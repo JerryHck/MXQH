@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="scripts/jquery-3.3.1.js"></script>
+</head>
+<body>
+    <input id="tbd" type="text" value="nema" />
+    <script type="text/javascript">
+        $("#tbd").click(function () {
+
+            //$.ajax({
+            //    type: "POST",
+            //    url: "http://localhost:13439/Common.asmx/HelloWorld",
+            //    data: {Name : "小孩",Json : "出啊让你"},//JSON.stringify({ "Json": "DoWork" }),
+            //    //contentType: "application/json;charset=utf-8",
+            //    contentType: "application/json",
+            //    dataType: 'jsonp',
+            //    processData: true,
+            //    success: function (json) {
+            //        alert(json);
+            //        return false;
+            //    },
+            //    error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //        alert(XMLHttpRequest.status);
+            //        alert(textStatus);
+            //        return false;
+            //    }
+            //});
+
+            var en = {};
+            en.funNo = 'BMS0001';
+            en.funName = '预算系统';
+            en.funPath = '\BMS';
+            en.funType = 1;
+            en.sysNo = "MXQH";
+            en.funDesc = '预算系统模块';
+            en.createBy = 'Admin'
+
+            var data = {};
+            data.strTbView = "TB_SYSTEM_FUN";
+            data.strJson = '[]';
+
+
+            //$.ajax({
+            //    type: "POST", //访问WebService使用Post方式请求
+            //    contentType: "application/x-www-form-urlencoded;charset=utf-8", //WebService 会返回Json类型
+            //    url: "http://localhost:13439/Common.asmx/Do", //调用WebService
+            //    data: { method: "GetTbViewList", Json: JSON.stringify(data) }, //Email参数
+            //    dataType: 'json',
+            //    headers: {
+            //        // 'Content-Type': 'application/json; charset=utf-8 ',
+            //        "Content-Type":"application/x-www-form-urlencoded",
+            //        "x-session-token": "1234",
+            //        "x-function": "dfasdaf"
+            //    },
+            //    error: function (x, e) {
+            //        console.log(x);
+            //        console.log(x.responseText);
+            //    },
+            //    success: function (response) { //回调函数，result，返回值
+            //        alert(response);
+            //        console.log(response);
+            //    }
+            //});
+
+
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "http://localhost:13439/WCFservice.svc/DoWork",
+                    data: JSON.stringify({ "name": "Newton", "address": "Chongqing"}),
+                    dataType: "json",
+                    contentType: 'application/x-www-form-urlencoded',
+                    processdata: true,
+                    success: function (msg) {
+                        alert("good!!!" + msg);
+                    },
+                    error: function (msg) {
+                        alert("shit!!!");
+                    }
+                });
+
+
+            return false;
+        });
+
+    </script>
+</body>
+</html>
