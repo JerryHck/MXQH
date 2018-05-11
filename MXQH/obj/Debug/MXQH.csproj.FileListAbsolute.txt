@@ -28,5 +28,6 @@ D:\Work\MXQH\MXQH\MXQH\bin\Microsoft.AI.Web.xml
 D:\Work\MXQH\MXQH\MXQH\bin\Microsoft.AI.WindowsServer.xml
 D:\Work\MXQH\MXQH\MXQH\bin\Microsoft.ApplicationInsights.xml
 D:\Work\MXQH\MXQH\MXQH\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Work\MXQH\MXQH\MXQH\obj\Debug\MXQH.csprojResolveAssemblyReference.cache
 D:\Work\MXQH\MXQH\MXQH\obj\Debug\MXQH.dll
 D:\Work\MXQH\MXQH\MXQH\obj\Debug\MXQH.pdb
