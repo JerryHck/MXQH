@@ -59,7 +59,7 @@ angular.module('app')
 
       // angular translate
       vm.lang = { isopen: false };
-      vm.langs = {en:'英语', de_DE:'中文', it_IT:'意大利'};
+      vm.langs = {en:'英语', cn:"中文", de_DE:'德语', it_IT:'意大利'};
       vm.selectLang = vm.langs[$translate.proposedLanguage()] || "中文";
       vm.setLang = function(langKey, $event) {
         // set the current lang

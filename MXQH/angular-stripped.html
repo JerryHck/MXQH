@@ -138,8 +138,8 @@
                       <div ui-jq="easyPieChart" ui-options="{
                           percent: 65,
                           lineWidth: 50,
-                          trackColor: '{{app.color.light}}',
-                          barColor: '{{app.color.info}}',
+                          trackColor: '{{vm.app.color.light}}',
+                          barColor: '{{vm.app.color.info}}',
                           scaleColor: false,
                           size: 100,
                           rotate: 90,
@@ -183,7 +183,7 @@
         <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" data-target=".navbar-collapse" role="search" ng-controller="TypeaheadDemoCtrl">
           <div class="form-group">
             <div class="input-group">
-              <input type="text" ng-model="selected" typeahead="state for state in states | filter:$viewValue | limitTo:8" class="form-control input-sm bg-light no-border rounded padder" placeholder="Search projects...">
+              <input type="text" ng-model="selected" typeahead="state for state in states | filter:$viewValue | limitTo:8" class="form-control input-sm bg-light no-border rounded padder" placeholder="查找...">
               <span class="input-group-btn">
                 <button type="submit" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></button>
               </span>
@@ -367,14 +367,14 @@
               <li ui-sref-active="active">
                 <a ui-sref="app.calendar">
                   <i class="glyphicon glyphicon-calendar icon text-info-dker"></i>
-                  <span class="font-bold" translate="aside.nav.CALENDAR">Calendar</span>
+                  <span class="font-bold" translate="aside.nav.CALENDAR">日历</span>
                 </a>
               </li>
               <li ui-sref-active="active">
                 <a ui-sref="app.mail.list">
                   <b class="badge bg-info pull-right">9</b>
                   <i class="glyphicon glyphicon-envelope icon text-info-lter"></i>
-                  <span class="font-bold" translate="aside.nav.EMAIL">Email</span>
+                  <span class="font-bold" translate="aside.nav.EMAIL">邮件</span>
                 </a>
               </li>
               <li>
