@@ -88,8 +88,8 @@
         </div>
         <div class="col-md-7">
           <div class="panel wrapper">
-            <label class="i-switch bg-warning pull-right" ng-init="showSpline=true">
-              <input type="checkbox" ng-model="showSpline">
+            <label class="i-switch bg-warning pull-right" ng-init="vm.showSpline=true">
+              <input type="checkbox" ng-model="vm.showSpline">
               <i></i>
             </label>
             <h4 class="font-thin m-t-none m-b text-muted">Latest Campaign</h4>
@@ -99,7 +99,7 @@
                 { data: {{d0_2}}, label:'Mag', points: { show: true, radius: 1}, splines: { show: showSpline, tension: 0.4, lineWidth: 1, fill: 0.8 } }
               ], 
               {
-                colors: ['{{app.color.info}}', '{{app.color.primary}}'],
+                colors: ['{{vm.app.color.info}}', '{{vm.app.color.primary}}'],
                 series: { shadowSize: 3 },
                 xaxis:{ font: { color: '#a1a7ac' } },
                 yaxis:{ font: { color: '#a1a7ac' }, max:20 },
@@ -125,7 +125,7 @@
               { data: {{d4}}, lines: { show: true, lineWidth: 1, fill:true, fillColor: { colors: [{opacity: 0.2}, {opacity: 0.8}] } } }
             ], 
             {
-              colors: ['{{app.color.light}}'],
+              colors: ['{{vm.app.color.light}}'],
               series: { shadowSize: 3 },
               xaxis:{ show:false },
               yaxis:{ font: { color: '#a1a7ac' } },
@@ -191,8 +191,8 @@
                 <div ui-jq="easyPieChart" ui-options="{
                     percent: 75,
                     lineWidth: 4,
-                    trackColor: '{{app.color.light}}',
-                    barColor: '{{app.color.primary}}',
+                    trackColor: '{{vm.app.color.light}}',
+                    barColor: '{{vm.app.color.primary}}',
                     scaleColor: false,
                     size: 115,
                     rotate: 90,
@@ -208,8 +208,8 @@
                 <div ui-jq="easyPieChart" ui-options="{
                     percent: 50,
                     lineWidth: 4,
-                    trackColor: '{{app.color.light}}',
-                    barColor: '{{app.color.info}}',
+                    trackColor: '{{vm.app.color.light}}',
+                    barColor: '{{vm.app.color.info}}',
                     scaleColor: false,
                     size: 115,
                     rotate: 180,
