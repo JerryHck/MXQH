@@ -3,8 +3,8 @@
 /* Controllers */
 
 angular.module('app')
-  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', 
-    function(              $scope,   $translate,   $localStorage,   $window ) {
+  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', 'AjaxService',
+    function ($scope, $translate, $localStorage, $window, AjaxService) {
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i);
       isIE && angular.element($window.document.body).addClass('ie');
@@ -38,9 +38,9 @@ angular.module('app')
           asideDock: false,
           container: false
         }
-
-
       }
+
+      
 
       // save settings to local storage
       if ( angular.isDefined($localStorage.settings) ) {
@@ -59,9 +59,12 @@ angular.module('app')
 
       // angular translate
       vm.lang = { isopen: false };
-      vm.langs = {en:'英语', cn:"中文", de_DE:'德语', it_IT:'意大利'};
+      vm.langs = { cn: "中文", en: '英语', de_DE: '德语', it_IT: '意大利' };
+      //默认中文
       vm.selectLang = vm.langs[$translate.proposedLanguage()] || "中文";
-      vm.setLang = function(langKey, $event) {
+      $translate.use("cn")
+      vm.setLang = function (langKey, $event) {
+          alert(langKey)
         // set the current lang
         vm.selectLang = vm.langs[langKey];
         // You can change the language during runtime

@@ -1,17 +1,48 @@
-'use strict';
+﻿'use strict';
 
 /**
  * Config for the router
  */
 angular.module('app')
-  .run(
-    [          '$rootScope', '$state', '$stateParams',
-      function ($rootScope,   $state,   $stateParams) {
-          $rootScope.$state = $state;
-          $rootScope.$stateParams = $stateParams;        
+  .run(['$rootScope', '$state', '$stateParams', '$cookieStore', '$window', '$q', 'routeResolver', 'AjaxService',
+  function ($rootScope, $state, $stateParams, $cookieStore, $window, $q, routeResolver, AjaxService) {
+      $rootScope.$state = $state;
+      $rootScope.$stateParams = $stateParams;
+      //State Change Start
+      $rootScope.$on('$stateChangeStart', onStateChangeStart);
+
+      //檢查是否登入
+      function onStateChangeStart(e, toState, toParams, fromState, fromParams) {
+          //if (!$cookieStore.get('user-token')) {
+          //    $window.location.href = '//localhost/WebSystem/Login/Login.html';
+          //}
+
+          //AjaxService.Call('Authentication', 'Check', '', 'Authentication').then(
+          //    function () { },
+          //    function (data) {
+          //        $cookieStore.remove('user-token');
+          //        $window.location.href = '//localhost/WebSystem/Login/Login.html';
+          //    });
       }
-    ]
-  )
+
+      var en = {};
+      en.strTbView = "TB_SYSTEM_FUN";
+      en.strJson = '[]';
+      AjaxService.GetTbViewList(en).then(function (data) {
+          console.log(data.data);
+          console.log(data.data[0].funName);
+      });
+
+      ////Route Config
+      //AjaxService.Call('RouteConfig', 'GetUserRoute', {}, 'LMS').then(function (data) {
+      //    angular.forEach(data, function (item) {
+      //        if (!$state.get(item.ROUTE_NAME)) {
+      //            $stateProviderRef.state(item.ROUTE_NAME, route.resolve(item));
+      //        }
+      //    });
+      //});
+
+  }])
   .config(
     [          '$stateProvider', '$urlRouterProvider',
       function ($stateProvider,   $urlRouterProvider) {
@@ -20,6 +51,7 @@ angular.module('app')
               .otherwise('/app/dashboard-v1');
           $stateProvider
               .state('app', {
+                  //表明此状态不能被显性激活，只能被子状态隐性激活
                   abstract: true,
                   url: '/app',
                   controllerAs: 'vm',

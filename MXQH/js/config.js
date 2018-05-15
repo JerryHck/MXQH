@@ -1,4 +1,4 @@
-// config
+﻿// config
 
 var app =  
 angular.module('app')
@@ -24,8 +24,22 @@ angular.module('app')
       prefix: 'l10n/',
       suffix: '.js'
     });
+
+    //$translateProvider.translations('en', {
+    //    'TITLE': 'Hello',
+    //    'FOO': 'This is a paragraph'
+    //});
+     
+    //$translateProvider.translations('zh',{
+    //    'TITLE':'你好',
+    //    'FOO':'这是一幅图'
+    //});
+     
+
+        $translateProvider.preferredLanguage('zh');
+
     // Tell the module what language to use by default
-    $translateProvider.preferredLanguage('en');
+    $translateProvider.preferredLanguage('cn');
     // Tell the module to store the language in the local storage
     $translateProvider.useLocalStorage();
   }]);

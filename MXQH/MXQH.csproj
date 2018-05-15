@@ -100,6 +100,8 @@
     <Content Include="js\app\mail\mails.json" />
     <Content Include="js\app\note\notes.json" />
     <Content Include="js\controllers\largeLoad.json" />
+    <Content Include="js\services\AjaxServiceMethod.js" />
+    <Content Include="js\services\AjaxServiceModule.js" />
     <Content Include="l10n\cn.js" />
     <Content Include="vendor\jquery\datatables\datatable.json" />
     <Content Include="vendor\jquery\footable\fonts\footable.eot" />
