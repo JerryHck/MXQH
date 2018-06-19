@@ -30,9 +30,9 @@ angular.module('pascalprecht.translate')
       ].join(''),
       method: 'GET',
       params: ''
-    }).success(function (data) {
+    }).then(function (data) {
       deferred.resolve(data);
-    }).error(function (data) {
+    },function (data) {
       deferred.reject(options.key);
     });
 

@@ -1,81 +1,96 @@
 ﻿(function () {
     angular.module('AjaxServiceModule').factory('AjaxService', AjaxService);
 
-    AjaxService.$inject = ['$rootScope', '$http', '$q', 'serviceUrl', 'appUrl'];
+    AjaxService.$inject = ['$rootScope', '$http', '$q', 'serviceUrl', 'appUrl', 'toastr'];
 
-    function AjaxService($rootScope, $http, $q, serviceUrl, appUrl) {
+    function AjaxService($rootScope, $http, $q, serviceUrl, appUrl, toastr) {
         var generic = 'Common.asmx/Do';
 
         var obj = {
-            //获得表资料
+            //获得实体资料-单个
+            GetEntity, GetEntity,
+            //获得实体资料-列表
+            GetEntities: GetEntities,
+            //获得表资料-单个
+            GetTbView, GetTbView,
+            //获得表资料-列表
             GetTbViewList: GetTbViewList,
-            //登入人員資料取得
-            GetUser: GetUser
+            //获取Json数据
+            GetJson: GetJson,
+            //简单单表新增
+            Action: Action
         };
 
         return obj;
 
+        //JSON Data取得
+        function GetJson(data) {
+            var d = $q.defer(),
+                url = appUrl + 'Data/' + data;
+            return Ajax(d, url, undefined, undefined, "GET");
+        }
+
+        //获得单实体资料
+        function GetEntity(name, json) {
+            var d = $q.defer(), g = $q.defer(),
+                 url = serviceUrl + generic;
+            var en = {};
+            en.strName = name;
+            en.strJson = JSON.stringify(convertArray(json)) || '[]';
+
+            Ajax(d, url, en, "GetEntity").then(
+                function (data) { g.resolve(data.data[0]); },
+                function () { g.reject(); }
+            );
+            return g.promise;
+        }
+
         //获得表资料
-        function GetTbViewList(data) {
+        function GetEntities(name, json) {
             var d = $q.defer(),
                  url = serviceUrl + generic;
+            var en = {};
+            en.strName = name;
+            en.strJson = JSON.stringify(convertArray(json)) || '[]';
 
-            return Ajax(d, url, data, "GetTbViewList");
+            return Ajax(d, url, en, "GetEntities");
         }
 
-        //登入人員資料取得
-        function GetUser(system) {
+        //获得单实体资料
+        function GetTbView(name, json) {
+            var d = $q.defer(), g = $q.defer(),
+                 url = serviceUrl + generic;
+            var en = {};
+            en.strTbView = name;
+            en.strJson = JSON.stringify(convertArray(json)) || '[]';
+
+            Ajax(d, url, en, "GetTbViewList").then(
+                function (data) { g.resolve(data.data[0]); },
+                function () { g.reject(); }
+            );
+            return g.promise;
+        }
+
+        //获得表资料
+        function GetTbViewList(name, json) {
             var d = $q.defer(),
-                url = serviceUrl + (system || $rootScope.systemName) + generic + 'GetUser';
+                 url = serviceUrl + generic;
+            var en = {};
+            en.strTbView = name;
+            en.strJson = JSON.stringify(convertArray(json)) || '[]';
 
-            return Ajax(d, url, "");
+            return Ajax(d, url, en, "GetTbViewList");
         }
 
-        //實體資料個數取得
-        function GetCount(entity, option) {
-            var op = option || {},
-                parameter = {
-                    Plan: op.plan || '',
-                    Condition: JSON.stringify(op.condition) || '',
-                    UserCondition: JSON.stringify(op.search) || '',
-                    User: op.user || false,
-                    LimitType: op.limit || ''
-                };
-
-            return DataService(entity, 'GetCount', op.system, parameter);
-        }
-
-        //自訂實體個數取得
-        function CustomCount(entity, method, option) {
-            var op = option || {},
-                parameter = {
-                    Method: method,
-                    Condition: JSON.stringify(op.condition),
-                    LimitType: op.limit || ''
-                };
-
-            return DataService(entity, 'CustomCount', op.system, parameter);
-        }
-
-        //使用狀態變更
-        function StatusChange(entity, data, option) {
-            var op = option || {},
-                parameter = { Data: JSON.stringify(data) };
-
-            return DataService(entity, 'StatusChange', op.system, parameter);
-        }
-
-        //資料服務
-        function DataService(entity, method, system, option) {
+        //获得表资料
+        function Action(name, json, action) {
             var d = $q.defer(),
-                url = serviceUrl + (system || $rootScope.systemName) + generic + 'DataService',
-                parameter = {
-                    strEntity: entity,
-                    strMethod: method,
-                    strOption: JSON.stringify(option)
-                };
+                 url = serviceUrl + generic;
+            var en = {};
+            en.strTbView = name;
+            en.strJson = JSON.stringify(json);
 
-            return Ajax(d, url, parameter);
+            return Ajax(d, url, en, action);
         }
 
         //HTTP AJAX
@@ -87,10 +102,32 @@
                 dataType: 'json',
                 data: { method: Method, Json: JSON.stringify(parameter) }
             })
-            .success(function (data) { q.resolve(data); })
-            .error(function () { q.reject(); });
+            .then(
+                function (data) { q.resolve(data.data); },
+                function (mes) {
+                    q.reject();
+                    console.log(mes);
+                    toastr.error(mes.data.split("。")[0], '服务访问错误')
+                });
 
             return q.promise;
+        }
+
+        //转换字符串
+        function convertArray(en) {
+            if (!en) return en;
+            var isArr;
+            if (typeof Array.isArray === "function") {
+                isArr = Array.isArray(en);
+            } else {
+                isArr = Object.prototype.toString.call(en) === "[object Array]";
+            }
+            if (isArr) { return en; }
+            else {
+                var enNew = [];
+                enNew.push(en);
+                return enNew
+            }
         }
     }
 })();

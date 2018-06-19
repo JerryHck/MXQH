@@ -11,6 +11,7 @@ angular.module('app')
       isSmartDevice( $window ) && angular.element($window.document.body).addClass('smart');
 
       var vm = this;
+      vm.Test = "app.System";
       // config
       vm.app = {
         name: '管理平台',
@@ -62,7 +63,7 @@ angular.module('app')
       vm.langs = { cn: "中文", en: '英语', de_DE: '德语', it_IT: '意大利' };
       //默认中文
       vm.selectLang = vm.langs[$translate.proposedLanguage()] || "中文";
-      $translate.use("cn")
+      //$translate.use("cn")
       vm.setLang = function (langKey, $event) {
           alert(langKey)
         // set the current lang

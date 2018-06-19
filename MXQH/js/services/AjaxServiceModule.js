@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('AjaxServiceModule', []);
+    angular.module('AjaxServiceModule', ['ngAnimate', 'toastr', ]);
 
     angular.module('AjaxServiceModule').config(appConfig);
 
@@ -32,30 +32,6 @@
             }
             return $.param(data);
         }
-
-        //$.ajax({
-        //    type: "POST", //访问WebService使用Post方式请求
-        //    contentType: "application/x-www-form-urlencoded;charset=utf-8", //WebService 会返回Json类型
-        //    url: "http://localhost:13439/Common.asmx/Do", //调用WebService
-        //    data: { method: "GetTbViewList", Json: JSON.stringify(data) }, //Email参数
-        //    dataType: 'json',
-        //    headers: {
-        //        // 'Content-Type': 'application/json; charset=utf-8 ',
-        //        "Content-Type":"application/x-www-form-urlencoded",
-        //        "x-session-token": "1234",
-        //        "x-function": "dfasdaf"
-        //    },
-        //    error: function (x, e) {
-        //        console.log(x);
-        //        console.log(x.responseText);
-        //    },
-        //    success: function (response) { //回调函数，result，返回值
-        //        alert(response);
-        //        console.log(response);
-        //    }
-        //});
-
-
         $httpProvider.interceptors.push(httpWatch);
     }
 })();
