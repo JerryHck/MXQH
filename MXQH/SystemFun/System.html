@@ -17,7 +17,7 @@
         <tr ng-repeat="item in sys.List">
             <td>
                 <button class="btn btn-xs btn-primary" ng-click="sys.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
-                <button class="btn btn-xs btn-danger" ng-click="sys.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                <button class="btn btn-xs btn-danger" ng-confirm  ng-click="sys.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
             </td>
             <td>{{ item.SysNo }}</td>
             <td>{{ item.SysName }}</td>

@@ -8,10 +8,11 @@ angular.module('app')
         vm.Edit = Edit;
         //删除
         vm.Delete = Delete;
-        //分頁
-        vm.page = { index: 1, size: 14 };
         //Dailog
         vm.Insert = Insert;
+
+        vm.ngConfirm = "dfdakldjl";
+
 
         GetList();
 
@@ -38,15 +39,13 @@ angular.module('app')
 
         //删除
         function Delete(item) {
-            if (confirm("确认删除？")) {
-                var en = {};
-                en.SysNo = item.SysNo;
-                en.CompanyNo = item.Company.CompanyNo;
-                AjaxService.Action('Sys_System', en, "Delete").then(function (data) {
-                    GetList();
-                    toastr.success('删除');
-                });
-            }
+            var en = {};
+            en.SysNo = item.SysNo;
+            en.CompanyNo = item.Company.CompanyNo;
+            AjaxService.Action('Sys_System', en, "Delete").then(function (data) {
+                GetList();
+                toastr.success('删除');
+            });
         }
 
         function GetList() {
