@@ -11,7 +11,7 @@ angular.module('app')
         //Dailog
         vm.Insert = Insert;
 
-        vm.ngConfirm = "dfdakldjl";
+        vm.Confirm = "dfdakldjl";
 
 
         GetList();
@@ -51,7 +51,6 @@ angular.module('app')
         function GetList() {
             AjaxService.GetEntities("SystemList").then(function (data) {
                 vm.List = data;
-                console.log(data);
             }).catch(function (mes) { console.log(mes); });
         }
 

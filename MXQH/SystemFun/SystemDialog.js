@@ -12,7 +12,7 @@ function SystemDialogCtrl($scope, $uibModalInstance, Form, ItemData, toastr, Aja
     //获取组织信息
     if (vm.form.index == 0) {
         AjaxService.GetEntities("Company").then(function (data) {
-            vm.CompanyList = data.data;
+            vm.CompanyList = data;
         });
     }
 

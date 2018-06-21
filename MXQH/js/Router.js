@@ -46,31 +46,3 @@ angular.module('app')
           urlCollection = url;
       }
   })
-.directive('ngConfirm', function () {
-    return {
-        restrict: 'A',
-        priority: 1,
-        terminal: true,
-        link: link
-    };
-    function link(scope, element, attr) {
-        var msg = scope.ngConfirm || "是否删除此笔资料",
-            clickAction = attr.ngClick;
-
-        element.bind('click', function () {
-            swal({
-                title: "确认删除",
-                text: msg,
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonText: "确定删除！", 
-                cancelButtonText: "取消删除！",
-            },
-            function (isConfirm) {
-                if (isConfirm) {
-                    scope.$eval(clickAction);
-                }
-            });
-        });
-    }
-})
