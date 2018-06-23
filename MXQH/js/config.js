@@ -13,7 +13,7 @@ angular.module('app')
         app.factory    = $provide.factory;
         app.service    = $provide.service;
         app.constant   = $provide.constant;
-        app.value      = $provide.value;
+        app.value = $provide.value;
     }
   ])
   .config(['$translateProvider', function($translateProvider){

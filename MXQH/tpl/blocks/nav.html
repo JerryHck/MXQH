@@ -1,40 +1,54 @@
 ﻿<!-- list -->
 <ul class="nav">
-  <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-    <span>导航栏</span>
-  </li>
-  <li>
-    <a class="auto">      
-      <span class="pull-right text-muted">
-        <i class="fa fa-fw fa-angle-right text"></i>
-        <i class="fa fa-fw fa-angle-down text-active"></i>
-      </span>
-      <i class="glyphicon glyphicon-th-list icon text-primary-dker"></i>
-      <span class="font-bold">模板选择</span>
-    </a>
-    <ul class="nav nav-sub dk">
-      <li class="nav-sub-header">
-        <a><span>模板</span></a>
-      </li>
-      <li ui-sref-active="active">
-        <a ui-sref="app.dashboard-v1">
-          <span>模板1</span>
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-2x">
+        <span>导航栏</span>
+    </li>
+    <li>
+        <a class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="glyphicon glyphicon-th-list icon text-primary-dker"></i>
+            <span class="font-bold">首页显示</span>
         </a>
-      </li>
-      <li ui-sref-active="active">
-        <a ui-sref="app.dashboard-v2">
-          <b class="label bg-info pull-right"></b>
-          <span>模板2</span>
+        <ul class="nav nav-sub dk">
+            <li class="nav-sub-header">
+                <a><span>模板</span></a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.dashboard-v1">
+                    <span class="text-xs">首页1</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.dashboard-v2">
+                    <b class="label bg-info pull-right"></b>
+                    <span class="text-xs">首页2</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="glyphicon glyphicon-th-list icon text-primary-dker"></i>
+            <span class="font-bold">系统设置</span>
         </a>
-      </li>
-
-        <li ui-sref-active="active">
-            <a ui-sref="{{ vm.Test }}">
-                <b class="label bg-info pull-right"></b>
-                <span>测试页面</span>
-            </a>
-        </li>
-    </ul>
-  </li>
+        <ul class="nav nav-sub dk">
+            <li class="nav-sub-header">
+                <a><span class="text-xs">系统设置</span></a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="{{ vm.Test }}">
+                    <b class="label bg-info pull-right"></b>
+                    <span class="text-xs">系统管理</span>
+                </a>
+            </li>
+        </ul>
+    </li>
 </ul>
 <!-- / list -->

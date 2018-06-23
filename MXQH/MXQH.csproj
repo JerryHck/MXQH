@@ -66,6 +66,8 @@
     <Content Include="api\signup" />
     <Content Include="bak\bower.json" />
     <Content Include="bak\package.json" />
+    <Content Include="Content\angular-busy.css" />
+    <Content Include="Content\angular-busy.min.css" />
     <Content Include="Content\angular-toastr.css" />
     <Content Include="Content\angular-toastr.min.css" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -116,12 +118,19 @@
     <Content Include="js\app\contact\contacts.json" />
     <Content Include="js\app\mail\mails.json" />
     <Content Include="js\app\note\notes.json" />
+    <Content Include="js\controllers\bootstrap.js" />
+    <Content Include="js\controllers\chart.js" />
     <Content Include="js\Dialog.js" />
     <Content Include="js\directives\app-Directive.js" />
     <Content Include="js\Router.js" />
     <Content Include="js\services\AjaxServiceMethod.js" />
     <Content Include="js\services\AjaxServiceModule.js" />
     <Content Include="l10n\cn.js" />
+    <Content Include="Loading\lg.ajax-spinner-preloader.gif" />
+    <Content Include="Loading\lg.circle-slack-loading-icon.gif" />
+    <Content Include="Loading\Loading.html" />
+    <Content Include="Scripts\angular-busy.js" />
+    <Content Include="Scripts\angular-busy.min.js" />
     <Content Include="Scripts\angular-messages.js" />
     <Content Include="Scripts\angular-messages.min.js" />
     <Content Include="Scripts\angular-toastr.js" />
@@ -499,6 +508,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="js\controllers\uploads\" />
     <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>

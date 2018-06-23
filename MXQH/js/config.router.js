@@ -18,10 +18,20 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
 
         var route = {};
         route.Name = "app.System";
-        route.Url = "/system";
+        route.Url = "/app/system";
+        route.Controller = "SystemCtrl";
+        route.ControllerAs = "sys";
         route.TempleteUrl = "SystemFun/System.html";
         route.LazyLoad = ['uiGrid', 'SystemFun/System.js']
         router.setDataRouters(route);
+
+        $stateProviderRef.state("dfasdg", {
+            abstract: true,
+            url: '/app',
+            controllerAs: 'vm',
+            controller: 'AppCtrl',
+            templateUrl: 'tpl/app.html',
+        });
     });
 }
 

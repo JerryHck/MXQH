@@ -2,6 +2,7 @@
 angular.module('app', [
     'ngAnimate',
     'toastr',
+    'cgBusy',
     'ngMessages',
     'ngCookies',
     'ngResource',
@@ -23,8 +24,8 @@ angular.module('app')
 //APP URL
 .constant('appUrl', '../')
 //Service URL
-//.constant('serviceUrl', '//localhost:13439/')
-.constant('serviceUrl', '//localhost/MXQHServie/')
+.constant('serviceUrl', '//localhost:13439/')
+//.constant('serviceUrl', '//localhost/MXQHServie/')
 
  //表單設定
 .constant('Form', [
@@ -32,6 +33,13 @@ angular.module('app')
     { index: 1, title: '编辑', action: 'Update' },
     { index: 2, title: '查看', action: 'Search' }
 ])
+    //Loading
+.constant('cgBusyDefaults', {
+    message: '',
+    backdrop: true,
+    templateUrl: '../Loading/Loading.html',
+    minDuration: 500
+})
 .factory('templateUrl', ['$rootScope', 'appUrl', function ($rootScope, appUrl) {
     return {
         get: function (system) {
