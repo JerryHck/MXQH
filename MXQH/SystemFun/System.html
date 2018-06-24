@@ -1,35 +1,37 @@
-﻿<div class="bg-light lter b-b wrapper-md" >
-    <h3 class="m-n font-thin h3">系统信息列表</h3>
-</div>
-<div class="wrapper-md" ng-controller="SystemCtrl as sys">
-    <div style="padding-bottom:5px">
-        <button class="btn btn-sm btn-success" ng-click="sys.Insert()"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+﻿<div ng-controller="SystemCtrl as sys">
+    <div class="bg-light lter b-b wrapper-md" cg-busy="sys.promise">
+        <h3 class="m-n font-thin h3">系统信息列表</h3>
     </div>
-    <table class="table table-striped">
-        <tr>
-            <td class="col-md-1">编辑</td>
-            <td class="col-md-1">系统编号</td>
-            <td class="col-md-2">系统名称</td>
-            <td class="col-md-2">备注</td>
-            <td class="col-md-2">所属组织</td>
-            <td class="col-md-1">创建人</td>
-        </tr>
-        <tr ng-repeat="item in sys.List">
-            <td>
-                <button class="btn btn-xs btn-primary" ng-click="sys.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
-                <button class="btn btn-xs btn-danger" ng-confirm  ng-click="sys.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
-            </td>
-            <td>{{ item.SysNo }}</td>
-            <td>{{ item.SysName }}</td>
-            <td>{{ item.SysDesc }}</td>
-            <td>{{ item.Company.CompanyName }}</td>
-            <td>
-                {{ item.CreateBy }}
-            </td>
-        </tr>
-    </table>
-    <!--<div class="col-md-12 text-center">
-        <uib-pagination total-items="sys.page.total" ng-model="sys.page.index" items-per-page="sys.page.size" max-size="4" class="pagination-sm" boundary-links="true"></uib-pagination>
-    </div>-->
-    <!--<pre>{{ sys.List | json }}</pre>-->
+    <div class="wrapper-md">
+        <div style="padding-bottom:5px">
+            <button class="btn btn-sm btn-success" ng-click="sys.Insert()"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+        </div>
+        <table class="table table-striped">
+            <tr>
+                <td class="col-md-1">编辑</td>
+                <td class="col-md-1">系统编号</td>
+                <td class="col-md-2">系统名称</td>
+                <td class="col-md-2">备注</td>
+                <td class="col-md-2">所属组织</td>
+                <td class="col-md-1">创建人</td>
+            </tr>
+            <tr ng-repeat="item in sys.List">
+                <td>
+                    <button class="btn btn-xs btn-primary" ng-click="sys.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                    <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="sys.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                </td>
+                <td>{{ item.SysNo }}</td>
+                <td>{{ item.SysName }}</td>
+                <td>{{ item.SysDesc }}</td>
+                <td>{{ item.Company.CompanyName }}</td>
+                <td>
+                    {{ item.CreateBy }}
+                </td>
+            </tr>
+        </table>
+        <!--<div class="col-md-12 text-center">
+            <uib-pagination total-items="sys.page.total" ng-model="sys.page.index" items-per-page="sys.page.size" max-size="4" class="pagination-sm" boundary-links="true"></uib-pagination>
+        </div>-->
+        <!--<pre>{{ sys.List | json }}</pre>-->
+    </div>
 </div>

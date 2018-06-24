@@ -231,6 +231,8 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="SystemFun\SysFunction.html" />
+    <Content Include="SystemFun\SysFunction.js" />
     <Content Include="SystemFun\SystemDialog.html" />
     <Content Include="SystemFun\SystemDialog.js" />
     <Content Include="SystemFun\System.html" />

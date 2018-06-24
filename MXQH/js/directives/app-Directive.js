@@ -14,7 +14,6 @@ angular.module('app')
     function link(scope, element, attr) {
         
         scope.$watchCollection(attr.ngConfirm, function (options) {
-            console.log(options)
             var en = options || {};
             en.title = en.title || "确认删除";
             en.text = en.text || "是否删除此笔资料";
