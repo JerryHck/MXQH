@@ -12,18 +12,29 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
         $cookieStore.put('function-token', "123dfaskldfj");
     }
 
-    AjaxService.GetTbViewList("Sys_Function").then(function (data) {
-        console.log(data.data);
-        console.log($cookieStore.get("function-token"));
+    var en = {};
+    en.name = "FunType";
+    en.value = 2;
+    AjaxService.GetEntities("Function", en).then(function (data) {
+        //console.log(data);
+        //console.log($cookieStore.get("function-token"));
 
-        var route = {};
-        route.Name = "app.System";
-        route.Url = "/app/system";
-        route.Controller = "SystemCtrl";
-        route.ControllerAs = "sys";
-        route.TempleteUrl = "SystemFun/System.html";
-        route.LazyLoad = ['uiGrid', 'SystemFun/System.js']
-        router.setDataRouters(route);
+        angular.forEach(data, function (item) {
+            var route = {};
+            route.Name = item.RouteName;
+            route.Url = item.RouteUrl;
+            route.Controller = item.Controller;
+            route.ControllerAs = item.ControllerAs;
+            route.TempleteUrl = item.FunHtml;
+            if (item.FunLoad) {
+                var loadJs = [];
+                angular.forEach(item.FunLoad, function (l) {
+                    loadJs.push(l.LoadName);
+                });
+                route.LazyLoad = loadJs;
+            }
+            router.setDataRouters(route);
+        });
     });
 }
 
@@ -41,7 +52,14 @@ function Config($stateProvider, $urlRouterProvider) {
             controller: 'AppCtrl',
             templateUrl: 'tpl/app.html',
         })
-
+        .state('apps', {
+            abstract: true,
+            controllerAs: 'vm',
+            controller: 'AppCtrl',
+            url: '/apps',
+            templateUrl: 'tpl/layout.html'
+        })
+        //首页
         .state('app.dashboard-v1', {
             url: '/dashboard-v1',
             templateUrl: 'tpl/app_dashboard_v1.html',
@@ -52,13 +70,13 @@ function Config($stateProvider, $urlRouterProvider) {
                   }]
             }
         })
-        .state('app.dashboard-v2', {
-            url: '/dashboard-v2',
-            templateUrl: 'tpl/app_dashboard_v2.html',
+        .state('apps.contact', {
+            url: '/contact',
+            templateUrl: 'tpl/apps_contact.html',
             resolve: {
-                deps: ['$ocLazyLoad',
-                  function ($ocLazyLoad) {
-                      return $ocLazyLoad.load(['js/controllers/chart.js']);
+                deps: ['uiLoad',
+                  function (uiLoad) {
+                      return uiLoad.load(['js/app/contact/contact.js']);
                   }]
             }
         })

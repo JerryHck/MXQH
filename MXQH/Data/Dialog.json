@@ -5,6 +5,5 @@
     "LoadFiles": [ "ui.select", "SystemFun/SystemDialog.js"],
     "controller": "SystemDialogCtrl",
     "controllerAs": "sys"
-    
   }
 ]

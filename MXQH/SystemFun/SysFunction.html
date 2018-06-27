@@ -1,39 +1,88 @@
-﻿<div ng-controller="FunctionCtrl as fun">
-    <div class="bg-light lter b-b wrapper-md" cg-busy="fun.promise">
-        <h3 class="m-n font-thin h3">系统功能信息</h3>
-    </div>
-    <div class="wrapper-md">
-        <div style="padding-bottom:5px">
-            <button class="btn btn-sm btn-success" ng-click="fun.Insert()"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+﻿    <!-- hbox layout -->
+<div class="hbox hbox-auto-xs hbox-auto-sm bg-light" ng-init="
+     vm.app.settings.asideFixed=true;
+     vm.app.settings.asideDock=false;
+     vm.app.settings.container=false;
+     vm.app.hideAside=false;
+     vm.app.hideFooter=true; " ng-controller="FunctionCtrl as fun">
+    <!-- Root -->
+    <div class="col w b-r">
+        <div class="vbox">
+            <div class="wrapper b-b bg-info">
+                <div class="font-thin h3">系统功能信息</div>
+            </div>
+            <div class="row-row">
+                <div class="cell scrollable hover">
+                    <div class="cell-inner">
+                        <div class="list-group no-radius no-border no-bg m-b-none">
+                            <a class="list-group-item bg-light b-b" ng-class="{'focus': (fun.SelectedRoot == '')}" ng-click="fun.SelectAllFun()">所有功能</a>
+                            <a ng-repeat="root in fun.List" ng-dblclick="fun.EditRoot(root)" class="list-group-item m-l hover-anchor b-a no-select"
+                               ng-class="{'focus m-l-none': fun.SelectedRoot == root.FunNo}" ng-click="fun.SelectRoot(root)"
+                               ng-drop="true" ng-drop-success="fun.RootDrop($data,$index)">
+                                <span ng-click='fun.DeleteRoot(root)' class="pull-right text-muted hover-action"><i class="fa fa-times"></i></span>
+                                <!--<b class="badge bg-info pull-right">{{ root.OrderBy }}</b>-->
+                                <span class="block m-l-n" ng-class="{'m-n': fun.SelectedRoot == root.FunNo }">
+                                    <i class="glyphicon glyphicon-move" ng-drag="true" ng-drag-data="root" ng-drag-success="fun.RootDrag($data,$index)"></i>{{ root.FunName }}
+                                </span>
+                                <input type="text" class="form-control pos-abt" ng-show="root.editing" ng-blur="fun.DoneRootEdit(root)" ng-model="fun.RootName" style="top:3px;left:2px;width:98%" ui-focus="root.editing">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper b-t">
+                <span tooltip="双击编辑目录" class="pull-right text-muted inline wrapper-xs m-r-sm"><i class="fa fa-question"></i></span>
+                <a class="btn btn-sm btn-info" ng-click="fun.AddRoot()"><i class="glyphicon glyphicon-plus"></i> 新增</a>
+            </div>
         </div>
-        <table class="table table-striped">
-            <tr>
-                <td class="col-md-1">编辑</td>
-                <td class="col-md-1">编号</td>
-                <td class="col-md-2">系统名称</td>
-                <td class="col-md-2">备注</td>
-                <td class="col-md-2">所属功能</td>
-                <td class="col-md-1">创建人</td>
-            </tr>
-            <tr ng-repeat="item in fun.List">
-                <td>
-                    <button class="btn btn-xs btn-primary" ng-click="fun.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
-                    <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="fun.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
-                </td>
-                <td>{{ item.FunNo }}</td>
-                <td>{{ item.ParFunNo }}</td>
-                <td>{{ item.FunName }}</td>
-                <td>{{ item.FunPath }}</td>
-                <td>{{ item.FunHtml }}</td>
-                <td>{{ item.FunType }}</td>
-                <td>{{ item.SysNo }}</td>
-                <td>{{ item.FunDesc }}</td>
-                <td>{{ item.CreateBy }}</td>
-            </tr>
-        </table>
-        <!--<div class="col-md-12 text-center">
-            <uib-pagination total-items="fun.page.total" ng-model="fun.page.index" items-per-page="fun.page.size" max-size="4" class="pagination-sm" boundary-links="true"></uib-pagination>
-        </div>-->
-        <!--<pre>{{ fun.List | json }}</pre>-->
+    </div>
+    <!-- /Root -->
+    <!-- Fun -->
+    <div class="col w-lg lter b-r">
+        <div class="vbox">
+            <div class="wrapper-xs b-b">
+                <div class="input-group m-b-xxs">
+                    <span class="input-group-addon input-sm no-border no-bg"><i class="icon-magnifier text-md m-t-xxs"></i></span>
+                    <input type="text" class="form-control input-sm no-border no-bg text-xs" placeholder="查询{{fun.RootName ? fun.RootName : '所有功能'}}" ng-model="fun.FunQuery">
+                </div>
+            </div>
+            <div class="row-row">
+                <div class="cell scrollable hover">
+                    <div class="cell-inner">
+                        <div class="m-t-n-xxs">
+                            <div class="list-group list-group-lg no-radius no-border no-bg m-b-none">
+                                <a ng-repeat="f in fun.FunList | filter:{group:FunName} | filter:fun.FunQuery | orderBy:'Orderby'" class="list-group-item m-l" ng-class="{'select m-l-none': f.selected }" ng-click="selectFun(f)">
+                                    <span class="block text-ellipsis m-l-n text-xs" ng-class="{'m-l-none': f.selected }">
+                                        {{ f.FunName }}
+                                        <span ng-hide="f.FunName">没有功能</span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="text-center pos-abt w-full" style="top:50%;" ng-hide="(fun.FunList | filter:{group:FunName} | filter:fun.FunQuery).length">没有功能</div>
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper b-t text-center">
+                <a href class="btn btn-sm btn-default btn-addon" ng-click="createItem()"><i class="fa fa-plus fa-fw m-r-xs"></i> New Contact</a>
+            </div>
+        </div>
+    </div>
+    <!-- /column -->
+    <!-- column -->
+    <div class="col bg-white-only" cg-busy="fun.promise">
+        <div class="vbox">
+            <div class="wrapper-sm b-b">
+                <div class="m-t-n-xxs m-b-n-xxs m-l-xs">
+                    <a class="btn btn-xs btn-default pull-right" ng-hide="!item" ng-click="deleteItem(item)"><i class="fa fa-times"></i></a>
+                    <a class="btn btn-xs btn-default" ng-hide="item.editing" ng-click="editItem(item)">Edit</a>
+                    <a class="btn btn-xs btn-default" ng-show="item.editing" ng-click="doneEditing(item)">Done</a>
+                </div>
+            </div>
+            <div class="row-row">
+                <div class="cell">
+                </div>
+            </div>
+        </div>
     </div>
 </div>

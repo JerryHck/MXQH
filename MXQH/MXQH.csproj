@@ -126,6 +126,8 @@
     <Content Include="js\services\AjaxServiceMethod.js" />
     <Content Include="js\services\AjaxServiceModule.js" />
     <Content Include="l10n\cn.js" />
+    <Content Include="Loading\finalfantasy.gif" />
+    <Content Include="Loading\index.circle-slack-loading-icon.gif" />
     <Content Include="Loading\lg.ajax-spinner-preloader.gif" />
     <Content Include="Loading\lg.circle-slack-loading-icon.gif" />
     <Content Include="Loading\Loading.html" />
@@ -173,6 +175,7 @@
     <Content Include="Scripts\jquery-3.0.0.min.js" />
     <Content Include="Scripts\jquery-3.0.0.slim.js" />
     <Content Include="Scripts\jquery-3.0.0.slim.min.js" />
+    <Content Include="Scripts\ngDraggable.js" />
     <Content Include="Scripts\oclazyload\ocLazyLoad.js" />
     <Content Include="Scripts\oclazyload\ocLazyLoad.min.js" />
     <Content Include="Scripts\oclazyload\ocLazyLoad.require.js" />
@@ -237,6 +240,7 @@
     <Content Include="SystemFun\SystemDialog.js" />
     <Content Include="SystemFun\System.html" />
     <Content Include="SystemFun\System.js" />
+    <Content Include="tpl\layout.html" />
     <Content Include="vendor\angular\angular.min.js" />
     <Content Include="vendor\angular\ui-router-require-polyfill.js" />
     <Content Include="vendor\jquery\datatables\datatable.json" />

@@ -107,7 +107,8 @@
                 function (mes) {
                     q.reject();
                     console.log(mes);
-                    toastr.error(mes.data.split("。")[0], '服务访问错误')
+                    var m = mes.data ? mes.data.split("。")[0] : "错误";
+                    toastr.error(m, '服务访问错误')
                 });
 
             return q.promise;

@@ -40,7 +40,7 @@ angular.module('app')
           container: false
         }
       }
-
+      GetList();
       
 
       // save settings to local storage
@@ -58,27 +58,16 @@ angular.module('app')
         $localStorage.settings = vm.app.settings;
       }, true);
 
-      // angular translate
-      vm.lang = { isopen: false };
-      vm.langs = { cn: "中文", en: '英语', de_DE: '德语', it_IT: '意大利' };
-      //默认中文
-      vm.selectLang = vm.langs[$translate.proposedLanguage()] || "中文";
-      //$translate.use("cn")
-      vm.setLang = function (langKey, $event) {
-          alert(langKey)
-        // set the current lang
-        vm.selectLang = vm.langs[langKey];
-        // You can change the language during runtime
-        $translate.use(langKey);
-        vm.lang.isopen = !vm.lang.isopen;
-      };
-
-      vm.Follows = [{ name: "小李", job: "文员", state : "on" },
-          { name: "小李", job: "前台", state: "away" },
-          { name: "李五", job: "行政助理", state: "busy" },
-          { name: "马六", job: "司机", state: "on" },
-          { name: "小黄", job: "软件工程师" }
-      ]
+      function GetList() {
+          var en = {};
+          en.name  = 'FunType';
+          en.value = 1
+          vm.promise = AjaxService.GetEntities("FunRoot", en).then(function (data) {
+              vm.FunTree = data;
+              //console.log(data);
+          });
+      }
+       
 
       function isSmartDevice( $window )
       {
