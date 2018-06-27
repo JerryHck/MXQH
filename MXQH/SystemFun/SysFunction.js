@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('FunctionCtrl', ['$scope', '$http', 'Dialog', 'AjaxService',
-function ($scope, $http, Dialog, AjaxService) {
+.controller('FunctionCtrl', ['$scope', '$http', 'Dialog', 'toastr', 'AjaxService',
+function ($scope, $http, Dialog, toastr, AjaxService) {
 
     var vm = this;
     //查询所有功能
@@ -18,7 +18,8 @@ function ($scope, $http, Dialog, AjaxService) {
     vm.RootDrop = RootDrop;
     //
     vm.RootDrag = RootDrag;
-
+    //
+    vm.SaveRoot = SaveRoot;
 
     vm.SelectedRoot = '';
 
@@ -65,7 +66,6 @@ function ($scope, $http, Dialog, AjaxService) {
         root.OrderBy = vm.List ? vm.List.Length : 0;
         root.FunType = 1;
         root.SysNo = 'MXQH';
-        root.selected = true;
         root.editing = true;
 
         vm.RootName = root.FunName;
@@ -103,6 +103,28 @@ function ($scope, $http, Dialog, AjaxService) {
     {
         root.FunName = vm.RootName;
         root.editing = false;
+        root.selected = false;
+    }
+
+    function SaveRoot()
+    {
+        var List = [];
+        angular.forEach(vm.List, function (r, i) {
+            var en = {};
+            en.FunNo = r.FunNo;
+            en.FunName = r.FunName;
+            en.OrderBy = i;
+            List.push(en);
+        });
+        var json = {};
+        json.FunType = '1';
+        json.SysNo = 'MXQH';
+        json.RootList = JSON.stringify(List);
+        json.TempColumns = 'RootList';
+
+        vm.promise = AjaxService.EditBack("sp_SaveFunctionRoot", json).then(function (data) {
+            toastr.success('储存成功');
+        })
     }
 }
 ]);

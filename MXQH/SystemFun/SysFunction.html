@@ -19,10 +19,12 @@
                             <a ng-repeat="root in fun.List" ng-dblclick="fun.EditRoot(root)" class="list-group-item m-l hover-anchor b-a no-select"
                                ng-class="{'focus m-l-none': fun.SelectedRoot == root.FunNo}" ng-click="fun.SelectRoot(root)"
                                ng-drop="true" ng-drop-success="fun.RootDrop($data,$index)">
-                                <span ng-click='fun.DeleteRoot(root)' class="pull-right text-muted hover-action"><i class="fa fa-times"></i></span>
-                                <!--<b class="badge bg-info pull-right">{{ root.OrderBy }}</b>-->
-                                <span class="block m-l-n" ng-class="{'m-n': fun.SelectedRoot == root.FunNo }">
-                                    <i class="glyphicon glyphicon-move" ng-drag="true" ng-drag-data="root" ng-drag-success="fun.RootDrag($data,$index)"></i>{{ root.FunName }}
+                                <span ng-if="!root.FunList || root.FunList.length == 0" ng-click='fun.DeleteRoot(root)' class="pull-right text-muted hover-action">
+                                    <i class="fa fa-times"></i>
+                                </span>
+                            
+                                <span class="block m-l-n bg-transparent" ng-class="{'m-n': fun.SelectedRoot == root.FunNo }">
+                                    <i class="glyphicon glyphicon-move bg-info" ng-drag="true" ng-drag-data="root" ng-drag-success="fun.RootDrag($data,$index)"></i>{{ root.FunName }}
                                 </span>
                                 <input type="text" class="form-control pos-abt" ng-show="root.editing" ng-blur="fun.DoneRootEdit(root)" ng-model="fun.RootName" style="top:3px;left:2px;width:98%" ui-focus="root.editing">
                             </a>
@@ -32,7 +34,8 @@
             </div>
             <div class="wrapper b-t">
                 <span tooltip="双击编辑目录" class="pull-right text-muted inline wrapper-xs m-r-sm"><i class="fa fa-question"></i></span>
-                <a class="btn btn-sm btn-info" ng-click="fun.AddRoot()"><i class="glyphicon glyphicon-plus"></i> 新增</a>
+                <a class="btn btn-sm btn-info col-md-offset-1" ng-click="fun.AddRoot()"><i class="glyphicon glyphicon-plus"></i></a>
+                <a class="btn btn-sm btn-success col-md-offset-1" ng-click="fun.SaveRoot()"><i class="glyphicon glyphicon-save"></i></a>
             </div>
         </div>
     </div>

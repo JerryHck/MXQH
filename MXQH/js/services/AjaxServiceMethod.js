@@ -18,7 +18,9 @@
             //获取Json数据
             GetJson: GetJson,
             //简单单表新增
-            Action: Action
+            Action: Action,
+            //存储过程执行
+            EditBack: EditBack
         };
 
         return obj;
@@ -80,6 +82,17 @@
             en.strJson = JSON.stringify(convertArray(json)) || '[]';
 
             return Ajax(d, url, en, "GetTbViewList");
+        }
+
+        //获得表资料
+        function EditBack(name, json) {
+            var d = $q.defer(),
+                 url = serviceUrl + generic;
+            var en = {};
+            en.strProc = name;
+            en.strJson = JSON.stringify(json) || '{}';
+
+            return Ajax(d, url, en, "EditBack");
         }
 
         //获得表资料
