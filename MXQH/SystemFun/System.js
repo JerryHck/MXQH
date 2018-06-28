@@ -24,7 +24,7 @@ function ($scope, $http, Dialog, AjaxService) {
                 return {};
             }
         };
-        Open("U", resolve);
+        Open("I", resolve);
     }
 
     //編輯

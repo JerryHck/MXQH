@@ -1,0 +1,18 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">Icon图标选择</h3>
+    <span class="col-xs-pull-6 text-muted">
+        已选择:<i ng-class="ico.SelectedClass"></i>
+    </span>
+</div>
+<div class="modal-body" style="height:500px; overflow:scroll">
+    <div ng-repeat="item in ico.Data">
+        <div class="col-md-12 col-sm-12 bg-black-opacity"><h3 class="font-thin">{{ item.name }}</h3></div>
+        <div class="col-md-12 col-sm-12 bg-light">
+            <div class="col-md-1 col-sm-2 bg-light" ng-repeat="c in item.List"><i ng-class="c" ng-click="ico.select(c)"></i></div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="ico.cancel()">关闭</button>
+</div>
+<!--<pre>{{ sys.Item | json }}</pre>-->

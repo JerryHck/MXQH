@@ -2,8 +2,15 @@
   {
     "name": "SystemDailog",
     "templateUrl": "SystemFun/SystemDialog.html",
-    "LoadFiles": [ "ui.select", "SystemFun/SystemDialog.js"],
+    "LoadFiles": [ "ui.select", "SystemFun/SystemDialog.js" ],
     "controller": "SystemDialogCtrl",
     "controllerAs": "sys"
+  },
+  {
+    "name": "IconDailog",
+    "templateUrl": "SystemFun/IconDialog.html",
+    "LoadFiles": [ "SystemFun/IconDialog.js" ],
+    "controller": "IconDialogCtrl",
+    "controllerAs": "ico"
   }
 ]

@@ -13,12 +13,15 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
     vm.AddRoot = AddRoot;
     //编辑根目录
     vm.EditRoot = EditRoot;
+    //图标窗口
+    vm.OpenIcon = OpenIcon;
+    //编辑根目录
     vm.DoneRootEdit = DoneRootEdit;
     //rootDrop
     vm.RootDrop = RootDrop;
-    //
+    //调整根目录顺序
     vm.RootDrag = RootDrag;
-    //
+    //保存根目录
     vm.SaveRoot = SaveRoot;
 
     vm.SelectedRoot = '';
@@ -52,7 +55,6 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
         vm.FunList = root.FunList;
         angular.forEach(vm.List, function (r) {
             r.selected = false;
-            r.editing = false;
         });
         root.selected = true;
     }
@@ -66,15 +68,14 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
         root.OrderBy = vm.List ? vm.List.Length : 0;
         root.FunType = 1;
         root.SysNo = 'MXQH';
+        root.FunImge = 'glyphicon glyphicon-chevron-right';
         root.editing = true;
-
-        vm.RootName = root.FunName;
-
         angular.forEach(vm.List, function (r) {
             r.selected = false;
-            r.editing = false;
         });
-
+        vm.SelectedRoot = root.FunNo;
+        vm.IsEditing = true;
+        vm.editRootItem = root;
         vm.List.push(root);
     }
 
@@ -93,17 +94,34 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
     }
 
     function EditRoot(root) {
-        if (root && root.selected) {
-            vm.RootName = root.FunName;
-            root.editing = true;
+        if (vm.IsEditing = true) {
+            DoneRootEdit();
         }
+        root.selected = true;
+        root.editing = true;
+        vm.editRootItem = root;
+        vm.IsEditing = true;
     };
 
-    function DoneRootEdit(root)
+    function OpenIcon(data) {
+        var resolve = {
+            Data: function () {
+                return data;
+            }
+        };
+        Dialog.open("IconDailog", resolve).then(function (data) {
+
+        }).catch(function (reason) {
+        });
+    }
+
+    function DoneRootEdit()
     {
-        root.FunName = vm.RootName;
-        root.editing = false;
-        root.selected = false;
+        if (vm.editRootItem) {
+            vm.editRootItem.editing = false;
+            vm.editRootItem.selected = false;
+            vm.IsEditing = false;
+        }
     }
 
     function SaveRoot()
@@ -114,6 +132,7 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
             en.FunNo = r.FunNo;
             en.FunName = r.FunName;
             en.OrderBy = i;
+            en.FunImge = r.FunImge;
             List.push(en);
         });
         var json = {};

@@ -1,19 +1,19 @@
 ﻿<!-- list -->
 <ul class="nav">
     <li class="hidden-folded padder m-t m-b-sm text-muted text-center">
-        <span>导航栏</span>
+        <span>查询</span>
     </li>
 
     <li ng-repeat="root in vm.FunTree">
-        <a class="auto">
+        <a href class="auto text-primary-dker" >
             <span class="pull-right text-muted">
                 <i class="fa fa-fw fa-angle-right text"></i>
                 <i class="fa fa-fw fa-angle-down text-active"></i>
             </span>
-            <i class="glyphicon glyphicon-th-list icon text-primary-dker"></i>
+            <i class="glyphicon glyphicon-stats icon text-primary-dker" ng-class="root.FunImge"></i>
             <span class="font-bold">{{ root.FunName }}</span>
         </a>
-        <ul class="nav nav-sub dk" ng-repeat="fun in root.FunList">
+        <ul ng-if="root.FunList" class="nav nav-sub dk" ng-repeat="fun in root.FunList">
             <li ui-sref-active="active">
                 <a ui-sref="{{ fun.RouteName }}">
                     <span class="text-xs">{{ fun.FunName }}</span>
@@ -22,6 +22,6 @@
         </ul>
         
     </li>
-    <li> <a ui-sref="apps.contact">测试页面</a> </li>
+    <!--<li> <a ui-sref="apps.contact">测试页面</a> </li>-->
 </ul>
 <!-- / list -->
