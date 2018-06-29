@@ -78,6 +78,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\select.css" />
     <Content Include="Content\select.min.css" />
+    <Content Include="Content\select2-bootstrap.css" />
+    <Content Include="Content\select2.css" />
     <Content Include="Content\sweetalert.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="Content\ui-grid.css" />
@@ -115,6 +117,10 @@
     <Content Include="fonts\sourcesanspro\sourcesanspro-bold.woff" />
     <Content Include="fonts\sourcesanspro\sourcesanspro-light.woff" />
     <Content Include="fonts\sourcesanspro\sourcesanspro.woff" />
+    <Content Include="Images\loading.gif" />
+    <Content Include="Images\progressbar.gif" />
+    <Content Include="Images\select2-spinner.gif" />
+    <Content Include="Images\select2.png" />
     <Content Include="js\app\contact\contacts.json" />
     <Content Include="js\app\mail\mails.json" />
     <Content Include="js\app\note\notes.json" />
@@ -232,6 +238,8 @@
     <Content Include="Scripts\ui-grid.tree-view.min.js" />
     <Content Include="Scripts\ui-grid.validate.js" />
     <Content Include="Scripts\ui-grid.validate.min.js" />
+    <Content Include="Scripts\ui-select2-angular.js" />
+    <Content Include="Scripts\ui-select2-jquery.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />

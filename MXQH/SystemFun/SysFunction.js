@@ -170,5 +170,7 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
             vm.SelectedFun = data;
         });
     }
+
+    vm.Company = "dfasdga";
 }
 ]);

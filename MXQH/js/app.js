@@ -10,6 +10,7 @@ angular.module('app', [
     'ngTouch',
     'ngStorage',
     'ui.router',
+    'ui.select2',
     'ui.bootstrap',
     'ui.load',
     'ui.jq',
@@ -24,8 +25,8 @@ angular.module('app')
 //APP URL
 .constant('appUrl', '../')
 //Service URL
-//.constant('serviceUrl', '//localhost:13439/')
-.constant('serviceUrl', '//localhost/MXQHServie/')
+.constant('serviceUrl', '//localhost:13439/')
+//.constant('serviceUrl', '//localhost/MXQHServie/')
 
  //表單設定
 .constant('Form', [
