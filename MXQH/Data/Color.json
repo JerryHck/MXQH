@@ -1,0 +1,76 @@
+﻿[
+  {
+    "name": "字体色",
+    "List": [
+      {
+        "MainColor": " text-info",
+        "DtlColor": [ " ", "-dker", "-dk", "-lt", "-lter" ]
+      },
+      {
+        "MainColor": " text-dark",
+        "DtlColor": [ " ", "-dker", "-dk", "-lt", "-lter" ]
+      },
+      {
+        "MainColor": " text-danger",
+        "DtlColor": [ " ", "-dker", "-dk", "-lt", "-lter" ]
+      },
+      {
+        "MainColor": " text-primary",
+        "DtlColor": [ " ", "-dker", "-dk", "-lt", "-lter" ]
+      },
+      {
+        "MainColor": " text-warning",
+        "DtlColor": [ " ", "-dker", "-dk", "-lt", "-lter" ]
+      },
+      {
+        "MainColor": " text-success",
+        "DtlColor": [ " ", "-dker", "-dk", "-lt", "-lter" ]
+      },
+      {
+        "MainColor": " text-light",
+        "DtlColor": [ " " ]
+      },
+      {
+        "MainColor": " text-black",
+        "DtlColor": [ " " ]
+      }
+    ]
+  },
+  {
+    "name": "背景色",
+    "List": [
+      {
+        "MainColor": " bg-info",
+        "DtlColor": [ " dker", " dk", " bg", " lt", " lter" ]
+      },
+      {
+        "MainColor": " bg-dark",
+        "DtlColor": [ " dker", " dk", " bg", " lt", " lter" ]
+      },
+      {
+        "MainColor": " bg-danger",
+        "DtlColor": [ " dker", " dk", " bg", " lt", " lter" ]
+      },
+      {
+        "MainColor": " bg-primary",
+        "DtlColor": [ " dker", " dk", " bg", " lt", " lter" ]
+      },
+      {
+        "MainColor": " bg-warning",
+        "DtlColor": [ " dker", " dk", " bg", " lt", " lter" ]
+      },
+      {
+        "MainColor": " bg-success",
+        "DtlColor": [ " dker", " dk", " bg", " lt", " lter" ]
+      },
+      {
+        "MainColor": " bg-light",
+        "DtlColor": [ " dker", " dk", " bg", " lt", " lter" ]
+      },
+      {
+        "MainColor": " bg-black",
+        "DtlColor": [ " dker", " dk", " bg", " lt", " lter" ]
+      }
+    ]
+  }
+]

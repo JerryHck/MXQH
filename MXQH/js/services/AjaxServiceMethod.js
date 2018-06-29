@@ -41,7 +41,7 @@
             en.strJson = JSON.stringify(convertArray(json)) || '[]';
 
             Ajax(d, url, en, "GetEntity").then(
-                function (data) { g.resolve(data.data[0]); },
+                function (data) { g.resolve(data); },
                 function () { g.reject(); }
             );
             return g.promise;

@@ -1,18 +1,51 @@
 ﻿<div class="modal-header">
-    <h3 class="modal-title">Icon图标选择</h3>
-    <span class="col-xs-pull-6 text-muted">
-        已选择:<i ng-class="ico.SelectedClass"></i>
-    </span>
+    <h3 class="modal-title">
+        Icon图标选择
+        <span class="pull-right">
+            已选择:<i ng-class="ico.Class"></i>
+        </span>
+    </h3>
+    <!--{{ ico.Class | json }}-->
 </div>
-<div class="modal-body" style="height:500px; overflow:scroll">
-    <div ng-repeat="item in ico.Data">
-        <div class="col-md-12 col-sm-12 bg-black-opacity"><h3 class="font-thin">{{ item.name }}</h3></div>
-        <div class="col-md-12 col-sm-12 bg-light">
-            <div class="col-md-1 col-sm-2 bg-light" ng-repeat="c in item.List"><i ng-class="c" ng-click="ico.select(c)"></i></div>
-        </div>
-    </div>
+<div class="modal-body">
+    <uib-tabset active="active" type="tabs" class="nav nav-tabs">
+        <uib-tab index="0">
+            <uib-tab-heading class="tab-pane">
+                Icon图标 <span ng-if="ico.Icon" class="bg-success"><i class="glyphicon glyphicon-ok-circle"></i></span>
+            </uib-tab-heading>
+            <div class="bg-light lt scroll-y" style="height:400px;">
+                <div class="panel" ng-repeat="item in ico.IconData">
+                    <div class="panel-heading bg-info">
+                        {{ item.name }}
+                    </div>
+                    <div class="panel-body list-icon">
+                        <div class="col-md-1 col-sm-2" ng-repeat="c in item.List"><i ng-class="c" ng-click="ico.SelectIcon(c)" ng-dblclick="ico.MakeSure(c)"></i></div>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="2">
+            <uib-tab-heading>
+                图标颜色 <span ng-if="ico.Color" class="bg-success"><i class="glyphicon glyphicon-ok-circle"></i></span>
+            </uib-tab-heading>
+            <div class="scroll-y" style="height:400px; overflow:scroll">
+                <div class="col text-p" ng-repeat="item in ico.ColorData">
+                    <p>{{ item.name }}</p>
+                    <div class="m-b" ng-repeat="color in item.List">
+                        <span class="hbox text-d">
+                            <span ng-repeat="d in color.DtlColor" class="btn col wrapper-xs text-center text-xs" ng-class="color.MainColor + ''+ d"
+                                  ng-click="ico.SelectColor(color.MainColor, d)" ng-dblclick="ico.MakeSureColor(color.MainColor, d)">
+                                {{ color.MainColor }} {{ d }}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+    </uib-tabset>
 </div>
 <div class="modal-footer">
+    <button class="btn btn-success" type="button" ng-disabled="!ico.Class" ng-click="ico.Ok()">确定</button>
     <button class="btn btn-warning" type="button" ng-click="ico.cancel()">关闭</button>
 </div>
 <!--<pre>{{ sys.Item | json }}</pre>-->

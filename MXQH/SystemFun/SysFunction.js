@@ -23,6 +23,10 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
     vm.RootDrag = RootDrag;
     //保存根目录
     vm.SaveRoot = SaveRoot;
+    //删除
+    vm.DeleteRoot = DeleteRoot;
+    //功能
+    vm.SelectFun = SelectFun;
 
     vm.SelectedRoot = '';
 
@@ -59,26 +63,6 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
         root.selected = true;
     }
 
-    //添加根目录
-    function AddRoot()
-    {
-        var root = {};
-        root.FunNo = "-1";
-        root.FunName = "新根目录";   
-        root.OrderBy = vm.List ? vm.List.Length : 0;
-        root.FunType = 1;
-        root.SysNo = 'MXQH';
-        root.FunImge = 'glyphicon glyphicon-chevron-right';
-        root.editing = true;
-        angular.forEach(vm.List, function (r) {
-            r.selected = false;
-        });
-        vm.SelectedRoot = root.FunNo;
-        vm.IsEditing = true;
-        vm.editRootItem = root;
-        vm.List.push(root);
-    }
-
     //root drop
     function RootDrop(root, index)
     {
@@ -93,6 +77,25 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
         vm.RootIndex = index;
     }
 
+    //添加根目录
+    function AddRoot() {
+        var root = {};
+        root.FunNo = "-1";
+        root.FunName = "新根目录";
+        root.OrderBy = vm.List ? vm.List.Length : 0;
+        root.FunType = 1;
+        root.SysNo = 'MXQH';
+        root.FunImge = 'glyphicon glyphicon-chevron-right';
+        root.editing = true;
+        angular.forEach(vm.List, function (r) {
+            r.selected = false;
+        });
+        vm.SelectedRoot = root.FunNo;
+        vm.IsEditing = true;
+        vm.editRootItem = root;
+        vm.List.push(root);
+    }
+
     function EditRoot(root) {
         if (vm.IsEditing = true) {
             DoneRootEdit();
@@ -103,14 +106,14 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
         vm.IsEditing = true;
     };
 
-    function OpenIcon(data) {
+    function OpenIcon() {
         var resolve = {
             Data: function () {
-                return data;
+                return vm.editRootItem.FunImge;
             }
         };
         Dialog.open("IconDailog", resolve).then(function (data) {
-
+            vm.editRootItem.FunImge = data;
         }).catch(function (reason) {
         });
     }
@@ -140,10 +143,32 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
         json.SysNo = 'MXQH';
         json.RootList = JSON.stringify(List);
         json.TempColumns = 'RootList';
-
         vm.promise = AjaxService.EditBack("sp_SaveFunctionRoot", json).then(function (data) {
             toastr.success('储存成功');
         })
+    }
+
+    function DeleteRoot(root) {
+        var json = {};
+        json.FunNo = root.FunNo;
+        vm.promise = AjaxService.EditBack("sp_DeleteFunction", json).then(function (data) {
+            toastr.success('删除成功');
+            GetList();
+        })
+    }
+
+    function SelectFun(fun) {
+        angular.forEach(vm.FunList, function (f) {
+            f.selected = false;
+        });
+
+        fun.selected = true;
+        var en = {};
+        en.name = "FunNo";
+        en.value = fun.FunNo;
+        AjaxService.GetEntity("Function", en).then(function (data) {
+            vm.SelectedFun = data;
+        });
     }
 }
 ]);

@@ -8,7 +8,7 @@
     <!-- Root -->
     <div class="col w b-r">
         <div class="vbox">
-            <div class="wrapper b-b bg-info">
+            <div class="wrapper-xs b-b bg-info">
                 <div class="font-thin h3">系统功能信息</div>
             </div>
             <div class="row-row">
@@ -19,18 +19,17 @@
                             <a ng-repeat="root in fun.List" ng-dblclick="fun.EditRoot(root)" class="list-group-item m-l hover-anchor b-a no-select"
                                ng-class="{'focus m-l-none': fun.SelectedRoot == root.FunNo}" ng-click="fun.SelectRoot(root)"
                                ng-drop="true" ng-drop-success="fun.RootDrop($data,$index)">
-                                <span ng-if="!root.FunList || root.FunList.length == 0" ng-click='fun.DeleteRoot(root)' class="pull-right text-muted hover-action">
+                                <span ng-if="!root.FunList || root.FunList.length == 0" ng-confirm="{text:'确定要删除该目录吗'}" ng-click='fun.DeleteRoot(root)' class="pull-right text-danger hover-action">
                                     <i class="fa fa-times"></i>
                                 </span>
-
                                 <span class="block m-l-n bg-transparent" ng-class="{'m-n': fun.SelectedRoot == root.FunNo }">
-                                    <i class="glyphicon glyphicon-move bg-info" ng-drag="true" ng-drag-data="root" ng-drag-success="fun.RootDrag($data,$index)"></i>{{ root.FunName }}
+                                    <i ng-class="root.FunImge" ng-drag="true" ng-drag-data="root" ng-drag-success="fun.RootDrag($data,$index)"></i>{{ root.FunName }}
                                 </span>
                                 <div class="form-group pos-abt badge-light" ng-if="root.editing"
                                      style="top:3px;left:3px;width:98%" ui-focus="root.editing">
                                     <div class="input-group m-b">
-                                        <span class="input-group-btn" ui-focus="root.editing">
-                                            <span class="btn btn-default"><i class="bg-info" ng-class="fun.editRootItem.FunImge" ng-click="fun.OpenIcon(fun.editRootItem.FunImge)" ></i></span>
+                                        <span class="input-group-btn" ui-focus="root.editing" ng-click="fun.OpenIcon()" >
+                                            <span class="btn btn-default"><i ng-class="fun.editRootItem.FunImge"></i></span>
                                         </span>
                                         <input type="text" class="form-control" ng-model="fun.editRootItem.FunName">
                                         <span class="input-group-btn">
@@ -44,7 +43,6 @@
                 </div>
             </div>
             <div class="wrapper b-t">
-                <span tooltip="双击编辑目录" class="pull-right text-muted inline wrapper-xs m-r-sm"><i class="fa fa-question"></i></span>
                 <button class="btn btn-sm btn-info col-md-offset-1" ng-disabled="fun.IsEditing" ng-click="fun.AddRoot()"><i class="glyphicon glyphicon-plus"></i></button>
                 <button class="btn btn-sm btn-success col-md-offset-1" ng-disabled="fun.IsEditing" ng-click="fun.SaveRoot()"><i class="glyphicon glyphicon-save"></i></button>
             </div>
@@ -57,7 +55,7 @@
             <div class="wrapper-xs b-b">
                 <div class="input-group m-b-xxs">
                     <span class="input-group-addon input-sm no-border no-bg"><i class="icon-magnifier text-md m-t-xxs"></i></span>
-                    <input type="text" class="form-control input-sm no-border no-bg text-xs" placeholder="查询{{fun.RootName ? fun.RootName : '所有功能'}}" ng-model="fun.FunQuery">
+                    <input type="text" class="form-control input-sm no-border no-bg text-xs" placeholder="查询" ng-model="fun.FunQuery">
                 </div>
             </div>
             <div class="row-row">
@@ -65,11 +63,16 @@
                     <div class="cell-inner">
                         <div class="m-t-n-xxs">
                             <div class="list-group list-group-lg no-radius no-border no-bg m-b-none">
-                                <a ng-repeat="f in fun.FunList | filter:{group:FunName} | filter:fun.FunQuery | orderBy:'Orderby'" class="list-group-item m-l" ng-class="{'select m-l-none': f.selected }" ng-click="selectFun(f)">
-                                    <span class="block text-ellipsis m-l-n text-xs" ng-class="{'m-l-none': f.selected }">
-                                        {{ f.FunName }}
-                                        <span ng-hide="f.FunName">没有功能</span>
+                                <a ng-repeat="f in fun.FunList | filter:{group:FunName} | filter:fun.FunQuery | orderBy:'f.Orderby'" 
+                                   class="list-group-item m-l" ng-class="{'select m-l-none': f.selected }" ng-click="fun.SelectFun(f)"
+                                   ng-drop="true" ng-drop-success="fun.FunDrop($data,$index)">
+                                    <span ng-confirm="{text:'确定要删除该功能吗'}" ng-click='fun.DeleteFun(f)' class="pull-right text-danger">
+                                        <i class="fa fa-times"></i>
                                     </span>
+                                    <span class="block m-l-n bg-transparent" ng-class="{'m-n': f.selected }">
+                                        <i ng-class="f.FunImge" ng-drag="true" ng-drag-data="f" ng-drag-success="fun.FunDrag($data,$index)"></i>{{ f.FunName }}
+                                    </span>
+                                    <span ng-show="!f.FunNo">没有功能</span>
                                 </a>
                             </div>
                         </div>
@@ -77,25 +80,76 @@
                     </div>
                 </div>
             </div>
-            <div class="wrapper b-t text-center">
-                <a href class="btn btn-sm btn-default btn-addon" ng-click="createItem()"><i class="fa fa-plus fa-fw m-r-xs"></i> New Contact</a>
+            <div class="wrapper b-t">
+                <button class="btn btn-sm btn-info col-md-offset-1" ng-disabled="fun.FunEditing" ng-click="fun.AddFun()"><i class="glyphicon glyphicon-plus"></i></button>
+                <button class="btn btn-sm btn-success col-md-offset-1" ng-disabled="fun.FunEditing" ng-click="fun.SaveFun()"><i class="glyphicon glyphicon-save"></i></button>
             </div>
         </div>
     </div>
     <!-- /column -->
-    <!-- column -->
-    <div class="col bg-white-only" cg-busy="fun.promise">
+    <div class="col w-auto lter b-r" cg-busy="fun.promise">
         <div class="vbox">
-            <div class="wrapper-sm b-b">
+            <div class="wrapper-xs b-b">
                 <div class="m-t-n-xxs m-b-n-xxs m-l-xs">
-                    <a class="btn btn-xs btn-default pull-right" ng-hide="!item" ng-click="deleteItem(item)"><i class="fa fa-times"></i></a>
-                    <a class="btn btn-xs btn-default" ng-hide="item.editing" ng-click="editItem(item)">Edit</a>
-                    <a class="btn btn-xs btn-default" ng-show="item.editing" ng-click="doneEditing(item)">Done</a>
+                    <a class="btn btn-xs btn-default" ng-if="fun.SelectedFun && !fun.FunEditing" ng-click="fun.EditFun()">编辑功能</a>
+                    <a class="btn btn-xs btn-default" ng-if="fun.FunEditing || fun.FunAdding" ng-click="fun.SaveFun()">储存</a>
                 </div>
             </div>
             <div class="row-row">
-                <div class="cell">
+                <div class="cell scrollable hover">
+                    <div class="list-group no-radius no-border no-bg m-b-none">
+                        <div class="wrapper-md" ng-form="FormFun" ng-if="fun.SelectedFun && !fun.FunEditing">
+                            <div class="panel panel-danger">
+                                <div class="panel-heading font-bold">
+                                    功能信息
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-lg-4 control-label text-info">功能编号</label>
+                                                    <div class="col-lg-8 text-xs">
+                                                        <input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.FunNo" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-lg-4 control-label text-info">功能名称</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.FunName">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-lg-4 control-label text-info">所属系统</label>
+                                                    <div class="col-lg-8 text-xs">
+
+                                                        <div system-select Company="fun.Company" ng-model="fun.Company"></div>
+
+                                                        <!--<input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.SysNo" disabled>-->
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-lg-4 control-label text-info">所属目录</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.ParFunName">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <pre>{{ fun.Company | json }}</pre>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div class="wrapper b-t">
+                
             </div>
         </div>
     </div>

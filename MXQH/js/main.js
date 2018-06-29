@@ -64,7 +64,7 @@ angular.module('app')
           en.value = 1
           vm.promise = AjaxService.GetEntities("FunRoot", en).then(function (data) {
               vm.FunTree = data;
-              console.log(data);
+              //console.log(data);
           });
       }
        
