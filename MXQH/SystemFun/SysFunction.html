@@ -125,17 +125,14 @@
                                             <div class="form-horizontal">
                                                 <div class="form-group">
                                                     <label class="col-lg-4 control-label text-info">所属系统</label>
-                                                    <div class="col-lg-8 text-xs">
-
-                                                        <div system-select select-item="fun.Company" ng-model="fun.Company"></div>
-
-                                                        <!--<input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.SysNo" disabled>-->
+                                                    <div class="col-lg-8">
+                                                        <company-select  select-item="fun.SeItem" ng-model="fun.SelectedFun.SysNo"></company-select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-lg-4 control-label text-info">所属目录</label>
                                                     <div class="col-lg-8">
-                                                        <input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.ParFunName">
+                                                        <function-select select-item="fun.FunSelItem" fun-type="1" ng-model="fun.SelectedFun.ParFunNo"></function-select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -143,7 +140,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <pre>{{ fun.Company | json }}</pre>
                         </div>
                     </div>
                 </div>

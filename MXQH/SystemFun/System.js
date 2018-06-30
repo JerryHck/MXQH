@@ -12,8 +12,6 @@ function ($scope, $http, Dialog, AjaxService) {
     //Dailog
     vm.Insert = Insert;
 
-    vm.Confirm = "dfdakldjl";
-
 
     GetList();
 

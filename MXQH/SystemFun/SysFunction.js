@@ -171,6 +171,6 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
         });
     }
 
-    vm.Company = "dfasdga";
-}
+    vm.Company = 'MXQH';
+    }
 ]);

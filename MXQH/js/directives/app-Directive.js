@@ -35,72 +35,161 @@ angular.module('app')
         });
     }
 })
-.directive('systemSelect', ['AjaxService', function (AjaxService) {
+.directive('companySelect', ['AjaxService', function (AjaxService) {
     return {
-        restrict: 'A',
+        restrict: 'AE',
+        require: 'ngModel',
         scope: {
-            ngModel: '='
+            ngModel: '=',
+            selectItem:'=',
+            Clear: '@'
         },
-        //template: '<ui-select  ng-model="ngModel" theme="bootstrap" required>'
-        //          +'  <ui-select-match placeholder="选择组织...">{{ $select.selected.CompanyName }}</ui-select-match>       '
-        //          +'  <ui-select-choices repeat="item in data | filter: $select.search">                                    '
-        //          +'      <div ng-bind-html="item.CompanyNo | highlight: $select.search"></div>                             '
-        //          +'      <small ng-bind-html="item.CompanyName | highlight: $select.search"></small>                       '
-        //          +'  </ui-select-choices>                                                                                  '
-        //          + '</ui-select>',
-        template: '<select ng-model="ngModel" ui-select2="{ allowClear: empClear }">' +
-                      '    <option value="" ng-if="empClear"></option>' +
-                      '    <option ng-repeat="com in data" value="{{ com.CompanyNo }}">' +
-                      '        [{{ com.CompanyNo }}] {{ com.CompanyName }}' +
-                      '    </option>' +
-                      '</select>',
+        template: '<ui-select  ng-model="$parent.selectItem" theme="bootstrap">'
+                  +'  <ui-select-match placeholder="选择组织...">{{ $select.selected.CompanyName }}</ui-select-match>       '
+                  + ' <ui-select-choices repeat="item in data | filter: $select.search track by item.CompanyNo">                          '
+                  +'      <div ng-bind-html="item.CompanyNo | highlight: $select.search"></div>                             '
+                  +'      <small ng-bind-html="item.CompanyName | highlight: $select.search"></small>                       '
+                  +'  </ui-select-choices>                                                                                  '
+                  + '</ui-select>',
+        //template: '<select class="form-con w-md" ng-model="ngModel" ui-select2="{ allowClear: Clear }">' +
+        //        '    <option value="" ng-if="Clear"></option>' +
+        //        '    <option ng-repeat="com in data" value="{{ com.CompanyNo }}">' +
+        //        '        {{ com.CompanyNo }} {{ com.CompanyName }}' +
+        //        '    </option>' +
+        //        '</select>',
 
         link: link
     };
 
     function link(scope, element, attrs) {
 
-        
-        //scope.$watch('item', updateModel);
+        scope.$watch('selectItem', UpdateItem);
+
         //组织
         AjaxService.GetEntities("Company").then(function (data) {
             scope.data = data;
+            $.grep(data, function (e) {
+                if (e.CompanyNo == scope.ngModel) {
+                    scope.selectItem = e;
+                    return;
+                }
+            });
         });
 
-        ////Update Model
-        //function updateModel() {
-        //    if (scope.data && scope.item) {
-        //        console.log(scope.item)
-        //        scope.ngModel = scope.item;
-        //    }
-        //}
+        function UpdateItem()
+        {
+            if (scope.selectItem && scope.selectItem.CompanyNo) {
+                scope.ngModel = scope.selectItem.CompanyNo;
+            }
+        }
     }
 }])
-//.directive('selectLocation', [
-//    function () {
+.directive('systemSelect', ['AjaxService', function (AjaxService) {
+    return {
+        restrict: 'AE',
+        require: 'ngModel',
+        scope: {
+            ngModel: '=',
+            selectItem: '=',
+            Clear: '@'
+        },
+        template: '<ui-select  ng-model="$parent.selectItem" theme="bootstrap">'
+                  + '  <ui-select-match placeholder="选择组织...">{{ $select.selected.SysName }}</ui-select-match>       '
+                  + ' <ui-select-choices repeat="item in data | filter: $select.search track by item.SysNo">             '
+                  + '      <div ng-bind-html="item.SysNo | highlight: $select.search"></div>                             '
+                  + '      <small ng-bind-html="item.SysName | highlight: $select.search"></small>                       '
+                  + '  </ui-select-choices>                                                                                  '
+                  + '</ui-select>',
+        //template: '<select class="form-con w-md" ng-model="ngModel" ui-select2="{ allowClear: Clear }">' +
+        //        '    <option value="" ng-if="Clear"></option>' +
+        //        '    <option ng-repeat="com in data" value="{{ com.CompanyNo }}">' +
+        //        '        {{ com.CompanyNo }} {{ com.CompanyName }}' +
+        //        '    </option>' +
+        //        '</select>',
 
-//        return {
-//            restrict: 'E',
-//            scope: {
-//                model: '=',
-//                refresh: '=',
-//                itemArray: '='
-//            },
-//            template: '  <ui-select ng-model="model.item">\
-//                        <ui-select-match>\
-//                            <span ng-bind="$select.selected.location_code"></span>\
-//                        </ui-select-match>\
-//                        <ui-select-choices refresh-delay=500 refresh="refresh({ $search: $select.search })" repeat="item in (itemArray | filter: $select.search) track by item.id">\
-//                            <span ng-bind="item.location_code"></span>\
-//                        </ui-select-choices>\
-//                      </ui-select>',
-//            link: function (scope, elemt, attr) {
-//                scope.$on('choices:update', function (e, data) {
-//                    scope.choices = data.choices;
-//                    updateChoices(scope, data.choices);
-//                });
-//            }
+        link: link
+    };
 
-//        }
-//    }
-//])
+    function link(scope, element, attrs) {
+
+        scope.$watch('selectItem', UpdateItem);
+
+        //组织
+        AjaxService.GetEntities("SystemList").then(function (data) {
+            scope.data = data;
+            console.log(data);
+            $.grep(data, function (e) {
+                if (e.SysNo == scope.ngModel) {
+                    scope.selectItem = e;
+                    return;
+                }
+            });
+        });
+
+        function UpdateItem() {
+            if (scope.selectItem && scope.selectItem.SysNo) {
+                scope.ngModel = scope.selectItem.SysNo;
+            }
+        }
+    }
+}])
+.directive('functionSelect', ['AjaxService', function (AjaxService) {
+    return {
+        restrict: 'AE',
+        require: 'ngModel',
+        scope: {
+            ngModel: '=',
+            selectItem: '=',
+            Clear: '@',
+            funType: '@',
+            ngDisabled: '@',
+        },
+        template: '<ui-select ng-model="$parent.selectItem" theme="bootstrap" ng-disabled="$parent.ngDisabled">'
+                  + '  <ui-select-match placeholder="请选择...">{{ $select.selected.FunName }}</ui-select-match>'
+                  + ' <ui-select-choices repeat="item in data | filter: $select.search track by item.FunNo">'
+                  + '      <div ng-bind-html="item.FunNo | highlight: $select.search"></div>'
+                  + '      <small ng-bind-html="item.FunName | highlight: $select.search"></small>'
+                  + '  </ui-select-choices>'
+                  + '</ui-select>'
+                  + '<span class="input-group-btn" ng-show="$parent.Clear">'
+                  +'  <button ng-click="person.selected = undefined" class="btn btn-default">'
+                  +'    <span class="glyphicon glyphicon-trash"></span>'
+                  +'  </button>'
+                  +'</span>',
+        link: link
+    };
+
+    function link(scope, element, attrs) {
+        scope.$watch('selectItem', UpdateItem);
+        scope.$watch('ngModel', SetValue);
+
+        if (scope.funType == 1){}
+        var en = {};
+        en.name = 'FunType';
+        en.value = scope.funType == 1 ? 1 : 2;
+        //组织
+        AjaxService.GetEntities("Function", en).then(function (data) {
+            scope.data = data;
+            SetValue();
+        });
+
+        function SetValue()
+        {
+            if (scope.data) {
+                scope.selectItem = undefined;
+                $.grep(scope.data, function (e) {
+                    if (e.FunNo == scope.ngModel) {
+                        scope.selectItem = e;
+                        return;
+                    }
+                });
+            }
+        }
+
+        function UpdateItem() {
+            if (scope.selectItem && scope.selectItem.FunNo) {
+                scope.ngModel = scope.selectItem.FunNo;
+            }
+        }
+    }
+}])
