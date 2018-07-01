@@ -36,6 +36,7 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
             router.setDataRouters(route);
         });
     });
+
 }
 
 angular.module('app').config(Config);

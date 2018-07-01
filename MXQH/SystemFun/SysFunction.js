@@ -27,6 +27,14 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
     vm.DeleteRoot = DeleteRoot;
     //功能
     vm.SelectFun = SelectFun;
+    vm.AddFun = AddFun;
+
+    //
+    vm.FunLoadDrop = FunLoadDrop;
+    vm.FunLoadDrag = FunLoadDrag;
+    vm.FunLoadDelete = FunLoadDelete;
+    vm.FunLoadAdd = FunLoadAdd;
+    vm.SaveFunInfo = SaveFunInfo;
 
     vm.SelectedRoot = '';
 
@@ -64,16 +72,14 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
     }
 
     //root drop
-    function RootDrop(root, index)
-    {
-        var en  =  angular.copy(root);
+    function RootDrop(root, index) {
+        var en = angular.copy(root);
         vm.List.splice(vm.RootIndex, 1);
         vm.List.splice(index, 0, en);
     }
 
     //
-    function RootDrag(root, index)
-    {
+    function RootDrag(root, index) {
         vm.RootIndex = index;
     }
 
@@ -118,8 +124,7 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
         });
     }
 
-    function DoneRootEdit()
-    {
+    function DoneRootEdit() {
         if (vm.editRootItem) {
             vm.editRootItem.editing = false;
             vm.editRootItem.selected = false;
@@ -127,8 +132,7 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
         }
     }
 
-    function SaveRoot()
-    {
+    function SaveRoot() {
         var List = [];
         angular.forEach(vm.List, function (r, i) {
             var en = {};
@@ -163,6 +167,7 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
         });
 
         fun.selected = true;
+        vm.editFun = false;
         var en = {};
         en.name = "FunNo";
         en.value = fun.FunNo;
@@ -171,6 +176,69 @@ function ($scope, $http, Dialog, toastr, AjaxService) {
         });
     }
 
-    vm.Company = 'MXQH';
+    function AddFun()
+    {
+        angular.forEach(vm.FunList, function (f) {
+            f.selected = false;
+        });
+        vm.editFun = true;
+        vm.SelectedFun = {};
+        vm.SelectedFun.selected = true;
+        vm.SelectedFun.FunNo = '-1';
+        vm.SelectedFun.FunName = '新功能';
+        vm.SelectedFun.FunLoad = [];
+        vm.FunList.push(vm.SelectedFun);
     }
+
+    //FunLoad drop
+    function FunLoadDrop(load, index) {
+        var en = angular.copy(load);
+        vm.SelectedFun.FunLoad.splice(vm.LoadIndex, 1);
+        vm.SelectedFun.FunLoad.splice(index, 0, en);
+    }
+
+    //
+    function FunLoadDrag(load, index) {
+        vm.LoadIndex = index;
+    }
+
+    function FunLoadDelete(index) {
+        vm.SelectedFun.FunLoad.splice(index, 1);
+    }
+
+    function FunLoadAdd(){
+        if (vm.loadFile) {
+            var have = false;
+            angular.forEach(vm.SelectedFun.FunLoad, function (f) {
+                if (f.LoadName == vm.loadFile) {
+                    have = true; return;
+                }
+            });
+            if (!have) {
+                var en = {};
+                en.FunNo = vm.SelectedFun.FunNo;
+                en.LoadName = vm.loadFile;
+                console.log(en);
+                vm.SelectedFun.FunLoad.push(en);
+            }
+        }
+    }
+
+    function SaveFunInfo() {
+
+        var list = [];
+
+        angular.forEach(vm.SelectedFun.FunLoad, function (l, i) {
+            l.SortNo = i;
+            list.push(l);
+        });
+
+        vm.SelectedFun.ListLoad = JSON.stringify(list);
+        vm.SelectedFun.TempColumns = 'ListLoad';
+        vm.promise = AjaxService.EditBack("sp_SaveFunction", vm.SelectedFun).then(function (data) {
+            vm.SelectedFun = undefined;
+            toastr.success('储存成功');
+        })
+    }
+}
 ]);

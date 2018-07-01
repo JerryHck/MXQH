@@ -20,7 +20,9 @@
             //简单单表新增
             Action: Action,
             //存储过程执行
-            EditBack: EditBack
+            EditBack: EditBack,
+            //文件
+            HandleFile: HandleFile
         };
 
         return obj;
@@ -104,6 +106,31 @@
             en.strJson = JSON.stringify(json);
 
             return Ajax(d, url, en, action);
+        }
+
+        function HandleFile(type) {
+            var d = $q.defer();
+            return AjaxHandle(d, type);
+        }
+
+        //HTTP AJAX
+        function AjaxHandle(q, type) {
+
+            $http({
+                method: 'post',
+                url: 'Data/Handler/FileData.ashx',
+                dataType: 'json',
+                data: { "type": type }
+            })
+            .then(
+                function (data) { q.resolve(data.data); },
+                function (mes) {
+                    q.reject();
+                    console.log(mes);
+                    var m = mes.data ? mes.data.split("。")[0] : "错误";
+                    toastr.error(m, '服务访问错误')
+                });
+            return q.promise;
         }
 
         //HTTP AJAX
