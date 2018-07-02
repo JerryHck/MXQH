@@ -29,7 +29,11 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
     vm.SelectFun = SelectFun;
     vm.AddFun = AddFun;
 
+    vm.FunDrop = FunDrop;
+    vm.FunDrag = FunDrag;
+
     //
+    vm.OpenFunIcon = OpenFunIcon;
     vm.FunLoadDrop = FunLoadDrop;
     vm.FunLoadDrag = FunLoadDrag;
     vm.FunLoadDelete = FunLoadDelete;
@@ -55,7 +59,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
 
     //查询所有功能
     function SelectAllFun() {
-        if (!MyPop.Show(vm.editFun, '功能信息还在编辑，请先保存！')) {
+        if (!showPop(vm.editFun)) {
             vm.SelectedRoot = { FunNo: '' };
             var en = {};
             en.name = 'FunType';
@@ -68,7 +72,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
 
     //选择根目录
     function SelectRoot(root) {
-        if (!MyPop.Show(vm.editFun, '功能信息还在编辑，请先保存！')) {
+        if (!showPop(vm.editFun)) {
             if (vm.editFun) return;
             vm.SelectedRoot = root;
             vm.FunList = root.FunList || [];
@@ -81,7 +85,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
 
     //root drop
     function RootDrop(root, index) {
-        if (!MyPop.Show(vm.editFun, '功能信息还在编辑，请先保存！')) {
+        if (!showPop(vm.editFun)) {
             var en = angular.copy(root);
             vm.List.splice(vm.RootIndex, 1);
             vm.List.splice(index, 0, en);
@@ -90,14 +94,14 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
 
     //
     function RootDrag(root, index) {
-        if (!MyPop.Show(vm.editFun, '功能信息还在编辑，请先保存！')) {
+        if (!showPop(vm.editFun)) {
             vm.RootIndex = index;
         }
     }
 
     //添加根目录
     function AddRoot() {
-        if (!MyPop.Show(vm.editFun, '功能信息还在编辑，请先保存！')) {
+        if (!showPop(vm.editFun)) {
             var root = {};
             root.FunNo = "-1";
             root.FunName = "新根目录";
@@ -117,7 +121,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
     }
 
     function EditRoot(root) {
-        if (!MyPop.Show(vm.editFun, '功能信息还在编辑，请先保存！')) {
+        if (!showPop(vm.editFun)) {
             if (vm.IsEditing = true) {
                 DoneRootEdit();
             }
@@ -129,7 +133,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
     };
 
     function OpenIcon() {
-        if (!MyPop.Show(vm.editFun, '功能信息还在编辑，请先保存！')) {
+        if (!showPop(vm.editFun)) {
             var resolve = {
                 Data: function () {
                     return vm.editRootItem.FunImge;
@@ -143,7 +147,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
     }
 
     function DoneRootEdit() {
-        if (!MyPop.Show(vm.editFun, '功能信息还在编辑，请先保存！')) {
+        if (!showPop(vm.editFun)) {
             if (vm.editRootItem) {
                 vm.editRootItem.editing = false;
                 vm.editRootItem.selected = false;
@@ -153,29 +157,27 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
     }
 
     function SaveRoot() {
-        if (!MyPop.Show(vm.editFun, '功能信息还在编辑，请先保存！')) {
-            var List = [];
-            angular.forEach(vm.List, function (r, i) {
-                var en = {};
-                en.FunNo = r.FunNo;
-                en.FunName = r.FunName;
-                en.OrderBy = i;
-                en.FunImge = r.FunImge;
-                List.push(en);
-            });
-            var json = {};
-            json.FunType = '1';
-            json.SysNo = 'MXQH';
-            json.RootList = JSON.stringify(List);
-            json.TempColumns = 'RootList';
-            vm.promise = AjaxService.EditBack("sp_SaveFunctionRoot", json).then(function (data) {
-                toastr.success('储存成功');
-            })
+        save(vm.List, "1");
+    }
+
+    //root drop
+    function FunDrop(f, index) {
+        if (!MyPop.Show((vm.SelectedRoot.FunNo == ''), '没有选择目录，不能排序功能！') && !showPop(vm.editFun)) {
+            var en = angular.copy(f);
+            vm.FunList.splice(vm.FunIndex, 1);
+            vm.FunList.splice(index, 0, en);
+        }
+    }
+
+    //
+    function FunDrag(f, index) {
+        if (!MyPop.Show((vm.SelectedRoot.FunNo == ''), '没有选择目录，不能排序功能！') && !showPop(vm.editFun)) {
+            vm.FunIndex = index;
         }
     }
 
     function Delete(funNo) {
-        if (!MyPop.Show(vm.editFun, '功能信息还在编辑，请先保存！')) {
+        if (!showPop(vm.editFun)) {
             var json = {};
             json.FunNo = funNo;
             vm.promise = AjaxService.EditBack("sp_DeleteFunction", json).then(function (data) {
@@ -186,7 +188,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
     }
 
     function SelectFun(fun) {
-        if (!MyPop.Show(vm.editFun, '功能信息还在编辑，请先保存！')) {
+        if (!showPop(vm.editFun)) {
             angular.forEach(vm.FunList, function (f) {
                 f.selected = false;
             });
@@ -204,7 +206,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
 
     function AddFun()
     {
-        if (!MyPop.Show(vm.editFun, '功能信息还在编辑，请先保存！')) {
+        if (!showPop(vm.editFun)) {
             angular.forEach(vm.FunList, function (f) {
                 f.selected = false;
             });
@@ -213,11 +215,29 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
             vm.SelectedFun.selected = true;
             vm.SelectedFun.FunNo = '-1';
             vm.SelectedFun.FunName = '新功能';
+            vm.SelectedFun.FunImge = 'glyphicon glyphicon-chevron-right';
             vm.SelectedFun.SysNo = vm.SelectedRoot.SysNo;
             vm.SelectedFun.ParFunNo = vm.SelectedRoot.FunNo;
             vm.SelectedFun.FunLoad = [];
             vm.FunList.push(vm.SelectedFun);
         }
+    }
+
+    function OpenFunIcon() {
+        var resolve = {
+            Data: function () {
+                return vm.SelectedFun.FunImge;
+            }
+        };
+        Dialog.open("IconDailog", resolve).then(function (data) {
+            vm.SelectedFun.FunImge = data;
+        }).catch(function (reason) {
+        });
+    }
+
+    function SaveFun()
+    {
+        save(vm.FunList, "2");
     }
 
     //FunLoad drop
@@ -280,28 +300,53 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
         vm.promise = AjaxService.EditBack("sp_SaveFunction", en).then(function (data) {
             //更新数据
             reflashData();
-            vm.SelectedFun = undefined;
-            vm.editFun = false;
             toastr.success('储存成功');
         })
     }
 
     function reflashData() {
-        
         var en = {};
         en.name = 'FunType';
-        en.value = 2
-      vm.promise =  AjaxService.GetEntities("FunRoot", en).then(function (data) {
-            vm.FunList = data;
+        en.value = 1
+        vm.promise = AjaxService.GetEntities("FunRoot", en).then(function (data) {
+            vm.List = data;
             angular.forEach(data, function (r) {
-                if (r.FunNo == vm.SelectedRoot.SysNo) {
+                if (r.FunNo == vm.SelectedRoot.FunNo) {
                     vm.FunList = r.FunList || [];
-                    r.selected = true; return;
+                    r.selected = true;
+                    vm.SelectedFun = undefined;
+                    vm.editFun = false;
+                    return;
                 }
             });
-        });
+        }); 
+    }
 
-        
+    function showPop(show)
+    {
+        return MyPop.Show(show, '功能信息还在编辑，请先保存！')
+    }
+
+    function save(list, type) {
+        if (!showPop(vm.editFun)) {
+            var List = [];
+            angular.forEach(list, function (r, i) {
+                var en = {};
+                en.FunNo = r.FunNo;
+                en.FunName = r.FunName;
+                en.OrderBy = i;
+                en.FunImge = r.FunImge;
+                List.push(en);
+            });
+            var json = {};
+            json.FunType = type;
+            json.SysNo = vm.SelectedRoot.SysNo;
+            json.RootList = JSON.stringify(List);
+            json.TempColumns = 'RootList';
+            vm.promise = AjaxService.EditBack("sp_SaveFunctionRoot", json).then(function (data) {
+                toastr.success('储存成功');
+            })
+        }
     }
 }
 ]);

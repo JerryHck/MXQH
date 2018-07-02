@@ -47,7 +47,7 @@ angular.module('app')
             myRequired: '@',
             ngName:'@'
         },
-        template: '<div ng-class="{ \'input-group\' : clear }">'
+        template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
                   + '<ui-select name="{{ ngName }}" ng-model="$parent.selectItem" theme="bootstrap" ng-disabled="ngDisabled" ng-required="myRequired">'
                   +'  <ui-select-match placeholder="选择组织...">{{ $select.selected.CompanyName }}</ui-select-match>       '
                   + ' <ui-select-choices repeat="item in data | filter: $select.search track by item.CompanyNo">                          '
@@ -100,7 +100,7 @@ angular.module('app')
             myRequired: '@',
             ngName: '@'
         },
-        template: '<div ng-class="{ \'input-group\' : clear }">'
+        template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
                   + '<ui-select  ng-model="$parent.selectItem" theme="bootstrap" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
                   + '  <ui-select-match placeholder="选择系统...">{{ $select.selected.SysName }}</ui-select-match>       '
                   + ' <ui-select-choices repeat="item in data | filter: $select.search track by item.SysNo">             '
@@ -163,7 +163,7 @@ angular.module('app')
             myRequired: '@',
             ngName: '@'
         },
-        template: '<div ng-class="{ \'input-group\' : clear }">'
+        template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
                   + '<ui-select ng-model="$parent.selectItem" theme="bootstrap" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
                   + '  <ui-select-match placeholder="请选择...">{{ $select.selected.FunName }}</ui-select-match>'
                   + ' <ui-select-choices repeat="item in data | filter: $select.search track by item.FunNo">'
@@ -226,7 +226,7 @@ angular.module('app')
             myRequired: '@',
             ngName: '@'
         },
-        template: '<div ng-class="{ \'input-group\' : clear }">'
+        template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
                   + '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
                   +'         <ui-select-match placeholder="请选择...">{{ $select.selected }}</ui-select-match>'
                   + '          <ui-select-choices repeat="item in data | filter: $select.search track by item">'
