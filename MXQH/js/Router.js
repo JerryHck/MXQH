@@ -24,7 +24,7 @@ angular.module('app')
                           item.controller = route.Controller;
                       }
                       if (route.ControllerAs) {
-                          item.controllerAS = route.ControllerAs;
+                          item.controllerAs = route.ControllerAs;
                       }
                       if (route.LazyLoad && route.LazyLoad.length > 0)
                       {

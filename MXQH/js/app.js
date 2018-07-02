@@ -51,4 +51,22 @@ angular.module('app')
         }
     };
 }])
+.factory('MyPop', function () {
+    return {
+        Show:function (show, text) {
+            if (show) {
+                var en = {};
+                en.title = en.title || "提示";
+                en.text = text || "资料还在编辑中";
+                en.type = en.type || "warning";
+                en.showConfirmButton = false
+                en.showCancelButton = true;
+                en.cancelButtonText = en.cancelButtonText || "关闭";
+                //显示提示消息
+                swal(en, function (isConfirm) { });
+            }
+            return show;
+        }
+    };
+})
 

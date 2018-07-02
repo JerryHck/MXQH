@@ -4,7 +4,7 @@
      vm.app.settings.asideDock=false;
      vm.app.settings.container=false;
      vm.app.hideAside=false;
-     vm.app.hideFooter=true; " ng-controller="FunctionCtrl as fun">
+     vm.app.hideFooter=true; ">
     <!-- Root -->
     <div class="col w b-r">
         <div class="vbox">
@@ -15,15 +15,15 @@
                 <div class="cell scrollable hover">
                     <div class="cell-inner">
                         <div class="list-group no-radius no-border no-bg m-b-none">
-                            <a class="list-group-item bg-light b-b" ng-class="{'focus': (fun.SelectedRoot == '')}" ng-click="fun.SelectAllFun()">所有功能</a>
+                            <a class="list-group-item bg-light b-b" ng-class="{'focus': fun.SelectedRoot.FunNo == ''}" ng-click="fun.SelectAllFun()">所有功能</a>
                             <a ng-repeat="root in fun.List" ng-dblclick="fun.EditRoot(root)" class="list-group-item m-l hover-anchor b-a no-select"
-                               ng-class="{'focus m-l-none': fun.SelectedRoot == root.FunNo}" ng-click="fun.SelectRoot(root)"
-                               ng-drop="true" ng-drop-success="fun.RootDrop($data,$index)">
-                                <span ng-if="!root.FunList || root.FunList.length == 0" ng-confirm="{text:'确定要删除该目录吗'}" ng-click='fun.DeleteRoot(root)' class="pull-right text-danger hover-action">
+                               ng-class="{'focus m-l-none': fun.SelectedRoot.FunNo == root.FunNo}" ng-click="fun.SelectRoot(root)"
+                               ng-drop="!fun.editFun" ng-drop-success="fun.RootDrop($data,$index)">
+                                <span ng-if="(!root.FunList || root.FunList.length == 0)&&!fun.editFun" ng-confirm="{text:'确定要删除该目录吗'}" ng-click='fun.Delete(root.FunNo)' class="pull-right text-danger hover-action">
                                     <i class="fa fa-times"></i>
                                 </span>
-                                <span class="block m-l-n bg-transparent" ng-class="{'m-n': fun.SelectedRoot == root.FunNo }">
-                                    <i ng-class="root.FunImge" ng-drag="true" ng-drag-data="root" ng-drag-success="fun.RootDrag($data,$index)"></i>{{ root.FunName }}
+                                <span class="block m-l-n bg-transparent" ng-class="{'m-n': fun.SelectedRoot.FunNo == root.FunNo }">
+                                    <i ng-class="root.FunImge" ng-drag="!fun.editFun" ng-drag-data="root" ng-drag-success="fun.RootDrag($data,$index)"></i>{{ root.FunName }}
                                 </span>
                                 <div class="form-group pos-abt badge-light" ng-if="root.editing"
                                      style="top:3px;left:3px;width:98%" ui-focus="root.editing">
@@ -43,8 +43,8 @@
                 </div>
             </div>
             <div class="wrapper b-t">
-                <button class="btn btn-sm btn-info col-md-offset-1" ng-disabled="fun.IsEditing" ng-click="fun.AddRoot()"><i class="glyphicon glyphicon-plus"></i></button>
-                <button class="btn btn-sm btn-success col-md-offset-1" ng-disabled="fun.IsEditing" ng-click="fun.SaveRoot()"><i class="glyphicon glyphicon-save"></i></button>
+                <button class="btn btn-sm btn-info col-md-offset-1" ng-disabled="fun.IsEditing || fun.editFun " ng-click="fun.AddRoot()"><i class="glyphicon glyphicon-plus"></i></button>
+                <button class="btn btn-sm btn-success col-md-offset-1" ng-disabled="fun.IsEditing || fun.editFun " ng-click="fun.SaveRoot()"><i class="glyphicon glyphicon-save"></i></button>
             </div>
         </div>
     </div>
@@ -65,12 +65,12 @@
                             <div class="list-group list-group-lg no-radius no-border no-bg m-b-none">
                                 <a ng-repeat="f in fun.FunList | filter:{group:FunName} | filter:fun.FunQuery | orderBy:'f.Orderby'"
                                    class="list-group-item m-l" ng-class="{'select m-l-none': f.selected }" ng-click="fun.SelectFun(f)"
-                                   ng-drop="true" ng-drop-success="fun.FunDrop($data,$index)">
-                                    <span ng-confirm="{text:'确定要删除该功能吗'}" ng-click='fun.DeleteFun(f)' class="pull-right text-danger">
+                                   ng-drop="!fun.editFun" ng-drop-success="fun.FunDrop($data,$index)">
+                                    <span ng-if="!fun.editFun" ng-confirm="{text:'确定要删除该功能吗'}" ng-click='fun.Delete(f.FunNo)' class="pull-right text-danger">
                                         <i class="fa fa-times"></i>
                                     </span>
                                     <span class="block m-l-n bg-transparent" ng-class="{'m-n': f.selected }">
-                                        <i ng-class="f.FunImge" ng-drag="true" ng-drag-data="f" ng-drag-success="fun.FunDrag($data,$index)"></i>{{ f.FunName }}
+                                        <i ng-class="f.FunImge" ng-drag="!fun.editFun" ng-drag-data="f" ng-drag-success="fun.FunDrag($data,$index)"></i>{{ f.FunName }}
                                     </span>
                                     <span ng-show="!f.FunNo">没有功能</span>
                                 </a>
@@ -81,149 +81,163 @@
                 </div>
             </div>
             <div class="wrapper b-t">
-                <button class="btn btn-sm btn-info col-md-offset-1" ng-disabled="fun.editFun" ng-click="fun.AddFun()"><i class="glyphicon glyphicon-plus"></i></button>
-                <button class="btn btn-sm btn-success col-md-offset-1" ng-disabled="fun.editFun" ng-click="fun.SaveFun()"><i class="glyphicon glyphicon-save"></i></button>
+                <button class="btn btn-sm btn-info col-md-offset-1" ng-disabled="!fun.SelectedRoot.FunNo|| fun.editFun " ng-click="fun.AddFun()"><i class="glyphicon glyphicon-plus"></i></button>
+                <button class="btn btn-sm btn-success col-md-offset-1" ng-disabled="!fun.SelectedRoot.FunNo || fun.editFun" ng-click="fun.SaveFun()"><i class="glyphicon glyphicon-save"></i></button>
             </div>
         </div>
     </div>
     <!-- /column -->
-    <div class="col w-auto lter b-r" cg-busy="fun.promise">
+    <div class="col w-auto lter b-r" cg-busy="fun.promise"  ng-form="FormFun">
         <div class="vbox" ng-if="fun.SelectedFun">
             <div class="wrapper-xs b-b">
                 <div class="m-t-n-xxs m-b-n-xxs m-l-xs">
                     <button class="btn btn-sm btn-info col-md-offset-1" ng-if="!fun.editFun" ng-click="fun.editFun = !fun.editFun"><i class="glyphicon glyphicon-edit"></i>编辑</button>
-                    <button class="btn btn-sm btn-info col-md-offset-1" ng-if="fun.editFun" ng-click="fun.SaveFunInfo()"><i class="glyphicon glyphicon-save"></i>储存</button>
+                    <button class="btn btn-sm btn-info col-md-offset-1" ng-if="fun.editFun" ng-click="fun.SaveFunInfo()" ng-disabled="FormFun.$invalid"><i class="glyphicon glyphicon-save"></i>储存</button>
+                    <button class="btn btn-sm btn-warning" type="button" ng-if="fun.editFun" ng-click="fun.Cancel()">取消</button>
+
                 </div>
             </div>
             <div class="row-row">
                 <div class="cell scrollable hover">
                     <div class="list-group no-radius no-border no-bg m-b-none">
-                        <div class="wrapper-md" ng-form="FormFun">
-                            <!--<div class="panel panel-primary">
-                                <div class="panel-heading font-bold">
-                                    功能信息
+                        <div class="wrapper-md">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label text-info">功能编号</label>
+                                            <div class="col-lg-8 text-xs">
+                                                <input class="form-control text-xs" name="No" type="text" ng-model="fun.SelectedFun.FunNo" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group m-t-sm" ng-class="{ 'has-error' : FormFun.FunName.$invalid }">
+                                            <label class="col-lg-4 control-label text-info">功能名称</label>
+                                            <div class="col-lg-8">
+                                                <input class="form-control text-xs" name="FunName" type="text" ng-model="fun.SelectedFun.FunName" ng-disabled="!fun.editFun" required>
+                                                <div ng-messages="FormFun.FunName.$error" class="help-block" role="alert">
+                                                    <div ng-message="required">请输入功能名</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" ng-class="{ 'has-error' : FormFun.Route.$invalid }">
+                                            <label class="col-lg-4 control-label text-info">路由</label>
+                                            <div class="col-lg-8">
+                                                <input class="form-control text-xs" name="Route" type="text" ng-model="fun.SelectedFun.RouteName" ng-disabled="!fun.editFun" required>
+                                                <div ng-messages="FormFun.Route.$error" class="help-block" role="alert">
+                                                    <div ng-message="required">请输入路由</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label text-info">控制器</label>
+                                            <div class="col-lg-8">
+                                                <input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.Controller" ng-disabled="!fun.editFun">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="panel-body">-->
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-horizontal">
-                                                <div class="form-group">
-                                                    <label class="col-lg-4 control-label text-info">功能编号</label>
-                                                    <div class="col-lg-8 text-xs">
-                                                        <input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.FunNo" disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group m-t-sm">
-                                                    <label class="col-lg-4 control-label text-info">功能名称</label>
-                                                    <div class="col-lg-8">
-                                                        <input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.FunName" ng-disabled="!fun.editFun">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-lg-4 control-label text-info">路由</label>
-                                                    <div class="col-lg-8">
-                                                        <input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.RouteName" ng-disabled="!fun.editFun">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-lg-4 control-label text-info">控制器</label>
-                                                    <div class="col-lg-8">
-                                                        <input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.Controller" ng-disabled="!fun.editFun">
-                                                    </div>
+                                <div class="col-sm-6">
+                                    <div class="form-horizontal" ng-class="{ 'has-error' : FormFun.mysys.$invalid }">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label text-info">所属系统</label>
+                                            <div class="col-lg-8">
+                                                <system-select select-item="fun.SeItem" ng-name="mysys" ng-model="fun.SelectedFun.SysNo" ng-disabled="!fun.editFun" my-required="true"></system-select>
+                                                <div ng-messages="FormFun.mysys.$error" class="help-block" role="alert">
+                                                    <div ng-message="required">请选择所属系统</div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-horizontal">
-                                                <div class="form-group">
-                                                    <label class="col-lg-4 control-label text-info">所属系统</label>
-                                                    <div class="col-lg-8">
-                                                        <company-select select-item="fun.SeItem" clear="true" ng-model="fun.SelectedFun.SysNo" ng-disabled="!fun.editFun"></company-select>
-                                                    </div>
+                                        <div class="form-group" ng-class="{ 'has-error' : FormFun.par.$invalid }">
+                                            <label class="col-lg-4 control-label text-info">所属目录</label>
+                                            <div class="col-lg-8">
+                                                <function-select select-item="fun.FunSelItem" fun-type="1" ng-model="fun.SelectedFun.ParFunNo" ng-disabled="!fun.editFun" ng-name="par" my-required="true"></function-select>
+                                                <div ng-messages="FormFun.par.$error" class="help-block" role="alert">
+                                                    <div ng-message="required">请选择所属目录</div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="col-lg-4 control-label text-info">所属目录</label>
-                                                    <div class="col-lg-8">
-                                                        <function-select select-item="fun.FunSelItem" fun-type="1" ng-model="fun.SelectedFun.ParFunNo" ng-disabled="!fun.editFun"></function-select>
-                                                    </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group" ng-class="{ 'has-error' : FormFun.routeUrl.$invalid }">
+                                            <label class="col-lg-4 control-label text-info">路由路径</label>
+                                            <div class="col-lg-8">
+                                                <input class="form-control text-xs" name="routeUrl" type="text" ng-model="fun.SelectedFun.RouteUrl" ng-disabled="!fun.editFun" required>
+                                                <div ng-messages="FormFun.routeUrl.$error" class="help-block" role="alert">
+                                                    <div ng-message="required">请输入路由路径</div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="col-lg-4 control-label text-info">路由路径</label>
-                                                    <div class="col-lg-8">
-                                                        <input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.RouteUrl" ng-disabled="!fun.editFun">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-lg-4 control-label text-info">控制器简写</label>
-                                                    <div class="col-lg-8">
-                                                        <input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.ControllerAs" ng-disabled="!fun.editFun">
-                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label text-info">控制器简写</label>
+                                            <div class="col-lg-8">
+                                                <input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.ControllerAs" ng-disabled="!fun.editFun">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-horizontal">
+                                    <div class="col-sm-12">
+                                        <div class="form-group" ng-class="{ 'has-error' : FormFun.Html.$invalid }">
+                                            <label class="col-lg-2 control-label text-info">HTML文件</label>
+                                            <div class="col-lg-10">
+                                                <fun-file-select file-type="1" ng-model="fun.SelectedFun.FunHtml" ng-disabled="!fun.editFun" clear="true" ng-name="Html" my-required="true"></fun-file-select>
+                                                <div ng-messages="FormFun.Html.$error" class="help-block" role="alert">
+                                                    <div ng-message="required">请选择对应Html文件</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="form-horizontal">
-                                            <div class="col-sm-12">
-                                                <div class="form-group">
-                                                    <label class="col-lg-2 control-label text-info">HTML文件</label>
-                                                    <div class="col-lg-10">
-                                                        <fun-file-select file-type="1" ng-model="fun.SelectedFun.FunHtml" ng-disabled="!fun.editFun" clear="true"></fun-file-select>
-                                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label text-info">备注</label>
+                                            <div class="col-lg-10">
+                                                <textarea class="form-control" ng-disabled="!fun.editFun" ng-model="fun.SelectedFun.FunDesc" rows="2"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group" ng-if="fun.editFun">
+                                            <label class="col-lg-2 control-label text-info">依赖文件</label>
+                                            <div class="col-lg-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default">
+                                                            <span class="glyphicon glyphicon-plus text-success" ng-click="fun.FunLoadAdd()"></span>
+                                                        </button>
+                                                    </span>
+                                                    <fun-file-select file-type="2" ng-model="fun.loadFile" ng-disabled="!fun.editFun"></fun-file-select>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-12">
-                                                <div class="form-group">
-                                                    <label class="col-lg-2 control-label text-info">备注</label>
-                                                    <div class="col-lg-10">
-                                                        <textarea class="form-control" ng-disabled="!fun.editFun" ng-model="fun.SelectedFun.FunDesc" rows="2"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <div class="form-group" ng-if="fun.editFun">
-                                                    <label class="col-lg-2 control-label text-info">依赖文件</label>
-                                                    <div class="col-lg-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-btn">
-                                                                <button class="btn btn-default">
-                                                                    <span class="glyphicon glyphicon-plus text-success" ng-click="fun.FunLoadAdd()"></span>
-                                                                </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group-sm">
+                                            <label class="col-lg-2 control-label text-info">依赖文件</label>
+                                            <div class="col-lg-10">
+                                                <div class="panel panel-default panel-body">
+                                                    <div class="list-group no-radius no-border no-bg m-b-none">
+                                                        <a ng-repeat="load in fun.SelectedFun.FunLoad | orderBy:'load.Orderby'"
+                                                           class="list-group-item"
+                                                           ng-drop="true" ng-drop-success="fun.FunLoadDrop($data,$index)">
+                                                            <span ng-if="fun.editFun" ng-click='fun.FunLoadDelete($index)' class="pull-right text-danger">
+                                                                <i class="fa fa-times"></i>
                                                             </span>
-                                                            <fun-file-select file-type="2" ng-model="fun.loadFile" ng-disabled="!fun.editFun"></fun-file-select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <div class="form-group-sm">
-                                                    <label class="col-lg-2 control-label text-info">依赖文件</label>
-                                                    <div class="col-lg-10">
-                                                        <div class="panel panel-default panel-body">
-                                                            <div class="list-group no-radius no-border no-bg m-b-none">
-                                                                <a ng-repeat="load in fun.SelectedFun.FunLoad | orderBy:'load.Orderby'"
-                                                                   class="list-group-item"
-                                                                   ng-drop="true" ng-drop-success="fun.FunLoadDrop($data,$index)">
-                                                                    <span ng-if="fun.editFun" ng-click='fun.FunLoadDelete($index)' class="pull-right text-danger">
-                                                                        <i class="fa fa-times"></i>
-                                                                    </span>
-                                                                    <span class="block m-l-n bg-transparent">
-                                                                        <i class="glyphicon glyphicon-move text-info" ng-drag="true" ng-if="fun.editFun"
-                                                                           ng-drag-data="load" ng-drag-success="fun.FunLoadDrag($data,$index)"></i>{{ load.LoadName }}
-                                                                    </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
+                                                            <span class="block m-l-n bg-transparent">
+                                                                <i class="glyphicon glyphicon-move text-info" ng-drag="true" ng-if="fun.editFun"
+                                                                   ng-drag-data="load" ng-drag-success="fun.FunLoadDrag($data,$index)"></i>{{ load.LoadName }}
+                                                            </span>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                <!--</div>
-                            </div>-->
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <!--<pre>{{ fun.loadFile | json }}</pre>-->
+                    <!--<pre>{{ fun.FunList | json }}</pre>-->
                 </div>
             </div>
             <div class="wrapper b-t">
