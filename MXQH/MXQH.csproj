@@ -197,48 +197,8 @@
     <Content Include="Scripts\select.js" />
     <Content Include="Scripts\select.min.js" />
     <Content Include="Scripts\sweetalert.min.js" />
-    <Content Include="Scripts\ui-grid.auto-resize.js" />
-    <Content Include="Scripts\ui-grid.auto-resize.min.js" />
-    <Content Include="Scripts\ui-grid.cellnav.js" />
-    <Content Include="Scripts\ui-grid.cellnav.min.js" />
-    <Content Include="Scripts\ui-grid.core.js" />
-    <Content Include="Scripts\ui-grid.core.min.js" />
-    <Content Include="Scripts\ui-grid.edit.js" />
-    <Content Include="Scripts\ui-grid.edit.min.js" />
-    <Content Include="Scripts\ui-grid.empty-base-layer.js" />
-    <Content Include="Scripts\ui-grid.empty-base-layer.min.js" />
-    <Content Include="Scripts\ui-grid.expandable.js" />
-    <Content Include="Scripts\ui-grid.expandable.min.js" />
-    <Content Include="Scripts\ui-grid.exporter.js" />
-    <Content Include="Scripts\ui-grid.exporter.min.js" />
-    <Content Include="Scripts\ui-grid.grouping.js" />
-    <Content Include="Scripts\ui-grid.grouping.min.js" />
-    <Content Include="Scripts\ui-grid.importer.js" />
-    <Content Include="Scripts\ui-grid.importer.min.js" />
-    <Content Include="Scripts\ui-grid.infinite-scroll.js" />
-    <Content Include="Scripts\ui-grid.infinite-scroll.min.js" />
     <Content Include="Scripts\ui-grid.js" />
     <Content Include="Scripts\ui-grid.min.js" />
-    <Content Include="Scripts\ui-grid.move-columns.js" />
-    <Content Include="Scripts\ui-grid.move-columns.min.js" />
-    <Content Include="Scripts\ui-grid.pagination.js" />
-    <Content Include="Scripts\ui-grid.pagination.min.js" />
-    <Content Include="Scripts\ui-grid.pinning.js" />
-    <Content Include="Scripts\ui-grid.pinning.min.js" />
-    <Content Include="Scripts\ui-grid.resize-columns.js" />
-    <Content Include="Scripts\ui-grid.resize-columns.min.js" />
-    <Content Include="Scripts\ui-grid.row-edit.js" />
-    <Content Include="Scripts\ui-grid.row-edit.min.js" />
-    <Content Include="Scripts\ui-grid.saveState.js" />
-    <Content Include="Scripts\ui-grid.saveState.min.js" />
-    <Content Include="Scripts\ui-grid.selection.js" />
-    <Content Include="Scripts\ui-grid.selection.min.js" />
-    <Content Include="Scripts\ui-grid.tree-base.js" />
-    <Content Include="Scripts\ui-grid.tree-base.min.js" />
-    <Content Include="Scripts\ui-grid.tree-view.js" />
-    <Content Include="Scripts\ui-grid.tree-view.min.js" />
-    <Content Include="Scripts\ui-grid.validate.js" />
-    <Content Include="Scripts\ui-grid.validate.min.js" />
     <Content Include="Scripts\ui-select2-angular.js" />
     <Content Include="Scripts\ui-select2-jquery.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
@@ -550,7 +510,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>32241</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
