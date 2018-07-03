@@ -1,8 +1,8 @@
-<div class="aside-wrap">
+﻿<div class="aside-wrap">
   <div class="app-aside-footer dk">    
     <div class="dropdown dropup" dropdown>
-      <a href class="pull-right wrapper m-r-xs" ng-click="app.settings.asideFolded = !app.settings.asideFolded">
-        <i class="fa {{app.settings.asideFolded ? 'fa-indent' : 'fa-dedent'}} fa-fw"></i>
+      <a href class="pull-right wrapper m-r-xs" ng-click="vm.app.settings.asideFolded = !vm.app.settings.asideFolded">
+        <i class="fa {{vm.app.settings.asideFolded ? 'fa-indent' : 'fa-dedent'}} fa-fw"></i>
       </a>
       <a href class="dropdown-toggle clear hidden-folded wrapper-sm padder" dropdown-toggle>
         <span class="thumb-xxs avatar pull-left m-r-sm">
@@ -30,7 +30,7 @@
         <li>
           <a ui-sref="app.docs">
             <span class="label bg-info pull-right">new</span>
-            Help
+            帮助
           </a>
         </li>
         <li class="divider"></li>

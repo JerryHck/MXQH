@@ -47,6 +47,13 @@ angular.module('app')
           events: true,
           modules: [
               {
+                  name: 'uiGrid',
+                  files: [
+                      'Scripts/ui-grid.min.js',
+                      'Content/ui-grid.min.css'
+                  ]
+              },
+              {
                   name: 'ngGrid',
                   files: [
                       'vendor/modules/ng-grid/ng-grid.min.js',
@@ -57,8 +64,8 @@ angular.module('app')
               {
                   name: 'ui.select',
                   files: [
-                      'vendor/modules/angular-ui-select/select.min.js',
-                      'vendor/modules/angular-ui-select/select.min.css'
+                      'Scripts/select.min.js',
+                      'Content/select.min.css'
                   ]
               },
               {
