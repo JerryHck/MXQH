@@ -51,19 +51,19 @@ function Config($stateProvider, $urlRouterProvider) {
             url: '/app',
             controllerAs: 'vm',
             controller: 'AppCtrl',
-            templateUrl: 'tpl/app.html',
+            templateUrl: 'Basic/app.html',
         })
         .state('apps', {
             abstract: true,
             controllerAs: 'vm',
             controller: 'AppCtrl',
             url: '/apps',
-            templateUrl: 'tpl/layout.html'
+            templateUrl: 'Basic/layout.html'
         })
         //首页
         .state('app.dashboard-v1', {
             url: '/dashboard-v1',
-            templateUrl: 'tpl/app_dashboard_v1.html',
+            templateUrl: 'Basic/app_dashboard_v1.html',
             resolve: {
                 deps: ['$ocLazyLoad',
                   function ($ocLazyLoad) {
