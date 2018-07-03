@@ -28,7 +28,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
     //功能
     vm.SelectFun = SelectFun;
     vm.AddFun = AddFun;
-
+    vm.SaveFun = SaveFun;
     vm.FunDrop = FunDrop;
     vm.FunDrag = FunDrag;
 
@@ -43,19 +43,12 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
     vm.SelectedRoot = { FunNo: '' };
     vm.editFun = false;
 
-    GetList();
-
-    console.log(12);
-
-    function GetList() {
-        var en = {};
-        en.name = 'FunType';
-        en.value = 1
-        vm.promise = AjaxService.GetEntities("FunRoot", en).then(function (data) {
-            vm.List = data;
-            console.log(data);
-        });
-    }
+    var en = {};
+    en.name = 'FunType';
+    en.value = 1
+    vm.promise = AjaxService.GetEntities("FunRoot", en).then(function (data) {
+        vm.List = data;
+    });
 
     //查询所有功能
     function SelectAllFun() {
@@ -340,7 +333,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
             });
             var json = {};
             json.FunType = type;
-            json.SysNo = vm.SelectedRoot.SysNo;
+            json.SysNo = "MXQH";
             json.RootList = JSON.stringify(List);
             json.TempColumns = 'RootList';
             vm.promise = AjaxService.EditBack("sp_SaveFunctionRoot", json).then(function (data) {
