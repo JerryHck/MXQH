@@ -1,0 +1,21 @@
+  <!-- navbar -->
+  <div data-ng-include="'Basic/blocks/header.html'" class="app-header navbar">
+  </div>
+  <!-- / navbar -->
+
+  <!-- menu -->
+  <div data-ng-include="'Basic/blocks/aside.html'" class="app-aside hidden-xs {{vm.app.settings.asideColor}}">
+  </div>
+  <!-- / menu -->
+
+  <!-- view -->
+  <div class="app-content" ng-class="{'m-n': vm.app.hideAside, 'h-full': vm.app.hideFooter }">
+    <div class="app-content-body app-content-full fade-in-up" ng-class="{'h-full': vm.app.hideFooter }" ui-view>
+    </div>
+  </div>
+  <!-- / view -->
+  <!-- navbar -->
+  <div class="app-footer navbar navbar-fixed-bottom bg-light lt b-t" ng-class="{'m-n': vm.app.hideAside, 'hide': vm.app.hideFooter}" ui-view="footer">
+    
+  </div>
+  <!-- /navbar -->
