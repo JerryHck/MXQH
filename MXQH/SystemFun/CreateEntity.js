@@ -13,6 +13,13 @@ function ($scope, $http, Dialog, AjaxService) {
     vm.Insert = Insert;
 
 
+    var en = {};
+    en.name = 'FunType';
+    en.value = 1;
+    AjaxService.GetPlans("FunRoot", en).then(function (data) {
+        console.log(data);
+    }).catch(function (mes) { console.log(mes); });
+
     GetList();
 
     //編輯
