@@ -45,9 +45,9 @@
                         <div class="cell-inner">
                             <div class="padder">
                                 <div class="list-group">
-                                    <a ng-repeat="item in en.List | filter:en.EntityQuery " class="list-group-item b-l-3x hover-anchor" ng-class="{'hover': item.selected, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="selectNote(note)">
+                                    <a ng-repeat="item in en.List | filter:en.EntityQuery " class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.selected, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="selectNote(note)">
                                         <span ng-click='deleteNote(note)' class="pull-right text-muted hover-action"><i class="fa fa-times"></i></span>
-                                        <span class="block text-ellipsis text-lg" ng-bind-html="item.EntityName | highlight: en.EntityQuery"></span>
+                                        <span class="pull-left"><i class="glyphicon glyphicon-tree-conifer"></span></i><span class="block text-info text-lg" ng-bind-html="item.EntityName | highlight: en.EntityQuery"></span>
                                         <small class="text-muted">
                                             <span>{{ item.TableSchema }}.{{ item.TableName }}</span>
                                             <span class="pull-right">{{ item.Level }}</span>
