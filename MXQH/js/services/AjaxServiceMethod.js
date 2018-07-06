@@ -8,7 +8,9 @@
 
         var obj = {
             //获得实体资料-单个
-            GetPlans, GetPlans,
+            GetPlan: GetPlan,
+            //获得实体资料-列表
+            GetPlans: GetPlans,
             //获得实体资料-单个
             GetEntity, GetEntity,
             //获得实体资料-列表
@@ -52,6 +54,21 @@
         }
 
         //获得计划资料
+        function GetPlan(name, json) {
+            var d = $q.defer(), g = $q.defer(),
+                 url = serviceUrl + generic;
+            var en = {};
+            en.entityName = name;
+            en.strJson = JSON.stringify(convertArray(json)) || '[]';
+
+            Ajax(d, url, en, "GetPlan").then(
+                function (data) { g.resolve(data); },
+                function () { g.reject(); }
+            );
+            return g.promise;
+        }
+
+        //获得计划资料
         function GetPlans(name, json) {
             var d = $q.defer(), g = $q.defer(),
                  url = serviceUrl + generic;
@@ -64,7 +81,6 @@
                 function () { g.reject(); }
             );
             return g.promise;
-            //return Ajax(d, url, en, "GetPlans");
         }
 
         //获得表资料

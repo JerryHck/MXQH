@@ -1,29 +1,85 @@
-﻿<div class="wrapper-md">
-    <div class="row">
-        <div class="col-lg-6">
-
-            <accordion close-others="oneAtATime">
-                <accordion-group heading="Accordion Header, initially expanded" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-                    <p>
-                        <button class="btn btn-default btn-sm" ng-click="status.open = !status.open">Toggle last panel</button>
-                        <button class="btn btn-default btn-sm" ng-click="status.isFirstDisabled = ! status.isFirstDisabled">Enable / Disable first panel</button>
-                    </p>
-                </accordion-group>
-                <accordion-group heading="Dynamic body content">
-
-                    <p>The body of the accordion group grows to fit the contents</p>
-                    <button class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
-                    <div class="list-group m-t">
-                        <div ng-repeat="item in items" class="list-group-item">{{item}}</div>
+﻿<div class="app-content-full">
+    <div class="hbox hbox-auto-xs hbox-auto-sm bg-light">
+        <div class="col w-lg lt b-r">
+            <div class="vbox">
+                <div class="wrapper">
+                    <div uib-accordion close-others="oneAtTime">
+                        <div uib-accordion-group class="panel-default" is-open="en.isAddOpen">
+                            <uib-accordion-heading>
+                                <a href class="pull-right btn btn-sm btn-info m-t-n-xs" ng-click="createNote()">
+                                    <i class="glyphicon glyphicon-plus"></i>新增
+                                </a>
+                                <div class="h4">计划数据实体</div>
+                            </uib-accordion-heading>
+                            <div class="panel" ng-form="EntityForm">
+                                <div class="panel-body">
+                                    <div class="form-horizontal">
+                                        <div class="form-group" ng-class="{ 'has-error' : EntityForm.entityName.$invalid }">
+                                            <label>实体名</label>
+                                            <input class="form-control text-xs warning" name="entityName" type="text" ng-model="en.NewEntity.EntityName" required>
+                                        </div>
+                                        <div class="form-group" ng-class="{ 'has-error' : EntityForm.obTable.$invalid }">
+                                            <label>对应表</label>
+                                            <object-select select-item="fun.FunSelItem" ob-type="'U'" ng-model="en.NewEntity.Table" ng-name="obTable" my-required="true"></object-select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>往下展开层级</label>
+                                            <input ui-jq="TouchSpin" class="input-sm" type="text" ng-model="en.NewEntity.Level" data-min='1' data-max="10">
+                                        </div>
+                                        <a class="btn btn-sm btn-success pull-right m-2" ng-click="en.SaveEntity()" ng-disabled="EntityForm.$invalid"><i class="glyphicon glyphicon-save"></i>储存</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </accordion-group>
-                <accordion-group is-open="status.open" class="b-info">
-                    <accordion-heading>
-                        I can have markup, too! <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
-                    </accordion-heading>
-                    This is just some content to illustrate fancy headings.
-                </accordion-group>
-            </accordion>
+
+                </div>
+                <div class="wrapper b-t m-t-xxs">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm" placeholder="查询" ng-model="en.EntityQuery">
+                        <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+                <div class="row-row">
+                    <div class="cell scrollable hover">
+                        <div class="cell-inner">
+                            <div class="padder">
+                                <div class="list-group">
+                                    <a ng-repeat="item in en.List | filter:en.EntityQuery " class="list-group-item b-l-3x hover-anchor" ng-class="{'hover': item.selected, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="selectNote(note)">
+                                        <span ng-click='deleteNote(note)' class="pull-right text-muted hover-action"><i class="fa fa-times"></i></span>
+                                        <span class="block text-ellipsis text-lg" ng-bind-html="item.EntityName | highlight: en.EntityQuery"></span>
+                                        <small class="text-muted">
+                                            <span>{{ item.TableSchema }}.{{ item.TableName }}</span>
+                                            <span class="pull-right">{{ item.Level }}</span>
+                                        </small>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-</div>
+        </div>
+        <div class="col">
+            <div class="vbox">
+                <div class="wrapper bg-light lt b-b">
+                    <span class="text-muted">Created on:</span> <span>{{ note.date  | date:'MMM-dd-yyyy H:mm' }}</span>
+                    <div class="m-l inline dropdown" dropdown>
+                        <a class="v-middle pos-rlt inline bg-{{note.color}}" dropdown-toggle style="width:16px;height:16px;top:-2px"></a>
+                        <div class="dropdown-menu animated fadeInUp w wrapper">
+                            <a ng-repeat="color in colors" class="inline m-xs bg-{{color}}" style="width:18px;height:18px" ng-click=" note.color=color "></a>
+                        </div>
+                        <pre>{{ en.List | json }}</pre>
+                    </div>
+                </div>
+                <div class="row-row">
+                    <div class="cell">
+                        <div class="cell-inner">
+                            <textarea class="form-control no-radius no-border no-bg wrapper-lg text-md" style="height:100%;" ng-model="note.content"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

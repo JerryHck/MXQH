@@ -5,31 +5,17 @@ angular.module('app')
 function ($scope, $http, Dialog, AjaxService) {
 
     var vm = this;
-    //編輯
-    vm.Edit = Edit;
-    //删除
-    vm.Delete = Delete;
-    //Dailog
-    vm.Insert = Insert;
+    //保存实体
+    vm.SaveEntity = SaveEntity;
 
-
-    var en = {};
-    en.name = 'FunType';
-    en.value = 1;
-    AjaxService.GetPlans("FunRoot", en).then(function (data) {
-        console.log(data);
-    }).catch(function (mes) { console.log(mes); });
+    vm.NewEntity = {};
+    vm.NewEntity.Level = 3;
 
     GetList();
 
-    //編輯
-    function Insert() {
-        var resolve = {
-            ItemData: function () {
-                return {};
-            }
-        };
-        Open("I", resolve);
+    //保存实体
+    function SaveEntity() {
+        vm.isAddOpen = false;
     }
 
     //編輯
@@ -55,9 +41,10 @@ function ($scope, $http, Dialog, AjaxService) {
     }
 
     function GetList() {
-        vm.promise = AjaxService.GetEntities("SystemList").then(function (data) {
+        vm.promise = AjaxService.GetPlans("PlanEntity").then(function (data) {
+            console.log(data);
             vm.List = data;
-        }).catch(function (mes) { console.log(mes); });
+        });
     }
 
     function Open(type, resolve) {

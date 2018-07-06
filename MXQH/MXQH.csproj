@@ -387,7 +387,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="angular-stripped.html" />
     <Content Include="css\animate.css" />
     <Content Include="css\app.css" />
     <Content Include="css\bootstrap.css" />

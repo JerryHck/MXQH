@@ -278,6 +278,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
 
         vm.SelectedFun.FunLoad = vm.SelectedFun.FunLoad || [];
         angular.forEach(vm.SelectedFun.FunLoad, function (l, i) {
+            l.Id = l.Id || -1;
             l.SortNo = i;
         });
         var en = angular.copy(vm.SelectedFun);
