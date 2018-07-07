@@ -277,12 +277,45 @@ angular.module('app')
         ,
         link: link
     };
-
     function link(scope, element, attrs) {
         var en = {};
         en.name = 'Type';
         en.value = scope.obType || "";
         AjaxService.GetPlans("sysObject", en).then(function (data) {
+            scope.data = data;
+        });
+    }
+}])
+.directive('connectSelect', ['AjaxService', function (AjaxService) {
+    return {
+        restrict: 'AE',
+        require: 'ngModel',
+        scope: {
+            ngModel: '=',
+            ngDisabled: '=',
+            clear: '=',
+            myRequired: '@',
+            ngName: '@'
+        },
+        template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
+                  + '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
+                  + '         <ui-select-match placeholder="请选择...">{{ $select.selected }}</ui-select-match>'
+                  + '          <ui-select-choices class="pl-1" repeat="item in data | filter: $select.search track by item">'
+                  + '             <div ng-bind-html="item | highlight: $select.search"></div>'
+                  + '         </ui-select-choices>'
+                  + '     </ui-select>'
+                  + '    <span class="input-group-btn" ng-if="clear">'
+                  + '        <button ng-click="$parent.ngModel= undefined" class="btn btn-default" ng-disabled="ngDisabled">'
+                  + '            <span class="glyphicon glyphicon-trash text-danger"></span>'
+                  + '         </button>'
+                  + '     </span>'
+                  + ' </div>'
+        ,
+        link: link
+    };
+    function link(scope, element, attrs) {
+        AjaxService.GetConnect().then(function (data) {
+            console.log(data);
             scope.data = data;
         });
     }

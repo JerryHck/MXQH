@@ -18,9 +18,13 @@
                                             <label>实体名</label>
                                             <input class="form-control text-xs warning" name="entityName" type="text" ng-model="en.NewEntity.EntityName" required>
                                         </div>
-                                        <div class="form-group" ng-class="{ 'has-error' : EntityForm.obTable.$invalid }">
+                                        <div class="form-group" ng-class="{ 'has-error' : EntityForm.obConnect.$invalid }">
+                                            <label>链接对象</label>
+                                            <connect-select ng-model="en.NewEntity.Table" ng-name="obConnect" my-required="true"></connect-select>
+                                        </div>
+                                        <div class="form-group" ng-class="{ 'has-error' : EntityForm.obConnect.$invalid }">
                                             <label>对应表</label>
-                                            <object-select select-item="fun.FunSelItem" ob-type="'U'" ng-model="en.NewEntity.Table" ng-name="obTable" my-required="true"></object-select>
+                                            <object-select ob-type="'U'" ng-model="en.NewEntity.Table" ng-name="obTable" my-required="true"></object-select>
                                         </div>
                                         <div class="form-group">
                                             <label>往下展开层级</label>

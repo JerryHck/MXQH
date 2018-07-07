@@ -26,7 +26,9 @@
             //存储过程执行
             EditBack: EditBack,
             //文件
-            HandleFile: HandleFile
+            HandleFile: HandleFile,
+            //链接对象列表
+            GetConnect: GetConnect
         };
 
         return obj;
@@ -38,60 +40,24 @@
             return Ajax(d, url, undefined, undefined, "GET");
         }
 
-        //获得单实体资料
-        function GetEntity(name, json) {
-            var d = $q.defer(), g = $q.defer(),
-                 url = serviceUrl + generic;
-            var en = {};
-            en.strName = name;
-            en.strJson = JSON.stringify(convertArray(json)) || '[]';
-
-            Ajax(d, url, en, "GetEntity").then(
-                function (data) { g.resolve(data); },
-                function () { g.reject(); }
-            );
-            return g.promise;
-        }
-
         //获得计划资料
         function GetPlan(name, json) {
-            var d = $q.defer(), g = $q.defer(),
-                 url = serviceUrl + generic;
-            var en = {};
-            en.entityName = name;
-            en.strJson = JSON.stringify(convertArray(json)) || '[]';
-
-            Ajax(d, url, en, "GetPlan").then(
-                function (data) { g.resolve(data); },
-                function () { g.reject(); }
-            );
-            return g.promise;
+            return plan(name, json, "GetPlan");
         }
 
         //获得计划资料
         function GetPlans(name, json) {
-            var d = $q.defer(), g = $q.defer(),
-                 url = serviceUrl + generic;
-            var en = {};
-            en.entityName = name;
-            en.strJson = JSON.stringify(convertArray(json)) || '[]';
-
-            Ajax(d, url, en, "GetPlans").then(
-                function (data) { g.resolve(data); },
-                function () { g.reject(); }
-            );
-            return g.promise;
+            return plan(name, json, "GetPlans");
         }
+
+        //获得单实体资料
+        function GetEntity(name, json) {
+            return entity(name, json, "GetEntity");
+        }  
 
         //获得表资料
         function GetEntities(name, json) {
-            var d = $q.defer(),
-                 url = serviceUrl + generic;
-            var en = {};
-            en.strName = name;
-            en.strJson = JSON.stringify(convertArray(json)) || '[]';
-
-            return Ajax(d, url, en, "GetEntities");
+            return entity(name, json, "GetEntities");
         }
 
         //获得单实体资料
@@ -101,7 +67,6 @@
             var en = {};
             en.strTbView = name;
             en.strJson = JSON.stringify(convertArray(json)) || '[]';
-
             Ajax(d, url, en, "GetTbViewList").then(
                 function (data) { g.resolve(data.data[0]); },
                 function () { g.reject(); }
@@ -116,7 +81,6 @@
             var en = {};
             en.strTbView = name;
             en.strJson = JSON.stringify(convertArray(json)) || '[]';
-
             return Ajax(d, url, en, "GetTbViewList");
         }
 
@@ -138,7 +102,6 @@
             var en = {};
             en.strTbView = name;
             en.strJson = JSON.stringify(json);
-
             return Ajax(d, url, en, action);
         }
 
@@ -150,31 +113,55 @@
         //HTTP AJAX
         function AjaxHandle(q, type) {
 
-            $http({
-                method: 'post',
-                url: 'Data/Handler/FileData.ashx',
-                dataType: 'json',
-                data: { "type": type }
-            })
-            .then(
-                function (data) { q.resolve(data.data); },
-                function (mes) {
-                    q.reject();
-                    console.log(mes);
-                    var m = mes.data ? mes.data.split("。")[0] : "错误";
-                    toastr.error(m, '服务访问错误')
-                });
+            var en = { "type": type }
+            httpFun(q, 'Data/Handler/FileData.ashx', en);
             return q.promise;
+        }
+
+        function GetConnect() {
+            var d = $q.defer(), url = serviceUrl + generic;
+            return Ajax(d, url, {}, "GetConnectList");
+        }
+
+        function entity(name, json, funName) {
+            var d = $q.defer(), g = $q.defer(),
+                url = serviceUrl + generic;
+            var en = {};
+            en.strName = name;
+            en.strJson = JSON.stringify(convertArray(json)) || '[]';
+
+            Ajax(d, url, en, funName).then(
+                function (data) { g.resolve(data); },
+                function () { g.reject(); }
+            );
+            return g.promise;
+        }
+
+        function plan(name, json, funName) {
+            var d = $q.defer(), g = $q.defer(),
+                 url = serviceUrl + generic;
+            var en = {};
+            en.entityName = name;
+            en.strJson = JSON.stringify(convertArray(json)) || '[]';
+            Ajax(d, url, en, funName).then(
+                function (data) { g.resolve(data); },
+                function () { g.reject(); }
+            );
+            return g.promise;
         }
 
         //HTTP AJAX
         function Ajax(q, url, parameter, Method, type) {
+            var en = { method: Method, Json: JSON.stringify(parameter) };
+            return httpFun(q, url, en, type);
+        }
 
+        function httpFun (q, url, postData, type) {
             $http({
                 method: type || 'POST',
                 url: url,
                 dataType: 'json',
-                data: { method: Method, Json: JSON.stringify(parameter) }
+                data: postData
             })
             .then(
                 function (data) { q.resolve(data.data); },
@@ -184,7 +171,6 @@
                     var m = mes.data ? mes.data.split("。")[0] : "错误";
                     toastr.error(m, '服务访问错误')
                 });
-
             return q.promise;
         }
 
