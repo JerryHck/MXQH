@@ -478,6 +478,7 @@
     <Content Include="l10n\de_DE.js" />
     <Content Include="l10n\en.js" />
     <Content Include="l10n\it_IT.js" />
+    <Content Include="Template\UIAccordionTemplate.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -489,7 +490,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="js\controllers\uploads\" />
-    <Folder Include="Models\" />
     <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>

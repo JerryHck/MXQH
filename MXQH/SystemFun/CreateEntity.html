@@ -3,60 +3,56 @@
         <div class="col w-lg lt b-r">
             <div class="vbox">
                 <div class="wrapper">
-                    <div uib-accordion close-others="oneAtTime">
-                        <div uib-accordion-group class="panel-default" is-open="en.isAddOpen">
-                            <uib-accordion-heading>
-                                <a href class="pull-right btn btn-sm btn-info m-t-n-xs" ng-click="createNote()">
-                                    <i class="glyphicon glyphicon-plus"></i>新增
-                                </a>
-                                <div class="h4">计划数据实体</div>
-                            </uib-accordion-heading>
-                            <div class="panel" ng-form="EntityForm">
-                                <div class="panel-body">
-                                    <div class="form-horizontal">
-                                        <div class="form-group" ng-class="{ 'has-error' : EntityForm.entityName.$invalid }">
-                                            <label>实体名</label>
-                                            <input class="form-control text-xs warning" name="entityName" type="text" ng-model="en.NewEntity.EntityName" required>
-                                        </div>
-                                        <div class="form-group" ng-class="{ 'has-error' : EntityForm.obConnect.$invalid }">
-                                            <label>链接对象</label>
-                                            <connect-select ng-model="en.NewEntity.Table" ng-name="obConnect" my-required="true"></connect-select>
-                                        </div>
-                                        <div class="form-group" ng-class="{ 'has-error' : EntityForm.obConnect.$invalid }">
-                                            <label>对应表</label>
-                                            <object-select ob-type="'U'" ng-model="en.NewEntity.Table" ng-name="obTable" my-required="true"></object-select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>往下展开层级</label>
-                                            <input ui-jq="TouchSpin" class="input-sm" type="text" ng-model="en.NewEntity.Level" data-min='1' data-max="10">
-                                        </div>
-                                        <a class="btn btn-sm btn-success pull-right m-2" ng-click="en.SaveEntity()" ng-disabled="EntityForm.$invalid"><i class="glyphicon glyphicon-save"></i>储存</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <div class="h4">计划数据实体</div>
                 </div>
                 <div class="wrapper b-t m-t-xxs">
-                    <div class="input-group">
-                        <input type="text" class="form-control input-sm" placeholder="查询" ng-model="en.EntityQuery">
-                        <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" placeholder="查询" ng-model="en.EntityQuery">
+                            <span class="input-group-btn">
+                                <button class="btn btn-sm btn-default" ng-click="en.isAddOpen = !en.isAddOpen" ng-disabled="en.isAddOpen">
+                                    <i class="glyphicon glyphicon-plus text-success">新增</i>
+                                </button>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="row-row">
                     <div class="cell scrollable hover">
                         <div class="cell-inner">
                             <div class="padder">
-                                <div class="list-group">
-                                    <a ng-repeat="item in en.List | filter:en.EntityQuery " class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.selected, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="selectNote(note)">
-                                        <span ng-click='deleteNote(note)' class="pull-right text-muted hover-action"><i class="fa fa-times"></i></span>
-                                        <span class="pull-left"><i class="glyphicon glyphicon-tree-conifer"></span></i><span class="block text-info text-lg" ng-bind-html="item.EntityName | highlight: en.EntityQuery"></span>
-                                        <small class="text-muted">
-                                            <span>{{ item.TableSchema }}.{{ item.TableName }}</span>
-                                            <span class="pull-right">{{ item.Level }}</span>
-                                        </small>
-                                    </a>
+                                <div uib-collapse="!en.isAddOpen">
+                                    <div class="panel" ng-form="EntityForm">
+                                        <div class="panel-body">
+                                            <div class="form-horizontal">
+                                                <div class="form-group" ng-class="{ 'has-error' : EntityForm.entityName.$invalid }">
+                                                    <input placeholder="实体名" class="form-control text-xs warning" name="entityName" type="text" ng-model="en.SelectedEn.EntityName" required>
+                                                </div>
+                                                <div class="form-group" ng-class="{ 'has-error' : EntityForm.obConnect.$invalid }">
+                                                    <connect-select ng-model="en.SelectedEn.ConnectName" ng-name="obConnect" my-required="true"></connect-select>
+                                                </div>
+                                                <div class="form-group" ng-class="{ 'has-error' : EntityForm.obConnect.$invalid }">
+                                                    <object-select ob-type="'U'" ob-connect="en.SelectedEn.ConnectName" ng-model="en.EnTable" ng-name="obTable" my-required="true"></object-select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input ui-jq="TouchSpin" placeholder="往下展开层级" class="input-sm" type="text" ng-model="en.SelectedEn.Level" data-min='1' data-max="10">
+                                                </div>
+                                                <a class="btn btn-sm btn-success pull-right m-2" ng-click="en.SaveEntity()" ng-disabled="EntityForm.$invalid"><i class="glyphicon glyphicon-save"></i>储存</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="!en.isAddOpen">
+                                    <div class="list-group">
+                                        <a ng-repeat="item in en.List | filter:en.EntityQuery " class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.selected, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="en.SelectEn(item)">
+                                            <span ng-click='deleteNote(note)' class="pull-right text-muted hover-action"><i class="fa fa-times"></i></span>
+                                            <span class="pull-left"><i class="glyphicon glyphicon-tree-conifer"></span></i><span class="block text-info text-lg" ng-bind-html="item.EntityName | highlight: en.EntityQuery"></span>
+                                            <small class="text-muted">
+                                                <span>{{ item.TableSchema }}.{{ item.TableName }}</span>
+                                                <span class="pull-right">{{ item.Level }}</span>
+                                            </small>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col" cg-busy="en.promise">
             <div class="vbox">
                 <div class="wrapper bg-light lt b-b">
                     <span class="text-muted">Created on:</span> <span>{{ note.date  | date:'MMM-dd-yyyy H:mm' }}</span>
@@ -73,13 +69,56 @@
                         <div class="dropdown-menu animated fadeInUp w wrapper">
                             <a ng-repeat="color in colors" class="inline m-xs bg-{{color}}" style="width:18px;height:18px" ng-click=" note.color=color "></a>
                         </div>
-                        <pre>{{ en.List | json }}</pre>
                     </div>
                 </div>
                 <div class="row-row">
-                    <div class="cell">
+                    <div class="cell scrollable hover">
                         <div class="cell-inner">
                             <textarea class="form-control no-radius no-border no-bg wrapper-lg text-md" style="height:100%;" ng-model="note.content"></textarea>
+                        </div>
+                        <!--<pre>{{ en.TbColunms | json }}</pre>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col w-lg lt b-r">
+            <div class="vbox">
+                vb
+                <
+                <div class="wrapper b-t m-t-xxs">
+                    <p class="text-info">数据库表栏位</p>
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm" placeholder="查询" ng-model="en.TbColunmName">
+                        <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+                <div class="row-row">
+                    <div class="cell scrollable hover">
+                        <div class="cell-inner">
+                            <div class="padder bg-white">
+                                <div class="panel-body">
+                                    <article class="media" ng-repeat="item in en.TbColunms | filter:en.TbColunmName ">
+                                        <div class="pull-left">
+                                            <label class="i-checks">
+                                                <input type="checkbox"><i></i>
+                                            </label>
+                                        </div>
+                                        <div class="media-body form-group">
+                                            <div class="list-group-item-sm col-lg-12">
+                                                <span class="h-3 text-success">{{ item.ColumnName }}</span>
+                                                <span class="pull-right" ng-if="item.IsKey == 1">
+                                                    <i class="badge badge-success text-danger">Key</i>
+                                                </span>
+                                            </div>
+                                            <div class="list-group-item-sm col-lg-12">
+                                                <small class="block m-t-xs">{{ item.ColumnDes }}</small>
+                                                <em class="text-xs"><span class="text-info">{{ item.DataType }}</span></em>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

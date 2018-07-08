@@ -37,7 +37,7 @@ angular.module('app')
 
 .directive('companySelect', ['AjaxService', function (AjaxService) {
     return {
-        restrict: 'AE',
+        restrict: 'E',
         require: 'ngModel',
         scope: {
             ngModel: '=',
@@ -90,7 +90,7 @@ angular.module('app')
 }])
 .directive('systemSelect', ['AjaxService', function (AjaxService) {
     return {
-        restrict: 'AE',
+        restrict: 'E',
         require: 'ngModel',
         scope: {
             ngModel: '=',
@@ -152,7 +152,7 @@ angular.module('app')
 
 .directive('functionSelect', ['AjaxService', function (AjaxService) {
     return {
-        restrict: 'AE',
+        restrict: 'E',
         require: 'ngModel',
         scope: {
             ngModel: '=',
@@ -216,7 +216,7 @@ angular.module('app')
 }])
 .directive('funFileSelect', ['AjaxService', function (AjaxService) {
     return {
-        restrict: 'AE',
+        restrict: 'E',
         require: 'ngModel',
         scope: {
             ngModel: '=',
@@ -251,10 +251,11 @@ angular.module('app')
 }])
 .directive('objectSelect', ['AjaxService', function (AjaxService) {
     return {
-        restrict: 'AE',
+        restrict: 'E',
         require: 'ngModel',
         scope: {
             ngModel: '=',
+            obConnect: '=',
             obType: '=',
             ngDisabled: '=',
             clear: '=',
@@ -278,17 +279,21 @@ angular.module('app')
         link: link
     };
     function link(scope, element, attrs) {
-        var en = {};
-        en.name = 'Type';
-        en.value = scope.obType || "";
-        AjaxService.GetPlans("sysObject", en).then(function (data) {
-            scope.data = data;
-        });
+        scope.$watch('obConnect', getList);
+        function getList() {
+            if (scope.obConnect) {
+                scope.data = undefined;
+                scope.ngModel = undefined;
+                AjaxService.GetDbeObject(scope.obConnect, scope.obType).then(function (data) {
+                    scope.data = data.data;
+                });
+            }
+        }
     }
 }])
 .directive('connectSelect', ['AjaxService', function (AjaxService) {
     return {
-        restrict: 'AE',
+        restrict: 'E',
         require: 'ngModel',
         scope: {
             ngModel: '=',
@@ -315,8 +320,9 @@ angular.module('app')
     };
     function link(scope, element, attrs) {
         AjaxService.GetConnect().then(function (data) {
-            console.log(data);
+            console.log(data)
             scope.data = data;
+            scope.ngModel = scope.ngModel || data[0];
         });
     }
 }])

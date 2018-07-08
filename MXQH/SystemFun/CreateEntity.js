@@ -5,13 +5,21 @@ angular.module('app')
 function ($scope, $http, Dialog, AjaxService) {
 
     var vm = this;
+    vm.isEnExists = isEnExists;
     //保存实体
     vm.SaveEntity = SaveEntity;
+    vm.SelectEn = SelectEn;
 
-    vm.NewEntity = {};
-    vm.NewEntity.Level = 3;
+    vm.SelectedEn = {};
+    vm.SelectedEn.Level = 3;
 
     GetList();
+
+    function SelectEn(item) {
+        vm.SelectedEn = angular.copy(item);
+        vm.EnTable = { Name: vm.SelectedEn.TableName, DbSchema: vm.SelectedEn.TableSchema };
+        //console.log(item);
+    }
 
     //保存实体
     function SaveEntity() {
@@ -28,6 +36,8 @@ function ($scope, $http, Dialog, AjaxService) {
         Open("U", resolve);
     }
 
+    $scope.$watch(function () { return vm.EnTable; }, getTableList);
+
 
     //删除
     function Delete(item) {
@@ -42,18 +52,25 @@ function ($scope, $http, Dialog, AjaxService) {
 
     function GetList() {
         vm.promise = AjaxService.GetPlans("PlanEntity").then(function (data) {
-            console.log(data);
             vm.List = data;
         });
     }
+    function getTableList() {
+        if (vm.EnTable) {
+            vm.promise = AjaxService.GetTbColumns(vm.EnTable.DbSchema, vm.EnTable.Name, vm.SelectedEn.ConnectName).then(function (data) {
+                vm.TbColunms = data;
+            });
+        }
+    }
 
-    function Open(type, resolve) {
-        Dialog.open("SystemDailog", resolve).then(function (data) {
-            GetList();
-            //console.log(data);
-        }).catch(function (reason) {
-            //console.log(reason);
-        });
+    //验证实体是否存在
+    function isEnExists() {
+        if (vm.Item.SysNo) {
+            var en = { name: "SysNo", value: vm.Item.SysNo };
+            vm.promise = AjaxService.GetTbView('Sys_System', en).then(function (data) {
+                $scope.SystemForm.No.$setValidity('unique', !data);
+            });
+        }
     }
 }
 ]);

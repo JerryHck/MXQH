@@ -28,7 +28,12 @@
             //文件
             HandleFile: HandleFile,
             //链接对象列表
-            GetConnect: GetConnect
+            GetConnect: GetConnect,
+            //数据对象
+            GetDbeObject: GetDbeObject,
+            //获取表栏位
+            GetColumns: GetColumns,
+            GetTbColumns: GetTbColumns
         };
 
         return obj;
@@ -62,13 +67,9 @@
 
         //获得单实体资料
         function GetTbView(name, json) {
-            var d = $q.defer(), g = $q.defer(),
-                 url = serviceUrl + generic;
-            var en = {};
-            en.strTbView = name;
-            en.strJson = JSON.stringify(convertArray(json)) || '[]';
-            Ajax(d, url, en, "GetTbViewList").then(
-                function (data) { g.resolve(data.data[0]); },
+            var g = $q.defer();
+            return GetTbViewList(name, json).then(
+                function (data) { g.resolve(data[0]); },
                 function () { g.reject(); }
             );
             return g.promise;
@@ -81,7 +82,7 @@
             var en = {};
             en.strTbView = name;
             en.strJson = JSON.stringify(convertArray(json)) || '[]';
-            return Ajax(d, url, en, "GetTbViewList");
+            return TbAjax(d, url, en, "GetTbViewList");
         }
 
         //获得表资料
@@ -92,7 +93,7 @@
             en.strProc = name;
             en.strJson = JSON.stringify(json) || '{}';
 
-            return Ajax(d, url, en, "EditBack");
+            return TbAjax(d, url, en, "EditBack");
         }
 
         //获得表资料
@@ -112,7 +113,6 @@
 
         //HTTP AJAX
         function AjaxHandle(q, type) {
-
             var en = { "type": type }
             httpFun(q, 'Data/Handler/FileData.ashx', en);
             return q.promise;
@@ -123,37 +123,76 @@
             return Ajax(d, url, {}, "GetConnectList");
         }
 
-        function entity(name, json, funName) {
-            var d = $q.defer(), g = $q.defer(),
-                url = serviceUrl + generic;
+        function GetDbeObject(con, type) {
+            var d = $q.defer(),
+                 url = serviceUrl + generic;
             var en = {};
-            en.strName = name;
-            en.strJson = JSON.stringify(convertArray(json)) || '[]';
+            en.strCon = con;
+            en.strType = type;
+            return Ajax(d, url, en, "GetDbeObject");
+        }
 
-            Ajax(d, url, en, funName).then(
-                function (data) { g.resolve(data); },
+        function GetColumns(con) {
+            var d = $q.defer(), g = $q.defer(),
+                 url = serviceUrl + generic;
+            var en = {};
+            en.entityName = con;
+            Ajax(d, url, en, "GetTbViewColumns").then(
+                function (data) { g.resolve(data.data); },
                 function () { g.reject(); }
             );
             return g.promise;
         }
 
-        function plan(name, json, funName) {
+        function GetTbColumns(schema, table, con) {
             var d = $q.defer(), g = $q.defer(),
                  url = serviceUrl + generic;
             var en = {};
-            en.entityName = name;
-            en.strJson = JSON.stringify(convertArray(json)) || '[]';
-            Ajax(d, url, en, funName).then(
-                function (data) { g.resolve(data); },
+            en.Schema = schema;
+            en.TableName = table;
+            en.ConnectName = con;
+            Ajax(d, url, en, "GetTbColumns").then(
+                function (data) { g.resolve(data.data); },
                 function () { g.reject(); }
             );
             return g.promise;
+        }
+
+        function entity(name, json, funName) {
+            var d = $q.defer(),
+                url = serviceUrl + generic;
+            var en = {};
+            en.strName = name;
+            en.strJson = JSON.stringify(convertArray(json)) || '[]';
+            return Ajax(d, url, en, funName);
+        }
+
+        function plan(name, json, funName) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = {};
+            en.entityName = name;
+            en.strJson = JSON.stringify(convertArray(json)) || '[]';
+            return Ajax(d, url, en, funName)
         }
 
         //HTTP AJAX
         function Ajax(q, url, parameter, Method, type) {
             var en = { method: Method, Json: JSON.stringify(parameter) };
             return httpFun(q, url, en, type);
+        }
+
+        function TbAjax(q, url, parameter, Method, type) {
+            var en = { method: Method, Json: JSON.stringify(parameter) };
+            return httpTbFun(q, url, en, type);
+        }
+
+        function httpTbFun(q, url, postData, type) {
+            var g = $q.defer();
+            httpFun(g, url, en, type).then(
+                function (data) { q.resolve(data.data); },
+                function () { q.reject(); }
+            );
+            return q.promise;
         }
 
         function httpFun (q, url, postData, type) {
