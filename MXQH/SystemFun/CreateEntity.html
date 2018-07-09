@@ -74,31 +74,32 @@
                                         <span class="h3">实体详细属性信息</span>
                                     </div>
                                     <div class="panel-body">
-
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td class="col-md-2">栏位名</td>
-                                                <td class="col-md-2">栏位属性</td>
-                                                <td class="col-md-2">实体关联方式</td>
-                                                <td class="col-md-2">是否主键</td>
-                                                <td class="col-md-2">排序方式</td>
-                                                <td class="col-md-2">排序优先级</td>
-                                            </tr>
-                                            <tr ng-repeat="pro in en.PropertyList">
+                                        <div class="col-lg-3 col-md-4 col-xs-6" ng-repeat="pro in en.PropertyList">
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">{{ pro.ColumnName }}</div>
+                                                <div class="list-group">
+                                                    <div class="list-group-item">{{ pro.ColumnName }}</div>
+                                                    <div class="list-group-item">{{ pro.RelationType }}</div>
+                                                    <div class="list-group-item">
+                                                        <div toggle-switch ng-model="pro.IsKey" class="switch-mini switch-small switch-danger" on-label="是" off-label="否"
+                                                                on-value="1" off-value="0" on-change="Supplier.change(item)"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--<tr ng-repeat="pro in en.PropertyList">
                                                 <td>{{ pro.ColumnName }}</td>
                                                 <td>{{ pro.ColumnType }}</td>
                                                 <td>{{ pro.RelationType }}</td>
                                                 <td>
-                                                    {{ pro.IsKey }}
-                                                    <div toggle-switch ng-model="pro.IsKey" class="switch-small switch-info" on-label="是" off-label="否"
-                                                         on-value="true" off-value="false" on-change="Supplier.change(item)"></div>
+                                                    <div toggle-switch ng-model="pro.IsKey" class="switch-mini switch-small switch-danger" on-label="是" off-label="否"
+                                                         on-value="1" off-value="0" on-change="Supplier.change(item)"></div>
                                                 </td>
                                                 <td>{{ pro.OrderWay }}</td>
                                                 <td>{{ pro.OrderNum }}</td>
 
-                                            </tr>
-                                        </table>
+                                            </tr>-->
                                     </div>
+                                </div>
                                 </div>
                             </div>
                         </div>

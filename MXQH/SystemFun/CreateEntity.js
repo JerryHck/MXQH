@@ -114,7 +114,7 @@ function ($scope, $http, Dialog, AjaxService) {
                 en.EntityName = vm.SelectedEn.EntityName;
                 en.ColumnName = item.ColumnName;
                 en.ColumnType = 0;
-                en.RelationType = 0;
+                en.RelationType = "";
                 en.OrderWay = 0
                 en.OrderNum = 0;
                 en.IsKey = item.IsKey;
