@@ -123,12 +123,13 @@
             return Ajax(d, url, {}, "GetConnectList");
         }
 
-        function GetDbeObject(con, type) {
+        function GetDbeObject(con, type, ser) {
             var d = $q.defer(),
                  url = serviceUrl + generic;
             var en = {};
             en.strCon = con;
             en.strType = type;
+            en.strSearch = ser;
             return Ajax(d, url, en, "GetDbeObject");
         }
 
@@ -188,7 +189,7 @@
 
         function httpTbFun(q, url, postData, type) {
             var g = $q.defer();
-            httpFun(g, url, en, type).then(
+            httpFun(g, url, postData, type).then(
                 function (data) { q.resolve(data.data); },
                 function () { q.reject(); }
             );

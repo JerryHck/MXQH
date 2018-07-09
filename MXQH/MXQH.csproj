@@ -85,10 +85,13 @@
     <Content Include="Content\angular-busy.min.css" />
     <Content Include="Content\angular-toastr.css" />
     <Content Include="Content\angular-toastr.min.css" />
+    <Content Include="Content\angular-toggle-switch\angular-toggle-switch.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
     <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap-switch\bootstrap-switch.css" />
+    <Content Include="Content\bootstrap-switch\bootstrap-switch.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\select.css" />
@@ -152,6 +155,9 @@
     <Content Include="Loading\lg.ajax-spinner-preloader.gif" />
     <Content Include="Loading\lg.circle-slack-loading-icon.gif" />
     <Content Include="Loading\Loading.html" />
+    <Content Include="Scripts\angular-ui\angular-toggle-switch.js" />
+    <Content Include="Scripts\angular-ui\bootstrap-switch.js" />
+    <Content Include="Scripts\angular-ui\bootstrap-switch.min.js" />
     <Content Include="Scripts\angular\angular-busy.js" />
     <Content Include="Scripts\angular\angular-busy.min.js" />
     <Content Include="Scripts\angular\angular-messages.js" />
@@ -220,6 +226,10 @@
     <Content Include="Scripts\angular\angular-cookies\angular-cookies.min.js.map" />
     <Content Include="Scripts\angular\angular-resource\angular-resource.min.js.map" />
     <Content Include="Scripts\angular\angular-sanitize\angular-sanitize.min.js.map" />
+    <Content Include="Content\angular-toggle-switch\angular-toggle-switch.less" />
+    <Content Include="Content\angular-toggle-switch\mixins.less" />
+    <Content Include="Content\angular-toggle-switch\toggle-switch.less" />
+    <Content Include="Content\angular-toggle-switch\variables.less" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />

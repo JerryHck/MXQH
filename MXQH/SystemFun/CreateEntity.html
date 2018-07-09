@@ -1,11 +1,11 @@
-﻿<div class="app-content-full">
+﻿<div class="app-content-full" cg-busy="en.promise">
     <div class="hbox hbox-auto-xs hbox-auto-sm bg-light">
         <div class="col w-lg lt b-r">
             <div class="vbox">
                 <div class="wrapper">
-                    <div class="h4">计划数据实体</div>
+                    <div class="h4 text-center">计划数据实体</div>
                 </div>
-                <div class="wrapper b-t m-t-xxs">
+                <div class="wrapper b-t m-b-xxs">
                     <div class="form-group">
                         <div class="input-group">
                             <input type="text" class="form-control input-sm" placeholder="查询" ng-model="en.EntityQuery">
@@ -32,22 +32,25 @@
                                                     <connect-select ng-model="en.SelectedEn.ConnectName" ng-name="obConnect" my-required="true"></connect-select>
                                                 </div>
                                                 <div class="form-group" ng-class="{ 'has-error' : EntityForm.obConnect.$invalid }">
-                                                    <object-select ob-type="'U'" ob-connect="en.SelectedEn.ConnectName" ng-model="en.EnTable" ng-name="obTable" my-required="true"></object-select>
+                                                    <object-select ob-type="'UV'" ob-connect="en.SelectedEn.ConnectName" ng-model="en.EnTable" ng-name="obTable" my-required="true"></object-select>
                                                 </div>
                                                 <div class="form-group">
                                                     <input ui-jq="TouchSpin" placeholder="往下展开层级" class="input-sm" type="text" ng-model="en.SelectedEn.Level" data-min='1' data-max="10">
                                                 </div>
-                                                <a class="btn btn-sm btn-success pull-right m-2" ng-click="en.SaveEntity()" ng-disabled="EntityForm.$invalid"><i class="glyphicon glyphicon-save"></i>储存</a>
                                             </div>
+                                        </div>
+                                        <div class="panel-footer text-right">
+                                            <a class="btn btn-sm btn-success m-2" ng-click="en.SaveEntity()" ng-disabled="EntityForm.$invalid"><i class="glyphicon glyphicon-save"></i>储存</a>
+                                            <a class="btn btn-sm btn-warning m-2 m-l-md" ng-click="en.Cancel()">取消</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div ng-if="!en.isAddOpen">
                                     <div class="list-group">
-                                        <a ng-repeat="item in en.List | filter:en.EntityQuery " class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.selected, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="en.SelectEn(item)">
-                                            <span ng-click='deleteNote(note)' class="pull-right text-muted hover-action"><i class="fa fa-times"></i></span>
-                                            <span class="pull-left"><i class="glyphicon glyphicon-tree-conifer"></span></i><span class="block text-info text-lg" ng-bind-html="item.EntityName | highlight: en.EntityQuery"></span>
-                                            <small class="text-muted">
+                                        <a ng-repeat="item in en.List | filter:en.EntityQuery " class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.selected, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}">
+                                            <span ng-click='en.DeleteEn(item)' ng-confirm="{text:'确定要删除实体吗'}" class="pull-right text-muted hover-action"><i class="fa fa-times"></i></span>
+                                            <span class="pull-left"><i class="glyphicon glyphicon-tree-conifer"></i></span><span class="block text-info text-lg" ng-bind-html="item.EntityName | highlight: en.EntityQuery" ng-click="en.SelectEn(item)"></span>
+                                            <small class="text-muted" ng-click="en.SelectEn(item)">
                                                 <span>{{ item.TableSchema }}.{{ item.TableName }}</span>
                                                 <span class="pull-right">{{ item.Level }}</span>
                                             </small>
@@ -60,23 +63,45 @@
                 </div>
             </div>
         </div>
-        <div class="col" cg-busy="en.promise">
+        <div class="col w-auto w-lg lt b-r">
             <div class="vbox">
-                <div class="wrapper bg-light lt b-b">
-                    <span class="text-muted">Created on:</span> <span>{{ note.date  | date:'MMM-dd-yyyy H:mm' }}</span>
-                    <div class="m-l inline dropdown" dropdown>
-                        <a class="v-middle pos-rlt inline bg-{{note.color}}" dropdown-toggle style="width:16px;height:16px;top:-2px"></a>
-                        <div class="dropdown-menu animated fadeInUp w wrapper">
-                            <a ng-repeat="color in colors" class="inline m-xs bg-{{color}}" style="width:18px;height:18px" ng-click=" note.color=color "></a>
-                        </div>
-                    </div>
-                </div>
                 <div class="row-row">
                     <div class="cell scrollable hover">
                         <div class="cell-inner">
-                            <textarea class="form-control no-radius no-border no-bg wrapper-lg text-md" style="height:100%;" ng-model="note.content"></textarea>
+                            <div class="padder">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <span class="h3">实体详细属性信息</span>
+                                    </div>
+                                    <div class="panel-body">
+
+                                        <table class="table table-striped">
+                                            <tr>
+                                                <td class="col-md-2">栏位名</td>
+                                                <td class="col-md-2">栏位属性</td>
+                                                <td class="col-md-2">实体关联方式</td>
+                                                <td class="col-md-2">是否主键</td>
+                                                <td class="col-md-2">排序方式</td>
+                                                <td class="col-md-2">排序优先级</td>
+                                            </tr>
+                                            <tr ng-repeat="pro in en.PropertyList">
+                                                <td>{{ pro.ColumnName }}</td>
+                                                <td>{{ pro.ColumnType }}</td>
+                                                <td>{{ pro.RelationType }}</td>
+                                                <td>
+                                                    {{ pro.IsKey }}
+                                                    <div toggle-switch ng-model="pro.IsKey" class="switch-small switch-info" on-label="是" off-label="否"
+                                                         on-value="true" off-value="false" on-change="Supplier.change(item)"></div>
+                                                </td>
+                                                <td>{{ pro.OrderWay }}</td>
+                                                <td>{{ pro.OrderNum }}</td>
+
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <!--<pre>{{ en.TbColunms | json }}</pre>-->
                     </div>
                 </div>
             </div>
@@ -84,10 +109,8 @@
 
         <div class="col w-lg lt b-r">
             <div class="vbox">
-                vb
-                <
                 <div class="wrapper b-t m-t-xxs">
-                    <p class="text-info">数据库表栏位</p>
+                    <p class="text-black-50">{{  en.SelectedEn.TableSchema  + (en.SelectedEn.TableSchema?".":"") + en.SelectedEn.TableName }}栏位列表</p>
                     <div class="input-group">
                         <input type="text" class="form-control input-sm" placeholder="查询" ng-model="en.TbColunmName">
                         <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
@@ -101,7 +124,7 @@
                                     <article class="media" ng-repeat="item in en.TbColunms | filter:en.TbColunmName ">
                                         <div class="pull-left">
                                             <label class="i-checks">
-                                                <input type="checkbox"><i></i>
+                                                <input type="checkbox" ng-checked="en.TbChecked(item)" ng-model="item.isCheck" ng-change="en.CheckChange(item)"><i></i>
                                             </label>
                                         </div>
                                         <div class="media-body form-group">

@@ -9,31 +9,39 @@ function ($scope, $http, Dialog, AjaxService) {
     //保存实体
     vm.SaveEntity = SaveEntity;
     vm.SelectEn = SelectEn;
+    vm.Cancel = Cancel;
+    vm.DeleteEn = DeleteEn;
 
-    vm.SelectedEn = {};
-    vm.SelectedEn.Level = 3;
+    vm.TbChecked = TbChecked;
+    vm.CheckChange = CheckChange;
 
     GetList();
+    Cancel();
 
     function SelectEn(item) {
         vm.SelectedEn = angular.copy(item);
         vm.EnTable = { Name: vm.SelectedEn.TableName, DbSchema: vm.SelectedEn.TableSchema };
+        getEntityProList();
         //console.log(item);
     }
 
     //保存实体
     function SaveEntity() {
-        vm.isAddOpen = false;
+        Cancel();
     }
 
-    //編輯
-    function Edit(item) {
-        var resolve = {
-            ItemData: function () {
-                return item;
-            }
-        };
-        Open("U", resolve);
+    //初始化数据
+    function Cancel() {
+        vm.SelectedEn = {};
+        vm.SelectedEn.Level = 3;
+        vm.isAddOpen = false;
+        vm.TbColunms = undefined;
+        vm.PropertyList = [];
+    }
+
+    //删除
+    function DeleteEn(item) {
+        
     }
 
     $scope.$watch(function () { return vm.EnTable; }, getTableList);
@@ -57,9 +65,63 @@ function ($scope, $http, Dialog, AjaxService) {
     }
     function getTableList() {
         if (vm.EnTable) {
+            vm.PropertyList = [];
+            vm.SelectedEn.TableSchema = vm.EnTable.DbSchema;
+            vm.SelectedEn.TableName = vm.EnTable.Name;
             vm.promise = AjaxService.GetTbColumns(vm.EnTable.DbSchema, vm.EnTable.Name, vm.SelectedEn.ConnectName).then(function (data) {
                 vm.TbColunms = data;
             });
+        }
+    }
+    function getEntityProList() {
+        if (vm.SelectedEn.EntityName) {
+            var en = {};
+            en.name = "EntityName";
+            en.value = vm.SelectedEn.EntityName;
+            vm.promise = AjaxService.GetPlans("PlanProperty", en).then(function (data) {
+                vm.PropertyList = data;
+            });
+        }
+    }
+
+    function TbChecked(item) {
+        var check = false;
+        for (var i = 0, len = vm.PropertyList.length; i < len; i++) {
+            if (item.ColumnName == vm.PropertyList[i].ColumnName) {
+                check = true; break;
+            }
+        }
+        return item.isCheck = check;
+    }
+
+    function CheckChange(item) {
+        var check = false, index=-1;
+        for (var i = 0, len = vm.PropertyList.length; i < len; i++) {
+            if (item.ColumnName == vm.PropertyList[i].ColumnName) {
+                check = true; index = i; break;
+            }
+        }
+
+        if (item.isCheck) {
+            var check = false;
+            for (var i = 0, len = vm.PropertyList.length; i < len; i++) {
+                if (item.ColumnName == vm.PropertyList[i].ColumnName) {
+                    check = true; break;
+                }
+            }
+            if (!check) {
+                var en = {};
+                en.EntityName = vm.SelectedEn.EntityName;
+                en.ColumnName = item.ColumnName;
+                en.ColumnType = 0;
+                en.RelationType = 0;
+                en.OrderWay = 0
+                en.OrderNum = 0;
+                en.IsKey = item.IsKey;
+                vm.PropertyList.push(en);
+            }
+        } else {
+            vm.PropertyList.splice(index, 1)
         }
     }
 

@@ -11,6 +11,7 @@ angular.module('app', [
     'ngStorage',
     'ui.router',
     'ui.select2',
+    'toggle-switch',
     'ui.bootstrap',
     'ui.load',
     'ui.jq',
