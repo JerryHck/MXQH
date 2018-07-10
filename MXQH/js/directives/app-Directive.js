@@ -334,27 +334,19 @@ angular.module('app')
         require: 'ngModel',
         scope: {
             ngModel: '=',
-            Clear: '=',
             ngDisabled: '=',
             searchEnabled: '=',
             configOption: '=',
+            ngClass: "@",
             myRequired: '@',
             ngName: '@'
         },
-        template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '<ui-select name="{{ ngName }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="myRequired">'
-                  + '  <ui-select-match placeholder="请选择...">{{ $select.selected.ClDesc }}</ui-select-match>       '
+        template:  '<ui-select name="{{ ngName }}" ng-class="{ ngClass }" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="myRequired">'
+                  + ' <ui-select-match placeholder="请选择...">{{ $select.selected.ClDesc }}</ui-select-match>       '
                   + ' <ui-select-choices repeat="item.ClInf as item in data | propsFilter: {ClInf: $select.search, ClDesc: $select.search}">                          '
-                  + '      <div ng-bind-html="item.ClDesc | highlight: $select.search"></div>                             '
-                  //+ '      <small ng-bind-html="item.ClDesc | highlight: $select.search"></small>                       '
-                  + '  </ui-select-choices>                                                                                  '
+                  + '      <div ng-bind-html="item.ClDesc | highlight: $select.search"></div>'                             
+                  + '  </ui-select-choices>'
                   + '</ui-select>'
-                  + '    <span class="input-group-btn" ng-if="clear">'
-                  + '        <button ng-click="$parent.ngModel= undefined" class="btn btn-default" ng-disabled="ngDisabled">'
-                  + '            <span class="glyphicon glyphicon-trash text-danger"></span>'
-                  + '         </button>'
-                  + '     </span>'
-                  + '</div>'
         ,
         link: link
     };

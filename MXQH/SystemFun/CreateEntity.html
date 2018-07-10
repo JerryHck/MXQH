@@ -1,6 +1,6 @@
 ﻿<div class="app-content-full" cg-busy="en.promise">
     <div class="hbox hbox-auto-xs hbox-auto-sm bg-light">
-        <div class="col w-lg lt b-r">
+        <div class="col w-md lt b-r text-xs">
             <div class="vbox">
                 <div class="wrapper">
                     <div class="h4 text-center">计划数据实体</div>
@@ -63,33 +63,31 @@
                 </div>
             </div>
         </div>
-        <div class="col w-auto w-lg lt b-r">
+        <div class="col w-auto w-lg lt b-r text-xs">
             <div class="vbox">
                 <div class="row-row">
                     <div class="cell scrollable hover">
                         <div class="cell-inner">
                             <div class="padder">
-                                <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <span class="h3">实体详细属性信息</span>
                                     </div>
-                                    <div class="panel-body">
-                                        <div class="col-lg-4 col-md-4 col-xs-6" ng-repeat="pro in en.PropertyList">
+                                    <div class="col-lg-4 col-md-6 col-xs-12" ng-repeat="pro in en.PropertyList">
                                             <div class="panel panel-info">
                                                 <div class="panel-heading h4">
                                                     {{ pro.ColumnName }}
                                                 </div>
-                                                <div class="form-horizontal">
-                                                    <div class="form-group">
+                                                <div class="form form-horizontal m-t-xxs">
+                                                    <div class="form-group" ng-if="pro.ColumnType == '0'">
                                                         <label class="col-sm-4 control-label">主键:</label>
-                                                        <div class="col-sm-8">
+                                                        <div class="col-sm-6">
                                                             <div toggle-switch ng-model="pro.IsKey" class="switch-mini w-xxs switch-small switch-danger" on-label="是" off-label="否"
                                                                  on-value="1" off-value="0" on-change="Supplier.change(item)"></div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-sm-4 control-label">排序:</label>
-                                                        <div class="col-sm-8">
+                                                        <div class="col-sm-7">
                                                             <div class="m-b-sm">
                                                                 <config-select ng-model="pro.OrderWay" config-option="en.ConfigOrderWay"></config-select>
                                                             </div>
@@ -99,27 +97,20 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
+                                                    <div class="form-group" ng-if="pro.ColumnType != '0'">
                                                         <label class="col-sm-4 control-label">属性:</label>
-                                                        <div class="col-sm-8 input-group">
-                                                            <div class="m-b-sm">
-                                                                <config-select ng-model="pro.ColumnType" config-option="en.ConfigColumnType"></config-select>
-                                                            </div>
-                                                            <div>
-
-                                                            </div>
-                                                            <!--<span class="input-group-btn" ng-if="clear">
+                                                        <div class="col-sm-7 input-group">
+                                                            <span class="input-group-btn">
                                                                 <button ng-click="" class="btn btn-default">
                                                                     <span class="glyphicon glyphicon-trash text-danger"></span>'
                                                                 </button>
-                                                            </span>-->
+                                                            </span>
+                                                            <config-select ng-model="pro.ColumnType" config-option="en.ConfigColumnType"></config-select>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -127,7 +118,7 @@
             </div>
         </div>
 
-        <div class="col w-lg lt b-r">
+        <div class="col w-md lt b-r text-xs">
             <div class="vbox">
                 <div class="wrapper b-t m-t-xxs">
                     <p class="text-black-50">{{  en.SelectedEn.TableSchema  + (en.SelectedEn.TableSchema?".":"") + en.SelectedEn.TableName }}栏位列表</p>
