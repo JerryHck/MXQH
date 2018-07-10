@@ -33,7 +33,8 @@
             GetDbeObject: GetDbeObject,
             //获取表栏位
             GetColumns: GetColumns,
-            GetTbColumns: GetTbColumns
+            GetTbColumns: GetTbColumns,
+            GetTableConfig: GetTableConfig,
         };
 
         return obj;
@@ -43,6 +44,14 @@
             var d = $q.defer(),
                 url = appUrl + 'Data/' + data;
             return Ajax(d, url, undefined, undefined, "GET");
+        }
+
+        function GetTableConfig(tbName, clName) {
+            var list = [
+                { name: "TbName", value: tbName },
+                { name: "ClName", value: clName }
+            ];
+            return GetPlans("TableConfig", list);
         }
 
         //获得计划资料

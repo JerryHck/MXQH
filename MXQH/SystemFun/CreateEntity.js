@@ -17,6 +17,20 @@ function ($scope, $http, Dialog, AjaxService) {
 
     GetList();
     Cancel();
+    vm.ConfigOrderWay = { Table: "EntityProperty", Column: "OrderWay" };
+    ////获取排序方式
+    //AjaxService.GetTableConfig("EntityProperty", "OrderWay").then(function (data) {
+    //    vm.OrderWayList = data;
+    //});
+    ////获取栏位属性
+    //AjaxService.GetTableConfig("EntityProperty", "ColumnType").then(function (data) {
+    //    vm.ColumnTypeList = data;
+    //});
+    ////获取栏位关联方式
+    //AjaxService.GetTableConfig("EntityProperty", "RelationType").then(function (data) {
+    //    vm.RelationTypeList = data;
+    //})
+
 
     function SelectEn(item) {
         vm.SelectedEn = angular.copy(item);
@@ -115,7 +129,7 @@ function ($scope, $http, Dialog, AjaxService) {
                 en.ColumnName = item.ColumnName;
                 en.ColumnType = 0;
                 en.RelationType = "";
-                en.OrderWay = 0
+                en.OrderWay = "NON";
                 en.OrderNum = 0;
                 en.IsKey = item.IsKey;
                 vm.PropertyList.push(en);

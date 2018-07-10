@@ -41,16 +41,16 @@ angular.module('app')
         require: 'ngModel',
         scope: {
             ngModel: '=',
-            selectItem:'=',
             Clear: '=',
             ngDisabled: '=',
+            searchEnabled:'=',
             myRequired: '@',
             ngName:'@'
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '<ui-select name="{{ ngName }}" ng-model="$parent.selectItem" theme="bootstrap" ng-disabled="ngDisabled" ng-required="myRequired">'
+                  + '<ui-select name="{{ ngName }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="myRequired">'
                   +'  <ui-select-match placeholder="选择组织...">{{ $select.selected.CompanyName }}</ui-select-match>       '
-                  + ' <ui-select-choices repeat="item in data | filter: $select.search track by item.CompanyNo">                          '
+                  + ' <ui-select-choices repeat="item.CompanyNo as item in data | filter: $select.search track by item.CompanyNo">                          '
                   +'      <div ng-bind-html="item.CompanyNo | highlight: $select.search"></div>                             '
                   +'      <small ng-bind-html="item.CompanyName | highlight: $select.search"></small>                       '
                   +'  </ui-select-choices>                                                                                  '
@@ -66,9 +66,7 @@ angular.module('app')
     };
 
     function link(scope, element, attrs) {
-
-        scope.$watch('selectItem', UpdateItem);
-
+        scope.data = undefined;
         //组织
         AjaxService.GetEntities("Company").then(function (data) {
             scope.data = data;
@@ -79,13 +77,6 @@ angular.module('app')
                 }
             });
         });
-
-        function UpdateItem()
-        {
-            if (scope.selectItem && scope.selectItem.CompanyNo) {
-                scope.ngModel = scope.selectItem.CompanyNo;
-            }
-        }
     }
 }])
 .directive('systemSelect', ['AjaxService', function (AjaxService) {
@@ -94,16 +85,16 @@ angular.module('app')
         require: 'ngModel',
         scope: {
             ngModel: '=',
-            selectItem: '=',
             ngDisabled: '=',
+            searchEnabled: '=',
             clear: '=',
             myRequired: '@',
             ngName: '@'
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '<ui-select  ng-model="$parent.selectItem" theme="bootstrap" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
-                  + '  <ui-select-match placeholder="选择系统...">{{ $select.selected.SysName }}</ui-select-match>       '
-                  + ' <ui-select-choices repeat="item in data | filter: $select.search track by item.SysNo">             '
+                  + '<ui-select  ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
+                  + ' <ui-select-match placeholder="选择系统...">{{ $select.selected.SysName }}</ui-select-match>       '
+                  + ' <ui-select-choices repeat="item.SysNo as item in data | filter: $select.search track by item.SysNo">             '
                   + '      <div ng-bind-html="item.SysNo | highlight: $select.search"></div>                             '
                   + '      <small ng-bind-html="item.SysName | highlight: $select.search"></small>                       '
                   + '  </ui-select-choices>                                                                                  '
@@ -120,43 +111,19 @@ angular.module('app')
     };
 
     function link(scope, element, attrs) {
-
-        scope.$watch('selectItem', UpdateItem);
-        scope.$watch('ngModel', SetValue);
-
+        scope.data = undefined;
         //组织
         AjaxService.GetEntities("SystemList").then(function (data) {
             scope.data = data;
-            SetValue();
         });
-
-        function SetValue() {
-            if (scope.data) {
-                scope.selectItem = undefined;
-                $.grep(scope.data, function (e) {
-                    if (e.SysNo == scope.ngModel) {
-                        scope.selectItem = e;
-                        return;
-                    }
-                });
-            }
-        }
-
-        function UpdateItem() {
-            if (scope.selectItem && scope.selectItem.SysNo) {
-                scope.ngModel = scope.selectItem.SysNo;
-            }
-        }
     }
 }])
-
 .directive('functionSelect', ['AjaxService', function (AjaxService) {
     return {
         restrict: 'E',
         require: 'ngModel',
         scope: {
             ngModel: '=',
-            selectItem: '=',
             funType: '@',
             ngDisabled: '=',
             clear: '=',
@@ -164,9 +131,9 @@ angular.module('app')
             ngName: '@'
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '<ui-select ng-model="$parent.selectItem" theme="bootstrap" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
+                  + '<ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
                   + '  <ui-select-match placeholder="请选择...">{{ $select.selected.FunName }}</ui-select-match>'
-                  + ' <ui-select-choices repeat="item in data | filter: $select.search track by item.FunNo">'
+                  + ' <ui-select-choices repeat="item.FunNo as item in data | filter: $select.search track by item.FunNo">'
                   + '      <div ng-bind-html="item.FunNo | highlight: $select.search"></div>'
                   + '      <small ng-bind-html="item.FunName | highlight: $select.search"></small>'
                   + '  </ui-select-choices>'
@@ -182,36 +149,14 @@ angular.module('app')
     };
 
     function link(scope, element, attrs) {
-        scope.$watch('selectItem', UpdateItem);
-        scope.$watch('ngModel', SetValue);
+        scope.data = undefined;
         var en = {};
         en.name = 'FunType';
         en.value = scope.funType == 1 ? 1 : 2;
         //组织
         AjaxService.GetEntities("Function", en).then(function (data) {
             scope.data = data;
-            SetValue();
         });
-
-
-        function SetValue()
-        {
-            if (scope.data) {
-                scope.selectItem = undefined;
-                $.grep(scope.data, function (e) {
-                    if (e.FunNo == scope.ngModel) {
-                        scope.selectItem = e;
-                        return;
-                    }
-                });
-            }
-        }
-
-        function UpdateItem() {
-            if (scope.selectItem && scope.selectItem.FunNo) {
-                scope.ngModel = scope.selectItem.FunNo;
-            }
-        }
     }
 }])
 .directive('funFileSelect', ['AjaxService', function (AjaxService) {
@@ -244,9 +189,10 @@ angular.module('app')
     };
 
     function link(scope, element, attrs) {
-
+        scope.data = undefined;
         //组织
-        AjaxService.HandleFile(scope.fileType).then(function (data) { scope.data = data; });
+        AjaxService.HandleFile(scope.fileType).then(function (data) { scope.data = data;});
+
     }
 }])
 .directive('objectSelect', ['AjaxService', function (AjaxService) {
@@ -279,6 +225,7 @@ angular.module('app')
         link: link
     };
     function link(scope, element, attrs) {
+        scope.data = undefined;
         scope.$watch('obConnect', getData);
 
         function getData() {
@@ -344,7 +291,7 @@ angular.module('app')
         link: link
     };
     function link(scope, element, attrs) {
-
+        scope.data = undefined;
         scope.$watch('ngModel', setValue);
 
         AjaxService.GetConnect().then(function (data) {
@@ -378,6 +325,47 @@ angular.module('app')
             else {
                 scope.data = scope.ListData;
             }
+        }
+    }
+}])
+.directive('configSelect', ['AjaxService', function (AjaxService) {
+    return {
+        restrict: 'E',
+        require: 'ngModel',
+        scope: {
+            ngModel: '=',
+            Clear: '=',
+            ngDisabled: '=',
+            searchEnabled: '=',
+            configOption: '=',
+            myRequired: '@',
+            ngName: '@'
+        },
+        template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
+                  + '<ui-select name="{{ ngName }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="myRequired">'
+                  + '  <ui-select-match placeholder="请选择...">{{ $select.selected.ClDesc }}</ui-select-match>       '
+                  + ' <ui-select-choices repeat="item.ClInf as item in data | propsFilter: {ClInf: $select.search, ClDesc: $select.search}">                          '
+                  + '      <div ng-bind-html="item.ClDesc | highlight: $select.search"></div>                             '
+                  //+ '      <small ng-bind-html="item.ClDesc | highlight: $select.search"></small>                       '
+                  + '  </ui-select-choices>                                                                                  '
+                  + '</ui-select>'
+                  + '    <span class="input-group-btn" ng-if="clear">'
+                  + '        <button ng-click="$parent.ngModel= undefined" class="btn btn-default" ng-disabled="ngDisabled">'
+                  + '            <span class="glyphicon glyphicon-trash text-danger"></span>'
+                  + '         </button>'
+                  + '     </span>'
+                  + '</div>'
+        ,
+        link: link
+    };
+
+    function link(scope, element, attrs) {
+        scope.data = undefined;
+        if (scope.configOption) {
+            //组织
+            AjaxService.GetTableConfig(scope.configOption.Table, scope.configOption.Column).then(function (data) {
+                scope.data = data;
+            });
         }
     }
 }])

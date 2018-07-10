@@ -74,32 +74,51 @@
                                         <span class="h3">实体详细属性信息</span>
                                     </div>
                                     <div class="panel-body">
-                                        <div class="col-lg-3 col-md-4 col-xs-6" ng-repeat="pro in en.PropertyList">
+                                        <div class="col-lg-4 col-md-4 col-xs-6" ng-repeat="pro in en.PropertyList">
                                             <div class="panel panel-info">
-                                                <div class="panel-heading">{{ pro.ColumnName }}</div>
-                                                <div class="list-group">
-                                                    <div class="list-group-item">{{ pro.ColumnName }}</div>
-                                                    <div class="list-group-item">{{ pro.RelationType }}</div>
-                                                    <div class="list-group-item">
-                                                        <div toggle-switch ng-model="pro.IsKey" class="switch-mini switch-small switch-danger" on-label="是" off-label="否"
-                                                                on-value="1" off-value="0" on-change="Supplier.change(item)"></div>
+                                                <div class="panel-heading h4">
+                                                    {{ pro.ColumnName }}
+                                                </div>
+                                                <div class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">主键:</label>
+                                                        <div class="col-sm-8">
+                                                            <div toggle-switch ng-model="pro.IsKey" class="switch-mini w-xxs switch-small switch-danger" on-label="是" off-label="否"
+                                                                 on-value="1" off-value="0" on-change="Supplier.change(item)"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">排序:</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="m-b-sm">
+                                                                <div class="btn-group-sm" uib-dropdown>
+                                                                    <span id="split-button" class="btn btn-default text-info">{{ pro.OrderWay }}</span>
+                                                                    <span type="button" class="btn btn-sm btn-success" uib-dropdown-toggle>
+                                                                        <span class="caret"></span>
+                                                                    </span>
+                                                                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
+                                                                        <li role="menuitem" ng-click="pro.OrderWay=way.ClInf" ng-repeat="way in en.OrderWayList"><a href="">{{ way.ClInf }}</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <input ui-jq="TouchSpin" type="text" ng-model="pro.OrderNum" class="form-control-sm input-sm" data-min='0' data-max="20"
+                                                                       data-verticalbuttons="false" data-verticalupclass="btn-xs fa fa-caret-up" data-verticaldownclass="btn-xs btn-sm fa fa-caret-down">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">属性:</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="m-b-sm">
+                                                                <config-select ng-model="pro.OrderWay" config-option="en.ConfigOrderWay" ></config-select>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--<tr ng-repeat="pro in en.PropertyList">
-                                                <td>{{ pro.ColumnName }}</td>
-                                                <td>{{ pro.ColumnType }}</td>
-                                                <td>{{ pro.RelationType }}</td>
-                                                <td>
-                                                    <div toggle-switch ng-model="pro.IsKey" class="switch-mini switch-small switch-danger" on-label="是" off-label="否"
-                                                         on-value="1" off-value="0" on-change="Supplier.change(item)"></div>
-                                                </td>
-                                                <td>{{ pro.OrderWay }}</td>
-                                                <td>{{ pro.OrderNum }}</td>
-
-                                            </tr>-->
+                                        </div>
                                     </div>
-                                </div>
                                 </div>
                             </div>
                         </div>
