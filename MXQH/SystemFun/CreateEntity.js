@@ -18,18 +18,8 @@ function ($scope, $http, Dialog, AjaxService) {
     GetList();
     Cancel();
     vm.ConfigOrderWay = { Table: "EntityProperty", Column: "OrderWay" };
-    ////获取排序方式
-    //AjaxService.GetTableConfig("EntityProperty", "OrderWay").then(function (data) {
-    //    vm.OrderWayList = data;
-    //});
-    ////获取栏位属性
-    //AjaxService.GetTableConfig("EntityProperty", "ColumnType").then(function (data) {
-    //    vm.ColumnTypeList = data;
-    //});
-    ////获取栏位关联方式
-    //AjaxService.GetTableConfig("EntityProperty", "RelationType").then(function (data) {
-    //    vm.RelationTypeList = data;
-    //})
+    vm.ConfigColumnType = { Table: "EntityProperty", Column: "ColumnType" };
+    vm.ConfigRelationType = { Table: "EntityProperty", Column: "RelationType" };
 
 
     function SelectEn(item) {
