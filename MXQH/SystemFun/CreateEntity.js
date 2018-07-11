@@ -1,19 +1,25 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('CreateEntityCtrl', ['$scope', '$http', 'Dialog', 'AjaxService',
-function ($scope, $http, Dialog, AjaxService) {
+.controller('CreateEntityCtrl', ['$scope', '$http', 'Dialog', 'AjaxService', 'toastr',
+function ($scope, $http, Dialog, AjaxService, toastr) {
 
     var vm = this;
-    vm.isEnExists = isEnExists;
+    vm.EnAdd = EnAdd;
+    vm.Edit = Edit;
     //保存实体
     vm.SaveEntity = SaveEntity;
     vm.SelectEn = SelectEn;
     vm.Cancel = Cancel;
     vm.DeleteEn = DeleteEn;
+    vm.DeletePro = DeletePro;
 
     vm.TbChecked = TbChecked;
     vm.CheckChange = CheckChange;
+    vm.setClass = setClass;
+
+    vm.isExists = isExists;
+
 
     GetList();
     Cancel();
@@ -21,12 +27,13 @@ function ($scope, $http, Dialog, AjaxService) {
     vm.ConfigColumnType = { Table: "EntityProperty", Column: "ColumnType" };
     vm.ConfigRelationType = { Table: "EntityProperty", Column: "RelationType" };
 
+    $scope.$watch(function () { return vm.EnTable; }, getTableList);
 
     function SelectEn(item) {
         vm.SelectedEn = angular.copy(item);
         vm.EnTable = { Name: vm.SelectedEn.TableName, DbSchema: vm.SelectedEn.TableSchema };
         getEntityProList();
-        //console.log(item);
+        vm.isEditing = false;
     }
 
     //保存实体
@@ -41,6 +48,8 @@ function ($scope, $http, Dialog, AjaxService) {
         vm.isAddOpen = false;
         vm.TbColunms = undefined;
         vm.PropertyList = [];
+        vm.isEditing = false;
+        vm.isAdd = false;
     }
 
     //删除
@@ -48,8 +57,19 @@ function ($scope, $http, Dialog, AjaxService) {
         
     }
 
-    $scope.$watch(function () { return vm.EnTable; }, getTableList);
 
+    function EnAdd() {
+        Cancel();
+        vm.isAddOpen = true;
+        vm.isEditing = true;
+        vm.isAdd = true;
+    }
+
+    function Edit() {
+        vm.isAddOpen = true;
+        vm.isEditing = true;
+        vm.isAdd = false;
+    }
 
     //删除
     function Delete(item) {
@@ -68,8 +88,12 @@ function ($scope, $http, Dialog, AjaxService) {
         });
     }
     function getTableList() {
-        if (vm.EnTable) {
+        if (vm.isEditing) {
             vm.PropertyList = [];
+            isProEmpty();
+        }
+
+        if (vm.EnTable) {
             vm.SelectedEn.TableSchema = vm.EnTable.DbSchema;
             vm.SelectedEn.TableName = vm.EnTable.Name;
             vm.promise = AjaxService.GetTbColumns(vm.EnTable.DbSchema, vm.EnTable.Name, vm.SelectedEn.ConnectName).then(function (data) {
@@ -87,7 +111,6 @@ function ($scope, $http, Dialog, AjaxService) {
             });
         }
     }
-
     function TbChecked(item) {
         var check = false;
         for (var i = 0, len = vm.PropertyList.length; i < len; i++) {
@@ -97,7 +120,6 @@ function ($scope, $http, Dialog, AjaxService) {
         }
         return item.isCheck = check;
     }
-
     function CheckChange(item) {
         var check = false, index=-1;
         for (var i = 0, len = vm.PropertyList.length; i < len; i++) {
@@ -105,7 +127,6 @@ function ($scope, $http, Dialog, AjaxService) {
                 check = true; index = i; break;
             }
         }
-
         if (item.isCheck) {
             var check = false;
             for (var i = 0, len = vm.PropertyList.length; i < len; i++) {
@@ -117,7 +138,7 @@ function ($scope, $http, Dialog, AjaxService) {
                 var en = {};
                 en.EntityName = vm.SelectedEn.EntityName;
                 en.ColumnName = item.ColumnName;
-                en.ColumnType = 0;
+                en.ColumnType = "0";
                 en.RelationType = "";
                 en.OrderWay = "NON";
                 en.OrderNum = 0;
@@ -127,16 +148,57 @@ function ($scope, $http, Dialog, AjaxService) {
         } else {
             vm.PropertyList.splice(index, 1)
         }
+        isProEmpty();
+    }
+
+    //删除属性
+    function DeletePro(pro) {
+        var index = -1;
+        for (var i = 0, len = vm.PropertyList.length; i < len; i++) {
+            if (pro.ColumnName == vm.PropertyList[i].ColumnName) {
+                index = i; break;
+            }
+        }
+        vm.PropertyList.splice(index, 1);
+        isProEmpty();
     }
 
     //验证实体是否存在
-    function isEnExists() {
-        if (vm.Item.SysNo) {
-            var en = { name: "SysNo", value: vm.Item.SysNo };
-            vm.promise = AjaxService.GetTbView('Sys_System', en).then(function (data) {
-                $scope.SystemForm.No.$setValidity('unique', !data);
+    function isExists(name) {
+        if (name) {
+            var en = { name: "EntityName", value: name };
+            AjaxService.GetPlan('PlanEntity', en).then(function (data) {
+                console.log(data)
+                var v = !data.EntityName;
+                $scope.EntityForm.entityName.$setValidity('unique', v);
+                if (!v) {
+                    toastr.warning('实体名称已被使用了！');
+                } else {
+                    isProEmpty();
+                }
             });
         }
+    }
+
+    function isProEmpty() {
+        if (vm.PropertyList) {
+            var v = vm.PropertyList.length > 0;
+            $scope.EntityForm.entityName.$setValidity('neetPro', v);
+            if (!v && vm.SelectedEn.EntityName) {
+                toastr.warning('实体属性还没有，需要重新添加哦！');
+            }
+        }
+    }
+
+    function setClass(type)
+    {
+        var c = "";
+        switch (type) {
+            case '0': c = "panel-default"; break;
+            case '1': c = "panel-primary"; break;
+            case '2': c = "panel-danger"; break;
+        }
+        return c;
     }
 }
 ]);
