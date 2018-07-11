@@ -358,7 +358,6 @@ angular.module('app')
     };
 
     function link(scope, element, attrs) {
-        console.log(scope.selectClass)
         scope.data = undefined;
         if (scope.configOption) {
             //组织
@@ -376,9 +375,9 @@ angular.module('app')
             ngModel: '=',
             obType: '=',
             ngDisabled: '=',
+            connectName: "=",
             clear: '=',
             selectClass: '@',
-            connectName: "@",
             myRequired: '@',
             ngName: '@'
         },
@@ -399,14 +398,14 @@ angular.module('app')
         link: link
     };
     function link(scope, element, attrs) {
+        scope.$watch('connectName', getData);
         scope.data = undefined;
-        getData();
         function getData() {
             scope.data = undefined;
             scope.ngModel = undefined;
             var en = {};
             en.name = 'ConnectName';
-            en.value = scope.connectName;
+            en.value = scope.connectName||'';
             AjaxService.GetPlans("SelectEntity", en).then(function (data) {
                 scope.data = data;
                 scope.ListData = angular.copy(scope.data);

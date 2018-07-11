@@ -1,5 +1,5 @@
 ﻿<div class="app-content-full" cg-busy="en.promise">
-    <div class="hbox hbox-auto-xs hbox-auto-sm bg-light" ng-form="EntityForm">
+    <div class="hbox hbox-auto-xs hbox-auto-sm bg-light">
         <div class="col w-md lt b-r text-xs">
             <div class="vbox">
                 <div class="wrapper">
@@ -23,7 +23,7 @@
                             <div class="padder">
                                 <div uib-collapse="!en.isAddOpen">
                                     <div class="panel">
-                                        <div class="panel-body">
+                                        <div class="panel-body" ng-form="EntityForm">
                                             <div class="form-horizontal">
                                                 <div class="form-group" ng-class="{ 'has-error' : EntityForm.entityName.$invalid }">
                                                     <input placeholder="实体名" ng-disabled="!en.isAdd" class="form-control text-xs warning" name="entityName" ng-blur="en.isExists(en.SelectedEn.EntityName)" type="text" ng-model="en.SelectedEn.EntityName" required>
@@ -74,7 +74,7 @@
                                         <button class="btn btn-sm btn-default" ng-if="!en.isEditing && en.SelectedEn.EntityName" ng-click="en.Edit()" ng-disabled="en.isAddOpen">
                                             <i class="glyphicon glyphicon-edit text-primary">编辑</i>
                                         </button>
-                                        <button class="btn btn-sm btn-default m-l-md" ng-if="en.isEditing" ng-click="en.isProAdd = !en.isProAdd">
+                                        <button class="btn btn-sm btn-default m-l-md" ng-if="en.isEditing" ng-click="en.isProAdd = !en.isProAdd" ng-disabled="en.isProAdd">
                                             <i class="glyphicon glyphicon-plus text-success">新增</i>
                                         </button>
                                     </span>
@@ -127,43 +127,58 @@
                                     <div class="panel panel-info">
                                         <div class="panel-heading">{{ en.ProItem.ColumnName }} 属性编辑</div>
                                         <div class="panel-body">
-                                            <div class="form form-horizontal">
+                                            <div class="form form-horizontal" ng-form="ClassForm">
                                                 <div class="form-group pull-in clearfix">
                                                     <div class="col-sm-6">
-                                                        <label class="col-lg-4 control-label">属性名</label>
-                                                        <div class="col-lg-8" ng-class="{ 'has-error' : EntityForm.No.$invalid }">
+                                                        <label class="col-lg-4 control-label">属性名:</label>
+                                                        <div class="col-lg-8" ng-class="{ 'has-error' : ClassForm.No.$invalid }">
                                                             <input type="text" class="form-control text-xs" name="No" placeholder="属性名"
                                                                    ng-model="en.ProItem.ColumnName" ng-disabled="!en.isEditing" ng-blur="sys.isExists()" required>
-                                                            <div ng-messages="EntityForm.No.$error" class="help-block" role="alert">
+                                                            <div ng-messages="ClassForm.No.$error" class="help-block" role="alert">
                                                                 <div ng-message="required">请输入系统编号</div>
                                                                 <div ng-message="unique">系统编号重复</div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label class="col-lg-4 control-label">属性类别</label>
-                                                        <div class="col-lg-8" ng-class="{ 'has-error' : EntityForm.enType.$invalid }">
+                                                        <label class="col-lg-4 control-label">属性类别:</label>
+                                                        <div class="col-lg-8" ng-class="{ 'has-error' : ClassForm.enType.$invalid }">
                                                             <config-select ng-model="en.ProItem.ColumnType" ng-name="enType" selectClass="text-danger text-xs" config-option="en.ConfigColumnType" ng-disabled="!en.isEditing" my-required="true"></config-select>
-                                                            <div ng-messages="EntityForm.enType.$error" class="help-block" role="alert">
+                                                            <div ng-messages="ClassForm.enType.$error" class="help-block" role="alert">
                                                                 <div ng-message="required">请选择属性类别</div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group pull-in clearfix">
-                                                    <div class="col-sm-6" ng-class="{ 'has-error' : EntityForm.conEn.$invalid }">
-                                                        <label>关联实体</label>
-                                                        <entity-select ng-model="en.ProItem.EntityName" select-class="'text-xs'"  ng-name="conEn" config-option="en.ConfigColumnType" ng-disabled="!en.isEditing" my-required="true"></entity-select>
-                                                        <div ng-messages="EntityForm.conEn.$error" class="help-block" role="alert">
-                                                            <div ng-message="required">请选择关联实体</div>
+                                                    <div class="col-sm-6">
+                                                        <label class="col-lg-4 control-label">关联实体</label>
+                                                        <div class="col-lg-8" ng-class="{ 'has-error' : ClassForm.conEn.$invalid }">
+                                                            <entity-select ng-model="en.ProItem.EntityName" select-class="'text-xs'" connect-name="en.SelectedEn.ConnectName" ng-name="conEn" ng-disabled="!en.isEditing" my-required="true"></entity-select>
+                                                            <div ng-messages="ClassForm.conEn.$error" class="help-block" role="alert">
+                                                                <div ng-message="required">请选择关联实体</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-6" ng-class="{ 'has-error' : EntityForm.conRelType.$invalid }">
-                                                        <label>关联方式</label>
-                                                        <config-select ng-model="en.ProItem.RelationType" select-class="text-xs"  ng-name="conRelType" config-option="en.ConfigRelationType" ng-disabled="!en.isEditing" my-required="true"></config-select>
-                                                        <div ng-messages="EntityForm.conRelType.$error" class="help-block" role="alert">
-                                                            <div ng-message="required">请选择关联方式</div>
+                                                    <div class="col-sm-6">
+                                                        <label class="col-lg-4 control-label">关联方式</label>
+                                                        <div class="col-lg-8"  ng-class="{ 'has-error' : ClassForm.conRelType.$invalid }">
+                                                            <config-select ng-model="en.ProItem.RelationType" select-class="text-xs" ng-name="conRelType" config-option="en.ConfigRelationType" ng-disabled="!en.isEditing" my-required="true"></config-select>
+                                                            <div ng-messages="ClassForm.conRelType.$error" class="help-block" role="alert">
+                                                                <div ng-message="required">请选择关联方式</div>
+                                                            </div>
                                                         </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-offset-6 col-sm-4">
+                                                        <button class="btn btn-sm btn-success" ng-click="en.Edit()" ng-disabled="ClassForm.$invalid">
+                                                            <i class="glyphicon glyphicon-edit">确定</i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-primary m-l-md" ng-click="en.isProAdd = !en.isProAdd">
+                                                            <i class="text-success">取消</i>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
