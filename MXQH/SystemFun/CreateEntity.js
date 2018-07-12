@@ -124,12 +124,20 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
 
     function AddProRelCon() {
         vm.ProItemRelateList.push(angular.copy(vm.newRelCon));
+        $scope.ClassForm.Pro.$setValidity('neetList', true);
         vm.newRelCon.ParentKey = undefined;
-        vm.newRelCon.ChildKey = undefined;
+        vm.newRelCon.ChildKey = undefined
     }
 
     function DeleteProCon(index) {
         vm.ProItemRelateList.splice(index, 1);
+        if (vm.ProItemRelateList.length == 0) {
+            vm.newRelCon.Associate = "";
+        }
+        else if (vm.ProItemRelateList.length == 1) {
+            vm.ProItemRelateList[0].Associate = "";
+        }
+        $scope.ClassForm.Pro.$setValidity('neetList', vm.ProItemRelateList.length > 0);
     }
 
 
@@ -217,8 +225,9 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
             var en = [{ name: "EntityName", value: vm.SelectedEn.EntityName },
                 { name: "ColumnName", value: name }];
             AjaxService.GetPlan('PlanProperty', en).then(function (data) {
-                console.log(data)
-                $scope.ClassForm.Pro.$setValidity('unique', !data.ColumnName);
+                var v = !data.ColumnName;
+                $scope.ClassForm.Pro.$setValidity('unique', v);
+                $scope.ClassForm.Pro.$setValidity('neetList', vm.ProItemRelateList.length > 0);
             });
         }
     }

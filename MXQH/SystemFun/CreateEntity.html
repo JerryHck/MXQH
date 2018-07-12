@@ -137,6 +137,7 @@
                                                             <div ng-messages="ClassForm.Pro.$error" class="help-block" role="alert">
                                                                 <div ng-message="required">请输入属性名</div>
                                                                 <div ng-message="unique">属性名重复</div>
+                                                                <div ng-message="neetList">需要添加关联条件</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -192,7 +193,8 @@
                                                                 </ui-select>
                                                                 <input type="text" name="ParentKey" class="form-control" ng-model="en.newRelCon.ParentKey" ng-if="en.newRelCon.ParenType=='2'" required />
                                                                 <input ui-jq="TouchSpin" name="ParentKey" type="text" ng-model="en.newRelCon.ParentKey" ng-if="en.newRelCon.ParenType=='1'" class="form-control" ng-disabled="!en.isEditing"
-                                                                       data-verticalbuttons="true" data-verticalupclass="btn-xs fa fa-caret-up" data-verticaldownclass="btn-xs btn-sm fa fa-caret-down" required>
+                                                                       data-verticalbuttons="true" data-verticalupclass="btn-xs fa fa-caret-up" data-verticaldownclass="btn-xs btn-sm fa fa-caret-down" 
+                                                                       data-min='-2147483647' data-max="2147483647" required>
                                                             </div>
                                                             <div class="col-lg-3" ng-class="{ 'has-error' : RelateForm.RelExp.$invalid }" title="条件中间表达式">
                                                                 <div config-select ng-name="RelExp" my-required="true" ng-model="en.newRelCon.Expression" select-class="text-xs" config-option="en.EntityRelationExp"></div>
@@ -211,32 +213,27 @@
                                                                 </ui-select>
                                                                 <input type="text" name="ChildKey" class="form-control" ng-model="en.newRelCon.ChildKey" ng-if="en.newRelCon.ChildType=='2'" required />
                                                                 <input ui-jq="TouchSpin" name="ChildKey" type="text" ng-model="en.newRelCon.ChildKey" ng-if="en.newRelCon.ChildType=='1'" class="form-control" ng-disabled="!en.isEditing"
-                                                                       data-verticalbuttons="true" data-verticalupclass="btn-xs fa fa-caret-up" data-verticaldownclass="btn-xs btn-sm fa fa-caret-down" required>
+                                                                       data-verticalbuttons="true" data-verticalupclass="btn-xs fa fa-caret-up" data-verticaldownclass="btn-xs btn-sm fa fa-caret-down"
+                                                                       data-min='-2147483647' data-max="2147483647" required>
                                                             </div>
                                                             <div class="col-lg-3" ng-class="{ 'has-error' : RelateForm.Ass.$invalid }" title="多条件关联方式">
-                                                                <div config-select ng-name="Ass" my-required="true" ng-model="en.newRelCon.Associate" select-class="text-xs" config-option="en.EntityRelationAss"></div>
+                                                                <div config-select ng-name="Ass" my-required="true" ng-model="en.newRelCon.Associate" select-class="text-xs" ng-disabled="en.ProItemRelateList.length==0" config-option="en.EntityRelationAss"></div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-offset-1 col-md-10">
-                                                <div class="list-group col-md-offset-1 col-md-10">
-                                                    <a class="list-group-item h4 text-center" ng-repeat="rel in en.ProItemRelateList">
-                                                        <div class="col-md-1"> {{ rel.Associate }} </div>
-                                                        <div class="col-md-3">
-                                                            <span ng-if="rel.ParenType !='2'"> {{ rel.ParentKey }}</span>
-                                                            <span ng-if="rel.ParenType =='2'"> '{{ rel.ParentKey }}'</span>
-                                                        </div>
-                                                        <div class="col-md-1">
-                                                            {{ rel.Expression }}
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <span ng-if="rel.ChildType !='2'"> {{ rel.ChildKey }}</span>
-                                                            <span ng-if="rel.ChildType =='2'"> '{{ rel.ChildKey }}'</span>
-                                                        </div>
-                                                        <span ng-click="en.DeleteProCon($index)" class="pull-right text-danger"><i class="fa fa-times"></i></span>
-                                                    </a>
+                                            <div class="col-md-offset-1 col-md-9">
+                                                <div class="panel panel-success">
+                                                    <ul class="list-group alt h4">
+                                                        <li class="list-group-item" ng-repeat="rel in en.ProItemRelateList ">
+                                                            <span>          {{ rel.Associate }} </span><span ng-if="rel.ParenType !='2'">          {{ rel.ParentKey }}</span>
+                                                                <span ng-if="rel.ParenType =='2'"> '{{ rel.ParentKey }}'</span> 
+                                                                    {{ rel.Expression }}      <span ng-if="rel.ChildType !='2'"> {{ rel.ChildKey }}</span>
+                                                                <span ng-if="rel.ChildType =='2'"> '{{ rel.ChildKey }}'</span> 
+                                                            <span ng-click="en.DeleteProCon($index)" class="pull-right text-danger"><i class="fa fa-times"></i></span>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-sm-offset-3 col-lg-4">
