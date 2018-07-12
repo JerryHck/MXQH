@@ -18,7 +18,11 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
     vm.CheckChange = CheckChange;
     vm.setClass = setClass;
 
+    vm.AddProRelCon = AddProRelCon;
+    vm.DeleteProCon = DeleteProCon;
+
     vm.isExists = isExists;
+    vm.isProExists = isProExists;
 
 
     GetList();
@@ -26,8 +30,14 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
     vm.ConfigOrderWay = { Table: "EntityProperty", Column: "OrderWay" };
     vm.ConfigColumnType = { Table: "EntityProperty", Column: "ColumnType" };
     vm.ConfigRelationType = { Table: "EntityProperty", Column: "RelationType" };
+    vm.EntityRelationType = { Table: "EntityRelation", Column: "ColumnType" };
+    vm.EntityRelationExp = { Table: "EntityRelation", Column: "Expression" };
+    vm.EntityRelationAss = { Table: "EntityRelation", Column: "Associate" };
+    vm.ProItem = { };
+    vm.newRelCon = { ParenType: '0', ChildType: '0' };
 
     $scope.$watch(function () { return vm.EnTable; }, getTableList);
+    $scope.$watch(function () { return vm.ProItem.EntityName; }, getChildTableList);
 
     function SelectEn(item) {
         vm.SelectedEn = angular.copy(item);
@@ -96,11 +106,33 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
         if (vm.EnTable) {
             vm.SelectedEn.TableSchema = vm.EnTable.DbSchema;
             vm.SelectedEn.TableName = vm.EnTable.Name;
-            vm.promise = AjaxService.GetTbColumns(vm.EnTable.DbSchema, vm.EnTable.Name, vm.SelectedEn.ConnectName).then(function (data) {
+            AjaxService.GetTbColumns(vm.EnTable.DbSchema, vm.EnTable.Name, vm.SelectedEn.ConnectName).then(function (data) {
                 vm.TbColunms = data;
             });
         }
     }
+
+    function getChildTableList() {
+        vm.ProItemRelateList = [];
+        vm.TbChildColunms = [];
+        if (vm.ProItem.EntityName) {
+            AjaxService.GetColumns(vm.ProItem.EntityName).then(function (data) {
+                vm.TbChildColunms = data;
+            });
+        }
+    }
+
+    function AddProRelCon() {
+        vm.ProItemRelateList.push(angular.copy(vm.newRelCon));
+        vm.newRelCon.ParentKey = undefined;
+        vm.newRelCon.ChildKey = undefined;
+    }
+
+    function DeleteProCon(index) {
+        vm.ProItemRelateList.splice(index, 1);
+    }
+
+
     function getEntityProList() {
         if (vm.SelectedEn.EntityName) {
             var en = {};
@@ -176,6 +208,17 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
                 } else {
                     isProEmpty();
                 }
+            });
+        }
+    }
+
+    function isProExists(name) {
+        if (name) {
+            var en = [{ name: "EntityName", value: vm.SelectedEn.EntityName },
+                { name: "ColumnName", value: name }];
+            AjaxService.GetPlan('PlanProperty', en).then(function (data) {
+                console.log(data)
+                $scope.ClassForm.Pro.$setValidity('unique', !data.ColumnName);
             });
         }
     }

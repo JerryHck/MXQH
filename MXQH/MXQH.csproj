@@ -146,6 +146,7 @@
     <Content Include="js\controllers\chart.js" />
     <Content Include="js\Dialog.js" />
     <Content Include="js\directives\app-Directive.js" />
+    <Content Include="js\filters\app-filter.js" />
     <Content Include="js\Router.js" />
     <Content Include="js\services\AjaxServiceMethod.js" />
     <Content Include="js\services\AjaxServiceModule.js" />
@@ -312,10 +313,6 @@
     <Content Include="Scripts\oclazyload\ocLazyLoad.require.js" />
     <Content Include="Scripts\oclazyload\ocLazyLoad.require.min.js" />
     <Content Include="Scripts\oclazyload\ui-router-require-polyfill.js" />
-    <Content Include="Scripts\popper-utils.js" />
-    <Content Include="Scripts\popper-utils.min.js" />
-    <Content Include="Scripts\popper.js" />
-    <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\select.js" />
     <Content Include="Scripts\select.min.js" />
     <Content Include="Scripts\sweetalert.min.js" />
@@ -381,10 +378,6 @@
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
     <Content Include="Scripts\umd\popper-utils.js.map" />
     <Content Include="Scripts\README.md" />
-    <Content Include="Scripts\popper.min.js.map" />
-    <Content Include="Scripts\popper.js.map" />
-    <Content Include="Scripts\popper-utils.min.js.map" />
-    <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Scripts\jquery\datatables\datatable.json" />
     <Content Include="Scripts\jquery\footable\fonts\footable.eot" />
     <Content Include="Scripts\jquery\footable\fonts\footable.ttf" />

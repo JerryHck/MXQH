@@ -37,7 +37,7 @@ angular.module('app')
 
 .directive('companySelect', ['AjaxService', function (AjaxService) {
     return {
-        restrict: 'E',
+        restrict: 'A',
         require: 'ngModel',
         scope: {
             ngModel: '=',
@@ -336,7 +336,7 @@ angular.module('app')
 }])
 .directive('configSelect', ['AjaxService', function (AjaxService) {
     return {
-        restrict: 'E',
+        restrict: 'A',
         require: 'ngModel',
         scope: {
             ngModel: '=',
@@ -363,13 +363,16 @@ angular.module('app')
             //组织
             AjaxService.GetTableConfig(scope.configOption.Table, scope.configOption.Column).then(function (data) {
                 scope.data = data;
+                if (data.length > 0) {
+                    scope.ngModel = scope.ngModel || data[0].ClInf;
+                }
             });
         }
     }
 }])
 .directive('entitySelect', ['AjaxService', function (AjaxService) {
     return {
-        restrict: 'E',
+        restrict: 'A',
         require: 'ngModel',
         scope: {
             ngModel: '=',
@@ -384,7 +387,7 @@ angular.module('app')
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
                   + '    <ui-select ng-model="$parent.ngModel" class="{{ selectClass }}" theme="bootstrap" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
                   + '         <ui-select-match placeholder="请选择...">{{ $select.selected.EntityName }}</ui-select-match>'
-                  + '          <ui-select-choices class="pl-1" repeat="item in data | filter: $select.search track by item.EntityName" refresh="refresh($select.search)" refresh-delay="0">'
+                  + '          <ui-select-choices class="pl-1" repeat="item.EntityName as item in data | filter: $select.search track by item.EntityName" refresh="refresh($select.search)" refresh-delay="0">'
                   + '             <div ng-bind-html="item.EntityName | highlight: $select.search"></div>'
                   + '         </ui-select-choices>'
                   + '     </ui-select>'
@@ -425,7 +428,6 @@ angular.module('app')
                 if (scope.data.length == 0) {
                     scope.data = undefined;
                     scope.ngModel = undefined;
-
                     var en = {}, list = [];
                     en.name = 'ConnectName';
                     en.value = scope.connectName;
@@ -447,3 +449,4 @@ angular.module('app')
         }
     }
 }])
+
