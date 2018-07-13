@@ -5,6 +5,7 @@
 
     function AjaxService($rootScope, $http, $q, serviceUrl, appUrl, toastr) {
         var generic = 'Common.asmx/Do';
+        var tableConfigList = [];
 
         var obj = {
             //获得实体资料-单个
@@ -47,11 +48,30 @@
         }
 
         function GetTableConfig(tbName, clName) {
-            var list = [
-                { name: "TbName", value: tbName },
-                { name: "ClName", value: clName }
-            ];
-            return GetPlans("TableConfig", list);
+
+            var d = $q.defer(),listHave = [];
+            //从缓存中获取数据
+            for (var j = 0, len = tableConfigList.length; j < len; j++) {
+                if (tableConfigList[j].TbName == tbName && tableConfigList[j].ClName == clName) {
+                    listHave.push(tableConfigList[j])
+                }
+            }
+            if (listHave.length > 0) {
+                d.resolve(listHave);
+            }
+            else {
+                var list = [
+                    { name: "TbName", value: tbName },
+                    { name: "ClName", value: clName }
+                ];
+                GetPlans("TableConfig", list).then(function (data) {
+                    for (var j = 0, len = data.length; j < len; j++) {
+                        tableConfigList.push(data[j]);
+                    }
+                    d.resolve(data);
+                });
+            }
+            return d.promise;
         }
 
         //获得计划资料

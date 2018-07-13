@@ -12,14 +12,18 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
     vm.SelectEn = SelectEn;
     vm.Cancel = Cancel;
     vm.DeleteEn = DeleteEn;
+    vm.AddPro = AddPro;
     vm.DeletePro = DeletePro;
 
     vm.TbChecked = TbChecked;
     vm.CheckChange = CheckChange;
     vm.setClass = setClass;
 
+    vm.SaveProClass = SaveProClass;
+    vm.EditProClass = EditProClass;
     vm.AddProRelCon = AddProRelCon;
     vm.DeleteProCon = DeleteProCon;
+    vm.CancelProCon = CancelProCon;
 
     vm.isExists = isExists;
     vm.isProExists = isProExists;
@@ -48,6 +52,7 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
 
     //保存实体
     function SaveEntity() {
+        console.log(vm.SelectedEn);
         Cancel();
     }
 
@@ -60,6 +65,7 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
         vm.PropertyList = [];
         vm.isEditing = false;
         vm.isAdd = false;
+        vm.isProAdd = false;
     }
 
     //删除
@@ -81,17 +87,6 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
         vm.isAdd = false;
     }
 
-    //删除
-    function Delete(item) {
-        var en = {};
-        en.SysNo = item.SysNo;
-        en.CompanyNo = item.Company.CompanyNo;
-        vm.promise = AjaxService.Action('Sys_System', en, "Delete").then(function (data) {
-            GetList();
-            toastr.success('删除');
-        });
-    }
-
     function GetList() {
         vm.promise = AjaxService.GetPlans("PlanEntity").then(function (data) {
             vm.List = data;
@@ -102,7 +97,6 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
             vm.PropertyList = [];
             isProEmpty();
         }
-
         if (vm.EnTable) {
             vm.SelectedEn.TableSchema = vm.EnTable.DbSchema;
             vm.SelectedEn.TableName = vm.EnTable.Name;
@@ -113,31 +107,42 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
     }
 
     function getChildTableList() {
-        vm.ProItemRelateList = [];
+        vm.ProItem.RelateList = [];
         vm.TbChildColunms = [];
         if (vm.ProItem.EntityName) {
             AjaxService.GetColumns(vm.ProItem.EntityName).then(function (data) {
                 vm.TbChildColunms = data;
             });
         }
+        if (vm.RelateList && vm.RelateList.length > 0) {
+            vm.ProItem.RelateList = vm.RelateList;
+        }
+        vm.RelateList = [];
+    }
+
+    function AddPro() {
+        var en = {};
+        vm.ProItem = en;
+        vm.isProAdd = !vm.isProAdd;
     }
 
     function AddProRelCon() {
-        vm.ProItemRelateList.push(angular.copy(vm.newRelCon));
+        vm.ProItem.RelateList = vm.ProItem.RelateList || [];
+        vm.ProItem.RelateList.push(angular.copy(vm.newRelCon));
         $scope.ClassForm.Pro.$setValidity('neetList', true);
         vm.newRelCon.ParentKey = undefined;
         vm.newRelCon.ChildKey = undefined
     }
 
     function DeleteProCon(index) {
-        vm.ProItemRelateList.splice(index, 1);
-        if (vm.ProItemRelateList.length == 0) {
+        vm.ProItem.RelateList.splice(index, 1);
+        if (vm.ProItem.RelateList.length == 0) {
             vm.newRelCon.Associate = "";
         }
-        else if (vm.ProItemRelateList.length == 1) {
-            vm.ProItemRelateList[0].Associate = "";
+        else if (vm.ProItem.RelateList.length == 1) {
+            vm.ProItem.RelateList[0].Associate = "";
         }
-        $scope.ClassForm.Pro.$setValidity('neetList', vm.ProItemRelateList.length > 0);
+        $scope.ClassForm.Pro.$setValidity('neetList', vm.ProItem.RelateList.length > 0);
     }
 
 
@@ -148,6 +153,7 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
             en.value = vm.SelectedEn.EntityName;
             vm.promise = AjaxService.GetPlans("PlanProperty", en).then(function (data) {
                 vm.PropertyList = data;
+                isProEmpty();
             });
         }
     }
@@ -191,6 +197,32 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
         isProEmpty();
     }
 
+    //添加类 列表
+    function SaveProClass() {
+        if (vm.IsProEdit) {}
+        else {
+            var en = {};
+            en.ColumnName = vm.ProItem.ColumnName;
+            en.EntityName = vm.SelectedEn.EntityName;
+            en.ColumnType = vm.ProItem.ColumnType;
+            en.RelationType = vm.ProItem.RelationType;
+            en.OrderWay = "NON";
+            en.OrderNum = 0;
+            en.IsKey = 0;
+            en.RelateList = vm.ProItem.RelateList;
+            vm.PropertyList.push(en);
+        }
+        vm.IsProEdit = false;
+        vm.isProAdd = !vm.isProAdd
+    }
+
+    function EditProClass(pro) {
+        vm.ProItem = pro;
+        vm.RelateList = pro.RelateList ? angular.copy(pro.RelateList) : [];
+        vm.isProAdd = true;
+        vm.IsProEdit = true;
+    }
+
     //删除属性
     function DeletePro(pro) {
         var index = -1;
@@ -203,12 +235,16 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
         isProEmpty();
     }
 
+    function CancelProCon() {
+        vm.isProAdd = !vm.isProAdd;
+        vm.IsProEdit = false;
+    }
+
     //验证实体是否存在
     function isExists(name) {
         if (name) {
             var en = { name: "EntityName", value: name };
             AjaxService.GetPlan('PlanEntity', en).then(function (data) {
-                console.log(data)
                 var v = !data.EntityName;
                 $scope.EntityForm.entityName.$setValidity('unique', v);
                 if (!v) {
@@ -222,13 +258,23 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
 
     function isProExists(name) {
         if (name) {
-            var en = [{ name: "EntityName", value: vm.SelectedEn.EntityName },
-                { name: "ColumnName", value: name }];
-            AjaxService.GetPlan('PlanProperty', en).then(function (data) {
-                var v = !data.ColumnName;
-                $scope.ClassForm.Pro.$setValidity('unique', v);
-                $scope.ClassForm.Pro.$setValidity('neetList', vm.ProItemRelateList.length > 0);
-            });
+            var have = false;
+            for (var i = 0, len = vm.PropertyList.length; i < len; i++) {
+                if (name == vm.PropertyList[i].ColumnName) {
+                    have = true;
+                    $scope.ClassForm.Pro.$setValidity('unique', false);
+                    break;
+                }
+            }
+            if (!have) {
+                var en = [{ name: "EntityName", value: vm.SelectedEn.EntityName },
+                    { name: "ColumnName", value: name }];
+                AjaxService.GetPlan('PlanProperty', en).then(function (data) {
+                    var v = !data.ColumnName;
+                    $scope.ClassForm.Pro.$setValidity('unique', v);
+                    $scope.ClassForm.Pro.$setValidity('neetList', vm.ProItem.RelateList.length > 0);
+                });
+            }
         }
     }
 
