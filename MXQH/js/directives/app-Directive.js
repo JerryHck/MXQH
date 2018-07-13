@@ -209,13 +209,14 @@ angular.module('app')
             obType: '=',
             ngDisabled: '=',
             clear: '=',
+            placeholder:'@',
             selectClass: '@',
             myRequired: '@',
             ngName: '@'
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
                   + '    <ui-select ng-model="$parent.ngModel" theme="bootstrap"  class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
-                  + '         <ui-select-match placeholder="请选择...">{{ $select.selected.Name }}</ui-select-match>'
+                  + '         <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>'
                   + '          <ui-select-choices class="pl-1" repeat="item in data | filter: $select.search track by item.Name" refresh="refresh($select.search)" refresh-delay="0">'
                   + '             <small><span ng-bind-html="item.DbSchema | highlight: $select.search"></span>.<span ng-bind-html="item.Name | highlight: $select.search"</span></small>'
                   + '         </ui-select-choices>'
@@ -232,7 +233,7 @@ angular.module('app')
     function link(scope, element, attrs) {
         scope.data = undefined;
         scope.$watch('obConnect', getData);
-
+        scope.placeholder = scope.placeholder || "请选择...";
         function getData() {
             if (scope.obConnect) {
                 scope.data = undefined;
@@ -343,12 +344,13 @@ angular.module('app')
             ngDisabled: '=',
             searchEnabled: '=',
             configOption: '=',
+            placeholder:'@',
             selectClass: '@',
             myRequired: '@',
             ngName: '@'
         },
         template: '<ui-select name="{{ ngName }}" class="{{ selectClass }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="myRequired">'
-                  + ' <ui-select-match placeholder="请选择...">{{ $select.selected.ClDesc }}</ui-select-match>       '
+                  + ' <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.ClDesc }}</ui-select-match>       '
                   + ' <ui-select-choices repeat="item.ClInf as item in data | propsFilter: {ClInf: $select.search, ClDesc: $select.search}">                          '
                   + '      <div ng-bind-html="item.ClDesc | highlight: $select.search"></div>'                             
                   + '  </ui-select-choices>'
@@ -359,6 +361,7 @@ angular.module('app')
 
     function link(scope, element, attrs) {
         scope.data = undefined;
+        scope.placeholder = scope.placeholder || "请选择...";
         if (scope.configOption) {
             //组织
             AjaxService.GetTableConfig(scope.configOption.Table, scope.configOption.Column).then(function (data) {
