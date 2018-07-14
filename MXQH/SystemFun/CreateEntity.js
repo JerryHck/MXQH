@@ -27,7 +27,7 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
 
     vm.isExists = isExists;
     vm.isProExists = isProExists;
-
+    vm.isProcExists = isProcExists;
 
     GetList();
     Cancel();
@@ -155,6 +155,13 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
                 vm.PropertyList = data;
                 isProEmpty();
             });
+
+            AjaxService.GetPlans("EntityProcedure", en).then(function (data) {
+                vm.ProcList = data;
+                for (var i = 0, len = vm.ProcList.length; i < len; i++) {
+                    vm.ProcList[i].EnProcedure = { "DbSchema": vm.ProcList[i].ProcSchema, "Name": vm.ProcList[i].ProcName };
+                }
+            });
         }
     }
     function TbChecked(item) {
@@ -256,16 +263,29 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
         }
     }
 
+    function isProcExists(name) {
+        if (name) {
+            var have = false;
+            for (var i = 0, len = vm.ProcList.length; i < len; i++) {
+                if (name == vm.ProcList[i].ShortName) {
+                    have = true;
+                    break;
+                }
+            }
+           vm.ProcedureForm.ShortName.$setValidity('unique', !have);
+        }
+    }
+
     function isProExists(name) {
         if (name) {
             var have = false;
             for (var i = 0, len = vm.PropertyList.length; i < len; i++) {
                 if (name == vm.PropertyList[i].ColumnName) {
                     have = true;
-                    $scope.ClassForm.Pro.$setValidity('unique', false);
                     break;
                 }
             }
+            $scope.ClassForm.Pro.$setValidity('unique', !have);
             if (!have) {
                 var en = [{ name: "EntityName", value: vm.SelectedEn.EntityName },
                     { name: "ColumnName", value: name }];

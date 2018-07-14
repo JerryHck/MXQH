@@ -143,7 +143,7 @@
                                             <div class="form-group  py-xl-1 pt-xl-1">
                                                 <label class="col-lg-4 control-label text-info">所属系统</label>
                                                 <div class="col-lg-8">
-                                                    <system-select select-item="fun.SeItem" ng-name="mysys" ng-model="fun.SelectedFun.SysNo" ng-disabled="!fun.editFun" my-required="true"></system-select>
+                                                    <div system-select select-item="fun.SeItem" ng-name="mysys" ng-model="fun.SelectedFun.SysNo" ng-disabled="!fun.editFun" my-required="true"></div>
                                                     <div ng-messages="FormFun.mysys.$error" class="help-block" role="alert">
                                                         <div ng-message="required">请选择所属系统</div>
                                                     </div>
@@ -152,7 +152,7 @@
                                             <div class="form-group  py-xl-1 pt-xl-1" ng-class="{ 'has-error' : FormFun.par.$invalid }">
                                                 <label class="col-lg-4 control-label text-info">所属目录</label>
                                                 <div class="col-lg-8">
-                                                    <function-select select-item="fun.FunSelItem" fun-type="1" ng-model="fun.SelectedFun.ParFunNo" ng-disabled="!fun.editFun" ng-name="par" my-required="true"></function-select>
+                                                    <div function-select select-item="fun.FunSelItem" fun-type="1" ng-model="fun.SelectedFun.ParFunNo" ng-disabled="!fun.editFun" ng-name="par" my-required="true"></div>
                                                     <div ng-messages="FormFun.par.$error" class="help-block" role="alert">
                                                         <div ng-message="required">请选择所属目录</div>
                                                     </div>
@@ -188,7 +188,7 @@
                                             <div class="form-group py-xl-1 pt-xl-1" ng-class="{ 'has-error' : FormFun.Html.$invalid }">
                                                 <label class="col-lg-2 control-label text-info">HTML文件</label>
                                                 <div class="col-lg-10">
-                                                    <fun-file-select file-type="1" ng-model="fun.SelectedFun.FunHtml" ng-disabled="!fun.editFun" clear="true" ng-name="Html" my-required="true"></fun-file-select>
+                                                    <div fun-file-select file-type="1" ng-model="fun.SelectedFun.FunHtml" ng-disabled="!fun.editFun" clear="true" ng-name="Html" my-required="true"></div>
                                                     <div ng-messages="FormFun.Html.$error" class="help-block" role="alert">
                                                         <div ng-message="required">请选择对应Html文件</div>
                                                     </div>
@@ -203,7 +203,7 @@
                                                                 <span class="glyphicon glyphicon-plus text-success" ng-click="fun.FunLoadAdd()"></span>
                                                             </button>
                                                         </span>
-                                                        <fun-file-select file-type="2" ng-model="fun.loadFile" ng-disabled="!fun.editFun"></fun-file-select>
+                                                        <div fun-file-select file-type="2" ng-model="fun.loadFile" ng-disabled="!fun.editFun"></div>
                                                     </div>
                                                 </div>
                                             </div>

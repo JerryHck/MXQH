@@ -82,7 +82,7 @@ angular.module('app')
 }])
 .directive('systemSelect', ['AjaxService', function (AjaxService) {
     return {
-        restrict: 'E',
+        restrict: 'A',
         require: 'ngModel',
         scope: {
             ngModel: '=',
@@ -122,7 +122,7 @@ angular.module('app')
 }])
 .directive('functionSelect', ['AjaxService', function (AjaxService) {
     return {
-        restrict: 'E',
+        restrict: 'A',
         require: 'ngModel',
         scope: {
             ngModel: '=',
@@ -164,7 +164,7 @@ angular.module('app')
 }])
 .directive('funFileSelect', ['AjaxService', function (AjaxService) {
     return {
-        restrict: 'E',
+        restrict: 'A',
         require: 'ngModel',
         scope: {
             ngModel: '=',
@@ -201,7 +201,7 @@ angular.module('app')
 }])
 .directive('objectSelect', ['AjaxService', function (AjaxService) {
     return {
-        restrict: 'E',
+        restrict: 'A',
         require: 'ngModel',
         scope: {
             ngModel: '=',
@@ -234,10 +234,10 @@ angular.module('app')
         scope.data = undefined;
         scope.$watch('obConnect', getData);
         scope.placeholder = scope.placeholder || "请选择...";
-        function getData() {
+        function getData(newValue, oldValue) {
             if (scope.obConnect) {
                 scope.data = undefined;
-                scope.ngModel = undefined;
+                scope.ngModel = newValue != oldValue ? undefined : scope.ngModel;
                 AjaxService.GetDbeObject(scope.obConnect, scope.obType, '').then(function (data) {
                     scope.data = data.data;
                     scope.ListData = angular.copy(scope.data);
@@ -257,7 +257,6 @@ angular.module('app')
                 //取服务器获取新数据
                 if (scope.data.length == 0) {
                     scope.data = undefined;
-                    scope.ngModel = undefined;
                     AjaxService.GetDbeObject(scope.obConnect, scope.obType, ser).then(function (data) {
                         scope.data = data.data;
                     });
@@ -271,7 +270,7 @@ angular.module('app')
 }])
 .directive('connectSelect', ['AjaxService', function (AjaxService) {
     return {
-        restrict: 'E',
+        restrict: 'A',
         require: 'ngModel',
         scope: {
             ngModel: '=',
@@ -406,9 +405,9 @@ angular.module('app')
     function link(scope, element, attrs) {
         scope.$watch('connectName', getData);
         scope.data = undefined;
-        function getData() {
+        function getData(newValue, oldValue) {
             scope.data = undefined;
-            scope.ngModel = undefined;
+            scope.ngModel = newValue != oldValue ? undefined : scope.ngModel;
             var en = {};
             en.name = 'ConnectName';
             en.value = scope.connectName||'';
