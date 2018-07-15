@@ -12,6 +12,14 @@
             GetPlan: GetPlan,
             //获得实体资料-列表
             GetPlans: GetPlans,
+            //分页获取实体资料
+            GetPlansPage:GetPlansPage,
+            //保存计划实体
+            SavePlan: SavePlan,
+            //删除计划实体
+            DeletePlan:DeletePlan,
+            //执行计划实体
+            ExecPlan: ExecPlan,
             //获得实体资料-单个
             GetEntity, GetEntity,
             //获得实体资料-列表
@@ -47,33 +55,6 @@
             return Ajax(d, url, undefined, undefined, "GET");
         }
 
-        function GetTableConfig(tbName, clName) {
-
-            var d = $q.defer(),listHave = [];
-            //从缓存中获取数据
-            for (var j = 0, len = tableConfigList.length; j < len; j++) {
-                if (tableConfigList[j].TbName == tbName && tableConfigList[j].ClName == clName) {
-                    listHave.push(tableConfigList[j])
-                }
-            }
-            if (listHave.length > 0) {
-                d.resolve(listHave);
-            }
-            else {
-                var list = [
-                    { name: "TbName", value: tbName },
-                    { name: "ClName", value: clName }
-                ];
-                GetPlans("TableConfig", list).then(function (data) {
-                    for (var j = 0, len = data.length; j < len; j++) {
-                        tableConfigList.push(data[j]);
-                    }
-                    d.resolve(data);
-                });
-            }
-            return d.promise;
-        }
-
         //获得计划资料
         function GetPlan(name, json) {
             return plan(name, json, "GetPlan");
@@ -82,6 +63,11 @@
         //获得计划资料
         function GetPlans(name, json) {
             return plan(name, json, "GetPlans");
+        }
+
+        //获得计划资料
+        function GetPlansPage(name, json, start, end) {
+            return plan(name, json, "GetPlansPage", start, end);
         }
 
         //获得单实体资料
@@ -197,12 +183,66 @@
             return Ajax(d, url, en, funName);
         }
 
-        function plan(name, json, funName) {
+        function plan(name, json, funName, start, end) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = {};
             en.entityName = name;
             en.strJson = JSON.stringify(convertArray(json)) || '[]';
+            en.start = start;
+            en.end = end;
             return Ajax(d, url, en, funName)
+        }
+
+
+        function SavePlan(name, json) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = {};
+            en.entityName = name;
+            en.strJson = JSON.stringify(json);
+            return Ajax(d, url, en, "SavePlan");
+        }
+
+        function DeletePlan(name, json) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = {};
+            en.entityName = name;
+            en.strJson = JSON.stringify(json);
+            return Ajax(d, url, en, "DeletePlan");
+        }
+
+        function ExecPlan(name, shortName, json) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = {};
+            en.entityName = name;
+            en.shortName = shortName;
+            en.strJson = JSON.stringify(json);
+            return Ajax(d, url, en, "ExecPlan")
+        }
+
+        function GetTableConfig(tbName, clName) {
+            var d = $q.defer(), listHave = [];
+            //从缓存中获取数据
+            for (var j = 0, len = tableConfigList.length; j < len; j++) {
+                if (tableConfigList[j].TbName == tbName && tableConfigList[j].ClName == clName) {
+                    listHave.push(tableConfigList[j])
+                }
+            }
+            if (listHave.length > 0) {
+                d.resolve(listHave);
+            }
+            else {
+                var list = [
+                    { name: "TbName", value: tbName },
+                    { name: "ClName", value: clName }
+                ];
+                GetPlans("TableConfig", list).then(function (data) {
+                    for (var j = 0, len = data.length; j < len; j++) {
+                        tableConfigList.push(data[j]);
+                    }
+                    d.resolve(data);
+                });
+            }
+            return d.promise;
         }
 
         //HTTP AJAX

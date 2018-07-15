@@ -234,10 +234,10 @@ angular.module('app')
         scope.data = undefined;
         scope.$watch('obConnect', getData);
         scope.placeholder = scope.placeholder || "请选择...";
+
         function getData(newValue, oldValue) {
             if (scope.obConnect) {
                 scope.data = undefined;
-                scope.ngModel = newValue != oldValue ? undefined : scope.ngModel;
                 AjaxService.GetDbeObject(scope.obConnect, scope.obType, '').then(function (data) {
                     scope.data = data.data;
                     scope.ListData = angular.copy(scope.data);
@@ -278,10 +278,11 @@ angular.module('app')
             clear: '=',
             selectClass: '@',
             myRequired: '@',
-            ngName: '@'
+            ngName: '@',
+            ngChange:'&'
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '    <ui-select ng-model="$parent.ngModel" theme="bootstrap"  class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
+                  + '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()"  class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
                   + '         <ui-select-match placeholder="请选择...">{{ $select.selected }}</ui-select-match>'
                   + '          <ui-select-choices class="pl-1" repeat="item in data | filter: $select.search track by item" refresh="refresh($select.search)" refresh-delay="0">'
                   + '             <div ng-bind-html="item | highlight: $select.search"></div>'
