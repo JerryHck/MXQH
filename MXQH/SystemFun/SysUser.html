@@ -1,10 +1,10 @@
-﻿<div class="bg-light lter b-b wrapper-md">
+﻿<div class="bg-light lter b-b wrapper-md" cg-busy="use.promise">
     <h3 class="m-n font-thin h3">系统信息列表</h3>
 </div>
 <div class="wrapper-md">
     <div style="padding-bottom:5px">
         <button class="btn btn-sm btn-success" ng-click="sys.Insert()"><i class="glyphicon glyphicon-plus"></i> 新增</button>
     </div>
-    <div ui-grid="use.gridOptions" class="grid" ui-grid-pagination style="height:100%"></div>
+    <div ui-grid="use.gridOptions" class="grid" ui-grid-pagination ui-grid-exporter></div>
 </div>
 
