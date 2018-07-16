@@ -17,7 +17,7 @@ angular.module('app')
             en.title = en.title || "确认删除";
             en.text = en.text || "是否删除此笔资料";
             en.type = en.type || "warning";
-            en.showCancelButton = en.showCancelButton == undefined || true;
+            en.showCancelButton = en.showCancelButton === undefined || true;
             en.confirmButtonText = en.confirmButtonText || "确定删除！";
             en.cancelButtonText = en.cancelButtonText || "取消删除！";
 
@@ -72,7 +72,7 @@ angular.module('app')
         AjaxService.GetEntities("Company").then(function (data) {
             scope.data = data;
             $.grep(data, function (e) {
-                if (e.CompanyNo == scope.ngModel) {
+                if (e.CompanyNo === scope.ngModel) {
                     scope.selectItem = e;
                     return;
                 }
@@ -155,7 +155,7 @@ angular.module('app')
         scope.data = undefined;
         var en = {};
         en.name = 'FunType';
-        en.value = scope.funType == 1 ? 1 : 2;
+        en.value = scope.funType === 1 ? 1 : 2;
         //组织
         AjaxService.GetEntities("Function", en).then(function (data) {
             scope.data = data;
@@ -250,12 +250,12 @@ angular.module('app')
                 scope.data = [];
                 scope.ListData = scope.ListData || [];
                 for (var j = 0, len = scope.ListData.length; j < len; j++) {
-                    if ((scope.ListData[j].DbSchema.toUpperCase().indexOf(ser.toUpperCase()) != -1) || (scope.ListData[j].Name.toUpperCase().indexOf(ser.toUpperCase()) != -1)) {
+                    if ((scope.ListData[j].DbSchema.toUpperCase().indexOf(ser.toUpperCase()) !== -1) || (scope.ListData[j].Name.toUpperCase().indexOf(ser.toUpperCase()) !== -1)) {
                         scope.data.push(scope.ListData[j])
                     }
                 }
                 //取服务器获取新数据
-                if (scope.data.length == 0) {
+                if (scope.data.length === 0) {
                     scope.data = undefined;
                     AjaxService.GetDbeObject(scope.obConnect, scope.obType, ser).then(function (data) {
                         scope.data = data.data;
@@ -299,19 +299,12 @@ angular.module('app')
     };
     function link(scope, element, attrs) {
         scope.data = undefined;
-        scope.$watch('ngModel', setValue);
 
         AjaxService.GetConnect().then(function (data) {
             scope.data = data;
             scope.ListData = angular.copy(scope.data);
             scope.ngModel = scope.ngModel || data[0];
         });
-
-        function setValue() {
-            if (scope.data && !scope.ngModel) {
-                scope.ngModel = scope.data[0];
-            }
-        }
 
         scope.refresh = function refresh(ser) {
             if (ser) {
