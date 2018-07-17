@@ -1,19 +1,28 @@
 ﻿'use strict';
 
-angular.module('app')
+angular.module('app', ['ui.grid', 'ui.grid.autoResize'])
 .controller('UserCtrl', ['$scope', '$http', 'Dialog', 'AjaxService', 'toastr', 'i18nService',
 function ($scope, $http, Dialog, AjaxService, toastr, i18nService) {
 
     var vm = this;
     i18nService.setCurrentLang('zh-cn');
 
-    getPage(0, 10);
-
     vm.gridOptions = {
+        
+        enablePagination: true, //是否分页，默认为true
+        enablePaginationControls: true, //使用默认的底部分页
+        paginationPageSizes: [14, 28, 50], //每页显示个数可选项
+        paginationCurrentPage: 1, //当前页码
+        paginationPageSize: 14, //每页显示个数
+        //paginationTemplate:"<div></div>", //自定义底部分页代码
+        totalItems: 0, // 总数量
+        useExternalPagination: true,//是否使用分页按钮
+
+
         enableGridMenu: true,
         enableSelectAll: true,
         exporterCsvFilename: 'myFile.csv',
-        exporterPdfDefaultStyle: { fontSize: 9 },
+        exporterPdfDefaultStyle: { fontSize: 8 },
         exporterPdfTableStyle: { margin: [30, 30, 30, 30] },
         exporterPdfTableHeaderStyle: { fontSize: 10, bold: true, italics: true, color: 'red' },
         exporterPdfHeader: { text: "My Header", style: 'headerStyle' },
@@ -44,13 +53,14 @@ function ($scope, $http, Dialog, AjaxService, toastr, i18nService) {
          
     function getPage (curPage, pageSize) {
         var firstRow = (curPage - 1) * pageSize;
-
-       vm.promise =  AjaxService.GetPlansPage("Sign", undefined, firstRow, firstRow + pageSize).then(function (data) {
-            vm.gridOptions.data = data.List;
+        vm.promise =  AjaxService.GetPlansPage("Sign", undefined, firstRow, firstRow + pageSize).then(function (data) {
             vm.gridOptions.totalItems = data.Count;
+            vm.gridOptions.data = data.List;
+            console.log(vm.gridOptions.totalItems)
         });
     };
     
+    getPage(1, vm.gridOptions.paginationPageSize);
 
     vm.gridOptions.columnDefs = [
             { name: 'SIGN_SN', displayName: '编辑', cellTemplate: '<button id="editBtn" type="button" class="btn-small" ng-click="edit(row.entity)" >Edit</button> ' },
@@ -60,6 +70,6 @@ function ($scope, $http, Dialog, AjaxService, toastr, i18nService) {
             { field: 'SIGN_MEMO', displayName: 'SIGN_MEMO' },
 
     ]
-
+    vm.gridStyle = function () { return { height: $(document.body).height() * 0.68 + 'px' }; }
 }
 ]);

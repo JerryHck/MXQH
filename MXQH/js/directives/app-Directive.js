@@ -155,7 +155,7 @@ angular.module('app')
         scope.data = undefined;
         var en = {};
         en.name = 'FunType';
-        en.value = scope.funType === 1 ? 1 : 2;
+        en.value = scope.funType == 1 ? 1 : 2;
         //组织
         AjaxService.GetEntities("Function", en).then(function (data) {
             scope.data = data;

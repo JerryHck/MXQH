@@ -36,6 +36,8 @@
             EditBack: EditBack,
             //文件
             HandleFile: HandleFile,
+            //
+            AddDailog:AddDailog,
             //链接对象列表
             GetConnect: GetConnect,
             //数据对象
@@ -123,12 +125,18 @@
 
         function HandleFile(type) {
             var d = $q.defer();
-            return AjaxHandle(d, type);
+            return AjaxHandle(d, "GetFileList", type);
+        }
+
+        function AddDailog(data) {
+            var d = $q.defer();
+            return AjaxHandle(d, "AddDialog", data);
         }
 
         //HTTP AJAX
-        function AjaxHandle(q, type) {
-            var en = { "type": type }
+        function AjaxHandle(q, method, data) {
+           
+            var en = { "method": method, "data": data };
             httpFun(q, 'Data/Handler/FileData.ashx', en);
             return q.promise;
         }

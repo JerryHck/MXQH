@@ -2,6 +2,10 @@
 
 */
 
+.grid {
+      height: 800px;
+    }
+
 html {
   background-color: #f0f3f4;
 }
