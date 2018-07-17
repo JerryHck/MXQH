@@ -1,7 +1,8 @@
 ﻿<div class="bg-light lter b-b wrapper-md" cg-busy="dailog.promise">
     <h3 class="m-n font-thin h3 text-center">
         系统弹跳窗路由设定
-        <button class="btn btn-sm btn-success pull-left" ng-click="dailog.Insert()"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+        <button class="btn btn-sm btn-success pull-left" ng-click="dailog.Insert()" ng-if="!dailog.isAdd"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+        <button class="btn btn-sm btn-success pull-left m-l-md" ng-click="dailog.SaveToJson()" ng-if="!dailog.isAdd"><i class="glyphicon glyphicon-save"></i> 保存</button>
     </h3>
 </div>
 <div class="wrapper-md" uib-collapse="dailog.isAdd">
@@ -41,20 +42,20 @@
     <!--<div class="col-md-12 text-center">
         <uib-pagination total-items="sys.page.total" ng-model="sys.page.index" items-per-page="sys.page.size" max-size="4" class="pagination-sm" boundary-links="true"></uib-pagination>
     </div>-->
-    <!--<pre>{{ sys.List | json }}</pre>-->
+    <!--<pre>{{ dailog.List | json }}</pre>-->
 </div>
-<div class="wrapper-md" uib-collapse="!dailog.isAdd">
-    <div class="modal-body wrapper-md" ng-form="DailogForm">
-        <div class="panel panel-default" ng-form="DailogForm">
+<div class="wrapper-xs" uib-collapse="!dailog.isAdd">
+    <div class="modal-body wrapper-md" ng-form="dailog.DailogForm">
+        <div class="panel panel-default">
             <div class="panel-heading"><h3 class="modal-title">弹出窗路由{{ dailog.form.title }}</h3></div>
             <div class="panel-body">
-                <div class="form-horizontal col-lg-6">
+                <div class="form-horizontal col-sm-6">
                     <div class="form-group pull-in clearfix">
                         <label class="col-lg-3 control-label text-info">弹出窗名</label>
-                        <div class="col-lg-9" ng-class="{ 'has-error' : DailogForm.name.$invalid }">
+                        <div class="col-lg-9" ng-class="{ 'has-error' : dailog.DailogForm.name.$invalid }">
                             <input type="text" class="form-control" name="name" placeholder="弹出窗名"
-                                   ng-model="dailog.NewItem.name" ng-disabled="dailog.form.index == 1" ng-blur="dailog.isExists()" required>
-                            <div ng-messages="DailogForm.name.$error" class="help-block" role="alert">
+                                   ng-model="dailog.NewItem.name" ng-disabled="dailog.form.index == 1" ng-blur="dailog.isExists(dailog.NewItem.name)" required>
+                            <div ng-messages="dailog.DailogForm.name.$error" class="help-block" role="alert">
                                 <div ng-message="required">请输入弹出窗名</div>
                                 <div ng-message="unique">弹出窗名重复</div>
                             </div>
@@ -62,65 +63,65 @@
                     </div>
                     <div class="form-group pull-in clearfix">
                         <label class="col-lg-3 control-label text-info">HTML文件</label>
-                        <div class="col-lg-9" ng-class="{ 'has-error' : DailogForm.Html.$invalid }">
-                            <div fun-file-select file-type="1" ng-model="fun.SelectedFun.FunHtml" clear="true" ng-name="Html" my-required="true"></div>
-                            <div ng-messages="DailogForm.Html.$error" class="help-block" role="alert">
+                        <div class="col-lg-9" ng-class="{ 'has-error' : dailog.DailogForm.Html.$invalid }">
+                            <div fun-file-select file-type="1" ng-model="dailog.NewItem.templateUrl" clear="true" ng-name="Html" my-required="true"></div>
+                            <div ng-messages="dailog.DailogForm.Html.$error" class="help-block" role="alert">
                                 <div ng-message="required">请选择对应Html文件</div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group pull-in clearfix">
                         <label class="col-lg-3 control-label text-info">控制器</label>
-                        <div class="col-lg-9" ng-class="{ 'has-error' : DailogForm.Control.$invalid }">
-                            <input class="form-control text-xs" name="Control" type="text" ng-model="fun.SelectedFun.RouteName" ng-disabled="!fun.editFun" required>
-                            <div ng-messages="DailogForm.Control.$error" class="help-block" role="alert">
-                                <div ng-message="required">请输入路由</div>
+                        <div class="col-lg-9" ng-class="{ 'has-error' : dailog.DailogForm.Control.$invalid }">
+                            <input class="form-control text-xs" name="Control" type="text" ng-model="dailog.NewItem.controller" ng-disabled="dailog.editDailog" required>
+                            <div ng-messages="dailog.DailogForm.Control.$error" class="help-block" role="alert">
+                                <div ng-message="required">请输入控制器</div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group pull-in clearfix">
                         <label class="col-lg-3 control-label text-info">控制器简写</label>
                         <div class="col-lg-9">
-                            <input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.ControllerAs" ng-disabled="!fun.editFun">
+                            <input class="form-control text-xs" type="text" ng-model="dailog.NewItem.controllerAs">
                         </div>
                     </div>
                     <div class="form-group pull-in clearfix">
                         <label class="col-lg-3 control-label text-info">依赖文件</label>
                         <div class="input-group col-lg-9">
-                            <div fun-file-select file-type="2" ng-model="fun.loadFile"></div>
+                            <div fun-file-select file-type="2" ng-model="dailog.loadFile"></div>
                             <span class="input-group-btn">
                                 <button class="btn btn-default">
-                                    <span class="glyphicon glyphicon-plus text-success" ng-click="fun.FunLoadAdd()"></span>
+                                    <span class="glyphicon glyphicon-plus text-success" ng-click="dailog.LoadAdd()"></span>
                                 </button>
                             </span>
                         </div>
                     </div>
                 </div>
 
-                <div class="panel panel-info col-lg-5">
+                <div class="panel panel-info col-sm-5">
                     <div class="panel-heading">依赖文件列表</div>
                     <div class="panel-body">
                         <div class="list-group no-radius no-border no-bg m-b-none">
-                            <a ng-repeat="load in fun.SelectedFun.FunLoad | orderBy:'load.Orderby'"
+                            <a ng-repeat="load in dailog.NewItem.LoadFiles"
                                class="list-group-item"
-                               ng-drop="true" ng-drop-success="fun.FunLoadDrop($data,$index)">
-                                <span ng-if="fun.editFun" ng-click='fun.FunLoadDelete($index)' class="pull-right text-danger">
+                               ng-drop="true" ng-drop-success="dailog.LoadDrop($data,$index)">
+                                <span ng-click='dailog.DeleteLoad($index)' class="pull-right text-danger">
                                     <i class="fa fa-times"></i>
                                 </span>
                                 <span class="block m-l-n bg-transparent">
-                                    <i class="glyphicon glyphicon-move text-info" ng-drag="true" ng-if="fun.editFun"
-                                       ng-drag-data="load" ng-drag-success="fun.FunLoadDrag($data,$index)"></i>{{ load.LoadName }}
+                                    <i class="glyphicon glyphicon-move text-info" ng-drag="true" 
+                                       ng-drag-data="load" ng-drag-success="dailog.LoadDrag($data,$index)"></i>{{ load }}
                                 </span>
                             </a>
                         </div>
 
                     </div>
                 </div>
-
+                <!--<pre>{{ dailog.NewItem | json }}</pre>-->
             </div>
-            <div class="panel-footer text-right">
-                <button class="btn btn-success" type="button" ng-disabled="SystemForm.$invalid" ng-click="sys.Save()">储存</button>
-                <button class="btn btn-warning" type="button" ng-click="sys.cancel()">取消</button>
+            <div class="panel-footer text-center">
+                <button class="btn btn-success" type="button" ng-disabled="dailog.DailogForm.$invalid" ng-click="dailog.Save()">储存</button>
+                <button class="btn btn-warning" type="button" ng-click="dailog.isAdd = !dailog.isAdd;">取消</button>
             </div>
         </div>
     </div>

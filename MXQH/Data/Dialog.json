@@ -1,16 +1,1 @@
-﻿[
-  {
-    "name": "SystemDailog",
-    "templateUrl": "SystemFun/SystemDialog.html",
-    "LoadFiles": [ "ui.select", "SystemFun/SystemDialog.js" ],
-    "controller": "SystemDialogCtrl",
-    "controllerAs": "sys"
-  },
-  {
-    "name": "IconDailog",
-    "templateUrl": "SystemFun/IconDialog.html",
-    "LoadFiles": [ "SystemFun/IconDialog.js" ],
-    "controller": "IconDialogCtrl",
-    "controllerAs": "ico"
-  }
-]
+[{"name":"SystemDailog","templateUrl":"SystemFun/SystemDialog.html","LoadFiles":["ui.select","SystemFun/SystemDialog.js"],"controller":"SystemDialogCtrl","controllerAs":"sys","$$hashKey":"object:67"},{"name":"IconDailog","templateUrl":"SystemFun/IconDialog.html","LoadFiles":["SystemFun/IconDialog.js"],"controller":"IconDialogCtrl","controllerAs":"ico","$$hashKey":"object:68"},{"LoadFiles":["Content\\angular-toastr.min.css"],"name":"test","templateUrl":"Basic\\apps_note.html","controller":"testlkttkkkc","controllerAs":"test","$$hashKey":"object:990"}]
