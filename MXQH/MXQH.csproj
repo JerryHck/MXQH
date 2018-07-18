@@ -94,6 +94,16 @@
     <Content Include="Content\bootstrap-switch\bootstrap-switch.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Css\demo.css" />
+    <Content Include="Content\Css\font-awesome.css" />
+    <Content Include="Content\Css\Main.css" />
+    <Content Include="Content\font\fontawesome-webfont.svg" />
+    <Content Include="Content\images\bg.jpg" />
+    <Content Include="Content\images\bg2.jpg" />
+    <Content Include="Content\images\bg3.jpg" />
+    <Content Include="Content\images\blurred.jpg" />
+    <Content Include="Content\images\noise.png" />
+    <Content Include="Content\images\wood_pattern.jpg" />
     <Content Include="Content\select.css" />
     <Content Include="Content\select.min.css" />
     <Content Include="Content\select2-bootstrap.css" />
@@ -156,6 +166,8 @@
     <Content Include="Loading\lg.ajax-spinner-preloader.gif" />
     <Content Include="Loading\lg.circle-slack-loading-icon.gif" />
     <Content Include="Loading\Loading.html" />
+    <Content Include="login.html" />
+    <Content Include="Login.js" />
     <Content Include="Scripts\angular-ui\angular-toggle-switch.js" />
     <Content Include="Scripts\angular-ui\bootstrap-switch.js" />
     <Content Include="Scripts\angular-ui\bootstrap-switch.min.js" />
@@ -231,6 +243,11 @@
     <Content Include="Content\angular-toggle-switch\mixins.less" />
     <Content Include="Content\angular-toggle-switch\toggle-switch.less" />
     <Content Include="Content\angular-toggle-switch\variables.less" />
+    <Content Include="Content\Css\.DS_Store" />
+    <Content Include="Content\font\fontawesome-webfont.eot" />
+    <Content Include="Content\font\fontawesome-webfont.ttf" />
+    <Content Include="Content\font\fontawesome-webfont.woff" />
+    <Content Include="Content\images\.DS_Store" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
