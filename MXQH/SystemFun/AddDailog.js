@@ -14,10 +14,15 @@ function ($scope, $http, Dialog, AjaxService, toastr, Form) {
     vm.LoadDrop = LoadDrop;
     vm.LoadDrag = LoadDrag;
     vm.SaveToJson = SaveToJson;
+    vm.Delete = Delete;
 
-    vm.promise = AjaxService.GetJson('Dialog.json', '').then(function (data) {
-        vm.List = data;
-    });
+    //
+    GetList();
+    function GetList() {
+        vm.promise = AjaxService.GetJson('Dialog.json', '').then(function (data) {
+            vm.List = data;
+        });
+    }
 
     function Insert() {
         vm.isAdd = !vm.isAdd;
@@ -88,5 +93,20 @@ function ($scope, $http, Dialog, AjaxService, toastr, Form) {
         });
     }
     
+    function Delete(item) {
+        var index = -1;
+        for (var i = 0, len = vm.List.length; i < len; i++) {
+            if (item.name == vm.List[i].name) {
+                index = i;
+                break;
+            }
+        }
+        vm.List.splice(index, 1);
+        vm.promise = AjaxService.AddDailog(JSON.stringify(vm.List)).then(function (data) {
+            toastr.success('删除成功');
+            GetList();
+        });
+    }
+
 }
 ]);

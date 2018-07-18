@@ -314,41 +314,40 @@
             </div>
         </div>
 
-        <div class="col w
-
-    <div class="col w-md lt b-r text-xs">
-        <div class="vbox">
-            <div class="wrapper b-t m-t-xxs">
-                <p class="text-black-50">{{  en.SelectedEn.TableSchema  + (en.SelectedEn.TableSchema?".":"") + en.SelectedEn.TableName }}栏位列表</p>
-                <div class="input-group">
-                    <input type="text" class="form-control input-sm" placeholder="查询" ng-model="en.TbColunmName">
-                    <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
+        <div class="col w-md lt b-r text-xs">
+            <div class="vbox">
+                <div class="wrapper b-t m-t-xxs">
+                    <p class="text-black-50">{{  en.SelectedEn.TableSchema  + (en.SelectedEn.TableSchema?".":"") + en.SelectedEn.TableName }}栏位列表</p>
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm" placeholder="查询" ng-model="en.TbColunmName">
+                        <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
+                    </div>
                 </div>
-            </div>
-            <div class="row-row">
-                <div class="cell scrollable hover">
-                    <div class="cell-inner">
-                        <div class="padder bg-white">
-                            <div class="panel-body">
-                                <article class="media" ng-repeat="item in en.TbColunms | filter:en.TbColunmName ">
-                                    <div class="pull-left">
-                                        <label class="i-checks">
-                                            <input type="checkbox" ng-checked="en.TbChecked(item)" ng-disabled="!en.isEditing" ng-model="item.isCheck" ng-change="en.CheckChange(item)"><i></i>
-                                        </label>
-                                    </div>
-                                    <div class="media-body form-group">
-                                        <div class="list-group-item-sm col-lg-12">
-                                            <span class="h-3 text-success">{{ item.ColumnName }}</span>
-                                            <span class="pull-right" ng-if="item.IsKey == 1">
-                                                <i class="badge badge-success text-danger">Key</i>
-                                            </span>
+                <div class="row-row">
+                    <div class="cell scrollable hover">
+                        <div class="cell-inner">
+                            <div class="padder bg-white">
+                                <div class="panel-body">
+                                    <article class="media" ng-repeat="item in en.TbColunms | filter:en.TbColunmName ">
+                                        <div class="pull-left">
+                                            <label class="i-checks">
+                                                <input type="checkbox" ng-checked="en.TbChecked(item)" ng-disabled="!en.isEditing" ng-model="item.isCheck" ng-change="en.CheckChange(item)"><i></i>
+                                            </label>
                                         </div>
-                                        <div class="list-group-item-sm col-lg-12">
-                                            <small class="block m-t-xs">{{ item.ColumnDes }}</small>
-                                            <em class="text-xs"><span class="text-info">{{ item.DataType }}</span></em>
+                                        <div class="media-body form-group">
+                                            <div class="list-group-item-sm col-lg-12">
+                                                <span class="h-3 text-success">{{ item.ColumnName }}</span>
+                                                <span class="pull-right" ng-if="item.IsKey == 1">
+                                                    <i class="badge badge-success text-danger">Key</i>
+                                                </span>
+                                            </div>
+                                            <div class="list-group-item-sm col-lg-12">
+                                                <small class="block m-t-xs">{{ item.ColumnDes }}</small>
+                                                <em class="text-xs"><span class="text-info">{{ item.DataType }}</span></em>
+                                            </div>
                                         </div>
-                                    </div>
-                                </article>
+                                    </article>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -357,4 +356,3 @@
         </div>
     </div>
 </div>
-    </div>

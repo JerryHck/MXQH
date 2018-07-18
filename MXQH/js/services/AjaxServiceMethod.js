@@ -24,10 +24,6 @@
             GetEntity, GetEntity,
             //获得实体资料-列表
             GetEntities: GetEntities,
-            //获得表资料-单个
-            GetTbView, GetTbView,
-            //获得表资料-列表
-            GetTbViewList: GetTbViewList,
             //获取Json数据
             GetJson: GetJson,
             //简单单表新增
@@ -46,6 +42,8 @@
             GetColumns: GetColumns,
             GetTbColumns: GetTbColumns,
             GetTableConfig: GetTableConfig,
+            //User
+            AddUser: AddUser
         };
 
         return obj;
@@ -80,26 +78,6 @@
         //获得表资料
         function GetEntities(name, json) {
             return entity(name, json, "GetEntities");
-        }
-
-        //获得单实体资料
-        function GetTbView(name, json) {
-            var g = $q.defer();
-            return GetTbViewList(name, json).then(
-                function (data) { g.resolve(data[0]); },
-                function () { g.reject(); }
-            );
-            return g.promise;
-        }
-
-        //获得表资料
-        function GetTbViewList(name, json) {
-            var d = $q.defer(),
-                 url = serviceUrl + generic;
-            var en = {};
-            en.strTbView = name;
-            en.strJson = JSON.stringify(convertArray(json)) || '[]';
-            return TbAjax(d, url, en, "GetTbViewList");
         }
 
         //获得表资料
@@ -227,6 +205,13 @@
             return Ajax(d, url, en, "ExecPlan")
         }
 
+        function AddUser(json) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = {};
+            en.strJson = JSON.stringify(json);
+            return Ajax(d, url, en, "AddUser", undefined, 'Authorization')
+        }
+
         function GetTableConfig(tbName, clName) {
             var d = $q.defer(), listHave = [];
             //从缓存中获取数据
@@ -254,13 +239,13 @@
         }
 
         //HTTP AJAX
-        function Ajax(q, url, parameter, Method, type) {
-            var en = { method: Method, Json: JSON.stringify(parameter) };
+        function Ajax(q, url, parameter, Method, type, service) {
+            var en = { method: Method, Json: JSON.stringify(parameter), service: service || '' };
             return httpFun(q, url, en, type);
         }
 
-        function TbAjax(q, url, parameter, Method, type) {
-            var en = { method: Method, Json: JSON.stringify(parameter) };
+        function TbAjax(q, url, parameter, Method, type, service) {
+            var en = { method: Method, Json: JSON.stringify(parameter), service: service||'' };
             return httpTbFun(q, url, en, type);
         }
 

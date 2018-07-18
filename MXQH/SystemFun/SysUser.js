@@ -5,7 +5,10 @@ angular.module('app', ['ui.grid', 'ui.grid.autoResize'])
 function ($scope, $http, Dialog, AjaxService, toastr, i18nService) {
 
     var vm = this;
+
     i18nService.setCurrentLang('zh-cn');
+    vm.Insert = Insert;
+
 
     vm.gridOptions = {
         
@@ -53,7 +56,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, i18nService) {
          
     function getPage (curPage, pageSize) {
         var firstRow = (curPage - 1) * pageSize;
-        vm.promise =  AjaxService.GetPlansPage("Sign", undefined, firstRow, firstRow + pageSize).then(function (data) {
+        vm.promise =  AjaxService.GetPlansPage("User", undefined, firstRow, firstRow + pageSize).then(function (data) {
             vm.gridOptions.totalItems = data.Count;
             vm.gridOptions.data = data.List;
             console.log(vm.gridOptions.totalItems)
@@ -71,5 +74,23 @@ function ($scope, $http, Dialog, AjaxService, toastr, i18nService) {
 
     ]
     vm.gridStyle = function () { return { height: $(document.body).height() * 0.68 + 'px' }; }
+
+    function Insert() {
+        var resolve = {
+            ItemData: function () {
+                return {};
+            }
+        };
+        Open("I", resolve);
+    }
+
+    function Open(type, resolve) {
+        Dialog.open("UserDailog", resolve).then(function (data) {
+            //GetList();
+            //console.log(data);
+        }).catch(function (reason) {
+            //console.log(reason);
+        });
+    }
 }
 ]);

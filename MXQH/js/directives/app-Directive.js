@@ -298,12 +298,13 @@ angular.module('app')
         link: link
     };
     function link(scope, element, attrs) {
-        scope.data = undefined;
-
-        AjaxService.GetConnect().then(function (data) {
-            scope.data = data;
-            scope.ListData = angular.copy(scope.data);
-            scope.ngModel = scope.ngModel || data[0];
+        scope.Load = 'L';
+        scope.$watch(function () { return scope.Load; }, function () {
+            AjaxService.GetConnect().then(function (data) {
+                scope.data = data;
+                scope.ListData = angular.copy(scope.data);
+                scope.ngModel = scope.ngModel || data[0];
+            });
         });
 
         scope.refresh = function refresh(ser) {
