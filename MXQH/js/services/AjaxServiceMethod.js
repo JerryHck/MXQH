@@ -230,7 +230,16 @@
                 ];
                 GetPlans("TableConfig", list).then(function (data) {
                     for (var j = 0, len = data.length; j < len; j++) {
-                        tableConfigList.push(data[j]);
+                        var have = false;
+                        for (var h = 0, len = tableConfigList.length; h < len; h++) {
+                            if (tableConfigList[h].TbName == data[j].TbName && tableConfigList[h].ClName == data[j].ClName &&
+                                tableConfigList[h].ClInf == data[j].ClInf) {
+                                have = true;
+                            }
+                        }
+                        if (have) {
+                            tableConfigList.push(data[j]);
+                        }
                     }
                     d.resolve(data);
                 });

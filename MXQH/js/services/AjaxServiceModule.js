@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('AjaxServiceModule', ['ngAnimate', 'toastr', ]);
+    angular.module('AjaxServiceModule', ['appData', 'ngAnimate', 'toastr']);
 
     angular.module('AjaxServiceModule').config(appConfig);
 
