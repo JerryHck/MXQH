@@ -37,6 +37,12 @@ angular.module('app')
                           }
                       }
 
+                      item.resolve = angular.extend(item.resolve || {}, {
+                          Fun: ['$cookieStore', function ($cookieStore) {
+                              $cookieStore.put('active-function', route.FunNo);
+                              return route.FunNo;
+                          }]
+                      });
                       $stateProvider.state(route.Name, item);
                   }
               }

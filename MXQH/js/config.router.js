@@ -1,7 +1,7 @@
 ﻿'use strict';
 angular.module('app').run(Run);
-Run.$inject  = ['$rootScope', '$state', '$stateParams', '$cookieStore', '$window', '$q', 'AjaxService', 'router'];
-function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxService, router) {
+Run.$inject  = ['$rootScope', '$state', '$stateParams', '$cookieStore', '$window', '$q', 'AjaxService', 'router', 'appUrl'];
+function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxService, router, appUrl) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
     //State Change Start
@@ -9,7 +9,9 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
 
     //檢查是否登入
     function onStateChangeStart(e, toState, toParams, fromState, fromParams) {
-        $cookieStore.put('function-token', "123dfaskldfj");
+        if (!$cookieStore.get('user-token')) {
+            $window.location.href = appUrl + 'Login.html';
+        }
     }
 
     var en = {};
@@ -26,6 +28,7 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
             route.Controller = item.Controller;
             route.ControllerAs = item.ControllerAs;
             route.TempleteUrl = item.FunHtml;
+            route.FunNo = item.FunNo;
             if (item.FunLoad) {
                 var loadJs = [];
                 angular.forEach(item.FunLoad, function (l) {

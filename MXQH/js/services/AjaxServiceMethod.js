@@ -43,7 +43,8 @@
             GetTbColumns: GetTbColumns,
             GetTableConfig: GetTableConfig,
             //User
-            AddUser: AddUser
+            AddUser: AddUser,
+            Login: Login
         };
 
         return obj;
@@ -210,6 +211,15 @@
             var en = {};
             en.strJson = JSON.stringify(json);
             return Ajax(d, url, en, "AddUser", undefined, 'Authorization')
+        }
+
+        function Login(user, psw, kicking) {
+            var d = $q.defer(), url = serviceUrl + "Common.asmx/Login";
+            var en = {};
+            en.User = user;
+            en.Psw = psw;
+            en.Kicking = kicking;
+            return httpFun(d, url, en)
         }
 
         function GetTableConfig(tbName, clName) {
