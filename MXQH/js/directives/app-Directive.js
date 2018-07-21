@@ -63,7 +63,19 @@ angular.module('app')
                   + '     </span>'
                   + '</div>'
         ,
-        link: link
+        link: link,
+        compile: function (tELe, tAttrs, transcludeFn) {
+            //进行编译后的dom操作
+            return {
+                pre: function (scope, iElement, iAttrs, controller) {
+                    //// 在子元素被链接之前执行
+                    //uiLoad.Load("ui.select");
+                },
+                post: function (scope, iElement, iAttrs, controller) {
+                    // 在子元素被链接之后执行
+                }
+            }
+        }
     };
 
     function link(scope, element, attrs) {

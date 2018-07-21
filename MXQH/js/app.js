@@ -11,7 +11,7 @@ angular.module('app', [
     'ngTouch',
     'ngStorage',
     'ui.router',
-    'ui.select2',
+    //'ui.select2',
     'toggle-switch',
     'ui.bootstrap',
     'ui.load',

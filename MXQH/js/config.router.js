@@ -55,6 +55,12 @@ function Config($stateProvider, $urlRouterProvider) {
             controllerAs: 'vm',
             controller: 'AppCtrl',
             templateUrl: 'Basic/app.html',
+            resolve: {
+                deps: ['$ocLazyLoad',
+                  function ($ocLazyLoad) {
+                      return $ocLazyLoad.load('ui.select');
+                  }]
+            }
         })
         .state('apps', {
             abstract: true,
