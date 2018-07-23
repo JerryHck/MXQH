@@ -66,6 +66,8 @@ angular.module('app')
               vm.FunTree = data;
               //console.log(data);
           });
+
+          vm.ConfigData = [];
       }
        
 

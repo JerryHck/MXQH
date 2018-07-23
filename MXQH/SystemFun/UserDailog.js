@@ -26,10 +26,10 @@ function UserDailogCtrl($scope, $uibModalInstance, Form, ItemData, toastr, AjaxS
 
     //验证是否存在
     function isExists() {
-        if (vm.Item.SysNo) {
+        if (vm.Item.UserNo) {
             var en = { name: "UserNo", value: vm.Item.UserNo };
             AjaxService.GetPlan('User', en).then(function (data) {
-                $scope.SystemForm.No.$setValidity('unique', !data);
+                vm.UserForm.No.$setValidity('unique', !data.UserNo);
             });
         }
     }
