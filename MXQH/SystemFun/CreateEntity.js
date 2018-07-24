@@ -70,7 +70,7 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
             pro.ColumnName = vm.PropertyList[i].ColumnName;
             pro.ColumnType = vm.PropertyList[i].ColumnType;
             pro.RelationType = vm.PropertyList[i].RelationType;
-            pro.IsKey = vm.PropertyList[i].IsKey;
+            pro.IsKey = vm.PropertyList[i].IsKey == '1' ? 1 : 0;
             pro.OrderWay = vm.PropertyList[i].OrderWay;
             pro.OrderNum = vm.PropertyList[i].OrderNum;
             ProList.push(pro);

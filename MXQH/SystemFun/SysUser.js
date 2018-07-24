@@ -7,6 +7,10 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
     var vm = this;
     vm.Insert = Insert;
     vm.SelectUser = SelectUser;
+    vm.EditEmp = EditEmp;
+    vm.change = change;
+    vm.CancelEmp = CancelEmp;
+    vm.SaveEmp = SaveEmp;
 
     vm.ConfigSex = { Table: "BasicData", Column: "Sex" };
 
@@ -19,6 +23,27 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
 
     function SelectUser(item) {
         vm.SelectedUser = item;
+        var en = { name: "EmpNo", value: item.EmpNo };
+        AjaxService.GetPlan("Employee", en).then(function (data) {
+            vm.EmpItem = data;
+            vm.PreEmpItem = angular.copy(data);
+        });
+    }
+
+    function EditEmp() {
+        vm.isEditEmp = !vm.isEditEmp;
+    }
+
+    function SaveEmp() {
+        AjaxService.PlanUpdate("Employee", vm.EmpItem).then(function (data) {
+            toastr.success('保存成功');
+            vm.isEditEmp = !vm.isEditEmp;
+        });
+    }
+
+    function CancelEmp() {
+        vm.EmpItem = angular.copy(vm.PreEmpItem);
+        vm.isEditEmp = !vm.isEditEmp;
     }
 
     function Insert() {
@@ -28,6 +53,15 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
             }
         };
         Open("I", resolve);
+    }
+
+    function change() {
+        var en = {};
+        en.UserNo = vm.SelectedUser.UserNo;
+        en.State = vm.SelectedUser.State;
+        AjaxService.PlanUpdate("UserBasic", en).then(function (data) {
+            toastr.success('成功');
+        });
     }
 
     function Open(type, resolve) {

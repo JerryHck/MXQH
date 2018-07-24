@@ -23,10 +23,6 @@
                             <div class="padder">
                                 <div class="list-group">
                                     <a ng-repeat="item in use.List | filter:use.UserQuery " class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.UserNo == use.SelectedUser.UserNo, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="use.SelectUser(item)">
-                                        <span class="pull-right">
-                                            <i toggle-switch ng-model="item.State" class="switch-mini w-xxs switch-small switch-success" on-label="启用" off-label="停用"
-                                               on-value="S" off-value="E" on-change="use.change(item)"></i>
-                                        </span>
                                         <span class="pull-left text-primary">
                                             <i class="fa" ng-class="{ 'fa-male': item.Sex=='M', 'fa-female': item.Sex=='F' }"></i>
                                         </span>
@@ -52,28 +48,32 @@
                                 <uib-tabset active="active" type="tabs">
                                     <uib-tab index="0">
                                         <uib-tab-heading class="h5">员工信息</uib-tab-heading>
-                                        <div class="panel panel-info">
+                                        <div class="panel panel-info" ng-if="use.EmpItem">
                                             <div class="panel-body">
                                                 <div class="row">
                                                     <span class="m-l-md">
-                                                        <button class="btn btn-sm btn-success" ng-click="en.Edit()" ng-disabled="en.isAddOpen">
+                                                        <button class="btn btn-sm btn-success" ng-click="use.EditEmp()" ng-if="!use.isEditEmp">
                                                             <i class="glyphicon glyphicon-edit">编辑</i>
                                                         </button>
+                                                        <button class="btn btn-sm btn-success" ng-if="use.isEditEmp" ng-click="use.SaveEmp()" ng-disabled="use.EmpForm.$invalid">
+                                                            <i class="glyphicon glyphicon-edit">确定</i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-warning m-l-xs m-r-lg" ng-if="use.isEditEmp" ng-click="use.CancelEmp()"> 取消</button>
                                                     </span>
+
                                                 </div>
-                                                <div class="form form-horizontal col-md-10 col-md-offset-1 b m-t-md" ng-form="en.ClassForm">
+                                                <div class="form form-horizontal col-md-10 b m-t-md" ng-form="use.EmpForm">
                                                     <div class="form-group pull-in clearfix  m-t-xs">
                                                         <div class="col-md-6" title="员工编号">
                                                             <label class="col-md-4 control-label font-bold">员工编号:</label>
-                                                            <div class="col-md-8" ng-class="{ 'has-error' : en.ClassForm.Pro.$invalid }">
-                                                                <input type="text" class="form-control text-xs" name="Pro" placeholder="属性名"
-                                                                       ng-model="en.ProItem.ColumnName" ng-disabled="!en.isEditing || en.IsProEdit" ng-blur="en.isProExists(en.ProItem.ColumnName)" required>
+                                                            <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.EmpNo.$invalid }">
+                                                                <input type="text" class="form-control text-xs" name="EmpNo" placeholder="属性名" ng-model="use.EmpItem.EmpNo" disabled required>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6" title="性别">
                                                             <label class="col-md-4 control-label font-bold">性别:</label>
-                                                            <div class="col-md-8" ng-class="{ 'has-error' : en.ClassForm.Pro.$invalid }">
-                                                                <div config-select ng-model="pro.ColumnType" config-option="use.ConfigSex"></div>
+                                                            <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.Sex.$invalid }">
+                                                                <div config-select ng-model="use.EmpItem.Sex" config-option="use.ConfigSex" ng-disabled="!use.isEditEmp"></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -81,99 +81,68 @@
                                                         <div class="col-md-6" title="姓名">
                                                             <label class="col-md-4 control-label font-bold">姓名:</label>
                                                             <div class="col-md-3" ng-class="{ 'has-error' : use.UserForm.ChLastName.$invalid }">
-                                                                <input type="text" name="ChLastName" class="form-control" ng-maxlength="10" placeholder="姓" ng-model="use.Item.ChiLastName" required>
+                                                                <input type="text" name="ChLastName" class="form-control" ng-maxlength="10" ng-disabled="!use.isEditEmp" placeholder="姓" ng-model="use.EmpItem.ChiLastName" required>
                                                             </div>
                                                             <div class="col-md-5" ng-class="{ 'has-error' : use.UserForm.ChiFirstName.$invalid }">
-                                                                <input type="text" class="form-control" name="ChiFirstName" ng-maxlength="10" placeholder="名" ng-model="use.Item.ChiFirstName" required>
+                                                                <input type="text" class="form-control" name="ChiFirstName" ng-maxlength="10" ng-disabled="!use.isEditEmp" placeholder="名" ng-model="use.EmpItem.ChiFirstName" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6" title="英文名">
                                                             <label class="col-md-4 control-label font-bold">英文名</label>
-                                                            <div  class="col-md-8">
-                                                                <input type="text" class="form-control text-xs" name="Pro" placeholder="属性名"
-                                                                       ng-model="en.ProItem.ColumnName" ng-disabled="!en.isEditing || en.IsProEdit" ng-blur="en.isProExists(en.ProItem.ColumnName)" required>
+                                                            <div class="col-md-8">
+                                                                <input type="text" class="form-control text-xs" name="Pro" placeholder="属性名" ng-disabled="!use.isEditEmp" ng-model="en.EmpItem.EngName">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="form form-horizontal col-md-offset-1 col-md-10" ng-if="en.isEditing">
-                                                    <div class="form-group pull-in clearfix" ng-form="en.RelateForm">
-                                                        <div class="col-md-1 control-label" title="增加关联条件">
-                                                            <span class="btn btn-default" ng-click="en.AddProRelCon()" ng-disabled="en.RelateForm.$invalid">
-                                                                <i class="glyphicon glyphicon-plus text-success"></i>
-                                                            </span>
-                                                        </div>
-                                                        <div class="col-md-11">
-                                                            <div class="row">
-                                                                <div class="col-lg-3" ng-class="{ 'has-error' : en.RelateForm.ParenType.$invalid }" title="母实体条件类型">
-                                                                    <div config-select ng-model="en.newRelCon.ParenType" ng-name="ParenType" my-required="true" config-option="en.EntityRelationType"></div>
-                                                                </div>
-                                                                <div class="col-lg-5" ng-class="{ 'has-error' : en.RelateForm.ParentKey.$invalid }" title="母实体条件">
-                                                                    <ui-select name="ParentKey" ng-model="en.newRelCon.ParentKey" theme="bootstrap" ng-if="en.newRelCon.ParenType=='0'" ng-required="true">
-                                                                        <ui-select-match placeholder="父实体栏位">{{ $select.selected.ColumnName }}</ui-select-match>
-                                                                        <ui-select-choices repeat="item.ColumnName as item in en.TbColunms | filter: $select.search track by item.ColumnName">
-                                                                            <div ng-bind-html="item.ColumnName | highlight: $select.search"></div>
-                                                                        </ui-select-choices>
-                                                                    </ui-select>
-                                                                    <input type="text" name="ParentKey" class="form-control" ng-model="en.newRelCon.ParentKey" ng-if="en.newRelCon.ParenType=='2'" required />
-                                                                    <input ui-jq="TouchSpin" name="ParentKey" type="text" ng-model="en.newRelCon.ParentKey" ng-if="en.newRelCon.ParenType=='1'" class="form-control" ng-disabled="!en.isEditing"
-                                                                           data-verticalbuttons="true" data-verticalupclass="btn-xs fa fa-caret-up" data-verticaldownclass="btn-xs btn-sm fa fa-caret-down"
-                                                                           data-min='-2147483647' data-max="2147483647" required>
-                                                                </div>
-                                                                <div class="col-lg-3" ng-class="{ 'has-error' : en.RelateForm.RelExp.$invalid }" title="条件中间表达式">
-                                                                    <div config-select ng-name="RelExp" my-required="true" ng-model="en.newRelCon.Expression" select-class="text-xs" config-option="en.EntityRelationExp"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row m-t-xs">
-                                                                <div class="col-lg-3" ng-class="{ 'has-error' : en.RelateForm.ChildType.$invalid }" title="关联实体条件">
-                                                                    <div config-select ng-model="en.newRelCon.ChildType" ng-name="ChildType" my-required="true" config-option="en.EntityRelationType"></div>
-                                                                </div>
-                                                                <div class="col-lg-5" ng-class="{ 'has-error' : en.RelateForm.ChildKey.$invalid }" title="关联实体条件">
-                                                                    <ui-select name="ChildKey" ng-model="en.newRelCon.ChildKey" theme="bootstrap" ng-if="en.newRelCon.ChildType=='0'" ng-required="true">
-                                                                        <ui-select-match placeholder="父实体栏位">{{ $select.selected.ColumnName }}</ui-select-match>
-                                                                        <ui-select-choices repeat="item.ColumnName as item in en.TbChildColunms | filter: $select.search track by item.ColumnName">
-                                                                            <div ng-bind-html="item.ColumnName | highlight: $select.search"></div>
-                                                                        </ui-select-choices>
-                                                                    </ui-select>
-                                                                    <input type="text" name="ChildKey" class="form-control" ng-model="en.newRelCon.ChildKey" ng-if="en.newRelCon.ChildType=='2'" required />
-                                                                    <input ui-jq="TouchSpin" name="ChildKey" type="text" ng-model="en.newRelCon.ChildKey" ng-if="en.newRelCon.ChildType=='1'" class="form-control" ng-disabled="!en.isEditing"
-                                                                           data-verticalbuttons="true" data-verticalupclass="btn-xs fa fa-caret-up" data-verticaldownclass="btn-xs btn-sm fa fa-caret-down"
-                                                                           data-min='-2147483647' data-max="2147483647" required>
-                                                                </div>
-                                                                <div class="col-lg-3" ng-class="{ 'has-error' : en.RelateForm.Ass.$invalid }" title="多条件关联方式">
-                                                                    <div config-select ng-name="Ass" my-required="true" ng-model="en.newRelCon.Associate" select-class="text-xs" ng-disabled="en.ProItem.RelateList.length==0" config-option="en.EntityRelationAss"></div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs">
+                                                        <div class="col-md-6" title="邮箱">
+                                                            <label class="col-md-4 control-label font-bold">邮箱:</label>
+                                                            <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.Email.$invalid }">
+                                                                <input type="email" class="form-control text-xs" name="Email" placeholder="邮箱" ng-disabled="!use.isEditEmp" ng-model="use.EmpItem.Email">
+                                                                <div ng-messages="use.EmpForm.Email.$error" class="help-block" role="alert">
+                                                                    <div ng-message="email">邮箱格式错误</div>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-md-6" title="职位">
+                                                            <label class="col-md-4 control-label font-bold">职位:</label>
+                                                            <div class="col-md-8">
+                                                                <input type="text" class="form-control text-xs" name="Mail" placeholder="职位" ng-model="use.EmpItem.Position" ng-disabled="!use.isEditEmp">
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-offset-1 col-md-9">
-                                                    <div class="panel panel-success">
-                                                        <ul class="list-group alt h4">
-                                                            <li class="list-group-item" ng-repeat="rel in en.ProItem.RelateList ">
-                                                                <span>          {{ rel.Associate }} </span><span ng-if="rel.ParenType !='2'">          {{ rel.ParentKey }}</span>
-                                                                <span ng-if="rel.ParenType =='2'"> '{{ rel.ParentKey }}'</span>
-                                                                {{ rel.Expression }}      <span ng-if="rel.ChildType !='2'"> {{ rel.ChildKey }}</span>
-                                                                <span ng-if="rel.ChildType =='2'"> '{{ rel.ChildKey }}'</span>
-                                                                <span ng-click="en.DeleteProCon($index)" ng-if="en.isEditing" class="pull-right text-danger"><i class="fa fa-times"></i></span>
-                                                            </li>
-                                                        </ul>
+                                                    <div class="form-group pull-in clearfix  m-t-xs">
+                                                        <div class="col-md-6" title="固定电话">
+                                                            <label class="col-md-4 control-label font-bold">固定电话:</label>
+                                                            <div class="col-md-8">
+                                                                <input type="text" class="form-control text-xs" name="Tel" placeholder="固定电话" ng-disabled="!use.isEditEmp" ng-model="use.EmpItem.Tel">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6" title="手机号码">
+                                                            <label class="col-md-4 control-label font-bold">手机号码:</label>
+                                                            <div class="col-md-8">
+                                                                <input type="tel" class="form-control text-xs" name="Mail" placeholder="手机号码" ng-disabled="!use.isEditEmp" ng-model="use.EmpItem.Phone">
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <span class="pull-right">
-                                                            <button class="btn btn-sm btn-success" ng-if="en.isEditing" ng-click="en.SaveProClass()" ng-disabled="en.ClassForm.$invalid">
-                                                                <i class="glyphicon glyphicon-edit">确定</i>
-                                                            </button>
-                                                            <button class="btn btn-sm btn-warning m-l-xs m-r-lg" ng-click="en.CancelProCon()"> 取消</button>
-                                                        </span>
-                                                    </div>
-                                                </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs">
+                                                        <div class="col-md-6" title="使用状态">
+                                                            <label class="col-md-4 control-label font-bold">使用状态:</label>
+                                                            <div class="col-md-8">
+                                                                <div toggle-switch ng-model="use.SelectedUser.State" class="w-xxs switch-success" on-label="启用" off-label="停用"
+                                                                     on-value="S" off-value="E" ng-change="use.change()" is-disabled="!use.isEditEmp"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
 
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </uib-tab>
                                     <uib-tab index="1">
-                                        <uib-tab-heading class="h5">存储过程</uib-tab-heading>
+                                        <uib-tab-heading class="h5">角色管理</uib-tab-heading>
                                         <div class="panel panel-success">
                                             <div class="panel-heading">实体相关存储过程</div>
                                             <div class="panel-body">
@@ -213,7 +182,61 @@
                                                                     <span ng-show='forma.confirm_foo.$error.validator'>Not match!</span>
                                                                 </div>
                                                                 <div class="col-md-1" ng-if="en.isEditing">
-                                                                    
+
+
+                                                                    <span class="btn btn-default" ng-click="en.DeleteProc($index)"><i class="glyphicon glyphicon-remove text-danger"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                                                </div>
+                                                <!--<pre>{{ ProcedureForm.$parent | json }}</pre>-->
+                                            </div>
+                                        </div>
+                                    </uib-tab>
+                                    <uib-tab index="2">
+                                        <uib-tab-heading class="h5">权限配给</uib-tab-heading>
+                                        <div class="panel panel-success">
+                                            <div class="panel-heading">实体相关存储过程</div>
+                                            <div class="panel-body">
+                                                <div class="form form-horizontal m-t-md" ng-form="en.ProcedureForm">
+                                                    <div class="form-group" ng-if="en.isEditing">
+                                                        <label class="col-sm-1 control-label"></label>
+                                                        <div class="col-sm-10">
+                                                            <div class="row">
+                                                                <div class="col-md-4" ng-class="{ 'has-error' : en.ProcedureForm.ShortName.$invalid }">
+                                                                    <input class="form-control" name="ShortName" placeholder="存储过程简称" type="text" ng-blur="en.isProcExists(en.NewProc.ShortName)" ng-model="en.NewProc.ShortName" required />
+                                                                    <div ng-messages="en.ProcedureForm.ShortName.$error" class="help-block" role="alert">
+                                                                        <div ng-message="unique">简称重复</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6" ng-class="{ 'has-error' : en.ProcedureForm.Proc.$invalid }">
+                                                                    <div object-select ob-type="'P'" ng-name="Proc" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.SelectedEn.ConnectName" ng-model="en.NewProc.EnProcedure" my-required="true"></div>
+                                                                </div>
+                                                                <div class="col-md-1" ng-if="en.isEditing">
+                                                                    <span class="btn btn-default" ng-click="en.AddProc()" ng-disabled="en.ProcedureForm.$invalid" title="增加关联存储过程">
+                                                                        <i class="glyphicon glyphicon-plus text-success"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                                                    <div class="form-group" ng-repeat="proc in en.ProcList">
+                                                        <label class="col-sm-1 control-label"></label>
+                                                        <div class="col-sm-10">
+                                                            <div class="row">
+                                                                <div class="col-sm-4">
+                                                                    <input class="form-control" ng-model="proc.ShortName" placeholder="存储过程简称" type="text" disabled />
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div object-select ob-type="'P'" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.SelectedEn.ConnectName" ng-disabled="!en.isEditing"
+                                                                         ng-model="proc.EnProcedure" ng-name="obProc" my-required="true"></div>
+                                                                    <span ng-show='forma.confirm_foo.$error.validator'>Not match!</span>
+                                                                </div>
+                                                                <div class="col-md-1" ng-if="en.isEditing">
+
 
                                                                     <span class="btn btn-default" ng-click="en.DeleteProc($index)"><i class="glyphicon glyphicon-remove text-danger"></i></span>
                                                                 </div>

@@ -17,7 +17,14 @@
             //保存计划实体
             SavePlan: SavePlan,
             //删除计划实体
-            DeletePlan:DeletePlan,
+            DeletePlan: DeletePlan,
+            //计划对应表新增
+            PlanInsert: PlanInsert,
+            //计划对应表更新
+            PlanUpdate: PlanUpdate,
+            //计划对应表删除
+            PlanDelete:PlanDelete,
+
             //执行计划实体
             ExecPlan: ExecPlan,
             //获得实体资料-单个
@@ -61,14 +68,29 @@
             return plan(name, json, "GetPlan");
         }
 
-        //获得计划资料
+        //获得计划资料-列表
         function GetPlans(name, json) {
             return plan(name, json, "GetPlans");
         }
 
-        //获得计划资料
+        //获得计划资料-分页
         function GetPlansPage(name, json, start, end) {
             return plan(name, json, "GetPlansPage", start, end);
+        }
+
+        //获得计划资料-新增
+        function PlanInsert(name, json) {
+            return planAjax(name, JSON.stringify(json), "Insert");
+        }
+
+        //获得计划资料-更新
+        function PlanUpdate(name, json) {
+            return planAjax(name, JSON.stringify(json), "Update");
+        }
+
+        //获得计划资料-删除
+        function PlanDelete(name, json) {
+            return planAjax(name, JSON.stringify(json), "Delete");
         }
 
         //获得单实体资料
@@ -139,7 +161,7 @@
             var d = $q.defer(), g = $q.defer(),
                  url = serviceUrl + generic;
             var en = {};
-            en.entityName = con;
+            en.planName = con;
             Ajax(d, url, en, "GetTbViewColumns").then(
                 function (data) { g.resolve(data.data); },
                 function () { g.reject(); }
@@ -171,20 +193,24 @@
         }
 
         function plan(name, json, funName, start, end) {
+            var enJson = JSON.stringify(convertArray(json)) || '[]';
+            return planAjax(name, enJson, funName, start, end);
+        }
+
+        function planAjax(name, json, funName, start, end) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = {};
-            en.entityName = name;
-            en.strJson = JSON.stringify(convertArray(json)) || '[]';
+            en.planName = name;
+            en.strJson = json;
             en.start = start;
             en.end = end;
             return Ajax(d, url, en, funName)
         }
 
-
         function SavePlan(name, json) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = {};
-            en.entityName = name;
+            en.planName = name;
             en.strJson = JSON.stringify(json);
             return Ajax(d, url, en, "SavePlan");
         }
@@ -192,7 +218,7 @@
         function DeletePlan(name, json) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = {};
-            en.entityName = name;
+            en.planName = name;
             en.strJson = JSON.stringify(json);
             return Ajax(d, url, en, "DeletePlan");
         }
@@ -200,7 +226,7 @@
         function ExecPlan(name, shortName, json) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = {};
-            en.entityName = name;
+            en.planName = name;
             en.shortName = shortName;
             en.strJson = JSON.stringify(json);
             return Ajax(d, url, en, "ExecPlan")

@@ -482,7 +482,7 @@
     <Content Include="js\app\weather\skycons.js" />
     <Content Include="js\config.js" />
     <Content Include="js\config.lazyload.js" />
-    <Content Include="config.router.js" />
+    <Content Include="js\config.router.js" />
     <Content Include="js\directives\setnganimate.js" />
     <Content Include="js\directives\ui-butterbar.js" />
     <Content Include="js\directives\ui-focus.js" />
