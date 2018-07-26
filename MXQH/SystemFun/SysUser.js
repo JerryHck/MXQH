@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app', ['ui.grid', 'ui.grid.autoResize'])
-.controller('UserCtrl', ['$scope', '$http', 'Dialog', 'AjaxService', 'toastr',
-function ($scope, $http, Dialog, AjaxService, toastr) {
+.controller('UserCtrl', ['$scope', '$http', 'Dialog', 'AjaxService', 'toastr', 'MyPop',
+function ($scope, $http, Dialog, AjaxService, toastr, MyPop) {
 
     var vm = this;
     vm.Insert = Insert;
@@ -11,10 +11,16 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
     vm.change = change;
     vm.CancelEmp = CancelEmp;
     vm.SaveEmp = SaveEmp;
+    vm.SelectRole = SelectRole;
+    vm.InsertRole = InsertRole;
+    vm.EditRole = EditRole;
+    vm.DeleteRole = DeleteRole;
 
     vm.ConfigSex = { Table: "BasicData", Column: "Sex" };
 
     getList();
+    getListRole();
+
     function getList() {
         AjaxService.GetPlans("User").then(function (data) {
             vm.List = data;
@@ -66,10 +72,55 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
 
     function Open(type, resolve) {
         Dialog.open("UserDailog", resolve).then(function (data) {
-            //GetList();
-            //console.log(data);
+            getList();
         }).catch(function (reason) {
-            //console.log(reason);
+        });
+    }
+
+
+    function getListRole() {
+        AjaxService.GetPlans("Role").then(function (data) {
+            vm.ListRole = data;
+        });
+    }
+
+    function SelectRole(item) {
+        vm.SelectedRole = item;
+    }
+
+    function InsertRole() {
+        var resolve = {
+            ItemData: function () {
+                return {};
+            }
+        };
+        OpenRole("I", resolve);
+    }
+
+    function EditRole(role) {
+        var resolve = {
+            ItemData: function () {
+                return role;
+            }
+        };
+        OpenRole("U", resolve);
+    }
+
+    function DeleteRole(role) {
+        MyPop.Confirm({ text: "确定要删除该角色吗" }, function () {
+            var en = {};
+            en.RoleSn = role.RoleSn;
+            AjaxService.PlanDelete("Role", en).then(function (data) {
+                toastr.success('删除成功');
+                getListRole();
+            });
+        });
+    }
+
+    function OpenRole(type, resolve) {
+        Dialog.open("RoleDailog", resolve).then(function (data) {
+            getListRole();
+        }).catch(function (reason) {
         });
     }
 }

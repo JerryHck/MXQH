@@ -6,15 +6,16 @@ angular.module('appData')
 //APP URL
 .constant('appUrl', '../')
 //Service URL
-.constant('serviceUrl', '//localhost:13439/')
+//.constant('serviceUrl', '//localhost:13439/')
 //.constant('serviceUrl', '//localhost/MXQHServie/')
-
+.constant('serviceUrl', '//192.168.1.82:90/MXQH/MXQHServie/')
  //表單設定
 .constant('Form', [
     { index: 0, title: '新增', action: 'Insert' },
     { index: 1, title: '编辑', action: 'Update' },
     { index: 2, title: '查看', action: 'Search' }
 ])
+.constant('Version', (new Date()).toString())
     //Loading
 .constant('cgBusyDefaults', {
     message: '',
@@ -47,6 +48,23 @@ angular.module('appData')
                 swal(en, function (isConfirm) { });
             }
             return show;
+        },
+        Confirm: function (en, Do) {
+            en = en || {};
+            en.title = en.title || "确定";
+            en.text = en.text || "确定吗";
+            en.type = en.type || "warning";
+            en.showConfirmButton = true
+            en.showCancelButton = true;
+            en.confirmButtonText = en.confirmButtonText || "确定";
+            en.cancelButtonText = en.cancelButtonText || "取消";
+            var bool = false;
+            //显示提示消息
+            swal(en, function (isConfirm) {
+                if (isConfirm) {
+                    Do();
+                }
+            });
         }
     };
 })

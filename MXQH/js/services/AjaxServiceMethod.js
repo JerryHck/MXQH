@@ -59,7 +59,7 @@
         //JSON Data取得
         function GetJson(data) {
             var d = $q.defer(),
-                url = appUrl + 'Data/' + data;
+                url = appUrl + 'Data/' + data + "?v=" + (new Date()).toString();
             return Ajax(d, url, undefined, undefined, "GET");
         }
 

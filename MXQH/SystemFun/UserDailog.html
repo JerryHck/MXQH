@@ -11,7 +11,6 @@
                         <input type="text" class="form-control" name="No" placeholder="用户账户"
                                ng-model="use.Item.UserNo" ng-disabled="use.form.index == 1" ng-blur="use.isExists()" required>
                         <div ng-messages="use.UserForm.No.$error" class="help-block" role="alert">
-                            <!--<div ng-message="required">请输入用户账户</div>-->
                             <div ng-message="unique">用户账户重复</div>
                         </div>
                     </div>
@@ -38,13 +37,6 @@
                         <input type="text" class="form-control" name="ChiFirstName" ng-maxlength="10" placeholder="名" ng-model="use.Item.ChiFirstName" required>
                     </div>
                 </div>
-                <!--<div class="form-group">
-                    <label class="col-md-2 control-label">使用状态</label>
-                    <div class="col-md-8">
-                        <div toggle-switch ng-model="use.Item.State" class="switch-mini w-xxs switch-small switch-danger" on-label="启用" off-label="停用"
-                             on-value="S" off-value="E" on-change="use.change(item)"></div>
-                    </div>
-                </div>-->
             </div>
         </div>
     </div>
@@ -53,4 +45,4 @@
     <button class="btn btn-success" type="button" ng-disabled="use.UserForm.$invalid" ng-click="use.Save()">储存</button>
     <button class="btn btn-warning" type="button" ng-click="use.cancel()">取消</button>
 </div>
-<pre>{{ use.Item | json }}</pre>
+<!--<pre>{{ use.Item | json }}</pre>-->

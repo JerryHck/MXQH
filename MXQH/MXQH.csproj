@@ -348,6 +348,8 @@
     <Content Include="SystemFun\CreateEntity.js" />
     <Content Include="SystemFun\IconDialog.html" />
     <Content Include="SystemFun\IconDialog.js" />
+    <Content Include="SystemFun\RoleDailog.html" />
+    <Content Include="SystemFun\RoleDailog.js" />
     <Content Include="SystemFun\SysFunction.html" />
     <Content Include="SystemFun\SysFunction.js" />
     <Content Include="SystemFun\SystemDialog.html" />

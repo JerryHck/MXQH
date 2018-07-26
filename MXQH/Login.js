@@ -28,11 +28,25 @@ function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $wi
                 toastr.error(data.Msg);
             }
             else if (data.Name == "Login") {
-                toastr.error(data.Msg);
-                vm.Pwd = undefined;
+                MyPop.Confirm({ text: data.Msg }, KickOut);
             }
             else if (data.Name == "Success") {
                 storage["userName"] = vm.IsSave === 1? vm.UserName : "";
+                storage["Pwd"] = vm.IsSave === 1 ? vm.Pwd : "";
+                storage["IsSave"] = vm.IsSave;
+                $cookieStore.put('user-token', data.Session);
+                $window.location.href = appUrl + '/index.html';
+            }
+        })
+    }
+    //踢出
+    function KickOut(){
+        AjaxService.Login(vm.UserName, vm.Pwd, "K").then(function (data) {
+            if (data.Name == "Error") {
+                toastr.error(data.Msg);
+            }
+            else if (data.Name == "Success") {
+                storage["userName"] = vm.IsSave === 1 ? vm.UserName : "";
                 storage["Pwd"] = vm.IsSave === 1 ? vm.Pwd : "";
                 storage["IsSave"] = vm.IsSave;
                 $cookieStore.put('user-token', data.Session);

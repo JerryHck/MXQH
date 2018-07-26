@@ -45,11 +45,11 @@
                     <div class="cell scrollable hover">
                         <div class="cell-inner">
                             <div class="padder">
-                                <uib-tabset active="active" type="tabs">
+                                <uib-tabset active="active" type="tabs" class="h-100">
                                     <uib-tab index="0">
                                         <uib-tab-heading class="h5">员工信息</uib-tab-heading>
                                         <div class="panel panel-info" ng-if="use.EmpItem">
-                                            <div class="panel-body">
+                                            <div class="panel-body bg-light">
                                                 <div class="row">
                                                     <span class="m-l-md">
                                                         <button class="btn btn-sm btn-success" ng-click="use.EditEmp()" ng-if="!use.isEditEmp">
@@ -142,112 +142,64 @@
                                         </div>
                                     </uib-tab>
                                     <uib-tab index="1">
-                                        <uib-tab-heading class="h5">角色管理</uib-tab-heading>
-                                        <div class="panel panel-success">
-                                            <div class="panel-heading">实体相关存储过程</div>
-                                            <div class="panel-body">
-                                                <div class="form form-horizontal m-t-md" ng-form="en.ProcedureForm">
-                                                    <div class="form-group" ng-if="en.isEditing">
-                                                        <label class="col-sm-1 control-label"></label>
-                                                        <div class="col-sm-10">
-                                                            <div class="row">
-                                                                <div class="col-md-4" ng-class="{ 'has-error' : en.ProcedureForm.ShortName.$invalid }">
-                                                                    <input class="form-control" name="ShortName" placeholder="存储过程简称" type="text" ng-blur="en.isProcExists(en.NewProc.ShortName)" ng-model="en.NewProc.ShortName" required />
-                                                                    <div ng-messages="en.ProcedureForm.ShortName.$error" class="help-block" role="alert">
-                                                                        <div ng-message="unique">简称重复</div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6" ng-class="{ 'has-error' : en.ProcedureForm.Proc.$invalid }">
-                                                                    <div object-select ob-type="'P'" ng-name="Proc" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.SelectedEn.ConnectName" ng-model="en.NewProc.EnProcedure" my-required="true"></div>
-                                                                </div>
-                                                                <div class="col-md-1" ng-if="en.isEditing">
-                                                                    <span class="btn btn-default" ng-click="en.AddProc()" ng-disabled="en.ProcedureForm.$invalid" title="增加关联存储过程">
-                                                                        <i class="glyphicon glyphicon-plus text-success"></i>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                        <uib-tab-heading class="h5">角色信息</uib-tab-heading>
+                                        <div class="hbox bg-white content-h-full">
+                                            <div class="col w-md padder b-r h-100">
+                                                <div class="form-group mt-1" >
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control input-sm" placeholder="查询" ng-model="use.UserRole">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-sm btn-default" ng-click="use.InsertRole()">
+                                                                <i class="glyphicon glyphicon-plus text-success">新增</i>
+                                                            </button>
+                                                        </span>
                                                     </div>
-                                                    <div class="line line-dashed b-b line-lg pull-in"></div>
-                                                    <div class="form-group" ng-repeat="proc in en.ProcList">
-                                                        <label class="col-sm-1 control-label"></label>
-                                                        <div class="col-sm-10">
-                                                            <div class="row">
-                                                                <div class="col-sm-4">
-                                                                    <input class="form-control" ng-model="proc.ShortName" placeholder="存储过程简称" type="text" disabled />
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div object-select ob-type="'P'" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.SelectedEn.ConnectName" ng-disabled="!en.isEditing"
-                                                                         ng-model="proc.EnProcedure" ng-name="obProc" my-required="true"></div>
-                                                                    <span ng-show='forma.confirm_foo.$error.validator'>Not match!</span>
-                                                                </div>
-                                                                <div class="col-md-1" ng-if="en.isEditing">
-
-
-                                                                    <span class="btn btn-default" ng-click="en.DeleteProc($index)"><i class="glyphicon glyphicon-remove text-danger"></i></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="line line-dashed b-b line-lg pull-in"></div>
                                                 </div>
-                                                <!--<pre>{{ ProcedureForm.$parent | json }}</pre>-->
+                                                <div class="list-group">
+                                                    <a ng-repeat="role in use.ListRole | filter:role.RoleQuery " class="list-group-item b-l-3x hover-anchor cl"
+                                                       ng-class="{'hover': role.RoleSn == use.SelectedRole.RoleNo, ' b-l-success':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="use.SelectRole(role)">
+                                                        <span class="pull-left">
+                                                            <i class="btn btn-xs glyphicon glyphicon-edit text-success" ng-click="use.EditRole(role)"></i>
+                                                        </span>
+                                                        <span class="pull-rigth">
+                                                            <i class="pull-right btn btn-xs glyphicon glyphicon-trash text-danger" ng-click="use.DeleteRole(role)"></i>
+                                                        </span>
+                                                        <span class="text-info text-lg" ng-bind-html="role.RoleSn | highlight: use.EntityQuery" ng-click="use.SelectEn(item)"></span><br />
+                                                        <small class="text-muted">
+                                                            <span class="h5">{{ role.RoleName }}</span>
+                                                            <span class="pull-right">
+                                                                <i class="glyphicon" ng-class="{ 'glyphicon-ok-circle text-success': role.State=='S', 'glyphicon-remove-circle  text-danger': role.State=='E' }"></i>
+                                                            </span>
+                                                            <br />
+                                                            <span class="h6">{{ role.RoleDesc }}</span>
+                                                        </small>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col w-auto padder w-tab-full">
+                                                <div class="padder-md" ng-if="use.SelectedRole">
+                                                    <div class="bg-light lter b-b wrapper-md">
+                                                        <h3 class="m-n font-thin h3">[{{ use.SelectedRole.RoleSn }}]{{ use.SelectedRole.RoleName }}</h3>
+                                                    </div>
+                                                    <div class="panel panel-info col-md-6">
+                                                        <div class="panel-heading text-center">角色功能列表</div>
+                                                        <div class="panel-body">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default col-md-6">
+                                                        <div class="panel-heading text-center">角色用户列表</div>
+                                                        <div class="panel-body">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+
                                     </uib-tab>
                                     <uib-tab index="2">
                                         <uib-tab-heading class="h5">权限配给</uib-tab-heading>
-                                        <div class="panel panel-success">
-                                            <div class="panel-heading">实体相关存储过程</div>
-                                            <div class="panel-body">
-                                                <div class="form form-horizontal m-t-md" ng-form="en.ProcedureForm">
-                                                    <div class="form-group" ng-if="en.isEditing">
-                                                        <label class="col-sm-1 control-label"></label>
-                                                        <div class="col-sm-10">
-                                                            <div class="row">
-                                                                <div class="col-md-4" ng-class="{ 'has-error' : en.ProcedureForm.ShortName.$invalid }">
-                                                                    <input class="form-control" name="ShortName" placeholder="存储过程简称" type="text" ng-blur="en.isProcExists(en.NewProc.ShortName)" ng-model="en.NewProc.ShortName" required />
-                                                                    <div ng-messages="en.ProcedureForm.ShortName.$error" class="help-block" role="alert">
-                                                                        <div ng-message="unique">简称重复</div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6" ng-class="{ 'has-error' : en.ProcedureForm.Proc.$invalid }">
-                                                                    <div object-select ob-type="'P'" ng-name="Proc" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.SelectedEn.ConnectName" ng-model="en.NewProc.EnProcedure" my-required="true"></div>
-                                                                </div>
-                                                                <div class="col-md-1" ng-if="en.isEditing">
-                                                                    <span class="btn btn-default" ng-click="en.AddProc()" ng-disabled="en.ProcedureForm.$invalid" title="增加关联存储过程">
-                                                                        <i class="glyphicon glyphicon-plus text-success"></i>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="line line-dashed b-b line-lg pull-in"></div>
-                                                    <div class="form-group" ng-repeat="proc in en.ProcList">
-                                                        <label class="col-sm-1 control-label"></label>
-                                                        <div class="col-sm-10">
-                                                            <div class="row">
-                                                                <div class="col-sm-4">
-                                                                    <input class="form-control" ng-model="proc.ShortName" placeholder="存储过程简称" type="text" disabled />
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div object-select ob-type="'P'" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.SelectedEn.ConnectName" ng-disabled="!en.isEditing"
-                                                                         ng-model="proc.EnProcedure" ng-name="obProc" my-required="true"></div>
-                                                                    <span ng-show='forma.confirm_foo.$error.validator'>Not match!</span>
-                                                                </div>
-                                                                <div class="col-md-1" ng-if="en.isEditing">
-
-
-                                                                    <span class="btn btn-default" ng-click="en.DeleteProc($index)"><i class="glyphicon glyphicon-remove text-danger"></i></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="line line-dashed b-b line-lg pull-in"></div>
-                                                </div>
-                                                <!--<pre>{{ ProcedureForm.$parent | json }}</pre>-->
-                                            </div>
-                                        </div>
                                     </uib-tab>
                                 </uib-tabset>
                             </div>
