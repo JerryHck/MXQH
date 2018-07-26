@@ -15,6 +15,8 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop) {
     vm.InsertRole = InsertRole;
     vm.EditRole = EditRole;
     vm.DeleteRole = DeleteRole;
+    vm.InsertUserRole = InsertUserRole;
+
 
     vm.ConfigSex = { Table: "BasicData", Column: "Sex" };
 
@@ -34,6 +36,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop) {
             vm.EmpItem = data;
             vm.PreEmpItem = angular.copy(data);
         });
+        getListUserRole();
     }
 
     function EditEmp() {
@@ -121,6 +124,25 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop) {
         Dialog.open("RoleDailog", resolve).then(function (data) {
             getListRole();
         }).catch(function (reason) {
+        });
+    }
+
+    function InsertUserRole() {
+        var en = {};
+        en.UserNo = vm.SelectedUser.UserNo;
+        en.RoleSn = vm.newUserRole;
+        en.CreateBy = "SYS";
+        AjaxService.PlanInsert("UserRole", en).then(function (data) {
+            toastr.success('新增成功');
+            getListUserRole();
+        });
+    }
+
+    function getListUserRole() {
+        var en = { name: "UserNo", value: vm.SelectedUser.UserNo };
+        AjaxService.GetPlans("UserRole", en).then(function (data) {
+            vm.UserHaveRole = data;
+            console.log(data);
         });
     }
 }

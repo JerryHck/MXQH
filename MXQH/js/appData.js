@@ -6,9 +6,9 @@ angular.module('appData')
 //APP URL
 .constant('appUrl', '../')
 //Service URL
-//.constant('serviceUrl', '//localhost:13439/')
+.constant('serviceUrl', '//localhost:13439/')
 //.constant('serviceUrl', '//localhost/MXQHServie/')
-.constant('serviceUrl', '//192.168.1.82:90/MXQH/MXQHServie/')
+//.constant('serviceUrl', '//192.168.1.82:90/MXQH/MXQHServie/')
  //表單設定
 .constant('Form', [
     { index: 0, title: '新增', action: 'Insert' },
