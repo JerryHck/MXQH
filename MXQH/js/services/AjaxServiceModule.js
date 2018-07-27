@@ -10,11 +10,10 @@
     function httpWatch($cookieStore) {
         var obj = {
             'request': function (config) {
-                //if ($cookies.get('user-token')) {
-                //    config.headers['x-session-token'] = $cookies.get('user-token');
-                //}
-                //config.headers['x-function'] = $cookies.get('function-token') || '';
-                config.headers['x-session-token'] = $cookieStore.get('user-token') || '';
+                if ($cookieStore.get('user-token')) {
+                    config.headers['x-session-token'] = $cookieStore.get('user-token');
+                   
+                }
                 config.headers['x-function'] = $cookieStore.get('active-function') || '';
                 return config;
             }

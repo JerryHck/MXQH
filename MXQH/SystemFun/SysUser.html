@@ -23,14 +23,16 @@
                             <div class="padder">
                                 <div class="list-group">
                                     <a ng-repeat="item in use.List | filter:use.UserQuery " class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.UserNo == use.SelectedUser.UserNo, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="use.SelectUser(item)">
-                                        <span class="pull-left text-primary">
-                                            <i class="fa" ng-class="{ 'fa-male': item.Sex=='M', 'fa-female': item.Sex=='F' }"></i>
+                                        <span class="pull-left h2 mr-1">
+                                            <i class="fa" ng-class="{ 'fa-male text-success': item.Sex=='M', 'fa-female text-danger': item.Sex=='F' }"></i>
                                         </span>
-                                        <span class="block text-info text-lg" ng-bind-html="item.UserNo | highlight: use.EntityQuery" ng-click="use.SelectEn(item)"></span>
-                                        <small class="text-muted">
-                                            <span>{{ item.ChiLastName }}{{ item.ChiFirstName }}</span>
-                                            <span class="pull-right">{{ item.Level }}</span>
-                                        </small>
+                                        <div class="clear ml-1">
+                                            <span class="block text-info text-lg" ng-bind-html="item.UserNo | highlight: use.EntityQuery" ng-click="use.SelectEn(item)"></span>
+                                            <small class="text-muted">
+                                                <span>{{ item.ChiLastName }}{{ item.ChiFirstName }}</span>
+                                                <span class="pull-right">{{ item.Level }}</span>
+                                            </small>
+                                        </div>
                                     </a>
                                 </div>
                             </div>
@@ -129,9 +131,6 @@
                                                 <div class="col-md-4">
                                                     <div class="row">
                                                         <div class="bg-light wrapper-md lter b-b text-center">
-                                                            <span class="btn btn-sm btn-success pull-left" ng-click="use.isAddUserRole=!use.isAddUserRole" ng-disabled="use.isAddUserRole">
-                                                                <i class="glyphicon glyphicon-plus">新增</i>
-                                                            </span>
                                                             <h3 class="m-n font-thin h5 font-bold">已分配给{{ use.EmpItem.ChiLastName }}{{ use.EmpItem.ChiFirstName }}的角色</h3>
                                                         </div>
                                                         <div class="padder m-t-xs">
@@ -142,36 +141,51 @@
                                                                             <i class="glyphicon glyphicon-plus text-success"></i>
                                                                         </button>
                                                                     </span>
-                                                                    <ui-select ng-model="use.newUserRole"  theme="bootstrap" search-enabled="true">
+                                                                    <ui-select ng-model="use.newUserRole" theme="bootstrap" search-enabled="true" ng-change="use.SelectUserRole()">
                                                                         <ui-select-match placeholder="选择角色...">{{ $select.selected.RoleName }}</ui-select-match>
                                                                         <ui-select-choices repeat="item.RoleSn as item in use.ListRole | filter: $select.search track by item.RoleSn">
                                                                             <div ng-bind-html="item.RoleSn | highlight: $select.search"></div>
                                                                             <small ng-bind-html="item.RoleName | highlight: $select.search"></small>
                                                                         </ui-select-choices>
-                                                                    </ui-select>  
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group" uib-collapse="use.isAddUserRole">
-                                                                <div class="input-group">
-                                                                    <input type="text" class="form-control input-sm" placeholder="查询" ng-model="use.UserQuery">
+                                                                    </ui-select>
                                                                     <span class="input-group-btn">
-                                                                        <button class="btn btn-sm btn-default" disabled>
+                                                                        <button class="btn btn-default" ng-click="use.isAddUserRole=!use.isAddUserRole">
                                                                             <i class="glyphicon glyphicon-search text-success"></i>
                                                                         </button>
                                                                     </span>
                                                                 </div>
                                                             </div>
-                                                            <div class="list-group no-radius no-border no-bg m-b-none">
-                                                                <a ng-repeat="ur in use.UserHaveRole" class="list-group-item">
-                                                                    <span ng-click='fun.FunLoadDelete($index)' class="pull-right text-danger">
-                                                                        <i class="fa fa-times"></i>
+                                                            <div class="form-group" uib-collapse="use.isAddUserRole">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-btn">
+                                                                        <button class="btn btn-success" ng-click="use.isAddUserRole=!use.isAddUserRole">
+                                                                            <i class="glyphicon glyphicon-plus"></i>
+                                                                        </button>
                                                                     </span>
-                                                                    <span class="block m-l-n bg-transparent">
-                                                                        <i class="glyphicon glyphicon-move text-info"></i>{{ ur.RoleSn }}
+                                                                    <input type="text" class="form-control" placeholder="查询" ng-model="use.UserRoleQuery">
+                                                                    <span class="input-group-btn">
+                                                                        <button class="btn btn-default" disabled>
+                                                                            <i class="glyphicon glyphicon-search text-success"></i>
+                                                                        </button>
                                                                     </span>
-                                                                </a>
+                                                                </div>
                                                             </div>
-                                                            <pre>{{ use.UserHaveRole|json }}</pre>
+                                                            <div class="list-group">
+                                                                <ul class="list-group bg-white">
+                                                                    <li class="list-group-item" ng-repeat="ur in use.UserHaveRole | filter:use.UserRoleQuery ">
+                                                                        <a herf class="pull-left">
+                                                                            <b class="badge bg-success h2"><i class="glyphicon glyphicon-lock text-white"></i></b>
+                                                                        </a>
+                                                                        <div class="clear">
+                                                                            <div>
+                                                                                <a ng-click='use.DeleteUserRole(ur)' class="pull-right hover text-muted h4"><i class="fa fa-times text-danger"></i></a>
+                                                                                <div class="text-info h4">{{ ur.RoleSn }}</div>
+                                                                            </div>
+                                                                            <small class="text-muted">{{ ur.Role.RoleName }}</small>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -198,40 +212,114 @@
                                                         <span class="pull-left">
                                                             <i class="btn btn-xs glyphicon glyphicon-edit text-success" ng-click="use.EditRole(role)"></i>
                                                         </span>
-                                                        <span class="pull-rigth">
-                                                            <i class="pull-right btn btn-xs glyphicon glyphicon-trash text-danger" ng-click="use.DeleteRole(role)"></i>
-                                                        </span>
-                                                        <span class="text-info text-lg" ng-bind-html="role.RoleSn | highlight: use.EntityQuery" ng-click="use.SelectEn(item)"></span><br />
-                                                        <small class="text-muted">
-                                                            <span class="h5">{{ role.RoleName }}</span>
-                                                            <span class="pull-right">
-                                                                <i class="glyphicon" ng-class="{ 'glyphicon-ok-circle text-success': role.State=='S', 'glyphicon-remove-circle  text-danger': role.State=='E' }"></i>
+                                                        <div class="clear">
+                                                            <span class="pull-rigth">
+                                                                <i class="pull-right btn btn-xs glyphicon glyphicon-trash text-danger" ng-click="use.DeleteRole(role)"></i>
                                                             </span>
-                                                            <br />
-                                                            <span class="h6">{{ role.RoleDesc }}</span>
-                                                        </small>
+                                                            <span class="text-info text-lg" ng-bind-html="role.RoleSn | highlight: use.EntityQuery" ng-click="use.SelectEn(item)"></span><br />
+                                                            <small class="text-muted">
+                                                                <span class="h5">{{ role.RoleName }}</span>
+                                                                <span class="pull-right">
+                                                                    <i class="glyphicon" ng-class="{ 'glyphicon-ok-circle text-success': role.State=='S', 'glyphicon-remove-circle  text-danger': role.State=='E' }"></i>
+                                                                </span>
+                                                                <br />
+                                                                <span class="h6">{{ role.RoleDesc }}</span>
+                                                            </small>
+                                                        </div>
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="col w-auto padder w-tab-full">
                                                 <div class="padder-md" ng-if="use.SelectedRole">
-                                                    <div class="bg-light lter b-b wrapper-md">
-                                                        <h3 class="m-n font-thin h3 font-bold">{{ use.SelectedRole.RoleSn }}  {{ use.SelectedRole.RoleName }}</h3>
-                                                    </div>
                                                     <div class="row">
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-7">
                                                             <div class="panel panel-default">
-                                                                <div class="panel-heading text-center">角色功能列表</div>
+                                                                <div class="panel-heading text-center h4 font-bold">
+                                                                    功能权限
+                                                                </div>
                                                                 <div class="panel-body">
-
+                                                                    <div class="form-group" uib-collapse="!use.isAddRoleFun">
+                                                                        <div class="input-group col-md-12">
+                                                                            <span class="input-group-btn">
+                                                                                <button class="btn btn-default" ng-click="use.InsertRoleFun()">
+                                                                                    <i class="glyphicon glyphicon-plus text-success"></i>
+                                                                                </button>
+                                                                            </span>
+                                                                            <div function-select fun-type="2" ng-model="use.NewRoleFun" ng-change="use.changeRoleFun()"></div>
+                                                                            <span class="input-group-btn">
+                                                                                <button class="btn btn-default" ng-click="use.isAddRoleFun=!use.isAddRoleFun">
+                                                                                    <i class="glyphicon glyphicon-search text-success"></i>
+                                                                                </button>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group" uib-collapse="use.isAddRoleFun">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-btn">
+                                                                                <button class="btn btn-success" ng-click="use.isAddRoleFun=!use.isAddRoleFun">
+                                                                                    <i class="glyphicon glyphicon-plus"></i>
+                                                                                </button>
+                                                                            </span>
+                                                                            <input type="text" class="form-control" placeholder="查询" ng-model="use.RoleFunQuery">
+                                                                            <span class="input-group-btn">
+                                                                                <button class="btn btn-default" disabled>
+                                                                                    <i class="glyphicon glyphicon-search text-success"></i>
+                                                                                </button>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="list-group">
+                                                                        <ul class="list-group bg-white">
+                                                                            <li class="list-group-item" ng-repeat="rf in use.RoleHaveFun | filter:use.RoleFunQuery ">
+                                                                                <a herf class="pull-left">
+                                                                                    <b class="badge bg-success h2"><i class="glyphicon glyphicon-lock text-white"></i></b>
+                                                                                </a>
+                                                                                <div class="clear">
+                                                                                    <div>
+                                                                                        <p class="text-info h4">
+                                                                                            {{ rf.FunNo }}
+                                                                                            <a ng-click='use.DeleteRoleFun(rf)' class="pull-right hover text-muted h4"><i class="fa fa-times text-danger"></i></a>
+                                                                                            <span class="form-group h5 text-success pull-right padder-md">
+                                                                                                <label class="checkbox-inline">
+                                                                                                    <input type="checkbox" ng-model="rf.AbleInsert" ng-checked="rf.AbleInsert" ng-change="use.UpdateRoleFun(rf)"> 增
+                                                                                                </label>
+                                                                                                <label class="checkbox-inline">
+                                                                                                    <input type="checkbox" ng-model="rf.AbleDelete" ng-checked="rf.AbleDelete" ng-change="use.UpdateRoleFun(rf)"> 删
+                                                                                                </label>
+                                                                                                <label class="checkbox-inline">
+                                                                                                    <input type="checkbox" ng-model="rf.AbleUpdate" ng-checked="rf.AbleUpdate" ng-change="use.UpdateRoleFun(rf)"> 改
+                                                                                                </label>
+                                                                                            </span>
+                                                                                        </p>
+                                                                                    </div>
+                                                                                    <small class="text-muted"> {{ rf.Fun.FunName }} </small>
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-5">
                                                             <div class="panel panel-default">
-                                                                <div class="panel-heading text-center">角色用户列表</div>
+                                                                <div class="panel-heading text-center">角色用户</div>
                                                                 <div class="panel-body">
-
+                                                                    <div class="list-group">
+                                                                        <ul class="list-group bg-white">
+                                                                            <li class="list-group-item" ng-repeat="ur in use.UserHaveRole">
+                                                                                <a herf class="pull-left">
+                                                                                    <b class="badge bg-success h2"><i class="glyphicon glyphicon-lock text-white"></i></b>
+                                                                                </a>
+                                                                                <div class="clear">
+                                                                                    <div>
+                                                                                        <a ng-click='use.DeleteUserRole(ur)' class="pull-right hover text-muted h4"><i class="fa fa-times text-danger"></i></a>
+                                                                                        <div class="text-info h4">{{ ur.RoleSn }}</div>
+                                                                                    </div>
+                                                                                    <small class="text-muted">{{ ur.Role.RoleName }}</small>
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -239,9 +327,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </uib-tab>
-                                    <uib-tab index="2">
-                                        <uib-tab-heading class="h5">权限配给</uib-tab-heading>
                                     </uib-tab>
                                 </uib-tabset>
                             </div>

@@ -506,6 +506,8 @@
     <Content Include="SystemFun\SysUser.js" />
     <Content Include="SystemFun\UserDailog.html" />
     <Content Include="SystemFun\UserDailog.js" />
+    <Content Include="SystemFun\UserRoleDailog.html" />
+    <Content Include="SystemFun\UserRoleDailog.js" />
     <Content Include="Template\UIAccordionTemplate.html" />
     <Content Include="Web.config" />
   </ItemGroup>

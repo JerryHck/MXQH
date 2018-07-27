@@ -1,9 +1,9 @@
 ﻿(function () {
     angular.module('AjaxServiceModule').factory('AjaxService', AjaxService);
 
-    AjaxService.$inject = ['$rootScope', '$http', '$q', 'serviceUrl', 'appUrl', 'toastr'];
+    AjaxService.$inject = ['$rootScope', '$http', '$q', 'serviceUrl', 'appUrl', 'toastr', '$cookieStore'];
 
-    function AjaxService($rootScope, $http, $q, serviceUrl, appUrl, toastr) {
+    function AjaxService($rootScope, $http, $q, serviceUrl, appUrl, toastr, $cookieStore, $window) {
         var generic = 'Common.asmx/Do';
         var tableConfigList = [];
 
@@ -312,11 +312,15 @@
             })
             .then(
                 function (data) { q.resolve(data.data); },
-                function (mes) {
+                function (data) {
                     q.reject();
-                    console.log(mes);
-                    var m = mes.data ? mes.data.split("。")[0] : "错误";
-                    toastr.error(m, '服务访问错误')
+                    if (data.status == 401) {
+                        $cookieStore.remove('user-token');
+                    } else {
+                        console.log(data);
+                        var m = data.data ? data.data.split("。")[0] : "错误";
+                        toastr.error(m, '服务访问错误')
+                    }
                 });
             return q.promise;
         }

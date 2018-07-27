@@ -152,7 +152,7 @@
                                             <div class="form-group  py-xl-1 pt-xl-1" ng-class="{ 'has-error' : FormFun.par.$invalid }">
                                                 <label class="col-lg-4 control-label text-info">所属目录</label>
                                                 <div class="col-lg-8">
-                                                    <div function-select select-item="fun.FunSelItem" fun-type="1" ng-model="fun.SelectedFun.ParFunNo" ng-disabled="!fun.editFun" ng-name="par" my-required="true"></div>
+                                                    <div function-select fun-type="1" ng-model="fun.SelectedFun.ParFunNo" ng-disabled="!fun.editFun" ng-name="par" my-required="true"></div>
                                                     <div ng-messages="FormFun.par.$error" class="help-block" role="alert">
                                                         <div ng-message="required">请选择所属目录</div>
                                                     </div>
