@@ -18,9 +18,7 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
     en.name = "FunType";
     en.value = 2;
     AjaxService.GetEntities("Function", en).then(function (data) {
-        //console.log(data);
-        //console.log($cookieStore.get("function-token"));
-
+       
         angular.forEach(data, function (item) {
             var route = {};
             route.Name = item.RouteName;
