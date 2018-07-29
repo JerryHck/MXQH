@@ -59,10 +59,7 @@ angular.module('app')
       }, true);
 
       function GetList() {
-          var en = {};
-          en.name  = 'FunType';
-          en.value = 1
-          vm.promise = AjaxService.GetEntities("FunRoot", en).then(function (data) {
+          vm.promise = AjaxService.GetUserRoot().then(function (data) {
               vm.FunTree = data;
               //console.log(data);
           });

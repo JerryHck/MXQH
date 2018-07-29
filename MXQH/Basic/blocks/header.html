@@ -31,12 +31,19 @@
 
         <!-- link and dropdown -->
         <ul class="nav navbar-nav hidden-sm">
+            <!--<div class="dropdown">
+                <a data-toggle="dropdown" href="#">下拉菜单（Dropdown）触发器</a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    ...
+                </ul>
+            </div>-->
+
           <li class="dropdown pos-stc" dropdown>
-            <a href class="dropdown-toggle" dropdown-toggle>
+            <a href ng-click="vm.isShortMenu = !vm.isShortMenu">
               <span>精选</span> 
               <span class="caret"></span>
             </a>
-            <div class="dropdown-menu wrvm.apper w-full bg-white">
+            <div class="dropdown-menu wrvm.apper w-full bg-white" uib-collapse="!vm.isShortMenu">
               <div class="row">
                 <div class="col-sm-4">
                   <div class="m-l-xs m-t-xs m-b-xs font-bold">Pages <span class="badge badge-sm bg-success">10</span></div>

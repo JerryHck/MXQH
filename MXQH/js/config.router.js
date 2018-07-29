@@ -4,6 +4,7 @@ Run.$inject  = ['$rootScope', '$state', '$stateParams', '$cookieStore', '$window
 function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxService, router, appUrl, Version) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
+    $cookieStore.put('active-function', "Main");
     //State Change Start
     $rootScope.$on('$stateChangeStart', onStateChangeStart);
 
@@ -14,11 +15,7 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
         }
     }
 
-    var en = {};
-    en.name = "FunType";
-    en.value = 2;
-    AjaxService.GetEntities("Function", en).then(function (data) {
-       
+    AjaxService.GetFunRoute().then(function (data) {
         angular.forEach(data, function (item) {
             var route = {};
             route.Name = item.RouteName;

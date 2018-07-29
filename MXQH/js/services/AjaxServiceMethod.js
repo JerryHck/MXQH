@@ -51,7 +51,9 @@
             GetTableConfig: GetTableConfig,
             //User
             AddUser: AddUser,
-            Login: Login
+            Login: Login,
+            GetFunRoute: GetFunRoute,
+            GetUserRoot: GetUserRoot
         };
 
         return obj;
@@ -246,6 +248,18 @@
             en.Psw = psw;
             en.Kicking = kicking;
             return httpFun(d, url, en)
+        }
+
+        function GetFunRoute() {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = {};
+            return Ajax(d, url, en, "GetFunRoute", undefined, 'Authorization');
+        }
+
+        function GetUserRoot() {
+            var d = $q.defer(), url = url = serviceUrl + generic;
+            var en = {};
+            return Ajax(d, url, en, "GetUserRoot", undefined, 'Authorization');
         }
 
         function GetTableConfig(tbName, clName) {
