@@ -1,7 +1,7 @@
 ﻿(function () {
     angular.module('AjaxServiceModule').factory('AjaxService', AjaxService);
 
-    AjaxService.$inject = ['$rootScope', '$http', '$q', 'serviceUrl', 'appUrl', 'toastr', '$cookieStore'];
+    AjaxService.$inject = ['$rootScope', '$http', '$q', 'serviceUrl', 'appUrl', 'toastr', '$cookieStore', '$window'];
 
     function AjaxService($rootScope, $http, $q, serviceUrl, appUrl, toastr, $cookieStore, $window) {
         var generic = 'Common.asmx/Do';
@@ -28,7 +28,7 @@
             //执行计划实体
             ExecPlan: ExecPlan,
             //获得实体资料-单个
-            GetEntity, GetEntity,
+            GetEntity: GetEntity,
             //获得实体资料-列表
             GetEntities: GetEntities,
             //获取Json数据
@@ -52,8 +52,10 @@
             //User
             AddUser: AddUser,
             Login: Login,
+            LoginOff:LoginOff,
             GetFunRoute: GetFunRoute,
-            GetUserRoot: GetUserRoot
+            GetUserRoot: GetUserRoot,
+            GetLoginEmp: GetLoginEmp
         };
 
         return obj;
@@ -247,7 +249,14 @@
             en.User = user;
             en.Psw = psw;
             en.Kicking = kicking;
+            $cookieStore.put('user-token', 'Login');
             return httpFun(d, url, en)
+        }
+
+        function LoginOff() {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = {};
+            return Ajax(d, url, en, "LoginOff", undefined, 'Authorization');
         }
 
         function GetFunRoute() {
@@ -260,6 +269,12 @@
             var d = $q.defer(), url = url = serviceUrl + generic;
             var en = {};
             return Ajax(d, url, en, "GetUserRoot", undefined, 'Authorization');
+        }
+
+        function GetLoginEmp() {
+            var d = $q.defer(), url = url = serviceUrl + generic;
+            var en = {};
+            return Ajax(d, url, en, "GetLoginEmp", undefined, 'Authorization');
         }
 
         function GetTableConfig(tbName, clName) {
@@ -317,7 +332,7 @@
             return q.promise;
         }
 
-        function httpFun (q, url, postData, type) {
+        function httpFun(q, url, postData, type) {
             $http({
                 method: type || 'POST',
                 url: url,
@@ -330,6 +345,10 @@
                     q.reject();
                     if (data.status == 401) {
                         $cookieStore.remove('user-token');
+                        if($window.location.href != appUrl + 'Login.html')
+                        {
+                            $window.location.href = appUrl + 'Login.html';
+                        }
                     } else {
                         console.log(data);
                         var m = data.data ? data.data.split("。")[0] : "错误";

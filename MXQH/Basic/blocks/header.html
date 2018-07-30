@@ -30,20 +30,13 @@
         <!-- / buttons -->
 
         <!-- link and dropdown -->
-        <ul class="nav navbar-nav hidden-sm">
-            <!--<div class="dropdown">
-                <a data-toggle="dropdown" href="#">下拉菜单（Dropdown）触发器</a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    ...
-                </ul>
-            </div>-->
-
+        <ul class="nav navbar-nav hidden-sm toggle-arrow">
           <li class="dropdown pos-stc" dropdown>
-            <a href ng-click="vm.isShortMenu = !vm.isShortMenu">
+            <a class="dropdown-toggle" data-toggle="dropdown">
               <span>精选</span> 
               <span class="caret"></span>
             </a>
-            <div class="dropdown-menu wrvm.apper w-full bg-white" uib-collapse="!vm.isShortMenu">
+            <div class="dropdown-menu wrvm.apper w-full bg-white" role="menu" aria-labelledby="dLabel">
               <div class="row">
                 <div class="col-sm-4">
                   <div class="m-l-xs m-t-xs m-b-xs font-bold">Pages <span class="badge badge-sm bg-success">10</span></div>
@@ -142,24 +135,24 @@
             </div>
           </li>
           <li class="dropdown" dropdown>
-            <a href class="dropdown-toggle" dropdown-toggle>
+            <a href class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-fw fa-plus visible-xs-inline-block"></i>
               <span>新</span> <span class="caret"></span>
             </a>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#" translate="header.navbar.new.PROJECT">项目</a></li>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+              <li><a >项目</a></li>
               <li>
-                <a href>
+                <a>
                   <span class="badge bg-info pull-right">5</span>
-                  <span translate="header.navbar.new.TASK">任务</span>
+                  <span >任务</span>
                 </a>
               </li>
-              <li><a href translate="header.navbar.new.USER">用户</a></li>
+              <li><a>用户</a></li>
               <li class="divider"></li>
               <li>
-                <a href>
+                <a>
                   <span class="badge bg-danger pull-right">4</span>
-                  <span translate="header.navbar.new.EMAIL">邮件</span>
+                  <span>邮件</span>
                 </a>
               </li>
             </ul>
@@ -168,12 +161,12 @@
         <!-- / link and dropdown -->
 
         <!-- search form -->
-        <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" target=".navbar-collapse" role="search" ng-controller="TypeaheadDemoCtrl">
+        <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" target=".navbar-collapse" role="search">
           <div class="form-group">
             <div class="input-group">
-              <input type="text" ng-model="selected" typeahead="state for state in states | filter:$viewValue | limitTo:8" class="form-control input-sm bg-light no-border rounded padder" placeholder="Search projects...">
+              <input type="text" ng-model="vm.SelectedFun" uib-typeahead="fun as fun.FunName for fun in vm.FunctionList | filter:$viewValue | limitTo:8" class="form-control input-sm bg-light no-border rounded padder" placeholder="查找功能...">
               <span class="input-group-btn">
-                <button type="submit" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></button>
+                <button type="submit" class="btn btn-sm bg-light rounded" ng-click="vm.Go(vm.SelectedFun.RouteName)">Go</button>
               </span>
             </div>
           </div>
@@ -182,23 +175,11 @@
 
         <!-- nabar right -->
         <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown hidden-sm" is-open="lang.isopen" dropdown>
-            <a href class="dropdown-toggle" dropdown-toggle>
-              {{vm.selectLang}} <b class="caret"></b>
-            </a>
-            <!-- dropdown -->
-            <ul class="dropdown-menu animated fadeInRight w">
-              <li ng-repeat="(langKey, label) in vm.langs">
-                <a ng-click="vm.setLang(langKey, $event)">{{label}}</a>
-              </li>
-            </ul>
-            <!-- / dropdown -->
-          </li>
           <li class="hidden-xs">
             <a ui-fullscreen></a>
           </li>
           <li class="dropdown" dropdown>
-            <a href class="dropdown-toggle" dropdown-toggle>
+            <a href class="dropdown-toggle" data-toggle="dropdown">
               <i class="icon-bell fa-fw"></i>
               <span class="visible-xs-inline">通知栏</span>
               <span class="badge badge-sm up bg-danger pull-right-xs">2</span>
@@ -235,39 +216,18 @@
             <!-- / dropdown -->
           </li>
           <li class="dropdown" dropdown>
-            <a href class="dropdown-toggle clear" dropdown-toggle>
+            <a href class="dropdown-toggle clear" data-toggle="dropdown">
               <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
                 <img src="img/a0.jpg" alt="...">
                 <i class="on md b-white bottom"></i>
               </span>
-              <span class="hidden-sm hidden-md">John.Smith</span> <b class="caret"></b>
+              <span class="hidden-sm hidden-md">{{ User.Emp.ChiLastName }}{{ User.Emp.ChiFirstName }}</span> <b class="caret"></b>
             </a>
             <!-- dropdown -->
             <ul class="dropdown-menu animated fadeInRight w">
-              <li class="wrvm.apper b-b m-b-sm bg-light m-t-n-xs">
-                <div>
-                  <p>300mb of 500mb used</p>
-                </div>
-                <progressbar value="60" class="progress-xs m-b-none bg-white"></progressbar>
-              </li>
-              <li>
-                <a href>
-                  <span class="badge bg-danger pull-right">30%</span>
-                  <span>Settings</span>
-                </a>
-              </li>
-              <li>
-                <a ui-sref="vm.app.page.profile">Profile</a>
-              </li>
-              <li>
-                <a ui-sref="vm.app.docs">
-                  <span class="label bg-info pull-right">new</span>
-                  Help
-                </a>
-              </li>
               <li class="divider"></li>
               <li>
-                <a ui-sref="access.signin">Logout</a>
+                <a ng-click="vm.LogOff()">注销</a>
               </li>
             </ul>
             <!-- / dropdown -->
@@ -276,4 +236,3 @@
         <!-- / navbar right -->
 
       </div>
-      <!-- / navbar collapse -->

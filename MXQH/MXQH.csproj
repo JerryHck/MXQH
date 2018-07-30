@@ -244,11 +244,10 @@
     <Content Include="Content\angular-toggle-switch\mixins.less" />
     <Content Include="Content\angular-toggle-switch\toggle-switch.less" />
     <Content Include="Content\angular-toggle-switch\variables.less" />
-    <Content Include="Content\Css\.DS_Store" />
     <Content Include="Content\font\fontawesome-webfont.eot" />
     <Content Include="Content\font\fontawesome-webfont.ttf" />
     <Content Include="Content\font\fontawesome-webfont.woff" />
-    <Content Include="Content\images\.DS_Store" />
+    <None Include="Properties\PublishProfiles\2.pubxml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />

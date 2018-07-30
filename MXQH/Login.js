@@ -31,11 +31,7 @@ function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $wi
                 MyPop.Confirm({ text: data.Msg }, KickOut);
             }
             else if (data.Name == "Success") {
-                storage["userName"] = vm.IsSave === 1? vm.UserName : "";
-                storage["Pwd"] = vm.IsSave === 1 ? vm.Pwd : "";
-                storage["IsSave"] = vm.IsSave;
-                $cookieStore.put('user-token', data.Session);
-                $window.location.href = appUrl + '/index.html';
+                saveCookie(data);
             }
         })
     }
@@ -46,12 +42,17 @@ function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $wi
                 toastr.error(data.Msg);
             }
             else if (data.Name == "Success") {
-                storage["userName"] = vm.IsSave === 1 ? vm.UserName : "";
-                storage["Pwd"] = vm.IsSave === 1 ? vm.Pwd : "";
-                storage["IsSave"] = vm.IsSave;
-                $cookieStore.put('user-token', data.Session);
-                $window.location.href = appUrl + '/index.html';
+                saveCookie(data);
             }
         })
+    }
+
+    function saveCookie(data) {
+        $window.localStorage["userName"] = vm.IsSave === 1 ? vm.UserName : "";
+        $window.localStorage["Pwd"] = vm.IsSave === 1 ? vm.Pwd : "";
+        $window.localStorage["IsSave"] = vm.IsSave;
+        $cookieStore.remove('user-token');
+        $cookieStore.put('user-token', data.Session);
+        $window.location.href = appUrl + '/index.html';
     }
 }

@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app', ['ui.grid', 'ui.grid.autoResize'])
-.controller('UserCtrl', ['$scope', '$http', 'Dialog', 'AjaxService', 'toastr', 'MyPop',
-function ($scope, $http, Dialog, AjaxService, toastr, MyPop) {
+.controller('UserCtrl', ['$scope', '$http', 'Dialog', 'AjaxService', 'toastr', 'MyPop', '$rootScope',
+function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
 
     var vm = this;
     //新增用户

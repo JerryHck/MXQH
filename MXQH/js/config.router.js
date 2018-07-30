@@ -1,6 +1,6 @@
 ﻿'use strict';
 angular.module('app').run(Run);
-Run.$inject  = ['$rootScope', '$state', '$stateParams', '$cookieStore', '$window', '$q', 'AjaxService', 'router', 'appUrl', 'Version'];
+Run.$inject = ['$rootScope', '$state', '$stateParams', '$cookieStore', '$window', '$q', 'AjaxService', 'router', 'appUrl', 'Version'];
 function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxService, router, appUrl, Version) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
@@ -14,7 +14,7 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
             $window.location.href = appUrl + 'Login.html';
         }
     }
-
+    //获取路由信息
     AjaxService.GetFunRoute().then(function (data) {
         angular.forEach(data, function (item) {
             var route = {};
@@ -35,6 +35,10 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
         });
     });
 
+    //获取用户信息
+    AjaxService.GetLoginEmp().then(function (data) {
+        $rootScope.User = data;
+    });
 }
 
 angular.module('app').config(Config);
