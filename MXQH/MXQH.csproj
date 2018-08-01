@@ -169,6 +169,8 @@
     <Content Include="Loading\Loading.html" />
     <Content Include="login.html" />
     <Content Include="Login.js" />
+    <Content Include="MESFun\BindingCode.html" />
+    <Content Include="MESFun\BindingCode.js" />
     <Content Include="Scripts\angular-ui\angular-toggle-switch.js" />
     <Content Include="Scripts\angular-ui\bootstrap-switch.js" />
     <Content Include="Scripts\angular-ui\bootstrap-switch.min.js" />

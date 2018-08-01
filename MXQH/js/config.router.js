@@ -15,7 +15,7 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
         }
     }
     //获取路由信息
-    AjaxService.GetFunRoute().then(function (data) {
+    AjaxService.LoginAction("GetFunRoute").then(function (data) {
         angular.forEach(data, function (item) {
             var route = {};
             route.Name = item.RouteName;
@@ -36,7 +36,7 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
     });
 
     //获取用户信息
-    AjaxService.GetLoginEmp().then(function (data) {
+    AjaxService.LoginAction("GetLoginEmp").then(function (data) {
         $rootScope.User = data;
     });
 }

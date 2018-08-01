@@ -52,10 +52,7 @@
             //User
             AddUser: AddUser,
             Login: Login,
-            LoginOff:LoginOff,
-            GetFunRoute: GetFunRoute,
-            GetUserRoot: GetUserRoot,
-            GetLoginEmp: GetLoginEmp
+            LoginAction:LoginAction,
         };
 
         return obj;
@@ -78,8 +75,9 @@
         }
 
         //获得计划资料-分页
-        function GetPlansPage(name, json, start, end) {
-            return plan(name, json, "GetPlansPage", start, end);
+        function GetPlansPage(name, json, index, size) {
+            var s = index <= 1 ? 1 : (index - 1) * size + 1;
+            return plan(name, json, "GetPlansPage", s, s + size);
         }
 
         //获得计划资料-新增
@@ -142,7 +140,7 @@
         function AjaxHandle(q, method, data) {
            
             var en = { "method": method, "data": data };
-            httpFun(q, 'Data/Handler/FileData.ashx', en);
+            httpFun(q, appUrl + 'Data/Handler/FileData.ashx', en);
             return q.promise;
         }
 
@@ -253,28 +251,10 @@
             return httpFun(d, url, en)
         }
 
-        function LoginOff() {
+        function LoginAction(method) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = {};
-            return Ajax(d, url, en, "LoginOff", undefined, 'Authorization');
-        }
-
-        function GetFunRoute() {
-            var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            return Ajax(d, url, en, "GetFunRoute", undefined, 'Authorization');
-        }
-
-        function GetUserRoot() {
-            var d = $q.defer(), url = url = serviceUrl + generic;
-            var en = {};
-            return Ajax(d, url, en, "GetUserRoot", undefined, 'Authorization');
-        }
-
-        function GetLoginEmp() {
-            var d = $q.defer(), url = url = serviceUrl + generic;
-            var en = {};
-            return Ajax(d, url, en, "GetLoginEmp", undefined, 'Authorization');
+            return Ajax(d, url, en, method, undefined, 'Authorization');
         }
 
         function GetTableConfig(tbName, clName) {

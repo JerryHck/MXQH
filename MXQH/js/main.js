@@ -64,7 +64,7 @@ angular.module('app')
         }, true);
 
         function GetList() {
-            vm.promise = AjaxService.GetUserRoot().then(function (data) {
+            vm.promise = AjaxService.LoginAction("GetUserRoot").then(function (data) {
                 vm.FunTree = data;
                 vm.FunctionList = [];
                 for (var i = 0, len = data.length; i < len; i++) {
@@ -87,7 +87,7 @@ angular.module('app')
         }
 
         function LogOff() {
-            AjaxService.LoginOff().then(function (data) {
+            AjaxService.LoginAction("LoginOff").then(function (data) {
                 $cookieStore.remove('user-token');
                 $window.location.href = appUrl + 'Login.html';
             })

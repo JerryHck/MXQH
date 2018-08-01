@@ -176,6 +176,8 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
             vm.promise = AjaxService.EditBack("sp_DeleteFunction", json).then(function (data) {
                 toastr.success('删除成功');
                 reflashData();
+                //更新功能基本信息
+                AjaxService.LoginAction("ReflashRoot");
             })
         }
     }
@@ -294,6 +296,8 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
         vm.promise = AjaxService.EditBack("sp_SaveFunction", en).then(function (data) {
             //更新数据
             reflashData();
+            //更新功能基本信息
+            AjaxService.LoginAction("ReflashRoot");
             toastr.success('储存成功');
         })
     }
@@ -339,6 +343,8 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
             json.TempColumns = 'RootList';
             vm.promise = AjaxService.EditBack("sp_SaveFunctionRoot", json).then(function (data) {
                 toastr.success('储存成功');
+                //更新功能基本信息
+                AjaxService.LoginAction("ReflashRoot");
             })
         }
     }

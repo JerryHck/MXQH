@@ -5,9 +5,10 @@ angular.module('appData', []);
 angular.module('appData')
 //APP URL
 .constant('appUrl', '../')
+//.constant('appUrl', 'http://localhost:8080/MXQH/')
 //Service URL
 .constant('serviceUrl', '//localhost:13439/')
-//.constant('serviceUrl', '//localhost/MXQHServie/')
+//.constant('serviceUrl', '//localhost:8080/MXQHServie/')
 //.constant('serviceUrl', '//192.168.1.82:90/MXQH/MXQHServie/')
  //表單設定
 .constant('Form', [
@@ -21,7 +22,7 @@ angular.module('appData')
     message: '',
     backdrop: true,
     templateUrl: '../Loading/Loading.html',
-    //templateUrl: '',
+    //templateUrl: 'http://localhost:8080/MXQH/Loading/Loading.html', 
     message: '请稍等...',
     minDuration: 500,
     notBusyDisabled: true

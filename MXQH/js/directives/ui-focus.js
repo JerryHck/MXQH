@@ -10,8 +10,10 @@ angular.module('app')
             });
           }
         });
-        element.bind('blur', function() {
-           scope.$apply(model.assign(scope, false));
+        element.bind('blur', function () {
+            if (model && model.assign) {
+                scope.$apply(model.assign(scope, false));
+            }
         });
       }
     };
