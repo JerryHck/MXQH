@@ -12,7 +12,8 @@ function ($rootScope, $ocLazyLoad, $uibModal, $q, AjaxService) {
     function open(name, resolve, option) {
         var d = $q.defer();
         //Route Config
-        AjaxService.GetJson('Dialog.json', '').then(function (data) {
+        AjaxService.GetJson('Dialog.json?1.2', '').then(function (data) {
+            
             var 
                 dialog = $.grep(data, function (e) { return e.name == name; })[0],          
                 config = angular.extend({
@@ -31,9 +32,15 @@ function ($rootScope, $ocLazyLoad, $uibModal, $q, AjaxService) {
             }
 
             config.resolve = resolve;
-            $ocLazyLoad.load(dialog.LoadFiles).then(function () {
-                d.resolve($uibModal.open(config).result);
-            });
+            if (dialog.LoadFiles) {
+                var loadList = [];
+                for (var i = 0, len = dialog.LoadFiles.length; i < len; i++) {
+                    loadList.push(dialog.LoadFiles[i].LoadName);
+                }
+                $ocLazyLoad.load(loadList).then(function () {
+                    d.resolve($uibModal.open(config).result);
+                });
+            }
         });
 
         return d.promise;

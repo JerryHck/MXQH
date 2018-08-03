@@ -1,9 +1,9 @@
 ﻿'use strict';
-angular.module('app').controller('RoleDailogCtrl', RoleDailogCtrl);
+angular.module('app').controller('RoleDialogCtrl', RoleDialogCtrl);
 
-RoleDailogCtrl.$inject = ['$scope', '$uibModalInstance', 'Form', 'ItemData', 'toastr', 'AjaxService'];
+RoleDialogCtrl.$inject = ['$scope', '$uibModalInstance', 'Form', 'ItemData', 'toastr', 'AjaxService'];
 
-function RoleDailogCtrl($scope, $uibModalInstance, Form, ItemData, toastr, AjaxService) {
+function RoleDialogCtrl($scope, $uibModalInstance, Form, ItemData, toastr, AjaxService) {
     var vm = this;
     vm.form = Form[ItemData.RoleSn ? 1 : 0];
     vm.Item = ItemData;

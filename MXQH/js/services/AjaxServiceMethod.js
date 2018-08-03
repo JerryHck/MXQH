@@ -27,6 +27,8 @@
 
             //执行计划实体
             ExecPlan: ExecPlan,
+            //执行实体关联的存储过程,获取Excel文件
+            ExecPlanToExcel:ExecPlanToExcel,
             //获得实体资料-单个
             GetEntity: GetEntity,
             //获得实体资料-列表
@@ -40,11 +42,11 @@
             //文件
             HandleFile: HandleFile,
             //
-            AddDailog:AddDailog,
+            AddDialog:AddDialog,
             //链接对象列表
             GetConnect: GetConnect,
             //数据对象
-            GetDbeObject: GetDbeObject,
+            GetDbObject: GetDbObject,
             //获取表栏位
             GetColumns: GetColumns,
             GetTbColumns: GetTbColumns,
@@ -131,7 +133,7 @@
             return AjaxHandle(d, "GetFileList", type);
         }
 
-        function AddDailog(data) {
+        function AddDialog(data) {
             var d = $q.defer();
             return AjaxHandle(d, "AddDialog", data);
         }
@@ -149,14 +151,14 @@
             return Ajax(d, url, {}, "GetConnectList");
         }
 
-        function GetDbeObject(con, type, ser) {
+        function GetDbObject(con, type, ser) {
             var d = $q.defer(),
                  url = serviceUrl + generic;
             var en = {};
             en.strCon = con;
             en.strType = type;
             en.strSearch = ser;
-            return Ajax(d, url, en, "GetDbeObject");
+            return Ajax(d, url, en, "GetDbObject");
         }
 
         function GetColumns(con) {
@@ -232,6 +234,17 @@
             en.shortName = shortName;
             en.strJson = JSON.stringify(json);
             return Ajax(d, url, en, "ExecPlan")
+        }
+
+        function ExecPlanToExcel(name, shortName, json, sheetTable)
+        {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = {};
+            en.planName = name;
+            en.shortName = shortName;
+            en.strJson = JSON.stringify(json);
+            en.sheetTable = JSON.stringify(convertArray(sheetTable));
+            return Ajax(d, url, en, "ExecPlanToExcel")
         }
 
         function AddUser(json) {

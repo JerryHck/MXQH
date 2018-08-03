@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('CreateEntityCtrl', ['$scope', '$http', 'Dialog', 'AjaxService', 'toastr',
-function ($scope, $http, Dialog, AjaxService, toastr) {
+.controller('CreateEntityCtrl', ['$scope', '$http', 'Dialog', 'AjaxService', 'toastr', '$rootScope',
+function ($scope, $http, Dialog, AjaxService, toastr, $rootScope) {
 
     var vm = this;
     vm.EnAdd = EnAdd;
@@ -34,7 +34,7 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
 
     vm.conChange = conChange;
 
-    GetList();
+    
     Cancel();
     vm.ConfigOrderWay = { Table: "EntityProperty", Column: "OrderWay" };
     vm.ConfigColumnType = { Table: "EntityProperty", Column: "ColumnType" };
@@ -47,6 +47,7 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
 
     $scope.$watch(function () { return vm.EnTable; }, getTableList);
     $scope.$watch(function () { return vm.ProItem.RelateEntity; }, getChildTableList);
+    $scope.$watch(function () { return vm.ConnectName; }, GetList);
 
     function conChange() {
         vm.EnTable = undefined;
@@ -64,6 +65,8 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
     //保存实体
     function SaveEntity() {
         var en = angular.copy(vm.SelectedEn), haveRel = false, haveProc = false;
+        en.ConnectName = vm.ConnectName;
+        en.CreateBy = $rootScope.User.Emp.EmpNo;
         var ProList = [], RelList = [], ProcList = [];
         for (var i = 0, len = vm.PropertyList.length; i < len; i++) {
             var pro = {};
@@ -155,7 +158,8 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
     }
 
     function GetList() {
-        vm.promise = AjaxService.GetPlans("PlanEntity").then(function (data) {
+        var en = { name: "ConnectName", value: vm.ConnectName };
+        vm.promise = AjaxService.GetPlans("PlanEntity", en).then(function (data) {
             vm.List = data;
         });
     }
@@ -167,7 +171,7 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
         if (vm.EnTable) {
             vm.SelectedEn.TableSchema = vm.EnTable.DbSchema;
             vm.SelectedEn.TableName = vm.EnTable.Name;
-            AjaxService.GetTbColumns(vm.EnTable.DbSchema, vm.EnTable.Name, vm.SelectedEn.ConnectName).then(function (data) {
+            AjaxService.GetTbColumns(vm.EnTable.DbSchema, vm.EnTable.Name, vm.ConnectName).then(function (data) {
                 vm.TbColunms = data;
                 if (vm.newRelCon) {
                     vm.newRelCon.ParentKey = undefined;

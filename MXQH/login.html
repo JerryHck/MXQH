@@ -38,8 +38,10 @@
 
     <script src="js/appData.js"></script>
 
-    <script src="js/services/AjaxServiceModule.js"></script>
-    <script src="js/services/AjaxServiceMethod.js"></script>
+    <script>
+        document.write("<script type='text/javascript' src='js/services/AjaxServiceModule.js?v=" + Date.now() + "'><\/script>");
+        document.write("<script type='text/javascript' src='js/services/AjaxServiceMethod.js?v=" + Date.now() + "'><\/script>");
+    </script>
 
     <script src="Login.js"></script>
 

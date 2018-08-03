@@ -7,6 +7,9 @@
                 </div>
                 <div class="wrapper b-t m-b-xxs">
                     <div class="form-group">
+                        <div class="form-group">
+                            <div connect-select ng-model="en.ConnectName" ng-name="obConnect" ng-change="en.conChange()"></div>
+                        </div>
                         <div class="input-group">
                             <input type="text" class="form-control input-sm" placeholder="查询" ng-model="en.EntityQuery">
                             <span class="input-group-btn">
@@ -29,10 +32,7 @@
                                                     <input placeholder="实体名" ng-disabled="!en.isAdd" class="form-control text-xs warning" name="entityName" ng-blur="en.isExists(en.SelectedEn.EntityName)" type="text" ng-model="en.SelectedEn.EntityName" required>
                                                 </div>
                                                 <div class="form-group" ng-class="{ 'has-error' : en.EntityForm.obConnect.$invalid }">
-                                                    <div connect-select ng-model="en.SelectedEn.ConnectName" ng-name="obConnect" my-required="true" ng-change="en.conChange()"></div>
-                                                </div>
-                                                <div class="form-group" ng-class="{ 'has-error' : en.EntityForm.obConnect.$invalid }">
-                                                    <div object-select ob-type="'UV'" ob-connect="en.SelectedEn.ConnectName" first-load="en.firstLoad" ng-model="en.EnTable" ng-name="obTable" my-required="true"></div>
+                                                    <div object-select ob-type="'UV'" ob-connect="en.ConnectName" first-load="en.firstLoad" ng-model="en.EnTable" ng-name="obTable" my-required="true"></div>
                                                 </div>
                                                 <div class="form-group">
                                                     <input ui-jq="TouchSpin" placeholder="往下展开层级" class="input-sm" type="text" ng-model="en.SelectedEn.Level" data-min='1' data-max="10">
@@ -159,7 +159,7 @@
                                                                     <div class="col-md-6" title="关联实体">
                                                                         <label class="sr-only">关联实体</label>
                                                                         <div ng-class="{ 'has-error' : en.ClassForm.conEn.$invalid }">
-                                                                            <div entity-select ng-model="en.ProItem.RelateEntity" select-class="'text-xs'" connect-name="en.SelectedEn.ConnectName" ng-name="conEn" ng-disabled="!en.isEditing" my-required="true" />
+                                                                            <div entity-select ng-model="en.ProItem.RelateEntity" select-class="'text-xs'" connect-name="en.ConnectName" ng-name="conEn" ng-disabled="!en.isEditing" my-required="true" />
                                                                             <div ng-messages="en.ClassForm.conEn.$error" class="help-block" role="alert">
                                                                                 <div ng-message="required">请选择关联实体</div>
                                                                             </div>
@@ -271,7 +271,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6" ng-class="{ 'has-error' : en.ProcedureForm.Proc.$invalid }">
-                                                                    <div object-select ob-type="'P'" ng-name="Proc" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.SelectedEn.ConnectName" ng-model="en.NewProc.EnProcedure" my-required="true"></div>
+                                                                    <div object-select ob-type="'P'" ng-name="Proc" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.ConnectName" ng-model="en.NewProc.EnProcedure" my-required="true"></div>
                                                                 </div>
                                                                 <div class="col-md-1" ng-if="en.isEditing">
                                                                     <span class="btn btn-default" ng-click="en.AddProc()" ng-disabled="en.ProcedureForm.$invalid" title="增加关联存储过程">
@@ -290,7 +290,7 @@
                                                                     <input class="form-control" ng-model="proc.ShortName" placeholder="存储过程简称" type="text" disabled />
                                                                 </div>
                                                                 <div class="col-sm-6">
-                                                                    <div object-select ob-type="'P'" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.SelectedEn.ConnectName" ng-disabled="!en.isEditing"
+                                                                    <div object-select ob-type="'P'" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.ConnectName" ng-disabled="!en.isEditing"
                                                                          ng-model="proc.EnProcedure" ng-name="obProc" my-required="true"></div>
                                                                     <span ng-show='forma.confirm_foo.$error.validator'>Not match!</span>
                                                                 </div>

@@ -137,7 +137,7 @@
                                                             <div class="form-group" uib-collapse="!use.isAddUserRole">
                                                                 <div class="input-group col-md-12">
                                                                     <span class="input-group-btn">
-                                                                        <button class="btn btn-default" ng-click="use.InsertUserRole()">
+                                                                        <button class="btn btn-default" ng-click="use.InsertUserRole()" ng-disabled="!use.newUserRole">
                                                                             <i class="glyphicon glyphicon-plus text-success"></i>
                                                                         </button>
                                                                     </span>
@@ -241,7 +241,7 @@
                                                                     <div class="form-group" uib-collapse="!use.isAddRoleFun">
                                                                         <div class="input-group col-md-12">
                                                                             <span class="input-group-btn">
-                                                                                <button class="btn btn-default" ng-click="use.InsertRoleFun()">
+                                                                                <button class="btn btn-default" ng-click="use.InsertRoleFun()" ng-disabled="!use.NewRoleFun">
                                                                                     <i class="glyphicon glyphicon-plus text-success"></i>
                                                                                 </button>
                                                                             </span>

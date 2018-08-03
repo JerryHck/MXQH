@@ -1,1 +1,55 @@
-[{"name":"SystemDailog","templateUrl":"SystemFun/SystemDialog.html","LoadFiles":["ui.select","SystemFun/SystemDialog.js"],"controller":"SystemDialogCtrl","controllerAs":"sys","$$hashKey":"object:67","size":""},{"name":"IconDailog","templateUrl":"SystemFun/IconDialog.html","LoadFiles":["SystemFun/IconDialog.js"],"controller":"IconDialogCtrl","controllerAs":"ico","$$hashKey":"object:68","size":""},{"$$hashKey":"object:805","controller":"UserDailogCtrl","controllerAs":"use","LoadFiles":["SystemFun\\UserDailog.js"],"name":"UserDailog","size":"","templateUrl":"SystemFun\\UserDailog.html"},{"LoadFiles":["SystemFun\\RoleDailog.js"],"name":"RoleDailog","controller":"RoleDailogCtrl","controllerAs":"role","templateUrl":"SystemFun\\RoleDailog.html","$$hashKey":"object:828"}]
+[
+  {
+    "$$hashKey": "object:67",
+    "controller": "SystemDialogCtrl",
+    "controllerAs": "sys",
+    "LoadFiles": [
+      { "LoadName": "SystemFun/SystemDialog.js" }
+    ],
+    "name": "SystemDialog",
+    "size": "",
+    "templateUrl": "SystemFun/SystemDialog.html"
+  },
+  {
+    "name": "IconDialog",
+    "templateUrl": "SystemFun/IconDialog.html",
+    "LoadFiles": [
+      { "LoadName": "SystemFun/IconDialog.js" }
+    ],
+    "controller": "IconDialogCtrl",
+    "controllerAs": "ico",
+    "$$hashKey": "object:68",
+    "size": ""
+  },
+  {
+    "$$hashKey": "object:805",
+    "controller": "UserDialogCtrl",
+    "controllerAs": "use",
+    "LoadFiles": [
+      { "LoadName": "SystemFun\\UserDialog.js" }
+    ],
+    "name": "UserDialog",
+    "size": "",
+    "templateUrl": "SystemFun\\UserDialog.html"
+  },
+  {
+    "$$hashKey": "object:828",
+    "controller": "RoleDialogCtrl",
+    "controllerAs": "role",
+    "LoadFiles": [ { "LoadName": "SystemFun\\RoleDialog.js" } ],
+    "name": "RoleDialog",
+    "templateUrl": "SystemFun\\RoleDialog.html"
+  },
+  {
+    "$$hashKey": "object:1766",
+    "controller": "DialogCtrl",
+    "controllerAs": "dialog",
+    "size": "lg",
+    "LoadFiles": [
+      { "LoadName": "Scripts/angular/ngDraggable.js" },
+      { "LoadName": "SystemFun\\DialogDialog.js" }
+    ],
+    "name": "DialogDialog",
+    "templateUrl": "SystemFun\\DialogDialog.html"
+  }
+]

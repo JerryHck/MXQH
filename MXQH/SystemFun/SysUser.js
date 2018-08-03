@@ -93,7 +93,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
     }
 
     function Open(type, resolve) {
-        Dialog.open("UserDailog", resolve).then(function (data) {
+        Dialog.open("UserDialog", resolve).then(function (data) {
             getList();
         }).catch(function (reason) {
         });
@@ -141,7 +141,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
     }
 
     function OpenRole(type, resolve) {
-        Dialog.open("RoleDailog", resolve).then(function (data) {
+        Dialog.open("RoleDialog", resolve).then(function (data) {
             getListRole();
         }).catch(function (reason) {
         });

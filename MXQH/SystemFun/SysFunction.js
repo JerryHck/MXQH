@@ -132,7 +132,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
                     return vm.editRootItem.FunImge;
                 }
             };
-            Dialog.open("IconDailog", resolve).then(function (data) {
+            Dialog.open("IconDialog", resolve).then(function (data) {
                 vm.editRootItem.FunImge = data;
             }).catch(function (reason) {
             });
@@ -224,7 +224,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
                 return vm.SelectedFun.FunImge;
             }
         };
-        Dialog.open("IconDailog", resolve).then(function (data) {
+        Dialog.open("IconDialog", resolve).then(function (data) {
             vm.SelectedFun.FunImge = data;
         }).catch(function (reason) {
         });

@@ -1,26 +1,29 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('BindingCodeCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
-   
+.controller('GenerateSnCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window', 'MyPop',
+function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
+
     var vm = this;
-    vm.NewBind = { Action: "I", CreateBy: $rootScope.User.Emp.ChiLastName + $rootScope.User.Emp.ChiFirstName, Customer:"D" };
+    vm.NewBind = { Action: "I", CreateBy: $rootScope.User.Emp.ChiLastName + $rootScope.User.Emp.ChiFirstName, Customer:"U" };
     vm.MesList = [];
     vm.Focus = 0;
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
+    vm.NewItemType = {};
 
     vm.KeyDonwInCode = KeyDonwInCode;
-    vm.KeyDonwSnCode = KeyDonwSnCode;
-    vm.KeyDonwIdCode = KeyDonwIdCode;
     vm.BindCode = BindCode;
     vm.PageChange = PageChange;
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
     vm.SelectTab = SelectTab;
+    vm.DeleteItemType = DeleteItemType;
+
+    vm.InsertItemType = InsertItemType;
 
     PageChange();
+    GetItemTypeList();
 
     function Search() {
         vm.page.index = 1;
@@ -38,13 +41,15 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         if (vm.Ser.IDCode1) {
             list.push({ name: "IDCode1", value: vm.Ser.IDCode1 });
         }
-        list.push({ name: "Customer", value: "D" });
+        list.push({ name: "Customer", value: "U" });
+
         vm.promise = AjaxService.GetPlansPage("BindCode", list, vm.page.index, vm.page.size).then(function (data) {
             vm.BindList = data.List;
             vm.page.total = data.Count;
         });
     }
 
+    //
 
     //内部码验证
     function KeyDonwInCode(e) {
@@ -69,7 +74,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                             vm.MesList.splice(0, 0, Msg);
                         }
                         else {
-                            vm.Focus = 1;
+                            GetSnCode();
                         }
                     })
                 }
@@ -77,61 +82,43 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         }
     }
 
-    function KeyDonwSnCode(e) {
-        var keycode = window.event ? e.keyCode : e.which;
-        if (keycode == 13 && vm.NewBind.SNCode) {
-            var en = {};
-            en.name = "SNCode";
-            en.value = vm.NewBind.SNCode;
-            AjaxService.GetPlan("MESSNCode", en).then(function (data2) {
-                var mss = "SN码 [" + vm.NewBind.SNCode + '] ';
-                if (data2.SNCode) {
-                    vm.NewBind.SNCode = undefined;
-                    //toastr.error(mes);
-                    var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过生产条码[' + data2.InternalCode + "]" };
-                    vm.MesList.splice(0, 0, Msg);
-                }
-                else {
-                    vm.Focus = 2;
-                }
-            })
-        }
-    }
-
-    function KeyDonwIdCode(e) {
-        var keycode = window.event ? e.keyCode : e.which;
-        if (keycode == 13 && vm.NewBind.IDCode1) {
-            var en = {};
-            en.name = "IDCode1";
-            en.value = vm.NewBind.IDCode1;
-            AjaxService.GetPlan("MESSNCode", en).then(function (data2) {
-                var mss = "模块二维码 [" + vm.NewBind.IDCode1 + '] ';
-                if (data2.IDCode1) {
-                    vm.NewBind.IDCode1 = undefined;
-                    //toastr.error(mes);
-                    var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过生产条码[' + data2.InternalCode + "]" };
-                    vm.MesList.splice(0, 0, Msg);
-                }
-                else {
-                    BindCode();
-                }
-            })
-        }
-    }
-
     function SelectTab(index) {
         vm.Focus = index;
     }
 
+    //生成内部码
+    function GetSnCode(isUpdate) {
+        var enSn = angular.copy(vm.SelectedItemType);
+        enSn.Company = "L";
+        enSn.Action = vm.IsAuto ? "U" : "S";
+        AjaxService.ExecPlan("BindCode", "SnCode", enSn).then(function (data3) {
+            vm.NewBind.SNCode = data3.data[0].SNCode;
+            if (vm.IsAuto) {
+                SaveBindCode();
+            }
+        })
+    }
+
     function BindCode() {
+        var enSn = angular.copy(vm.SelectedItemType);
+        enSn.Company = "L";
+        enSn.Action = "U";
+        AjaxService.ExecPlan("BindCode", "SnCode", enSn).then(function (data3) {
+            vm.NewBind.SNCode = data3.data[0].SNCode;
+            SaveBindCode();
+        })
+    }
+
+    function SaveBindCode(){
         vm.promise = AjaxService.ExecPlan("BindCode", 'bindCode', vm.NewBind).then(function (data) {
-            var mss = "生产条码 [" + vm.NewBind.InternalCode + ']  SN码 [' + vm.NewBind.SNCode + ']  模块二维码[' + vm.NewBind.IDCode1 + '] 绑定成功';
+            var mss = "生产条码 [" + vm.NewBind.InternalCode + ']  SN码 [' + vm.NewBind.SNCode + '] 绑定成功';
             var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };
             vm.MesList.splice(0, 0, Msg);
-            vm.NewBind = { Action: "I", CreateBy: $rootScope.User.Emp.ChiLastName + $rootScope.User.Emp.ChiFirstName, Customer: "D" };
+            vm.NewBind = { Action: "I", CreateBy: $rootScope.User.Emp.ChiLastName + $rootScope.User.Emp.ChiFirstName, Customer: "U" };
             vm.Focus = 0;
         });
     }
+
 
     function ExportExcel() {
         var en = {};
@@ -146,6 +133,30 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         vm.promise = AjaxService.ExecPlanToExcel("BindCode", 'BindExcel', en, sheet).then(function (data) {
             //console.log(data);
             $window.location.href = data.File;
+        });
+    }
+
+    function InsertItemType() {
+        vm.promise = AjaxService.PlanInsert("MesItemType", vm.NewItemType).then(function (data) {
+            toastr.success("新增成功");
+            vm.NewItemType = {};
+            GetItemTypeList();
+        })
+    }
+
+    function GetItemTypeList() {
+        AjaxService.GetPlans("MesItemType").then(function (data) {
+            vm.ItemTypeList = data;
+            
+        })
+    }
+
+    function DeleteItemType(type) {
+        MyPop.Confirm({ text: "确定要删除该类型吗" }, function () {
+            AjaxService.PlanDelete("MesItemType", type).then(function (data) {
+                toastr.success("删除成功");
+                GetItemTypeList();
+            })
         });
     }
 }

@@ -1,9 +1,9 @@
 ﻿'use strict';
-angular.module('app').controller('UserDailogCtrl', UserDailogCtrl);
+angular.module('app').controller('UserDialogCtrl', UserDialogCtrl);
 
-UserDailogCtrl.$inject = ['$rootScope', '$scope', '$uibModalInstance', 'Form', 'ItemData', 'toastr', 'AjaxService'];
+UserDialogCtrl.$inject = ['$rootScope', '$scope', '$uibModalInstance', 'Form', 'ItemData', 'toastr', 'AjaxService'];
 
-function UserDailogCtrl($rootScope, $scope, $uibModalInstance, Form, ItemData, toastr, AjaxService) {
+function UserDialogCtrl($rootScope, $scope, $uibModalInstance, Form, ItemData, toastr, AjaxService) {
     var vm = this;
     vm.form = Form[ItemData.SysNo ? 1 : 0];
     vm.Item = ItemData;

@@ -60,38 +60,41 @@
     <script src="Scripts/angular/angular-translate/storage-local.js"></script>
 
     <!-- App -->
-    <script src="js/services/AjaxServiceModule.js"></script>
-    <script src="js/services/AjaxServiceMethod.js"></script>
+    <!--<script src="js/services/AjaxServiceModule.js"></script>
+    <script src="js/services/AjaxServiceMethod.js"></script>-->
     <script src="js/app.js"></script>
     <script>
-        document.write("<script type='text/javascript' src='js/appData.js?v=" + Date.now() + "'><\/script>");
+        var version = Date.now();
+        document.write("<script type='text/javascript' src='js/appData.js?v=" + version + "'><\/script>");
+        document.write("<script type='text/javascript' src='js/services/AjaxServiceModule.js?v=" + version + "'><\/script>");
+        document.write("<script type='text/javascript' src='js/services/AjaxServiceMethod.js?v=" + version + "'><\/script>");
+
+        document.write("<script src='js/Router.js?v=" + version + "'><\/script>");
+        document.write("<script src='js/config.js?v=" + version + "'><\/script>");
+        document.write("<script src='js/config.lazyload.js?v=" + version + "'><\/script>");
+        document.write("<script src='js/Dialog.js?v=" + version + "'><\/script>");
+        document.write("<script src='js/config.router.js?v=" + version + "'><\/script>");
+        document.write("<script src='js/main.js?v=" + version + "'><\/script>");
+        document.write("<script src='js/directives/app-Directive.js?v=" + version + "'><\/script>");
+
+        var sta = '1.0001';
+        //lazy load
+        document.write("<script src='js/services/ui-load.js?v=" + sta + "'><\/script>");
+        document.write("<script src='js/filters/fromNow.js?v=" + sta + "'><\/script>");
+        document.write("<script src='js/filters/app-filter.js?v=" + sta + "'><\/script>");
+        document.write("<script src='js/directives/setnganimate.js?v=" + sta + "'><\/script>");
+        document.write("<script src='js/directives/ui-butterbar.js?v=" + sta + "'><\/script>");
+        document.write("<script src='js/directives/ui-focus.js?v=" + sta + "'><\/script>");
+        document.write("<script src='js/directives/ui-fullscreen.js?v=" + sta + "'><\/script>");
+        document.write("<script src='js/directives/ui-jq.js?v=" + sta + "'><\/script>");
+        document.write("<script src='js/directives/ui-module.js?v=" + sta + "'><\/script>");
+        document.write("<script src='js/directives/ui-nav.js?v=" + sta + "'><\/script>");
+        document.write("<script src='js/directives/ui-scroll.js?v=" + sta + "'><\/script>");
+        document.write("<script src='js/directives/ui-shift.js?v=" + sta + "'><\/script>");
+        document.write("<script src='js/directives/ui-toggleclass.js?v=" + sta + "'><\/script>");
+        document.write("<script src='js/directives/ui-validate.js?v=" + sta + "'><\/script>");
+        document.write("<script src='js/controllers/bootstrap.js?v=" + sta + "'><\/script>");
+        document.write("<script src='Scripts/ui-grid.min.js?v=" + sta + "'><\/script>");
     </script>
-    <!--<script src="js/appData.js"+new date()></script>-->
-    <script src="js/Router.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/config.lazyload.js"></script>
-    <script src="js/Dialog.js"></script>
-    <script src="js/config.router.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/services/ui-load.js"></script>
-
-
-    <script src="js/filters/fromNow.js"></script>
-    <script src="js/filters/app-filter.js"></script>
-    <script src="js/directives/setnganimate.js"></script>
-    <script src="js/directives/ui-butterbar.js"></script>
-    <script src="js/directives/ui-focus.js"></script>
-    <script src="js/directives/ui-fullscreen.js"></script>
-    <script src="js/directives/ui-jq.js"></script>
-    <script src="js/directives/ui-module.js"></script>
-    <script src="js/directives/ui-nav.js"></script>
-    <script src="js/directives/ui-scroll.js"></script>
-    <script src="js/directives/ui-shift.js"></script>
-    <script src="js/directives/ui-toggleclass.js"></script>
-    <script src="js/directives/ui-validate.js"></script>
-    <script src="js/controllers/bootstrap.js"></script>
-    <script src="js/directives/app-Directive.js"></script>
-    <script src="Scripts/ui-grid.min.js"></script>
-    <!-- Lazy loading -->
 </body>
 </html>
