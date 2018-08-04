@@ -46,7 +46,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, $rootScope) {
     }
     
     function SaveToJson() {
-        vm.promise = AjaxService.AddDailog(JSON.stringify(vm.List)).then(function (data) {
+        vm.promise = AjaxService.AddDialog(JSON.stringify(vm.List)).then(function (data) {
             toastr.success('储存成功');
         });
     }
