@@ -345,10 +345,12 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="SystemFun\AddDailog.js" />
+    <Content Include="SystemFun\AddDialog.js" />
     <Content Include="SystemFun\AddDialog.html" />
     <Content Include="SystemFun\CreateEntity.html" />
     <Content Include="SystemFun\CreateEntity.js" />
+    <Content Include="SystemFun\DialogDialog.html" />
+    <Content Include="SystemFun\DialogDialog.js" />
     <Content Include="SystemFun\IconDialog.html" />
     <Content Include="SystemFun\IconDialog.js" />
     <Content Include="SystemFun\RoleDailog.html" />
@@ -512,7 +514,9 @@
     <Content Include="SystemFun\UserRoleDailog.html" />
     <Content Include="SystemFun\UserRoleDailog.js" />
     <Content Include="Template\UIAccordionTemplate.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Handler\FileData.ashx.cs">
