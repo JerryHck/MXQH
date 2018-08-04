@@ -28,7 +28,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
     //功能
     vm.SelectFun = SelectFun;
     vm.AddFun = AddFun;
-
+    vm.SaveFun = SaveFun;
     vm.FunDrop = FunDrop;
     vm.FunDrag = FunDrag;
 
@@ -43,19 +43,12 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
     vm.SelectedRoot = { FunNo: '' };
     vm.editFun = false;
 
-    GetList();
-
-    console.log(12);
-
-    function GetList() {
-        var en = {};
-        en.name = 'FunType';
-        en.value = 1
-        vm.promise = AjaxService.GetEntities("FunRoot", en).then(function (data) {
-            vm.List = data;
-            console.log(data);
-        });
-    }
+    var en = {};
+    en.name = 'FunType';
+    en.value = 1
+    vm.promise = AjaxService.GetEntities("FunRoot", en).then(function (data) {
+        vm.List = data;
+    });
 
     //查询所有功能
     function SelectAllFun() {
@@ -139,7 +132,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
                     return vm.editRootItem.FunImge;
                 }
             };
-            Dialog.open("IconDailog", resolve).then(function (data) {
+            Dialog.open("IconDialog", resolve).then(function (data) {
                 vm.editRootItem.FunImge = data;
             }).catch(function (reason) {
             });
@@ -183,6 +176,8 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
             vm.promise = AjaxService.EditBack("sp_DeleteFunction", json).then(function (data) {
                 toastr.success('删除成功');
                 reflashData();
+                //更新功能基本信息
+                AjaxService.LoginAction("ReflashRoot");
             })
         }
     }
@@ -229,7 +224,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
                 return vm.SelectedFun.FunImge;
             }
         };
-        Dialog.open("IconDailog", resolve).then(function (data) {
+        Dialog.open("IconDialog", resolve).then(function (data) {
             vm.SelectedFun.FunImge = data;
         }).catch(function (reason) {
         });
@@ -285,6 +280,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
 
         vm.SelectedFun.FunLoad = vm.SelectedFun.FunLoad || [];
         angular.forEach(vm.SelectedFun.FunLoad, function (l, i) {
+            l.Id = l.Id || -1;
             l.SortNo = i;
         });
         var en = angular.copy(vm.SelectedFun);
@@ -300,6 +296,8 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
         vm.promise = AjaxService.EditBack("sp_SaveFunction", en).then(function (data) {
             //更新数据
             reflashData();
+            //更新功能基本信息
+            AjaxService.LoginAction("ReflashRoot");
             toastr.success('储存成功');
         })
     }
@@ -340,11 +338,13 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
             });
             var json = {};
             json.FunType = type;
-            json.SysNo = vm.SelectedRoot.SysNo;
+            json.SysNo = "MXQH";
             json.RootList = JSON.stringify(List);
             json.TempColumns = 'RootList';
             vm.promise = AjaxService.EditBack("sp_SaveFunctionRoot", json).then(function (data) {
                 toastr.success('储存成功');
+                //更新功能基本信息
+                AjaxService.LoginAction("ReflashRoot");
             })
         }
     }

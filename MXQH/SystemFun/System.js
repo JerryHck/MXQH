@@ -9,7 +9,7 @@ function ($scope, $http, Dialog, AjaxService) {
     vm.Edit = Edit;
     //删除
     vm.Delete = Delete;
-    //Dailog
+    //Dialog
     vm.Insert = Insert;
 
 
@@ -54,7 +54,7 @@ function ($scope, $http, Dialog, AjaxService) {
     }
 
     function Open(type, resolve) {
-        Dialog.open("SystemDailog", resolve).then(function (data) {
+        Dialog.open("SystemDialog", resolve).then(function (data) {
             GetList();
             //console.log(data);
         }).catch(function (reason) {

@@ -1,0 +1,50 @@
+﻿<div class="bg-light lter b-b wrapper-md" cg-busy="dailog.promise">
+    <h3 class="m-n font-thin h3 ">
+        系统弹跳窗路由设定
+        <button class="btn btn-sm btn-success pull-left" ng-click="dailog.Insert()" ng-if="!dailog.isAdd"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+        <button class="btn btn-sm btn-success pull-right m-l-md" ng-click="dailog.SaveToJson()"><i class="glyphicon glyphicon-save"></i> 保存到Json文件</button>
+        <button class="btn btn-sm btn-success pull-right m-l-md" ng-click="dailog.JsonToDb()"><i class="glyphicon glyphicon-save"></i> 从Json文件导入数据库</button>
+    </h3>
+</div>
+<div class="wrapper-md" uib-collapse="dailog.isAdd">
+    <div class="input-group m-b-xxs">
+        <span class="input-group-addon input-sm no-border no-bg"><i class="icon-magnifier text-md m-t-xxs"></i></span>
+        <input type="text" class="form-control input-sm no-border no-bg text-xs" placeholder="查询" ng-model="dailog.search">
+    </div>
+    <div>
+        <table class="table table-striped b-2x" cg-busy="sys.promise">
+            <tr class="text-center bg-gd-dk h4">
+                <td class="col-md-1">编辑</td>
+                <td class="col-md-1">Dialog</td>
+                <td class="col-md-2">html文件</td>
+                <td class="col-md-2">依赖js文件</td>
+                <td class="col-md-2">Controller</td>
+                <td class="col-md-1">ControllerAs</td>
+            </tr>
+            <tr ng-repeat="item in dailog.List | filter: dailog.search">
+                <td>
+                    <button class="btn btn-xs btn-primary" ng-click="dailog.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                    <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="dailog.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                </td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.templateUrl }}</td>
+                <td>
+                    <div class="list-group">
+                        <a class="list-group" href="" ng-repeat="js in item.LoadFiles">{{ js }}</a>
+                    </div>
+                </td>
+                <td>{{ item.controller }}</td>
+                <td>
+                    {{ item.controllerAs }}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!--<div class="col-md-12 text-center">
+        <uib-pagination total-items="sys.page.total" ng-model="sys.page.index" items-per-page="sys.page.size" max-size="4" class="pagination-sm" boundary-links="true"></uib-pagination>
+    </div>-->
+</div>
+<div class="wrapper-xs" uib-collapse="!dailog.isAdd">
+    
+</div>
+
