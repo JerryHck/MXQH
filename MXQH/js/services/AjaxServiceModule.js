@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('AjaxServiceModule', ['ngAnimate', 'toastr', ]);
+    angular.module('AjaxServiceModule', ['appData', 'ngAnimate', 'toastr', 'ngCookies']);
 
     angular.module('AjaxServiceModule').config(appConfig);
 
@@ -7,15 +7,14 @@
 
     //httpWatch.$inject = ['$cookies'];
 
-    function httpWatch($cookies) {
+    function httpWatch($cookieStore) {
         var obj = {
             'request': function (config) {
-                //if ($cookies.get('user-token')) {
-                //    config.headers['x-session-token'] = $cookies.get('user-token');
-                //}
-                //config.headers['x-function'] = $cookies.get('function-token') || '';
-                config.headers['x-session-token'] = "123fasdf";
-                config.headers['x-function'] = "123fasdf";
+                if ($cookieStore.get('user-token')) {
+                    config.headers['x-session-token'] = $cookieStore.get('user-token');
+                   
+                }
+                config.headers['x-function'] = $cookieStore.get('active-function') || '';
                 return config;
             }
         };

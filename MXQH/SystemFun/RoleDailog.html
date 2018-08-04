@@ -1,0 +1,48 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">权限角色{{ role.form.title }}</h3>
+</div>
+<div class="modal-body wrapper-md" ng-form="role.RoleForm">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">角色编号</label>
+                    <div class="col-md-10" ng-class="{ 'has-error' : role.RoleForm.No.$invalid }">
+                        <input type="text" class="form-control" name="No" placeholder="用户账户"
+                               ng-model="role.Item.RoleSn" disabled required>
+                    </div>
+                </div>
+                <div class="form-group pull-in clearfix">
+                    <label class="col-md-2 control-label">角色名</label>
+                    <div class="col-md-10" ng-class="{ 'has-error' : role.RoleForm.roleName.$invalid }">
+                        <input type="text" name="roleName" class="form-control" ng-maxlength="18" placeholder="角色名" ng-model="role.Item.RoleName" required>
+                        <div ng-messages="role.RoleForm.roleName.$error" class="help-block" role="alert">
+                            <div ng-message="maxlength">角色名必须小于10个字</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">描述信息</label>
+                    <div class="col-md-10" ng-class="{ 'has-error' : role.RoleForm.desc.$invalid }">
+                        <textarea class="form-control" name="desc" rows="6" maxlength="255" ng-model="role.Item.RoleDesc" placeholder="输入描述信息"></textarea>
+                        <div ng-messages="role.RoleForm.desc.$error" class="help-block" role="alert">
+                            <div ng-message="maxlength">角色名必须小于255个字</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label font-bold">使用状态:</label>
+                    <div class="col-md-8">
+                        <div toggle-switch ng-model="role.Item.State" class="w-xxs switch-success" on-label="启用" off-label="停用"
+                             on-value="S" off-value="E"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" type="button" ng-disabled="role.RoleForm.$invalid" ng-click="role.Save()">储存</button>
+    <button class="btn btn-warning" type="button" ng-click="role.cancel()">取消</button>
+</div>
+<!--<pre>{{ role.Item | json }}</pre>-->

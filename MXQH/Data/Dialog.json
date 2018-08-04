@@ -1,16 +1,55 @@
-﻿[
+[
   {
-    "name": "SystemDailog",
-    "templateUrl": "SystemFun/SystemDialog.html",
-    "LoadFiles": [ "ui.select", "SystemFun/SystemDialog.js" ],
+    "$$hashKey": "object:67",
     "controller": "SystemDialogCtrl",
-    "controllerAs": "sys"
+    "controllerAs": "sys",
+    "LoadFiles": [
+      { "LoadName": "SystemFun/SystemDialog.js" }
+    ],
+    "name": "SystemDialog",
+    "size": "",
+    "templateUrl": "SystemFun/SystemDialog.html"
   },
   {
-    "name": "IconDailog",
+    "name": "IconDialog",
     "templateUrl": "SystemFun/IconDialog.html",
-    "LoadFiles": [ "SystemFun/IconDialog.js" ],
+    "LoadFiles": [
+      { "LoadName": "SystemFun/IconDialog.js" }
+    ],
     "controller": "IconDialogCtrl",
-    "controllerAs": "ico"
+    "controllerAs": "ico",
+    "$$hashKey": "object:68",
+    "size": ""
+  },
+  {
+    "$$hashKey": "object:805",
+    "controller": "UserDialogCtrl",
+    "controllerAs": "use",
+    "LoadFiles": [
+      { "LoadName": "SystemFun\\UserDialog.js" }
+    ],
+    "name": "UserDialog",
+    "size": "",
+    "templateUrl": "SystemFun\\UserDialog.html"
+  },
+  {
+    "$$hashKey": "object:828",
+    "controller": "RoleDialogCtrl",
+    "controllerAs": "role",
+    "LoadFiles": [ { "LoadName": "SystemFun\\RoleDialog.js" } ],
+    "name": "RoleDialog",
+    "templateUrl": "SystemFun\\RoleDialog.html"
+  },
+  {
+    "$$hashKey": "object:1766",
+    "controller": "DialogCtrl",
+    "controllerAs": "dialog",
+    "size": "lg",
+    "LoadFiles": [
+      { "LoadName": "Scripts/angular/ngDraggable.js" },
+      { "LoadName": "SystemFun\\DialogDialog.js" }
+    ],
+    "name": "DialogDialog",
+    "templateUrl": "SystemFun\\DialogDialog.html"
   }
 ]
