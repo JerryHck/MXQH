@@ -1,1 +1,107 @@
-[{"name":"DialogDialog","templateUrl":"SystemFun\\DialogDialog.html","controller":"DialogCtrl","controllerAs":"dialog","LoadFiles":[{"Id":11,"LoadName":"Scripts/angular/ngDraggable.js","name":"DialogDialog","SortNo":0,"$$hashKey":"object:70"},{"Id":12,"LoadName":"SystemFun\\DialogDialog.js","name":"DialogDialog","SortNo":1,"$$hashKey":"object:71"}],"$$hashKey":"object:60"},{"name":"IconDialog","templateUrl":"SystemFun/IconDialog.html","controller":"IconDialogCtrl","controllerAs":"ico","LoadFiles":[{"Id":8,"LoadName":"SystemFun/IconDialog.js","name":"IconDialog","SortNo":0,"$$hashKey":"object:74"}],"$$hashKey":"object:61"},{"name":"RoleDialog","templateUrl":"SystemFun\\RoleDialog.html","controller":"RoleDialogCtrl","controllerAs":"role","LoadFiles":[{"Id":10,"LoadName":"SystemFun\\RoleDialog.js","name":"RoleDialog","SortNo":0,"$$hashKey":"object:76"}],"$$hashKey":"object:62"},{"name":"SystemDialog","templateUrl":"SystemFun/SystemDialog.html","controller":"SystemDialogCtrl","controllerAs":"sys","LoadFiles":[{"Id":7,"LoadName":"SystemFun/SystemDialog.js","name":"SystemDialog","SortNo":0,"$$hashKey":"object:78"}],"$$hashKey":"object:63"},{"name":"UserDialog","templateUrl":"SystemFun\\UserDialog.html","controller":"UserDialogCtrl","controllerAs":"use","LoadFiles":[{"Id":9,"LoadName":"SystemFun\\UserDialog.js","name":"UserDialog","SortNo":0,"$$hashKey":"object:80"}],"$$hashKey":"object:64"}]
+[
+  {
+    "name": "DialogDialog",
+    "size": "lg",
+    "templateUrl": "SystemFun\\DialogDialog.html",
+    "backdrop": "static",
+    "controller": "DialogCtrl",
+    "controllerAs": "dialog",
+    "LoadFiles": [
+      {
+        "Id": 31,
+        "LoadName": "Scripts/angular/ngDraggable.js",
+        "name": "DialogDialog",
+        "SortNo": 0,
+        "$$hashKey": "object:5455"
+      },
+      {
+        "Id": 32,
+        "LoadName": "SystemFun\\DialogDialog.js",
+        "name": "DialogDialog",
+        "SortNo": 1,
+        "$$hashKey": "object:5456"
+      }
+    ],
+    "$$hashKey": "object:5445"
+  },
+  {
+    "name": "IconDialog",
+    "size": "",
+    "templateUrl": "SystemFun/IconDialog.html",
+    "backdrop": "static",
+    "controller": "IconDialogCtrl",
+    "controllerAs": "ico",
+    "LoadFiles": [
+      {
+        "Id": 33,
+        "LoadName": "SystemFun/IconDialog.js",
+        "name": "IconDialog",
+        "SortNo": 0,
+        "$$hashKey": "object:5459"
+      }
+    ],
+    "$$hashKey": "object:5446",
+    "CreateBy": "SSAdmin",
+    "Action": "U"
+  },
+  {
+    "name": "RoleDialog",
+    "size": "",
+    "templateUrl": "SystemFun\\RoleDialog.html",
+    "backdrop": "static",
+    "controller": "RoleDialogCtrl",
+    "controllerAs": "role",
+    "LoadFiles": [
+      {
+        "Id": 36,
+        "LoadName": "SystemFun\\RoleDialog.js",
+        "name": "RoleDialog",
+        "SortNo": 0,
+        "$$hashKey": "object:5461"
+      }
+    ],
+    "$$hashKey": "object:5447",
+    "CreateBy": "SSAdmin",
+    "Action": "U"
+  },
+  {
+    "name": "SystemDialog",
+    "size": "",
+    "templateUrl": "SystemFun/SystemDialog.html",
+    "backdrop": "static",
+    "controller": "SystemDialogCtrl",
+    "controllerAs": "sys",
+    "LoadFiles": [
+      {
+        "Id": 34,
+        "LoadName": "SystemFun/SystemDialog.js",
+        "name": "SystemDialog",
+        "SortNo": 0,
+        "$$hashKey": "object:5463"
+      }
+    ],
+    "$$hashKey": "object:5448",
+    "CreateBy": "SSAdmin",
+    "Action": "U"
+  },
+  {
+    "name": "UserDialog",
+    "size": "",
+    "templateUrl": "SystemFun\\UserDialog.html",
+    "backdrop": "static",
+    "controller": "UserDialogCtrl",
+    "controllerAs": "use",
+    "LoadFiles": [
+      {
+        "$$hashKey": "object:5465",
+        "Id": 35,
+        "LoadName": "SystemFun\\UserDialog.js",
+        "name": "UserDialog",
+        "SortNo": 0
+      }
+    ],
+    "$$hashKey": "object:5449",
+    "CreateBy": "SSAdmin",
+    "Action": "U"
+  }
+]
