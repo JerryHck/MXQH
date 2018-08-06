@@ -11,38 +11,33 @@ function ($rootScope, $ocLazyLoad, $uibModal, $q, AjaxService) {
     //開啟
     function open(name, resolve, option) {
         var d = $q.defer();
-        //Route Config
-        AjaxService.GetJson('Dialog.json?1.2', '').then(function (data) {
-            
-            var 
-                dialog = $.grep(data, function (e) { return e.name == name; })[0],          
-                config = angular.extend({
-                    templateUrl: dialog.templateUrl,
-                    controller: dialog.controller,
-                    backdrop: dialog.backdrop || 'static',
-                    size: dialog.size
-                }, option || {});
+        var
+            dialog = $.grep($rootScope.DialogData, function (e) { return e.name == name; })[0],
+            config = angular.extend({
+                templateUrl: dialog.templateUrl,
+                controller: dialog.controller,
+                backdrop: dialog.backdrop || 'static',
+                size: dialog.size
+            }, option || {});
 
-            if (dialog.controllerAs) {
-                config.controllerAs = dialog.controllerAs;
+        if (dialog.controllerAs) {
+            config.controllerAs = dialog.controllerAs;
+        }
+
+        if (dialog.keyboard && config.keyboard == undefined) {
+            config.keyboard = dialog.keyboard == 'true';
+        }
+
+        config.resolve = resolve;
+        if (dialog.LoadFiles) {
+            var loadList = [];
+            for (var i = 0, len = dialog.LoadFiles.length; i < len; i++) {
+                loadList.push(dialog.LoadFiles[i].LoadName);
             }
-
-            if (dialog.keyboard && config.keyboard == undefined) {
-                config.keyboard = dialog.keyboard == 'true';
-            }
-
-            config.resolve = resolve;
-            if (dialog.LoadFiles) {
-                var loadList = [];
-                for (var i = 0, len = dialog.LoadFiles.length; i < len; i++) {
-                    loadList.push(dialog.LoadFiles[i].LoadName);
-                }
-                $ocLazyLoad.load(loadList).then(function () {
-                    d.resolve($uibModal.open(config).result);
-                });
-            }
-        });
-
+            $ocLazyLoad.load(loadList).then(function () {
+                d.resolve($uibModal.open(config).result);
+            });
+        }
         return d.promise;
     }
 }

@@ -39,6 +39,11 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
     AjaxService.LoginAction("GetLoginEmp").then(function (data) {
         $rootScope.User = data;
     });
+
+    //获取dialog信息
+    AjaxService.GetPlans('Dialog').then(function (data) {
+        $rootScope.DialogData = data;
+    });
 }
 
 angular.module('app').config(Config);
