@@ -34,7 +34,6 @@ angular.module('app')
         });
     }
 })
-
 .directive('companySelect', ['AjaxService', function (AjaxService) {
     return {
         restrict: 'A',
@@ -433,5 +432,47 @@ angular.module('app')
             }
         }
     }
+}])
+//文件导入
+.directive('importSheetJs', ['$http', 'AjaxService', function (AjaxService) {
+    return {
+        restrict: 'A',
+        scope: { opts: '=', ngComplete: '&' },
+        templateUrl: 'js/directives/ImportSheetJs.html',
+
+        link: function (scope, $elm) {
+            scope.opts = scope.opts || {};
+            var op = scope.opts;
+            op.sheetNum = op.sheetNum || 1;
+            console.log($elm)
+            $('input[id=lefile]').on('change', function (changeEvent) {
+                if (!changeEvent.target.files)
+                {
+                    return;
+                }
+                scope.fileName = changeEvent.target.files[0].name;
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    /* read workbook */
+                    var bstr = e.target.result;
+                    var wb = XLSX.read(bstr, { type: 'binary' });
+                    
+                    var Data = [];
+                    for (var i = 0; i < op.sheetNum; i++) {
+                        var wsname = wb.SheetNames[i];
+                        var ws = wb.Sheets[wsname];
+                        var aoa = XLSX.utils.sheet_to_json(ws, op.header);
+                        /* update scope */
+                        scope.$apply(function () {
+                            Data.push(aoa);
+                        });
+                    }
+                    scope.opts.data = Data;
+                    scope.ngComplete()
+                };
+                reader.readAsBinaryString(changeEvent.target.files[0]);
+            });
+        }
+    };
 }])
 
