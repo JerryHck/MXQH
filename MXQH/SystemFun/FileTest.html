@@ -1,11 +1,14 @@
 ﻿<div cg-busy="file.promise">
-
-    <div id="file1" import-sheet-js opts="file.FileData" ng-complete="file.Do()"></div>
-    <div id="file2" import-sheet-js opts="file.FileData2" ng-complete="file.Do()"></div>
+    <div class="row">
+        <div class="col-md-3">
+            <div id="file1" import-sheet-js opts="file.FileData" ng-complete="file.Do()"></div>
+        </div>
+    </div>
+    <!--<div id="file2" import-sheet-js opts="file.FileData2" ng-complete="file.Do2()"></div>-->
     <!--<div import-sheet-js opts="file.FileData3" ng-complete="file.Do()"></div>-->
     <!--<input type="file" import-sheet-js="" opts="file.FileData" ng-complete="file.Do()" />-->
 
-    <pre>{{ file.List | json }}</pre>
+    <pre>{{ List | json }}</pre>
 </div>
 <!--<input type="file" onchange="importf(this)" />
 <div id="demo"></div>

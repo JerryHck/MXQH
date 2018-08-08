@@ -1,9 +1,9 @@
 ﻿<div class="form-group col-md-12 has-feedback">
     <div class="col-md-12 input-group">
-        <input type="file" style="display:none">
+        <input type="file" class="fileType" style="display:none">
         <input class="form-control" type="text" ng-model="fileName">
-        <span class="input-group-addon text-success" onclick="$('input[id=lefile]').click();" style="cursor: pointer; background-color: #e7e7e7">
-            <i class="fa fa-folder-open"></i>浏览
+        <span class="input-group-addon text-success" ng-click="Open($event)" style="cursor: pointer; background-color: #e7e7e7">
+            <i class="fa fa-folder-open">浏览</i>
         </span>
     </div>
 </div>

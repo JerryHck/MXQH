@@ -440,17 +440,29 @@ angular.module('app')
         scope: { opts: '=', ngComplete: '&' },
         templateUrl: 'js/directives/ImportSheetJs.html',
 
-        link: function (scope, $elm) {
-            scope.opts = scope.opts || {};
-            var op = scope.opts;
+        link: function ($scope, elm) {
+
+            $scope.opts = $scope.opts || {};
+            var op = $scope.opts;
             op.sheetNum = op.sheetNum || 1;
-            console.log($elm)
-            $('input[id=lefile]').on('change', function (changeEvent) {
-                if (!changeEvent.target.files)
+
+            $scope.Open = function (e) {
+                //console.log(e)
+                e.target.parentNode.parentElement.firstElementChild.click()
+            }
+            var fileInput = elm[0].firstElementChild.firstElementChild.firstElementChild;
+            //var fileInput = elm[0].firstElementChild.firstElementChild.getElementsByClassName("fileType");
+            //fileInput.on('change', function () {
+            //    scope.$apply(function () {
+            //        $scope.doStuff();
+            //    });
+            //});
+
+            fileInput.onchange = function (changeEvent) {
+                if (!changeEvent.target.files || changeEvent.target.files.length == 0)
                 {
                     return;
                 }
-                scope.fileName = changeEvent.target.files[0].name;
                 var reader = new FileReader();
                 reader.onload = function (e) {
                     /* read workbook */
@@ -462,16 +474,17 @@ angular.module('app')
                         var wsname = wb.SheetNames[i];
                         var ws = wb.Sheets[wsname];
                         var aoa = XLSX.utils.sheet_to_json(ws, op.header);
-                        /* update scope */
-                        scope.$apply(function () {
-                            Data.push(aoa);
-                        });
+                        Data.push(aoa);
                     }
-                    scope.opts.data = Data;
-                    scope.ngComplete()
+                    /* update scope */
+                    $scope.$apply(function () {
+                        $scope.opts.data = Data;
+                        $scope.ngComplete();
+                        $scope.fileName = changeEvent.target.files[0].name;
+                    });
                 };
                 reader.readAsBinaryString(changeEvent.target.files[0]);
-            });
+            };
         }
     };
 }])

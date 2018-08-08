@@ -7,11 +7,11 @@ function ($scope, $http, $q, AjaxService) {
     var vm = this;
     $scope.importf = importf;
     vm.Do = Do;
-    vm.FileData = { header: { header: "A" }, sheetNum: 1 };
+    //vm.FileData = { header: { header: "A" }, sheetNum: 1 };
 
     function Do() {
-        vm.List = angular.copy( vm.FileData.data[0]);
-        console.log(vm.List)
+        $scope.List = angular.copy(vm.FileData.data[0]);
+        console.log($scope.List)
     }
     /*
     FileReader共有4种读取方法：
@@ -26,10 +26,10 @@ function ($scope, $http, $q, AjaxService) {
         if (!obj.files) {
             return;
         }
-        vm.List = [];
+        $scope.List = [];
        
         vm.promise = ToJson(obj.files[0]).then(function (data) {
-            vm.List = data;
+            $scope.List = data;
         });
     }
 
