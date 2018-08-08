@@ -173,6 +173,10 @@
     <Content Include="MESFun\BindingCode.js" />
     <Content Include="MESFun\GenerateSn.html" />
     <Content Include="MESFun\GenerateSn.js" />
+    <Content Include="PLMFun\ItemMaster.html" />
+    <Content Include="PLMFun\ItemMaster.js" />
+    <Content Include="PLMFun\ItemMasterDialog.html" />
+    <Content Include="PLMFun\ItemMasterDialog.js" />
     <Content Include="Scripts\angular-ui\angular-toggle-switch.js" />
     <Content Include="Scripts\angular-ui\bootstrap-switch.js" />
     <Content Include="Scripts\angular-ui\bootstrap-switch.min.js" />

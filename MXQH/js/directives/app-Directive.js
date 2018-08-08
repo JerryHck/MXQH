@@ -269,7 +269,7 @@ angular.module('app')
                 //取服务器获取新数据
                 if (scope.data.length === 0) {
                     scope.data = undefined;
-                    AjaxService.GetDbeObject(scope.obConnect, scope.obType, ser).then(function (data) {
+                    AjaxService.GetDbObject(scope.obConnect, scope.obType, ser).then(function (data) {
                         scope.data = data.data;
                     });
                 }
