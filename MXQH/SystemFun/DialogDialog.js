@@ -53,7 +53,8 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, AjaxService, $rootS
 
     function isExists(name) {
         var en = {};
-        en.name = name;
+        en.name = "name";
+        en.value = name
         AjaxService.GetPlan("Dialog", en).then(function (data) {
             vm.DialogForm.name.$setValidity('unique', !data.name);
         });

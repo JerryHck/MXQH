@@ -7,3 +7,13 @@
         </span>
     </div>
 </div>
+<div class="col-md-12 progress progress-sm m-b-none m-t-xs" ng-if="Progress>0">
+    <div class="progress-bar bg-info" role="progressbar" ng-style="{ 'width': Progress + '%' }"></div>
+</div>
+<div class="progress">
+    <div class="progress-bar progress-bar-success" role="progressbar"
+         aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+         ng-style="{ 'width': Progress + '%' }">
+        <span class="sr-only">90% 完成（成功）</span>
+    </div>
+</div>

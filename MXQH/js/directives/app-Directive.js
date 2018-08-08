@@ -447,28 +447,48 @@ angular.module('app')
             op.sheetNum = op.sheetNum || 1;
 
             $scope.Open = function (e) {
-                //console.log(e)
-                e.target.parentNode.parentElement.firstElementChild.click()
+                e.target.parentNode.parentElement.firstElementChild.click();
+                console.log(e.target.parentNode)
+
             }
             var fileInput = elm[0].firstElementChild.firstElementChild.firstElementChild;
-            //var fileInput = elm[0].firstElementChild.firstElementChild.getElementsByClassName("fileType");
-            //fileInput.on('change', function () {
-            //    scope.$apply(function () {
-            //        $scope.doStuff();
-            //    });
-            //});
-
+            //事件添加
             fileInput.onchange = function (changeEvent) {
                 if (!changeEvent.target.files || changeEvent.target.files.length == 0)
                 {
                     return;
                 }
+                var file = changeEvent.target.files[0];
                 var reader = new FileReader();
+
+                reader.onloadstart = function (e) {
+                };
+
+                var loaded = 0;
+               
+                var TotalSize = file.size;
+
+                reader.onprogress = function (e) {
+                    //var me = h;
+                    loaded += e.loaded;
+                    //更新进度条
+                    $scope.$apply(function () {
+                        $scope.Progress =(loaded / TotalSize) * 100;
+                    });
+                },
+
+                reader.onloadend = function (e) {
+                    setTimeout(function () {
+                        $scope.$apply(function () {
+                            $scope.Progress = 0;
+                        });
+                    }, 1000);
+                }
+
                 reader.onload = function (e) {
                     /* read workbook */
                     var bstr = e.target.result;
                     var wb = XLSX.read(bstr, { type: 'binary' });
-                    
                     var Data = [];
                     for (var i = 0; i < op.sheetNum; i++) {
                         var wsname = wb.SheetNames[i];
@@ -478,13 +498,14 @@ angular.module('app')
                     }
                     /* update scope */
                     $scope.$apply(function () {
+                        $scope.fileName = file.name;
                         $scope.opts.data = Data;
                         $scope.ngComplete();
-                        $scope.fileName = changeEvent.target.files[0].name;
                     });
                 };
-                reader.readAsBinaryString(changeEvent.target.files[0]);
+                reader.readAsBinaryString(file);
             };
+
         }
     };
 }])
