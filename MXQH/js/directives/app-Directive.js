@@ -434,24 +434,34 @@ angular.module('app')
     }
 }])
 //文件导入
-.directive('importSheetJs', ['$http', 'AjaxService', function (AjaxService) {
+.directive('importSheetJs', ['$q', 'AjaxService', 'toastr', function ($q, AjaxService, toastr) {
     return {
         restrict: 'A',
-        scope: { opts: '=', ngComplete: '&' },
+        //require:'ngModel',
+        scope: {
+            isImport:'@',
+            opts: '=',
+            ngComplete: '&'
+        },
         templateUrl: 'js/directives/ImportSheetJs.html',
 
         link: function ($scope, elm) {
-
             $scope.opts = $scope.opts || {};
+            $scope.isImport = $scope.isImport || 'false';
+            $scope.ngModel = $scope.ngModel || '';
             var op = $scope.opts;
             op.sheetNum = op.sheetNum || 1;
+           
 
             $scope.Open = function (e) {
                 e.target.parentNode.parentElement.firstElementChild.click();
-                console.log(e.target.parentNode)
+                
 
             }
+            console.log(elm)
+
             var fileInput = elm[0].firstElementChild.firstElementChild.firstElementChild;
+            var circle = elm[0].firstElementChild.firstElementChild.lastElementChild;
             //事件添加
             fileInput.onchange = function (changeEvent) {
                 if (!changeEvent.target.files || changeEvent.target.files.length == 0)
@@ -459,36 +469,11 @@ angular.module('app')
                     return;
                 }
                 var file = changeEvent.target.files[0];
-                var reader = new FileReader();
+                $scope.ngModel = file.name;
 
-                reader.onloadstart = function (e) {
-                };
-
-                var loaded = 0;
-               
-                var TotalSize = file.size;
-
-                reader.onprogress = function (e) {
-                    //var me = h;
-                    loaded += e.loaded;
-                    //更新进度条
-                    $scope.$apply(function () {
-                        $scope.Progress =(loaded / TotalSize) * 100;
-                    });
-                },
-
-                reader.onloadend = function (e) {
-                    setTimeout(function () {
-                        $scope.$apply(function () {
-                            $scope.Progress = 0;
-                        });
-                    }, 1000);
-                }
-
-                reader.onload = function (e) {
+                getFileReaderPromise(changeEvent.target.files[0]).then(function (data) {
                     /* read workbook */
-                    var bstr = e.target.result;
-                    var wb = XLSX.read(bstr, { type: 'binary' });
+                    var wb = XLSX.read(data, { type: 'binary' });
                     var Data = [];
                     for (var i = 0; i < op.sheetNum; i++) {
                         var wsname = wb.SheetNames[i];
@@ -496,15 +481,70 @@ angular.module('app')
                         var aoa = XLSX.utils.sheet_to_json(ws, op.header);
                         Data.push(aoa);
                     }
-                    /* update scope */
-                    $scope.$apply(function () {
-                        $scope.fileName = file.name;
-                        $scope.opts.data = Data;
-                        $scope.ngComplete();
-                    });
-                };
-                reader.readAsBinaryString(file);
+                    $scope.opts.data = Data;
+                    $scope.ngComplete();
+                    $scope.Progress = 0;
+                })
             };
+
+            console.log($(circle))
+            console.log($(".circleChart#0"))
+
+            $(circle).circleChart({
+                size: 20,
+                value: 1,
+            });
+            //setInterval(function () {
+            //    $(circle).circleChart({
+            //        value: Math.random() * 100
+            //    });
+            //}, 1000);
+
+
+            //$scope.$apply(function () {
+            //    $scope.Progress = (i * 100 / total).toFixed(2);
+            //}); 
+
+            function getFileReaderPromise(file) {
+                return $q(function (resolve, reject) {
+                    var reader = new FileReader();
+                    var inter, total =  (file.size / (1024*128)).toFixed(0), i = 0;
+                    reader.onloadstart = function (e) {};
+                    var TotalSize = file.size;
+                    reader.onprogress = function (e) {
+                        $scope.Progress = 10;
+                        //var me = h;
+                        inter = setInterval(function () {
+                            if (parseFloat(i) > parseFloat(total)) {
+                                setTimeout(function () {
+                                    clearInterval(inter);
+                                    resolve(reader.result);
+                                    $scope.Progress = 0;
+                                }, 1500)
+                            }
+                            else {
+                                $(circle).circleChart({
+                                    size: 20,
+                                    value: (i * 100 / total).toFixed(2)
+                                });
+                            }
+                            i++;
+                        }, 50);
+
+                    },
+
+                    reader.onloadend = function (e) { }
+
+                    reader.onload = function (e) {                       
+                    };                    
+
+                    reader.onerror = function (err) {
+                        reject(err);
+                    }
+                    //reader.readAsDataURL(file);
+                    reader.readAsBinaryString(file);
+                });
+            }
 
         }
     };

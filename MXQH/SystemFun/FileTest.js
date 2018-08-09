@@ -11,7 +11,7 @@ function ($scope, $http, $q, AjaxService) {
 
     function Do() {
         vm.List = angular.copy(vm.FileData.data[0]);
-        //console.log($scope.List)
+        console.log(vm.List)
     }
     /*
     FileReader共有4种读取方法：
@@ -34,3 +34,7 @@ function ($scope, $http, $q, AjaxService) {
     }
 }
 ]);
+
+
+//events事件回调对象包含
+//success,load,progressvar

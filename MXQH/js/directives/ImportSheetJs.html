@@ -1,19 +1,20 @@
-﻿<div class="form-group col-md-12 has-feedback">
+﻿<div class="form-group col-md-12 has-feedback m-b-none">
     <div class="col-md-12 input-group">
         <input type="file" class="fileType" style="display:none">
-        <input class="form-control" type="text" ng-model="fileName">
-        <span class="input-group-addon text-success" ng-click="Open($event)" style="cursor: pointer; background-color: #e7e7e7">
+        <input class="form-control" type="text" ng-show="isImport == 'false'" ng-model="ngModel" ng-if="isImport=='false'">
+        <span class="input-group-addon " ng-click="Open($event)" style="cursor: pointer; background-color: #e7e7e7">
             <i class="fa fa-folder-open">浏览</i>
         </span>
+        <span class="input-group-addon circleChart" ng-if="Progress > 0"></span>{{ Progress }}
     </div>
 </div>
-<div class="col-md-12 progress progress-sm m-b-none m-t-xs" ng-if="Progress>0">
-    <div class="progress-bar bg-info" role="progressbar" ng-style="{ 'width': Progress + '%' }"></div>
-</div>
-<div class="progress">
-    <div class="progress-bar progress-bar-success" role="progressbar"
+<!--<div class="form-group-sm col-md-12 progress progress-striped progress-xs m-t-none" ng-if="Progress>0">
+    <div class="progress-bar progress-bar-success " role="progressbar"
          aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
          ng-style="{ 'width': Progress + '%' }">
-        <span class="sr-only">90% 完成（成功）</span>
+        <span>{{ Progress }}%</span>
     </div>
-</div>
+</div>-->
+<!--<div class="col-md-12">
+    <div class="circleChart" id="0"></div>
+</div>-->
