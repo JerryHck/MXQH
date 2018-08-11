@@ -434,7 +434,7 @@ angular.module('app')
     }
 }])
 //文件导入
-.directive('importSheetJs', ['$q', 'AjaxService', 'toastr', function ($q, AjaxService, toastr) {
+.directive('importSheetJs', ['$q', 'AjaxService', 'toastr', 'FileLoad', function ($q, AjaxService, toastr, FileLoad) {
     return {
         restrict: 'A',
         //require:'ngModel',
@@ -455,13 +455,15 @@ angular.module('app')
 
             $scope.Open = function (e) {
                 e.target.parentNode.parentElement.firstElementChild.click();
-                
-
             }
-            console.log(elm)
-
             var fileInput = elm[0].firstElementChild.firstElementChild.firstElementChild;
-            var circle = elm[0].firstElementChild.firstElementChild.lastElementChild;
+            var circle = elm[0].lastElementChild;
+
+            $(circle).circleChart({
+                size: 20,
+                value: 1,
+            });
+
             //事件添加
             fileInput.onchange = function (changeEvent) {
                 if (!changeEvent.target.files || changeEvent.target.files.length == 0)
@@ -470,30 +472,49 @@ angular.module('app')
                 }
                 var file = changeEvent.target.files[0];
                 $scope.ngModel = file.name;
+                var option = {};
+                option.file = file;
+                option.onProcent = function process(pro) {
+                    $(circle).circleChart({
+                        size: 20,
+                        value: pro||1,
+                    });
+                };
+                option.onComplete = function (data) {
+                    console.log(data.length);
+                    //var wb = XLSX.read(data, { type: 'binary' });
+                    //var Data = [];
+                    //for (var i = 0; i < op.sheetNum; i++) {
+                    //    var wsname = wb.SheetNames[i];
+                    //    var ws = wb.Sheets[wsname];
+                    //    var aoa = XLSX.utils.sheet_to_json(ws, op.header);
+                    //    Data.push(aoa);
+                    //}
+                    //$scope.opts.data = Data;
+                    //$scope.ngComplete();
+                    //$scope.Progress = 0;
+                };
+                FileLoad.Load(option);
 
-                getFileReaderPromise(changeEvent.target.files[0]).then(function (data) {
-                    /* read workbook */
-                    var wb = XLSX.read(data, { type: 'binary' });
-                    var Data = [];
-                    for (var i = 0; i < op.sheetNum; i++) {
-                        var wsname = wb.SheetNames[i];
-                        var ws = wb.Sheets[wsname];
-                        var aoa = XLSX.utils.sheet_to_json(ws, op.header);
-                        Data.push(aoa);
-                    }
-                    $scope.opts.data = Data;
-                    $scope.ngComplete();
-                    $scope.Progress = 0;
-                })
+                //getFileReaderPromise(changeEvent.target.files[0]).then(function (data) {
+                //    console.log(data.length);
+                //    console.log(2);
+                //    ///* read workbook */
+                //    //var wb = XLSX.read(data, { type: 'binary' });
+                //    //var Data = [];
+                //    //for (var i = 0; i < op.sheetNum; i++) {
+                //    //    var wsname = wb.SheetNames[i];
+                //    //    var ws = wb.Sheets[wsname];
+                //    //    var aoa = XLSX.utils.sheet_to_json(ws, op.header);
+                //    //    Data.push(aoa);
+                //    //}
+                //    //$scope.opts.data = Data;
+                //    //$scope.ngComplete();
+                //    //$scope.Progress = 0;
+                //})
             };
 
-            console.log($(circle))
-            console.log($(".circleChart#0"))
-
-            $(circle).circleChart({
-                size: 20,
-                value: 1,
-            });
+           
             //setInterval(function () {
             //    $(circle).circleChart({
             //        value: Math.random() * 100
@@ -545,7 +566,6 @@ angular.module('app')
                     reader.readAsBinaryString(file);
                 });
             }
-
         }
     };
 }])

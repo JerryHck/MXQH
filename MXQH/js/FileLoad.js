@@ -1,45 +1,96 @@
 ﻿'use strict'
-angular.module('app').factory('FileLoad', ['$rootScope', '$ocLazyLoad', '$uibModal', '$q', 'AjaxService', 'Version',
-function ($rootScope, $ocLazyLoad, $uibModal, $q, AjaxService, Version) {
-    var obj = {
-        //開啟
-        open: open
+angular.module('app').factory('FileLoad', ['$rootScope', '$q', 'AjaxService',
+function ($rootScope, $q, AjaxService) {
+
+    var h = {
+        Load: function (option) {
+            var me = h;
+            me.precetMethod = option.onProcent;
+            me.type = option.type || 'binary';//binary,buffer,url,text
+            me.onComplete = option.onComplete;
+            //每次读取128k
+            me.step = 1024 * 1024;
+            me.loaded = 0;
+            me.times = 0;
+            me.result = '';
+            
+            var d = $q.defer();
+            var file = me.file = option.file;
+            var reader = me.reader = new FileReader();
+            //
+            me.total = file.size;
+
+            reader.onloadstart = me.onLoadStart;
+            reader.onprogress = me.onProgress;
+            reader.onabort = me.onAbort;
+            reader.onerror = me.onerror;
+            reader.onload = me.onLoad;
+            reader.onloadend = me.onLoadEnd;
+            //读取第一块
+            me.readBlob(file, 0);
+        },
+        onLoadStart: function () {
+            var me = h;
+        },
+        onProgress: function (e) {
+            var me = h;
+            me.loaded += e.loaded;
+            if (me.precetMethod) {
+                me.precetMethod((me.loaded / me.total) * 100);
+            }
+        },
+        onAbort: function () {
+            var me = h;
+        },
+        onError: function () {
+            var me = h;
+        },
+        onLoad: function (e) {
+            var me = h;
+            console.log(me.result.length + "   + " + e.target.result.length)
+            me.result = me.result + e.target.result;
+            console.log(me.result.length);
+            console.log(me.loaded);
+            if (me.loaded < me.total) {
+                console.log(1)
+                me.readBlob(me.loaded);
+            } else {
+                me.loaded = me.total;
+                console.log(2)
+                if (me.onComplete) {
+                    me.onComplete(me.result);
+                }
+            }
+            //console.log(me.result.length);
+        },
+        onLoadEnd: function () {
+            var me = h;
+        },
+        readBlob: function (start) {
+            var me = h;
+            var blob, file = me.file;
+            me.times += 1;
+            if (file.slice) {
+                blob = file.slice(start, (start + me.step + 1));
+            } else {
+                blob = file;
+            }
+
+            switch (me.type) {
+                case 'binary': me.reader.readAsBinaryString(blob); break;
+                case 'buffer': me.reader.readAsArrayBuffer(blob); break;
+                case 'url': me.reader.readAsDataURL(blob); break;
+                case 'text': me.reader.readAsText(blob); break;
+            }
+        },
+        abortHandler: function () {
+            var me = h;
+            if (me.reader) {
+                me.reader.abort();
+            }
+        }
     };
 
-    return obj;
-
-    //開啟
-    function open(name, resolve, option) {
-        var d = $q.defer();
-        var
-            dialog = $.grep($rootScope.DialogData, function (e) { return e.name == name; })[0],
-            config = angular.extend({
-                templateUrl: dialog.templateUrl + "?v=" + Version,
-                controller: dialog.controller,
-                backdrop: dialog.backdrop || 'static',
-                size: dialog.size
-            }, option || {});
-
-        if (dialog.controllerAs) {
-            config.controllerAs = dialog.controllerAs;
-        }
-
-        if (dialog.keyboard && config.keyboard == undefined) {
-            config.keyboard = dialog.keyboard == 'true';
-        }
-
-        config.resolve = resolve;
-        if (dialog.LoadFiles) {
-            var loadList = [];
-            for (var i = 0, len = dialog.LoadFiles.length; i < len; i++) {
-                loadList.push(dialog.LoadFiles[i].LoadName + "?v=" + Version);
-            }
-            $ocLazyLoad.load(loadList).then(function () {
-                d.resolve($uibModal.open(config).result);
-            });
-        }
-        return d.promise;
-    }
+    return h;
 }
-
 ])
