@@ -7,12 +7,19 @@ function ($scope, $http, $q, AjaxService) {
     var vm = this;
     $scope.importf = importf;
     vm.Do = Do;
+    vm.Do2 = Do2;
     //vm.FileData = { header: { header: "A" }, sheetNum: 1 };
 
     function Do() {
         vm.List = angular.copy(vm.FileData.data[0]);
         console.log(vm.List)
     }
+
+    function Do2() {
+        vm.List2 = angular.copy(vm.FileData2.data[0]);
+        console.log(vm.List2)
+    }
+
     /*
     FileReader共有4种读取方法：
     1.readAsArrayBuffer(file)：将文件读取为ArrayBuffer。

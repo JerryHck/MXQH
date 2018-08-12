@@ -434,16 +434,17 @@ angular.module('app')
     }
 }])
 //文件导入
-.directive('importSheetJs', ['$q', 'AjaxService', 'toastr', 'FileLoad', function ($q, AjaxService, toastr, FileLoad) {
+.directive('importSheetJs', ['$q', 'AjaxService', 'toastr', 'FileLoad', 'ToJsonWorker',
+    function ($q, AjaxService, toastr, FileLoad, ToJsonWorker) {
     return {
         restrict: 'A',
         //require:'ngModel',
         scope: {
-            isImport:'@',
+            isImport: '@',
             opts: '=',
             ngComplete: '&'
         },
-        templateUrl: 'js/directives/ImportSheetJs.html',
+        templateUrl: 'js/directives/ImportSheetJs.html?v='+(new Date()),
 
         link: function ($scope, elm) {
             $scope.opts = $scope.opts || {};
@@ -451,7 +452,7 @@ angular.module('app')
             $scope.ngModel = $scope.ngModel || '';
             var op = $scope.opts;
             op.sheetNum = op.sheetNum || 1;
-           
+
 
             $scope.Open = function (e) {
                 e.target.parentNode.parentElement.firstElementChild.click();
@@ -459,114 +460,90 @@ angular.module('app')
             var fileInput = elm[0].firstElementChild.firstElementChild.firstElementChild;
             var circle = elm[0].lastElementChild;
 
-            $(circle).circleChart({
-                size: 20,
-                value: 1,
-            });
 
             //事件添加
             fileInput.onchange = function (changeEvent) {
-                if (!changeEvent.target.files || changeEvent.target.files.length == 0)
-                {
+
+                //$(circle).circleChart({
+                //    size: 20,
+                //    value: 1,
+                //});
+
+                if (!changeEvent.target.files || changeEvent.target.files.length == 0) {
                     return;
                 }
                 var file = changeEvent.target.files[0];
-                $scope.ngModel = file.name;
+                /* update scope */
+                $scope.$apply(function () {
+                    $scope.ngModel = file.name;
+                    $scope.Progress = 0;
+                });
                 var option = {};
                 option.file = file;
+                //option.type = 'text';
                 option.onProcent = function process(pro) {
-                    $(circle).circleChart({
-                        size: 20,
-                        value: pro||1,
-                    });
+                    var d = $q.defer();
+                    setTimeout(function () {
+                        //$(circle).circleChart({
+                        //    size: 20,
+                        //    value: pro || 1,
+                        //});
+                        $scope.$apply(function () {
+                            $scope.Progress = pro;
+                        });
+                    },1000);
+                    d.resolve('');
+                    return d.promise;
                 };
                 option.onComplete = function (data) {
-                    console.log(data.length);
-                    //var wb = XLSX.read(data, { type: 'binary' });
-                    //var Data = [];
-                    //for (var i = 0; i < op.sheetNum; i++) {
-                    //    var wsname = wb.SheetNames[i];
-                    //    var ws = wb.Sheets[wsname];
-                    //    var aoa = XLSX.utils.sheet_to_json(ws, op.header);
-                    //    Data.push(aoa);
-                    //}
-                    //$scope.opts.data = Data;
-                    //$scope.ngComplete();
-                    //$scope.Progress = 0;
+                    ToJsonWorker.onmessage = function (evt) {
+                        $scope.$apply(function () {
+                            $scope.opts.data = evt.data;
+                            $scope.ngComplete();
+                            $scope.Progress = 0;
+                        });
+                    };
+                    ToJsonWorker.postMessage({ data: data, op: op });
+                    //var d = $q.defer();
+                    //setTimeout(function () {
+                    //    ToJson(data);
+                    //    //ToJson(data).then(function (data2) {
+                    //    //        $scope.opts.data = data2;
+                    //    //        $scope.ngComplete();
+                    //    //        $scope.Progress = 0;
+                    //    //})
+                    //}, 500);
+                    //return d.promise;
+
+                    //var sheet = {};
+                    //sheet.ColumnsName = ["生成条码", "客户SN码", "模块二维码", "绑定时间"]
+                    //sheet.FirstColunms = false;
+                    //AjaxService.FileImport('', '', '', file, data, sheet).then(function (data2) {
+                    //    console.log(data2)
+                    //})
+                    //ToJson(data);
                 };
                 FileLoad.Load(option);
+            }
 
-                //getFileReaderPromise(changeEvent.target.files[0]).then(function (data) {
-                //    console.log(data.length);
-                //    console.log(2);
-                //    ///* read workbook */
-                //    //var wb = XLSX.read(data, { type: 'binary' });
-                //    //var Data = [];
-                //    //for (var i = 0; i < op.sheetNum; i++) {
-                //    //    var wsname = wb.SheetNames[i];
-                //    //    var ws = wb.Sheets[wsname];
-                //    //    var aoa = XLSX.utils.sheet_to_json(ws, op.header);
-                //    //    Data.push(aoa);
-                //    //}
-                //    //$scope.opts.data = Data;
-                //    //$scope.ngComplete();
-                //    //$scope.Progress = 0;
-                //})
-            };
-
-           
-            //setInterval(function () {
-            //    $(circle).circleChart({
-            //        value: Math.random() * 100
-            //    });
-            //}, 1000);
-
-
-            //$scope.$apply(function () {
-            //    $scope.Progress = (i * 100 / total).toFixed(2);
-            //}); 
-
-            function getFileReaderPromise(file) {
-                return $q(function (resolve, reject) {
-                    var reader = new FileReader();
-                    var inter, total =  (file.size / (1024*128)).toFixed(0), i = 0;
-                    reader.onloadstart = function (e) {};
-                    var TotalSize = file.size;
-                    reader.onprogress = function (e) {
-                        $scope.Progress = 10;
-                        //var me = h;
-                        inter = setInterval(function () {
-                            if (parseFloat(i) > parseFloat(total)) {
-                                setTimeout(function () {
-                                    clearInterval(inter);
-                                    resolve(reader.result);
-                                    $scope.Progress = 0;
-                                }, 1500)
-                            }
-                            else {
-                                $(circle).circleChart({
-                                    size: 20,
-                                    value: (i * 100 / total).toFixed(2)
-                                });
-                            }
-                            i++;
-                        }, 50);
-
-                    },
-
-                    reader.onloadend = function (e) { }
-
-                    reader.onload = function (e) {                       
-                    };                    
-
-                    reader.onerror = function (err) {
-                        reject(err);
-                    }
-                    //reader.readAsDataURL(file);
-                    reader.readAsBinaryString(file);
-                });
+            function ToJson (data){
+                //var d = $q.defer();
+                //console.log(data.length);
+                var wb = XLSX.read(data, { type: 'binary' });
+                var Data = [];
+                for (var i = 0; i < op.sheetNum; i++) {
+                    var wsname = wb.SheetNames[i];
+                    var ws = wb.Sheets[wsname];
+                    var aoa = XLSX.utils.sheet_to_json(ws, op.header);
+                    Data.push(aoa);
+                }
+                $scope.opts.data = Data;
+                $scope.ngComplete();
+                //$scope.Progress = 0;
+                //d.resolve(Data);
+                //return d.promise;
             }
         }
-    };
+    }
 }])
 

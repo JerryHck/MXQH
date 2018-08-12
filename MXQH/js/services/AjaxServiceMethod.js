@@ -54,7 +54,9 @@
             //User
             AddUser: AddUser,
             Login: Login,
-            LoginAction:LoginAction,
+            LoginAction: LoginAction,
+            //file
+            FileImport: FileImport
         };
 
         return obj;
@@ -303,6 +305,18 @@
                 });
             }
             return d.promise;
+        }
+
+        function FileImport(name, shortName, json, file, inData, sheetTable) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = {};
+            en.planName = name;
+            en.shortName = shortName;
+            en.strJson = JSON.stringify(json);
+            en.filaName = file;
+            en.bt = inData;
+            en.sheetTable = JSON.stringify(convertArray(sheetTable));
+            return Ajax(d, url, en, 'FileImport');
         }
 
         //HTTP AJAX

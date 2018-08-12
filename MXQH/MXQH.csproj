@@ -158,6 +158,7 @@
     <Content Include="js\Dialog.js" />
     <Content Include="js\directives\app-Directive.js" />
     <Content Include="js\directives\ImportSheetJs.html" />
+    <Content Include="js\FileLoad.js" />
     <Content Include="js\filters\app-filter.js" />
     <Content Include="js\Router.js" />
     <Content Include="js\services\AjaxServiceMethod.js" />
