@@ -172,10 +172,14 @@
     <Content Include="Loading\Loading.html" />
     <Content Include="login.html" />
     <Content Include="Login.js" />
+    <Content Include="MESFun\AteData.html" />
+    <Content Include="MESFun\AteData.js" />
     <Content Include="MESFun\BindingCode.html" />
     <Content Include="MESFun\BindingCode.js" />
     <Content Include="MESFun\GenerateSn.html" />
     <Content Include="MESFun\GenerateSn.js" />
+    <Content Include="MESFun\InCodeDelete.html" />
+    <Content Include="MESFun\InCodeDelete.js" />
     <Content Include="PLMFun\ItemMaster.html" />
     <Content Include="PLMFun\ItemMaster.js" />
     <Content Include="PLMFun\ItemMasterDialog.html" />
@@ -362,6 +366,8 @@
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="SystemFun\AddDialog.js" />
     <Content Include="SystemFun\AddDialog.html" />
+    <Content Include="SystemFun\ChangePswDialog.html" />
+    <Content Include="SystemFun\ChangePswDialog.js" />
     <Content Include="SystemFun\CreateEntity.html" />
     <Content Include="SystemFun\CreateEntity.js" />
     <Content Include="SystemFun\DialogDialog.html" />
