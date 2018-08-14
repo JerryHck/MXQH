@@ -27,6 +27,8 @@ angular.module('appData')
     minDuration: 500,
     notBusyDisabled: true
 })
+.constant('ToJsonWorker', new Worker("js/directives/ToJson.js"))
+
 .factory('templateUrl', ['$rootScope', 'appUrl', function ($rootScope, appUrl) {
     return {
         get: function (system) {

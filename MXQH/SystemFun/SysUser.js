@@ -17,25 +17,12 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
     vm.CancelEmp = CancelEmp;
     //保存员工信息
     vm.SaveEmp = SaveEmp;
-    //选择角色
-    vm.SelectRole = SelectRole;
-    //新增角色
-    vm.InsertRole = InsertRole;
-    //编辑角色
-    vm.EditRole = EditRole;
-    //删除角色
-    vm.DeleteRole = DeleteRole;
     //新增用户角色
     vm.InsertUserRole = InsertUserRole;
     //新增用户角色-选择角色改变
     vm.SelectUserRole = SelectUserRole;
     //删除用户角色
     vm.DeleteUserRole = DeleteUserRole;
-    //新增角色功能
-    vm.InsertRoleFun = InsertRoleFun;
-    //更新角色功能
-    vm.UpdateRoleFun = UpdateRoleFun;
-    vm.DeleteRoleFun = DeleteRoleFun;
 
     vm.ConfigSex = { Table: "BasicData", Column: "Sex" };
 
@@ -106,52 +93,11 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
         });
     }
 
-    function SelectRole(item) {
-        vm.SelectedRole = item;
-        getListRoleFun();
-    }
-
-    function InsertRole() {
-        var resolve = {
-            ItemData: function () {
-                return {};
-            }
-        };
-        OpenRole("I", resolve);
-    }
-
-    function EditRole(role) {
-        var resolve = {
-            ItemData: function () {
-                return role;
-            }
-        };
-        OpenRole("U", resolve);
-    }
-
-    function DeleteRole(role) {
-        MyPop.Confirm({ text: "确定要删除该角色吗" }, function () {
-            var en = {};
-            en.RoleSn = role.RoleSn;
-            vm.promise = AjaxService.PlanDelete("Role", en).then(function (data) {
-                toastr.success('删除成功');
-                getListRole();
-            });
-        });
-    }
-
-    function OpenRole(type, resolve) {
-        Dialog.open("RoleDialog", resolve).then(function (data) {
-            getListRole();
-        }).catch(function (reason) {
-        });
-    }
-
     function InsertUserRole() {
         var en = {};
         en.UserNo = vm.SelectedUser.UserNo;
         en.RoleSn = vm.newUserRole;
-        en.CreateBy = "SYS";
+        en.CreateBy = $rootScope.User.Emp.EmpNo;
         vm.promise = AjaxService.PlanInsert("UserRole", en).then(function (data) {
             toastr.success('新增成功');
             getListUserRole();
@@ -171,6 +117,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
             if (vm.UserHaveRole[i].RoleSn == vm.newUserRole) {
                 toastr.error('角色已经添加，请选择其他角色！');
                 vm.newUserRole = undefined;
+                break
             }
         }
     }
@@ -179,36 +126,6 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
         vm.promise = AjaxService.PlanDelete("UserRole", ur).then(function (data) {
             toastr.success('移除成功');
             getListUserRole();
-        });
-    }
-
-    function getListRoleFun() {
-        var en = { name: "RoleSn", value: vm.SelectedRole.RoleSn };
-        AjaxService.GetPlans("RoleFun", en).then(function (data) {
-            vm.RoleHaveFun = data;
-        });
-    }
-
-    function InsertRoleFun() {
-        var en = {};
-        en.RoleSn = vm.SelectedRole.RoleSn;
-        en.FunNo = vm.NewRoleFun;
-        en.CreateBy = "SYS";
-        vm.promise = AjaxService.PlanInsert("RoleFun", en).then(function (data) {
-            toastr.success('新增成功');
-            getListRoleFun();
-        });
-    }
-
-    function UpdateRoleFun(rf) {
-        AjaxService.PlanUpdate("RoleFun", rf).then(function (data) {
-        });
-    }
-
-    function DeleteRoleFun(rf) {
-        AjaxService.PlanDelete("RoleFun", rf).then(function (data) {
-            toastr.success('删除成功');
-            getListRoleFun();
         });
     }
 }

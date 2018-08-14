@@ -54,7 +54,9 @@
             //User
             AddUser: AddUser,
             Login: Login,
-            LoginAction:LoginAction,
+            LoginAction: LoginAction,
+            //file
+            FileImport: FileImport
         };
 
         return obj;
@@ -264,9 +266,9 @@
             return httpFun(d, url, en)
         }
 
-        function LoginAction(method) {
+        function LoginAction(method, en) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
+            en = en || {};
             return Ajax(d, url, en, method, undefined, 'Authorization');
         }
 
@@ -303,6 +305,18 @@
                 });
             }
             return d.promise;
+        }
+
+        function FileImport(name, shortName, json, file, inData, sheetTable) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = {};
+            en.planName = name;
+            en.shortName = shortName;
+            en.strJson = JSON.stringify(json);
+            en.filaName = file;
+            en.bt = inData;
+            en.sheetTable = JSON.stringify(convertArray(sheetTable));
+            return Ajax(d, url, en, 'FileImport');
         }
 
         //HTTP AJAX
@@ -344,8 +358,8 @@
                         }
                     } else {
                         console.log(data);
-                        var m = data.data ? data.data.split("。")[0] : "错误";
-                        toastr.error(m, '服务访问错误')
+                        var m = data.data ? data.data.split("。")[0].replace(/System.Exception:/, '') : "错误";
+                        toastr.error(m, '服务错误')
                     }
                 });
             return q.promise;

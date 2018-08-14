@@ -3,8 +3,8 @@
 /* Controllers */
 
 angular.module('app')
-  .controller('AppCtrl', ['$scope', '$localStorage', '$window', 'AjaxService', '$state', '$rootScope', '$cookieStore', 'appUrl', 
-    function ($scope, $localStorage, $window, AjaxService, $state, $rootScope, $cookieStore, appUrl) {
+  .controller('AppCtrl', ['$scope', '$localStorage', '$window', 'AjaxService', '$state', '$rootScope', '$cookieStore', 'appUrl', 'Dialog',
+    function ($scope, $localStorage, $window, AjaxService, $state, $rootScope, $cookieStore, appUrl, Dialog) {
         // add 'ie' classes to html
         var isIE = !!navigator.userAgent.match(/MSIE/i);
         isIE && angular.element($window.document.body).addClass('ie');
@@ -15,6 +15,7 @@ angular.module('app')
         vm.FunctionList = [];
         //路由状态改变
         vm.Go = Go;
+        vm.ChangPsw = ChangPsw;
         vm.LogOff = LogOff;
 
         // config
@@ -84,6 +85,18 @@ angular.module('app')
 
         function Go(routeName) {
             $state.go(routeName);
+        }
+
+        function ChangPsw() {
+            var resolve = {
+                ItemData: function () {
+                    return {};
+                }
+            };
+            Dialog.open("ChangePswDialog", resolve).then(function (data) {
+                getListRole();
+            }).catch(function (reason) {
+            });
         }
 
         function LogOff() {

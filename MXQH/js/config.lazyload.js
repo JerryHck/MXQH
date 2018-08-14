@@ -62,6 +62,13 @@ angular.module('app')
                   ]
               },
               {
+                  name: 'fileLoad',
+                  files: [
+                      'Scripts/SheetJs/xlsx.full.min.js',
+                      'Scripts/Concurrent.Thread/Concurrent.Thread.js',
+                  ]
+              },
+              {
                   name: 'ui.select',
                   files: [
                       'Scripts/select.min.js',
