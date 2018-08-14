@@ -158,11 +158,12 @@
     <Content Include="js\Dialog.js" />
     <Content Include="js\directives\app-Directive.js" />
     <Content Include="js\directives\ImportSheetJs.html" />
-    <Content Include="js\FileLoad.js" />
+    <Content Include="js\directives\ToJson.js" />
     <Content Include="js\filters\app-filter.js" />
     <Content Include="js\Router.js" />
     <Content Include="js\services\AjaxServiceMethod.js" />
     <Content Include="js\services\AjaxServiceModule.js" />
+    <Content Include="js\FileLoad.js" />
     <Content Include="l10n\cn.js" />
     <Content Include="Loading\finalfantasy.gif" />
     <Content Include="Loading\index.circle-slack-loading-icon.gif" />
@@ -224,6 +225,8 @@
     <Content Include="Scripts\bootstrap\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap\bootstrap.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\circleChart\circleChart.es5.min.js" />
+    <Content Include="Scripts\circleChart\circleChart.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -367,10 +370,12 @@
     <Content Include="SystemFun\FileTest.js" />
     <Content Include="SystemFun\IconDialog.html" />
     <Content Include="SystemFun\IconDialog.js" />
-    <Content Include="SystemFun\RoleDailog.html" />
-    <Content Include="SystemFun\RoleDailog.js" />
+    <Content Include="SystemFun\RoleDialog.html" />
+    <Content Include="SystemFun\RoleDialog.js" />
     <Content Include="SystemFun\SysFunction.html" />
     <Content Include="SystemFun\SysFunction.js" />
+    <Content Include="SystemFun\SysRole.html" />
+    <Content Include="SystemFun\SysRole.js" />
     <Content Include="SystemFun\SystemDialog.html" />
     <Content Include="SystemFun\SystemDialog.js" />
     <Content Include="SystemFun\System.html" />
@@ -526,10 +531,10 @@
     <Content Include="l10n\it_IT.js" />
     <Content Include="SystemFun\SysUser.html" />
     <Content Include="SystemFun\SysUser.js" />
-    <Content Include="SystemFun\UserDailog.html" />
-    <Content Include="SystemFun\UserDailog.js" />
-    <Content Include="SystemFun\UserRoleDailog.html" />
-    <Content Include="SystemFun\UserRoleDailog.js" />
+    <Content Include="SystemFun\UserDialog.html" />
+    <Content Include="SystemFun\UserDialog.js" />
+    <Content Include="SystemFun\UserRoleDialog.html" />
+    <Content Include="SystemFun\UserRoleDialog.js" />
     <Content Include="Template\UIAccordionTemplate.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
