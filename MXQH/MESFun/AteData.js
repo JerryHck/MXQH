@@ -1,11 +1,11 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('BindingCodeCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
+.controller('AteDataCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
 function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
-   
+
     var vm = this;
-    vm.NewBind = { Action: "I", CreateBy: $rootScope.User.Emp.ChiLastName + $rootScope.User.Emp.ChiFirstName, Customer:"D" };
+    vm.NewBind = { Action: "I", CreateBy: $rootScope.User.Emp.ChiLastName + $rootScope.User.Emp.ChiFirstName, Customer: "D" };
     vm.MesList = [];
     vm.Focus = 0;
     vm.page = { index: 1, size: 12 };
@@ -112,7 +112,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                     var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过生产条码[' + data2.InternalCode + "]" };
                     vm.MesList.splice(0, 0, Msg);
                 }
-                else if (vm.IsAuto){
+                else {
                     BindCode();
                 }
             })
