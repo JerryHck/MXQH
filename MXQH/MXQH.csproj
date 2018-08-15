@@ -178,8 +178,13 @@
     <Content Include="MESFun\BindingCode.js" />
     <Content Include="MESFun\GenerateSn.html" />
     <Content Include="MESFun\GenerateSn.js" />
+<<<<<<< HEAD
     <Content Include="MESFun\InCodeDelete.html" />
     <Content Include="MESFun\InCodeDelete.js" />
+=======
+    <Content Include="PLMFun\BOMEI.html" />
+    <Content Include="PLMFun\BOMEI.js" />
+>>>>>>> PLMFun
     <Content Include="PLMFun\ItemMaster.html" />
     <Content Include="PLMFun\ItemMaster.js" />
     <Content Include="PLMFun\ItemMasterDialog.html" />
@@ -266,6 +271,7 @@
     <Content Include="Content\font\fontawesome-webfont.ttf" />
     <Content Include="Content\font\fontawesome-webfont.woff" />
     <None Include="Properties\PublishProfiles\2.pubxml" />
+    <None Include="Properties\PublishProfiles\MXQH.pubxml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />

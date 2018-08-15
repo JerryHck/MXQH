@@ -1,0 +1,13 @@
+﻿<div cg-busy="bomei.promise">
+    <div class="row">
+        <div class="col-md-3 form-inline">
+            <div id="file1" import-sheet-js opts="bomei.FileData" ng-complete="bomei.Do()"></div>
+        </div>
+        <div class="col-md-4 form-inline">
+            <button class="btn btn-sm btn-success" ng-click="bomei.Import()"><i class="glyphicon glyphicon-import"></i>导入</button>
+            <button class="btn btn-sm btn-success" ng-click="bomei.Export()"><i class="glyphicon glyphicon-export"></i>导出</button>
+            <a class="btn-link text-danger" href="#">点击下载BOM导入模板</a>
+        </div>
+    </div>
+    <pre>{{ bomei.List | json }}</pre>
+</div>
