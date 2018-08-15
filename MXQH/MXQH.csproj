@@ -178,13 +178,10 @@
     <Content Include="MESFun\BindingCode.js" />
     <Content Include="MESFun\GenerateSn.html" />
     <Content Include="MESFun\GenerateSn.js" />
-<<<<<<< HEAD
     <Content Include="MESFun\InCodeDelete.html" />
     <Content Include="MESFun\InCodeDelete.js" />
-=======
     <Content Include="PLMFun\BOMEI.html" />
     <Content Include="PLMFun\BOMEI.js" />
->>>>>>> PLMFun
     <Content Include="PLMFun\ItemMaster.html" />
     <Content Include="PLMFun\ItemMaster.js" />
     <Content Include="PLMFun\ItemMasterDialog.html" />
