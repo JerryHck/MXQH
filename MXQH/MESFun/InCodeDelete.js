@@ -17,6 +17,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
     vm.SelectTab = SelectTab;
+   
 
     PageChange();
 
@@ -25,6 +26,8 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         PageChange()
     }
 
+    
+
     function PageChange() {
         var list = [];
         if (vm.Ser.InternalCode) {
@@ -32,6 +35,12 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         }
         if (vm.Ser.WorkOrder) {
             list.push({ name: "WorkOrder", value: vm.Ser.WorkOrder });
+        }
+        if (vm.Ser.StartDate) {
+            list.push({ name: "DeleteDate", value: vm.Ser.StartDate, type: ">=" });
+        }
+        if (vm.Ser.EndDate) {
+            list.push({ name: "DeleteDate", value: vm.Ser.EndDate, type: "<=" });
         }
         vm.promise = AjaxService.GetPlansPage("MESDeleteCode", list, vm.page.index, vm.page.size).then(function (data) {
             vm.DeleteList = data.List;
@@ -86,16 +95,11 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function ExportExcel() {
-        var en = {};
-        en.InternalCode = vm.Ser.InternalCode;
-        en.SNCode = vm.Ser.SNCode;
-        en.IDCode1 = vm.Ser.IDCode1;
-        en.Customer = "U";
         var sheet = {};
-        sheet.SheetName = "条码绑定列表";
-        sheet.ColumnsName = ["生成条码", "客户SN码", "模块二维码", "绑定时间"]
+        sheet.SheetName = "内部码解绑记录信息表";
+        sheet.ColumnsName = ["内部码", "原工单", "品名", "现工单", '现品名', '操作者', '操作日期', '备注']
         sheet.FirstColunms = false;
-        vm.promise = AjaxService.ExecPlanToExcel("BindCode", 'BindExcel', en, sheet).then(function (data) {
+        vm.promise = AjaxService.ExecPlanToExcel("MESDeleteCode", 'Excel', vm.Ser, sheet).then(function (data) {
             //console.log(data);
             $window.location.href = data.File;
         });

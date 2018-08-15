@@ -62,10 +62,30 @@
         <div class="wrapper-md">
             <div class="form-inline">
                 <div class="form-group">
-                    <input type="text" class="form-control" ui-focus="inCode.Focus == -1" ng-model="inCode.Ser.InternalCode" placeholder="生产条码">
+                    <input type="text" class="form-control" ui-focus="inCode.Focus == -1" ng-model="inCode.Ser.InternalCode" placeholder="内部码">
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control" ng-model="inCode.Ser.WorkOrder" placeholder="工单号">
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="inCode.Ser.StartDate" is-open="inCode.StartOpened" 
+                               close-text="关闭" clear-text="清空" current-text="今天"  placeholder="起始解绑日"
+                               alt-input-formats="['yyyy/M!/d!']" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="inCode.StartOpened = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="inCode.Ser.EndDate" is-open="inCode.EndOpened"
+                               close-text="关闭" clear-text="清空" current-text="今天" placeholder="结束解绑日"
+                               alt-input-formats="['yyyy/M!/d!']" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="inCode.EndOpened = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
                 </div>
                 <button class="btn btn-sm btn-info" ng-click="inCode.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
                 <button class="btn btn-sm btn-success" ng-click="inCode.ExportExcel()"><i class="glyphicon glyphicon-export"></i> 导出</button>
@@ -75,17 +95,23 @@
             <table class="table table-striped" cg-busy="sys.promise">
                 <tr>
                     <td class="col-md-1">内部码</td>
-                    <td class="col-md-2">工单</td>
-                    <td class="col-md-2">备注</td>
-                    <td class="col-md-2">操作者</td>
+                    <td class="col-md-1">原工单</td>
+                    <td class="col-md-2">原品名</td>
+                    <td class="col-md-1">现工单</td>
+                    <td class="col-md-2">现品名</td>
+                    <td class="col-md-1">操作者</td>
                     <td class="col-md-2">操作时间</td>
+                    <td class="col-md-2">备注</td>
                 </tr>
                 <tr ng-repeat="item in inCode.DeleteList">
                     <td>{{ item.InternalCode }}</td>
                     <td>{{ item.WorkOrder }}</td>
-                    <td>{{ item.Remark }}</td>
+                    <td>{{ item.MaterialName }}</td>
+                    <td>{{ item.Plan.Order.WorOrder }}</td>
+                    <td>{{ item.Plan.Order.MaterialName }}</td>
                     <td>{{ item.DeleteBy }}</td>
                     <td>{{ item.DeleteDate }}</td>
+                    <td>{{ item.Remark }}</td>
                 </tr>
             </table>
             <div class="col-md-12 text-center" ng-if="inCode.page.total>inCode.page.size">
@@ -93,5 +119,6 @@
                      ng-change="inCode.PageChange()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
             </div>
         </div>
+        <!--<pre>{{ inCode.Ser | json }}</pre>-->
     </uib-tab>
 </uib-tabset>
