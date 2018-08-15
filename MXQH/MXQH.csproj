@@ -184,6 +184,7 @@
     <Content Include="PLMFun\ItemMaster.js" />
     <Content Include="PLMFun\ItemMasterDialog.html" />
     <Content Include="PLMFun\ItemMasterDialog.js" />
+    <Content Include="Scripts\angular-ui\angular-locale_zh-cn.min.js" />
     <Content Include="Scripts\angular-ui\angular-toggle-switch.js" />
     <Content Include="Scripts\angular-ui\bootstrap-switch.js" />
     <Content Include="Scripts\angular-ui\bootstrap-switch.min.js" />
