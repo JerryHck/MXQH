@@ -17,6 +17,7 @@ angular.module('appData')
     { index: 2, title: '查看', action: 'Search' }
 ])
 .constant('Version', (new Date()).toString())
+.constant('ToJsonWorker', new Worker("js/directives/ToJson.js"))
     //Loading
 .constant('cgBusyDefaults', {
     message: '',
@@ -27,7 +28,7 @@ angular.module('appData')
     minDuration: 500,
     notBusyDisabled: true
 })
-.constant('ToJsonWorker', new Worker("js/directives/ToJson.js"))
+
 
 .factory('templateUrl', ['$rootScope', 'appUrl', function ($rootScope, appUrl) {
     return {
