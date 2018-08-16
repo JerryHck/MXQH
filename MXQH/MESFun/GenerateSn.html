@@ -105,7 +105,7 @@
                 </tr>
             </table>
             <div class="col-md-12 text-center" ng-if="gen.page.total>gen.page.size">
-                <div uib-pagination total-items="gen.page.total" ng-model="gen.page.index" items-per-page="gen.page.size" max-size="maxSize" first-text="第一页" previous-text="上一页"
+                <div uib-pagination total-items="gen.page.total" ng-model="gen.page.index" items-per-page="gen.page.size" max-size="10" first-text="第一页" previous-text="上一页"
                      ng-change="gen.PageChange()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
             </div>
         </div>

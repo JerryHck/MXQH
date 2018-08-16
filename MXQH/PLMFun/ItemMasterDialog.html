@@ -1,0 +1,61 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">电子料新增</h3>
+</div>
+<div class="modal-body wrapper-md" ng-form="ItemmasterDialog.form">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">料号</label>
+                    <div class="col-md-4" ng-class="{ 'has-error' : ItemmasterDialog.form.Code.$invalid }">
+                        <input type="text" class="form-control" name="Code" placeholder="料号"
+                               ng-model="ItemmasterDialog.Item.Code" required>
+                        <div ng-messages="ItemmasterDialog.form.Code.$error" class="help-block" role="alert">
+                            <div ng-message="required">料号不能为空</div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 control-label">品名</label>
+                    <div class="col-md-4" ng-class="{ 'has-error' : ItemmasterDialog.form.Name.$invalid }">
+                        <input type="text" class="form-control" name="Name" placeholder="品名"
+                               ng-model="ItemmasterDialog.Item.Name" required>
+                        <div ng-messages="ItemmasterDialog.form.Name.$error" class="help-block" role="alert">
+                            <div ng-message="required">品名不能为空</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">规格</label>
+                    <div class="col-md-10" ng-class="{ 'has-error' : ItemmasterDialog.form.SPEC.$invalid }">
+                        <textarea type="text" class="form-control" name="SPEC" placeholder="规格"
+                                  ng-model="ItemmasterDialog.Item.SPEC" required></textarea>
+                        <div ng-messages="ItemmasterDialog.form.SPEC.$error" class="help-block" role="alert">
+                            <div ng-message="required">规格不能为空</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">类型</label>
+                    <div class="col-md-4" ng-class="{ 'has-error' : ItemmasterDialog.form.ComponentType.$invalid }">
+                        <div config-select name="ComponentType" ng-model="ItemmasterDialog.Item.ComponentType" config-option="ItemmasterDialog.ConfigComponentType"></div>
+                        <div ng-messages="ItemmasterDialog.form.ComponentType.$error" class="help-block" role="alert">
+                            <div ng-message="required">请选择类型</div>
+                        </div>
+                    </div>
+                    <label class="col-md-2 control-label">组号</label>
+                    <div class="col-md-4" ng-class="{ 'has-error' : ItemmasterDialog.form.DocLineNo.$invalid }">
+                        <input type="number" class="form-control" name="DocLineNo" placeholder="组号"
+                               ng-model="ItemmasterDialog.Item.DocLineNo" required>
+                        <div ng-messages="ItemmasterDialog.form.DocLineNo.$error" class="help-block" role="alert">
+                            <div ng-message="required">组号不能为空</div>
+                            <div ng-message="number">组号必须是数字</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" type="button" ng-click="ItemmasterDialog.Save()">储存</button>
+    <button class="btn btn-warning" type="button" ng-click="ItemmasterDialog.Cancel()">取消</button>
+</div>

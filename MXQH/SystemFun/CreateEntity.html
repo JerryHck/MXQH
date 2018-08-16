@@ -261,19 +261,30 @@
                                             <div class="panel-body">
                                                 <div class="form form-horizontal m-t-md" ng-form="en.ProcedureForm">
                                                     <div class="form-group" ng-if="en.isEditing">
-                                                        <label class="col-sm-1 control-label"></label>
-                                                        <div class="col-sm-10">
+                                                        <div class="col-sm-12">
                                                             <div class="row">
-                                                                <div class="col-md-4" ng-class="{ 'has-error' : en.ProcedureForm.ShortName.$invalid }">
+                                                                <div class="col-sm-2" ng-class="{ 'has-error' : en.ProcedureForm.ShortName.$invalid }">
                                                                     <input class="form-control" name="ShortName" placeholder="存储过程简称" type="text" ng-blur="en.isProcExists(en.NewProc.ShortName)" ng-model="en.NewProc.ShortName" required />
                                                                     <div ng-messages="en.ProcedureForm.ShortName.$error" class="help-block" role="alert">
                                                                         <div ng-message="unique">简称重复</div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-6" ng-class="{ 'has-error' : en.ProcedureForm.Proc.$invalid }">
+                                                                <div class="col-sm-5" ng-class="{ 'has-error' : en.ProcedureForm.Proc.$invalid }">
                                                                     <div object-select ob-type="'P'" ng-name="Proc" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.ConnectName" ng-model="en.NewProc.EnProcedure" my-required="true"></div>
                                                                 </div>
-                                                                <div class="col-md-1" ng-if="en.isEditing">
+                                                                <div class="col-sm-2" ng-class="{ 'has-error' : en.ProcedureForm.ActionType.$invalid }">
+                                                                    <div config-select ng-model="en.NewProc.ActionType" ng-name="ActionType" my-required="true" config-option="en.ActionType"></div>
+                                                                </div>
+                                                                <div class="col-sm-2" ng-class="{ 'has-error' : en.ProcedureForm.ShortName.$invalid }">
+                                                                    <ui-select ng-model="en.NewProc.RoleSn" theme="bootstrap" search-enabled="true" required>
+                                                                        <ui-select-match placeholder="选择角色...">{{ $select.selected.RoleName }}</ui-select-match>
+                                                                        <ui-select-choices repeat="item.RoleSn as item in en.ListRole | filter: $select.search track by item.RoleSn">
+                                                                            <div ng-bind-html="item.RoleSn | highlight: $select.search"></div>
+                                                                            <small ng-bind-html="item.RoleName | highlight: $select.search"></small>
+                                                                        </ui-select-choices>
+                                                                    </ui-select>
+                                                                </div>
+                                                                <div class="col-sm-1" ng-if="en.isEditing">
                                                                     <span class="btn btn-default" ng-click="en.AddProc()" ng-disabled="en.ProcedureForm.$invalid" title="增加关联存储过程">
                                                                         <i class="glyphicon glyphicon-plus text-success"></i>
                                                                     </span>
@@ -283,18 +294,29 @@
                                                     </div>
                                                     <div class="line line-dashed b-b line-lg pull-in"></div>
                                                     <div class="form-group" ng-repeat="proc in en.ProcList">
-                                                        <label class="col-sm-1 control-label"></label>
-                                                        <div class="col-sm-10">
+                                                        <div class="col-sm-12">
                                                             <div class="row">
-                                                                <div class="col-sm-4">
+                                                                <div class="col-sm-2">
                                                                     <input class="form-control" ng-model="proc.ShortName" placeholder="存储过程简称" type="text" disabled />
                                                                 </div>
-                                                                <div class="col-sm-6">
+                                                                <div class="col-sm-5">
                                                                     <div object-select ob-type="'P'" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.ConnectName" ng-disabled="!en.isEditing"
                                                                          ng-model="proc.EnProcedure" ng-name="obProc" my-required="true"></div>
                                                                     <span ng-show='forma.confirm_foo.$error.validator'>Not match!</span>
                                                                 </div>
-                                                                <div class="col-md-1" ng-if="en.isEditing">
+                                                                <div class="col-sm-2" ng-class="{ 'has-error' : en.ProcedureForm.ActionType.$invalid }">
+                                                                    <div config-select ng-model="proc.ActionType" ng-name="ActionType" my-required="true" config-option="en.ActionType" ng-disabled="!en.isEditing"></div>
+                                                                </div>
+                                                                <div class="col-sm-2" ng-class="{ 'has-error' : en.ProcedureForm.roleSn.$invalid }">
+                                                                    <ui-select name ="roleSn" ng-model="proc.RoleSn" theme="bootstrap" search-enabled="true" required ng-disabled="!en.isEditing">
+                                                                        <ui-select-match placeholder="选择角色...">{{ $select.selected.RoleName }}</ui-select-match>
+                                                                        <ui-select-choices repeat="item.RoleSn as item in en.ListRole | filter: $select.search track by item.RoleSn">
+                                                                            <div ng-bind-html="item.RoleSn | highlight: $select.search"></div>
+                                                                            <small ng-bind-html="item.RoleName | highlight: $select.search"></small>
+                                                                        </ui-select-choices>
+                                                                    </ui-select>
+                                                                </div>
+                                                                <div class="col-sm-1" ng-if="en.isEditing">
                                                                     <span class="btn btn-default" ng-click="en.DeleteProc($index)"><i class="glyphicon glyphicon-remove text-danger"></i></span>
                                                                 </div>
                                                             </div>

@@ -11,7 +11,7 @@ angular.module('app')
         link: link
     };
     function link(scope, element, attr) {
-        
+
         scope.$watchCollection(attr.ngConfirm, function (options) {
             var en = options || {};
             en.title = en.title || "确认删除";
@@ -34,7 +34,6 @@ angular.module('app')
         });
     }
 })
-
 .directive('companySelect', ['AjaxService', function (AjaxService) {
     return {
         restrict: 'A',
@@ -44,17 +43,18 @@ angular.module('app')
             Clear: '=',
             ngDisabled: '=',
             searchEnabled: '=',
-            selectClass:'@',
+            selectClass: '@',
             myRequired: '@',
-            ngName:'@'
+            ngName: '@',
+            ngChange:'&'
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
                   + '<ui-select name="{{ ngName }}" ng-model="$parent.ngModel"  class="{{ selectClass }}" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="myRequired">'
-                  +'  <ui-select-match placeholder="选择组织...">{{ $select.selected.CompanyName }}</ui-select-match>       '
+                  + '  <ui-select-match placeholder="选择组织...">{{ $select.selected.CompanyName }}</ui-select-match>       '
                   + ' <ui-select-choices repeat="item.CompanyNo as item in data | filter: $select.search track by item.CompanyNo">                          '
-                  +'      <div ng-bind-html="item.CompanyNo | highlight: $select.search"></div>                             '
-                  +'      <small ng-bind-html="item.CompanyName | highlight: $select.search"></small>                       '
-                  +'  </ui-select-choices>                                                                                  '
+                  + '      <div ng-bind-html="item.CompanyNo | highlight: $select.search"></div>                             '
+                  + '      <small ng-bind-html="item.CompanyName | highlight: $select.search"></small>                       '
+                  + '  </ui-select-choices>                                                                                  '
                   + '</ui-select>'
                   + '    <span class="input-group-btn" ng-if="clear">'
                   + '        <button ng-click="$parent.selectItem= undefined" class="btn btn-default" ng-disabled="ngDisabled">'
@@ -103,7 +103,8 @@ angular.module('app')
             clear: '=',
             selectClass: '@',
             myRequired: '@',
-            ngName: '@'
+            ngName: '@',
+            ngChange:'&'
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
                   + '<ui-select  ng-model="$parent.ngModel" theme="bootstrap"  class="{{ selectClass }}" search-enabled="searchEnabled" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
@@ -143,10 +144,11 @@ angular.module('app')
             clear: '=',
             selectClass: '@',
             myRequired: '@',
-            ngName: '@'
+            ngName: '@',
+            ngChange:'&'
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '<ui-select ng-model="$parent.ngModel" theme="bootstrap" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
+                  + '<ui-select ng-model="$parent.ngModel" ng-change="ngChange()" theme="bootstrap" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
                   + '  <ui-select-match placeholder="请选择...">{{ $select.selected.FunName }}</ui-select-match>'
                   + ' <ui-select-choices repeat="item.FunNo as item in data | filter: $select.search track by item.FunNo">'
                   + '      <div ng-bind-html="item.FunNo | highlight: $select.search"></div>'
@@ -174,6 +176,45 @@ angular.module('app')
         });
     }
 }])
+.directive('userSelect', ['AjaxService', function (AjaxService) {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        scope: {
+            ngModel: '=',
+            ngDisabled: '=',
+            clear: '=',
+            selectClass: '@',
+            myRequired: '@',
+            ngName: '@',
+            ngChange:'&'
+        },
+        template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
+                  + '<ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
+                  + '  <ui-select-match placeholder="请选择...">{{ $select.selected.UserNo }}</ui-select-match>'
+                  + ' <ui-select-choices repeat="item.UserNo as item in data | filter: $select.search track by item.UserNo">'
+                  + '      <div ng-bind-html="item.UserNo | highlight: $select.search"></div>'
+                  + '      <small><span ng-bind-html="item.ChiLastName | highlight: $select.search"></span><span ng-bind-html="item.ChiFirstName | highlight: $select.search"></span></small>'
+                  + '  </ui-select-choices>'
+                  + '</ui-select>'
+                  + '    <span class="input-group-btn" ng-if="clear">'
+                  + '        <button ng-click="$parent.selectItem= undefined" class="btn btn-default" ng-disabled="ngDisabled">'
+                  + '            <span class="glyphicon glyphicon-trash text-danger"></span>'
+                  + '         </button>'
+                  + '     </span>'
+                  + ' </div>'
+        ,
+        link: link
+    };
+
+    function link($scope, element, attrs) {
+        $scope.data = undefined;
+        //组织
+        AjaxService.GetPlans("User").then(function (data) {
+            $scope.data = data;
+        });
+    }
+}])
 .directive('funFileSelect', ['AjaxService', function (AjaxService) {
     return {
         restrict: 'A',
@@ -185,20 +226,21 @@ angular.module('app')
             clear: '=',
             selectClass: '@',
             myRequired: '@',
-            ngName: '@'
+            ngName: '@',
+            ngChange:'&'
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '    <ui-select ng-model="$parent.ngModel" theme="bootstrap"  class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
-                  +'         <ui-select-match placeholder="请选择...">{{ $select.selected }}</ui-select-match>'
+                  + '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
+                  + '         <ui-select-match placeholder="请选择...">{{ $select.selected }}</ui-select-match>'
                   + '          <ui-select-choices repeat="item in data | filter: $select.search track by item">'
-                  +'             <div ng-bind-html="item | highlight: $select.search"></div>'
-                  +'         </ui-select-choices>'
-                  +'     </ui-select>'
+                  + '             <div ng-bind-html="item | highlight: $select.search"></div>'
+                  + '         </ui-select-choices>'
+                  + '     </ui-select>'
                   + '    <span class="input-group-btn" ng-if="clear">'
                   + '        <button ng-click="$parent.ngModel= undefined" class="btn btn-default" ng-disabled="ngDisabled">'
                   + '            <span class="glyphicon glyphicon-trash text-danger"></span>'
-                  +'         </button>'
-                  +'     </span>'
+                  + '         </button>'
+                  + '     </span>'
                   + ' </div>'
         ,
         link: link
@@ -207,7 +249,7 @@ angular.module('app')
     function link(scope, element, attrs) {
         scope.data = undefined;
         //组织
-        AjaxService.HandleFile(scope.fileType).then(function (data) { scope.data = data;});
+        AjaxService.HandleFile(scope.fileType).then(function (data) { scope.data = data; });
 
     }
 }])
@@ -221,13 +263,14 @@ angular.module('app')
             obType: '=',
             ngDisabled: '=',
             clear: '=',
-            placeholder:'@',
+            placeholder: '@',
             selectClass: '@',
             myRequired: '@',
-            ngName: '@'
+            ngName: '@',
+            ngChange:'&'
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '    <ui-select ng-model="$parent.ngModel" theme="bootstrap"  class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
+                  + '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
                   + '         <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>'
                   + '          <ui-select-choices class="pl-1" repeat="item in data | filter: $select.search track by item.Name" refresh="refresh($select.search)" refresh-delay="0">'
                   + '             <small><span ng-bind-html="item.DbSchema | highlight: $select.search"></span>.<span ng-bind-html="item.Name | highlight: $select.search"</span></small>'
@@ -269,7 +312,7 @@ angular.module('app')
                 //取服务器获取新数据
                 if (scope.data.length === 0) {
                     scope.data = undefined;
-                    AjaxService.GetDbeObject(scope.obConnect, scope.obType, ser).then(function (data) {
+                    AjaxService.GetDbObject(scope.obConnect, scope.obType, ser).then(function (data) {
                         scope.data = data.data;
                     });
                 }
@@ -291,7 +334,7 @@ angular.module('app')
             selectClass: '@',
             myRequired: '@',
             ngName: '@',
-            ngChange:'&'
+            ngChange: '&'
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
                   + '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()"  class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
@@ -326,15 +369,16 @@ angular.module('app')
             ngDisabled: '=',
             searchEnabled: '=',
             configOption: '=',
-            placeholder:'@',
+            placeholder: '@',
             selectClass: '@',
             myRequired: '@',
-            ngName: '@'
+            ngName: '@',
+            ngChange:'&'
         },
-        template: '<ui-select name="{{ ngName }}" class="{{ selectClass }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="myRequired">'
+        template: '<ui-select name="{{ ngName }}" ng-change="ngChange()" class="{{ selectClass }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="myRequired">'
                   + ' <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.ClDesc }}</ui-select-match>       '
                   + ' <ui-select-choices repeat="item.ClInf as item in data | propsFilter: {ClInf: $select.search, ClDesc: $select.search}">                          '
-                  + '      <div ng-bind-html="item.ClDesc | highlight: $select.search"></div>'                             
+                  + '      <div ng-bind-html="item.ClDesc | highlight: $select.search"></div>'
                   + '  </ui-select-choices>'
                   + '</ui-select>'
         ,
@@ -367,10 +411,11 @@ angular.module('app')
             clear: '=',
             selectClass: '@',
             myRequired: '@',
-            ngName: '@'
+            ngName: '@',
+            ngChange:'&'
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '    <ui-select ng-model="$parent.ngModel" class="{{ selectClass }}" theme="bootstrap" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
+                  + '    <ui-select ng-model="$parent.ngModel" ng-change="ngChange()" class="{{ selectClass }}" theme="bootstrap" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
                   + '         <ui-select-match placeholder="请选择...">{{ $select.selected.EntityName }}</ui-select-match>'
                   + '          <ui-select-choices class="pl-1" repeat="item.EntityName as item in data | filter: $select.search track by item.EntityName" refresh="refresh($select.search)" refresh-delay="0">'
                   + '             <div ng-bind-html="item.EntityName | highlight: $select.search"></div>'
@@ -393,7 +438,7 @@ angular.module('app')
             scope.ngModel = newValue != oldValue ? undefined : scope.ngModel;
             var en = {};
             en.name = 'ConnectName';
-            en.value = scope.connectName||'';
+            en.value = scope.connectName || '';
             AjaxService.GetPlans("SelectEntity", en).then(function (data) {
                 scope.data = data;
                 scope.ListData = angular.copy(scope.data);
@@ -434,4 +479,113 @@ angular.module('app')
         }
     }
 }])
+//文件导入
+.directive('importSheetJs', ['$q', 'AjaxService', 'toastr', 'FileLoad', 'ToJsonWorker',
+    function ($q, AjaxService, toastr, FileLoad, ToJsonWorker) {
+        return {
+            restrict: 'A',
+            //require:'ngModel',
+            scope: {
+                isImport: '@',
+                fileType: '@',
+                opts: '=',
+                ngComplete: '&'
+            },
+            //templateUrl: 'js/directives/ImportSheetJs.html',
+            templateUrl: 'js/directives/ImportSheetJs.html?v=' + (new Date()),
+
+            link: function ($scope, elm) {
+                $scope.opts = $scope.opts || {};
+                $scope.fileType = $scope.fileType || "*";
+                $scope.isImport = $scope.isImport || 'false';
+                $scope.ngModel = $scope.ngModel || '';
+                var op = $scope.opts;
+                op.sheetNum = op.sheetNum || 1;
+
+
+                $scope.Open = function (e) {
+                    e.target.parentNode.parentElement.firstElementChild.click();
+                }
+                var fileInput = elm[0].firstElementChild.firstElementChild.firstElementChild;
+                var circle = elm[0].lastElementChild;
+
+
+                //事件添加
+                fileInput.onchange = function (changeEvent) {
+                    //圆形进度条
+                    //$(circle).circleChart({
+                    //    size: 20,
+                    //    value: 1,
+                    //});
+
+                    if (!changeEvent.target.files || changeEvent.target.files.length == 0) {
+                        return;
+                    }
+                    var file = changeEvent.target.files[0];
+
+                    var exec = (/[.]/.exec(file.name)) ? /[^.]+$/.exec(file.name.toLowerCase()) : '';
+
+                    if ($scope.fileType != "*" && $scope.fileType.indexOf(exec[0]) == -1) {
+                        toastr.error("文件格式不对，请上传 " + $scope.fileType + " 文件!");
+                        return false;
+                    }
+
+                    /* update scope */
+                    $scope.$apply(function () {
+                        $scope.ngModel = file.name;
+                        $scope.Progress = 0;
+                    });
+                    var option = {};
+                    option.file = file;
+                    //option.type = 'text';
+                    option.onProcent = function process(pro) {
+                        var d = $q.defer();
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+                                $scope.Progress = pro;
+                            });
+                        }, 1000);
+                        d.resolve('');
+                        return d.promise;
+                    };
+                    option.onComplete = function (data) {
+                        ToJsonWorker.onmessage = function (evt) {
+                            $scope.$apply(function () {
+                                $scope.opts.data = evt.data;
+                                $scope.ngComplete();
+                                $scope.Progress = 0;
+                            });
+                        };
+                        ToJsonWorker.postMessage({ data: data, op: op });
+                        //var sheet = {};
+                        //sheet.ColumnsName = ["生成条码", "客户SN码", "模块二维码", "绑定时间"]
+                        //sheet.FirstColunms = false;
+                        //AjaxService.FileImport('', '', '', file, data, sheet).then(function (data2) {
+                        //    console.log(data2)
+                        //})
+                        //ToJson(data);
+                    };
+                    FileLoad.Load(option);
+                }
+
+                function ToJson(data) {
+                    //var d = $q.defer();
+                    //console.log(data.length);
+                    var wb = XLSX.read(data, { type: 'binary' });
+                    var Data = [];
+                    for (var i = 0; i < op.sheetNum; i++) {
+                        var wsname = wb.SheetNames[i];
+                        var ws = wb.Sheets[wsname];
+                        var aoa = XLSX.utils.sheet_to_json(ws, op.header);
+                        Data.push(aoa);
+                    }
+                    $scope.opts.data = Data;
+                    $scope.ngComplete();
+                    //$scope.Progress = 0;
+                    //d.resolve(Data);
+                    //return d.promise;
+                }
+            }
+        }
+    }])
 

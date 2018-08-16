@@ -157,10 +157,13 @@
     <Content Include="js\controllers\chart.js" />
     <Content Include="js\Dialog.js" />
     <Content Include="js\directives\app-Directive.js" />
+    <Content Include="js\directives\ImportSheetJs.html" />
+    <Content Include="js\directives\ToJson.js" />
     <Content Include="js\filters\app-filter.js" />
     <Content Include="js\Router.js" />
     <Content Include="js\services\AjaxServiceMethod.js" />
     <Content Include="js\services\AjaxServiceModule.js" />
+    <Content Include="js\FileLoad.js" />
     <Content Include="l10n\cn.js" />
     <Content Include="Loading\finalfantasy.gif" />
     <Content Include="Loading\index.circle-slack-loading-icon.gif" />
@@ -169,10 +172,21 @@
     <Content Include="Loading\Loading.html" />
     <Content Include="login.html" />
     <Content Include="Login.js" />
+    <Content Include="MESFun\AteData.html" />
+    <Content Include="MESFun\AteData.js" />
     <Content Include="MESFun\BindingCode.html" />
     <Content Include="MESFun\BindingCode.js" />
     <Content Include="MESFun\GenerateSn.html" />
     <Content Include="MESFun\GenerateSn.js" />
+    <Content Include="MESFun\InCodeDelete.html" />
+    <Content Include="MESFun\InCodeDelete.js" />
+    <Content Include="PLMFun\BOMEI.html" />
+    <Content Include="PLMFun\BOMEI.js" />
+    <Content Include="PLMFun\ItemMaster.html" />
+    <Content Include="PLMFun\ItemMaster.js" />
+    <Content Include="PLMFun\ItemMasterDialog.html" />
+    <Content Include="PLMFun\ItemMasterDialog.js" />
+    <Content Include="Scripts\angular-ui\angular-locale_zh-cn.min.js" />
     <Content Include="Scripts\angular-ui\angular-toggle-switch.js" />
     <Content Include="Scripts\angular-ui\bootstrap-switch.js" />
     <Content Include="Scripts\angular-ui\bootstrap-switch.min.js" />
@@ -218,6 +232,8 @@
     <Content Include="Scripts\bootstrap\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap\bootstrap.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\circleChart\circleChart.es5.min.js" />
+    <Content Include="Scripts\circleChart\circleChart.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -252,6 +268,7 @@
     <Content Include="Content\font\fontawesome-webfont.ttf" />
     <Content Include="Content\font\fontawesome-webfont.woff" />
     <None Include="Properties\PublishProfiles\2.pubxml" />
+    <None Include="Properties\PublishProfiles\MXQH.pubxml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -336,6 +353,12 @@
     <Content Include="Scripts\oclazyload\ui-router-require-polyfill.js" />
     <Content Include="Scripts\select.js" />
     <Content Include="Scripts\select.min.js" />
+    <Content Include="Scripts\SheetJs\cpexcel.js" />
+    <Content Include="Scripts\SheetJs\shim.min.js" />
+    <Content Include="Scripts\SheetJs\xlsx.core.min.js" />
+    <Content Include="Scripts\SheetJs\xlsx.extendscript.js" />
+    <Content Include="Scripts\SheetJs\xlsx.full.min.js" />
+    <Content Include="Scripts\SheetJs\xlsx.min.js" />
     <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Scripts\ui-grid.js" />
     <Content Include="Scripts\ui-grid.min.js" />
@@ -347,16 +370,22 @@
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="SystemFun\AddDialog.js" />
     <Content Include="SystemFun\AddDialog.html" />
+    <Content Include="SystemFun\ChangePswDialog.html" />
+    <Content Include="SystemFun\ChangePswDialog.js" />
     <Content Include="SystemFun\CreateEntity.html" />
     <Content Include="SystemFun\CreateEntity.js" />
     <Content Include="SystemFun\DialogDialog.html" />
     <Content Include="SystemFun\DialogDialog.js" />
+    <Content Include="SystemFun\FileTest.html" />
+    <Content Include="SystemFun\FileTest.js" />
     <Content Include="SystemFun\IconDialog.html" />
     <Content Include="SystemFun\IconDialog.js" />
-    <Content Include="SystemFun\RoleDailog.html" />
-    <Content Include="SystemFun\RoleDailog.js" />
+    <Content Include="SystemFun\RoleDialog.html" />
+    <Content Include="SystemFun\RoleDialog.js" />
     <Content Include="SystemFun\SysFunction.html" />
     <Content Include="SystemFun\SysFunction.js" />
+    <Content Include="SystemFun\SysRole.html" />
+    <Content Include="SystemFun\SysRole.js" />
     <Content Include="SystemFun\SystemDialog.html" />
     <Content Include="SystemFun\SystemDialog.js" />
     <Content Include="SystemFun\System.html" />
@@ -409,6 +438,9 @@
     <Content Include="Scripts\jquery\footable\fonts\footable.eot" />
     <Content Include="Scripts\jquery\footable\fonts\footable.ttf" />
     <Content Include="Scripts\jquery\footable\fonts\footable.woff" />
+    <Content Include="Scripts\SheetJs\xlsx.core.min.map" />
+    <Content Include="Scripts\SheetJs\xlsx.full.min.map" />
+    <Content Include="Scripts\SheetJs\xlsx.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -509,10 +541,10 @@
     <Content Include="l10n\it_IT.js" />
     <Content Include="SystemFun\SysUser.html" />
     <Content Include="SystemFun\SysUser.js" />
-    <Content Include="SystemFun\UserDailog.html" />
-    <Content Include="SystemFun\UserDailog.js" />
-    <Content Include="SystemFun\UserRoleDailog.html" />
-    <Content Include="SystemFun\UserRoleDailog.js" />
+    <Content Include="SystemFun\UserDialog.html" />
+    <Content Include="SystemFun\UserDialog.js" />
+    <Content Include="SystemFun\UserRoleDialog.html" />
+    <Content Include="SystemFun\UserRoleDialog.js" />
     <Content Include="Template\UIAccordionTemplate.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

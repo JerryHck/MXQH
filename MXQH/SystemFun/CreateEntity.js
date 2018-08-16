@@ -35,19 +35,22 @@ function ($scope, $http, Dialog, AjaxService, toastr, $rootScope) {
     vm.conChange = conChange;
 
     
-    Cancel();
     vm.ConfigOrderWay = { Table: "EntityProperty", Column: "OrderWay" };
     vm.ConfigColumnType = { Table: "EntityProperty", Column: "ColumnType" };
     vm.ConfigRelationType = { Table: "EntityProperty", Column: "RelationType" };
     vm.EntityRelationType = { Table: "EntityRelation", Column: "ColumnType" };
     vm.EntityRelationExp = { Table: "EntityRelation", Column: "Expression" };
     vm.EntityRelationAss = { Table: "EntityRelation", Column: "Associate" };
+    vm.ActionType = { Table: "BasicData", Column: "ActionType" };
     vm.ProItem = { };
     vm.newRelCon = { ParenType: '0', ChildType: '0' };
 
     $scope.$watch(function () { return vm.EnTable; }, getTableList);
     $scope.$watch(function () { return vm.ProItem.RelateEntity; }, getChildTableList);
     $scope.$watch(function () { return vm.ConnectName; }, GetList);
+
+    GetRoleList();
+    Cancel();
 
     function conChange() {
         vm.EnTable = undefined;
@@ -101,6 +104,8 @@ function ($scope, $http, Dialog, AjaxService, toastr, $rootScope) {
                 proc.ShortName = vm.ProcList[h].ShortName;
                 proc.ProcSchema = vm.ProcList[h].EnProcedure.DbSchema;
                 proc.ProcName = vm.ProcList[h].EnProcedure.Name;
+                proc.ActionType = vm.ProcList[h].ActionType;
+                proc.RoleSn = vm.ProcList[h].RoleSn;
                 ProcList.push(proc);
             }
         }
@@ -388,6 +393,13 @@ function ($scope, $http, Dialog, AjaxService, toastr, $rootScope) {
                 });
             }
         }
+    }
+
+    function GetRoleList() {
+        AjaxService.GetPlans('Role').then(function (data) {
+            vm.ListRole = data;
+            vm.ListRole.splice(0, 0, { RoleSn: "ALL", RoleName: "全部" });
+        });
     }
 
     function isProEmpty() {

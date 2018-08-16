@@ -38,6 +38,9 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, AjaxService, $rootS
         for (var i = 0, len = vm.NewItem.LoadFiles.length; i < len; i++) {
             vm.NewItem.LoadFiles[i].SortNo = i;
         }
+        vm.NewItem.Temp = JSON.stringify(vm.NewItem.LoadFiles);
+        vm.NewItem.TempColumns = "Temp";
+
         AjaxService.ExecPlan("Dialog", 'save', vm.NewItem).then(function (data) {
             toastr.success('储存成功');
             $uibModalInstance.close(vm.NewItem);
@@ -50,7 +53,8 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, AjaxService, $rootS
 
     function isExists(name) {
         var en = {};
-        en.name = name;
+        en.name = "name";
+        en.value = name
         AjaxService.GetPlan("Dialog", en).then(function (data) {
             vm.DialogForm.name.$setValidity('unique', !data.name);
         });
@@ -66,12 +70,6 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, AjaxService, $rootS
     //
     function LoadDrag(load, index) {
         vm.LoadIndex = index;
-    }
-
-    function SaveToJson() {
-        vm.promise = AjaxService.AddDialog(JSON.stringify(vm.List)).then(function (data) {
-            toastr.success('储存成功');
-        });
     }
 
     //取消
