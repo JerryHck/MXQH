@@ -24,7 +24,8 @@
             PlanUpdate: PlanUpdate,
             //计划对应表删除
             PlanDelete:PlanDelete,
-
+            //计划备份
+            PlanBak: PlanBak,
             //执行计划实体
             ExecPlan: ExecPlan,
             //执行实体关联的存储过程,获取Excel文件
@@ -97,6 +98,14 @@
         //获得计划资料-删除
         function PlanDelete(name, json) {
             return planAjax(name, JSON.stringify(json), "Delete");
+        }
+        //计划备份已导入
+        function PlanBak(action, json) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = {};
+            en.action = action;
+            en.strJson = json;
+            return Ajax(d, url, en, "PlanBak")
         }
 
         //获得单实体资料
