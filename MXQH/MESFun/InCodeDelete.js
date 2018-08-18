@@ -64,7 +64,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                 if (!data.InternalCode) {
                     vm.DeleteItem.InternalCode = undefined;
                     //toastr.error(mes);
-                    vm.MesList.splice(0, 0, { IsOk: false, Msg: mss + '  不存在或还没有上线' });
+                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或还没有上线' });
                 }
                 else {
                     AjaxService.GetPlan("MESSNCode", en).then(function (data2) {
