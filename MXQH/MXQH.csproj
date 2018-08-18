@@ -232,6 +232,10 @@
     <Content Include="Scripts\bootstrap\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap\bootstrap.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap\DateTimePicker\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap\DateTimePicker\bootstrap-datetimepicker.min.css" />
+    <Content Include="Scripts\bootstrap\DateTimePicker\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap\DateTimePicker\bootstrap-datetimepicker.zh-CN.js" />
     <Content Include="Scripts\circleChart\circleChart.es5.min.js" />
     <Content Include="Scripts\circleChart\circleChart.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
@@ -290,6 +294,10 @@
     <Content Include="Scripts\jquery\datatables\dataTables.bootstrap.css" />
     <Content Include="Scripts\jquery\datatables\dataTables.bootstrap.js" />
     <Content Include="Scripts\jquery\datatables\jquery.dataTables.min.js" />
+    <Content Include="Scripts\jquery\DateTimePicker\jquery.datetimepicker.full.js" />
+    <Content Include="Scripts\jquery\DateTimePicker\jquery.datetimepicker.full.min.js" />
+    <Content Include="Scripts\jquery\DateTimePicker\jquery.datetimepicker.min.css" />
+    <Content Include="Scripts\jquery\DateTimePicker\jquery.datetimepicker.min.js" />
     <Content Include="Scripts\jquery\file\bootstrap-filestyle.min.js" />
     <Content Include="Scripts\jquery\footable\fonts\footable.svg" />
     <Content Include="Scripts\jquery\footable\footable.all.min.js" />
@@ -433,7 +441,6 @@
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
     <Content Include="Scripts\umd\popper-utils.js.map" />
-    <Content Include="Scripts\README.md" />
     <Content Include="Scripts\jquery\datatables\datatable.json" />
     <Content Include="Scripts\jquery\footable\fonts\footable.eot" />
     <Content Include="Scripts\jquery\footable\fonts\footable.ttf" />
