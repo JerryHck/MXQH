@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('CreateEntityCtrl', ['$scope', '$http', 'Dialog', 'AjaxService', 'toastr', '$rootScope',
-function ($scope, $http, Dialog, AjaxService, toastr, $rootScope) {
+.controller('CreateEntityCtrl', ['$scope', '$window', 'Dialog', 'AjaxService', 'toastr', '$rootScope', 'FileLoad', 'serviceUrl',
+function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, serviceUrl) {
 
     var vm = this;
     vm.EnAdd = EnAdd;
@@ -33,6 +33,9 @@ function ($scope, $http, Dialog, AjaxService, toastr, $rootScope) {
     vm.isProcExists = isProcExists;
 
     vm.conChange = conChange;
+    vm.ImportPlan = ImportPlan;
+    vm.DownLoadPlan = DownLoadPlan;
+    vm.planBak = planBak;
 
     
     vm.ConfigOrderWay = { Table: "EntityProperty", Column: "OrderWay" };
@@ -421,6 +424,41 @@ function ($scope, $http, Dialog, AjaxService, toastr, $rootScope) {
             case '2': c = "panel-danger"; break;
         }
         return c;
+    }
+
+    function planBak() {
+        AjaxService.PlanBak("B").then(function (data2) {
+            toastr.success('备份成功');
+        })
+    }
+
+    function DownLoadPlan() {
+        $window.open(serviceUrl + 'Data/PlanData.json');
+    }
+
+    function ImportPlan(e) {
+        $("#importPlan").click();
+        $("#importPlan").on('change', function (changeEvent) {
+            if (!changeEvent.target.files || changeEvent.target.files.length == 0) {
+                return;
+            }
+            var file = changeEvent.target.files[0];
+            var exec = (/[.]/.exec(file.name)) ? /[^.]+$/.exec(file.name.toLowerCase()) : '';
+            if (exec[0] != 'json') {
+                toastr.error("文件格式不对，请选择 Json 文件!");
+                return;
+            }
+            var option = {};
+            option.file = file;
+            option.type = 'text';
+            option.onComplete = function (data) {
+                AjaxService.PlanBak("I", data).then(function (data2) {
+                    toastr.success('导入成功');
+                    GetList();
+                })
+            };
+            FileLoad.Load(option);
+        })
     }
 }
 ]);
