@@ -328,6 +328,41 @@
                                             </div>
                                         </div>
                                     </uib-tab>
+                                    <uib-tab index="2">
+                                        <uib-tab-heading class="h5">备份导入</uib-tab-heading>
+                                        <div>
+                                            <div class="panel panel-default col-md-8">
+                                                <div class="panel-heading font-bold">实体备份与导入</div>
+                                                <div class="panel-body">
+                                                    <div class="bs-example form-horizontal">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-4 control-label">备份</label>
+                                                            <div class="col-lg-8">
+                                                                <button class="btn btn-default" ng-click="en.planBak()"><i class="fa fa-save"></i>备份</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-lg-4 control-label">下载备份</label>
+                                                            <div class="col-lg-8">
+                                                                <button class="btn btn-default" ng-click="en.DownLoadPlan()"><i class="glyphicon glyphicon-export"></i></button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-lg-4 control-label">导入</label>
+                                                            <div class="col-lg-8 input-group">
+                                                                <input id="importPlan" type="file" style="display:none" accept=".json">
+                                                                <input class="form-control" type="text" ng-model="en.ImportFile">
+                                                                <span class="input-group-addon " ng-click="en.ImportPlan()" style="cursor: pointer; background-color: #e7e7e7">
+                                                                    <i class="glyphicon glyphicon-import">导入</i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <pre>{{ en.ImportData | json }}</pre>
+                                        </div>
+                                    </uib-tab>
                                 </uib-tabset>
                             </div>
                         </div>

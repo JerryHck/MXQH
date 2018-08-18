@@ -26,14 +26,34 @@ angular.module('app')
                 swal(en, function (isConfirm) {
                     if (isConfirm) {
                         scope.$eval(clickAction);
-                        //scope.$parent.$eval(clickAction);
-                        //scope.$parse(clickAction);
                     }
                 });
             });
         });
     }
 })
+.directive("dateTimePicker", ['$ocLazyLoad', function ($ocLazyLoad) {
+    return {
+        require: '?ngModel',
+        restrict: 'A',
+        scope: {
+            ngModel: '=',
+            option:'='
+        },
+        link: function (scope, element, attr, ngModel) {
+            scope.option = scope.option ||
+                {
+                    formatTime: 'H:i',
+                    formatDate: 'd.m.Y',
+                    timepickerScrollbar: false
+                }
+            $ocLazyLoad.load('datetimepicker').then(function () {
+                $.datetimepicker.setLocale('zh');
+                element.datetimepicker(scope.option);
+            })
+        }
+    }
+}])
 .directive('companySelect', ['AjaxService', function (AjaxService) {
     return {
         restrict: 'A',

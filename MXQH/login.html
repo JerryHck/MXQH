@@ -26,25 +26,6 @@
     <link href="Content/ui-bootstrap-csp.css" rel="stylesheet" />
     <link href="Content/angular-toastr.css" rel="stylesheet" />
     <link href="Content/sweetalert.css" rel="stylesheet" />
-    <!-- jQuery -->
-    <script src="Scripts/jquery-3.0.0.min.js"></script>
-    <!-- Angular -->
-    <script src="Scripts/angular/angular.min.js"></script>
-    <script src="Scripts/angular/angular-toastr.tpls.min.js"></script>
-    <script src="Scripts/angular/angular-animate/angular-animate.js"></script>
-    <script src="Scripts/angular/angular-cookies/angular-cookies.js"></script>
-    <script src="Scripts/angular/angular-sanitize/angular-sanitize.js"></script>
-    <script src="Scripts/sweetalert.min.js"></script>
-
-    <script src="js/appData.js"></script>
-
-    <script>
-        document.write("<script type='text/javascript' src='js/services/AjaxServiceModule.js?v=" + Date.now() + "'><\/script>");
-        document.write("<script type='text/javascript' src='js/services/AjaxServiceMethod.js?v=" + Date.now() + "'><\/script>");
-    </script>
-
-    <script src="Login.js"></script>
-
 </head>
 <body ng-app="LoginApp">
     <div class="container" ng-controller="LoginCtrl as Log">
@@ -75,8 +56,39 @@
                     <input type="submit" name="submit" ng-click="Log.Login()" value="登 录">
                 </p>
             </form>
+            <!--<br /><br /><br /><br />
+            <button class="btn btn-rounded btn-success"><i class="glyphicon glyphicon-download-alt"></i> Chrome</button>-->
         </section>
-
+        
     </div>
+
+    <!-- jQuery -->
+    <script src="Scripts/jquery-3.0.0.min.js"></script>
+    <!-- Angular -->
+    <script src="Scripts/angular/angular.min.js"></script>
+    <script src="Scripts/angular/angular-toastr.tpls.min.js"></script>
+    <script src="Scripts/angular/angular-animate/angular-animate.js"></script>
+    <script src="Scripts/angular/angular-cookies/angular-cookies.js"></script>
+    <script src="Scripts/angular/angular-sanitize/angular-sanitize.js"></script>
+    <script src="Scripts/sweetalert.min.js"></script>
+    <script src="js/appData.js"></script>
+
+    <script>
+        check();
+
+        function check (){
+            var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+            var isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1; //判断Chrome浏览器
+            if (!isChrome) {
+                if (confirm("您使用的不是Chrome浏览器，请使用Chrome浏览本系统！")) {
+                    window.location.href = '//192.168.1.82:9090/File/DownLoad/chromexp_96311.rar';
+                }
+            }
+        }
+
+        document.write("<script type='text/javascript' src='js/services/AjaxServiceModule.js?v=" + Date.now() + "'><\/script>");
+        document.write("<script type='text/javascript' src='js/services/AjaxServiceMethod.js?v=" + Date.now() + "'><\/script>");
+    </script>
+    <script src="Login.js"></script>
 </body>
 </html>

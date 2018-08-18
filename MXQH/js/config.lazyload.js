@@ -65,7 +65,15 @@ angular.module('app')
                   name: 'fileLoad',
                   files: [
                       'Scripts/SheetJs/xlsx.full.min.js',
-                      'Scripts/Concurrent.Thread/Concurrent.Thread.js',
+                  ]
+              },
+              {
+                  name: 'datetimepicker',
+                  files: [
+                      //'Scripts/bootstrap/DateTimePicker/bootstrap-datetimepicker.min.css',
+                      //'Scripts/bootstrap/DateTimePicker/bootstrap-datetimepicker.min.js',
+                      'Scripts/jquery/DateTimePicker/jquery.datetimepicker.min.css',
+                      'Scripts/jquery/DateTimePicker/jquery.datetimepicker.full.min.js',
                   ]
               },
               {

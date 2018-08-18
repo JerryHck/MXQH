@@ -68,22 +68,21 @@
                     <input type="text" class="form-control" ng-model="inCode.Ser.WorkOrder" placeholder="工单号">
                 </div>
                 <div class="form-group">
+                    <input type="text" class="form-control" ng-model="inCode.Ser.DeleteBy" placeholder="操作者">
+                </div>
+                <div class="form-group">
                     <div class="input-group">
-                        <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="inCode.Ser.StartDate" is-open="inCode.StartOpened" 
-                               close-text="关闭" clear-text="清空" current-text="今天"  placeholder="起始解绑日"
-                               alt-input-formats="['yyyy/M!/d!']" />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="inCode.StartOpened = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                        <input type="text" date-time-picker class="form-control" placeholder="结束解绑日" ng-model="inCode.Ser.StartDate" option="inCode.StartOption" />
+                        <span class="input-group-addon">
+                            <a><i ng-click="inCode.Ser.StartDate = undefined" class="glyphicon glyphicon-trash"></i></a>
                         </span>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="inCode.Ser.EndDate" is-open="inCode.EndOpened"
-                               close-text="关闭" clear-text="清空" current-text="今天" placeholder="结束解绑日"
-                               alt-input-formats="['yyyy/M!/d!']" />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="inCode.EndOpened = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                        <input type="text" date-time-picker class="form-control"  placeholder="结束解绑日" ng-model="inCode.Ser.EndDate" option="inCode.EndOption" />
+                        <span class="input-group-addon">
+                            <a><i ng-click="inCode.Ser.EndDate = undefined" class="glyphicon glyphicon-trash"></i></a>
                         </span>
                     </div>
                 </div>
@@ -94,14 +93,14 @@
         <div class="padder-md">
             <table class="table table-striped" cg-busy="sys.promise">
                 <tr>
-                    <td class="col-md-1">内部码</td>
-                    <td class="col-md-1">原工单</td>
-                    <td class="col-md-2">原品名</td>
-                    <td class="col-md-1">现工单</td>
-                    <td class="col-md-2">现品名</td>
-                    <td class="col-md-1">操作者</td>
-                    <td class="col-md-2">操作时间</td>
-                    <td class="col-md-2">备注</td>
+                    <td style="width:10%">内部码</td>
+                    <td style="width:13%">原工单</td>
+                    <td style="width:15%">原品名</td>
+                    <td style="width:13%">现工单</td>
+                    <td style="width:15%">现品名</td>
+                    <td style="width:8%">操作者</td>
+                    <td style="width:13%">操作时间</td>
+                    <td style="width:12%">备注</td>
                 </tr>
                 <tr ng-repeat="item in inCode.DeleteList">
                     <td>{{ item.InternalCode }}</td>

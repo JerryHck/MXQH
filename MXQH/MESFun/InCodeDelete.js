@@ -19,7 +19,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.SelectTab = SelectTab;
    
 
-    PageChange();
+    //PageChange();
 
     function Search() {
         vm.page.index = 1;
@@ -35,6 +35,9 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         }
         if (vm.Ser.WorkOrder) {
             list.push({ name: "WorkOrder", value: vm.Ser.WorkOrder });
+        }
+        if (vm.Ser.DeleteBy) {
+            list.push({ name: "DeleteBy", value: vm.Ser.DeleteBy });
         }
         if (vm.Ser.StartDate) {
             list.push({ name: "DeleteDate", value: vm.Ser.StartDate, type: ">=" });
