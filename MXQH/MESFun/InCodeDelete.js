@@ -5,7 +5,7 @@ angular.module('app')
 function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
-    vm.DeleteItem = { CreateBy: $rootScope.User.Emp.ChiLastName + $rootScope.User.Emp.ChiFirstName };
+    vm.DeleteItem = { CreateBy: $rootScope.User.UserNo };
     vm.MesList = [];
     vm.Focus = 0;
     vm.page = { index: 1, size: 12 };

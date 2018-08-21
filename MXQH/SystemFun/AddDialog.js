@@ -54,7 +54,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, $rootScope) {
     function JsonToDb() {
         vm.promise = AjaxService.GetJson('Dialog.json', '').then(function (data) {
             var List = [], listLoad = [];
-            var en = { CreateBy: $rootScope.User.Emp.EmpNo };
+            var en = { CreateBy: $rootScope.User.UserNo };
             en.TempColumns = "List,ListLoad";
             for (var i = 0, len = data.length; i < len; i++) {
                 var wait = false;

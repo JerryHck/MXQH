@@ -6,7 +6,7 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, AjaxService, $rootS
     var vm = this;
     vm.form = Form[ItemData.name ? 1 : 0];
     vm.NewItem = ItemData.name ? ItemData : { LoadFiles: [] };
-    vm.NewItem.CreateBy = $rootScope.User.Emp.EmpNo;
+    vm.NewItem.CreateBy = $rootScope.User.UserNo;
     vm.NewItem.Action = ItemData.name ? "U" : "I";
     vm.isExists = isExists;
     vm.LoadAdd = LoadAdd;

@@ -5,7 +5,7 @@ angular.module('app')
 function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
 
     var vm = this;
-    vm.NewBind = { Action: "I", CreateBy: $rootScope.User.Emp.ChiLastName + $rootScope.User.Emp.ChiFirstName, Customer:"U" };
+    vm.NewBind = { Action: "I", CreateBy: $rootScope.User.UserNo, Customer:"U" };
     vm.MesList = [];
     vm.Focus = 0;
     vm.page = { index: 1, size: 12 };
@@ -114,7 +114,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
             var mss = "生产条码 [" + vm.NewBind.InternalCode + ']  SN码 [' + vm.NewBind.SNCode + '] 绑定成功';
             var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };
             vm.MesList.splice(0, 0, Msg);
-            vm.NewBind = { Action: "I", CreateBy: $rootScope.User.Emp.ChiLastName + $rootScope.User.Emp.ChiFirstName, Customer: "U" };
+            vm.NewBind = { Action: "I", CreateBy: $rootScope.User.UserNo, Customer: "U" };
             vm.Focus = 0;
         });
     }

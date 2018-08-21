@@ -20,6 +20,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
     vm.setClass = setClass;
 
     vm.SaveProClass = SaveProClass;
+    vm.SaveProBasic = SaveProBasic;
     vm.EditProClass = EditProClass;
     vm.AddProRelCon = AddProRelCon;
     vm.DeleteProCon = DeleteProCon;
@@ -45,6 +46,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
     vm.EntityRelationExp = { Table: "EntityRelation", Column: "Expression" };
     vm.EntityRelationAss = { Table: "EntityRelation", Column: "Associate" };
     vm.ActionType = { Table: "BasicData", Column: "ActionType" };
+    vm.UserEmp = { Table: "BasicData", Column: "UserEmp" };
     vm.ProItem = { };
     vm.newRelCon = { ParenType: '0', ChildType: '0' };
 
@@ -72,18 +74,20 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
     function SaveEntity() {
         var en = angular.copy(vm.SelectedEn), haveRel = false, haveProc = false;
         en.ConnectName = vm.ConnectName;
-        en.CreateBy = $rootScope.User.Emp.EmpNo;
+        en.CreateBy = $rootScope.User.UserNo;
         var ProList = [], RelList = [], ProcList = [];
         for (var i = 0, len = vm.PropertyList.length; i < len; i++) {
             var pro = {};
             pro.ColumnName = vm.PropertyList[i].ColumnName;
             pro.ColumnType = vm.PropertyList[i].ColumnType;
-            pro.RelationType = vm.PropertyList[i].RelationType;
+            pro.RelationType = vm.PropertyList[i].RelationType || '';
             pro.IsKey = vm.PropertyList[i].IsKey == '1' ? 1 : 0;
             pro.OrderWay = vm.PropertyList[i].OrderWay;
             pro.OrderNum = vm.PropertyList[i].OrderNum;
+            pro.BasicName = vm.PropertyList[i].BasicName || '';
+            pro.BasicNamePro = vm.PropertyList[i].BasicNamePro || '';
             ProList.push(pro);
-            if (pro.ColumnType != '0') {
+            if (pro.ColumnType == '1' || pro.ColumnType == '2') {
                 var relList = vm.PropertyList[i].RelateList;
                 for (var j = 0, len2 = relList.length; j < len2; j++) {
                     var enRel = {};
@@ -310,6 +314,26 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
         vm.isProAdd = !vm.isProAdd
     }
 
+    //添加公共件
+    function SaveProBasic() {
+        if (vm.IsProEdit) { }
+        else {
+            var en = {};
+            en.ColumnName = vm.ProItem.ColumnName;
+            en.EntityName = vm.SelectedEn.EntityName;
+            en.ColumnType = vm.ProItem.ColumnType;
+            en.RelationType = vm.ProItem.RelationType;
+            en.OrderWay = "NON";
+            en.OrderNum = 0;
+            en.IsKey = 0;
+            en.BasicName = vm.ProItem.BasicName;
+            en.BasicNamePro = vm.ProItem.BasicNamePro;
+            vm.PropertyList.push(en);
+        }
+        vm.IsProEdit = false;
+        vm.isProAdd = !vm.isProAdd
+    }
+
     function EditProClass(pro) {
         vm.ProItem = pro;
         vm.ProItem.RelateEntity = pro.RelateList ? pro.RelateList[0].EntityName : '';
@@ -392,7 +416,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
                 AjaxService.GetPlan('PlanProperty', en).then(function (data) {
                     var v = !data.ColumnName;
                     vm.ClassForm.Pro.$setValidity('unique', v);
-                    vm.ClassForm.Pro.$setValidity('neetList', vm.ProItem.RelateList && vm.ProItem.RelateList.length > 0);
+                    vm.ClassForm.Pro.$setValidity('neetList', vm.ProItem.ColumnType == '3' || (vm.ProItem.RelateList && vm.ProItem.RelateList.length > 0));
                 });
             }
         }
@@ -422,6 +446,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
             case '0': c = "panel-default"; break;
             case '1': c = "panel-primary"; break;
             case '2': c = "panel-danger"; break;
+            case '3': c = "panel-info"; break;
         }
         return c;
     }
