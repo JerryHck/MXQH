@@ -315,9 +315,9 @@
                                                                     <div config-select ng-model="en.NewProc.ActionType" ng-name="ActionType" my-required="true" config-option="en.ActionType"></div>
                                                                 </div>
                                                                 <div class="col-sm-2" ng-class="{ 'has-error' : en.ProcedureForm.ShortName.$invalid }">
-                                                                    <ui-select ng-model="en.NewProc.RoleSn" theme="bootstrap" search-enabled="true" required>
-                                                                        <ui-select-match placeholder="选择角色...">{{ $select.selected.RoleName }}</ui-select-match>
-                                                                        <ui-select-choices repeat="item.RoleSn as item in en.ListRole | filter: $select.search track by item.RoleSn">
+                                                                    <ui-select ng-model="en.NewProc.RoleSn" class="h6" theme="bootstrap" search-enabled="true" required>
+                                                                        <ui-select-match class="h5" placeholder="选择角色...">{{ $select.selected.RoleName }}</ui-select-match>
+                                                                        <ui-select-choices class="h5" repeat="item.RoleSn as item in en.ListRole | filter: $select.search track by item.RoleSn">
                                                                             <div ng-bind-html="item.RoleSn | highlight: $select.search"></div>
                                                                             <small ng-bind-html="item.RoleName | highlight: $select.search"></small>
                                                                         </ui-select-choices>
@@ -336,7 +336,10 @@
                                                         <div class="col-sm-12">
                                                             <div class="row">
                                                                 <div class="col-sm-2 m-l-none pl-md-0">
-                                                                    <label class="control-label h4">{{ proc.ShortName }}</label>
+                                                                    <label class="control-label h4">
+                                                                        <a class="text-success mr-2" ng-click="en.OpenProc(proc)"><i class="icon icon-settings"></i></a>
+                                                                        <span>{{ proc.ShortName }}</span>
+                                                                    </label>
                                                                 </div>
                                                                 <div class="col-sm-5 m-l-none">
                                                                     <div object-select ob-type="'P'" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.ConnectName" ng-disabled="!en.isEditing"
@@ -346,7 +349,7 @@
                                                                     <div config-select ng-model="proc.ActionType" ng-name="ActionType" my-required="true" config-option="en.ActionType" ng-disabled="!en.isEditing"></div>
                                                                 </div>
                                                                 <div class="col-sm-2" ng-class="{ 'has-error' : en.ProcedureForm.roleSn.$invalid }">
-                                                                    <ui-select name ="roleSn" ng-model="proc.RoleSn" theme="bootstrap" search-enabled="true" required ng-disabled="!en.isEditing">
+                                                                    <ui-select name="roleSn" class="h6" ng-model="proc.RoleSn" theme="bootstrap" search-enabled="true" required ng-disabled="!en.isEditing">
                                                                         <ui-select-match placeholder="选择角色...">{{ $select.selected.RoleName }}</ui-select-match>
                                                                         <ui-select-choices repeat="item.RoleSn as item in en.ListRole | filter: $select.search track by item.RoleSn">
                                                                             <div ng-bind-html="item.RoleSn | highlight: $select.search"></div>

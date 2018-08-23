@@ -1,0 +1,88 @@
+﻿<!--<div class="modal-header" cg-busy="proc.promise">
+    <h3 class="modal-title">存储过程设定</h3>
+</div>-->
+<div class="modal-body" ng-form="proc.ProcSetForm">
+    <uib-tabset active="active" type="tabs">
+        <uib-tab index="$index" ng-repeat="t in proc.List">
+            <uib-tab-heading class="h5">数据表{{ t.ReadIndex == 0?"":t.ReadIndex }}设定</uib-tab-heading>
+            <div class="tab-content scroll-y" style="height:500px">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="form-horizontal col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-2">导出excel</label>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="input-group m-b">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" ng-model="t.IsExcel"/>
+                                                </span>
+                                                <input type="text" class="form-control" ng-model="t.SheetName" placeholder="sheet 名称" ng-disabled="!t.IsExcel">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" ng-model="t.IsAll" ng-change="proc.SelectAll(t)" ng-disabled="!t.IsExcel"/><i></i>全选
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5 b-r pt-2 text-xs">
+                            <div class="panel panel-default" ng-repeat="col in t.Columns">
+                                <div class="panel-heading text-center">
+                                    <label class="i-checks pull-left">
+                                        <input type="checkbox" ng-model="col.IsConvert"><i></i>转换
+                                    </label>
+                                    {{ col.ColumnName }}
+                                    <label class="i-checks pull-right">
+                                        <input type="checkbox" ng-disabled="!t.IsExcel" ng-change="proc.IsExcelChange(t, col)" ng-model="col.IsExcel"><i></i>导出excel
+                                    </label>
+                                </div>
+                                <div class="panel-body pt-0" ng-if="col.IsConvert">
+                                    <div class="form-group col-md-12 pt-0" ng-class="{ 'has-error' : proc.ProcSetForm.ConvertType.$invalid }">
+                                        <div config-select ng-model="col.ConvertType" placeholder="选择转换方式" ng-name="ConvertType" my-required="true" config-option="proc.ValueConvertConfig"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 b-r pt-2 text-xs wrapper-xs">
+                            <div class="form-horizontal">
+                                <div class="form-group" ng-repeat="excel in t.ExcelColumns "  ng-drop="true" ng-drop-success="proc.Drop(t, $data,$index)">
+                                    <div class="row col-md-12 m-1 b-info">
+                                        <div class="col-md-4 m-l-none pl-md-0">
+                                            <label class="control-label text-md">
+                                                <span>
+                                                    <i class="glyphicon glyphicon-move text-info" ng-drag="true" 
+                                                       ng-drag-data="excel" ng-drag-success="proc.Drag($data,$index)"></i>{{ excel.ColumnName }}
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-5" ng-class="{ 'has-error' : !excel.ColumnText }">
+                                            <input type="text" name="ColText" class="form-control" placeholder="中文栏名" ng-model="excel.ColumnText" required/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="i-checks pull-left">
+                                                <input type="checkbox" ng-model="excel.IsAutoMerge"><i></i>合并行
+                                            </label>
+                                            <a class="text-danger ml-3 pull-right" ng-click="proc.DeleteExcel(t, $index)"><i class="glyphicon glyphicon-remove"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <pre>{{ t.Columns | json }}</pre>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</div>
+<div class="modal-footer text-center">
+    <button class="btn btn-success" type="button" ng-disabled="proc.ProcSetForm.$invalid" ng-click="proc.Save()">储存</button>
+    <button class="btn btn-warning" type="button" ng-click="proc.cancel()">取消</button>
+</div>
+
+<!--<pre>{{ proc.List | json }}</pre>-->

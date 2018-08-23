@@ -503,9 +503,8 @@ angular.module('app')
                 opts: '=',
                 ngComplete: '&'
             },
-            //templateUrl: 'js/directives/ImportSheetJs.html',
-            templateUrl: 'js/directives/ImportSheetJs.html?v=' + (new Date()),
-
+            templateUrl: 'js/directives/ImportSheetJs.html',
+            //templateUrl: 'js/directives/ImportSheetJs.html?v=' + (new Date()),
             link: function ($scope, elm) {
                 $scope.opts = $scope.opts || {};
                 $scope.fileType = $scope.fileType || "*";

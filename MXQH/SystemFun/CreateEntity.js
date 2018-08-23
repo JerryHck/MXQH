@@ -37,7 +37,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
     vm.ImportPlan = ImportPlan;
     vm.DownLoadPlan = DownLoadPlan;
     vm.planBak = planBak;
-
+    vm.OpenProc = OpenProc;
     
     vm.ConfigOrderWay = { Table: "EntityProperty", Column: "OrderWay" };
     vm.ConfigColumnType = { Table: "EntityProperty", Column: "ColumnType" };
@@ -484,6 +484,19 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
             };
             FileLoad.Load(option);
         })
+    }
+
+    function OpenProc(proc) {
+        var item = angular.copy(proc);
+        item.ConnectName = vm.ConnectName;
+        var resolve = {
+            ItemData: function () {
+                return item;
+            }
+        };
+        Dialog.open("EnProcSetDialog", resolve).then(function (data) {
+        }).catch(function (reason) {
+        });
     }
 }
 ]);
