@@ -80,7 +80,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
         var en = {};
         en.RoleSn = vm.SelectedRole.RoleSn;
         en.UserNo = vm.NewRoleUser;
-        en.CreateBy = $rootScope.User.Emp.EmpNo;
+        en.CreateBy = $rootScope.User.UserNo;
         vm.promise = AjaxService.PlanInsert("UserRole", en).then(function (data) {
             toastr.success('新增成功');
             vm.NewRoleUser = undefined;
@@ -133,7 +133,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
         var en = {};
         en.RoleSn = vm.SelectedRole.RoleSn;
         en.FunNo = vm.NewRoleFun;
-        en.CreateBy = $rootScope.User.Emp.EmpNo;
+        en.CreateBy = $rootScope.User.UserNo;
         vm.promise = AjaxService.PlanInsert("RoleFun", en).then(function (data) {
             toastr.success('新增成功');
             vm.NewRoleFun = undefined;

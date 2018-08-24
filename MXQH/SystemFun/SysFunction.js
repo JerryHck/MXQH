@@ -173,7 +173,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
         if (!showPop(vm.editFun)) {
             var json = {};
             json.FunNo = funNo;
-            vm.promise = AjaxService.EditBack("sp_DeleteFunction", json).then(function (data) {
+            vm.promise = AjaxService.ExecPlan('FunRoot', "delete", json).then(function (data) {
                 toastr.success('删除成功');
                 reflashData();
                 //更新功能基本信息
@@ -293,7 +293,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
         en.OrderBy = vm.FunList.Length || 1;
         en.CreateBy = "Sys";
         en.TempColumns = 'ListLoad';
-        vm.promise = AjaxService.EditBack("sp_SaveFunction", en).then(function (data) {
+        vm.promise = AjaxService.ExecPlan('FunRoot', "save", en).then(function (data) {
             //更新数据
             reflashData();
             //更新功能基本信息
@@ -341,7 +341,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
             json.SysNo = "MXQH";
             json.RootList = JSON.stringify(List);
             json.TempColumns = 'RootList';
-            vm.promise = AjaxService.EditBack("sp_SaveFunctionRoot", json).then(function (data) {
+            vm.promise = AjaxService.ExecPlan("FunRoot", "saveRoot", json).then(function (data) {
                 toastr.success('储存成功');
                 //更新功能基本信息
                 AjaxService.LoginAction("ReflashRoot");

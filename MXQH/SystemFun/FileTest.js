@@ -10,6 +10,10 @@ function ($scope, $http, $q, AjaxService) {
     vm.Do2 = Do2;
     //vm.FileData = { header: { header: "A" }, sheetNum: 1 };
 
+    AjaxService.GetPlans("LonginEmp").then(function (data) {
+        vm.List = data;
+    })
+
     function Do() {
         vm.List = angular.copy(vm.FileData.data[0]);
         console.log(vm.List)

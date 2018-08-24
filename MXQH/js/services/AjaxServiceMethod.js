@@ -51,6 +51,7 @@
             //获取表栏位
             GetColumns: GetColumns,
             GetTbColumns: GetTbColumns,
+            GetProcColumns:GetProcColumns,
             GetTableConfig: GetTableConfig,
             //User
             AddUser: AddUser,
@@ -182,6 +183,15 @@
                 function () { g.reject(); }
             );
             return g.promise;
+        }
+
+        function GetProcColumns(conn, proc){
+            var d = $q.defer(),
+                 url = serviceUrl + generic;
+            var en = {};
+            en.connName = conn;
+            en.strProc = proc;
+            return Ajax(d, url, en, "GetProcColumns");
         }
 
         function GetTbColumns(schema, table, con) {
