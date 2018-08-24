@@ -100,8 +100,8 @@
                     <td>{{ item.InternalCode }}</td>
                     <td>{{ item.SNCode }}</td>
                     <td>{{ item.IDCode1 }}</td>
-                    <td>{{ item.CreateBy }}</td>
-                    <td>{{ item.CreateDate }}</td>
+                    <td>{{ item.Emp.Name }}</td>
+                    <td>{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                 </tr>
             </table>
             <div class="col-md-12 text-center" ng-if="gen.page.total>gen.page.size">
