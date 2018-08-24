@@ -16,11 +16,11 @@
                                         <div class="col-md-8">
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon">
-                                                    <input type="checkbox" ng-model="t.IsExcel"/>
+                                                    <input type="checkbox" ng-model="t.IsExcel" />
                                                 </span>
                                                 <input type="text" class="form-control" ng-model="t.SheetName" placeholder="sheet 名称" ng-disabled="!t.IsExcel">
                                                 <span class="input-group-addon">
-                                                    <input type="checkbox" ng-model="t.IsAll" ng-change="proc.SelectAll(t)" ng-disabled="!t.IsExcel"/><i></i>全选
+                                                    <input type="checkbox" ng-model="t.IsAll" ng-change="proc.SelectAll(t)" ng-disabled="!t.IsExcel" /><i></i>全选
                                                 </span>
                                             </div>
                                         </div>
@@ -29,53 +29,49 @@
                             </div>
                         </div>
 
-                        <div class="col-md-5 b-r pt-2 text-xs">
-                            <div class="panel panel-default" ng-repeat="col in t.Columns">
-                                <div class="panel-heading text-center">
-                                    <label class="i-checks pull-left">
-                                        <input type="checkbox" ng-model="col.IsConvert"><i></i>转换
-                                    </label>
-                                    {{ col.ColumnName }}
-                                    <label class="i-checks pull-right">
-                                        <input type="checkbox" ng-disabled="!t.IsExcel" ng-change="proc.IsExcelChange(t, col)" ng-model="col.IsExcel"><i></i>导出excel
+                        <div class="col-md-7 b-r pt-2 text-xs">
+                            <div class="b bg-light list-group-item" ng-repeat="col in t.Columns">
+                                <div class="row v-middle">
+                                    <div class="col-md-3">
+                                        <label class="i-checks">
+                                            <input type="checkbox" ng-model="col.IsConvert"><i></i>转换
+                                        </label>
+                                    </div>
+                                    <label class="col-md-3 font-bold">{{ col.ColumnName }}</label>
+                                    <div class="col-md-4 form-group-sm" ng-class="{ 'has-error' : !col.ColumnText }">
+                                        <input type="text" name="ColText" class="form-control" placeholder="中文栏名" ng-model="col.ColumnText" required/>
+                                    </div>
+                                    <label class="col-md-2 i-checks pull-right">
+                                        <input type="checkbox" ng-disabled="!t.IsExcel" ng-change="proc.IsExcelChange(t, col)" ng-model="col.IsExcel"><i></i>excel
                                     </label>
                                 </div>
-                                <div class="panel-body pt-0" ng-if="col.IsConvert">
-                                    <div class="form-group col-md-12 pt-0" ng-class="{ 'has-error' : proc.ProcSetForm.ConvertType.$invalid }">
+                                <div class="row text-center" ng-if="col.IsConvert">
+                                    <div ng-class="{ 'has-error' : proc.ProcSetForm.ConvertType.$invalid }">
                                         <div config-select ng-model="col.ConvertType" placeholder="选择转换方式" ng-name="ConvertType" my-required="true" config-option="proc.ValueConvertConfig"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-7 b-r pt-2 text-xs wrapper-xs">
-                            <div class="form-horizontal">
-                                <div class="form-group" ng-repeat="excel in t.ExcelColumns "  ng-drop="true" ng-drop-success="proc.Drop(t, $data,$index)">
-                                    <div class="row col-md-12 m-1 b-info">
-                                        <div class="col-md-4 m-l-none pl-md-0">
-                                            <label class="control-label text-md">
-                                                <span>
-                                                    <i class="glyphicon glyphicon-move text-info" ng-drag="true" 
-                                                       ng-drag-data="excel" ng-drag-success="proc.Drag($data,$index)"></i>{{ excel.ColumnName }}
-                                                </span>
-                                            </label>
-                                        </div>
-                                        <div class="col-md-5" ng-class="{ 'has-error' : !excel.ColumnText }">
-                                            <input type="text" name="ColText" class="form-control" placeholder="中文栏名" ng-model="excel.ColumnText" required/>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="i-checks pull-left">
-                                                <input type="checkbox" ng-model="excel.IsAutoMerge"><i></i>合并行
-                                            </label>
-                                            <a class="text-danger ml-3 pull-right" ng-click="proc.DeleteExcel(t, $index)"><i class="glyphicon glyphicon-remove"></i></a>
-                                        </div>
-                                    </div>
+                        <div class="col-md-5 pt-2 text-xs">
+                            <div class="row m-l-md col-md-12 wrapper-xs b-b" ng-repeat="excel in t.ExcelColumns " ng-drop="true" ng-drop-success="proc.Drop(t, $data,$index)">
+                                <label class="control-label text-md col-md-7">
+                                    <span>
+                                        <i class="glyphicon glyphicon-move text-info" ng-drag="true"
+                                           ng-drag-data="excel" ng-drag-success="proc.Drag($data,$index)"></i>{{ excel.ColumnName }}
+                                    </span>
+                                </label>
+                                <label class="i-checks col-md-3">
+                                    <input type="checkbox" ng-model="excel.IsAutoMerge"><i></i>合并行
+                                </label>
+                                <div class="col-md-1">
+                                    <a class="text-danger" ng-click="proc.DeleteExcel(t, $index)"><i class="glyphicon glyphicon-remove"></i></a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <pre>{{ t.Columns | json }}</pre>
+                <!--<pre>{{ t.Columns | json }}</pre>-->
             </div>
         </uib-tab>
     </uib-tabset>
@@ -85,4 +81,4 @@
     <button class="btn btn-warning" type="button" ng-click="proc.cancel()">取消</button>
 </div>
 
-<!--<pre>{{ proc.List | json }}</pre>-->
+<!--<pre>{{ proc.DataList | json }}</pre>-->
