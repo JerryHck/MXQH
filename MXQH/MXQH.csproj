@@ -384,6 +384,8 @@
     <Content Include="SystemFun\CreateEntity.js" />
     <Content Include="SystemFun\DialogDialog.html" />
     <Content Include="SystemFun\DialogDialog.js" />
+    <Content Include="SystemFun\EnProcSetDialog.html" />
+    <Content Include="SystemFun\EnProcSetDialog.js" />
     <Content Include="SystemFun\FileTest.html" />
     <Content Include="SystemFun\FileTest.js" />
     <Content Include="SystemFun\IconDialog.html" />

@@ -282,26 +282,18 @@ angular.module('app')
             obConnect: '=',
             obType: '=',
             ngDisabled: '=',
-            clear: '=',
             placeholder: '@',
             selectClass: '@',
             myRequired: '@',
             ngName: '@',
             ngChange:'&'
         },
-        template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
+        template:  '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
                   + '         <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>'
                   + '          <ui-select-choices class="pl-1" repeat="item in data | filter: $select.search track by item.Name" refresh="refresh($select.search)" refresh-delay="0">'
                   + '             <small><span ng-bind-html="item.DbSchema | highlight: $select.search"></span>.<span ng-bind-html="item.Name | highlight: $select.search"</span></small>'
                   + '         </ui-select-choices>'
                   + '     </ui-select>'
-                  + '    <span class="input-group-btn" ng-if="clear">'
-                  + '        <button ng-click="$parent.ngModel= undefined" class="btn btn-default" ng-disabled="ngDisabled">'
-                  + '            <span class="glyphicon glyphicon-trash text-danger"></span>'
-                  + '         </button>'
-                  + '     </span>'
-                  + ' </div>'
         ,
         link: link
     };
@@ -511,9 +503,8 @@ angular.module('app')
                 opts: '=',
                 ngComplete: '&'
             },
-            //templateUrl: 'js/directives/ImportSheetJs.html',
-            templateUrl: 'js/directives/ImportSheetJs.html?v=' + (new Date()),
-
+            templateUrl: 'js/directives/ImportSheetJs.html',
+            //templateUrl: 'js/directives/ImportSheetJs.html?v=' + (new Date()),
             link: function ($scope, elm) {
                 $scope.opts = $scope.opts || {};
                 $scope.fileType = $scope.fileType || "*";

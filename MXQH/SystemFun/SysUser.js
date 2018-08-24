@@ -97,7 +97,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
         var en = {};
         en.UserNo = vm.SelectedUser.UserNo;
         en.RoleSn = vm.newUserRole;
-        en.CreateBy = $rootScope.User.Emp.EmpNo;
+        en.CreateBy = $rootScope.User.UserNo;
         vm.promise = AjaxService.PlanInsert("UserRole", en).then(function (data) {
             toastr.success('新增成功');
             getListUserRole();
