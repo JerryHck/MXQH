@@ -8,7 +8,7 @@ function ($scope, $http, $q, AjaxService,$window) {
     bomei.Import = ImportExcel;
     bomei.Export = ExportExcel;
     bomei.Do = Do;
-    bomei.FileData = { header: { header: ["Line","Code","SPEC","Name" ] }, sheetNum: 1, data: [] };
+    bomei.FileData = { header: { header: ["Line", "Code", "SPEC", "Name", "Num", "Version", "Cost", "Weight", "BOMUom", "BaseNum", "Waste", "Position", "Remark"] }, sheetNum: 1, data: [] };
     
     //导入excel数据
     function ImportExcel() {
@@ -26,7 +26,7 @@ function ($scope, $http, $q, AjaxService,$window) {
         var en = {};
         var sheet = {};
         sheet.SheetName = "BOM列表";
-        sheet.ColumnsName = ["层次号","组号", "料品", "品名", "规格"]
+        sheet.ColumnsName = ["层次号","组号", "料品", "品名", "规格","数量","版本号","成本","重量","BOM单位","基数","耗损率","装配位置","BOM备注"]
         sheet.FirstColunms = false;
         //console.log(itemmaster.S);
         bomei.promise = AjaxService.ExecPlanToExcel("AuctusBom", 'AuctusBOM', en, sheet).then(function (data) {
