@@ -12,7 +12,7 @@ function ($scope, $http, $q, AjaxService,$window) {
     
     //导入excel数据
     function ImportExcel() {
-        console.log('1');
+        //导入时将表头也包含在内，表头的行号为1，在存储过程中导入时自动删除表头这一行
         var en = {};
         en.ListLoad = JSON.stringify(bomei.List);
         en.TempColumns = 'ListLoad';
@@ -26,17 +26,14 @@ function ($scope, $http, $q, AjaxService,$window) {
         var en = {};
         var sheet = {};
         sheet.SheetName = "BOM列表";
-        sheet.ColumnsName = ["层次号","组号", "料品", "品名", "规格","数量","版本号","成本","重量","BOM单位","基数","耗损率","装配位置","BOM备注"]
+        sheet.ColumnsName = ["层次号", "组号", "料品", "规格", "品名", "数量", "版本号", "成本", "重量", "BOM单位", "基数", "耗损率", "装配位置", "BOM备注"]
         sheet.FirstColunms = false;
-        //console.log(itemmaster.S);
         bomei.promise = AjaxService.ExecPlanToExcel("AuctusBom", 'AuctusBOM', en, sheet).then(function (data) {
             $window.location.href = data.File;
         });
     }
     function Do() {
         bomei.List = angular.copy(bomei.FileData.data[0]);
-        bomei.List.splice(0,1);
-        //console.log(bomei.FileData.data[0]);
     }
 }
 
