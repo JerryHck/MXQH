@@ -16,6 +16,8 @@
             GetPlansPage:GetPlansPage,
             //保存计划实体
             SavePlan: SavePlan,
+            //刷新计划实体
+            ReflashPlan:ReflashPlan,
             //删除计划实体
             DeletePlan: DeletePlan,
             //计划对应表新增
@@ -239,7 +241,13 @@
             en.strJson = JSON.stringify(json);
             return Ajax(d, url, en, "SavePlan");
         }
-
+        
+        function ReflashPlan(name) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = {};
+            en.planName = name;
+            return Ajax(d, url, en, "ReflashPlan");
+        }
         function DeletePlan(name, json) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = {};

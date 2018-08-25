@@ -175,8 +175,10 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
         en.TempColumns = "Excel,Columns";
 
         AjaxService.ExecPlan("EnProcExcel", 'save', en).then(function (data) {
-            toastr.success('储存成功');
-            $uibModalInstance.close(ItemData);
+            AjaxService.ReflashPlan(ItemData.EntityName).then(function (data2) {
+                toastr.success('储存成功');
+                $uibModalInstance.close(ItemData);
+            })
         });
     }
 

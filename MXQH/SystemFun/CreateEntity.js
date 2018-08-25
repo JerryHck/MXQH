@@ -495,6 +495,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
             }
         };
         Dialog.open("EnProcSetDialog", resolve).then(function (data) {
+
         }).catch(function (reason) {
         });
     }
