@@ -476,6 +476,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
             var option = {};
             option.file = file;
             option.type = 'text';
+            option.encode = 'gb2312';
             option.onComplete = function (data) {
                 AjaxService.PlanBak("I", data).then(function (data2) {
                     toastr.success('导入成功');
