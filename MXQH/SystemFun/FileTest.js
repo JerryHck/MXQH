@@ -24,7 +24,7 @@ function ($scope, $http, $window, AjaxService) {
 
     AjaxService.GetPlanExcel("BindCode", "BindExcel", en).then(function (data) {
         vm.List = data;
-        $window.location.href = data.File;
+        //$window.location.href = data.File;
     })
 
     function Do() {

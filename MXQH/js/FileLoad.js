@@ -12,6 +12,7 @@ function ($rootScope, $q, AjaxService, $ocLazyLoad) {
                 var me = h;
                 me.precetMethod = option.onProcent;
                 me.type = option.type || 'binary';//binary,buffer,url,text
+                me.encode = option.encode || 'utf-8';
                 me.onComplete = option.onComplete;
                 me.onSliceData = option.onProgress;
                 me.onProcent = option.onProcent;
@@ -89,7 +90,7 @@ function ($rootScope, $q, AjaxService, $ocLazyLoad) {
                 case 'binary': me.reader.readAsBinaryString(blob); break;
                 case 'buffer': me.reader.readAsArrayBuffer(blob); break;
                 case 'url': me.reader.readAsDataURL(blob); break;
-                case 'text': me.reader.readAsText(blob); break;
+                case 'text': me.reader.readAsText(blob, me.encode); break;
             }
         },
         abortHandler: function () {
