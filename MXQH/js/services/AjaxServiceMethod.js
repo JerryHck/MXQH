@@ -13,7 +13,9 @@
             //获得实体资料-列表
             GetPlans: GetPlans,
             //分页获取实体资料
-            GetPlansPage:GetPlansPage,
+            GetPlansPage: GetPlansPage,
+            //实体计划excel导出
+            GetPlanExcel:GetPlanExcel,
             //保存计划实体
             SavePlan: SavePlan,
             //刷新计划实体
@@ -274,6 +276,15 @@
             en.strJson = JSON.stringify(json);
             en.sheetTable = JSON.stringify(convertArray(sheetTable));
             return Ajax(d, url, en, "ExecPlanToExcel")
+        }
+
+        function GetPlanExcel(name, shortName, json) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = {};
+            en.planName = name;
+            en.shortName = shortName;
+            en.strJson = JSON.stringify(json);
+            return Ajax(d, url, en, "GetPlanExcel")
         }
 
         function AddUser(json) {

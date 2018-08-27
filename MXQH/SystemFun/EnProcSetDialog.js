@@ -45,6 +45,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
                                 ex.IsExcel = data2[j].IsExcel;
                                 ex.IsAll = data2[j].IsAll;
                                 ex.SheetName = data2[j].SheetName;
+                                vm.ExcelName = data2[j].ExcelName;
                                 if (data2[j].Columns) {
                                     for (var k = 0, len3 = data2[j].Columns.length; k < len3; k++) {
                                         var colDb = data2[j].Columns[k];
@@ -144,6 +145,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
             ex.IsExcel = exEn.IsExcel || false;
             ex.SheetName = exEn.SheetName || "";
             ex.IsAll = exEn.IsAll || false;
+            ex.ExcelName = vm.ExcelName || "";
             //加入栏位设定
             for (var k = 0, len3 = exEn.Columns.length; k < len3; k++) {
                 var col = {}, ThisCol = vm.List[i].Columns[k];

@@ -98,11 +98,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function ExportExcel() {
-        var sheet = {};
-        sheet.SheetName = "内部码解绑记录信息表";
-        sheet.ColumnsName = ["内部码", "原工单", "品名", "现工单", '现品名', '操作者', '操作日期', '备注']
-        sheet.FirstColunms = false;
-        vm.promise = AjaxService.ExecPlanToExcel("MESDeleteCode", 'Excel', vm.Ser, sheet).then(function (data) {
+        vm.promise = AjaxService.GetPlanExcel("MESDeleteCode", 'Excel', vm.Ser).then(function (data) {
             //console.log(data);
             $window.location.href = data.File;
         });

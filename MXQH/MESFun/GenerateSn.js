@@ -126,11 +126,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
         en.SNCode = vm.Ser.SNCode;
         en.IDCode1 = vm.Ser.IDCode1;
         en.Customer = "U";
-        var sheet = {};
-        sheet.SheetName = "条码绑定列表";
-        sheet.ColumnsName = ["生成条码", "客户SN码", "模块二维码", "绑定时间"]
-        sheet.FirstColunms = false;
-        vm.promise = AjaxService.ExecPlanToExcel("BindCode", 'BindExcel', en, sheet).then(function (data) {
+        vm.promise = AjaxService.GetPlanExcel("BindCode", 'BindExcel', en).then(function (data) {
             //console.log(data);
             $window.location.href = data.File;
         });
