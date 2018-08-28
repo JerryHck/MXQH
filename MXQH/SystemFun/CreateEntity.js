@@ -336,7 +336,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
 
     function EditProClass(pro) {
         vm.ProItem = pro;
-        vm.ProItem.RelateEntity = pro.RelateList ? pro.RelateList[0].EntityName : '';
+        vm.ProItem.RelateEntity = pro.RelateList && pro.RelateList[0] ? pro.RelateList[0].EntityName : '';
         vm.RelateList = pro.RelateList ? angular.copy(pro.RelateList) : [];
         vm.isProAdd = true;
         vm.IsProEdit = true;
