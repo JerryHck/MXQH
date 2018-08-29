@@ -10,9 +10,9 @@ function ($scope, $http, $window, AjaxService) {
     vm.Do2 = Do2;
     //vm.FileData = { header: { header: "A" }, sheetNum: 1 };
 
-    //AjaxService.GetPlans("LonginEmp").then(function (data) {
-    //    vm.List = data;
-    //})
+    AjaxService.GetPlans("empTest").then(function (data) {
+        vm.List = data;
+    })
     var en = {};
     //en.InternalCode = vm.Ser.InternalCode;
     //en.SNCode = vm.Ser.SNCode;
@@ -22,10 +22,10 @@ function ($scope, $http, $window, AjaxService) {
     //    vm.List = data;
     //})
 
-    AjaxService.GetPlanExcel("BindCode", "BindExcel", en).then(function (data) {
-        vm.List = data;
-        $window.location.href = data.File;
-    })
+    //AjaxService.GetPlanExcel("BindCode", "BindExcel", en).then(function (data) {
+    //    vm.List = data;
+    //    //$window.location.href = data.File;
+    //})
 
     function Do() {
         vm.List = angular.copy(vm.FileData.data[0]);
