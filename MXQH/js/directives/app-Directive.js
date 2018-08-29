@@ -413,6 +413,41 @@ angular.module('app')
         }
     }
 }])
+.directive('commonDataSelect', ['AjaxService', function (AjaxService) {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        scope: {
+            ngModel: '=',
+            ngDisabled: '=',
+            searchEnabled: '=',
+            placeholder: '@',
+            selectClass: '@',
+            myRequired: '@',
+            ngName: '@',
+            ngChange: '&'
+        },
+        template: '<ui-select name="{{ ngName }}" ng-change="ngChange()" class="{{ selectClass }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="myRequired">'
+                    + ' <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.ComName }}</ui-select-match>       '
+                    + ' <ui-select-choices repeat="item.ComName as item in data | propsFilter: {ComName: $select.search}">                          '
+                    + '      <div ng-bind-html="item.ComName | highlight: $select.search"></div>'
+                    + '  </ui-select-choices>'
+                    + '</ui-select>'
+        ,
+        link: link
+    };
+
+    function link(scope, element, attrs) {
+        scope.data = undefined;
+        scope.placeholder = scope.placeholder || "请选择...";
+        AjaxService.GetPlans("CommonData").then(function (data) {
+            scope.data = data;
+            if (data.length > 0) {
+                scope.ngModel = scope.ngModel || data[0].ComName;
+            }
+        });
+    }
+}])
 .directive('entitySelect', ['AjaxService', function (AjaxService) {
     return {
         restrict: 'A',
