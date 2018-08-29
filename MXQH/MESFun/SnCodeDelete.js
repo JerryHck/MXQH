@@ -66,7 +66,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                 else {
                     vm.SNCode = data.SNCode;
                     var sub = data.SNCode.substring(0, 2);
-                    if (sub != '83' && sub != '93') {
+                    if (sub != '83' && sub != '93' && sub != '45') {
                         vm.DeleteItem.InternalCode = undefined;
                         //toastr.error(mes);
                         vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '不允许解绑该SN码[' + data.SNCode + ']' });
