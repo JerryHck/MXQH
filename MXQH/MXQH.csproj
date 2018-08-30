@@ -180,6 +180,8 @@
     <Content Include="MESFun\GenerateSn.js" />
     <Content Include="MESFun\InCodeDelete.html" />
     <Content Include="MESFun\InCodeDelete.js" />
+    <Content Include="MESFun\SnCodeDelete.html" />
+    <Content Include="MESFun\SnCodeDelete.js" />
     <Content Include="PLMFun\BOMEI.html" />
     <Content Include="PLMFun\BOMEI.js" />
     <Content Include="PLMFun\ItemMaster.html" />

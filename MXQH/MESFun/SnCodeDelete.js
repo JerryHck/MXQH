@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('InCodeDeleteCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
+.controller('SnCodeDeleteCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
 function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
@@ -17,7 +17,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
     vm.SelectTab = SelectTab;
-   
+
 
     //PageChange();
 
@@ -26,15 +26,12 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         PageChange()
     }
 
-    
+
 
     function PageChange() {
         var list = [];
         if (vm.Ser.InternalCode) {
             list.push({ name: "InternalCode", value: vm.Ser.InternalCode });
-        }
-        if (vm.Ser.WorkOrder) {
-            list.push({ name: "WorkOrder", value: vm.Ser.WorkOrder });
         }
         if (vm.Ser.DeleteBy) {
             list.push({ name: "DeleteBy", value: vm.Ser.DeleteBy });
@@ -45,7 +42,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         if (vm.Ser.EndDate) {
             list.push({ name: "DeleteDate", value: vm.Ser.EndDate, type: "<=" });
         }
-        vm.promise = AjaxService.GetPlansPage("MESDeleteCode", list, vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("MESSnDelete", list, vm.page.index, vm.page.size).then(function (data) {
             vm.DeleteList = data.List;
             vm.page.total = data.Count;
         });
@@ -59,25 +56,24 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
             var en = {};
             en.name = "InternalCode";
             en.value = vm.DeleteItem.InternalCode;
-            AjaxService.GetPlan("MesPlanMain", en).then(function (data) {
+            AjaxService.GetPlan("MESSNCode", en).then(function (data) {
                 var mss = "生产条码 [" + vm.DeleteItem.InternalCode + '] ';
                 if (!data.InternalCode) {
                     vm.DeleteItem.InternalCode = undefined;
                     //toastr.error(mes);
-                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或还没有上线' });
+                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或还没有绑定SN码' });
                 }
                 else {
-                    AjaxService.GetPlan("MESSNCode", en).then(function (data2) {
-                        if (data2.InternalCode) {
-                            vm.DeleteItem.InternalCode = undefined;
-                            //toastr.error(mes);
-                            var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过SN码[' + data2.SNCode + "], 不可再解绑" };
-                            vm.MesList.splice(0, 0, Msg);
-                        }
-                        else if (vm.IsAuto) {
-                            DeleteCode();
-                        }
-                    })
+                    vm.SNCode = data.SNCode;
+                    var sub = data.SNCode.substring(0, 2);
+                    if (sub != '83' && sub != '93' && sub != '45') {
+                        vm.DeleteItem.InternalCode = undefined;
+                        //toastr.error(mes);
+                        vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '不允许解绑该SN码[' + data.SNCode + ']' });
+                    }
+                    else if (vm.IsAuto) {
+                        DeleteCode();
+                    }
                 }
             });
         }
@@ -88,17 +84,18 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function DeleteCode() {
-        vm.promise = AjaxService.ExecPlan("MESDeleteCode", 'delete', vm.DeleteItem).then(function (data) {
-            var mss = "内部码 [" + vm.DeleteItem.InternalCode + '] 解绑成功';
+        vm.promise = AjaxService.ExecPlan("MESSnDelete", 'delete', vm.DeleteItem).then(function (data) {
+            var mss = "内部码 [" + vm.DeleteItem.InternalCode + '] 解绑SN码[' + vm.SNCode + ']成功';
             var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };
             vm.MesList.splice(0, 0, Msg);
             vm.DeleteItem.InternalCode = undefined;
+            vm.SNCode = undefined;
             vm.Focus = 0;
         });
     }
 
     function ExportExcel() {
-        vm.promise = AjaxService.GetPlanExcel("MESDeleteCode", 'Excel', vm.Ser).then(function (data) {
+        vm.promise = AjaxService.GetPlanExcel("MESSnDelete", 'excel', vm.Ser).then(function (data) {
             //console.log(data);
             $window.location.href = data.File;
         });

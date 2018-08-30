@@ -336,7 +336,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
 
     function EditProClass(pro) {
         vm.ProItem = pro;
-        vm.ProItem.RelateEntity = pro.RelateList ? pro.RelateList[0].EntityName : '';
+        vm.ProItem.RelateEntity = pro.RelateList && pro.RelateList[0] ? pro.RelateList[0].EntityName : '';
         vm.RelateList = pro.RelateList ? angular.copy(pro.RelateList) : [];
         vm.isProAdd = true;
         vm.IsProEdit = true;
@@ -476,6 +476,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
             var option = {};
             option.file = file;
             option.type = 'text';
+            option.encode = 'gb2312';
             option.onComplete = function (data) {
                 AjaxService.PlanBak("I", data).then(function (data2) {
                     toastr.success('导入成功');
@@ -495,6 +496,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
             }
         };
         Dialog.open("EnProcSetDialog", resolve).then(function (data) {
+
         }).catch(function (reason) {
         });
     }

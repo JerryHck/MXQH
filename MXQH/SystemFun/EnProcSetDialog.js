@@ -20,6 +20,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
     function GetList() {
         vm.promise = AjaxService.GetProcColumns(ItemData.ConnectName, ItemData.ProcSchema + '.' + ItemData.ProcName).then(function (data) {
             vm.List = data;
+
             var enList = [];
             //获取数据库记录
             enList.push({ name: "EntityName", value: ItemData.EntityName });
@@ -27,18 +28,52 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
             enList.push({ name: "ProcSchema", value: ItemData.ProcSchema });
             enList.push({ name: "ProcName", value: ItemData.ProcName });
             AjaxService.GetPlans("EnProcExcel", enList).then(function (data2) {
+                vm.DataList = data2;
+
                 for (var i = 0, len = vm.List.length; i < len; i++) {
-                    for (var j = 0, len2 = data2.length; j < len2; j++) {
-                        if (vm.List[i].ReadIndex == data2[j].ReadIndex) {
-                            vm.List[i].IsExcel = data2[j].IsExcel;
-                            vm.List[i].IsAll = data2[j].IsAll;
-                            vm.List[i].SheetName = data2[j].SheetName;
-                            vm.List[i].ExcelColumns = [];
-                            if (data2[j].Columns) {
-                                for (var k = 0, len3 = data2[j].Columns.length; k < len3; k++) {
-                                    var colDb = data2[j].Columns[k];
-                                    colDb.ColumnText = colDb.ColumnText || colDb.ColumnName;
-                                    vm.List[i].ExcelColumns.push(colDb);
+                    var ex = vm.List[i];
+                    ex.ExcelColumns = [];
+                    //初始化
+                    for (var a = 0, l = ex.Columns.length; a < l; a++) {
+                        var col = ex.Columns[a];
+                        col.ColumnText = col.ColumnText || col.ColumnName;
+                        col.ReadIndex = ex.ReadIndex;
+
+                        //双方数据匹配
+                        for (var j = 0, len2 = data2.length; j < len2; j++) {
+                            if (ex.ReadIndex == data2[j].ReadIndex) {
+                                ex.IsExcel = data2[j].IsExcel;
+                                ex.IsAll = data2[j].IsAll;
+                                ex.SheetName = data2[j].SheetName;
+                                vm.ExcelName = data2[j].ExcelName;
+                                if (data2[j].Columns) {
+                                    for (var k = 0, len3 = data2[j].Columns.length; k < len3; k++) {
+                                        var colDb = data2[j].Columns[k];
+                                        if (col.ReadIndex == colDb.ReadIndex && col.ColumnName == colDb.ColumnName) {
+                                            col.IsConvert = colDb.IsConvert;
+                                            col.ConvertType = colDb.ConvertType;
+                                            col.ColumnText = colDb.ColumnText;
+                                            col.IsAutoMerge = colDb.IsAutoMerge;
+                                            col.IsExcel = colDb.IsExcel;
+                                            col.ExcelRowNum = colDb.ExcelRowNum;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    //excel 添加
+                    for (var b = 0, l2 = data2.length; b < l2; b++) {
+                        var ex2 = data2[b];
+                        if (ex.ReadIndex == ex2.ReadIndex && ex2.Columns) {
+                            for (var c = 0, l3 = ex2.Columns.length; c < l3; c++) {
+                                var col2 = ex2.Columns[c];
+                                if (col2.IsExcel) {
+                                    for (var d = 0, l4 = ex.Columns.length; d < l4; d++) {
+                                        if (col2.ColumnName == ex.Columns[d].ColumnName && col2.ReadIndex == ex.Columns[d].ReadIndex){
+                                            ex.ExcelColumns.push(ex.Columns[d]);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -97,7 +132,6 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
     }
 
     function Save() {
-
         var en = {}, ExcelProc = [], ColProc = [];
         en.EntityName = ItemData.EntityName;
         en.ShortName = ItemData.ShortName;
@@ -106,22 +140,33 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
         
         for (var i = 0, len = vm.List.length; i < len; i++) {
             var ex = {};
-            ex.ReadIndex = vm.List[i].ReadIndex;
-            ex.IsExcel = vm.List[i].IsExcel;
-            ex.SheetName = vm.List[i].SheetName;
-            ex.IsAll = vm.List[i].IsAll;
-            ex.ReadIndex = vm.List[i].ReadIndex;
-            //加入convert
-            for (var j = 0, len2 = vm.List[i].Columns.length; j < len2; j++) {
-                if (vm.List[i].Columns[j].IsConvert) {
-                    var convert = {};
-                    convert.ReadIndex = ex.ReadIndex;
-                    convert.ColumnName = vm.List[i].Columns[j].ColumnName;
-                    convert.ColumnName = vm.List[i].Columns[j].ColumnName;
-
-                    ExcelProc.push()
+            var exEn = vm.List[i];
+            ex.ReadIndex = exEn.ReadIndex;
+            ex.IsExcel = exEn.IsExcel || false;
+            ex.SheetName = exEn.SheetName || "";
+            ex.IsAll = exEn.IsAll || false;
+            ex.ExcelName = vm.ExcelName || "";
+            //加入栏位设定
+            for (var k = 0, len3 = exEn.Columns.length; k < len3; k++) {
+                var col = {}, ThisCol = vm.List[i].Columns[k];
+                col.ReadIndex = ex.ReadIndex;
+                col.ColumnName = ThisCol.ColumnName;
+                col.IsConvert = ThisCol.IsConvert || false;
+                col.ConvertType = ThisCol.ConvertType || '';
+                col.ColumnText = ThisCol.ColumnText;
+                col.IsExcel = ThisCol.IsExcel || false;
+                col.IsAutoMerge = ThisCol.IsAutoMerge || false;
+                col.ExcelRowNum = 0;
+                //更新rownum
+                if (exEn.ExcelColumns) {
+                    for (var j = 0, len2 = exEn.ExcelColumns.length; j < len2; j++) {
+                        if (exEn.ExcelColumns[j].ColumnName == col.ColumnName)
+                        {
+                            col.ExcelRowNum = j + 1; break;
+                        }
+                    }
                 }
-                
+                ColProc.push(col)
             }
 
             ExcelProc.push(ex)
@@ -129,16 +174,14 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
 
         en.Excel = JSON.stringify(ExcelProc);
         en.Columns = JSON.stringify(ColProc);
-        en.TempColumns = "Excel, Columns";
+        en.TempColumns = "Excel,Columns";
 
-        AjaxService.ExecPlan("EnProcExcel", 'save', vm.NewItem).then(function (data) {
-            toastr.success('储存成功');
-            $uibModalInstance.close(vm.NewItem);
+        AjaxService.ExecPlan("EnProcExcel", 'save', en).then(function (data) {
+            AjaxService.ReflashPlan(ItemData.EntityName).then(function (data2) {
+                toastr.success('储存成功');
+                $uibModalInstance.close(ItemData);
+            })
         });
-    }
-
-    function DeleteLoad(index) {
-        vm.NewItem.LoadFiles.splice(index, 1);
     }
 
     // drop

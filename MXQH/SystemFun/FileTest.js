@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('FileCtrl', ['$scope', '$http', '$q', 'AjaxService',
-function ($scope, $http, $q, AjaxService) {
+.controller('FileCtrl', ['$scope', '$http', '$window', 'AjaxService',
+function ($scope, $http, $window, AjaxService) {
 
     var vm = this;
     $scope.importf = importf;
@@ -10,9 +10,22 @@ function ($scope, $http, $q, AjaxService) {
     vm.Do2 = Do2;
     //vm.FileData = { header: { header: "A" }, sheetNum: 1 };
 
-    AjaxService.GetPlans("LonginEmp").then(function (data) {
+    AjaxService.GetPlans("empTest").then(function (data) {
         vm.List = data;
     })
+    var en = {};
+    //en.InternalCode = vm.Ser.InternalCode;
+    //en.SNCode = vm.Ser.SNCode;
+    //en.IDCode1 = vm.Ser.IDCode1;
+    en.Customer = "U";
+    //AjaxService.ExecPlan("BindCode", "BindExcel", en).then(function (data) {
+    //    vm.List = data;
+    //})
+
+    //AjaxService.GetPlanExcel("BindCode", "BindExcel", en).then(function (data) {
+    //    vm.List = data;
+    //    //$window.location.href = data.File;
+    //})
 
     function Do() {
         vm.List = angular.copy(vm.FileData.data[0]);
