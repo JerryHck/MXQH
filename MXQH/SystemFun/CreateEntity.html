@@ -136,7 +136,7 @@
                                                         <div class="panel-body">
                                                             <div class="form form-horizontal col-md-offset-1 col-md-10" ng-form="en.ClassForm">
                                                                 <div class="form-group pull-in clearfix">
-                                                                    <div class="col-md-6" title="属性类别">
+                                                                    <div class="col-md-5" title="属性类别">
                                                                         <label class="sr-only">属性类别:</label>
                                                                         <div ng-class="{ 'has-error' : en.ClassForm.enType.$invalid }">
                                                                             <div config-select ng-model="en.ProItem.ColumnType" ng-name="enType" selectClass="text-danger text-xs" config-option="en.ConfigColumnType" ng-disabled="!en.isEditing" my-required="true"></div>
@@ -145,7 +145,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-5" title="属性名">
+                                                                    <div class="col-md-7" title="属性名">
                                                                         <label class="sr-only">属性名:</label>
                                                                         <div ng-class="{ 'has-error' : en.ClassForm.Pro.$invalid }">
                                                                             <input type="text" class="form-control text-xs" name="Pro" placeholder="属性名"
@@ -179,7 +179,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group pull-in clearfix" ng-if="en.ProItem.ColumnType=='3'">
-                                                                    <div class="col-md-6" title="对应属性">
+                                                                    <div class="col-md-5" title="对应属性">
                                                                         <label class="sr-only">对应属性</label>
                                                                         <div ng-class="{ 'has-error' : en.ClassForm.BasicPro.$invalid }">
                                                                             <ui-select name="BasicPro" ng-model="en.ProItem.BasicNamePro" theme="bootstrap" ng-disabled="!en.isEditing" search-enabled="true" required>
@@ -194,10 +194,10 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-5" title="选择公共件">
+                                                                    <div class="col-md-7" title="选择公共件">
                                                                         <label class="sr-only">选择公共件</label>
                                                                         <div ng-class="{ 'has-error' : en.ClassForm.BasicData.$invalid }">
-                                                                            <div config-select ng-model="en.ProItem.BasicName" select-class="text-xs" ng-disabled="!en.isEditing" ng-name="BasicData" config-option="en.UserEmp" ng-disabled="!en.isEditing" my-required="true"></div>
+                                                                            <div common-data-select ng-model="en.ProItem.BasicName" select-class="text-xs" ng-disabled="!en.isEditing" ng-name="BasicData" my-required="true"></div>
                                                                             <div ng-messages="en.ClassForm.BasicData.$error" class="help-block" role="alert">
                                                                                 <div ng-message="required">选择公共件</div>
                                                                             </div>
@@ -370,6 +370,80 @@
                                         </div>
                                     </uib-tab>
                                     <uib-tab index="2">
+                                        <uib-tab-heading class="h5">实体Excel设定</uib-tab-heading>
+                                        <div class="tab-content">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div class="form-horizontal col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-2">导出excel</label>
+                                                            <div class="col-md-10">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="input-group m-b">
+                                                                            <span class="input-group-addon">
+                                                                                <input type="checkbox" ng-model="t.IsExcel" />
+                                                                            </span>
+                                                                            <input type="text" class="form-control" ng-model="t.SheetName" placeholder="sheet 名称" ng-disabled="!t.IsExcel">
+                                                                            <span class="input-group-addon">
+                                                                                <input type="checkbox" ng-model="t.IsAll" ng-change="proc.SelectAll(t)" ng-disabled="!t.IsExcel" /><i></i>全选
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <input type="text" class="form-control" ng-model="proc.ExcelName" placeholder="Excel名称" ng-disabled="!t.IsExcel">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-7 b-r pt-2 text-xs">
+                                                        <div class="b bg-light list-group-item" ng-repeat="col in t.Columns">
+                                                            <div class="row v-middle">
+                                                                <div class="col-md-3">
+                                                                    <label class="i-checks">
+                                                                        <input type="checkbox" ng-model="col.IsConvert"><i></i>转换
+                                                                    </label>
+                                                                </div>
+                                                                <label class="col-md-3 font-bold">{{ col.ColumnName }}</label>
+                                                                <div class="col-md-4 form-group-sm" ng-class="{ 'has-error' : !col.ColumnText }">
+                                                                    <input type="text" name="ColText" class="form-control" placeholder="中文栏名" ng-model="col.ColumnText" required />
+                                                                </div>
+                                                                <label class="col-md-2 i-checks pull-right">
+                                                                    <input type="checkbox" ng-disabled="!t.IsExcel" ng-change="proc.IsExcelChange(t, col)" ng-model="col.IsExcel"><i></i>excel
+                                                                </label>
+                                                            </div>
+                                                            <div class="row text-center" ng-if="col.IsConvert">
+                                                                <div ng-class="{ 'has-error' : proc.ProcSetForm.ConvertType.$invalid }">
+                                                                    <div common-data-select ng-model="col.ConvertType" placeholder="选择转换方式" ng-name="ConvertType" my-required="true"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-5 pt-2 text-xs">
+                                                        <div class="row m-l-md col-md-12 wrapper-xs b-b" ng-repeat="excel in t.ExcelColumns " ng-drop="true" ng-drop-success="proc.Drop(t, $data,$index)">
+                                                            <label class="control-label text-md col-md-7">
+                                                                <span>
+                                                                    <i class="glyphicon glyphicon-move text-info" ng-drag="true"
+                                                                       ng-drag-data="excel" ng-drag-success="proc.Drag($data,$index)"></i>{{ excel.ColumnName }}
+                                                                </span>
+                                                            </label>
+                                                            <label class="i-checks col-md-3">
+                                                                <input type="checkbox" ng-model="excel.IsAutoMerge"><i></i>合并行
+                                                            </label>
+                                                            <div class="col-md-1">
+                                                                <a class="text-danger" ng-click="proc.DeleteExcel(t, $index)"><i class="glyphicon glyphicon-remove"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--<pre>{{ t.Columns | json }}</pre>-->
+                                        </div>
+                                    </uib-tab>
+                                    <uib-tab index="3">
                                         <uib-tab-heading class="h5">备份导入</uib-tab-heading>
                                         <div>
                                             <div class="panel panel-default col-md-8">
