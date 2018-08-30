@@ -9,7 +9,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, Form, MyPop) {
     itemmaster.S = {};//搜索条件
     itemmaster.Delete = Delete;
     itemmaster.form = Form[0];
-    itemmaster.page = { index: 1, size: 15 };
+    itemmaster.page = { index: 1, size: 15,maxSize:10 };
     itemmaster.PageChange = PageChange;
     itemmaster.Search = Search;
     itemmaster.Export = ExportExcel;

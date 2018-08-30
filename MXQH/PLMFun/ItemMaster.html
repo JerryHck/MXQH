@@ -44,7 +44,7 @@
         </table>
     </div>
     <div class="col-md-12 text-center" ng-if="itemmaster.page.total>itemmaster.page.size">
-        <div uib-pagination total-items="itemmaster.page.total" ng-model="itemmaster.page.index" items-per-page="itemmaster.page.size" max-size="maxSize" first-text="第一页" previous-text="上一页"
+        <div uib-pagination total-items="itemmaster.page.total" ng-model="itemmaster.page.index" items-per-page="itemmaster.page.size" max-size="itemmaster.page.maxSize" first-text="第一页" previous-text="上一页"
              ng-change="itemmaster.PageChange()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
     </div>
 </div>
