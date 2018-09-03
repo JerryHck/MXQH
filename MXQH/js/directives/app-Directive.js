@@ -14,12 +14,12 @@ angular.module('app')
 
         scope.$watchCollection(attr.ngConfirm, function (options) {
             var en = options || {};
-            en.title = en.title || "确认删除";
+            en.title = en.title || "确认";
             en.text = en.text || "是否删除此笔资料";
             en.type = en.type || "warning";
             en.showCancelButton = en.showCancelButton === undefined || true;
-            en.confirmButtonText = en.confirmButtonText || "确定删除！";
-            en.cancelButtonText = en.cancelButtonText || "取消删除！";
+            en.confirmButtonText = en.confirmButtonText || "确定！";
+            en.cancelButtonText = en.cancelButtonText || "取消！";
 
             var clickAction = attr.ngClick;
             element.bind('click', function () {
