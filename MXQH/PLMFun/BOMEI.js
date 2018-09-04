@@ -24,11 +24,11 @@ function ($scope, $http, $q, AjaxService,$window) {
     //导出excel数据
     function ExportExcel() {
         var en = {};
-        var sheet = {};
-        sheet.SheetName = "BOM列表";
-        sheet.ColumnsName = ["层次号", "料品", "规格", "品名", "数量", "版本号", "成本", "重量", "BOM单位", "基数", "耗损率", "装配位置", "BOM备注"]
-        sheet.FirstColunms = false;
-        bomei.promise = AjaxService.ExecPlanToExcel("AuctusBom", 'AuctusBOM', en, sheet).then(function (data) {
+        //var sheet = {};
+        //sheet.SheetName = "BOM列表";
+        //sheet.ColumnsName = ["层次号", "料品", "规格", "品名", "数量", "版本号", "成本", "重量", "BOM单位", "基数", "耗损率", "装配位置", "BOM备注"]
+        //sheet.FirstColunms = false;
+        bomei.promise = AjaxService.GetPlanExcel("AuctusBom", 'AuctusBOM', en).then(function (data) {
             $window.location.href = data.File;
         });
     }
