@@ -5,9 +5,11 @@ angular.module('appData', []);
 angular.module('appData')
 //APP URL
 .constant('appUrl', '../')
+.constant('FileUrl', '../')
 //.constant('appUrl', 'http://localhost:8080/MXQH/')
 //Service URL
 .constant('serviceUrl', '//localhost:13439/')
+.constant('FileServiceUrl', '//localhost:14292/')
 //.constant('serviceUrl', '//192.168.1.82:9090/MXQHService/')
 //.constant('serviceUrl', '//localhost:8080/MXQHServie/')
 //.constant('serviceUrl', '//192.168.1.82:90/MXQH/MXQHServie/')

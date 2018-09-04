@@ -1,18 +1,17 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('FileCtrl', ['$scope', '$http', '$window', 'AjaxService',
-function ($scope, $http, $window, AjaxService) {
+.controller('FileCtrl', ['$scope', '$http', '$window', 'AjaxService', 'FileService',
+function ($scope, $http, $window, AjaxService, FileService) {
 
     var vm = this;
     $scope.importf = importf;
     vm.Do = Do;
-    vm.Do2 = Do2;
     //vm.FileData = { header: { header: "A" }, sheetNum: 1 };
 
-    AjaxService.GetPlans("empTest").then(function (data) {
-        vm.List = data;
-    })
+    //AjaxService.GetPlans("empTest").then(function (data) {
+    //    vm.List = data;
+    //})
     var en = {};
     //en.InternalCode = vm.Ser.InternalCode;
     //en.SNCode = vm.Ser.SNCode;
@@ -30,11 +29,6 @@ function ($scope, $http, $window, AjaxService) {
     function Do() {
         vm.List = angular.copy(vm.FileData.data[0]);
         console.log(vm.List)
-    }
-
-    function Do2() {
-        vm.List2 = angular.copy(vm.FileData2.data[0]);
-        console.log(vm.List2)
     }
 
     /*
@@ -56,6 +50,13 @@ function ($scope, $http, $window, AjaxService) {
             $scope.List = data;
         });
     }
+
+    var option = {};
+    option.onComplete = function (data) {
+        vm.List = data;
+    }
+
+    $scope.uploader = FileService.upLoad(option);
 }
 ]);
 
