@@ -112,7 +112,7 @@
                 </tr>
             </table>
             <div class="col-md-12 text-center" ng-if="sn.page.total>sn.page.size">
-                <div uib-pagination total-items="sn.page.total" ng-model="sn.page.index" items-per-page="sn.page.size" max-size="maxSize" first-text="第一页" previous-text="上一页"
+                <div uib-pagination total-items="sn.page.total" ng-model="sn.page.index" items-per-page="sn.page.size" max-size="10" first-text="第一页" previous-text="上一页"
                      ng-change="sn.PageChange()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
             </div>
         </div>
