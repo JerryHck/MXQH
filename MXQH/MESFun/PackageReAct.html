@@ -49,7 +49,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6" ng-form="pack.UpdateForm">
                 <div class="panel panel-default scroll-y" style="max-height:600px">
                     <div class="panel-heading font-bold text-center">
                         <span class="btn btn-default btn-xs up pull-left" ng-disabled="pack.IsEdit" ng-show="pack.PackDetail" ng-click="pack.Edit()"><i class="glyphicon glyphicon-edit"></i>编辑</span>
@@ -116,16 +116,16 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-5 font-bold text-info">包装重量:</label>
-                                <div class="col-sm-7">
+                                <div class="col-sm-7" ng-class="{ 'has-error' : pack.UpdateForm.Packweigth.$invalid }">
                                     <p class="form-control-static" ng-if="!pack.IsEdit">{{pack.PackDetail.Packweight}}</p>
-                                    <input type="number" ng-if="pack.IsEdit" class="form-control" ng-model="pack.PackDetail.Packweight" />
+                                    <input type="number" ng-if="pack.IsEdit" name="Packweigth" class="form-control" ng-model="pack.PackDetail.Packweight"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer text-center" ng-if="pack.IsEdit">
-                        <button class="btn btn-success" type="button" ng-confirm="{text:'确定要更新包装吗'}" ng-click="pack.Save('U')">更新包装</button>
-                        <button class="btn btn-danger" type="button" ng-confirm="{text:'确定要重新包装吗'}" ng-click="pack.Save('R')">删除重包装</button>
+                        <button class="btn btn-success" type="button" ng-disabled="pack.UpdateForm.$invalid" ng-confirm="{text:'确定要更新包装吗'}" ng-click="pack.Save('U')">更新包装</button>
+                        <button class="btn btn-danger" type="button" ng-disabled="pack.UpdateForm.$invalid" ng-confirm="{text:'确定要删除并重新包装吗'}" ng-click="pack.Save('R')">删除重包装</button>
                         <button class="btn btn-warning" type="button" ng-click="pack.IsEdit = false">取消</button>
                     </div>
                     <!--<pre>{{ pack.List | json }}</pre>-->
