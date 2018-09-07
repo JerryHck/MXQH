@@ -27,8 +27,12 @@
                     uploader.filters.push({
                         name: 'FileFilter',
                         fn: function (item /*{File|FileLikeObject}*/, options) {
-                            var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-                            return option.filter.indexOf(type) !== -1;
+                            var exec = (/[.]/.exec(item.name)) ? /[^.]+$/.exec(item.name.toLowerCase()) : '';
+                            if (option.filter.indexOf(exec[0]) == -1) {
+                                toastr.error("文件格式不对，请上传 " + option.filter + " 文件!");
+                                return false;
+                            }
+                            return option.filter.indexOf(exec[0]) != -1;
                         }
                     });
                 }
@@ -50,6 +54,10 @@
                 uploader.onSuccessItem = function (fileItem, response, status, headers) {
                     if (response[0]) {
                         me.List.push(response[0])
+                        fileItem.data = response[0];
+                        if (option.onCompleteItem) {
+                            option.onCompleteItem(fileItem);
+                        }
                     }
                 };
                 uploader.onCompleteItem = function (fileItem, response, status, headers) {

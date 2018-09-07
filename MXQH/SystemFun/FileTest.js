@@ -1,17 +1,31 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('FileCtrl', ['$scope', '$http', '$window', 'AjaxService', 'FileService',
-function ($scope, $http, $window, AjaxService, FileService) {
+.controller('FileCtrl', ['$scope', '$http', '$window', 'AjaxService', 'FileService','toastr',
+function ($scope, $http, $window, AjaxService, FileService, toastr) {
 
     var vm = this;
     $scope.importf = importf;
     vm.Do = Do;
+    vm.save = save;
+
+    function save()
+    {
+        var en = {};
+        en.List = JSON.stringify(vm.UploadFile);
+        en.TempColumns = 'List';
+
+        AjaxService.ExecPlanUpload("FileSaveTest", "save", en, vm.UploadFile, "TestMove").then(function (data) {
+            vm.List = data;
+            toastr.success("储存成功");
+        })
+    }
+
     //vm.FileData = { header: { header: "A" }, sheetNum: 1 };
 
-    //AjaxService.GetPlans("empTest").then(function (data) {
-    //    vm.List = data;
-    //})
+    AjaxService.GetPlans("FileSaveTest").then(function (data) {
+        vm.List = data;
+    })
     var en = {};
     //en.InternalCode = vm.Ser.InternalCode;
     //en.SNCode = vm.Ser.SNCode;
@@ -37,7 +51,7 @@ function ($scope, $http, $window, AjaxService, FileService) {
     2.readAsBinaryString(file)：将文件读取为二进制字符串
     3.readAsDataURL(file)：将文件读取为Data URL
     4.readAsText(file, [encoding])：将文件读取为文本，encoding缺省值为'UTF-8'
-                         */
+    */
     var wb;//读取完成的数据
     var rABS = false; //是否将文件读取为二进制字符串
     function importf(obj) {
@@ -50,13 +64,6 @@ function ($scope, $http, $window, AjaxService, FileService) {
             $scope.List = data;
         });
     }
-
-    var option = {};
-    option.onComplete = function (data) {
-        vm.List = data;
-    }
-
-    $scope.uploader = FileService.upLoad(option);
 }
 ]);
 

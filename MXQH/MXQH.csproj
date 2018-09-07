@@ -159,6 +159,8 @@
     <Content Include="js\directives\app-Directive.js" />
     <Content Include="js\directives\ImportSheetJs.html" />
     <Content Include="js\directives\ToJson.js" />
+    <Content Include="js\directives\UploadFile.html" />
+    <Content Include="js\directives\UploadFileMuti.html" />
     <Content Include="js\filters\app-filter.js" />
     <Content Include="js\Router.js" />
     <Content Include="js\services\FileService.js" />
