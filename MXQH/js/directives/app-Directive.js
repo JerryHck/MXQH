@@ -529,8 +529,8 @@ angular.module('app')
     }
 }])
 //文件导入
-.directive('importSheetJs', ['$q', 'AjaxService', 'toastr', 'FileLoad', 'ToJsonWorker',
-    function ($q, AjaxService, toastr, FileLoad, ToJsonWorker) {
+.directive('importSheetJs', ['$q', 'AjaxService', 'toastr', 'FileLoad', 'ToJsonWorker', 'Version',
+    function ($q, AjaxService, toastr, FileLoad, ToJsonWorker, Version) {
         return {
             restrict: 'A',
             //require:'ngModel',
@@ -540,8 +540,8 @@ angular.module('app')
                 opts: '=',
                 ngComplete: '&'
             },
-            templateUrl: 'js/directives/ImportSheetJs.html',
-            //templateUrl: 'js/directives/ImportSheetJs.html?v=' + (new Date()),
+            //templateUrl: 'js/directives/ImportSheetJs.html',
+            templateUrl: 'js/directives/ImportSheetJs.html?v=' + Version,
             link: function ($scope, elm) {
                 $scope.opts = $scope.opts || {};
                 $scope.fileType = $scope.fileType || "*";
@@ -632,6 +632,115 @@ angular.module('app')
                     //$scope.Progress = 0;
                     //d.resolve(Data);
                     //return d.promise;
+                }
+            }
+        }
+    }])
+.directive('fileUploadMuti', ['$window', 'Version', 'toastr', 'FileService',
+    function ($window, Version, toastr, FileService) {
+        return {
+            restrict: 'A',
+            scope: {
+                ngDisabled: '@',
+                fileType: '@',
+                fileData:'=',
+                ngComplete: '&'
+            },
+            templateUrl: 'js/directives/UploadFileMuti.html?v=' + Version,
+            controller: ['$scope',function ($scope) {
+                var option = {};
+                $scope.List = [];
+                option.onComplete = function (data) {
+                    if ($scope.ngComplete)
+                    {
+                        $scope.ngComplete();
+                    }
+                }
+                option.onCompleteItem = function (item) {
+                    $scope.fileData.push(angular.copy(item.data));
+                    item.remove();
+                }
+                if ($scope.fileType && $scope.fileType != "*")
+                {
+                    option.filter = $scope.fileType;
+                }
+
+                $scope.uploader = FileService.upLoad(option);
+            }],
+            link: function ($scope, elm) {
+                $scope.fileType = $scope.fileType || "*";
+                $scope.opts = $scope.opts || {};
+                $scope.ngDisabled = $scope.ngDisabled || 'false';
+                $scope.fileData = $scope.fileData || [];
+                var op = $scope.opts;
+
+                $scope.Open = function (e) {
+                    e.target.parentNode.parentElement.parentElement.lastElementChild.click();
+                }
+                $scope.Delete = function (index) {
+                    $scope.fileData.splice(index, 1);
+                }
+                $scope.DownLoad = function (url){
+                    $window.open(url);
+                }
+            }
+        }
+    }])
+.directive('fileUpload', ['$window', 'Version', 'toastr', 'FileService',
+    function ($window, Version, toastr, FileService) {
+        return {
+            restrict: 'A',
+            scope: {
+                ngDisabled: '@',
+                fileType: '@',
+                fileData: '=',
+                ngComplete: '&'
+            },
+            templateUrl: 'js/directives/UploadFile.html?v=' + Version,
+            controller: ['$scope', function ($scope) {
+                var option = {};
+                option.onComplete = function (data) {
+                    if ($scope.ngComplete) {
+                        $scope.ngComplete();
+                    }
+                    $scope.isUploaded = true;
+                }
+                option.onCompleteItem = function (item) {
+                    $scope.fileData = item.data;
+                    $scope.item = item;
+                }
+                if ($scope.fileType && $scope.fileType != "*") {
+                    option.filter = $scope.fileType;
+                }
+
+                $scope.uploader = FileService.upLoad(option);
+                $scope.uploader.autoUpload = true;
+            }],
+            link: function ($scope, elm) {
+                $scope.fileType = $scope.fileType || "*";
+                $scope.ngDisabled = $scope.ngDisabled || 'false';
+                $scope.fileData = $scope.fileData || {};
+                $scope.Open = function (e) {
+                    $scope.uploader.clearQueue();
+                    e.target.parentNode.parentElement.parentElement.lastElementChild.click();
+                }
+                $scope.DownLoad = function (url) {
+                    $window.open(url);
+                }
+
+                var fileInput = elm[0].firstElementChild.firstElementChild.lastElementChild;
+                //事件添加
+                fileInput.onchange = function (changeEvent) {
+                    if (!changeEvent.target.files || changeEvent.target.files.length == 0) {
+                        return;
+                    }
+                    var file = changeEvent.target.files[0].name;
+                    var exec = (/[.]/.exec(file.name)) ? /[^.]+$/.exec(file.name.toLowerCase()) : '';
+                    if ($scope.fileType != '*' &&  $scope.fileType.indexOf(exec[0]) == -1) {
+                        return;
+                    }
+                    $scope.fileData.OriginalName = file.name;
+                    $scope.isUploaded = false;
                 }
             }
         }

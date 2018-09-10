@@ -62,7 +62,9 @@
             Login: Login,
             LoginAction: LoginAction,
             //file
-            FileImport: FileImport
+            FileImport: FileImport,
+            //文件上传保存
+            ExecPlanUpload: ExecPlanUpload,
         };
 
         return obj;
@@ -265,6 +267,17 @@
             en.shortName = shortName;
             en.strJson = JSON.stringify(json);
             return Ajax(d, url, en, "ExecPlan")
+        }
+
+        function ExecPlanUpload(name, shortName, json, fileJson, dir) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = {};
+            en.planName = name;
+            en.shortName = shortName;
+            en.strJson = JSON.stringify(json);
+            en.fileJson = JSON.stringify(fileJson);
+            en.dir = dir;
+            return Ajax(d, url, en, "ExecPlanUpload")
         }
 
         function ExecPlanToExcel(name, shortName, json, sheetTable)

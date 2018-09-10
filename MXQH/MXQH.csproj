@@ -159,8 +159,11 @@
     <Content Include="js\directives\app-Directive.js" />
     <Content Include="js\directives\ImportSheetJs.html" />
     <Content Include="js\directives\ToJson.js" />
+    <Content Include="js\directives\UploadFile.html" />
+    <Content Include="js\directives\UploadFileMuti.html" />
     <Content Include="js\filters\app-filter.js" />
     <Content Include="js\Router.js" />
+    <Content Include="js\services\FileService.js" />
     <Content Include="js\services\AjaxServiceMethod.js" />
     <Content Include="js\services\AjaxServiceModule.js" />
     <Content Include="js\FileLoad.js" />
@@ -196,6 +199,8 @@
     <Content Include="Scripts\angular-ui\bootstrap-switch.min.js" />
     <Content Include="Scripts\angular\angular-busy.js" />
     <Content Include="Scripts\angular\angular-busy.min.js" />
+    <Content Include="Scripts\angular\angular-file-upload\angular-file-upload.js" />
+    <Content Include="Scripts\angular\angular-file-upload\angular-file-upload.min.js" />
     <Content Include="Scripts\angular\angular-messages.js" />
     <Content Include="Scripts\angular\angular-messages.min.js" />
     <Content Include="Scripts\angular\angular-toastr.js" />
@@ -277,6 +282,8 @@
     <Content Include="Content\font\fontawesome-webfont.woff" />
     <None Include="Properties\PublishProfiles\2.pubxml" />
     <None Include="Properties\PublishProfiles\MXQH.pubxml" />
+    <Content Include="Scripts\angular\angular-file-upload\angular-file-upload.js.map" />
+    <Content Include="Scripts\angular\angular-file-upload\angular-file-upload.min.js.map" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
