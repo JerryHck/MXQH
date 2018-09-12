@@ -18,6 +18,9 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.ExportExcel = ExportExcel;
     vm.SelectTab = SelectTab;
    
+    vm.DeleteItemRemark = DeleteItemRemark;
+
+    vm.InsertItemRemark = InsertItemRemark;
 
     //PageChange();
 
@@ -26,7 +29,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         PageChange()
     }
 
-    
+    GetItemRemakList();
 
     function PageChange() {
         var list = [];
@@ -103,5 +106,31 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
             $window.location.href = data.File;
         });
     }
+
+
+    function InsertItemRemark() {
+        vm.promise = AjaxService.PlanInsert("MESCodeDelRemark", vm.NewItemType).then(function (data) {
+            toastr.success("新增成功");
+            vm.NewItemType = {};
+            GetItemRemakList();
+        })
+    }
+
+    function GetItemRemakList() {
+        AjaxService.GetPlans("MESCodeDelRemark").then(function (data) {
+            vm.ItemRemarkList = data;
+
+        })
+    }
+
+    function DeleteItemRemark(type) {
+        MyPop.Confirm({ text: "确定要删除该备注吗" }, function () {
+            AjaxService.PlanDelete("MESCodeDelRemark", type).then(function (data) {
+                toastr.success("删除成功");
+                GetItemRemakList();
+            })
+        });
+    }
+
 }
 ]);
