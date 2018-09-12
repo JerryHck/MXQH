@@ -23,7 +23,7 @@ function ($scope, $http, $window, AjaxService, FileService, toastr) {
 
     //vm.FileData = { header: { header: "A" }, sheetNum: 1 };
 
-    AjaxService.GetPlans("FileSaveTest").then(function (data) {
+    AjaxService.GetPlansPage("PLMPrecess", {}, 1, 100).then(function (data) {
         vm.List = data;
     })
     var en = {};
