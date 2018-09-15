@@ -102,7 +102,9 @@
     <Content Include="Content\images\bg2.jpg" />
     <Content Include="Content\images\bg3.jpg" />
     <Content Include="Content\images\blurred.jpg" />
+    <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\noise.png" />
+    <Content Include="Content\images\top_bg.jpg" />
     <Content Include="Content\images\wood_pattern.jpg" />
     <Content Include="Content\select.css" />
     <Content Include="Content\select.min.css" />
@@ -387,6 +389,8 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="SDKFun\Register.html" />
+    <Content Include="SDKFun\Register.js" />
     <Content Include="SystemFun\AddDialog.js" />
     <Content Include="SystemFun\AddDialog.html" />
     <Content Include="SystemFun\ChangePswDialog.html" />
