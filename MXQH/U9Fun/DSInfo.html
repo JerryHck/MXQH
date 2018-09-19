@@ -1,0 +1,62 @@
+﻿<div class="bg-light lter b-b wrapper-md" cg-busy="dsinfo.promise">
+    <h3 class="m-n font-thin h3 text-center">
+        电子料列表
+    </h3>
+</div>
+<div class="wrapper-md">
+    <div class="input-group m-b-xxs">
+        <div class="form-inline">
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="dsinfo.S.Code" placeholder="料号">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="dsinfo.S.DocNo" placeholder="单号">
+            </div>
+            <button class="btn btn-sm btn-info" ng-click="dsinfo.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-11">
+            <table class="table table-striped b-2x" cg-busy="dsinfo.promise">
+                <tr class="text-left bg-gd-dk h4">
+                    <td class="col-md-1">编辑</td>
+                    <td class="col-md-1">计划名称</td>
+                    <td class="col-md-1">公司名称</td>
+                    <td class="col-md-1">料号</td>
+                    <td class="col-md-1">品名</td>
+                    <td class="col-md-1">单号</td>
+                    <td class="col-md-1">需求分类号</td>
+                    <td class="col-md-1">需求供应形态</td>
+                    <td class="col-md-1">订单类型</td>
+                    <td class="col-md-1">净数量</td>
+                    <td class="col-md-1">交易数量</td>
+                    <td class="col-md-1">需求日期</td>
+                </tr>
+                <!--filter: dsinfo.search-->
+                <tr ng-repeat="item in dsinfo.List |orderBy:['PlanCode','Code']">
+                    <td>
+                        <button class="btn btn-xs btn-primary" ng-click="dsinfo.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                    </td>
+                    <td>{{ item.PlanCode }}</td>
+                    <td>{{ item.Company }}</td>
+                    <td>{{ item.Code }}</td>
+                    <td>{{ item.Name }}</td>
+                    <td>{{ item.DemandCode }}</td>
+                    <td>{{ item.DocNo }}</td>
+                    <td>{{ item.DSType }}</td>
+                    <td>{{ item.DocType }}</td>
+                    <td>{{ item.NetQty }}</td>
+                    <td>{{ item.TradeBaseQty }}</td>
+                    <td>{{ item.DemandDate|date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <!--<td ng-if="item.ComponentType==null">无</td>
+                    <td ng-if="item.ComponentType==0">标准</td>
+                    <td ng-if="item.ComponentType==2">替代</td>-->
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-12 text-center" ng-if="dsinfo.page.total>dsinfo.page.size">
+        <div uib-pagination total-items="dsinfo.page.total" ng-model="dsinfo.page.index" items-per-page="dsinfo.page.size" max-size="dsinfo.page.maxSize" first-text="第一页" previous-text="上一页"
+             ng-change="dsinfo.DataBind()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
+    </div>
+</div>
