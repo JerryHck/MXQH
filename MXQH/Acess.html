@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
-<html lang="en" data-ng-app="app">
+<html lang="en" data-ng-app="access">
 <head>
     <meta charset="utf-8" />
-    <title>Auctus | 系统平台</title>
+    <title>Auctus | 平台入口资讯系统</title>
     <meta name="description" content="Auctus | 平台入口资讯系统" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="css/simple-line-icons.css" type="text/css" />
     <link rel="stylesheet" href="css/font.css" type="text/css" />
     <link rel="stylesheet" href="css/app.css" type="text/css" />
-    <link href="Content/ui-grid.css" rel="stylesheet" />
     <link href="Content/ui-bootstrap-csp.css" rel="stylesheet" />
     <link href="Content/angular-toastr.css" rel="stylesheet" />
     <link href="Content/sweetalert.css" rel="stylesheet" />
@@ -23,8 +22,7 @@
 
 </head>
 <body>
-    <div class="app" id="app" ng-class="{'app-header-fixed':vm.app.settings.headerFixed, 'app-aside-fixed':vm.app.settings.asideFixed, 'app-aside-folded':vm.app.settings.asideFolded, 'app-aside-dock':vm.app.settings.asideDock, 'container':vm.app.settings.container}" ui-view></div>
-
+    <div class="app" ui-view></div>
     <!-- jQuery -->
     <script src="Scripts/jquery-3.0.0.min.js"></script>
     <!-- Angular -->
@@ -55,54 +53,28 @@
     <script src="Scripts/sweetalert.min.js"></script>
     <!-- lazyload -->
     <script src="Scripts/oclazyload/ocLazyLoad.min.js"></script>
-    <!-- 解耦 -->
-    <script src="Scripts/oclazyload/ui-router-require-polyfill.js"></script>
-    <script src="Scripts/angular/angular-translate.min.js"></script>
-
-    <script src="Scripts/angular/angular-translate/loader-static-files.js"></script>
-    <script src="Scripts/angular/angular-translate/storage-cookie.js"></script>
-    <script src="Scripts/angular/angular-translate/storage-local.js"></script>
-    <!-- circle -->
-    <script src="Scripts/circleChart/circleChart.min.js"></script>
-    <!--<script src="Scripts/Concurrent.Thread/Concurrent.Thread.js"></script>-->
-    <!-- App -->
-    <!--<script src="js/services/AjaxServiceModule.js"></script>
-    <script src="js/services/AjaxServiceMethod.js"></script>-->
-    <script src="js/app.js"></script>
+    
     <script>
+        check();
+        function check (){
+            var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+            var isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1; //判断Chrome浏览器
+            if (!isChrome) {
+                if (confirm("您使用的不是Chrome浏览器，请使用Chrome浏览本系统！")) {
+                    window.location.href = '//192.168.1.82:9090/File/DownLoad/chromexp_96311.rar';
+                }
+            }
+        }
+
         var version = Date.now();
         document.write("<script type='text/javascript' src='js/appData.js?v=" + version + "'><\/script>");
         document.write("<script type='text/javascript' src='js/services/AjaxServiceModule.js?v=" + version + "'><\/script>");
         document.write("<script type='text/javascript' src='js/services/AjaxServiceMethod.js?v=" + version + "'><\/script>");
         document.write("<script type='text/javascript' src='js/services/FileService.js?v=" + version + "'><\/script>");
 
-        document.write("<script src='js/Router.js?v=" + version + "'><\/script>");
-        document.write("<script src='js/config.js?v=" + version + "'><\/script>");
-        document.write("<script src='js/config.lazyload.js?v=" + version + "'><\/script>");
-        document.write("<script src='js/Dialog.js?v=" + version + "'><\/script>");
-        document.write("<script src='js/config.router.js?v=" + version + "'><\/script>");
-        document.write("<script src='js/main.js?v=" + version + "'><\/script>");
+        //document.write("<script src='js/Dialog.js?v=" + version + "'><\/script>");
         document.write("<script src='js/directives/MyDirective.js?v=" + version + "'><\/script>");
-        document.write("<script src='js/FileLoad.js?v=" + version + "'><\/script>");
-
-        var sta = '1.0001';
-        //lazy load
-        document.write("<script src='js/services/ui-load.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/filters/fromNow.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/filters/app-filter.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/setnganimate.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-butterbar.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-focus.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-fullscreen.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-jq.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-module.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-nav.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-scroll.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-shift.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-toggleclass.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-validate.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/controllers/bootstrap.js?v=" + sta + "'><\/script>");
-        document.write("<script src='Scripts/ui-grid.min.js?v=" + sta + "'><\/script>");
     </script>
+    <script src="Access.js"></script>
 </body>
 </html>

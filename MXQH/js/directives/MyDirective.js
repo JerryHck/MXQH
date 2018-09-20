@@ -1,6 +1,7 @@
 ﻿'use strict'
-//angular.module('Routing', ['ui.router', 'oc.lazyLoad'])
-angular.module('app')
+angular.module('MyDirective', [])
+
+angular.module('MyDirective')
 .directive('ngConfirm', function () {
     return {
         restrict: 'A',

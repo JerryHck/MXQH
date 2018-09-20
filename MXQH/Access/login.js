@@ -1,17 +1,8 @@
-'use strict';
+﻿'use strict';
 
-angular.module('LoginApp', [
-    'appData',
-    'ngAnimate',
-    'toastr',
-    'ngCookies',
-    'ngSanitize',
-    'AjaxServiceModule'
-])
-
-var app = angular.module('LoginApp').controller('LoginCtrl', LoginCtrl);
-LoginCtrl.$inject = ['$scope', 'AjaxService', 'toastr', 'MyPop', 'appUrl', '$cookieStore', '$window'];
-function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $window) {
+angular.module('access').controller('LoginCtrl', LoginCtrl);
+LoginCtrl.$inject = ['$scope', 'AjaxService', 'toastr', 'MyPop', 'appUrl', '$cookieStore', '$window', '$state'];
+function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $window, $state) {
     var vm = this;
     var storage = $window.localStorage;
     vm.UserName = storage["userName"];
@@ -22,6 +13,7 @@ function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $wi
 
     vm.reflashSecCode = reflashSecCode;
     vm.CheckCode = CheckCode;
+    vm.Go = Go;
 
     function RndNum(n) {
         var rnd = "";
@@ -85,21 +77,18 @@ function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $wi
         $window.location.href = appUrl + '/index.html';
     }
 
-    function CheckCode()
-    {
+    function CheckCode() {
         if (vm.SecCode) {
             var en = {};
             en.CusCode = vm.CusCode;
             en.SecCode = vm.SecCode;
             AjaxService.DoBefore("CheckSecCode", en).then(function (data) {
                 vm.IsOK = data.IsOk;
-                console.log(data)
             })
         }
     }
 
-    function reflashSecCode()
-    {
+    function reflashSecCode() {
         vm.IsOK = undefined;
         var en = {};
         en.CusCode = vm.CusCode;
@@ -108,5 +97,9 @@ function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $wi
         AjaxService.DoBefore("GenSecCodeImg", en).then(function (data) {
             vm.SecDataUrl = data.File;
         })
+    }
+
+    function Go(name) {
+        $state.go(name);
     }
 }

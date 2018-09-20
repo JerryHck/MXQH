@@ -7,11 +7,11 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
     $cookieStore.put('active-function', "Main");
     //State Change Start
     $rootScope.$on('$stateChangeStart', onStateChangeStart);
-
+    //console.log($state.current.name)
     //檢查是否登入
     function onStateChangeStart(e, toState, toParams, fromState, fromParams) {
         if (!$cookieStore.get('user-token')) {
-            $window.location.href = appUrl + 'Login.html';
+            $window.location.href = appUrl + 'Acess.html#!/login';
         }
     }
     //获取路由信息
@@ -87,5 +87,22 @@ function Config($stateProvider, $urlRouterProvider, Version) {
         .state('app.ui', {
             url: '/ui',
             template: '<div ui-view class="fade-in-up"></div>'
+        })
+        //.state('access', {
+        //    url: '/access',
+        //    template: '<div ui-view class="fade-in-right-big smooth"></div>'
+        //})
+        //找回密码
+        .state('access.forgotPsw', {
+            url: '/forgotpsd/',
+            controllerAs: 'psw',
+            controller: 'ForgotPasswordCtrl',
+            templateUrl: 'SystemFun/ForgotPassword.html' + "?v=" + Version,
+            resolve: {
+                deps: ['$ocLazyLoad',
+                  function ($ocLazyLoad) {
+                      return $ocLazyLoad.load(['SystemFun/ForgotPassword.js' + "?v=" + Version]);
+                  }]
+            }
         })
 }

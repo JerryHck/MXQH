@@ -62,6 +62,12 @@
     <Reference Include="System.Web.Services" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Access.js" />
+    <Content Include="Access\ChangePassword.html" />
+    <Content Include="Access\ChangePassword.js" />
+    <Content Include="Access\login.html" />
+    <Content Include="Access\login.js" />
+    <Content Include="Acess.html" />
     <Content Include="api\login" />
     <Content Include="api\signup" />
     <Content Include="Basic\app.html" />
@@ -101,8 +107,11 @@
     <Content Include="Content\images\bg.jpg" />
     <Content Include="Content\images\bg2.jpg" />
     <Content Include="Content\images\bg3.jpg" />
+    <Content Include="Content\images\bg5.jpg" />
+    <Content Include="Content\images\bg6.jpg" />
     <Content Include="Content\images\blurred.jpg" />
     <Content Include="Content\images\noise.png" />
+    <Content Include="Content\images\timg.jpg" />
     <Content Include="Content\images\wood_pattern.jpg" />
     <Content Include="Content\select.css" />
     <Content Include="Content\select.min.css" />
@@ -149,6 +158,11 @@
     <Content Include="Images\progressbar.gif" />
     <Content Include="Images\select2-spinner.gif" />
     <Content Include="Images\select2.png" />
+    <Content Include="Scripts\assets\js\unlock.js" />
+    <Content Include="Scripts\assets\less\unlock.css" />
+    <Content Include="Access\ForgotPassword.html" />
+    <Content Include="Access\ForgotPassword.js" />
+    <Content Include="unlock.js" />
     <Content Include="js\appData.js" />
     <Content Include="js\app\contact\contacts.json" />
     <Content Include="js\app\mail\mails.json" />
@@ -156,7 +170,7 @@
     <Content Include="js\controllers\bootstrap.js" />
     <Content Include="js\controllers\chart.js" />
     <Content Include="js\Dialog.js" />
-    <Content Include="js\directives\app-Directive.js" />
+    <Content Include="js\directives\MyDirective.js" />
     <Content Include="js\directives\ImportSheetJs.html" />
     <Content Include="js\directives\ToJson.js" />
     <Content Include="js\directives\UploadFile.html" />
@@ -284,6 +298,7 @@
     <None Include="Properties\PublishProfiles\MXQH.pubxml" />
     <Content Include="Scripts\angular\angular-file-upload\angular-file-upload.js.map" />
     <Content Include="Scripts\angular\angular-file-upload\angular-file-upload.min.js.map" />
+    <Content Include="Scripts\assets\less\unlock.less" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />

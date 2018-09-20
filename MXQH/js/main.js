@@ -47,7 +47,6 @@ angular.module('app')
         }
         GetList();
 
-
         // save settings to local storage
         if (angular.isDefined($localStorage.settings)) {
             vm.app.settings = $localStorage.settings;
@@ -101,7 +100,7 @@ angular.module('app')
         function LogOff() {
             AjaxService.LoginAction("LoginOff").then(function (data) {
                 $cookieStore.remove('user-token');
-                $window.location.href = appUrl + 'Login.html';
+                $window.location.href = appUrl + 'Acess.html#!/login';
             })
         }
 
