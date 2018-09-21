@@ -2,20 +2,35 @@
 SignUpCtrl.$inject = ['$scope', 'AjaxService', 'toastr', 'MyPop', 'appUrl', '$window'];
 function SignUpCtrl($scope, AjaxService, toastr, MyPop, appUrl, $window) {
     var vm = this;
+    vm.indextab = 2;
+    vm.process = 2;
 
-    vm.indextab = 0;
+    vm.ThisTap = function (index) {
+        if (index <= vm.process)
+        {
+            vm.indextab = index;
+        }
+    }
 
-    vm.Next = function (index) {
+    vm.Agree = function () {
+        vm.process = vm.Item.IsAgree ? 1 : 0;
+        vm.indextab = vm.Item.IsAgree ? 1 : 0;
+    }
+
+    vm.Next = function (index)
+    {
+        vm.process = index;
         vm.indextab = index;
     }
 
-    vm.SetClass = function (index)
-    {
-
-    }
-
     vm.SetImg = function (index) {
-
+        if (index - vm.process == 1) {
+            return 'Content/images/process2.png'
+        }
+        else if (index <= vm.process) {
+            return 'Content/images/process3.png'
+        }
+        return 'Content/images/process1.png'
     }
 
     vm.checkAccount = function () {

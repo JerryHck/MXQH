@@ -67,6 +67,7 @@
     <Content Include="Access\ChangePassword.js" />
     <Content Include="Access\login.html" />
     <Content Include="Access\login.js" />
+    <Content Include="Access\SignUpProtocol.html" />
     <Content Include="Acess.html" />
     <Content Include="api\login" />
     <Content Include="api\signup" />
@@ -112,6 +113,9 @@
     <Content Include="Content\images\blurred.jpg" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\noise.png" />
+    <Content Include="Content\images\process1.png" />
+    <Content Include="Content\images\process2.png" />
+    <Content Include="Content\images\process3.png" />
     <Content Include="Content\images\timg.jpg" />
     <Content Include="Content\images\top_bg.jpg" />
     <Content Include="Content\images\wood_pattern.jpg" />
@@ -164,6 +168,8 @@
     <Content Include="Scripts\assets\less\unlock.css" />
     <Content Include="Access\ForgotPassword.html" />
     <Content Include="Access\ForgotPassword.js" />
+    <Content Include="SDKFun\SignUp.html" />
+    <Content Include="SDKFun\SignUp.js" />
     <Content Include="unlock.js" />
     <Content Include="js\appData.js" />
     <Content Include="js\app\contact\contacts.json" />
