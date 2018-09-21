@@ -22,7 +22,11 @@
 
 </head>
 <body>
-    <div class="app" ui-view></div>
+    <div class="app">
+        <div class="mr-2"><img style="margin-top:22px;" src="../Content/images/logo.png" /></div>
+        <div ui-view></div>
+    </div>
+    <div class="text-center" ng-include="'Basic/blocks/page_footer.html'"></div>
     <!-- jQuery -->
     <script src="Scripts/jquery-3.0.0.min.js"></script>
     <!-- Angular -->

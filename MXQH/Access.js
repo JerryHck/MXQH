@@ -77,7 +77,20 @@ function Config($stateProvider, $urlRouterProvider, Version) {
             resolve: {
                 deps: ['$ocLazyLoad',
                   function ($ocLazyLoad) {
-                      return $ocLazyLoad.load(['Content/Css/Main.css', 'Access/ChangePassword.js' + "?v=" + Version]);
+                      return $ocLazyLoad.load(['Access/ChangePassword.js' + "?v=" + Version]);
+                  }]
+            }
+        })
+        //注册页
+        .state('signup', {
+            url: '/signup',
+            controllerAs: 'sign',
+            controller: 'SignUpCtrl',
+            templateUrl: 'SDKFun/SignUp.html' + "?v=" + Version,
+            resolve: {
+                deps: ['$ocLazyLoad',
+                  function ($ocLazyLoad) {
+                      return $ocLazyLoad.load(['SDKFun/SignUp.js' + "?v=" + Version]);
                   }]
             }
         })
