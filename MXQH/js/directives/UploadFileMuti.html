@@ -2,6 +2,10 @@
     <div class="col-md-12 input-group">
         <span class="input-group-addon">
             <a class="pull-left" ng-click="Open($event)"><i class="fa fa-folder-open">浏览</i></a>
+            <!--<a class="pull-right text-success" ng-click="uploader.uploadAll()"><i class="glyphicon glyphicon-upload">上传</i></a>-->
+        </span>
+        <input type="text" class="form-control" name="{{ ngName }}" placeholder="{{ placeholder }}" disabled ng-required="ngRequired"/>
+        <span class="input-group-addon">
             <a class="pull-right text-success" ng-click="uploader.uploadAll()"><i class="glyphicon glyphicon-upload">上传</i></a>
         </span>
         <input type="file" class="fileType" nv-file-select="" multiple uploader="uploader" style="display: none" accept="{{ fileType }}">

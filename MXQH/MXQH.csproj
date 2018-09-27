@@ -410,8 +410,8 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="SDKFun\Register.html" />
-    <Content Include="SDKFun\Register.js" />
+    <Content Include="SDKFun\RegistrationAudit.html" />
+    <Content Include="SDKFun\RegistrationAudit.js" />
     <Content Include="SystemFun\AddDialog.js" />
     <Content Include="SystemFun\AddDialog.html" />
     <Content Include="SystemFun\ChangePswDialog.html" />

@@ -22,7 +22,7 @@
 
 </head>
 <body>
-    <div class="app">
+    <div class="app" style="min-height: 100%; padding: 0 0 60px;">
         <div class="row">
             <div class="col-md-1">
                 <div><img style="margin-top:22px;width:150px" src="../Content/images/logo.png" /></div>
@@ -31,9 +31,8 @@
                 <div ui-view></div>
             </div>
         </div>
-        <!--<div ui-view></div>-->
-        <div class="text-center" ng-include="'Basic/blocks/page_footer.html'"></div>
     </div>
+    <div style="height: 50px; margin-top: -60px; text-align:center" ng-include="'Basic/blocks/page_footer.html'"></div>
     <!-- jQuery -->
     <script src="Scripts/jquery-3.0.0.min.js"></script>
     <!-- Angular -->

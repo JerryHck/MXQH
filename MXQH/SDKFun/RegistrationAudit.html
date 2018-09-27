@@ -1,0 +1,125 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="reg.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">注册账号列表</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control" ui-focus="reg.Focus == -1" ng-model="reg.Ser.InternalCode" placeholder="内部码">
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4" user-select ng-model="reg.Ser.DeleteBy" clear="true" placeholder="请选择操作者"></div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" date-time-picker class="form-control" placeholder="结束解绑日" ng-model="reg.Ser.StartDate" option="reg.StartOption" />
+                        <span class="input-group-addon">
+                            <a><i ng-click="reg.Ser.StartDate = undefined" class="glyphicon glyphicon-trash"></i></a>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" date-time-picker class="form-control" placeholder="结束解绑日" ng-model="reg.Ser.EndDate" option="reg.EndOption" />
+                        <span class="input-group-addon">
+                            <a><i ng-click="reg.Ser.EndDate = undefined" class="glyphicon glyphicon-trash"></i></a>
+                        </span>
+                    </div>
+                </div>
+                <button class="btn btn-sm btn-info" ng-click="reg.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
+                <button class="btn btn-sm btn-success" ng-click="reg.ExportExcel()"><i class="glyphicon glyphicon-export"></i> 导出</button>
+            </div>
+        </div>
+        <div class="padder-md">
+            <table class="table text-center h6">
+                <thead class="h5">
+                    <tr>
+                        <th style="width:10%">操作</th>
+                        <th style="width:10%">状态</th>
+                        <th style="width:10%">账号</th>
+                        <th style="width:30%">公司名称</th>
+                        <th style="width:20%">授权联系人</th>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in reg.List">
+                    <td>
+                        <button class="btn btn-xs btn-primary" ng-click="sys.Edit(item)"><i class="fa fa-search"></i></button>
+                    </td>
+                    <td>{{ item.StateDesc }}</td>
+                    <td>{{ item.Account }}</td>
+                    <td>{{ item.CompanyName }}</td>
+                    <td>{{ item.Contact }}</td>
+                </tr>
+            </table>
+            <div class="col-md-12 text-center" ng-if="reg.page.total>reg.page.size">
+                <div uib-pagination total-items="reg.page.total" ng-model="reg.page.index" items-per-page="reg.page.size" max-size="10" first-text="第一页" previous-text="上一页"
+                     ng-change="reg.PageChange()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="1" ng-if="sd">
+        <uib-tab-heading class="h5">SN码解绑</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="col-sm-6">
+                <div class="panel panel-default" ng-form="reg.DeleteForm">
+                    <div class="panel-heading font-bold">解绑</div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">内部码</label>
+                                <div class="col-lg-8" ng-class="{ 'has-error' : reg.DeleteForm.InCode.$invalid }">
+                                    <input type="text" class="form-control" ui-focus="reg.Focus == 0" name="InCode" ng-model="reg.DeleteItem.InternalCode" placeholder="生产条码" ng-keyup="reg.KeyDonwInCode($event)" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Sn码</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" ng-model="reg.SNCode" placeholder="Sn码" disabled>
+                                    <div class="h6 text-danger">注:只允许解绑开头为45,83,93开头的SN码</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">备注</label>
+                                <div class="col-lg-8">
+                                    <textarea class="form-control" rows="3" maxlength="255" ng-model="reg.DeleteItem.Remark" placeholder="输入备注信息"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-offset-4 col-lg-8">
+                                    <div class="checkbox col-md-5">
+                                        <label class="i-checks">
+                                            <input type="checkbox" ng-model="reg.IsAuto"><i></i> 自动解绑
+                                        </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="submit" class="btn btn-sm btn-success" ng-click="reg.DeleteCode()" ng-disabled="reg.DeleteForm.$invalid || reg.IsAuto">解绑</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default scroll-y" style="max-height:600px">
+                    <div class="panel-heading font-bold text-center">解绑记录</div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            <ul class="list-group bg-white">
+                                <li class="list-group-item" ng-repeat="item in reg.MesList track by item.Id" ng-class="{ 'text-danger' : !item.IsOk, 'text-success':item.IsOk }">
+                                    <span herf class="pull-left">
+                                        <i class="glyphicon glyphicon-remove"></i>
+                                    </span>
+                                    <div class="clear">
+                                        <div>{{ item.Msg }}</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+
+

@@ -5,7 +5,7 @@ angular.module('appData', []);
 angular.module('appData')
 //APP URL
 .constant('appUrl', '../')
-.constant('FileUrl', '../')
+.constant('FileUrl', 'http://localhost:8080/File/')
 //.constant('appUrl', 'http://localhost:8080/MXQH/')
 //Service URL
 .constant('serviceUrl', '//localhost:13439/')

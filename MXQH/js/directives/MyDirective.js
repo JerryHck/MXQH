@@ -644,7 +644,10 @@ angular.module('MyDirective')
             scope: {
                 ngDisabled: '@',
                 fileType: '@',
-                fileData:'=',
+                ngName: '@',
+                ngRequired: '@',
+                placeholder: '@',
+                fileData: '=',
                 ngComplete: '&'
             },
             templateUrl: 'js/directives/UploadFileMuti.html?v=' + Version,
@@ -694,6 +697,9 @@ angular.module('MyDirective')
             scope: {
                 ngDisabled: '@',
                 fileType: '@',
+                ngName: '@',
+                ngRequired: '@',
+                placeholder: '@',
                 fileData: '=',
                 ngComplete: '&'
             },

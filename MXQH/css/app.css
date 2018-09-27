@@ -38,6 +38,43 @@ a {
   cursor: pointer;
 }
 
+table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    text-align: center;
+}
+
+    table td, table th {
+        border: 1px solid #cad9ea;
+        color: rgba(0, 0, 0, 0.8);
+        height: 30px;
+    }
+
+    table th {
+        text-align:center;
+        background-color: #e3dddd;
+    }
+
+    table thead th {
+        background-color: #e3dddd;
+        width: 100px;
+        text-align:center
+    }
+
+    table tr:nth-child(odd) {
+        background: #fff;
+    }
+
+    table tr:nth-child(even) {
+        background: #F5FAFA;
+    }
+
+    table tbody tr:hover {
+        color: #339;
+	    background: #d0dafd;
+    }
+
+
 a:hover,
 a:focus {
   color: #141719;
