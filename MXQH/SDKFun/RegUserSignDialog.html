@@ -1,0 +1,149 @@
+﻿<div class="bg-light lter">
+    <div class="modal-header text-center">
+        <h3 class="modal-title">客户注册信息{{ reg.title }}</h3>
+    </div>
+    <div class="modal-body" ng-form="reg.DialogForm">
+        <div class="panel panel-default scroll-y" style="max-height:500px">
+            <div class="panel-body bg-light lter h6">
+                <div class="form-horizontal col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-5">注册账号:</label>
+                        <div class="col-md-7">
+                            <p class="form-control-static">{{reg.Data.Account}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5">公司名称:</label>
+                        <div class="col-md-7">
+                            <p class="form-control-static">{{reg.Data.CompanyName}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5">社会信用代码:</label>
+                        <div class="col-md-7">
+                            <p class="form-control-static">{{reg.Data.Code}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5">法人:</label>
+                        <div class="col-md-7">
+                            <p class="form-control-static">{{reg.Data.LegalPerson}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5">股东信息:</label>
+                        <div class="col-md-7">
+                            <p class="form-control-static">{{reg.Data.ShareHolder}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5">公司授权联系人:</label>
+                        <div class="col-md-7">
+                            <p class="form-control-static">{{reg.Data.Contact}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5">联系人手机:</label>
+                        <div class="col-md-7">
+                            <p class="form-control-static">{{reg.Data.Mobile}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5">名片正面:</label>
+                        <div class="col-md-5">
+                            <p class="form-control-static">
+                                <img ng-if="reg.Data.CardFile.File.FileUrl" ng-src="{{ reg.Data.CardFile.File.FileUrl }}" class="img-responsive center-block" alt="名片正面" />
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5">NDA协议:</label>
+                        <div class="col-md-7 h6">
+                            <p class="form-control-static" ng-repeat="NDA in reg.Data.NDAFile">
+                                <a class="text-success" ng-click="reg.DownLoad(NDA.File.FileUrl)">{{NDA.File.OriginalName}}{{NDA.File.FileType}}</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-horizontal col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-5">公司地址:</label>
+                        <div class="col-md-7">
+                            <p class="form-control-static">{{reg.Data.Address}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5">公司邮箱:</label>
+                        <div class="col-md-7">
+                            <p class="form-control-static">{{reg.Data.Email}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5">公司开户银行:</label>
+                        <div class="col-md-7">
+                            <p class="form-control-static">{{reg.Data.Bank}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5">公司收款账号:</label>
+                        <div class="col-md-7">
+                            <p class="form-control-static">{{reg.Data.ReceiveAccount}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5">营业执照:</label>
+                        <div class="col-md-7">
+                            <p class="form-control-static">
+                                <a class="text-success" ng-click="reg.DownLoad(reg.Data.LicenseFile.File.FileUrl)">{{reg.Data.LicenseFile.File.OriginalName}}{{reg.Data.LicenseFile.File.FileType}}</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5">联系人座机:</label>
+                        <div class="col-md-7">
+                            <p class="form-control-static">{{reg.Data.Phone}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5">联系人职务:</label>
+                        <div class="col-md-7">
+                            <p class="form-control-static">{{reg.Data.Position}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5">名片反面:</label>
+                        <div class="col-md-5">
+                            <p class="form-control-static">
+                                <img ng-if="reg.Data.CardReverseFile.File.FileUrl" ng-src="{{ reg.Data.CardReverseFile.File.FileUrl }}" class="img-responsive center-block" alt="名片反面" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 b-b"></div>
+                <div class="col-sm-12 wrapper-md">
+                    <div class="m-l-lg m-b-lg">
+                        <div>
+                            <div class="m-b"><div ng-step opts="reg.opts"></div></div>
+                            <div ng-if="reg.AbleSign" class="panel panel-default m-t-md m-b-n-sm pos-rlt" ng-form="reg.ReForm">
+                                <div class="bg-light lter">
+                                    <div class="form-horizontal">
+                                        <textarea class="form-control no-border" maxlength="255" ng-model="reg.SignItem.Remark" name="Remark" rows="3" placeholder="审核意见..." required></textarea>
+                                    </div>
+                                    <p class="h6 text-danger">注:驳回必须填写审核意见！</p>
+                                </div>
+                                <div class="panel-footer text-center bg-light lter">
+                                    <button class="btn btn-info pull-none btn-sm" ng-click="reg.Sign(1)">同意</button>
+                                    <button class="btn btn-danger pull-none btn-sm" ng-click="reg.Sign(2)" ng-disabled="reg.ReForm.$invalid">驳回</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<pre>{{ reg.Data | json }}</pre>-->
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning pull-none" type="button" ng-click="reg.cancel()">取消</button>
+    </div>
+</div>

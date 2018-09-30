@@ -48,6 +48,8 @@ table {
         border: 1px solid #cad9ea;
         color: rgba(0, 0, 0, 0.8);
         height: 30px;
+        line-height: 30px;
+        vertical-align:middle !important;
     }
 
     table th {
@@ -520,7 +522,7 @@ a.list-group-item.hover {
   border-top: 1px solid #eaedef;
 }
 
-.table > tbody > tr > td,
+/*.table > tbody > tr > td,
 .table > tfoot > tr > td {
   padding: 8px 15px;
   border-top: 1px solid #eaeff0;
@@ -555,7 +557,7 @@ a.list-group-item.hover {
 
 .table-striped > thead > th:last-child {
   border-right: none;
-}
+}*/
 
 .well,
 pre {
