@@ -10,32 +10,34 @@
                 <input type="text" class="form-control" ng-model="dsinfo.S.Code" placeholder="料号">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" ng-model="dsinfo.S.DocNo" placeholder="单号">
+                <input type="text" class="form-control" ng-model="dsinfo.S.PlanCode" placeholder="计划名称">
             </div>
             <button class="btn btn-sm btn-info" ng-click="dsinfo.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
+            <button class="btn btn-sm btn-success" ng-click="dsinfo.BatchSave()"><i class="glyphicon glyphicon-floppy-save"></i>全部保存</button>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-11">
+        <div class="col-md-12">
             <table class="table table-striped b-2x" cg-busy="dsinfo.promise">
                 <tr class="text-left bg-gd-dk h4">
-                    <td class="col-md-1">编辑</td>
-                    <td class="col-md-1">计划名称</td>
-                    <td class="col-md-1">公司名称</td>
-                    <td class="col-md-1">料号</td>
-                    <td class="col-md-1">品名</td>
-                    <td class="col-md-1">单号</td>
-                    <td class="col-md-1">需求分类号</td>
-                    <td class="col-md-1">需求供应形态</td>
-                    <td class="col-md-1">订单类型</td>
-                    <td class="col-md-1">净数量</td>
-                    <td class="col-md-1">交易数量</td>
-                    <td class="col-md-1">需求日期</td>
+                    <td style="width:18%;" class="">原因</td>
+                    <td style="width:7%;" class="">计划名称</td>
+                    <td style="width:12%;" class="">公司名称</td>
+                    <td style="width:7%;" class="">料号</td>
+                    <td style="width:7%;" class="">品名</td>
+                    <td style="width:7%;" class="">单号</td>
+                    <td style="width:7%;" class="">需求分类号</td>
+                    <td style="width:7%;" class="">供需形态</td>
+                    <td style="width:7%;" class="">订单类型</td>
+                    <td style="width:7%;" class="">余量</td>
+                    <td style="width:7%;" class="">交易数量</td>
+                    <td style="width:7%;" class="">需求日期</td>
                 </tr>
                 <!--filter: dsinfo.search-->
-                <tr ng-repeat="item in dsinfo.List |orderBy:['PlanCode','Code']">
+                <tr ng-repeat="item in dsinfo.List">
                     <td>
-                        <button class="btn btn-xs btn-primary" ng-click="dsinfo.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                        <!--<button class="btn btn-xs btn-primary" ng-click="dsinfo.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>-->
+                        <input type="text" onmouseover="this.title=this.value" class="form-control text-sm" ng-model="item.Remark" />
                     </td>
                     <td>{{ item.PlanCode }}</td>
                     <td>{{ item.Company }}</td>
@@ -47,7 +49,7 @@
                     <td>{{ item.DocType }}</td>
                     <td>{{ item.NetQty }}</td>
                     <td>{{ item.TradeBaseQty }}</td>
-                    <td>{{ item.DemandDate|date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td>{{ item.DemandDate|date:'yyyy-MM-dd' }}</td>
                     <!--<td ng-if="item.ComponentType==null">无</td>
                     <td ng-if="item.ComponentType==0">标准</td>
                     <td ng-if="item.ComponentType==2">替代</td>-->
