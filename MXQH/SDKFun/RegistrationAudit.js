@@ -60,10 +60,11 @@ function ($scope, Dialog, $window, AjaxService, FileService, toastr) {
         for (var i = 0, len = proList.length; i < len; i++) {
             var en = {};
             en.title = proList[i].NodeName;
-            en.content = item.Contact;
+            en.content = i == 0 ? item.Contact : "";
             if (ReList) {
                 for (var j = 0, len2 = ReList.length; j < len2; j++) {
                     if (item.Process[i].NodeNo == item.SignResult[j].NodeNo) {
+                        en.content = "";
                         if (item.SignResult[j].IsAgree == 1) {
                             en.content = item.Process[i].SortNo > 0 ? (item.SignResult[j].UserName + ' 核准 备注：' + item.SignResult[j].Remark) : "";
                             item.opts.now = i + 1;

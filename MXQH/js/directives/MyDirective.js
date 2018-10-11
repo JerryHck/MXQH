@@ -656,6 +656,7 @@ angular.module('MyDirective')
             controller: ['$scope',function ($scope) {
                 var option = {};
                 $scope.List = [];
+                $scope.fileData = $scope.fileData || [];
                 option.onComplete = function (data) {
                     if ($scope.ngComplete)
                     {
@@ -677,7 +678,6 @@ angular.module('MyDirective')
                 $scope.fileType = $scope.fileType || "*";
                 $scope.opts = $scope.opts || {};
                 $scope.ngDisabled = $scope.ngDisabled || 'false';
-                $scope.fileData = $scope.fileData || [];
                 var op = $scope.opts;
 
                 $scope.Open = function (e) {
@@ -708,6 +708,7 @@ angular.module('MyDirective')
             templateUrl: 'js/directives/UploadFile.html?v=' + Version,
             controller: ['$scope', function ($scope) {
                 var option = {};
+                $scope.fileData = $scope.fileData || {};
                 option.onComplete = function (data) {
                     if ($scope.ngComplete) {
                         $scope.ngComplete();
@@ -728,7 +729,6 @@ angular.module('MyDirective')
             link: function ($scope, elm) {
                 $scope.fileType = $scope.fileType || "*";
                 $scope.ngDisabled = $scope.ngDisabled || 'false';
-                $scope.fileData = $scope.fileData || {};
                 $scope.Open = function (e) {
                     $scope.uploader.clearQueue();
                     e.target.parentNode.parentElement.parentElement.lastElementChild.click();

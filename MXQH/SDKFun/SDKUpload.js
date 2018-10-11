@@ -17,6 +17,7 @@ function SDKUploadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUrl,
     vm.ProFileSave = ProFileSave;
     vm.DeleteProFile = DeleteProFile;
     vm.DownLoad = DownLoad;
+    vm.isProExists = isProExists;
 
     Search()
     function Search() {
@@ -82,6 +83,19 @@ function SDKUploadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUrl,
         vm.promise = AjaxService.GetPlans("SDKProFile", list).then(function (data) {
             vm.ProFileList = data;
         });
+    }
+
+    function isProExists()
+    {
+        if (vm.Item.ProNo && vm.Item.Version) {
+            var list = [];
+            list.push({ name: "ProNo", value: vm.Item.ProNo });
+            list.push({ name: "Version", value: vm.Item.Version });
+            AjaxService.GetPlan("SDKPro", list).then(function (data) {
+                console.log(data.ProNo)
+                vm.ProductForm.Version.$setValidity('unique', !data.ProNo);
+            });
+        }
     }
 
     function ProFileSave()

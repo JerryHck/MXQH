@@ -37,10 +37,11 @@ function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $wi
         AjaxService.DoBefore("Login", en).then(function (data) {
             if (data.Name == "Error") {
                 toastr.error(data.Msg);
+                reflashSecCode();
             }
             else if (data.Name == "Error2") {
                 toastr.error(data.Msg);
-                //reflashSecCode();
+                reflashSecCode();
             }
             else if (data.Name == "Login") {
                 MyPop.Confirm({ text: data.Msg }, KickOut);
