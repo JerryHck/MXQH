@@ -566,6 +566,10 @@
     <Content Include="SystemFun\UserRoleDialog.html" />
     <Content Include="SystemFun\UserRoleDialog.js" />
     <Content Include="Template\UIAccordionTemplate.html" />
+    <Content Include="U9Fun\DSInfo.html" />
+    <Content Include="U9Fun\DSInfo.js" />
+    <Content Include="U9Fun\DSInfoDialog.html" />
+    <Content Include="U9Fun\DSInfoDialog.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
