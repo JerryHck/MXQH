@@ -22,8 +22,16 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">备注</label>
-                                <div class="col-lg-8">
-                                    <textarea class="form-control" rows="3" maxlength="255" ng-model="sn.DeleteItem.Remark" placeholder="输入备注信息"></textarea>
+                                <div class="col-lg-8" ng-class="{ 'has-error' : sn.DeleteForm.remark.$invalid }">
+                                    <ui-select name="remark" ng-model="sn.DeleteItem.Remark" theme="bootstrap" search-enabled="true" ng-required="true">
+                                        <ui-select-match placeholder="选择备注信息..." class="h6">{{ $select.selected.Remark }}</ui-select-match>
+                                        <ui-select-choices repeat="item.Remark as item in sn.ItemRemarkList | filter: $select.search track by item.Id">
+                                            <div ng-bind-html="item.ShortName | highlight: $select.search"></div>
+                                            <small ng-bind-html="item.Remark | highlight: $select.search"></small>
+                                        </ui-select-choices>
+                                    </ui-select>
+
+                                    <!--<textarea class="form-control" rows="3" maxlength="255" ng-model="sn.DeleteItem.Remark" placeholder="输入备注信息"></textarea>-->
                                 </div>
                             </div>
                             <div class="form-group">
