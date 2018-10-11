@@ -86,11 +86,11 @@ function Config($stateProvider, $urlRouterProvider, Version) {
             url: '/signup',
             controllerAs: 'sign',
             controller: 'SignUpCtrl',
-            templateUrl: 'SDKFun/SignUp.html' + "?v=" + Version,
+            templateUrl: 'Access/SignUp.html' + "?v=" + Version,
             resolve: {
                 deps: ['$ocLazyLoad',
                   function ($ocLazyLoad) {
-                      return $ocLazyLoad.load(['SDKFun/SignUp.js' + "?v=" + Version]);
+                      return $ocLazyLoad.load(['Access/SignUp.js' + "?v=" + Version]);
                   }]
             }
         })

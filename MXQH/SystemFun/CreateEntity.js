@@ -48,7 +48,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
     vm.ActionType = { Table: "BasicData", Column: "ActionType" };
     vm.UserEmp = { Table: "BasicData", Column: "UserEmp" };
     vm.ProItem = { };
-    vm.newRelCon = { ParenType: '0', ChildType: '0' };
+    vm.newRelCon = { ParenType: '0', ChildType: '0', Associate: "" };
 
     $scope.$watch(function () { return vm.EnTable; }, getTableList);
     $scope.$watch(function () { return vm.ProItem.RelateEntity; }, getChildTableList);
@@ -158,6 +158,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
     function EnAdd() {
         Cancel();
         vm.SelectedEn.ActionType = "I";
+        vm.SelectedEn.AutoDelLog = false;
         vm.isAddOpen = true;
         vm.isEditing = true;
         vm.isAdd = true;

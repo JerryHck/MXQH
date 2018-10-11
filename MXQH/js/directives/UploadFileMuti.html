@@ -4,6 +4,11 @@
             <a class="pull-left" ng-click="Open($event)"><i class="fa fa-folder-open">浏览</i></a>
             <!--<a class="pull-right text-success" ng-click="uploader.uploadAll()"><i class="glyphicon glyphicon-upload">上传</i></a>-->
         </span>
+        <div ng-if="ableDrag=='true'" nv-file-drop="" uploader="uploader">
+            <div nv-file-over="" uploader="uploader" over-class="b-danger" class="b-a b-2x b-dashed wrapper-lg lter text-center">
+                可拖曳文件到此上传
+            </div>
+        </div>
         <input type="text" class="form-control" name="{{ ngName }}" placeholder="{{ placeholder }}" disabled ng-required="ngRequired"/>
         <span class="input-group-addon">
             <a class="pull-right text-success" ng-click="uploader.uploadAll()"><i class="glyphicon glyphicon-upload">上传</i></a>
@@ -14,7 +19,7 @@
 <div ng-repeat="f in fileData">
     <div class="form-group col-md-12 has-feedback  m-b-none">
         <div class="col-md-12 input-group">
-            <span class="input-group-addon" ng-if="ngDisabled=='false'" ng-click="Delete(index)">
+            <span class="input-group-addon" ng-if="ngDisabled=='false'" ng-click="Delete($index)">
                 <a class="text-danger"><i class="glyphicon glyphicon-trash"></i></a>
             </span>
             <input class="form-control" ng-disabled="ngDisabled == 'true'" type="text" ng-model="f.OriginalName">
@@ -49,3 +54,4 @@
         </div>
     </div>
 </div>
+<!--<pre>{{ fileData|json }}</pre>-->

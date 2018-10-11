@@ -648,6 +648,7 @@ angular.module('MyDirective')
                 ngName: '@',
                 ngRequired: '@',
                 placeholder: '@',
+                ableDrag:'@',
                 fileData: '=',
                 ngComplete: '&'
             },
