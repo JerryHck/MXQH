@@ -8,6 +8,9 @@
         var tableConfigList = [];
 
         var obj = {
+            //登录前服务
+            DoBefore: DoBefore,
+
             //获得实体资料-单个
             GetPlan: GetPlan,
             //获得实体资料-列表
@@ -15,11 +18,11 @@
             //分页获取实体资料
             GetPlansPage: GetPlansPage,
             //实体计划excel导出
-            GetPlanExcel:GetPlanExcel,
+            GetPlanExcel: GetPlanExcel,
             //保存计划实体
             SavePlan: SavePlan,
             //刷新计划实体
-            ReflashPlan:ReflashPlan,
+            ReflashPlan: ReflashPlan,
             //删除计划实体
             DeletePlan: DeletePlan,
             //计划对应表新增
@@ -27,13 +30,13 @@
             //计划对应表更新
             PlanUpdate: PlanUpdate,
             //计划对应表删除
-            PlanDelete:PlanDelete,
+            PlanDelete: PlanDelete,
             //计划备份
             PlanBak: PlanBak,
             //执行计划实体
             ExecPlan: ExecPlan,
             //执行实体关联的存储过程,获取Excel文件
-            ExecPlanToExcel:ExecPlanToExcel,
+            ExecPlanToExcel: ExecPlanToExcel,
             //获得实体资料-单个
             GetEntity: GetEntity,
             //获得实体资料-列表
@@ -42,12 +45,10 @@
             GetJson: GetJson,
             //简单单表新增
             Action: Action,
-            //存储过程执行
-            EditBack: EditBack,
             //文件
             HandleFile: HandleFile,
             //
-            AddDialog:AddDialog,
+            AddDialog: AddDialog,
             //链接对象列表
             GetConnect: GetConnect,
             //数据对象
@@ -55,16 +56,19 @@
             //获取表栏位
             GetColumns: GetColumns,
             GetTbColumns: GetTbColumns,
-            GetProcColumns:GetProcColumns,
+            GetProcColumns: GetProcColumns,
             GetTableConfig: GetTableConfig,
             //User
             AddUser: AddUser,
-            Login: Login,
             LoginAction: LoginAction,
             //file
             FileImport: FileImport,
             //文件上传保存
             ExecPlanUpload: ExecPlanUpload,
+            //发送邮件
+            ExecPlanMail: ExecPlanMail,
+
+
         };
 
         return obj;
@@ -77,19 +81,19 @@
         }
 
         //获得计划资料
-        function GetPlan(name, json) {
-            return plan(name, json, "GetPlan");
+        function GetPlan(name, json, limitCol) {
+            return plan(name, json, "GetPlan", undefined, undefined, limitCol);
         }
 
         //获得计划资料-列表
-        function GetPlans(name, json) {
-            return plan(name, json, "GetPlans");
+        function GetPlans(name, json, limitCol) {
+            return plan(name, json, "GetPlans", undefined, undefined, limitCol);
         }
 
         //获得计划资料-分页
-        function GetPlansPage(name, json, index, size) {
+        function GetPlansPage(name, json, index, size, limitCol) {
             var s = index <= 1 ? 1 : (index - 1) * size + 1;
-            return plan(name, json, "GetPlansPage", s, s + size);
+            return plan(name, json, "GetPlansPage", s, s + size, limitCol);
         }
 
         //获得计划资料-新增
@@ -118,22 +122,11 @@
         //获得单实体资料
         function GetEntity(name, json) {
             return entity(name, json, "GetEntity");
-        }  
+        }
 
         //获得表资料
         function GetEntities(name, json) {
             return entity(name, json, "GetEntities");
-        }
-
-        //获得表资料
-        function EditBack(name, json) {
-            var d = $q.defer(),
-                 url = serviceUrl + generic;
-            var en = {};
-            en.strProc = name;
-            en.strJson = JSON.stringify(json) || '{}';
-
-            return TbAjax(d, url, en, "EditBack");
         }
 
         //获得表资料
@@ -158,7 +151,7 @@
 
         //HTTP AJAX
         function AjaxHandle(q, method, data) {
-           
+
             var en = { "method": method, "data": data };
             httpFun(q, appUrl + 'Data/Handler/FileData.ashx', en);
             return q.promise;
@@ -191,7 +184,7 @@
             return g.promise;
         }
 
-        function GetProcColumns(conn, proc){
+        function GetProcColumns(conn, proc) {
             var d = $q.defer(),
                  url = serviceUrl + generic;
             var en = {};
@@ -223,29 +216,28 @@
             return Ajax(d, url, en, funName);
         }
 
-        function plan(name, json, funName, start, end) {
+        function plan(name, json, funName, start, end, limitCol) {
             var enJson = JSON.stringify(convertArray(json)) || '[]';
-            return planAjax(name, enJson, funName, start, end);
+            return planAjax(name, enJson, funName, start, end, limitCol);
         }
 
-        function planAjax(name, json, funName, start, end) {
+        function planAjax(name, json, funName, start, end, limitCol) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = {};
             en.planName = name;
             en.strJson = json;
             en.start = start;
             en.end = end;
+            en.limitUserCol = limitCol;
             return Ajax(d, url, en, funName)
         }
 
         function SavePlan(name, json) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, undefined, json);
             return Ajax(d, url, en, "SavePlan");
         }
-        
+
         function ReflashPlan(name) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = {};
@@ -254,49 +246,40 @@
         }
         function DeletePlan(name, json) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, undefined, json);
             return Ajax(d, url, en, "DeletePlan");
         }
 
         function ExecPlan(name, shortName, json) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.shortName = shortName;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, shortName, json);
             return Ajax(d, url, en, "ExecPlan")
+        }
+
+        function ExecPlanMail(name, shortName, json) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = getEn(name, shortName, json);
+            return Ajax(d, url, en, "ExecPlanMail")
         }
 
         function ExecPlanUpload(name, shortName, json, fileJson, dir) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.shortName = shortName;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, shortName, json);
             en.fileJson = JSON.stringify(fileJson);
             en.dir = dir;
             return Ajax(d, url, en, "ExecPlanUpload")
         }
 
-        function ExecPlanToExcel(name, shortName, json, sheetTable)
-        {
+        function ExecPlanToExcel(name, shortName, json, sheetTable) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.shortName = shortName;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, shortName, json);
             en.sheetTable = JSON.stringify(convertArray(sheetTable));
             return Ajax(d, url, en, "ExecPlanToExcel")
         }
 
         function GetPlanExcel(name, shortName, json) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.shortName = shortName;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, shortName, json);
             return Ajax(d, url, en, "GetPlanExcel")
         }
 
@@ -307,14 +290,10 @@
             return Ajax(d, url, en, "AddUser", undefined, 'Authorization')
         }
 
-        function Login(user, psw, kicking) {
-            var d = $q.defer(), url = serviceUrl + "Common.asmx/Login";
-            var en = {};
-            en.User = user;
-            en.Psw = psw;
-            en.Kicking = kicking;
-            $cookieStore.put('user-token', 'Login');
-            return httpFun(d, url, en)
+        function DoBefore(method, en) {
+            var d = $q.defer(), url = serviceUrl + "Common.asmx/DoBefore";
+            var json = { method: method, Json: JSON.stringify(en) };
+            return httpFun(d, url, json)
         }
 
         function LoginAction(method, en) {
@@ -360,10 +339,7 @@
 
         function FileImport(name, shortName, json, file, inData, sheetTable) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.shortName = shortName;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, shortName, json);
             en.filaName = file;
             en.bt = inData;
             en.sheetTable = JSON.stringify(convertArray(sheetTable));
@@ -377,7 +353,7 @@
         }
 
         function TbAjax(q, url, parameter, Method, type, service) {
-            var en = { method: Method, Json: JSON.stringify(parameter), service: service||'' };
+            var en = { method: Method, Json: JSON.stringify(parameter), service: service || '' };
             return httpTbFun(q, url, en, type);
         }
 
@@ -403,9 +379,8 @@
                     q.reject();
                     if (data.status == 401) {
                         $cookieStore.remove('user-token');
-                        if($window.location.href != appUrl + 'Login.html')
-                        {
-                            $window.location.href = appUrl + 'Login.html';
+                        if ($window.location.href != appUrl + 'Acess.html#!/login') {
+                            $window.location.href = appUrl + 'Acess.html#!/login';
                         }
                     } else {
                         console.log(data);
@@ -414,6 +389,15 @@
                     }
                 });
             return q.promise;
+        }
+
+        function getEn(name, shortName, json)
+        {
+            var en = {};
+            en.planName = name;
+            en.shortName = shortName;
+            en.strJson = JSON.stringify(json);
+            return en;
         }
 
         //转换字符串

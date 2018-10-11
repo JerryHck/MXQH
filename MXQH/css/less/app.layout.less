@@ -28,6 +28,7 @@ body{
 .app-header-fixed{
 	padding-top: @app-header-height;
 	.app-header{
+        z-index: 1025;
 		position: fixed;
 		top: 0;
 		width: 100%;
@@ -42,6 +43,7 @@ body{
 // menu
 .app-aside{
 	float: left;
+    z-index: 1025;
 	&:before{
 		content: "";
 		position: absolute;
@@ -63,7 +65,7 @@ body{
 	.app-aside-folded & {
 		max-width: @app-aside-folded-width;
 	}
-	~ div{
+	div{
 		padding-bottom: 50px;
 	}
 }
@@ -74,6 +76,7 @@ body{
 
 // content
 .app-content{
+    z-index:100;
 	height: 100%;
 	.clearfix();
 }
@@ -106,6 +109,7 @@ body{
 	left: 0;
 	right: 0;
 	z-index: 1005;
+    vertical-align:central !important;
 	&.app-footer-fixed{
 		position: fixed;
 	}

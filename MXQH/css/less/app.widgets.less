@@ -1,3 +1,51 @@
+
+.d-r{
+	z-index: 200;
+	position: fixed;
+    top:@app-header-height;
+    right: -480px;
+	width: 480px;
+    height:auto;
+	.transition(right 0.4s);
+	bottom: @app-footer-height;
+	padding: 0 !important;
+	&.h-full{
+		bottom: 0;
+		height: auto;
+	}
+    &.sm{
+        right: -240px;
+	    width: 240px;
+    }   
+
+    &.md{
+        right: -600px;
+	    width: 600px;
+    }
+    &.xl{
+        right: -720px;
+	    width: 720px;
+    }
+    &.lg{
+        right: -1000px;
+	    width: 1000px;
+    }
+}
+.d-r.active{
+	right: -1px;
+}
+.d-r.active > .blur-close{
+    z-index:200 !important;
+    position:absolute;
+    background: none;
+    /*background-color:#808080;*/
+	border-right-width: 0;
+    height:100%;
+    width:  1600px;
+	left:  -1600px;
+}
+/*.d-r::-webkit-scrollbar{width: 0px;height: 0px;}*/
+
 // icon list
 .list-icon i{font-size: 14px;width:40px;vertical-align:middle;margin:0;display: inline-block;text-align: center;.transition(font-size .2s);}
 .list-icon div{line-height: 40px;white-space: nowrap;}
@@ -7,13 +55,21 @@
 .settings{
 	z-index: 1050;
 	position: fixed;
-	top: 120px;
+	top: 1px;
 	right: -240px;
 	width: 240px;
 	.transition(right 0.2s);
 }
 .settings.active{
 	right: -1px;
+    > .blur-close{
+        background: none;
+	    border-right-width: 0;
+        height:100%;
+        width:1600px;
+        position: absolute;
+	    left:  -1600px;
+    }
 }
 
 .settings > .btn{

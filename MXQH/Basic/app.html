@@ -1,9 +1,9 @@
   <!-- navbar -->
-  <div data-ng-include="'Basic/blocks/header.html' " class="app-header navbar">
+  <div data-ng-include="'Basic/blocks/header.html?v=107' " class="app-header navbar">
   </div>
   <!-- / navbar -->
   <!-- menu -->
-  <div data-ng-include="'Basic/blocks/aside.html'" class="app-aside hidden-xs {{vm.app.settings.asideColor}}">
+  <div data-ng-include="'Basic/blocks/aside.html'" ui-remove-class="active" target=".settings" class="app-aside hidden-xs {{vm.app.settings.asideColor}}">
   </div>
   <!-- / menu -->
 
@@ -80,5 +80,5 @@
     &copy; 2018 Copyright.
   </div>
   <!-- / footer -->
-  <!--<div data-ng-include=" 'Basic/blocks/settings.html' " class="settings panel panel-default">
-  </div>-->
+  <div data-ng-include=" 'Basic/blocks/settings.html?v=108' " class="settings panel panel-default">
+  </div>

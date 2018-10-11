@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-ng-app="access">
+<head>
+    <meta charset="utf-8" />
+    <title>Auctus | 平台入口资讯系统</title>
+    <meta name="description" content="Auctus | 平台入口资讯系统" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+
+    <link href="Content/angular-busy.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/animate.css" type="text/css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/simple-line-icons.css" type="text/css" />
+    <link rel="stylesheet" href="css/font.css" type="text/css" />
+    <link rel="stylesheet" href="css/app.css" type="text/css" />
+    <link href="Content/ui-bootstrap-csp.css" rel="stylesheet" />
+    <link href="Content/angular-toastr.css" rel="stylesheet" />
+    <link href="Content/sweetalert.css" rel="stylesheet" />
+    <link href="Content/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet" />
+    <link href="Content/angular-toggle-switch/angular-toggle-switch.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="app" style="min-height: 100%; padding: 0 0 60px;">
+        <div class="row">
+            <div class="col-md-1">
+                <div><img style="margin-top:22px;width:150px" src="Content/images/logo.png" /></div>
+            </div>
+            <div class="col-md-10">
+                <div ui-view></div>
+            </div>
+        </div>
+    </div>
+    <div style="height: 50px; margin-top: -60px; text-align:center" ng-include="'Basic/blocks/page_footer.html'"></div>
+    <!-- jQuery -->
+    <script src="Scripts/jquery-3.0.0.min.js"></script>
+    <!-- Angular -->
+    <script src="Scripts/angular/angular.min.js"></script>
+    <script src="Scripts/angular/angular-messages.min.js"></script>
+    <script src="Scripts/angular/angular-toastr.tpls.min.js"></script>
+    <script src="Scripts/angular/angular-busy.min.js"></script>
+
+    <script src="Scripts/angular/angular-ui-router.min.js"></script>
+
+    <script src="Scripts/angular/angular-animate/angular-animate.js"></script>
+    <script src="Scripts/angular/angular-cookies/angular-cookies.js"></script>
+    <script src="Scripts/angular/angular-resource/angular-resource.js"></script>
+    <script src="Scripts/angular/angular-sanitize/angular-sanitize.js"></script>
+    <script src="Scripts/angular/angular-touch/angular-touch.js"></script>
+    <script src="Scripts/angular/ngstorage/ngStorage.js"></script>
+
+    <!--file upload-->
+    <script src="Scripts/angular/angular-file-upload/angular-file-upload.min.js"></script>
+
+    <!-- bootstrap -->
+    <script src="Scripts/bootstrap/bootstrap.min.js"></script>
+    <script src="Scripts/angular-ui/bootstrap-switch.min.js"></script>
+    <script src="Scripts/angular-ui/angular-toggle-switch.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+    <script src="Scripts/angular-ui/angular-locale_zh-cn.min.js"></script>
+    <script src="Scripts/sweetalert.min.js"></script>
+    <!-- lazyload -->
+    <script src="Scripts/oclazyload/ocLazyLoad.min.js"></script>
+    
+    <script>
+        check();
+        function check (){
+            var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+            var isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1; //判断Chrome浏览器
+            if (!isChrome) {
+                if (confirm("您使用的不是Chrome浏览器，请使用Chrome浏览本系统！")) {
+                    window.location.href = '//192.168.1.82:9090/File/DownLoad/chromexp_96311.rar';
+                }
+            }
+        }
+
+        var version = Date.now();
+        document.write("<script type='text/javascript' src='js/appData.js?v=" + version + "'><\/script>");
+        document.write("<script type='text/javascript' src='js/services/AjaxServiceModule.js?v=" + version + "'><\/script>");
+        document.write("<script type='text/javascript' src='js/services/AjaxServiceMethod.js?v=" + version + "'><\/script>");
+        document.write("<script type='text/javascript' src='js/services/FileService.js?v=" + version + "'><\/script>");
+
+        //document.write("<script src='js/Dialog.js?v=" + version + "'><\/script>");
+        document.write("<script src='js/directives/MyDirective.js?v=" + version + "'><\/script>");
+    </script>
+    <script src="Access.js"></script>
+</body>
+</html>

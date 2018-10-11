@@ -20,5 +20,7 @@ angular.module('app', [
     'oc.lazyLoad',
     'pascalprecht.translate',
     'AjaxServiceModule',
-    'ui.router.requirePolyfill'
+    'ui.router.requirePolyfill',
+    'MyDirective',
+    'FileLoad'
 ]);

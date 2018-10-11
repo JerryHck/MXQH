@@ -47,14 +47,13 @@ angular.module('app')
         }
         GetList();
 
-
         // save settings to local storage
         if (angular.isDefined($localStorage.settings)) {
             vm.app.settings = $localStorage.settings;
         } else {
             $localStorage.settings = vm.app.settings;
         }
-        $scope.$watch('app.settings', function () {
+        $scope.$watch('vm.app.settings', function () {
             if (vm.app.settings.asideDock && vm.app.settings.asideFixed) {
                 // aside dock and fixed must set the header fixed.
                 vm.app.settings.headerFixed = true;
@@ -101,7 +100,7 @@ angular.module('app')
         function LogOff() {
             AjaxService.LoginAction("LoginOff").then(function (data) {
                 $cookieStore.remove('user-token');
-                $window.location.href = appUrl + 'Login.html';
+                $window.location.href = appUrl + 'Acess.html#!/login';
             })
         }
 

@@ -7,11 +7,11 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
     $cookieStore.put('active-function', "Main");
     //State Change Start
     $rootScope.$on('$stateChangeStart', onStateChangeStart);
-
+    //console.log($state.current.name)
     //檢查是否登入
     function onStateChangeStart(e, toState, toParams, fromState, fromParams) {
         if (!$cookieStore.get('user-token')) {
-            $window.location.href = appUrl + 'Login.html';
+            $window.location.href = appUrl + 'Acess.html#!/login';
         }
     }
     //获取路由信息
