@@ -4,9 +4,8 @@ angular.module('app')
 .controller('DSInfoCtrl', ['$rootScope', '$scope', '$http', 'Dialog', 'toastr', 'AjaxService', 'MyPop',
 function ($rootScope,$scope, $http, Dialog, toastr, AjaxService, Form, MyPop) {
 
-    var dsinfo = this;
-    dsinfo.page = { index: 1, size: 15, maxSize: 10 };
-    dsinfo.S = {};
+    var dsinfo = this;    
+    dsinfo.page = { pageIndex: 1, pageSize: 20, maxSize: 10, Code: '', PlanCode: '', UserNo: $rootScope.User.UserNo };
     dsinfo.DataBind = DataBind;
     dsinfo.Search = Search;
     dsinfo.BatchSave = BatchSave;
@@ -23,11 +22,9 @@ function ($rootScope,$scope, $http, Dialog, toastr, AjaxService, Form, MyPop) {
             en.Remark = r.Remark;
             li.push(en);
         });
-        console.log(li);
         var json = {};
         json.List = JSON.stringify(li);
         json.TempColumns = "List"
-        console.log(json);
         dsinfo.promise = AjaxService.ExecPlan("MRPDSInfoResult", "BatchUpdate", json).then(function (data) {
             toastr.success('储存成功');
             //更新功能基本信息
@@ -38,21 +35,21 @@ function ($rootScope,$scope, $http, Dialog, toastr, AjaxService, Form, MyPop) {
     //绑定数据（带分页）
     function DataBind() {
         var list2 = [];
-        if (dsinfo.S.Code) {
-            list2.push({ name: "Code", value: '%'+dsinfo.S.Code+'%' });
+        if (!dsinfo.page.Code) {
+            dsinfo.page.Code = '';
         }
-        if (dsinfo.S.PlanCode) {
-            list2.push({ name: "PlanCode", value:'%'+dsinfo.S.PlanCode+'%' });
+        if (!dsinfo.page.PlanCode) {
+            dsinfo.page.PlanCode = '';
         }
-        dsinfo.promise = AjaxService.GetPlansPage("MRPDSInfoResult", list2, dsinfo.page.index, dsinfo.page.size).then(function (data) {
-            dsinfo.List = data.List;
-            dsinfo.page.total = data.Count;
+        dsinfo.promise = AjaxService.ExecPlan("MRPDSInfoResult", "Select", dsinfo.page).then(function (data) {
+            dsinfo.List = data.data;
+            dsinfo.page.total=data.data1[0].TotalCount
         });
     }
 
     //查询
     function Search() {
-        dsinfo.page.index = 1;
+        dsinfo.page.pageIndex = 1;
         DataBind()
     }
 
@@ -63,7 +60,6 @@ function ($rootScope,$scope, $http, Dialog, toastr, AjaxService, Form, MyPop) {
                 return item;
             }
         }
-        console.log('123');
         Open('U', resolve);
     }
     //打开弹出框 I/U->新增/编辑
