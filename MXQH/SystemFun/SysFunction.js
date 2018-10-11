@@ -177,7 +177,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
                 toastr.success('删除成功');
                 reflashData();
                 //更新功能基本信息
-                AjaxService.LoginAction("ReflashRoot");
+                AjaxService.LoginAction("ReInit")
             })
         }
     }
@@ -297,7 +297,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
             //更新数据
             reflashData();
             //更新功能基本信息
-            AjaxService.LoginAction("ReflashRoot");
+            AjaxService.LoginAction("ReInit")
             toastr.success('储存成功');
         })
     }
@@ -344,7 +344,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
             vm.promise = AjaxService.ExecPlan("FunRoot", "saveRoot", json).then(function (data) {
                 toastr.success('储存成功');
                 //更新功能基本信息
-                AjaxService.LoginAction("ReflashRoot");
+                AjaxService.LoginAction("ReInit");
             })
         }
     }

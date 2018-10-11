@@ -128,6 +128,7 @@
     <Content Include="Content\ui-grid.css" />
     <Content Include="Content\ui-grid.min.css" />
     <Content Include="Content\ui-grid.svg" />
+    <Content Include="css\app.css" />
     <Content Include="css\less\app.arrow.less" />
     <Content Include="css\less\app.butterbar.less" />
     <Content Include="css\less\app.buttons.less" />
@@ -136,7 +137,7 @@
     <Content Include="css\less\app.item.less" />
     <Content Include="css\less\app.layout.boxed.less" />
     <Content Include="css\less\app.layout.less" />
-    <Content Include="css\less\app.less" />
+    <Content Include="css\app.less" />
     <Content Include="css\less\app.mixins.less" />
     <Content Include="css\less\app.nav.dock.less" />
     <Content Include="css\less\app.nav.less" />
@@ -160,6 +161,7 @@
     <Content Include="fonts\sourcesanspro\sourcesanspro-bold.woff" />
     <Content Include="fonts\sourcesanspro\sourcesanspro-light.woff" />
     <Content Include="fonts\sourcesanspro\sourcesanspro.woff" />
+    <Content Include="HtmlPage1.html" />
     <Content Include="Images\loading.gif" />
     <Content Include="Images\progressbar.gif" />
     <Content Include="Images\select2-spinner.gif" />
@@ -168,8 +170,22 @@
     <Content Include="Scripts\assets\less\unlock.css" />
     <Content Include="Access\ForgotPassword.html" />
     <Content Include="Access\ForgotPassword.js" />
-    <Content Include="SDKFun\SignUp.html" />
-    <Content Include="SDKFun\SignUp.js" />
+    <Content Include="Scripts\bootstrap-step\css\bs-is-fun.css" />
+    <Content Include="Scripts\bootstrap-step\css\shCore.css" />
+    <Content Include="Scripts\bootstrap-step\css\shThemeDefault.css" />
+    <Content Include="Scripts\bootstrap-step\js\brush.js" />
+    <Content Include="Scripts\jquery\ystep\css\images\pointes_blue.png" />
+    <Content Include="Scripts\jquery\ystep\css\images\pointes_blue1.png" />
+    <Content Include="Scripts\jquery\ystep\css\images\pointes_green.png" />
+    <Content Include="Scripts\jquery\ystep\css\images\pointes_green1.png" />
+    <Content Include="Scripts\jquery\ystep\css\ystep.css" />
+    <Content Include="Scripts\jquery\ystep\ystep.js" />
+    <Content Include="SDKFun\RegUserSignDialog.html" />
+    <Content Include="SDKFun\RegUserSignDialog.js" />
+    <Content Include="SDKFun\SDKUpload.html" />
+    <Content Include="SDKFun\SDKUpload.js" />
+    <Content Include="Access\SignUp.html" />
+    <Content Include="Access\SignUp.js" />
     <Content Include="unlock.js" />
     <Content Include="js\appData.js" />
     <Content Include="js\app\contact\contacts.json" />
@@ -302,6 +318,7 @@
     <Content Include="Content\font\fontawesome-webfont.eot" />
     <Content Include="Content\font\fontawesome-webfont.ttf" />
     <Content Include="Content\font\fontawesome-webfont.woff" />
+    <None Include="css\less\app.table.less" />
     <None Include="Properties\PublishProfiles\2.pubxml" />
     <None Include="Properties\PublishProfiles\MXQH.pubxml" />
     <Content Include="Scripts\angular\angular-file-upload\angular-file-upload.js.map" />
@@ -410,8 +427,8 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="SDKFun\Register.html" />
-    <Content Include="SDKFun\Register.js" />
+    <Content Include="SDKFun\RegistrationAudit.html" />
+    <Content Include="SDKFun\RegistrationAudit.js" />
     <Content Include="SystemFun\AddDialog.js" />
     <Content Include="SystemFun\AddDialog.html" />
     <Content Include="SystemFun\ChangePswDialog.html" />
@@ -495,7 +512,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\animate.css" />
-    <Content Include="css\app.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\font-awesome.min.css" />
     <Content Include="css\font.css" />

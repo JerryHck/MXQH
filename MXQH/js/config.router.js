@@ -88,21 +88,4 @@ function Config($stateProvider, $urlRouterProvider, Version) {
             url: '/ui',
             template: '<div ui-view class="fade-in-up"></div>'
         })
-        //.state('access', {
-        //    url: '/access',
-        //    template: '<div ui-view class="fade-in-right-big smooth"></div>'
-        //})
-        //找回密码
-        .state('access.forgotPsw', {
-            url: '/forgotpsd/',
-            controllerAs: 'psw',
-            controller: 'ForgotPasswordCtrl',
-            templateUrl: 'SystemFun/ForgotPassword.html' + "?v=" + Version,
-            resolve: {
-                deps: ['$ocLazyLoad',
-                  function ($ocLazyLoad) {
-                      return $ocLazyLoad.load(['SystemFun/ForgotPassword.js' + "?v=" + Version]);
-                  }]
-            }
-        })
 }

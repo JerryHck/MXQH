@@ -53,7 +53,7 @@ angular.module('app')
         } else {
             $localStorage.settings = vm.app.settings;
         }
-        $scope.$watch('app.settings', function () {
+        $scope.$watch('vm.app.settings', function () {
             if (vm.app.settings.asideDock && vm.app.settings.asideFixed) {
                 // aside dock and fixed must set the header fixed.
                 vm.app.settings.headerFixed = true;

@@ -45,8 +45,6 @@
             GetJson: GetJson,
             //简单单表新增
             Action: Action,
-            //存储过程执行
-            EditBack: EditBack,
             //文件
             HandleFile: HandleFile,
             //
@@ -83,19 +81,19 @@
         }
 
         //获得计划资料
-        function GetPlan(name, json) {
-            return plan(name, json, "GetPlan");
+        function GetPlan(name, json, limitCol) {
+            return plan(name, json, "GetPlan", undefined, undefined, limitCol);
         }
 
         //获得计划资料-列表
-        function GetPlans(name, json) {
-            return plan(name, json, "GetPlans");
+        function GetPlans(name, json, limitCol) {
+            return plan(name, json, "GetPlans", undefined, undefined, limitCol);
         }
 
         //获得计划资料-分页
-        function GetPlansPage(name, json, index, size) {
+        function GetPlansPage(name, json, index, size, limitCol) {
             var s = index <= 1 ? 1 : (index - 1) * size + 1;
-            return plan(name, json, "GetPlansPage", s, s + size);
+            return plan(name, json, "GetPlansPage", s, s + size, limitCol);
         }
 
         //获得计划资料-新增
@@ -129,17 +127,6 @@
         //获得表资料
         function GetEntities(name, json) {
             return entity(name, json, "GetEntities");
-        }
-
-        //获得表资料
-        function EditBack(name, json) {
-            var d = $q.defer(),
-                 url = serviceUrl + generic;
-            var en = {};
-            en.strProc = name;
-            en.strJson = JSON.stringify(json) || '{}';
-
-            return TbAjax(d, url, en, "EditBack");
         }
 
         //获得表资料
@@ -229,26 +216,25 @@
             return Ajax(d, url, en, funName);
         }
 
-        function plan(name, json, funName, start, end) {
+        function plan(name, json, funName, start, end, limitCol) {
             var enJson = JSON.stringify(convertArray(json)) || '[]';
-            return planAjax(name, enJson, funName, start, end);
+            return planAjax(name, enJson, funName, start, end, limitCol);
         }
 
-        function planAjax(name, json, funName, start, end) {
+        function planAjax(name, json, funName, start, end, limitCol) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = {};
             en.planName = name;
             en.strJson = json;
             en.start = start;
             en.end = end;
+            en.limitUserCol = limitCol;
             return Ajax(d, url, en, funName)
         }
 
         function SavePlan(name, json) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, undefined, json);
             return Ajax(d, url, en, "SavePlan");
         }
 
@@ -260,36 +246,25 @@
         }
         function DeletePlan(name, json) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, undefined, json);
             return Ajax(d, url, en, "DeletePlan");
         }
 
         function ExecPlan(name, shortName, json) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.shortName = shortName;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, shortName, json);
             return Ajax(d, url, en, "ExecPlan")
         }
 
         function ExecPlanMail(name, shortName, json) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.shortName = shortName;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, shortName, json);
             return Ajax(d, url, en, "ExecPlanMail")
         }
 
         function ExecPlanUpload(name, shortName, json, fileJson, dir) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.shortName = shortName;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, shortName, json);
             en.fileJson = JSON.stringify(fileJson);
             en.dir = dir;
             return Ajax(d, url, en, "ExecPlanUpload")
@@ -297,20 +272,14 @@
 
         function ExecPlanToExcel(name, shortName, json, sheetTable) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.shortName = shortName;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, shortName, json);
             en.sheetTable = JSON.stringify(convertArray(sheetTable));
             return Ajax(d, url, en, "ExecPlanToExcel")
         }
 
         function GetPlanExcel(name, shortName, json) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.shortName = shortName;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, shortName, json);
             return Ajax(d, url, en, "GetPlanExcel")
         }
 
@@ -370,10 +339,7 @@
 
         function FileImport(name, shortName, json, file, inData, sheetTable) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.shortName = shortName;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, shortName, json);
             en.filaName = file;
             en.bt = inData;
             en.sheetTable = JSON.stringify(convertArray(sheetTable));
@@ -423,6 +389,15 @@
                     }
                 });
             return q.promise;
+        }
+
+        function getEn(name, shortName, json)
+        {
+            var en = {};
+            en.planName = name;
+            en.shortName = shortName;
+            en.strJson = JSON.stringify(json);
+            return en;
         }
 
         //转换字符串
