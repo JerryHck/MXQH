@@ -18,7 +18,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.ExportExcel = ExportExcel;
     vm.SelectTab = SelectTab;
 
-
+    GetItemRemakList();
     //PageChange();
 
     function Search() {
@@ -99,6 +99,13 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
             //console.log(data);
             $window.location.href = data.File;
         });
+    }
+
+    function GetItemRemakList() {
+        AjaxService.GetPlans("MESCodeDelRemark").then(function (data) {
+            vm.ItemRemarkList = data;
+
+        })
     }
 }
 ]);

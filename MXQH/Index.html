@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Auctus | 系统平台</title>
-    <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+    <meta name="description" content="Auctus | 平台入口资讯系统" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 
@@ -13,13 +13,19 @@
     <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
     <link rel="stylesheet" href="css/simple-line-icons.css" type="text/css" />
     <link rel="stylesheet" href="css/font.css" type="text/css" />
-    <link rel="stylesheet" href="css/app.css" type="text/css" />
     <link href="Content/ui-grid.css" rel="stylesheet" />
     <link href="Content/ui-bootstrap-csp.css" rel="stylesheet" />
     <link href="Content/angular-toastr.css" rel="stylesheet" />
     <link href="Content/sweetalert.css" rel="stylesheet" />
     <link href="Content/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet" />
     <link href="Content/angular-toggle-switch/angular-toggle-switch.css" rel="stylesheet" />
+    <link href="Scripts/jquery/ystep/css/ystep.css" rel="stylesheet" />
+
+    <script>
+        var version = Date.now();
+        document.write("<link rel='stylesheet' href='css/app.css?v=" + version + "' type='text/css' />");
+    </script>
+
 
 </head>
 <body>
@@ -64,13 +70,9 @@
     <script src="Scripts/angular/angular-translate/storage-local.js"></script>
     <!-- circle -->
     <script src="Scripts/circleChart/circleChart.min.js"></script>
-    <!--<script src="Scripts/Concurrent.Thread/Concurrent.Thread.js"></script>-->
-    <!-- App -->
-    <!--<script src="js/services/AjaxServiceModule.js"></script>
-    <script src="js/services/AjaxServiceMethod.js"></script>-->
+    <script src="Scripts/jquery/ystep/ystep.js"></script>
     <script src="js/app.js"></script>
     <script>
-        var version = Date.now();
         document.write("<script type='text/javascript' src='js/appData.js?v=" + version + "'><\/script>");
         document.write("<script type='text/javascript' src='js/services/AjaxServiceModule.js?v=" + version + "'><\/script>");
         document.write("<script type='text/javascript' src='js/services/AjaxServiceMethod.js?v=" + version + "'><\/script>");
@@ -82,10 +84,11 @@
         document.write("<script src='js/Dialog.js?v=" + version + "'><\/script>");
         document.write("<script src='js/config.router.js?v=" + version + "'><\/script>");
         document.write("<script src='js/main.js?v=" + version + "'><\/script>");
-        document.write("<script src='js/directives/app-Directive.js?v=" + version + "'><\/script>");
+        document.write("<script src='js/directives/MyDirective.js?v=" + version + "'><\/script>");
         document.write("<script src='js/FileLoad.js?v=" + version + "'><\/script>");
 
-        var sta = '1.0001';
+        //var sta = '1.0002';
+        var sta = version;
         //lazy load
         document.write("<script src='js/services/ui-load.js?v=" + sta + "'><\/script>");
         document.write("<script src='js/filters/fromNow.js?v=" + sta + "'><\/script>");

@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('FileCtrl', ['$scope', '$http', '$window', 'AjaxService', 'FileService','toastr',
+.controller('FileCtrl', ['$scope', '$http', '$window', 'AjaxService', 'FileService', 'toastr',
 function ($scope, $http, $window, AjaxService, FileService, toastr) {
 
     var vm = this;
@@ -9,13 +9,18 @@ function ($scope, $http, $window, AjaxService, FileService, toastr) {
     vm.Do = Do;
     vm.save = save;
 
-    function save()
-    {
+    function save() {
         var en = {};
-        en.List = JSON.stringify(vm.UploadFile);
-        en.TempColumns = 'List';
+        //en.List = JSON.stringify(vm.UploadFile);
+        //en.TempColumns = 'List';
 
-        AjaxService.ExecPlanUpload("FileSaveTest", "save", en, vm.UploadFile, "TestMove").then(function (data) {
+        //AjaxService.ExecPlanUpload("FileSaveTest", "save", en, vm.UploadFile, "TestMove").then(function (data) {
+        //    vm.List = data;
+        //    toastr.success("储存成功");
+        //})
+
+
+        vm.promise = AjaxService.ExecPlanMail("PLMPrecess", "mail", en).then(function (data) {
             vm.List = data;
             toastr.success("储存成功");
         })
@@ -23,9 +28,9 @@ function ($scope, $http, $window, AjaxService, FileService, toastr) {
 
     //vm.FileData = { header: { header: "A" }, sheetNum: 1 };
 
-    AjaxService.GetPlans("FileSaveTest").then(function (data) {
-        vm.List = data;
-    })
+    //AjaxService.GetPlans("FileSaveTest").then(function (data) {
+    //    vm.List = data;
+    //})
     var en = {};
     //en.InternalCode = vm.Ser.InternalCode;
     //en.SNCode = vm.Ser.SNCode;
@@ -59,7 +64,7 @@ function ($scope, $http, $window, AjaxService, FileService, toastr) {
             return;
         }
         $scope.List = [];
-       
+
         vm.promise = ToJson(obj.files[0]).then(function (data) {
             $scope.List = data;
         });

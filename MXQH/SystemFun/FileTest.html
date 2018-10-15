@@ -7,7 +7,7 @@
     </div>
     <div class="row wrapper-sm">
         <div class="col-md-6">
-            <div file-upload-muti file-data="file.UploadFile" file-type=".xls,.xlsx" ></div>
+            <div file-upload-muti file-data="file.UploadFile"></div>
         </div>
     </div>
     <div class="row wrapper-sm">
@@ -15,12 +15,14 @@
             <div file-upload file-data="file.UploadFile2" file-type=".xls,.xlsx"></div>
         </div>
     </div>
-    <button class="btn btn-default" ng-click="file.save()">保存</button>
+    <button class="btn btn-success" ng-click="file.save()">保存</button>
     <div>
         <pre>{{ file.UploadFile | json }}</pre>
         <pre>{{ file.UploadFile2 | json }}</pre>
         <pre>{{ file.List | json }}</pre>
     </div>
+    
+    <form style="width:300px; height:300px"></form>
 
     <!--<div id="file2" import-sheet-js opts="file.FileData2" ng-complete="file.Do2()"></div>-->
     <!--<div import-sheet-js opts="file.FileData3" ng-complete="file.Do()"></div>-->

@@ -16,8 +16,16 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">备注</label>
-                                <div class="col-lg-8">
-                                    <textarea class="form-control" rows="3" maxlength="255" ng-model="inCode.DeleteItem.Remark" placeholder="输入备注信息"></textarea>
+                                <div class="col-lg-8" ng-class="{ 'has-error' : inCode.DeleteForm.remark.$invalid }">
+                                    <ui-select name="remark" ng-model="inCode.DeleteItem.Remark" theme="bootstrap" search-enabled="true" ng-required="true">
+                                        <ui-select-match placeholder="选择类型..." class="h6">{{ $select.selected.Remark }}</ui-select-match>
+                                        <ui-select-choices repeat="item.Remark as item in inCode.ItemRemarkList | filter: $select.search track by item.Id">
+                                            <div ng-bind-html="item.ShortName | highlight: $select.search"></div>
+                                            <small ng-bind-html="item.Remark | highlight: $select.search"></small>
+                                        </ui-select-choices>
+                                    </ui-select>
+
+                                    <!--<textarea class="form-control" rows="3" maxlength="255" ng-model="inCode.DeleteItem.Remark" placeholder="输入备注信息"></textarea>-->
                                 </div>
                             </div>
                             <div class="form-group">
@@ -91,7 +99,7 @@
             </div>
         </div>
         <div class="padder-md">
-            <table class="table table-striped" cg-busy="sys.promise">
+            <table class="table" cg-busy="sys.promise">
                 <tr>
                     <td style="width:10%">内部码</td>
                     <td style="width:13%">原工单</td>
@@ -119,5 +127,73 @@
             </div>
         </div>
         <!--<pre>{{ inCode.Ser | json }}</pre>-->
+    </uib-tab>
+    <uib-tab index="2">
+        <uib-tab-heading class="h5">解绑理由</uib-tab-heading>
+        <div class="wrapper-xs">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="wrapper-md">
+                    <div class="form-horizontal">
+                        <div class="form-group" uib-collapse="!inCode.isAddItemType">
+                            <div class="col-sm-12" ng-form="inCode.NewItemTypeForm">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="input-group" ng-class="{ 'has-error' : inCode.NewItemTypeForm.NewRemak.$invalid }">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" ng-click="inCode.InsertItemRemark()" ng-disabled="inCode.NewItemTypeForm.$invalid">
+                                                    <i class="glyphicon glyphicon-plus text-success"></i>
+                                                </button>
+                                            </span>
+                                            <input type="text" name="NewRemak" class="form-control" placeholder="备注原因" ng-model="inCode.NewItemType.Remark" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group" ng-class="{ 'has-error' : inCode.NewItemTypeForm.ShortName.$invalid }">
+                                            <input type="text" name="ShortName" class="form-control" placeholder="简写" ng-model="inCode.NewItemType.ShortName" required>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-light" ng-click="inCode.isAddItemType=!inCode.isAddItemType"><i class="icon icon-action-undo"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" uib-collapse="inCode.isAddItemType">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="input-group col-md-9 col-md-offset-1">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-success" ng-click="inCode.isAddItemType=!inCode.isAddItemType">
+                                                <i class="glyphicon glyphicon-plus"></i>
+                                            </button>
+                                        </span>
+                                        <input type="text" class="form-control" placeholder="查询" ng-model="inCode.itemRemarkQuenry">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" disabled>
+                                                <i class="glyphicon glyphicon-search text-success"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="list-group bg-white">
+                        <li class="list-group-item" ng-repeat="type in inCode.ItemRemarkList | filter:inCode.itemRemarkQuenry ">
+                            <a herf class="pull-left">
+                                <b class="badge bg-success h2"><i class="fa fa-dot-circle-o"></i></b>
+                            </a>
+                            <div class="clear">
+                                <div>
+                                    <a ng-click='inCode.DeleteItemRemark(type)' class="pull-right hover text-muted h4"><i class="fa fa-times text-danger"></i></a>
+                                    <div class="text-info h4">{{ type.Remark }}</div>
+                                </div>
+                                <small class="text-muted">{{ type.ShortName }}</small>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </uib-tab>
 </uib-tabset>

@@ -1,0 +1,96 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">电子料新增</h3>
+</div>
+<div class="modal-body wrapper-md" ng-form="dsdialog.form">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">公司名称</label>
+                    <div class="col-md-4">
+                        <input type="text" disabled="disabled" class="form-control" name="Company" placeholder="公司名称"
+                               ng-model="dsdialog.Item.Company">
+                    </div>
+                    <label class="col-md-2 control-label">计划名称</label>
+                    <div class="col-md-4" ng-disabled="true">
+                        <input type="text" disabled="disabled" class="form-control" name="PlanCode" placeholder="计划名称"
+                               ng-model="dsdialog.Item.PlanCode">
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">料号</label>
+                    <div class="col-md-4">
+                        <input type="text" disabled="disabled" class="form-control" name="Code" placeholder="料号"
+                               ng-model="dsdialog.Item.Code">
+                    </div>
+                    <label class="col-md-2 control-label">品名</label>
+                    <div class="col-md-4" ng-disabled="true">
+                        <input type="text" disabled="disabled" class="form-control" name="Name" placeholder="品名"
+                               ng-model="dsdialog.Item.Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">单号</label>
+                    <div class="col-md-4">
+                        <input type="text" disabled="disabled" class="form-control" name="DocNo" placeholder="单号"
+                               ng-model="dsdialog.Item.DocNo">
+                    </div>
+                    <label class="col-md-2 control-label">需求分类号</label>
+                    <div class="col-md-4" ng-disabled="true">
+                        <input type="text" disabled="disabled" class="form-control" name="DemandCode" placeholder=""
+                               ng-model="dsdialog.Item.DemandCode">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label">需求供应形态</label>
+                    <div class="col-md-4">
+                        <input type="text" disabled="disabled" class="form-control" name="DSType" placeholder="需求供应形态"
+                               ng-model="dsdialog.Item.DSType">
+                    </div>
+                    <label class="col-md-2 control-label">订单类型</label>
+                    <div class="col-md-4" ng-disabled="true">
+                        <input type="text" disabled="disabled" class="form-control" name="DocType" placeholder="订单类型"
+                               ng-model="dsdialog.Item.DocType">
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">净数量</label>
+                    <div class="col-md-4">
+                        <input type="text" disabled="disabled" class="form-control" name="NetQty" placeholder="净数量"
+                               ng-model="dsdialog.Item.NetQty">
+                    </div>
+                    <label class="col-md-2 control-label">交易数量</label>
+                    <div class="col-md-4" ng-disabled="true">
+                        <input type="text" disabled="disabled" class="form-control" name="TradeBaseQty" placeholder="交易数量"
+                               ng-model="dsdialog.Item.TradeBaseQty">
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">需求时间</label>
+                    <div class="col-md-4">
+                        <input type="text" disabled="disabled" class="form-control" name="DemandDate" placeholder="需求时间"
+                               ng-model="dsdialog.Item.DemandDate|date:'yyyy-MM-dd HH:mm:ss'">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">备注</label>
+                    <div class="col-md-10" ng-class="{ 'has-error' : dsdialog.form.Remark.$invalid }">
+                        <textarea class="form-control" name="Remark" placeholder="备注"
+                                  ng-model="dsdialog.Item.Remark" required></textarea>
+                        <div ng-messages="dsdialog.form.Remark.$error" class="help-block" role="alert">
+                            <div ng-message="required">备注不能为空</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" type="button" ng-click="dsdialog.Save()">储存</button>
+    <button class="btn btn-warning" type="button" ng-click="dsdialog.Cancel()">取消</button>
+</div>

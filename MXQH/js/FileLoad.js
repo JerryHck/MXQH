@@ -2,7 +2,7 @@
 //importScripts("../Scripts/Concurrent.Thread/Concurrent.Thread.min.js");
 //importScripts("../Scripts/SheetJs/xlsx.full.min.js");
 
-angular.module('app').factory('FileLoad', ['$rootScope', '$q', 'AjaxService', '$ocLazyLoad', 
+angular.module('FileLoad', []).factory('FileLoad', ['$rootScope', '$q', 'AjaxService', '$ocLazyLoad',
 function ($rootScope, $q, AjaxService, $ocLazyLoad) {
     
     var h = {

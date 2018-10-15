@@ -1,0 +1,145 @@
+﻿<div class="bg-light lter b-b wrapper-md" cg-busy="sdk.promise">
+    <div class="col-md-3 text-center">
+        <span class="m-n font-thin h3">产品列表</span>
+        <button class="btn btn-sm btn-success pull-left" ng-click="sdk.Insert()" ui-toggle-class="active" target=".insert-pro"><i class="glyphicon glyphicon-plus"></i>产品</button>
+    </div>
+    <div class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="sdk.Ser.ProNo" placeholder="产品编号">
+        </div>
+        <button class="btn btn-sm btn-info" ng-click="sdk.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
+
+    </div>
+</div>
+<div class="wrapper-md">
+    <div class="col-md-4" ng-repeat="item in sdk.List">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                <a class="h3 pull-left thumb-sm text-success" ng-click="sdk.ProEdit(item)" title="编辑产品"><i class="glyphicon glyphicon-edit"></i></a>
+                <a class="h3">{{ item.ProNo }}</a>
+                <span class="text-muted">
+                    <strong>{{ item.Version }}</strong>
+                </span>
+                <a class="h3 pull-right thumb-sm text-warning" ng-click="sdk.ProFile(item)" title="打开文件列表"><i class="fa fa-folder-open"></i></a>
+            </div>
+            <div class="panel-body scroll-y no-scroll" style="height:120px;">
+                <article class="media">
+                    <small class="media-left pull-left">品名:</small>
+                    <div class="media-body">
+                        <small class="block">{{ item.ProName }}</small>
+                    </div>
+                </article>
+                <article class="media">
+                    <small class="media-left pull-left">规格:</small>
+                    <div class="media-body">
+                        <small class="block">{{ item.Spec }}</small>
+                    </div>
+                </article>
+                <article class="media">
+                    <small class="media-left pull-left">备注:</small>
+                    <div class="media-body">
+                        <small class="block">{{ item.Remark }}</small>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 text-center" ng-if="sdk.page.total>sdk.page.size">
+        <div uib-pagination total-items="sdk.page.total" ng-model="sdk.page.index" items-per-page="sdk.page.size" max-size="10" first-text="第一页" previous-text="上一页"
+             ng-change="sdk.PageChange()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
+    </div>
+    <!--<pre>{{ sdk.List|json }}</pre>-->
+</div>
+<div class="insert-pro md d-r bg-light dk">
+    <div class="blur-close" ui-remove-class="active" target=".insert-pro"></div>
+    <div class="b-b wrapper-md text-center">
+        <a href class="text-danger pull-left" ui-remove-class="active" target=".insert-pro"><i class="glyphicon glyphicon-remove"></i></a>
+        <h3 class="m-n font-thin h3" ng-if="!sdk.isEdit">产品新增</h3>
+        <h3 class="m-n font-thin h3" ng-if="sdk.isEdit">[ <strong>{{ sdk.Item.ProNo }}</strong><span class="text-muted h5">{{ sdk.Item.Version }}</span> ]编辑</h3>
+    </div>
+    <div class="padder-md wrapper" ng-form="sdk.ProductForm">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group pull-in clearfix">
+                    <div class="col-sm-8" ng-class="{ 'has-error' : sdk.ProductForm.No.$invalid }">
+                        <label>产品编号</label>
+                        <input type="text" class="form-control" name="No" placeholder="产品编号"
+                               ng-model="sdk.Item.ProNo" ng-disabled="sdk.isEdit" ng-blur="sdk.isProExists()" required>
+                    </div>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : sdk.ProductForm.Version.$invalid }">
+                        <label>产品版本</label>
+                        <input type="text" ng-disabled="sdk.isEdit" name="Version" class="form-control"  ng-blur="sdk.isProExists()" placeholder="产品版本" ng-model="sdk.Item.Version" required>
+                        <div ng-messages="sdk.ProductForm.Version.$error" class="help-block" role="alert">
+                            <div ng-message="unique">产品版本已存在</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>产品名称</label>
+                    <div ng-class="{ 'has-error' : sdk.ProductForm.ProName.$invalid }">
+                        <input type="text" name="ProName" class="form-control" placeholder="产品名称" ng-model="sdk.Item.ProName" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>规格</label>
+                    <textarea class="form-control" rows="3" ng-model="sdk.Item.Spec" maxlength="300" placeholder="输入规格信息"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>备注</label>
+                    <textarea class="form-control" rows="3" ng-model="sdk.Item.Remark" maxlength="255" placeholder="输入备注信息"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col text-center">
+            <button class="btn btn-success" type="button" ng-disabled="sdk.ProductForm.$invalid" ng-click="sdk.ProSave()">储存</button>
+            <button class="btn btn-warning" type="button" ui-remove-class="active" target=".insert-pro">取消</button>
+        </div>
+    </div>
+</div>
+<div class="pro-file d-r lg bg-light dk wrapper-md padder-md scroll-y">
+    <!--<div class="blur-close" ui-remove-class="active" target=".pro-file"></div>-->
+    <div class="b-b wrapper-md text-center">
+        <a href class="text-danger pull-left" ui-remove-class="active" target=".pro-file"><i class="glyphicon glyphicon-remove"></i></a>
+        <h3 class="m-n font-thin h3">[ <strong>{{ sdk.FileItem.ProNo }}</strong><span class="text-muted h5">{{ sdk.FileItem.Version }}</span> ]相关文件</h3>
+    </div>
+    <div class="padder-md wrapper">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        <button class="btn btn-success" type="button"ng-click="sdk.ProFileSave()" title="保存文件信息到服务器">
+                            <i class="glyphicon glyphicon-save"></i>
+                            保存
+                        </button>
+                    </label>
+                    <div class="col-md-10 scroll-y" style="max-height:500px">
+                        <p class="h6 text-danger" style="padding-left:20px">注：已打开文件浏览按钮时，请不要使用拖曳文件方式，否则可能引起浏览器卡死。</p>
+                        <div file-upload-muti file-data="sdk.UploadFile" able-drag="true"></div>
+                    </div>
+                    <div class="line"></div>
+                    <div ng-repeat="f in sdk.ProFileList">
+                        <div class="form-group col-md-12 has-feedback  m-b-none">
+                            <div class="col-md-12 input-group">
+                                <span class="input-group-addon" ng-click="sdk.DeleteProFile($index, f)">
+                                    <a class="text-danger"><i class="glyphicon glyphicon-trash"></i></a>
+                                </span>
+                                <span class="input-group-addon" title="所在服务器文件夹">
+                                    {{ f.File.FormalDir }}
+                                </span>
+                                <input class="form-control" ng-disabled="ngDisabled == 'true'" type="text" ng-model="f.File.OriginalName">
+                                <span class="input-group-addon text-success">{{ f.File.FileType }}</span>
+                                <span class="input-group-addon">
+                                    <a ng-click="sdk.DownLoad(f.File.FileUrl)" title="下载文件" class="text-success"><i class="glyphicon glyphicon-download"></i></a>
+                                    <!--<a href="{{ f.FileUrl }}" download="{{ f.OriginalName }}{{ f.FileType }}" class="text-success"><i class="glyphicon glyphicon-download"></i></a>-->
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<pre>{{ sdk.ProFileList | json }}</pre>-->
+    </div>
+
+</div>

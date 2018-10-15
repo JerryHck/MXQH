@@ -1,6 +1,7 @@
 ﻿'use strict'
-//angular.module('Routing', ['ui.router', 'oc.lazyLoad'])
-angular.module('app')
+angular.module('MyDirective', [])
+
+angular.module('MyDirective')
 .directive('ngConfirm', function () {
     return {
         restrict: 'A',
@@ -387,6 +388,7 @@ angular.module('app')
             selectClass: '@',
             myRequired: '@',
             ngName: '@',
+            autoFirst:'@',
             ngChange:'&'
         },
         template: '<ui-select name="{{ ngName }}" ng-change="ngChange()" class="{{ selectClass }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="myRequired">'
@@ -406,7 +408,7 @@ angular.module('app')
             //组织
             AjaxService.GetTableConfig(scope.configOption.Table, scope.configOption.Column).then(function (data) {
                 scope.data = data;
-                if (data.length > 0) {
+                if (data.length > 0 && scope.autoFirst) {
                     scope.ngModel = scope.ngModel || data[0].ClInf;
                 }
             });
@@ -643,13 +645,18 @@ angular.module('app')
             scope: {
                 ngDisabled: '@',
                 fileType: '@',
-                fileData:'=',
+                ngName: '@',
+                ngRequired: '@',
+                placeholder: '@',
+                ableDrag:'@',
+                fileData: '=',
                 ngComplete: '&'
             },
             templateUrl: 'js/directives/UploadFileMuti.html?v=' + Version,
             controller: ['$scope',function ($scope) {
                 var option = {};
                 $scope.List = [];
+                $scope.fileData = $scope.fileData || [];
                 option.onComplete = function (data) {
                     if ($scope.ngComplete)
                     {
@@ -671,7 +678,6 @@ angular.module('app')
                 $scope.fileType = $scope.fileType || "*";
                 $scope.opts = $scope.opts || {};
                 $scope.ngDisabled = $scope.ngDisabled || 'false';
-                $scope.fileData = $scope.fileData || [];
                 var op = $scope.opts;
 
                 $scope.Open = function (e) {
@@ -693,12 +699,16 @@ angular.module('app')
             scope: {
                 ngDisabled: '@',
                 fileType: '@',
+                ngName: '@',
+                ngRequired: '@',
+                placeholder: '@',
                 fileData: '=',
                 ngComplete: '&'
             },
             templateUrl: 'js/directives/UploadFile.html?v=' + Version,
             controller: ['$scope', function ($scope) {
                 var option = {};
+                $scope.fileData = $scope.fileData || {};
                 option.onComplete = function (data) {
                     if ($scope.ngComplete) {
                         $scope.ngComplete();
@@ -719,7 +729,6 @@ angular.module('app')
             link: function ($scope, elm) {
                 $scope.fileType = $scope.fileType || "*";
                 $scope.ngDisabled = $scope.ngDisabled || 'false';
-                $scope.fileData = $scope.fileData || {};
                 $scope.Open = function (e) {
                     $scope.uploader.clearQueue();
                     e.target.parentNode.parentElement.parentElement.lastElementChild.click();
@@ -745,4 +754,44 @@ angular.module('app')
             }
         }
     }])
+//步骤条
+.directive('ngStep', function () {
+    return {
+        restrict: 'A',
+        scope: {
+            opts: '=',
+            //step: '@',
+            //reject: '@',
+        },
+        template: '<div></div>',
+        link: link
+    };
+    function link($scope, element, attr) {
+        
+        $scope.opts = $scope.opts || {};
+        $scope.opts.now = $scope.opts.now || 1;
+        $scope.opts.reject = $scope.opts.reject || $scope.opts.now;
 
+        //ystep的外观大小
+        //可选值：small,large
+        $scope.opts.size = $scope.opts.size || "small";
+        //ystep配色方案
+        //可选值：green,blue
+        $scope.opts.color = $scope.opts.color || 'green';
+        
+        $scope.opts.steps = $scope.opts.steps || [{
+            //步骤名称
+            title: "发起",
+            //步骤内容(鼠标移动到本步骤节点时，会提示该内容)
+            content: "步骤1"
+        }, {
+            title: "结束",
+            content: "步骤2"
+        }];
+
+        //根据jQuery选择器找到需要加载ystep的容器
+        //loadStep 方法可以初始化ystep
+        $(element).loadStep($scope.opts);
+        $(element).setStep($scope.opts.now, $scope.opts.reject);
+    }
+})
