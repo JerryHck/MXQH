@@ -389,6 +389,8 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="SDKFun\CustomerManage.html" />
+    <Content Include="SDKFun\CustomerManage.js" />
     <Content Include="SDKFun\Register.html" />
     <Content Include="SDKFun\Register.js" />
     <Content Include="SystemFun\AddDialog.js" />

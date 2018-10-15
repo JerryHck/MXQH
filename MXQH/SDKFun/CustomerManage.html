@@ -8,10 +8,10 @@
                 <div class="wrapper b-t m-b-md">
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" class="form-control input-sm" placeholder="查询" ng-model="customer.UserQuery">
+                            <input type="text" class="form-control input-sm" ng-keypress="($event.which === 13)?customer.Search():0" placeholder="账号/姓名/公司名称"  ng-model="customer.S.WhereClause">
                             <span class="input-group-btn">
-                                <button class="btn btn-sm btn-default" ng-click="customer.Insert()">
-                                    <i class="glyphicon glyphicon-plus text-success">新增</i>
+                                <button class="btn btn-sm btn-default"  ng-click="customer.Search()">
+                                    <i class="glyphicon glyphicon-search text-success">查询</i>
                                 </button>
                             </span>
                         </div>
@@ -22,15 +22,14 @@
                         <div class="cell-inner">
                             <div class="padder">
                                 <div class="list-group">
-                                    <a ng-repeat="item in customer.List | filter:customer.UserQuery " class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.UserNo == customer.SelectedUser.UserNo, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="customer.SelectUser(item)">
+                                    <a ng-repeat="item in customer.List" class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.Account == customer.selectedCustomer.Account, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="customer.SelectCustomer(item)">
                                         <span class="pull-left h2 mr-1">
                                             <i class="fa" ng-class="{ 'fa-male text-success': item.Sex=='M', 'fa-female text-danger': item.Sex=='F' }"></i>
                                         </span>
                                         <div class="clear ml-1">
-                                            <span class="block text-info text-lg" ng-bind-html="item.UserNo | highlight: customer.EntityQuery" ng-click="customer.SelectEn(item)"></span>
+                                            <span class="block text-info text-lg" ng-bind-html="item.Account | highlight: customer.S.WhereClause" ></span>
                                             <small class="text-muted">
-                                                <span>{{ item.ChiLastName }}{{ item.ChiFirstName }}</span>
-                                                <span class="pull-right">{{ item.Level }}</span>
+                                                <span>{{ item.Contact }}</span>
                                             </small>
                                         </div>
                                     </a>
@@ -41,111 +40,134 @@
                 </div>
             </div>
         </div>
-        <!--<div class="col w-auto w-lg lt b-r text-xs">
-            <div class="vbox">
+        <div class="col w-auto w-lg lt b-r text-xs">
+         <div class="vbox">
                 <div class="row-row">
                     <div class="cell scrollable hover">
                         <div class="cell-inner">
                             <div class="padder">
-                                <uib-tabset active="active" type="tabs" class="h-100">
-                                    <uib-tab index="0">
-                                        <uib-tab-heading class="h5">员工信息</uib-tab-heading>
-                                        <div class="padder-md" ng-if="customer.EmpItem">
+                           
+                                        <div class="padder-md" ng-if="customer.selectedCustomer">
                                             <div class="row">
-                                                <div class="col-md-6 b-r m-t-xs">
+                                                <div class="col-md-9 b-r m-t-xs">
                                                     <div class="row">
                                                         <span class="m-l-md">
-                                                            <button class="btn btn-sm btn-success" ng-click="customer.EditEmp()" ng-if="!customer.isEditEmp">
+                                                            <button class="btn btn-sm btn-success" ng-if="!customer.isEdit" ng-click="customer.EditCustomer()" >
                                                                 <i class="glyphicon glyphicon-edit">编辑</i>
                                                             </button>
-                                                            <button class="btn btn-sm btn-success" ng-if="customer.isEditEmp" ng-click="customer.SaveEmp()" ng-disabled="customer.EmpForm.$invalid">
+                                                            <button class="btn btn-sm btn-success" ng-if="customer.isEdit" ng-click="customer.SaveCustomer()" ng-disabled="customer.Form.$invalid">
                                                                 <i class="glyphicon glyphicon-edit">确定</i>
                                                             </button>
-                                                            <button class="btn btn-sm btn-warning m-l-xs m-r-lg" ng-if="customer.isEditEmp" ng-click="customer.CancelEmp()"> 取消</button>
+                                                            <button class="btn btn-sm btn-warning m-l-xs m-r-lg" ng-if="customer.isEdit"  ng-click="customer.CancelCustomer()"> 取消</button>
                                                         </span>
                                                     </div>
-                                                    <div class="form form-horizontal b m-t-md" ng-form="customer.EmpForm">
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="员工编号">
-                                                            <label class="col-md-4 control-label font-bold">员工编号:</label>
-                                                            <div class="col-md-8" ng-class="{ 'has-error' : customer.EmpForm.EmpNo.$invalid }">
-                                                                <input type="text" class="form-control text-xs" name="EmpNo" placeholder="属性名" ng-model="customer.EmpItem.EmpNo" disabled required>
+                                                    <div class="form form-horizontal b m-t-md" ng-form="customer.Form">
+                                                        <div class="form-group pull-in clearfix  m-t-xs" title="">
+                                                            <label class="col-md-1 control-label font-bold">注册账号:</label>
+                                                            <div class="col-md-4" ng-class="{ 'has-error' : customer.selectedCustomer.Account.$invalid }">
+                                                                <input type="text" class="form-control text-xs" name="Account" placeholder="注册账号" ng-model="customer.selectedCustomer.Account" disabled required>
+                                                            </div>
+                                                            <label class="col-md-1 control-label font-bold">公司地址:</label>
+                                                            <div class="col-md-4" ng-class="{ 'has-error' : customer.selectedCustomer.Address.$invalid }">
+                                                                <input type="text" class="form-control text-xs" ng-disabled="!customer.isEdit" name="Address" placeholder="公司地址" ng-model="customer.selectedCustomer.Address" disabled>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="姓名">
-                                                            <label class="col-md-4 control-label font-bold">姓名:</label>
-                                                            <div class="col-md-3" ng-class="{ 'has-error' : customer.UserForm.ChLastName.$invalid }">
-                                                                <input type="text" name="ChLastName" class="form-control" ng-maxlength="10" ng-disabled="!customer.isEditEmp" placeholder="姓" ng-model="customer.EmpItem.ChiLastName" required>
+                                                        <div class="form-group pull-in clearfix  m-t-xs" title="">
+                                                            <label class="col-md-1 control-label font-bold">公司名称:</label>
+                                                            <div class="col-md-4" ng-class="{ 'has-error' : customer.selectedCustomer.CompanyName.$invalid }">
+                                                                <input type="text" name="CompanyName" class="form-control" ng-maxlength="10" ng-disabled="!customer.isEdit" placeholder="公司名称" ng-model="customer.selectedCustomer.CompanyName" required>
                                                             </div>
-                                                            <div class="col-md-5" ng-class="{ 'has-error' : customer.UserForm.ChiFirstName.$invalid }">
-                                                                <input type="text" class="form-control" name="ChiFirstName" ng-maxlength="10" ng-disabled="!customer.isEditEmp" placeholder="名" ng-model="customer.EmpItem.ChiFirstName" required>
+                                                            <label class="col-md-1 control-label font-bold">公司邮箱:</label>
+                                                            <div class="col-md-4" ng-class="{ 'has-error' : customer.selectedCustomer.Email.$invalid }">
+                                                                <input type="text" class="form-control" name="Email" ng-maxlength="10" ng-disabled="!customer.isEdit" placeholder="公司邮箱" ng-model="customer.selectedCustomer.Email" required>
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="英文名">
-                                                            <label class="col-md-4 control-label font-bold">英文名</label>
-                                                            <div class="col-md-8">
-                                                                <input type="text" class="form-control text-xs" name="Pro" placeholder="属性名" ng-disabled="!customer.isEditEmp" ng-model="en.EmpItem.EngName">
+                                                        </div>                                                         
+                                                        <div class="form-group pull-in clearfix  m-t-xs" title="">
+                                                            <label class="col-md-1 control-label font-bold">公司授权联系人:</label>
+                                                            <div class="col-md-4" ng-class="{ 'has-error' : customer.selectedCustomer.Contact.$invalid }">
+                                                                <input type="text" name="Contact" class="form-control" ng-maxlength="10" ng-disabled="!customer.isEdit" placeholder="公司授权联系人" ng-model="customer.selectedCustomer.Contact" required>
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="性别">
-                                                            <label class="col-md-4 control-label font-bold">性别:</label>
-                                                            <div class="col-md-8" ng-class="{ 'has-error' : customer.EmpForm.Sex.$invalid }">
-                                                                <div config-select ng-model="customer.EmpItem.Sex" config-option="customer.ConfigSex" ng-disabled="!customer.isEditEmp"></div>
+                                                            <label class="col-md-1 control-label font-bold">联系人座机:</label>
+                                                            <div class="col-md-4" ng-class="{ 'has-error' : customer.selectedCustomer.Phone.$invalid }">
+                                                                <input type="text" class="form-control" name="Phone" ng-maxlength="10" ng-disabled="!customer.isEdit" placeholder="联系人座机" ng-model="customer.selectedCustomer.Phone" required>
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="邮箱">
-                                                            <label class="col-md-4 control-label font-bold">邮箱:</label>
-                                                            <div class="col-md-8" ng-class="{ 'has-error' : customer.EmpForm.Email.$invalid }">
-                                                                <input type="email" class="form-control text-xs" name="Email" placeholder="邮箱" ng-disabled="!customer.isEditEmp" ng-model="customer.EmpItem.Email">
-                                                                <div ng-messages="customer.EmpForm.Email.$error" class="help-block" role="alert">
-                                                                    <div ng-message="email">邮箱格式错误</div>
-                                                                </div>
+                                                        </div> 
+                                                        <div class="form-group pull-in clearfix  m-t-xs" title="">
+                                                            <label class="col-md-1 control-label font-bold">联系人手机:</label>
+                                                            <div class="col-md-4" ng-class="{ 'has-error' : customer.selectedCustomer.Mobile.$invalid }">
+                                                                <input type="text" name="Mobile" class="form-control" ng-maxlength="10" ng-disabled="!customer.isEdit" placeholder="联系人手机" ng-model="customer.selectedCustomer.Mobile" required>
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="职位">
-                                                            <label class="col-md-4 control-label font-bold">职位:</label>
-                                                            <div class="col-md-8">
-                                                                <input type="text" class="form-control text-xs" name="Mail" placeholder="职位" ng-model="customer.EmpItem.Position" ng-disabled="!customer.isEditEmp">
+                                                            <label class="col-md-1 control-label font-bold">联系人职务:</label>
+                                                            <div class="col-md-4" ng-class="{ 'has-error' : customer.selectedCustomer.Position.$invalid }">
+                                                                <input type="text" class="form-control" name="Position" ng-maxlength="10" ng-disabled="!customer.isEdit" placeholder="联系人职务" ng-model="customer.selectedCustomer.Position" required>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="固定电话">
-                                                            <label class="col-md-4 control-label font-bold">固定电话:</label>
-                                                            <div class="col-md-8">
-                                                                <input type="text" class="form-control text-xs" name="Tel" placeholder="固定电话" ng-disabled="!customer.isEditEmp" ng-model="customer.EmpItem.Tel">
+                                                        <div class="form-group pull-in clearfix  m-t-xs" title="">
+                                                            <label class="col-md-1 control-label font-bold">社会信用代码:</label>
+                                                            <div class="col-md-4" ng-class="{ 'has-error' : customer.selectedCustomer.Code.$invalid }">
+                                                                <input type="text" name="Code" class="form-control" ng-maxlength="10" ng-disabled="!customer.isEdit" placeholder="社会信用代码" ng-model="customer.selectedCustomer.Code">
+                                                            </div>
+                                                            <label class="col-md-1 control-label font-bold">公司开户银行:</label>
+                                                            <div class="col-md-4" ng-class="{ 'has-error' : customer.selectedCustomer.Bank.$invalid }">
+                                                                <input type="text" class="form-control" name="Bank" ng-maxlength="10" ng-disabled="!customer.isEdit" placeholder="公司开户银行" ng-model="customer.selectedCustomer.Bank">
                                                             </div>
                                                         </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="手机号码">
-                                                            <label class="col-md-4 control-label font-bold">手机号码:</label>
-                                                            <div class="col-md-8">
-                                                                <input type="tel" class="form-control text-xs" name="Mail" placeholder="手机号码" ng-disabled="!customer.isEditEmp" ng-model="customer.EmpItem.Phone">
+                                                        <div class="form-group pull-in clearfix  m-t-xs" title="">
+                                                            <label class="col-md-1 control-label font-bold">法人:</label>
+                                                            <div class="col-md-4" ng-class="{ 'has-error' : customer.selectedCustomer.LegalPerson.$invalid }">
+                                                                <input type="text" name="LegalPerson" class="form-control" ng-maxlength="10" ng-disabled="!customer.isEdit" placeholder="法人" ng-model="customer.selectedCustomer.LegalPerson">
+                                                            </div>
+                                                            <label class="col-md-1 control-label font-bold">公司收款账号:</label>
+                                                            <div class="col-md-4" ng-class="{ 'has-error' : customer.selectedCustomer.ReceiveAccount.$invalid }">
+                                                                <input type="text" class="form-control" name="ReceiveAccount" ng-maxlength="10" ng-disabled="!customer.isEdit" placeholder="公司收款账号" ng-model="customer.selectedCustomer.ReceiveAccount">
                                                             </div>
                                                         </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="使用状态">
-                                                            <label class="col-md-4 control-label font-bold">使用状态:</label>
-                                                            <div class="col-md-8">
-                                                                <div toggle-switch ng-model="customer.SelectedUser.State" class="w-xxs switch-success" on-label="启用" off-label="停用"
-                                                                     on-value="S" off-value="E" ng-change="customer.change()" is-disabled="!customer.isEditEmp"></div>
+                                                        <div class="form-group pull-in clearfix  m-t-xs" title="">
+                                                            <label class="col-md-1 control-label font-bold">股东信息:</label>
+                                                            <div class="col-md-4" ng-class="{ 'has-error' : customer.selectedCustomer.ShareHolder.$invalid }">
+                                                                <input type="text" name="ShareHolder" class="form-control" ng-maxlength="10" ng-disabled="!customer.isEdit" placeholder="股东信息" ng-model="customer.selectedCustomer.ShareHolder">
+                                                            </div>
+                                                            <label class="col-md-1 control-label font-bold">营业执照:</label>
+                                                            <div class="col-md-4" ng-class="{ 'has-error' : customer.selectedCustomer.BusinessLicense.$invalid }">
+                                                                <input type="text" class="form-control" name="BusinessLicense" ng-maxlength="10" ng-disabled="!customer.isEdit" placeholder="营业执照" ng-model="customer.selectedCustomer.BusinessLicense">
                                                             </div>
                                                         </div>
+                                                        <div class="form-group pull-in clearfix  m-t-xs" title="">
+                                                            <label class="col-md-1 control-label font-bold">名片正面:</label>
+                                                            <div class="col-md-4" ng-class="{ 'has-error' : customer.selectedCustomer.Account.$invalid }">
+                                                                <input type="text" name="Account" class="form-control" ng-maxlength="10" ng-disabled="!customer.isEdit" placeholder="名片正面" ng-model="customer.selectedCustomer.Account" required>
+                                                            </div>
+                                                            <label class="col-md-1 control-label font-bold">名片反面:</label>
+                                                            <div class="col-md-4" ng-class="{ 'has-error' : customer.selectedCustomer.Account.$invalid }">
+                                                                <input type="text" class="form-control" name="Account" ng-maxlength="10" ng-disabled="!customer.isEdit" placeholder="名片反面" ng-model="customer.selectedCustomer.Account" required>
+                                                            </div>
+                                                        </div> 
+                                                        <div class="form-group pull-in clearfix  m-t-xs" title="">
+                                                            <label class="col-md-1 control-label font-bold">NDA协议:</label>
+                                                            <div class="col-md-4" ng-class="{ 'has-error' : customer.selectedCustomer.Account.$invalid }">
+                                                                <input type="text" name="Account" class="form-control" ng-maxlength="10" ng-disabled="!customer.isEdit" placeholder="NDA协议" ng-model="customer.selectedCustomer.Account" required>
+                                                            </div>
+                                                        </div>                                                  
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <div class="row">
                                                         <div class="bg-light wrapper-md lter b-b text-center">
-                                                            <h3 class="m-n font-thin h5 font-bold">已分配给{{ customer.EmpItem.ChiLastName }}{{ customer.EmpItem.ChiFirstName }}的角色</h3>
+                                                            <h3 class="m-n font-thin h5 font-bold">已分配给{{ customer.selectedCustomer.Account}}{{ customer.selectedCustomer.Account }}的权限</h3>
                                                         </div>
                                                         <div class="padder m-t-xs">
                                                             <div class="form-group" uib-collapse="!customer.isAddUserRole">
                                                                 <div class="input-group col-md-12">
                                                                     <span class="input-group-btn">
-                                                                        <button class="btn btn-default" ng-click="customer.InsertUserRole()" ng-disabled="!customer.newUserRole">
+                                                                        <button class="btn btn-default" ng-click="customer.InsertCustomerRight()" ng-disabled="!customer.isNewRight">
                                                                             <i class="glyphicon glyphicon-plus text-success"></i>
                                                                         </button>
                                                                     </span>
-                                                                    <ui-select ng-model="customer.newUserRole" theme="bootstrap" search-enabled="true" ng-change="customer.SelectUserRole()">
-                                                                        <ui-select-match placeholder="选择角色...">{{ $select.selected.RoleName }}</ui-select-match>
-                                                                        <ui-select-choices repeat="item.RoleSn as item in customer.ListRole | filter: $select.search track by item.RoleSn">
-                                                                            <div ng-bind-html="item.RoleSn | highlight: $select.search"></div>
-                                                                            <small ng-bind-html="item.RoleName | highlight: $select.search"></small>
+                                                                    <ui-select ng-model="customer.newProduct" theme="bootstrap" search-enabled="true" ng-change="customer.SelectProduct( $select.selected.ProNo+$select.selected.Version)">
+                                                                        <ui-select-match placeholder="选择产品...">{{ $select.selected.ProNo+$select.selected.Version }}</ui-select-match>
+                                                                        <ui-select-choices repeat="item in customer.Products|filter:$select.search track by item.ProNo+item.Version">
+                                                                            <div ng-bind-html="item.ProNo+item.Version|highlight:$select.search"></div>
+                                                                            <small ng-bind-html="item.ProName "></small>
                                                                         </ui-select-choices>
                                                                     </ui-select>
                                                                     <span class="input-group-btn">
@@ -162,9 +184,9 @@
                                                                             <i class="glyphicon glyphicon-plus"></i>
                                                                         </button>
                                                                     </span>
-                                                                    <input type="text" class="form-control" placeholder="查询" ng-model="customer.UserRoleQuery">
+                                                                    <input type="text" class="form-control" placeholder="查询" ng-model="customer.S2.WhereClause">
                                                                     <span class="input-group-btn">
-                                                                        <button class="btn btn-default" disabled>
+                                                                        <button class="btn btn-default" ng-click="customer.SearchPro()" disabled>
                                                                             <i class="glyphicon glyphicon-search text-success"></i>
                                                                         </button>
                                                                     </span>
@@ -172,16 +194,16 @@
                                                             </div>
                                                             <div class="list-group">
                                                                 <ul class="list-group bg-white">
-                                                                    <li class="list-group-item" ng-repeat="ur in customer.UserHaveRole | filter:customer.UserRoleQuery ">
+                                                                    <li class="list-group-item" ng-repeat="item in customer.CustomerRights|filter:customer.S2.WhereClause track by item.ProNo+item.Version+item.ProName">
                                                                         <a herf class="pull-left">
                                                                             <b class="badge bg-success h2"><i class="glyphicon glyphicon-lock text-white"></i></b>
                                                                         </a>
                                                                         <div class="clear">
                                                                             <div>
-                                                                                <a ng-click='customer.DeleteUserRole(ur)' class="pull-right hover text-muted h4"><i class="fa fa-times text-danger"></i></a>
-                                                                                <div class="text-info h4">{{ ur.RoleSn }}</div>
+                                                                                <a ng-click='customer.DeleteCustomerRight(item)' class="pull-right hover text-muted h4"><i class="fa fa-times text-danger"></i></a>
+                                                                                <div class="text-info h4">{{ item.ProNo+item.Version }}</div>
                                                                             </div>
-                                                                            <small class="text-muted">{{ ur.Role.RoleName }}</small>
+                                                                            <small class="text-muted">{{ item.ProName }}</small>
                                                                         </div>
                                                                     </li>
                                                                 </ul>
@@ -191,14 +213,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </uib-tab>
-                                </uib-tabset>
+                            
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>-->
+        </div>
     </div>
 </div>
 
