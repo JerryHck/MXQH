@@ -8,6 +8,7 @@ function ($scope, $uibModalInstance, $rootScope, ItemData, toastr, AjaxService, 
     vm.opts = ItemData.opts;
     vm.opts.size = 'large';
     vm.AbleSign = ItemData.Type == 'S';
+    vm.SignItem = {};
     vm.Sign = Sign;
 
     vm.DownLoad = DownLoad;

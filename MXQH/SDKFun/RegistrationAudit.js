@@ -14,15 +14,19 @@ function ($scope, Dialog, $window, AjaxService, FileService, toastr) {
     vm.Open = Open;
     vm.Search = Search;
 
+    GetUserRigth();
+
     function Search() {
         vm.page.index = 1;
         PageChange()
     }
 
-    AjaxService.GetEntities("SDKUserSign").then(function (data) {
-        vm.ListSign = data;
-        PageChange();
-    })
+    function GetUserRigth() {
+        AjaxService.GetEntities("SDKUserSign").then(function (data) {
+            vm.ListSign = data;
+            PageChange();
+        })
+    }
 
     function PageChange() {
         var list = [];
@@ -91,7 +95,7 @@ function ($scope, Dialog, $window, AjaxService, FileService, toastr) {
             }
         };
         Dialog.open("RegUserSignDialog", resolve).then(function (data) {
-            PageChange();
+            GetUserRigth()
         }).catch(function (reason) {
         });
     }
