@@ -10,7 +10,7 @@
     }
 
     #myTab li {
-        width: 20%;
+        width: 25%;
         float: left;
         height: 40px;
         list-style: none;
@@ -77,15 +77,15 @@
             </li>
             <li id="step3Li" ng-class="{ 'gray' : sign.process <2,'blue':sign.process >=2 }" ng-click="sign.ThisTap(2)">
                 <img ng-src="{{ sign.SetImg(2) }}" />
-                <a role="tab"> 3.完善公司信息 </a>
+                <a role="tab"> 3.完善信息 </a>
             </li>
-            <li id="step3Li" ng-class="{ 'gray' : sign.process <3,'blue':sign.process >=3 }" ng-click="sign.ThisTap(3)">
+            <!--<li id="step3Li" ng-class="{ 'gray' : sign.process <3,'blue':sign.process >=3 }" ng-click="sign.ThisTap(3)">
                 <img ng-src="{{ sign.SetImg(3) }}" />
                 <a role="tab"> 4.填写联系人 </a>
-            </li>
-            <li id="step4Li" ng-class="{ 'gray' : sign.process <4,'blue':sign.process >=4 }" ng-click="sign.ThisTap(4)">
-                <img ng-src="{{ sign.SetImg(4) }}" />
-                <a role="tab"> 5.完成注册 </a>
+            </li>-->
+            <li id="step3Li" ng-class="{ 'gray' : sign.process <3,'blue':sign.process >=3 }" ng-click="sign.ThisTap(3)">
+                <img ng-src="{{ sign.SetImg(3) }}" />
+                <a role="tab"> 4.完成注册 </a>
             </li>
         </ul>
         <div id="myTabContent" class="tab-content mt-1">
@@ -173,27 +173,22 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">社会信用代码:</label>
-                                    <div class="col-md-9" ng-class="{ 'has-error' : sign.TwoForm.Code.$invalid }">
-                                        <input placeholder="社会信用代码" name="Code" class="form-control" ng-maxlength="50" ng-model="sign.Item.Code" required>
+                                    <label class="control-label col-md-3">公司授权联系人:</label>
+                                    <div class="col-md-9" ng-class="{ 'has-error' : sign.TwoForm.Contact.$invalid }">
+                                        <input placeholder="姓名" name="Contact" class="form-control" ng-maxlength="50" ng-model="sign.Item.Contact" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">法人:</label>
-                                    <div class="col-md-9" ng-class="{ 'has-error' : sign.TwoForm.LegalPerson.$invalid }">
-                                        <input placeholder="法人" name="LegalPerson" class="form-control" ng-maxlength="50" ng-model="sign.Item.LegalPerson" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">股东信息:</label>
-                                    <div class="col-md-9" ng-class="{ 'has-error' : sign.TwoForm.ShareHolder.$invalid }">
-                                        <input placeholder="请填写公司完整的股东信息" name="ShareHolder" class="form-control" ng-maxlength="50" ng-model="sign.Item.ShareHolder" required>
+                                    <label class="control-label col-md-3">联系人手机:</label>
+                                    <div class="col-md-9" ng-class="{ 'has-error' : sign.TwoForm.Mobile.$invalid }">
+                                        <input type="text" placeholder="联系人手机" name="Mobile" class="form-control" ng-maxlength="20" ng-model="sign.Item.Mobile"
+                                               ng-pattern="/^[\d\+\-\(\)]+$/" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">NDA协议下载:</label>
                                     <div class="col-md-9 text-warning">
-                                        <p>请下载NDA协议并仔细阅读，签署后扫描上传系统以完成注册。同时寄送原件至力同科技股份有限公司，该协议将成为注册审核的重要依据。</p>
+                                        <p>请下载NDA协议并仔细阅读，签署后寄送至力同科技股份有限公司，该协议将成为注册审核的重要依据。</p>
                                         <p class="text-danger">
                                             寄送地址请与对接人沟通。
                                             <button class="btn btn-sm pull-right bg-success" ng-click="sign.DownloadNDA()">
@@ -207,12 +202,6 @@
                         <div class="col-md-6">
                             <div class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">公司地址:</label>
-                                    <div class="col-md-9" ng-class="{ 'has-error' : sign.TwoForm.Address.$invalid }">
-                                        <input placeholder="公司地址" name="Address" class="form-control" ng-maxlength="50" ng-model="sign.Item.Address" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="control-label col-md-3">公司邮箱:</label>
                                     <div class="col-md-9" ng-class="{ 'has-error' : sign.TwoForm.Email.$invalid }">
                                         <input placeholder="请填写公司正式接收的邮箱（带公司简称后缀）" type="email" name="Email" class="form-control" ng-maxlength="30"
@@ -220,27 +209,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">公司开户银行:</label>
-                                    <div class="col-md-9" ng-class="{ 'has-error' : sign.TwoForm.Bank.$invalid }">
-                                        <input placeholder="请填写公司开票及收款银行全称" name="Bank" class="form-control" ng-maxlength="50" ng-model="sign.Item.Bank" required>
+                                    <label class="control-label col-md-3">联系人座机:</label>
+                                    <div class="col-md-9" ng-class="{ 'has-error' : sign.TwoForm.Phone.$invalid }">
+                                        <input placeholder="联系人座机" name="Phone" class="form-control" ng-maxlength="50" ng-model="sign.Item.Phone"
+                                               ng-pattern="/^[\d\+\-\(\)]+$/" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">公司收款账号:</label>
-                                    <div class="col-md-9" ng-class="{ 'has-error' : sign.TwoForm.ReceiveAccount.$invalid }">
-                                        <input placeholder="公司收款账号" name="ReceiveAccount" class="form-control" ng-maxlength="50" ng-model="sign.Item.ReceiveAccount" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">营业执照上传:</label>
-                                    <div class="col-md-9">
-                                        <div file-upload file-data="sign.License" placeholder="请上传公司营业执照复印件" file-type=".jpeg,.jpg,.png,.bmp"></div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">NDA协议上传:</label>
-                                    <div class="col-md-9 text-warning h6">
-                                        <div file-upload-muti file-data="sign.NDAFile" file-type=".jpeg,.jpg,.png,.bmp,.dox,.docx,.pdf,.rar,.zip"></div>
+                                    <label class="control-label col-md-3">联系人职务:</label>
+                                    <div class="col-md-9" ng-class="{ 'has-error' : sign.TwoForm.Position.$invalid }">
+                                        <input placeholder="请填写所在公司任职职务，并上传名片" name="Position" class="form-control" ng-maxlength="30" ng-model="sign.Item.Position" required>
                                     </div>
                                 </div>
                             </div>
@@ -255,66 +233,6 @@
                 </div>
             </div>
             <div id="step4" class="tab-pane fade" ng-class="{ 'active in' : sign.indextab == 3 }">
-                <div class="panel panel-default" ng-form="sign.ThreeForm">
-                    <div class="panel-body">
-                        <div class="col-md-6">
-                            <div class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">公司授权联系人:</label>
-                                    <div class="col-md-9" ng-class="{ 'has-error' : sign.ThreeForm.Contact.$invalid }">
-                                        <input placeholder="姓名" name="Contact" class="form-control" ng-maxlength="50" ng-model="sign.Item.Contact" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">联系人手机:</label>
-                                    <div class="col-md-9" ng-class="{ 'has-error' : sign.ThreeForm.Mobile.$invalid }">
-                                        <input type="text" placeholder="联系人手机" name="Mobile" class="form-control" ng-maxlength="20" ng-model="sign.Item.Mobile"
-                                               ng-pattern="/^[\d\+\-\(\)]+$/" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">名片正面上传:</label>
-                                    <div class="col-md-9">
-                                        <div file-upload file-data="sign.Card" placeholder="名片正面" file-type=".jpeg,.jpg,.png,.bmp"></div>
-                                        <img ng-if="sign.Card.FileUrl" class="img-responsive center-block" ng-src="{{ sign.Card.FileUrl }}" alt="名片正面" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">联系人座机:</label>
-                                    <div class="col-md-9" ng-class="{ 'has-error' : sign.ThreeForm.Phone.$invalid }">
-                                        <input placeholder="联系人座机" name="Phone" class="form-control" ng-maxlength="50" ng-model="sign.Item.Phone"
-                                               ng-pattern="/^[\d\+\-\(\)]+$/" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">联系人职务:</label>
-                                    <div class="col-md-9" ng-class="{ 'has-error' : sign.ThreeForm.Position.$invalid }">
-                                        <input placeholder="请填写所在公司任职职务，并上传名片" name="Position" class="form-control" ng-maxlength="30" ng-model="sign.Item.Position" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">名片反面上传:</label>
-                                    <div class="col-md-9">
-                                        <div file-upload file-data="sign.CardReverse" placeholder="名片反面" file-type=".jpeg,.jpg,.png,.bmp"></div>
-                                        <img ng-if="sign.CardReverse.FileUrl" ng-src="{{ sign.CardReverse.FileUrl }}" class="img-responsive center-block" alt="名片反面" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 wrapper-xl v-bottom">
-                            <button type="button" class="btn btn-sm btn-success col-md-2 pull-right"
-                                    ng-disabled="sign.TwoForm.$invalid || !sign.Item.IsAgree || sign.OneForm.$invalid || sign.ThreeForm.$invalid" ng-click="sign.FourNext()">
-                                下一步
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="step4" class="tab-pane fade" ng-class="{ 'active in' : sign.indextab == 4 }">
                 <div class="col">
                     <div id="bower" class="wrapper"></div>
                     <div class="line b-b"></div>

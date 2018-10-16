@@ -10,6 +10,8 @@
         var obj = {
             //登录前服务
             DoBefore: DoBefore,
+            //自定义服务方法
+            Custom:Custom,
 
             //获得实体资料-单个
             GetPlan: GetPlan,
@@ -300,6 +302,12 @@
             var d = $q.defer(), url = serviceUrl + generic;
             en = en || {};
             return Ajax(d, url, en, method, undefined, 'Authorization');
+        }
+
+        function Custom(method, en) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            en = en || {};
+            return Ajax(d, url, en, method, undefined, 'Custom');
         }
 
         function GetTableConfig(tbName, clName) {

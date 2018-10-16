@@ -37,7 +37,7 @@ function SignUpCtrl($scope, AjaxService, toastr, appUrl, FileUrl, $window) {
 
     vm.checkAccount = function () {
         var en = {}, en2 = {};
-        en.Account = vm.Item.Password;
+        en.Account = vm.Item.Account;
         en2.Json = JSON.stringify(en);
         AjaxService.DoBefore("CheckAccountExists", en2).then(function (data) {
             vm.OneForm.Account.$setValidity('isExists', data.data[0].Result == 0);
@@ -57,88 +57,89 @@ function SignUpCtrl($scope, AjaxService, toastr, appUrl, FileUrl, $window) {
     }
 
     vm.ThreeNext = function () {
-        if (!vm.License || !vm.License.AttachSn) {
-            toastr.error("公司营业执照复印件未上传");
-        }
-        else if (!vm.NDAFile || vm.NDAFile.length == 0) {
-            toastr.error("NDA协议未上传");
-        }
-        else
-        {
+        //if (!vm.License || !vm.License.AttachSn) {
+        //    toastr.error("公司营业执照复印件未上传");
+        //}
+        //else if (!vm.NDAFile || vm.NDAFile.length == 0) {
+        //    toastr.error("NDA协议未上传");
+        //}
+        //else
+        //{
             Next(3);
-        }
+        //}
     }
 
     vm.FourNext = function () {
-        if (!vm.Card || !vm.Card.AttachSn) {
-            toastr.error("名片正面未上传");
-        }
-        else if (!vm.CardReverse || !vm.CardReverse.AttachSn) {
-            toastr.error("名片反面未上传");
-        }
-        else {
-            Next(4);
-        }
+        //if (!vm.Card || !vm.Card.AttachSn) {
+        //    toastr.error("名片正面未上传");
+        //}
+        //else if (!vm.CardReverse || !vm.CardReverse.AttachSn) {
+        //    toastr.error("名片反面未上传");
+        //}
+        //else {
+        //    Next(4);
+        //}
+        Next(4);
     }
 
     //完成注册
     function Register()
     {
-        if (!vm.License || !vm.License.AttachSn) {
-            toastr.error("公司营业执照复印件未上传");
-        }
-        else if (!vm.NDAFile || vm.NDAFile.length == 0) {
-            toastr.error("NDA协议未上传");
-        }
-        else if (!vm.Card || !vm.Card.AttachSn) {
-            toastr.error("名片正面未上传");
-        }
-        else if (!vm.CardReverse || !vm.CardReverse.AttachSn) {
-            toastr.error("名片反面未上传");
-        }
+        //if (!vm.License || !vm.License.AttachSn) {
+        //    toastr.error("公司营业执照复印件未上传");
+        //}
+        //else if (!vm.NDAFile || vm.NDAFile.length == 0) {
+        //    toastr.error("NDA协议未上传");
+        //}
+        //else if (!vm.Card || !vm.Card.AttachSn) {
+        //    toastr.error("名片正面未上传");
+        //}
+        //else if (!vm.CardReverse || !vm.CardReverse.AttachSn) {
+        //    toastr.error("名片反面未上传");
+        //}
 
-        var RegFile = [];
-        var AttachFile = [];
-        //营业执照
-        AttachFile.push(angular.copy(vm.License));
-        var license = {};
-        license.AttachSn = vm.License.AttachSn;
-        license.FileType = 'License';
-        RegFile.push(license);
-        //NDA
-        for (var i = 0, len = vm.NDAFile.length; i < len; i++)
-        {
-            AttachFile.push(angular.copy(vm.NDAFile[i]));
-            var n = {};
-            n.AttachSn = vm.NDAFile[i].AttachSn;
-            n.FileType = 'NDA';
-            RegFile.push(n);
-        }
+        //var RegFile = [];
+        //var AttachFile = [];
+        ////营业执照
+        //AttachFile.push(angular.copy(vm.License));
+        //var license = {};
+        //license.AttachSn = vm.License.AttachSn;
+        //license.FileType = 'License';
+        //RegFile.push(license);
+        ////NDA
+        //for (var i = 0, len = vm.NDAFile.length; i < len; i++)
+        //{
+        //    AttachFile.push(angular.copy(vm.NDAFile[i]));
+        //    var n = {};
+        //    n.AttachSn = vm.NDAFile[i].AttachSn;
+        //    n.FileType = 'NDA';
+        //    RegFile.push(n);
+        //}
 
-        //Card
-        AttachFile.push(angular.copy(vm.Card));
-        var c = {};
-        c.AttachSn = vm.Card.AttachSn;
-        c.FileType = 'Card';
-        RegFile.push(c);
+        ////Card
+        //AttachFile.push(angular.copy(vm.Card));
+        //var c = {};
+        //c.AttachSn = vm.Card.AttachSn;
+        //c.FileType = 'Card';
+        //RegFile.push(c);
 
-        //CardReverse
-        AttachFile.push(angular.copy(vm.CardReverse));
-        var cr = {};
-        cr.AttachSn = vm.CardReverse.AttachSn;
-        cr.FileType = 'CardReverse';
-        RegFile.push(cr);
+        ////CardReverse
+        //AttachFile.push(angular.copy(vm.CardReverse));
+        //var cr = {};
+        //cr.AttachSn = vm.CardReverse.AttachSn;
+        //cr.FileType = 'CardReverse';
+        //RegFile.push(cr);
 
         vm.Item.NDA = !vm.Item.NDA || false;
-        vm.Item.Files = JSON.stringify(RegFile);
+        //vm.Item.Files = JSON.stringify(RegFile);
         vm.Item.PswdKey = "NAN";
-        vm.Item.TempColumns = "Files";
+        //vm.Item.TempColumns = "Files";
 
         var en = {};
         en.planName = "SDKRegUser";
         en.shortName = "save";
         en.strJson = JSON.stringify(vm.Item);
-        en.fileJson = JSON.stringify(AttachFile);
+        //en.fileJson = JSON.stringify(AttachFile);
         en.dir = "SDKRegister";
 
         AjaxService.DoBefore("ExecPlanUpload", en).then(function (data) {

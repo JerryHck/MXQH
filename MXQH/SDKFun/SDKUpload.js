@@ -101,7 +101,7 @@ function SDKUploadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUrl,
     function ProFileSave()
     {
         vm.ProFileList = vm.ProFileList || [];
-        vm.UploadFile.length = vm.UploadFile.length || [];
+        vm.UploadFile = vm.UploadFile || [];
         var FileList = [];
         for (var i = 0, len = vm.UploadFile.length; i < len; i++) {
             var file=vm.UploadFile[i];
@@ -120,7 +120,7 @@ function SDKUploadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUrl,
         en.TempColumns = 'List';
         vm.promise = AjaxService.ExecPlanUpload("SDKPro", "saveFile", en, vm.UploadFile, "SDKFile").then(function (data) {
             GetProFile();
-            vm.UploadFile = undefined;
+            vm.UploadFile = [];
             toastr.success("储存成功");
         })
     }

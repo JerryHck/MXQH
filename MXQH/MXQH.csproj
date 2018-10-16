@@ -182,6 +182,10 @@
     <Content Include="Scripts\jquery\ystep\ystep.js" />
     <Content Include="SDKFun\RegUserSignDialog.html" />
     <Content Include="SDKFun\RegUserSignDialog.js" />
+    <Content Include="SDKFun\SDKDownLoad.html" />
+    <Content Include="SDKFun\SDKDownLoad.js" />
+    <Content Include="SDKFun\SdkDownloadLink.html" />
+    <Content Include="SDKFun\SdkDownloadLink.js" />
     <Content Include="SDKFun\SDKUpload.html" />
     <Content Include="SDKFun\SDKUpload.js" />
     <Content Include="Access\SignUp.html" />
