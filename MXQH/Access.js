@@ -94,4 +94,17 @@ function Config($stateProvider, $urlRouterProvider, Version) {
                   }]
             }
         })
+        //SDK下载
+        .state('sdkdownload', {
+            url: '/sdkdownload',
+            controllerAs: 'sdk',
+            controller: 'SdkDownloadLinkCtrl',
+            templateUrl: 'SDKFun/SdkDownloadLink.html' + "?v=" + Version,
+            resolve: {
+                deps: ['$ocLazyLoad',
+                  function ($ocLazyLoad) {
+                      return $ocLazyLoad.load(['SDKFun/SdkDownloadLink.js' + "?v=" + Version]);
+                  }]
+            }
+        })
 }

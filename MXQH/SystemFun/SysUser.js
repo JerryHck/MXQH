@@ -5,6 +5,7 @@ angular.module('app', ['ui.grid', 'ui.grid.autoResize'])
 function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
 
     var vm = this;
+    vm.getList = getList;
     //新增用户
     vm.Insert = Insert;
     //选择用户
@@ -25,13 +26,16 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
     vm.DeleteUserRole = DeleteUserRole;
 
     vm.ConfigSex = { Table: "BasicData", Column: "Sex" };
+    vm.UserType = 'E';
 
     getList();
     getListRole();
 
     function getList() {
-        vm.promise = AjaxService.GetPlans("User").then(function (data) {
+        var en = { name: "UserType", value: vm.UserType }
+        vm.promise = AjaxService.GetPlans("User", en).then(function (data) {
             vm.List = data;
+            vm.SelectedUser = undefined;
         });
     }
 

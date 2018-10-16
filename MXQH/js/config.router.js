@@ -76,7 +76,7 @@ function Config($stateProvider, $urlRouterProvider, Version) {
         //首页
         .state('app.dashboard-v1', {
             url: '/dashboard-v1',
-            templateUrl: 'Basic/app_dashboard_v1.html',
+            templateUrl: 'Basic/app_dashboard_v1.html'+ "?v=" + Version,
             resolve: {
                 deps: ['$ocLazyLoad',
                   function ($ocLazyLoad) {

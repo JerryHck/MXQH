@@ -5,7 +5,14 @@
                 <div class="wrapper">
                     <div class="h4 text-center">用户列表</div>
                 </div>
-                <div class="wrapper b-t m-b-md">
+                <div class="wrapper-sm b-t">
+                    <div class="form-group text-center">
+                        <span class="btn-group">
+                            <label class="btn btn-default" ng-model="use.UserType" uib-btn-radio="'E'" ng-click="use.getList()">员工</label>
+                            <label class="btn btn-default" ng-model="use.UserType" uib-btn-radio="'C'" ng-click="use.getList()">客户</label>
+                            <label class="btn btn-default" ng-model="use.UserType" uib-btn-radio="'S'" ng-click="use.getList()">供应商</label>
+                        </span>
+                    </div>
                     <div class="form-group">
                         <div class="input-group">
                             <input type="text" class="form-control input-sm" placeholder="查询" ng-model="use.UserQuery">
@@ -20,7 +27,7 @@
                 <div class="row-row">
                     <div class="cell scrollable hover">
                         <div class="cell-inner">
-                            <div class="padder">
+                            <div class="wrapper-xs">
                                 <div class="list-group">
                                     <a ng-repeat="item in use.List | filter:use.UserQuery " class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.UserNo == use.SelectedUser.UserNo, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="use.SelectUser(item)">
                                         <span class="pull-left h2 mr-1">
@@ -30,7 +37,9 @@
                                             <span class="block text-info text-lg" ng-bind-html="item.UserNo | highlight: use.EntityQuery" ng-click="use.SelectEn(item)"></span>
                                             <small class="text-muted">
                                                 <span>{{ item.ChiLastName }}{{ item.ChiFirstName }}</span>
-                                                <span class="pull-right">{{ item.Level }}</span>
+                                            </small><br />
+                                            <small class="text-muted" ng-if="use.UserType!='E'">
+                                                {{ item.CompanyName }}
                                             </small>
                                         </div>
                                     </a>
@@ -50,9 +59,9 @@
                                 <uib-tabset active="active" type="tabs" class="h-100">
                                     <uib-tab index="0">
                                         <uib-tab-heading class="h5">员工信息</uib-tab-heading>
-                                        <div class="padder-md" ng-if="use.EmpItem">
+                                        <div class="padder-md" ng-if="use.SelectedUser">
                                             <div class="row">
-                                                <div class="col-md-6 b-r m-t-xs">
+                                                <div class="col-md-6 b-r m-t-xs" ng-if="use.UserType=='E'">
                                                     <div class="row">
                                                         <span class="m-l-md">
                                                             <button class="btn btn-sm btn-success" ng-click="use.EditEmp()" ng-if="!use.isEditEmp">
@@ -131,7 +140,7 @@
                                                 <div class="col-md-4">
                                                     <div class="row">
                                                         <div class="bg-light wrapper-md lter b-b text-center">
-                                                            <h3 class="m-n font-thin h5 font-bold">已分配给{{ use.EmpItem.ChiLastName }}{{ use.EmpItem.ChiFirstName }}的角色</h3>
+                                                            <h3 class="m-n font-thin h5 font-bold">已分配给{{ use.SelectedUser.ChiLastName }}{{ use.SelectedUser.ChiFirstName }}的角色</h3>
                                                         </div>
                                                         <div class="padder m-t-xs">
                                                             <div class="form-group" uib-collapse="!use.isAddUserRole">
