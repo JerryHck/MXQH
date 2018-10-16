@@ -29,7 +29,6 @@ function SDKDownLoadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUr
         vm.promise = AjaxService.Custom("GetProList", json).then(function (data) {
             vm.List = data.data;
             vm.page.total = data.data1[0].Total;
-            console.log(data)
         });
         
     }
