@@ -166,6 +166,8 @@
     <Content Include="Images\progressbar.gif" />
     <Content Include="Images\select2-spinner.gif" />
     <Content Include="Images\select2.png" />
+    <Content Include="MESFun\OrderReWork.html" />
+    <Content Include="MESFun\OrderReWork.js" />
     <Content Include="Scripts\assets\js\unlock.js" />
     <Content Include="Scripts\assets\less\unlock.css" />
     <Content Include="Access\ForgotPassword.html" />
