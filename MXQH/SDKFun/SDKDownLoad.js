@@ -56,14 +56,16 @@ function SDKDownLoadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUr
                 List.push(vm.ProFileList[i].File);
             }
         }
-        var en = {};
-        en.ProNo = vm.FileItem.ProNo;
-        en.Version = vm.FileItem.Version;
-        en.FileJson = JSON.stringify(List);
+        if (List.length > 0) {
+            var en = {};
+            en.ProNo = vm.FileItem.ProNo;
+            en.Version = vm.FileItem.Version;
+            en.FileJson = JSON.stringify(List);
 
-        vm.promise = AjaxService.Custom("SdkDownload", en).then(function (data) {
-            toastr.success("下载链接已经发送到您的邮箱，请查收！");
-        })
+            vm.promise = AjaxService.Custom("SdkDownload", en).then(function (data) {
+                toastr.success("下载链接已经发送到您的邮箱，请查收！");
+            })
+        }
     }
 
     function SelectAll() {
