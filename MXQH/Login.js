@@ -12,6 +12,9 @@ angular.module('LoginApp', [
 var app = angular.module('LoginApp').controller('LoginCtrl', LoginCtrl);
 LoginCtrl.$inject = ['$scope', 'AjaxService', 'toastr', 'MyPop', 'appUrl', '$cookieStore', '$window'];
 function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $window) {
+
+    $window.location.href = appUrl + '/Acess.html#!/login';
+
     var vm = this;
     var storage = $window.localStorage;
     vm.UserName = storage["userName"];
