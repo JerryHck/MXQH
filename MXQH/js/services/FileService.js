@@ -53,7 +53,7 @@
                 };
                 uploader.onSuccessItem = function (fileItem, response, status, headers) {
                     if (response[0]) {
-                        me.List.push(response[0])
+                        me.List.push(response[0]);
                         fileItem.data = response[0];
                         if (option.onCompleteItem) {
                             option.onCompleteItem(fileItem);

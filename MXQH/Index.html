@@ -20,92 +20,19 @@
     <link href="Content/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet" />
     <link href="Content/angular-toggle-switch/angular-toggle-switch.css" rel="stylesheet" />
     <link href="Scripts/jquery/ystep/css/ystep.css" rel="stylesheet" />
-
-    <script>
-        var version = Date.now();
-        document.write("<link rel='stylesheet' href='css/app.css?v=" + version + "' type='text/css' />");
-    </script>
-
+    <link href="css/app.css" rel="stylesheet" />
 
 </head>
 <body>
-    <div class="app" id="app" ng-class="{'app-header-fixed':vm.app.settings.headerFixed, 'app-aside-fixed':vm.app.settings.asideFixed, 'app-aside-folded':vm.app.settings.asideFolded, 'app-aside-dock':vm.app.settings.asideDock, 'container':vm.app.settings.container}" ui-view></div>
-
-    <!-- jQuery -->
-    <script src="Scripts/jquery-3.0.0.min.js"></script>
-    <!-- Angular -->
-    <script src="Scripts/angular/angular.min.js"></script>
-    <script src="Scripts/angular/angular-messages.min.js"></script>
-    <script src="Scripts/angular/angular-toastr.tpls.min.js"></script>
-    <script src="Scripts/angular/angular-busy.min.js"></script>
-
-    <script src="Scripts/angular/angular-ui-router.min.js"></script>
-
-    <script src="Scripts/angular/angular-animate/angular-animate.js"></script>
-    <script src="Scripts/angular/angular-cookies/angular-cookies.js"></script>
-    <script src="Scripts/angular/angular-resource/angular-resource.js"></script>
-    <script src="Scripts/angular/angular-sanitize/angular-sanitize.js"></script>
-    <script src="Scripts/angular/angular-touch/angular-touch.js"></script>
-    <script src="Scripts/angular/ngstorage/ngStorage.js"></script>
-
-    <!--file upload-->
-    <script src="Scripts/angular/angular-file-upload/angular-file-upload.min.js"></script>
-
-    <!-- bootstrap -->
-    <script src="Scripts/bootstrap/bootstrap.min.js"></script>
-    <script src="Scripts/angular-ui/bootstrap-switch.min.js"></script>
-    <script src="Scripts/angular-ui/angular-toggle-switch.js"></script>
-    <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
-    <script src="Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
-    <script src="Scripts/angular-ui/angular-locale_zh-cn.min.js"></script>
-    <script src="Scripts/sweetalert.min.js"></script>
-    <!-- lazyload -->
-    <script src="Scripts/oclazyload/ocLazyLoad.min.js"></script>
-    <!-- 解耦 -->
-    <script src="Scripts/oclazyload/ui-router-require-polyfill.js"></script>
-    <script src="Scripts/angular/angular-translate.min.js"></script>
-
-    <script src="Scripts/angular/angular-translate/loader-static-files.js"></script>
-    <script src="Scripts/angular/angular-translate/storage-cookie.js"></script>
-    <script src="Scripts/angular/angular-translate/storage-local.js"></script>
-    <!-- circle -->
-    <script src="Scripts/circleChart/circleChart.min.js"></script>
-    <script src="Scripts/jquery/ystep/ystep.js"></script>
-    <script src="js/app.js"></script>
-    <script>
-        document.write("<script type='text/javascript' src='js/appData.js?v=" + version + "'><\/script>");
-        document.write("<script type='text/javascript' src='js/services/AjaxServiceModule.js?v=" + version + "'><\/script>");
-        document.write("<script type='text/javascript' src='js/services/AjaxServiceMethod.js?v=" + version + "'><\/script>");
-        document.write("<script type='text/javascript' src='js/services/FileService.js?v=" + version + "'><\/script>");
-
-        document.write("<script src='js/Router.js?v=" + version + "'><\/script>");
-        document.write("<script src='js/config.js?v=" + version + "'><\/script>");
-        document.write("<script src='js/config.lazyload.js?v=" + version + "'><\/script>");
-        document.write("<script src='js/Dialog.js?v=" + version + "'><\/script>");
-        document.write("<script src='js/config.router.js?v=" + version + "'><\/script>");
-        document.write("<script src='js/main.js?v=" + version + "'><\/script>");
-        document.write("<script src='js/directives/MyDirective.js?v=" + version + "'><\/script>");
-        document.write("<script src='js/FileLoad.js?v=" + version + "'><\/script>");
-
-        //var sta = '1.0002';
-        var sta = version;
-        //lazy load
-        document.write("<script src='js/services/ui-load.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/filters/fromNow.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/filters/app-filter.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/setnganimate.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-butterbar.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-focus.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-fullscreen.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-jq.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-module.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-nav.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-scroll.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-shift.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-toggleclass.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/directives/ui-validate.js?v=" + sta + "'><\/script>");
-        document.write("<script src='js/controllers/bootstrap.js?v=" + sta + "'><\/script>");
-        document.write("<script src='Scripts/ui-grid.min.js?v=" + sta + "'><\/script>");
-    </script>
+    <div class="app" id="app" ng-class="{'app-header-fixed':vm.app.settings.headerFixed, 'app-aside-fixed':vm.app.settings.asideFixed, 'app-aside-folded':vm.app.settings.asideFolded, 'app-aside-dock':vm.app.settings.asideDock, 'container':vm.app.settings.container}" ui-view></div>    
+    <script src="js/plugin.min.js"></script>
+    <!--<script src="js/appData.js"></script>
+    <script src="js/mxqh.min.js"></script>-->
+    <!--<script type="text/javascript">
+        document.getElementById('appData').src = 'js/appData.js';
+        document.getElementById('mxqh').src = 'js/mxqh.min.js';
+        //$('#appData').attr('src', 'js/appData.js');
+        //$('#mxqh').attr('src', 'js/mxqh.min.js');
+    </script>-->
 </body>
 </html>

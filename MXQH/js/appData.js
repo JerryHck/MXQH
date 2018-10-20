@@ -6,14 +6,11 @@ angular.module('appData')
 //APP URL
 .constant('appUrl', '../')
 .constant('FileUrl', 'http://localhost:8080/File/')
-//.constant('appUrl', 'http://localhost:8080/MXQH/')
 //Service URL
 .constant('serviceUrl', '//localhost:13439/')
 //.constant('FileServiceUrl', '//localhost:14292/')
 .constant('FileServiceUrl', '//192.168.11.75:8080/FileService/')
-//.constant('serviceUrl', '//192.168.1.82:9090/MXQHService/')
-//.constant('serviceUrl', '//localhost:8080/MXQHServie/')
-//.constant('serviceUrl', '//192.168.1.82:90/MXQH/MXQHServie/')
+//.constant('serviceUrl', '//192.168.1.82:9090/MXQHService/') 
  //表單設定
 .constant('Form', [
     { index: 0, title: '新增', action: 'Insert' },
@@ -21,12 +18,12 @@ angular.module('appData')
     { index: 2, title: '查看', action: 'Search' }
 ])
 .constant('Version', (new Date()).toString())
-.constant('ToJsonWorker', new Worker("/js/directives/ToJson.js"))
+.constant('ToJsonWorker', new Worker("./js/directives/ToJson.js"))
     //Loading
 .constant('cgBusyDefaults', {
     message: '',
     backdrop: true,
-    templateUrl: '../Loading/Loading.html',
+    templateUrl: './Loading/Loading.html',
     //templateUrl: 'http://localhost:8080/MXQH/Loading/Loading.html', 
     message: '请稍等...',
     minDuration: 500,
@@ -62,7 +59,7 @@ angular.module('appData')
             en.title = en.title || "确定";
             en.text = en.text || "确定吗";
             en.type = en.type || "warning";
-            en.showConfirmButton = true
+            en.showConfirmButton = true;
             en.showCancelButton = true;
             en.confirmButtonText = en.confirmButtonText || "确定";
             en.cancelButtonText = en.cancelButtonText || "取消";

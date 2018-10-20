@@ -166,6 +166,11 @@
     <Content Include="Images\progressbar.gif" />
     <Content Include="Images\select2-spinner.gif" />
     <Content Include="Images\select2.png" />
+    <Content Include="js\mxqh.js" />
+    <Content Include="js\mxqh.min.js" />
+    <Content Include="js\plugin.js" />
+    <Content Include="js\plugin.min.js" />
+    <Content Include="Scripts\angular-ui\angular-locale_zh-cn.js" />
     <Content Include="Scripts\assets\js\unlock.js" />
     <Content Include="Scripts\assets\less\unlock.css" />
     <Content Include="Access\ForgotPassword.html" />
@@ -174,6 +179,7 @@
     <Content Include="Scripts\bootstrap-step\css\shCore.css" />
     <Content Include="Scripts\bootstrap-step\css\shThemeDefault.css" />
     <Content Include="Scripts\bootstrap-step\js\brush.js" />
+    <Content Include="Scripts\circleChart\circleChart.js" />
     <Content Include="Scripts\jquery\ystep\css\images\pointes_blue.png" />
     <Content Include="Scripts\jquery\ystep\css\images\pointes_blue1.png" />
     <Content Include="Scripts\jquery\ystep\css\images\pointes_green.png" />
@@ -235,7 +241,6 @@
     <Content Include="PLMFun\ItemMaster.js" />
     <Content Include="PLMFun\ItemMasterDialog.html" />
     <Content Include="PLMFun\ItemMasterDialog.js" />
-    <Content Include="Scripts\angular-ui\angular-locale_zh-cn.min.js" />
     <Content Include="Scripts\angular-ui\angular-toggle-switch.js" />
     <Content Include="Scripts\angular-ui\bootstrap-switch.js" />
     <Content Include="Scripts\angular-ui\bootstrap-switch.min.js" />
@@ -288,7 +293,6 @@
     <Content Include="Scripts\bootstrap\DateTimePicker\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap\DateTimePicker\bootstrap-datetimepicker.zh-CN.js" />
     <Content Include="Scripts\circleChart\circleChart.es5.min.js" />
-    <Content Include="Scripts\circleChart\circleChart.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -323,6 +327,8 @@
     <Content Include="Content\font\fontawesome-webfont.ttf" />
     <Content Include="Content\font\fontawesome-webfont.woff" />
     <None Include="css\less\app.table.less" />
+    <Content Include="js\mxqh.js.JSCompress" />
+    <Content Include="js\plugin.js.JSCompress" />
     <None Include="Properties\PublishProfiles\2.pubxml" />
     <None Include="Properties\PublishProfiles\MXQH.pubxml" />
     <Content Include="Scripts\angular\angular-file-upload\angular-file-upload.js.map" />
@@ -333,7 +339,6 @@
     <Content Include="Scripts\jquery-3.0.0.min.js" />
     <Content Include="Scripts\jquery-3.0.0.slim.js" />
     <Content Include="Scripts\jquery-3.0.0.slim.min.js" />
-    <Content Include="Scripts\jquery\bootstrap.js" />
     <Content Include="Scripts\jquery\charts\easypiechart\jquery.easy-pie-chart.js" />
     <Content Include="Scripts\jquery\charts\flot\jquery.flot.min.js" />
     <Content Include="Scripts\jquery\charts\flot\jquery.flot.orderBars.js" />
@@ -422,7 +427,7 @@
     <Content Include="Scripts\SheetJs\xlsx.extendscript.js" />
     <Content Include="Scripts\SheetJs\xlsx.full.min.js" />
     <Content Include="Scripts\SheetJs\xlsx.min.js" />
-    <Content Include="Scripts\sweetalert.min.js" />
+    <Content Include="Scripts\sweetalert.js" />
     <Content Include="Scripts\ui-grid.js" />
     <Content Include="Scripts\ui-grid.min.js" />
     <Content Include="Scripts\ui-select2-angular.js" />

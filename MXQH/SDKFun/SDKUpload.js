@@ -8,6 +8,12 @@ function SDKUploadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUrl,
     vm.page = { index: 1, size: 12 };
     vm.DeleteFile = [];
     vm.isEdit = false;
+    vm.Option = {
+        yearOffset: 222,
+        format: 'Y/m/d H:i',
+        formatDate: 'Y/m/d',
+        formatTime: 'H:i',
+    };
 
     vm.ProSave = ProSave;
     vm.Search = Search;
@@ -45,6 +51,7 @@ function SDKUploadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUrl,
         vm.Item = item;
         vm.isEdit = true;
         $(".insert-pro").addClass("active");
+        console.log(item)
     }
 
     function ProFile(item) {
@@ -132,5 +139,4 @@ function SDKUploadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUrl,
     function DownLoad(url) {
         $window.open(url);
     }
-
 }

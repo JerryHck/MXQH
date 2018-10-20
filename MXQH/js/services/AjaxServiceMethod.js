@@ -295,7 +295,7 @@
         function DoBefore(method, en) {
             var d = $q.defer(), url = serviceUrl + "Common.asmx/DoBefore";
             var json = { method: method, Json: JSON.stringify(en) };
-            return httpFun(d, url, json)
+            return httpFun(d, url, json);
         }
 
         function LoginAction(method, en) {
@@ -393,7 +393,7 @@
                     } else {
                         console.log(data);
                         var m = data.data ? data.data.split("。")[0].replace(/System.Exception:/, '') : "错误";
-                        toastr.error(m, '服务错误')
+                        toastr.error(m, '服务错误');
                     }
                 });
             return q.promise;
@@ -421,7 +421,7 @@
             else {
                 var enNew = [];
                 enNew.push(en);
-                return enNew
+                return enNew;
             }
         }
     }

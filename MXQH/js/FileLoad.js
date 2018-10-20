@@ -57,7 +57,7 @@ function ($rootScope, $q, AjaxService, $ocLazyLoad) {
         onLoad: function (e) {
             var me = h;
             if (me.onSliceData) {
-                me.onSliceData(e.target.result)
+                me.onSliceData(e.target.result);
             }
 
             if (me.loaded < me.total) {

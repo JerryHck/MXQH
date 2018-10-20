@@ -48,7 +48,7 @@
     </div>
     <!--<pre>{{ sdk.ProFileList | json }}</pre>-->
 </div>
-<div class="pro-file d-r bg-light dk wrapper-md padder-md">
+<div class="pro-file d-r lg bg-light dk wrapper-md padder-md">
     <div class="blur-close" ui-remove-class="active" target=".pro-file"></div>
     <div class="padder-md wrapper">
         <div class="panel panel-default">
@@ -61,34 +61,28 @@
                 <h3 class="m-n font-thin h3">[ <strong>{{ sdk.FileItem.ProNo }}</strong><span class="text-muted h5">{{ sdk.FileItem.Version }}</span> ]相关文件</h3>
             </div>
             <div class="panel-body padder-md scroll-y" style="max-height:550px">
-                <article class="media">
-                    <div class="pull-left">
-                        <label class="i-checks">
-                            <input type="checkbox" ng-model="sdk.IsAll" ng-change="sdk.SelectAll()"><i></i>全选
-                        </label>
-                    </div>
-                    <div class="media-body form-group text-center">
-                        <div class="list-group-item-sm col-lg-12 text-center">
-                            <span class="h-3 font-bold">文件名</span>
-                        </div>
-                        
-                    </div>
-                </article>
-                <div class="line line-dashed b-b line-lg pull-in"></div>
-                <article class="media" ng-repeat="f in sdk.ProFileList">
-                    <div class="pull-left">
-                        <label class="i-checks">
-                            <input type="checkbox" ng-model="f.isCheck"><i></i>
-                        </label>
-                    </div>
-                    <div class="media-body form-group">
-                        <div class="list-group-item-sm col-lg-12">
-                            <span class="h-3 text-success">{{ f.File.OriginalName }} {{ f.File.FileType }}</span>
-                        </div>
-                    </div>
-                </article>
+                <table class="table">
+                    <tr class="text-center">
+                        <td class="col-md-1">
+                            <label class="i-checks">
+                                <input type="checkbox" ng-model="sdk.IsAll" ng-change="sdk.SelectAll()"><i></i>全选
+                            </label>
+                        </td>
+                        <td class="col-md-8"><span class="h-3 font-bold">文件名</span></td>
+                        <td class="col-md-2"><span class="h-3 font-bold">文件大小</span></td>
+                    </tr>
+                    <tr ng-repeat="f in sdk.ProFileList">
+                        <td>
+                            <label class="i-checks">
+                                <input type="checkbox" ng-model="f.isCheck"><i></i>
+                            </label>
+                        </td>
+                        <td class="text-left"><span class="h-3 text-success">{{ f.File.OriginalName }} {{ f.File.FileType }}</span></td>
+                        <td><span class="h-3 text-success">{{ f.File.SizeDesc }}</span></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
-
+    <!--<pre>{{ sdk.ProFileList | json }}</pre>-->
 </div>
