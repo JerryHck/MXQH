@@ -197,7 +197,7 @@
     <Content Include="Access\SignUp.html" />
     <Content Include="Access\SignUp.js" />
     <Content Include="unlock.js" />
-    <Content Include="js\appData.js" />
+    <Content Include="appData.js" />
     <Content Include="js\app\contact\contacts.json" />
     <Content Include="js\app\mail\mails.json" />
     <Content Include="js\app\note\notes.json" />

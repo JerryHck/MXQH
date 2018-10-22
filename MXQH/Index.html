@@ -24,15 +24,15 @@
 
 </head>
 <body>
-    <div class="app" id="app" ng-class="{'app-header-fixed':vm.app.settings.headerFixed, 'app-aside-fixed':vm.app.settings.asideFixed, 'app-aside-folded':vm.app.settings.asideFolded, 'app-aside-dock':vm.app.settings.asideDock, 'container':vm.app.settings.container}" ui-view></div>    
+    <div class="app" id="app" ng-class="{'app-header-fixed':vm.app.settings.headerFixed, 'app-aside-fixed':vm.app.settings.asideFixed, 'app-aside-folded':vm.app.settings.asideFolded, 'app-aside-dock':vm.app.settings.asideDock, 'container':vm.app.settings.container}" ui-view></div>
     <script src="js/plugin.min.js"></script>
-    <!--<script src="js/appData.js"></script>
-    <script src="js/mxqh.min.js"></script>-->
-    <!--<script type="text/javascript">
-        document.getElementById('appData').src = 'js/appData.js';
-        document.getElementById('mxqh').src = 'js/mxqh.min.js';
-        //$('#appData').attr('src', 'js/appData.js');
-        //$('#mxqh').attr('src', 'js/mxqh.min.js');
-    </script>-->
+    <!--<script src="appData.js?v=${date}"></script>
+    <script src="js/mxqh.min.js?v=${date}"></script>-->
+    
+    <script type="text/javascript">
+        var version = new Date();
+        document.write("<script type='text/javascript' src='appData.js?v=" + version + "'><\/script>");
+        document.write("<script type='text/javascript' src='js/mxqh.min.js?v=" + version + "'><\/script>");
+    </script>
 </body>
 </html>
