@@ -33,15 +33,15 @@
                 <article class="media scroll-y" style="height:20px">
                     <small class="media-left pull-left">版本说明:</small>
                     <div class="media-body">
-                        <small class="block">{{ item.VersionDesc }}</small>
+                        <small class="block" replace-enter="item.VersionDesc"></small>
                     </div>
                 </article>
                 <article class="media">
                     <small class="pull-left">
-                        <a class="pull-left text-success" ng-click="sdk.ProEdit(item)" title="复制产品"><i class="fa fa-share"></i></a>
+                        <a class="pull-left text-success" ng-click="sdk.ProCopy(item)" title="复制产品"><i class="fa fa-share"></i></a>
                     </small>
                     <small class="pull-right">
-                        <a class="pull-left text-danger" ng-click="sdk.ProEdit(item)" title="删除产品"><i class="glyphicon glyphicon-remove"></i></a>
+                        <a class="pull-left text-danger" ng-click="sdk.ProDelete(item)" ng-confirm="{text:'确定要删除产品吗'}" title="删除产品"><i class="glyphicon glyphicon-remove"></i></a>
                     </small>
                     <div class="media-body">
                     </div>
@@ -69,11 +69,11 @@
                     <div class="col-sm-6" ng-class="{ 'has-error' : sdk.ProductForm.No.$invalid }">
                         <label>产品名称</label>
                         <input type="text" class="form-control" name="No" placeholder="产品名"
-                               ng-model="sdk.Item.ProNo" ng-disabled="sdk.isEdit" ng-blur="sdk.isProExists()" required>
+                               ng-model="sdk.Item.ProNo" ng-disabled="sdk.isEdit || sdk.isCopy" ng-blur="sdk.isProExists()" required>
                     </div>
                     <div class="col-sm-6" ng-class="{ 'has-error' : sdk.ProductForm.Version.$invalid }">
                         <label>产品版本</label>
-                        <input type="text" ng-disabled="sdk.isEdit" name="Version" class="form-control"  ng-blur="sdk.isProExists()" placeholder="产品版本" ng-model="sdk.Item.Version" required>
+                        <input type="text" ng-disabled="sdk.isEdit" name="Version" class="form-control" ng-blur="sdk.isProExists()" placeholder="产品版本" ng-model="sdk.Item.Version" required>
                         <div ng-messages="sdk.ProductForm.Version.$error" class="help-block" role="alert">
                             <div ng-message="unique">产品版本已存在</div>
                         </div>
@@ -87,11 +87,11 @@
                 </div>
                 <div class="form-group">
                     <label>版本说明</label>
-                    <textarea class="form-control" rows="3" ng-model="sdk.Item.VersionDesc" maxlength="300" placeholder="输入版本说明"></textarea>
+                    <textarea class="form-control" rows="4" ng-model="sdk.Item.VersionDesc" maxlength="300" placeholder="输入版本说明"></textarea>
                 </div>
                 <div class="form-group">
                     <label>注意事项</label>
-                    <textarea class="form-control" rows="3" ng-model="sdk.Item.Note" maxlength="255" placeholder="输入注意事项"></textarea>
+                    <textarea class="form-control" rows="4" ng-model="sdk.Item.Note" maxlength="255" placeholder="输入注意事项"></textarea>
                 </div>
             </div>
         </div>
@@ -106,13 +106,14 @@
     <div class="b-b wrapper-md text-center">
         <a href class="text-danger pull-left" ui-remove-class="active" target=".pro-file"><i class="glyphicon glyphicon-remove"></i></a>
         <h3 class="m-n font-thin h3">[ <strong>{{ sdk.FileItem.ProNo }}</strong><span class="text-muted h5">{{ sdk.FileItem.Version }}</span> ]相关文件</h3>
+        <span class="pull-down pull-right">发布日期：<strong class="text-info">{{ sdk.FileItem.PublishTime | date:'yyyy-MM-dd HH:mm:ss' }}</strong></span>
     </div>
     <div class="padder-md wrapper">
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="form-group">
                     <label class="control-label col-md-2">
-                        <button class="btn btn-success" type="button"ng-click="sdk.ProFileSave()" title="保存文件信息到服务器">
+                        <button class="btn btn-success" type="button" ng-click="sdk.ProFileSave()" title="保存文件信息到服务器">
                             <i class="glyphicon glyphicon-save"></i>
                             保存
                         </button>
@@ -143,9 +144,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="line b-b wrapper-md"></div>
+                <div class="form-group col-md-12">
+                    <label class="control-label col-md-2 text-right">版本说明：</label>
+                    <div class="col-md-10">
+                        <span class="form-control-static"  replace-enter="sdk.FileItem.VersionDesc"></span>
+                    </div>
+                </div>
+                <div class="form-group col-xs-12">
+                    <label class="control-label col-md-2 text-right">注意事项：</label>
+                    <div class="col-md-10">
+                        <span class="form-control-static" replace-enter="sdk.FileItem.Note"></span>
+                    </div>
+                </div>
             </div>
         </div>
-        <!--<pre>{{ sdk.ProFileList | json }}</pre>-->
+
+        <!--<pre>{{ sdk.FileItem | json }}</pre>-->
     </div>
 
 </div>

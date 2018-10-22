@@ -4,7 +4,10 @@
     </div>
     <div class="form-inline">
         <div class="form-group">
-            <input type="text" class="form-control" ng-model="sdk.Ser.ProNo" placeholder="产品编号">
+            <input type="text" class="form-control" ng-model="sdk.Ser.ProNo" placeholder="产品名称">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="sdk.Ser.Version" placeholder="产品版本">
         </div>
         <button class="btn btn-sm btn-info" ng-click="sdk.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
 
@@ -22,21 +25,16 @@
             </div>
             <div class="panel-body scroll-y no-scroll" style="height:120px;">
                 <article class="media">
-                    <small class="media-left pull-left">品名:</small>
+                    <small class="media-left pull-left">发布时间:</small>
                     <div class="media-body">
-                        <small class="block">{{ item.ProName }}</small>
+                        <small class="block">{{ item.PublishTime | date:'yyyy-MM-dd HH:mm:ss' }}</small>
+                        <span></span>
                     </div>
                 </article>
-                <article class="media">
-                    <small class="media-left pull-left">规格:</small>
+                <article class="media scroll-y" style="height:40px">
+                    <small class="media-left pull-left">版本说明:</small>
                     <div class="media-body">
-                        <small class="block">{{ item.Spec }}</small>
-                    </div>
-                </article>
-                <article class="media">
-                    <small class="media-left pull-left">备注:</small>
-                    <div class="media-body">
-                        <small class="block">{{ item.Remark }}</small>
+                        <small class="block" replace-enter="item.VersionDesc"></small>
                     </div>
                 </article>
             </div>

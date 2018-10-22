@@ -1264,6 +1264,23 @@ angular.module('MyDirective')
         $(element).setStep($scope.opts.now, $scope.opts.reject);
     }
 })
+    //替换texarea回车
+.directive('replaceEnter', function () {
+    return {
+        restrict: 'A',
+        priority: 1,
+        terminal: true,
+        link: link
+    };
+    function link($scope, element, attr) {
+        element.html("");
+        $scope.$watchCollection(attr.replaceEnter, function (data) {
+            var en = data ? data.replace(/\n/g, '<br/>') : "";
+            element.html(en);
+        })
+        
+    }
+})
 ;
 ///<jscompress sourcefile="FileLoad.js" />
 'use strict'
