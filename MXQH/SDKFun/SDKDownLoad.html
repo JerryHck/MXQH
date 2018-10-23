@@ -51,34 +51,55 @@
     <div class="padder-md wrapper">
         <div class="panel panel-default">
             <div class="panel-heading text-center">
-                <button class="btn btn-success pull-left" type="button" ng-click="sdk.Download()" title="保存文件信息到服务器">
+                <button class="btn btn-success pull-left" type="button" ng-click="sdk.Download()" title="下载文件">
                     <i class="glyphicon glyphicon-download"></i>
                     下载
                 </button>
                 <a class="text-danger pull-right" ui-remove-class="active" target=".pro-file"><i class="glyphicon glyphicon-remove"></i></a>
                 <h3 class="m-n font-thin h3">[ <strong>{{ sdk.FileItem.ProNo }}</strong><span class="text-muted h5">{{ sdk.FileItem.Version }}</span> ]相关文件</h3>
             </div>
-            <div class="panel-body padder-md scroll-y" style="max-height:550px">
-                <table class="table">
-                    <tr class="text-center">
-                        <td class="col-md-1">
-                            <label class="i-checks">
-                                <input type="checkbox" ng-model="sdk.IsAll" ng-change="sdk.SelectAll()"><i></i>全选
-                            </label>
-                        </td>
-                        <td class="col-md-8"><span class="h-3 font-bold">文件名</span></td>
-                        <td class="col-md-2"><span class="h-3 font-bold">文件大小</span></td>
-                    </tr>
-                    <tr ng-repeat="f in sdk.ProFileList">
-                        <td>
-                            <label class="i-checks">
-                                <input type="checkbox" ng-model="f.isCheck"><i></i>
-                            </label>
-                        </td>
-                        <td class="text-left"><span class="h-3 text-success">{{ f.File.OriginalName }} {{ f.File.FileType }}</span></td>
-                        <td><span class="h-3 text-success">{{ f.File.SizeDesc }}</span></td>
-                    </tr>
-                </table>
+            <div class="panel-body padder-md scroll-y" >
+                <div class="form-group col-md-12 scroll-y" style="max-height:350px">
+                    <table class="table col-md-12">
+                        <tr class="text-center">
+                            <td class="col-md-2">
+                                <label class="i-checks">
+                                    <input type="checkbox" ng-model="sdk.IsAll" ng-change="sdk.SelectAll()"><i></i>全选
+                                </label>
+                            </td>
+                            <td class="col-md-8"><span class="h-3 font-bold">文件名</span></td>
+                            <td class="col-md-2"><span class="h-3 font-bold">文件大小</span></td>
+                        </tr>
+                        <tr ng-repeat="f in sdk.ProFileList">
+                            <td>
+                                <label class="i-checks">
+                                    <input type="checkbox" ng-model="f.isCheck"><i></i>
+                                </label>
+                            </td>
+                            <td class="text-left"><span class="h-3 text-success">{{ f.File.OriginalName }} {{ f.File.FileType }}</span></td>
+                            <td><span class="h-3 text-success">{{ f.File.SizeDesc }}</span></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="line b-b wrapper-md"></div>
+                <div class="form-group col-md-12">
+                    <label class="control-label col-md-2 text-right">发布日期：</label>
+                    <div class="col-md-10">
+                        <span class="form-control-static"><strong class="text-info">{{ sdk.FileItem.PublishTime | date:'yyyy-MM-dd HH:mm:ss' }}</strong></span>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="control-label col-md-2 text-right">版本说明：</label>
+                    <div class="col-md-10">
+                        <span class="form-control-static text-info" replace-enter="sdk.FileItem.VersionDesc"></span>
+                    </div>
+                </div>
+                <div class="form-group col-xs-12">
+                    <label class="control-label col-md-2 text-right">注意事项：</label>
+                    <div class="col-md-10">
+                        <span class="form-control-static text-info" replace-enter="sdk.FileItem.Note"></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
