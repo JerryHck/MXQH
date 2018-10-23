@@ -44,8 +44,9 @@ angular.module('MyDirective')
         link: function (scope, element, attr, ngModel) {
             scope.option = scope.option ||
                 {
+                    //mask:'9999/19/39 29:59',
                     formatTime: 'H:i',
-                    formatDate: 'd.m.Y',
+                    formatDate: 'Y.m.d',
                     timepickerScrollbar: false
                 }
             $ocLazyLoad.load('datetimepicker').then(function () {
@@ -321,7 +322,7 @@ angular.module('MyDirective')
                 scope.ListData = scope.ListData || [];
                 for (var j = 0, len = scope.ListData.length; j < len; j++) {
                     if ((scope.ListData[j].DbSchema.toUpperCase().indexOf(ser.toUpperCase()) !== -1) || (scope.ListData[j].Name.toUpperCase().indexOf(ser.toUpperCase()) !== -1)) {
-                        scope.data.push(scope.ListData[j])
+                        scope.data.push(scope.ListData[j]);
                     }
                 }
                 //取服务器获取新数据
@@ -502,7 +503,7 @@ angular.module('MyDirective')
                 scope.ListData = scope.ListData || [];
                 for (var j = 0, len = scope.ListData.length; j < len; j++) {
                     if ((scope.ListData[j].EntityName.toUpperCase().indexOf(ser.toUpperCase()) != -1)) {
-                        scope.data.push(scope.ListData[j])
+                        scope.data.push(scope.ListData[j]);
                     }
                 }
                 //取服务器获取新数据
@@ -518,7 +519,7 @@ angular.module('MyDirective')
                     en2.name = 'EntityName';
                     en2.value = '%' + ser + '%';
                     en2.type = 'like';
-                    list.push(en2)
+                    list.push(en2);
                     AjaxService.GetPlans("SelectEntity", list).then(function (data) {
                         scope.data = data;
                     });
@@ -793,5 +794,22 @@ angular.module('MyDirective')
         //loadStep 方法可以初始化ystep
         $(element).loadStep($scope.opts);
         $(element).setStep($scope.opts.now, $scope.opts.reject);
+    }
+})
+    //替换texarea回车
+.directive('replaceEnter', function () {
+    return {
+        restrict: 'A',
+        priority: 1,
+        terminal: true,
+        link: link
+    };
+    function link($scope, element, attr) {
+        element.html("");
+        $scope.$watchCollection(attr.replaceEnter, function (data) {
+            var en = data ? data.replace(/\n/g, '<br/>') : "";
+            element.html(en);
+        })
+        
     }
 })

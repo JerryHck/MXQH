@@ -22,6 +22,8 @@ function SDKDownLoadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUr
     function PageChange() {
         var en = {};
         en.ProNo = vm.Ser.ProNo;
+        en.Version = vm.Ser.Version;
+        en.IsDelete = false;
         en.Start = vm.page.index <= 1 ? 1 : (vm.page.index - 1) * vm.page.size + 1;
         en.End = en.Start + vm.page.size;
         var json = {};

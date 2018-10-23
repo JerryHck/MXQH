@@ -8,6 +8,12 @@ function SDKUploadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUrl,
     vm.page = { index: 1, size: 12 };
     vm.DeleteFile = [];
     vm.isEdit = false;
+    vm.Option = {
+        yearOffset: 222,
+        format: 'Y/m/d H:i',
+        formatDate: 'Y/m/d',
+        formatTime: 'H:i',
+    };
 
     vm.ProSave = ProSave;
     vm.Search = Search;
@@ -18,6 +24,9 @@ function SDKUploadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUrl,
     vm.DeleteProFile = DeleteProFile;
     vm.DownLoad = DownLoad;
     vm.isProExists = isProExists;
+    vm.ProDelete = ProDelete;
+    vm.ProCopy = ProCopy;
+
 
     Search()
     function Search() {
@@ -27,6 +36,7 @@ function SDKUploadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUrl,
 
     function Insert() {
         vm.isEdit = false;
+        vm.isCopy = false;
         vm.Item = {};
     }
 
@@ -35,6 +45,7 @@ function SDKUploadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUrl,
         if (vm.Ser.ProNo) {
             list.push({ name: "ProNo", value: vm.Ser.ProNo });
         }
+        list.push({ name: "IsDelete", value: false });
         vm.promise = AjaxService.GetPlansPage("SDKPro", list, vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
@@ -44,11 +55,20 @@ function SDKUploadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUrl,
     function ProEdit(item) {
         vm.Item = item;
         vm.isEdit = true;
+        vm.isCopy = false;
+        $(".insert-pro").addClass("active");
+    }
+
+    function ProCopy(item) {
+        vm.Item = angular.copy(item);
+        vm.Item.Version = undefined;
+        vm.isCopy = true;
+        vm.isEdit = false;
         $(".insert-pro").addClass("active");
     }
 
     function ProFile(item) {
-        vm.FileItem = item;
+        vm.FileItem = angular.copy(item);
         GetProFile();
         $(".pro-file").addClass("active");
     }
@@ -92,7 +112,6 @@ function SDKUploadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUrl,
             list.push({ name: "ProNo", value: vm.Item.ProNo });
             list.push({ name: "Version", value: vm.Item.Version });
             AjaxService.GetPlan("SDKPro", list).then(function (data) {
-                console.log(data.ProNo)
                 vm.ProductForm.Version.$setValidity('unique', !data.ProNo);
             });
         }
@@ -133,4 +152,14 @@ function SDKUploadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUrl,
         $window.open(url);
     }
 
+    function ProDelete(item) {
+        var en = {};
+        en.ProNo = item.ProNo;
+        en.Version = item.Version;
+        en.CreateBy = $rootScope.User.UserNo;
+        AjaxService.ExecPlan("SDKPro", "delete", item).then(function (data) {
+            toastr.success("删除成功");
+            PageChange();
+        })
+    }
 }

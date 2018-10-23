@@ -168,6 +168,11 @@
     <Content Include="Images\select2.png" />
     <Content Include="MESFun\OrderReWork.html" />
     <Content Include="MESFun\OrderReWork.js" />
+    <Content Include="js\mxqh.js" />
+    <Content Include="js\mxqh.min.js" />
+    <Content Include="js\plugin.js" />
+    <Content Include="js\plugin.min.js" />
+    <Content Include="Scripts\angular-ui\angular-locale_zh-cn.js" />
     <Content Include="Scripts\assets\js\unlock.js" />
     <Content Include="Scripts\assets\less\unlock.css" />
     <Content Include="Access\ForgotPassword.html" />
