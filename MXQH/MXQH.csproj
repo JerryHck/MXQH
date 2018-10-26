@@ -174,6 +174,8 @@
     <Content Include="js\mxqh.min.js" />
     <Content Include="js\plugin.js" />
     <Content Include="js\plugin.min.js" />
+    <Content Include="MESFun\SnPackageCheck.html" />
+    <Content Include="MESFun\SnPackageCheck.js" />
     <Content Include="Scripts\angular-ui\angular-locale_zh-cn.js" />
     <Content Include="Scripts\assets\js\unlock.js" />
     <Content Include="Scripts\assets\less\unlock.css" />

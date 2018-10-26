@@ -28,12 +28,12 @@ function ($scope, $http, $window, AjaxService, FileService, toastr) {
 
     //vm.FileData = { header: { header: "A" }, sheetNum: 1 };
 
-    var list = [];
+    //var list = [];
 
-    vm.promise = AjaxService.GetPlansPage("PanTest", list, 1, 10).then(function (data) {
-        vm.BindList = data.List;
-        vm.page.total = data.Count;
-    });
+    //vm.promise = AjaxService.GetPlansPage("PanTest", list, 1, 10).then(function (data) {
+    //    vm.BindList = data.List;
+    //    vm.page.total = data.Count;
+    //});
 
     var en = {};
     //en.InternalCode = vm.Ser.InternalCode;
