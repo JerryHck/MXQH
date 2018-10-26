@@ -22,10 +22,10 @@
     <sourcefile path="..\Scripts\angular-ui\angular-locale_zh-cn.js" />
     <sourcefile path="..\Scripts\oclazyload\ui-router-require-polyfill.js" />
     <sourcefile path="..\Scripts\oclazyload\ocLazyLoad.js" />
-    <sourcefile path="..\..\..\..\IIS\MXQH\Scripts\angular\angular-translate\angular-translate.js" />
-    <sourcefile path="..\..\..\..\IIS\MXQH\Scripts\angular\angular-translate\loader-static-files.js" />
-    <sourcefile path="..\..\..\..\IIS\MXQH\Scripts\angular\angular-translate\storage-cookie.js" />
-    <sourcefile path="..\..\..\..\IIS\MXQH\Scripts\angular\angular-translate\storage-local.js" />
+    <sourcefile path="..\Scripts\angular\angular-translate\angular-translate.js" />
+    <sourcefile path="..\Scripts\angular\angular-translate\loader-static-files.js" />
+    <sourcefile path="..\Scripts\angular\angular-translate\storage-cookie.js" />
+    <sourcefile path="..\Scripts\angular\angular-translate\storage-local.js" />
     <sourcefile path="..\Scripts\sweetalert.js" />
     <sourcefile path="..\Scripts\jquery\ystep\ystep.js" />
     <sourcefile path="..\Scripts\ui-grid.js" />

@@ -18,7 +18,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     function Search() {
         vm.page.index = 1;
-        PageChange()
+        PageChange();
     }
 
     function PageChange() {

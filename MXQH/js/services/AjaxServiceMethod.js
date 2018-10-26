@@ -387,8 +387,8 @@
                     q.reject();
                     if (data.status == 401) {
                         $cookieStore.remove('user-token');
-                        if ($window.location.href != appUrl + 'Acess.html#!/login') {
-                            $window.location.href = appUrl + 'Acess.html#!/login';
+                        if ($window.location.href != appUrl + 'Access.html#!/login') {
+                            $window.location.href = appUrl + 'Access.html#!/login';
                         }
                     } else {
                         console.log(data);

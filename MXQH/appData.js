@@ -8,7 +8,6 @@ angular.module('appData')
 .constant('FileUrl', 'http://localhost:8080/File/')
 //Service URL
 .constant('serviceUrl', '//localhost:13439/')
-//.constant('FileServiceUrl', '//localhost:14292/')
 .constant('FileServiceUrl', '//192.168.11.75:8080/FileService/')
 //.constant('serviceUrl', '//192.168.1.82:9090/MXQHService/') 
  //表單設定

@@ -62,13 +62,14 @@
     <Reference Include="System.Web.Services" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Access.js" />
+    <Content Include="Access.html" />
+    <Content Include="index.html" />
+    <Content Include="js\Access.js" />
     <Content Include="Access\ChangePassword.html" />
     <Content Include="Access\ChangePassword.js" />
     <Content Include="Access\login.html" />
     <Content Include="Access\login.js" />
     <Content Include="Access\SignUpProtocol.html" />
-    <Content Include="Acess.html" />
     <Content Include="api\login" />
     <Content Include="api\signup" />
     <Content Include="appData.js" />
@@ -149,6 +150,7 @@
     <Content Include="css\less\app.utilities.less" />
     <Content Include="css\less\app.variables.less" />
     <Content Include="css\less\app.widgets.less" />
+    <Content Include="css\plugin.css" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -162,14 +164,13 @@
     <Content Include="fonts\sourcesanspro\sourcesanspro-bold.woff" />
     <Content Include="fonts\sourcesanspro\sourcesanspro-light.woff" />
     <Content Include="fonts\sourcesanspro\sourcesanspro.woff" />
-    <Content Include="HtmlPage1.html" />
     <Content Include="Images\loading.gif" />
     <Content Include="Images\progressbar.gif" />
     <Content Include="Images\select2-spinner.gif" />
     <Content Include="Images\select2.png" />
+    <Content Include="js\dobefore.min.js" />
     <Content Include="MESFun\OrderReWork.html" />
     <Content Include="MESFun\OrderReWork.js" />
-    <Content Include="js\mxqh.js" />
     <Content Include="js\mxqh.min.js" />
     <Content Include="js\plugin.js" />
     <Content Include="js\plugin.min.js" />
@@ -200,7 +201,6 @@
     <Content Include="SDKFun\SDKUpload.js" />
     <Content Include="Access\SignUp.html" />
     <Content Include="Access\SignUp.js" />
-    <Content Include="unlock.js" />
     <Content Include="js\app\contact\contacts.json" />
     <Content Include="js\app\mail\mails.json" />
     <Content Include="js\app\note\notes.json" />
@@ -224,8 +224,8 @@
     <Content Include="Loading\lg.ajax-spinner-preloader.gif" />
     <Content Include="Loading\lg.circle-slack-loading-icon.gif" />
     <Content Include="Loading\Loading.html" />
-    <Content Include="login.html" />
-    <Content Include="Login.js" />
+    <Content Include="NodeJs\login.html" />
+    <Content Include="NodeJs\Login.js" />
     <Content Include="MESFun\AteData.html" />
     <Content Include="MESFun\AteData.js" />
     <Content Include="MESFun\PackageReAct.html" />
@@ -330,8 +330,6 @@
     <Content Include="Content\font\fontawesome-webfont.ttf" />
     <Content Include="Content\font\fontawesome-webfont.woff" />
     <None Include="css\less\app.table.less" />
-    <Content Include="js\mxqh.js.JSCompress" />
-    <Content Include="js\plugin.js.JSCompress" />
     <None Include="Properties\PublishProfiles\2.pubxml" />
     <None Include="Properties\PublishProfiles\MXQH.pubxml" />
     <Content Include="Scripts\angular\angular-file-upload\angular-file-upload.js.map" />
@@ -577,7 +575,6 @@
     <Content Include="img\c9.jpg" />
     <Content Include="img\logo.png" />
     <Content Include="img\p0.jpg" />
-    <Content Include="index.html" />
     <Content Include="js\app.js" />
     <Content Include="js\app\calendar\calendar.js" />
     <Content Include="js\app\contact\contact.js" />

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="access">
+<head>
+    <meta charset="utf-8" />
+    <title>Auctus | 平台入口资讯系统</title>
+    <meta name="description" content="Auctus | 平台入口资讯系统" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="css/plugin.css?v=91254e1c04" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="app" style="min-height: 100%; padding: 0 0 60px;">
+        <div class="row">
+            <div class="col-md-1">
+                <div><img style="margin-top:22px;width:150px" src="Content/images/logo.png" /></div>
+            </div>
+            <div class="col-md-10">
+                <div ui-view></div>
+            </div>
+        </div>
+    </div>
+    <div style="height: 50px; margin-top: -60px; text-align:center" ng-include="'Basic/blocks/page_footer.html?v=c4af2cddd8'"></div>
+    <script src="js/plugin.min.js?v=17962d0f9e"></script>
+    <script src="appData.js?v=49f18d6984"></script>
+    <script src="js/dobefore.min.js?v=29a26788be"></script>
+    <script>
+        check();
+        function check() {
+            var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+            var isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1; //判断Chrome浏览器
+            if (!isChrome) {
+                if (confirm("您使用的不是Chrome浏览器，请使用Chrome浏览本系统！")) {
+                    window.location.href = '//192.168.1.82:9090/File/DownLoad/chromexp_96311.rar';
+                }
+            }
+        }
+        var version = Date.now();
+    </script>
+
+</body>
+</html>

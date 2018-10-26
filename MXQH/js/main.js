@@ -100,7 +100,7 @@ angular.module('app')
         function LogOff() {
             AjaxService.LoginAction("LoginOff").then(function (data) {
                 $cookieStore.remove('user-token');
-                $window.location.href = appUrl + 'Acess.html#!/login';
+                $window.location.href = appUrl + 'Access.html#!/login';
             })
         }
 
