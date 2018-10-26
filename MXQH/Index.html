@@ -1,38 +1,18 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-ng-app="app">
 <head>
     <meta charset="utf-8" />
     <title>Auctus | 系统平台</title>
     <meta name="description" content="Auctus | 平台入口资讯系统" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
-
-    <link href="Content/angular-busy.min.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="css/animate.css" type="text/css" />
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
-    <link rel="stylesheet" href="css/simple-line-icons.css" type="text/css" />
-    <link rel="stylesheet" href="css/font.css" type="text/css" />
-    <link href="Content/ui-grid.css" rel="stylesheet" />
-    <link href="Content/ui-bootstrap-csp.css" rel="stylesheet" />
-    <link href="Content/angular-toastr.css" rel="stylesheet" />
-    <link href="Content/sweetalert.css" rel="stylesheet" />
-    <link href="Content/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet" />
-    <link href="Content/angular-toggle-switch/angular-toggle-switch.css" rel="stylesheet" />
-    <link href="Scripts/jquery/ystep/css/ystep.css" rel="stylesheet" />
-    <link href="css/app.css" rel="stylesheet" />
+    <link href="css/plugin.css?v=91254e1c04" rel="stylesheet" />
+    <link href="css/app.css?v=4fb4eaa4b3" rel="stylesheet" />
 
 </head>
 <body>
     <div class="app" id="app" ng-class="{'app-header-fixed':vm.app.settings.headerFixed, 'app-aside-fixed':vm.app.settings.asideFixed, 'app-aside-folded':vm.app.settings.asideFolded, 'app-aside-dock':vm.app.settings.asideDock, 'container':vm.app.settings.container}" ui-view></div>
-    <script src="js/plugin.min.js"></script>
-    <!--<script src="appData.js?v=${date}"></script>
-    <script src="js/mxqh.min.js?v=${date}"></script>-->
-    
-    <script type="text/javascript">
-        var version = new Date();
-        document.write("<script type='text/javascript' src='appData.js?v=" + version + "'><\/script>");
-        document.write("<script type='text/javascript' src='js/mxqh.min.js?v=" + version + "'><\/script>");
-    </script>
+    <script src="js/plugin.min.js?v=17962d0f9e"></script>
+    <script src="appData.js?v=49f18d6984"></script>
+    <script src="js/mxqh.min.js?v=1e00f9b89a"></script> 
 </body>
 </html>
