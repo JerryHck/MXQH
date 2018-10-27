@@ -14,7 +14,6 @@ function ($rootScope, $scope, Form, $http, Dialog, toastr, AjaxService, MyPop) {
     customer.Search = Search;
     customer.CustomerRights = {};
     customer.SelectCustomer = SelectCustomer;
-    customer.selectedCustomer = {};
     customer.EditCustomer = EditCustomer;
     customer.CancelCustomer = CancelCustomer;
     customer.SelectProduct = SelectProduct;
