@@ -1,7 +1,6 @@
 ﻿'use strict'
 angular.module('appData', []);
 
-
 angular.module('appData')
 //APP URL
 .constant('appUrl', '../')
@@ -9,7 +8,6 @@ angular.module('appData')
 //Service URL
 .constant('serviceUrl', '//localhost:13439/')
 .constant('FileServiceUrl', '//192.168.11.75:8080/FileService/')
-//.constant('serviceUrl', '//192.168.1.82:9090/MXQHService/') 
  //表單設定
 .constant('Form', [
     { index: 0, title: '新增', action: 'Insert' },

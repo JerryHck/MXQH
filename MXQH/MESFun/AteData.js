@@ -9,6 +9,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.Focus = 0;
     vm.page = { index: 1, size: 8 };
     vm.Ser = {};
+    vm.ConfigTable = { Table: "MES_ATETestSearch", Column: "Table" };
 
     vm.PageChange = PageChange;
     vm.Search = Search;
@@ -25,6 +26,9 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         vm.Ser.Start = vm.page.index <= 1 ? 1 : (vm.page.index - 1) * vm.page.size + 1;
         vm.Ser.End = vm.Ser.Start + vm.page.size;
         vm.Ser.IsExecl = false;
+        vm.Ser.StartDate = vm.Ser.StartDate == '' ? undefined : vm.Ser.StartDate;
+        vm.Ser.EndDate = vm.Ser.EndDate == '' ? undefined : vm.Ser.EndDate;
+
         vm.promise = AjaxService.ExecPlan("MESAteData", "AteBrOrder", vm.Ser).then(function (data) {
             vm.page.total = data.data[0].TotalCount;
             vm.ColumnList = data.data1;
@@ -34,6 +38,8 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     function ExportExcel() {
         vm.Ser.IsExecl = true;
+        vm.Ser.StartDate = vm.Ser.StartDate == '' ? undefined : vm.Ser.StartDate;
+        vm.Ser.EndDate = vm.Ser.EndDate == '' ? undefined : vm.Ser.EndDate;
         vm.promise = AjaxService.GetPlanExcel("MESAteData", "AteBrOrder", vm.Ser).then(function (data) {
             //console.log(data);
             $window.location.href = data.File;

@@ -162,7 +162,7 @@
                                                                     <div class="col-md-6" title="关联实体" ng-if="en.ProItem.ColumnType!='3'">
                                                                         <label class="sr-only">关联实体</label>
                                                                         <div ng-class="{ 'has-error' : en.ClassForm.conEn.$invalid }">
-                                                                            <div entity-select ng-model="en.ProItem.RelateEntity" select-class="'text-xs'" connect-name="en.ConnectName" ng-name="conEn" ng-disabled="!en.isEditing" my-required="true" />
+                                                                            <div entity-select ng-model="en.ProItem.RelateEntity" select-class="'text-xs'" connect-name="en.ConnectName" ng-name="conEn" ng-disabled="!en.isEditing" my-required="true"></div>
                                                                             <div ng-messages="en.ClassForm.conEn.$error" class="help-block" role="alert">
                                                                                 <div ng-message="required">请选择关联实体</div>
                                                                             </div>

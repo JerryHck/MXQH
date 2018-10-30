@@ -35,17 +35,17 @@ function ChangePasswordCtrl($scope, $location, $state, toastr, AjaxService, appU
                 toastr.success('修改成功');
                 setTimeout(function () {
                     $state.go("login");
-                }, 1000)
+                }, 1000);
             }
         });
     };
 
     vm.checkNewPwd = function () {
         vm.PswForm.newPwd.$setValidity('check', vm.Item.UserPwd != vm.Item.NewPwd);
-    }
+    };
 
     vm.checkNewPwdSign = function () {
         vm.PswForm.newPwdSign.$setValidity('check', vm.Item.NewPwd == vm.Item.NewPwdSign);
-    }
+    };
 
 }

@@ -9,7 +9,6 @@ function SDKUploadCtrl($scope, $rootScope, AjaxService, toastr, appUrl, FileUrl,
     vm.DeleteFile = [];
     vm.isEdit = false;
     vm.Option = {
-        yearOffset: 222,
         format: 'Y/m/d H:i',
         formatDate: 'Y/m/d',
         formatTime: 'H:i',

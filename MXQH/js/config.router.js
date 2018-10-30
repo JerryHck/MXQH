@@ -11,7 +11,7 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
     //檢查是否登入
     function onStateChangeStart(e, toState, toParams, fromState, fromParams) {
         if (!$cookieStore.get('user-token')) {
-            $window.location.href = appUrl + 'Acess.html#!/login';
+            $window.location.href = appUrl + 'Access.html#!/login';
         }
     }
     //获取路由信息
