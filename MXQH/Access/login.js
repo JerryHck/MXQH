@@ -50,7 +50,7 @@ function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $wi
                 saveCookie(data);
             }
         })
-    }
+    };
     //踢出
     function KickOut() {
         var en = {};
@@ -66,7 +66,7 @@ function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $wi
             else if (data.Name == "Success") {
                 saveCookie(data);
             }
-        })
+        });
     }
 
     function saveCookie(data) {
@@ -85,7 +85,7 @@ function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $wi
             en.SecCode = vm.SecCode;
             AjaxService.DoBefore("CheckSecCode", en).then(function (data) {
                 vm.IsOK = data.IsOk;
-            })
+            });
         }
     }
 
@@ -97,7 +97,7 @@ function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $wi
         //验证码获取
         AjaxService.DoBefore("GenSecCodeImg", en).then(function (data) {
             vm.SecDataUrl = data.File;
-        })
+        });
     }
 
     function Go(name) {

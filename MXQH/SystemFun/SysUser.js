@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-angular.module('app', ['ui.grid', 'ui.grid.autoResize'])
+angular.module('app')
 .controller('UserCtrl', ['$scope', '$http', 'Dialog', 'AjaxService', 'toastr', 'MyPop', '$rootScope',
 function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
 

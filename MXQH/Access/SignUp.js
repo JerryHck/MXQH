@@ -8,16 +8,15 @@ function SignUpCtrl($scope, AjaxService, toastr, appUrl, FileUrl, $window) {
     vm.Register = Register;
 
     vm.ThisTap = function (index) {
-        if (index <= vm.process)
-        {
+        if (index <= vm.process) {
             vm.indextab = index;
         }
-    }
+    };
 
     vm.Agree = function () {
         vm.process = vm.Item.IsAgree ? 1 : 0;
         vm.indextab = vm.Item.IsAgree ? 1 : 0;
-    }
+    };
 
     function Next(index)
     {
@@ -27,13 +26,13 @@ function SignUpCtrl($scope, AjaxService, toastr, appUrl, FileUrl, $window) {
 
     vm.SetImg = function (index) {
         if (index - vm.process == 1) {
-            return 'Content/images/process2.png'
+            return 'Content/images/process2.png';
         }
         else if (index <= vm.process) {
-            return 'Content/images/process3.png'
+            return 'Content/images/process3.png';
         }
-        return 'Content/images/process1.png'
-    }
+        return 'Content/images/process1.png';
+    };
 
     vm.checkAccount = function () {
         var en = {}, en2 = {};
@@ -48,13 +47,13 @@ function SignUpCtrl($scope, AjaxService, toastr, appUrl, FileUrl, $window) {
         if (vm.Item.PasswordSign) {
             vm.OneForm.PasswordSign.$setValidity('check', vm.Item.Password == vm.Item.PasswordSign);
         }
-    }
+    };
 
     vm.DownloadNDA = function () {
         //$window.location.href = data.File;
         vm.Item.NDA = true;
-        $window.open(FileUrl + 'DownLoad/相互保密协议中英文版本（平台专用）.docx')
-    }
+        $window.open(FileUrl + 'DownLoad/相互保密协议中英文版本（平台专用）.docx');
+    };
 
     vm.ThreeNext = function () {
         //if (!vm.License || !vm.License.AttachSn) {
@@ -65,9 +64,9 @@ function SignUpCtrl($scope, AjaxService, toastr, appUrl, FileUrl, $window) {
         //}
         //else
         //{
-            Next(3);
+        Next(3);
         //}
-    }
+    };
 
     vm.FourNext = function () {
         //if (!vm.Card || !vm.Card.AttachSn) {
@@ -80,11 +79,10 @@ function SignUpCtrl($scope, AjaxService, toastr, appUrl, FileUrl, $window) {
         //    Next(4);
         //}
         Next(4);
-    }
+    };
 
     //完成注册
-    function Register()
-    {
+    function Register() {
         //if (!vm.License || !vm.License.AttachSn) {
         //    toastr.error("公司营业执照复印件未上传");
         //}
@@ -147,7 +145,7 @@ function SignUpCtrl($scope, AjaxService, toastr, appUrl, FileUrl, $window) {
             setTimeout(function () {
                 $window.location.href = appUrl + 'Acess.html#!/login';
             }, 3000);
-        })
+        });
     }
 
 }
