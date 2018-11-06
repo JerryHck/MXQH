@@ -40,6 +40,7 @@ angular.module('app')
                       item.resolve = angular.extend(item.resolve || {}, {
                           Fun: ['$cookieStore', function ($cookieStore) {
                               $cookieStore.put('active-function', route.FunNo);
+                              $cookieStore.put('active-router', route.Name)
                               return route.FunNo;
                           }]
                       });

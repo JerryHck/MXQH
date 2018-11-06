@@ -16,7 +16,8 @@ angular.module('app')
         vm.Go = Go;
         vm.ChangPsw = ChangPsw;
         vm.LogOff = LogOff;
-
+        vm.Reflash = Reflash;
+        
         // config
         vm.app = {
             name: '管理平台',
@@ -80,9 +81,14 @@ angular.module('app')
 
             vm.ConfigData = [];
         }
-
+        
         function Go(routeName) {
             $state.go(routeName);
+        }
+
+        function Reflash() {
+            //console.log($cookieStore.get('active-router'));
+            $state.reload($cookieStore.get('active-router'));
         }
 
         function ChangPsw() {

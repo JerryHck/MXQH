@@ -49,6 +49,9 @@ angular.module('MyDirective')
                     formatDate: 'Y.m.d',
                     timepickerScrollbar: false
                 }
+            //scope.option.formatTime = scope.option.formatTime || 'H:i';
+            //scope.option.formatDate = scope.option.formatDate || 'Y.m.d';
+
             $ocLazyLoad.load('datetimepicker').then(function () {
                 $.datetimepicker.setLocale('zh');
                 element.datetimepicker(scope.option);
@@ -404,18 +407,63 @@ angular.module('MyDirective')
 
     function link(scope, element, attrs) {
         scope.data = undefined;
+        scope.autoFirst = scope.autoFirst || "false";
         scope.placeholder = scope.placeholder || "请选择...";
         if (scope.configOption) {
             //组织
             AjaxService.GetTableConfig(scope.configOption.Table, scope.configOption.Column).then(function (data) {
                 scope.data = data;
-                if (data.length > 0 && scope.autoFirst) {
+                if (data.length > 0 && scope.autoFirst.toLowerCase() == 'true') {
                     scope.ngModel = scope.ngModel || data[0].ClInf;
                 }
             });
         }
     }
 }])
+.directive('configSelectMulti', ['AjaxService', function (AjaxService) {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            scope: {
+                ngModel: '=',
+                ngDisabled: '=',
+                searchEnabled: '=',
+                configOption: '=',
+                placeholder: '@',
+                selectClass: '@',
+                myRequired: '@',
+                ngName: '@',
+                autoFirst: '@',
+                ngChange: '&'
+            },
+            template: '<ui-select name="{{ ngName }}" ng-change="ngChange()" class="{{ selectClass }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="myRequired" multiple>'
+                      + ' <ui-select-match placeholder="{{ placeholder }}">{{ $item.ClDesc }}</ui-select-match>       '
+                      + ' <ui-select-choices repeat="item.ClInf as item in data | propsFilter: {ClInf: $select.search, ClDesc: $select.search}">                          '
+                      + '      <div ng-bind-html="item.ClDesc | highlight: $select.search"></div>'
+                      + '  </ui-select-choices>'
+                      + '</ui-select>'
+            ,
+            link: link
+        };
+
+        function link(scope, element, attrs) {
+            scope.data = undefined;
+            scope.autoFirst = scope.autoFirst || "false";
+            scope.placeholder = scope.placeholder || "请选择...";
+            if (scope.configOption) {
+                //组织
+                AjaxService.GetTableConfig(scope.configOption.Table, scope.configOption.Column).then(function (data) {
+                    scope.data = data;
+                    if (data.length > 0 && scope.autoFirst.toLowerCase() == 'true') {
+                        if (!scope.ngModel || scope.ngModel.length == 0) {
+                            scope.ngModel = [];
+                            scope.ngModel.push(data[0].ClInf);
+                        }
+                    }
+                });
+            }
+        }
+    }])
 .directive('commonDataSelect', ['AjaxService', function (AjaxService) {
     return {
         restrict: 'A',
@@ -639,7 +687,7 @@ angular.module('MyDirective')
             }
         }
     }])
-.directive('fileUploadMuti', ['$window', 'Version', 'toastr', 'FileService',
+.directive('fileUploadMulti', ['$window', 'Version', 'toastr', 'FileService',
     function ($window, Version, toastr, FileService) {
         return {
             restrict: 'A',
