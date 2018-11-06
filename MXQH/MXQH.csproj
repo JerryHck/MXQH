@@ -193,6 +193,8 @@
     <Content Include="Scripts\jquery\ystep\css\ystep.css" />
     <Content Include="Scripts\jquery\ystep\ystep.js" />
     <Content Include="Scripts\sweetalert.js" />
+    <Content Include="SDKFun\ATEQuery.html" />
+    <Content Include="SDKFun\ATEQuery.js" />
     <Content Include="SDKFun\RegUserSignDialog.html" />
     <Content Include="SDKFun\RegUserSignDialog.js" />
     <Content Include="SDKFun\SDKDownLoad.html" />

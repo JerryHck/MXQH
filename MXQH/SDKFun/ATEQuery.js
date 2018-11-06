@@ -4,7 +4,7 @@ angular.module('app')
 .controller('ATEQueryCtrl', ['$rootScope', '$scope', 'Form', '$http', 'Dialog', 'toastr', 'AjaxService', 'MyPop',
 function ($rootScope, $scope, Form, $http, Dialog, toastr, AjaxService, MyPop) {
     var ate = this;
-    ate.page = {size:1,index:1,maxSize:10}
+    ate.page = {size:10,index:1,maxSize:10}
     ate.BindData = BindData;
     ate.Search = Search;
     BindData();

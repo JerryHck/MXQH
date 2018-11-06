@@ -16,23 +16,19 @@
         </div>
     </div>
     <div>
-        <table class="table b-2x" cg-busy="ateQuery.promise">
+        <table class="table b-2x" >
             <tr class="text-left bg-gd-dk h4">
                 <td class="col-md-3">芯片ID</td>
+                <td class="col-md-3">软件版本</td>
+                <td class="col-md-1">授权功能</td>
                 <td class="col-md-3">客户编码</td>
-                <td class="col-md-1">DMR协议栈</td>
-                <td class="col-md-1">PDT协议栈</td>
-                <td class="col-md-1">TTS协议栈</td>
-                <td class="col-md-1">GUI协议栈</td>
             </tr>
             <!--filter: itemmaster.search-->
             <tr ng-repeat="item in ateQuery.List">
                 <td>{{ item.Wafer }}</td>
+                <td>{{ item.Version }}</td>
+                <td>{{ item.Rights }}</td>
                 <td>{{ item.CustomerCode }}</td>
-                <td>{{ item.DMRProtocol }}</td>
-                <td>{{ item.PDTProtocol }}</td>
-                <td>{{ item.TTSProtocol }}</td>
-                <td>{{ item.GUIProtocol }}</td>
             </tr>
         </table>
     </div>
