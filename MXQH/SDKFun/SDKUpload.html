@@ -55,10 +55,11 @@
     </div>
     <!--<pre>{{ sdk.List|json }}</pre>-->
 </div>
-<div class="insert-pro md d-r bg-light dk">
-    <div class="blur-close" ui-remove-class="active" target=".insert-pro"></div>
+<div class="insert-pro xl d-r bg-light dk scroll-y">
+    <!--<div class="blur-close" ui-remove-class="active" target=".insert-pro"></div>-->
     <div class="b-b wrapper-md text-center">
-        <a href class="text-danger pull-left" ui-remove-class="active" target=".insert-pro"><i class="glyphicon glyphicon-remove"></i></a>
+        <a class="text-danger pull-right" ui-remove-class="active" target=".insert-pro"><i class="glyphicon glyphicon-remove"></i></a>
+        <button class="btn btn-success pull-left pull-down" type="button" ng-disabled="sdk.ProductForm.$invalid" ng-click="sdk.ProSave()">储存</button>
         <h3 class="m-n font-thin h3" ng-if="!sdk.isEdit">产品新增</h3>
         <h3 class="m-n font-thin h3" ng-if="sdk.isEdit">[ <strong>{{ sdk.Item.ProNo }}</strong><span class="text-muted h5">{{ sdk.Item.Version }}</span> ]编辑</h3>
     </div>
@@ -95,10 +96,10 @@
                 </div>
             </div>
         </div>
-        <div class="col text-center">
+        <!--<div class="col text-center">
             <button class="btn btn-success" type="button" ng-disabled="sdk.ProductForm.$invalid" ng-click="sdk.ProSave()">储存</button>
             <button class="btn btn-warning" type="button" ui-remove-class="active" target=".insert-pro">取消</button>
-        </div>
+        </div>-->
     </div>
 </div>
 <div class="pro-file d-r lg bg-light dk wrapper-md padder-md scroll-y">
