@@ -462,6 +462,8 @@
     <Content Include="SystemFun\RoleDialog.js" />
     <Content Include="SystemFun\SysFunction.html" />
     <Content Include="SystemFun\SysFunction.js" />
+    <Content Include="SystemFun\SysJobSetting.html" />
+    <Content Include="SystemFun\SysJobSetting.js" />
     <Content Include="SystemFun\SysRole.html" />
     <Content Include="SystemFun\SysRole.js" />
     <Content Include="SystemFun\SystemDialog.html" />
