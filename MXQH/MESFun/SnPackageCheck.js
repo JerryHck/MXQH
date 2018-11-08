@@ -50,6 +50,29 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                     vm.Item.Antenna = undefined;
                     vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  在MES系统中不存在' });
                 }
+                else if (vm.Item.WorOrder.ID) {
+                    var en = {};
+                    en.name = "ID";
+                    en.value = vm.Item.WorOrder.ID;
+                    AjaxService.GetPlan("MESPackageCheck", en).then(function (data) {
+                        var mss = "工单 [" + vm.Item.WorOrder.WorOrder + '] ';
+                        vm.PackData = data;
+                        if (!data.SNCode) {
+                            vm.Item.WorOrder = undefined;
+                            vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在' });
+                        }
+                        else if ((data.Antenna != vm.Item.Antenna)) {
+                            var s = mss + '应该用纸盒[' + data.Antenna + ']，与当前纸盒[' + vm.Item.Antenna + ']不符';
+                            vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: s });
+                            MyPop.Show(true, s);
+                            vm.Item.Antenna = undefined;
+                        }
+                        else {
+                            check(data);
+                            vm.Item.Antenna = undefined;
+                        }
+                    });
+                }
                 else {
                     vm.Antenna = data.Antenna;
                     vm.Focus = 1;
