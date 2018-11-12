@@ -13,7 +13,7 @@
 </div>
 <div class="wrapper-md">
     <div class="col-md-4" ng-repeat="item in job.List">
-        <div class="panel panel-default">
+        <div class="panel" ng-class="{'panel-success': item.IsStart, 'panel-danger': !item.IsStart}">
             <div class="panel-heading text-center">
                 <a class="h3 pull-left thumb-sm text-success" ng-click="job.JobEdit(item)" title="编辑产品"><i class="glyphicon glyphicon-edit"></i></a>
                 <a class="h3">{{ item.JobName }}</a>
@@ -30,7 +30,7 @@
                 <article class="media">
                     <small class="media-left pull-left">下次执行:</small>
                     <div class="media-body">
-                        <small class="block">{{ item.NextTime | date:'yyyy-MM-dd HH:mm:ss' }}</small>
+                        <small class="h4 text-info font-bold block">{{ item.NextTime | date:'yyyy-MM-dd HH:mm:ss' }} &nbsp;</small>
                         <span></span>
                     </div>
                 </article>
