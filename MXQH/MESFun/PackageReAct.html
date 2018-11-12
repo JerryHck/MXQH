@@ -10,7 +10,7 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">SNCode</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : pack.PackageForm.InCode.$invalid }">
-                                    <input type="text" ng-disabled="pack.IsEdit" class="form-control" ui-focus="pack.Focus == 0" name="InCode" ng-model="pack.Item.SNCode" placeholder="生产条码" ng-keyup="pack.KeyDonwSnCode($event)" required>
+                                    <input type="text" ng-disabled="pack.IsEdit" class="form-control" ui-focus="pack.Focus.SNCode" name="InCode" ng-model="pack.Item.SNCode" placeholder="生产条码" ng-keyup="pack.KeyDonwSnCode($event)" required>
                                     <div class="h6 text-danger">扫SN可带出包装箱信息</div>
                                 </div>
                             </div>

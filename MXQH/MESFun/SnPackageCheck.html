@@ -12,7 +12,7 @@
                                 <div class="col-lg-8">
                                     <div class="input-group">
                                         <input type="text" ng-model="sn.Item.WorOrder" uib-typeahead="order as order.WorOrder for order in sn.OrderList | filter:$viewValue | limitTo:8"
-                                               class="form-control" placeholder="工单号" ng-keyup="sn.KeyDonwOrder($event)">
+                                               class="form-control" placeholder="工单号" ng-keyup="sn.KeyDonwOrder($event)" ui-focus="sn.Focus.Order">
                                         <span class="input-group-addon">
                                             <a ng-if="sn.Item.WorOrder.ID" class="text-success"><i class="glyphicon glyphicon-ok"></i></a>
                                             <a ng-if="!sn.Item.WorOrder.ID" class="text-danger"><i class="glyphicon glyphicon-remove"></i></a>
@@ -23,13 +23,13 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">纸盒条码</label>
                                 <div class="col-lg-8" ng-class="{'has-error': sn.PackageForm.Antenna.$invalid}">
-                                    <input type="text" ng-model="sn.Item.Antenna" name="Antenna" ui-focus="sn.Focus == 0" class="form-control" placeholder="纸盒条码" ng-keyup="sn.KeyDonwAntenna($event)" required>
+                                    <input type="text" ng-model="sn.Item.Antenna" name="Antenna" ui-focus="sn.Focus.Antenna" class="form-control" placeholder="纸盒条码" ng-keyup="sn.KeyDonwAntenna($event)" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">SNCode</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : sn.PackageForm.InCode.$invalid }">
-                                    <input type="text" class="form-control" ng-disabled="sn.PackageForm.Antenna.$invalid" ui-focus="sn.Focus == 1" name="InCode" ng-model="sn.Item.SNCode" placeholder="生产条码" ng-keyup="sn.KeyDonwSnCode($event)" required>
+                                    <input type="text" class="form-control" ng-disabled="sn.PackageForm.Antenna.$invalid" ui-focus="sn.Focus.SN" name="InCode" ng-model="sn.Item.SNCode" placeholder="生产条码" ng-keyup="sn.KeyDonwSnCode($event)" required>
                                     <div class="h6 text-danger">扫SN进行信息验证</div>
                                 </div>
                             </div>
@@ -70,7 +70,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-5 font-bold">生成数量:</label>
+                                <label class="control-label col-sm-5 font-bold">生产数量:</label>
                                 <div class="col-sm-7">
                                     <p class="form-control-static h4 text-info">{{sn.OrderData.Quantity}}</p>
                                 </div>
@@ -79,6 +79,12 @@
                                 <label class="control-label col-sm-5 font-bold">客户名称:</label>
                                 <div class="col-sm-7">
                                     <p class="form-control-static">{{sn.OrderData.CustomerName}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold">纸盒条码:</label>
+                                <div class="col-sm-7">
+                                    <p class="form-control-static h4 text-danger">{{sn.OrderData.Antenna}}</p>
                                 </div>
                             </div>
                         </div>

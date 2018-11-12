@@ -7,7 +7,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     var vm = this;
     vm.Item = { CreateBy: $rootScope.User.UserNo };
     vm.MesList = [];
-    vm.Focus = 0;
+    vm.Focus = { SNCode: true, Order: false, SN: false };
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
 

@@ -7,17 +7,18 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     var vm = this;
     vm.Item = { CreateBy: $rootScope.User.UserNo };
     vm.MesList = [];
-    vm.Focus = 0;
+    vm.Focus = { Order: true, Antenna: false, SN: false };
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
 
     vm.KeyDonwAntenna = KeyDonwAntenna;
     vm.KeyDonwSnCode = KeyDonwSnCode;
+    vm.KeyDonwOrder = KeyDonwOrder;
     vm.SelectTab = SelectTab;
     vm.PageChange = PageChange;
 
     //获取工单信息
-    AjaxService.GetPlans("MESOrder").then(function (data) {
+    AjaxService.GetPlans("MESOrder", { name: "ExtendOne", type:"null" }).then(function (data) {
         vm.OrderList = data;
     })
 
@@ -38,6 +39,17 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         });
     }
 
+    function KeyDonwOrder(e) {
+        var keycode = window.event ? e.keyCode : e.which;
+        if (keycode == 13 && vm.Item.WorOrder && vm.Item.WorOrder.ID) {
+            var en = { name: "ID", value: vm.Item.WorOrder.ID };
+            AjaxService.GetPlan("OrderPackgeSn", en).then(function (data) {
+                vm.OrderData = data;
+                vm.Focus = { Order: false, Antenna: true, SN: false };
+            })
+        }
+    }
+
     function KeyDonwAntenna(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.Item.Antenna) {
@@ -54,10 +66,10 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                     var en = {};
                     en.name = "ID";
                     en.value = vm.Item.WorOrder.ID;
-                    AjaxService.GetPlan("MESPackageCheck", en).then(function (data) {
+                    AjaxService.GetPlan("OrderPackgeSn", en).then(function (data) {
                         var mss = "工单 [" + vm.Item.WorOrder.WorOrder + '] ';
                         vm.PackData = data;
-                        if (!data.SNCode) {
+                        if (!data.ID) {
                             vm.Item.WorOrder = undefined;
                             vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在' });
                         }
@@ -75,61 +87,62 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 }
                 else {
                     vm.Antenna = data.Antenna;
-                    vm.Focus = 1;
+                    vm.Focus = { Order: false, Antenna: false, SN: true };
                 }
             });
         }
     }
 
-        //内部码验证
-        function KeyDonwSnCode(e) {
-            var keycode = window.event ? e.keyCode : e.which;
-            if (keycode == 13 && vm.Item.SNCode) {
-                vm.IsEdit = false;
-                var en = {};
-                en.name = "SNCode";
-                en.value = vm.Item.SNCode;
-                AjaxService.GetPlan("MESPackageCheck", en).then(function (data) {
-                    var mss = "SN 码 [" + vm.Item.SNCode + '] ';
-                    vm.PackData = data;
-                    if (!data.SNCode) {
-                        vm.Item.SNCode = undefined;
-                        vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或未绑定内部码' });
-                    }
-                    else if ((data.Antenna != vm.Antenna)) {
-                        vm.Item.SNCode = undefined;
-                        var s = mss + '应该用纸盒[' + data.Antenna + ']，与当前纸盒[' + vm.Antenna + ']不符';
-                        vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: s });
-                        MyPop.Show(true, s);
-                    }
-                    else {
-                        check(data);
-                    }
-                });
-            }
-        }
-
-        //验证
-        function check(order) {
-            var en = { CreateBy: $rootScope.User.UserNo, PlanDetailId: order.ID, SNCode: vm.Item.SNCode, PackNoCode: vm.Item.Antenna };
-            vm.Item.SNCode = undefined;
-            AjaxService.ExecPlan("MESPackageCheck", "check", en).then(function (data) {
-                if (data.data[0].MesType == 'Error') {
-                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: data.data[0].Msg });
+    //内部码验证
+    function KeyDonwSnCode(e) {
+        var keycode = window.event ? e.keyCode : e.which;
+        if (keycode == 13 && vm.Item.SNCode) {
+            vm.IsEdit = false;
+            var en = {};
+            en.name = "SNCode";
+            en.value = vm.Item.SNCode;
+            AjaxService.GetPlan("MESPackageCheck", en).then(function (data) {
+                var mss = "SN 码 [" + vm.Item.SNCode + '] ';
+                vm.PackData = data;
+                if (!data.SNCode) {
+                    vm.Item.SNCode = undefined;
+                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或未绑定内部码' });
                 }
-                else if (data.data[0].MesType == 'Success') {
-                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
-                    vm.OrderData = data.data1[0];
+                else if ((data.Antenna != vm.Antenna)) {
+                    vm.Item.SNCode = undefined;
+                    var s = mss + '应该用纸盒[' + data.Antenna + ']，与当前纸盒[' + vm.Antenna + ']不符';
+                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: s });
+                    MyPop.Show(true, s);
                 }
                 else {
-                    vm.OrderData = data.data1[0];
+                    check(data);
+                    vm.Focus = { Order: false, Antenna: true, SN: false };
                 }
-            })
+            });
         }
-
-        function SelectTab(index) {
-            vm.Focus = index;
-        }
-
     }
+
+    //验证
+    function check(order) {
+        var en = { CreateBy: $rootScope.User.UserNo, PlanDetailId: order.ID, SNCode: vm.Item.SNCode, PackNoCode: vm.Item.Antenna };
+        vm.Item.SNCode = undefined;
+        AjaxService.ExecPlan("MESPackageCheck", "check", en).then(function (data) {
+            if (data.data[0].MesType == 'Error') {
+                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: data.data[0].Msg });
+            }
+            else if (data.data[0].MesType == 'Success') {
+                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
+                vm.OrderData = data.data1[0];
+            }
+            else {
+                vm.OrderData = data.data1[0];
+            }
+        })
+    }
+
+    function SelectTab(index) {
+        //vm.Focus = { Order: false, Antenna: true, SN: false };
+    }
+
+}
 ])

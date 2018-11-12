@@ -7,7 +7,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     var vm = this;
     vm.NewBind = { Action: "I", CreateBy: $rootScope.User.UserNo, Customer:"D" };
     vm.MesList = [];
-    vm.Focus = 0;
+    vm.Focus = { InCode: true, SnCode: false, IdCode: false };
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
 
@@ -69,7 +69,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                             vm.MesList.splice(0, 0, Msg);
                         }
                         else {
-                            vm.Focus = 1;
+                            vm.Focus = { InCode: false, SnCode: true, IdCode: false };
                         }
                     })
                 }
@@ -92,7 +92,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                     vm.MesList.splice(0, 0, Msg);
                 }
                 else {
-                    vm.Focus = 2;
+                    vm.Focus = { InCode: false, SnCode: false, IdCode: true };
                 }
             })
         }
@@ -120,7 +120,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function SelectTab(index) {
-        vm.Focus = index;
+        //vm.Focus = index;
     }
 
     function BindCode() {
@@ -129,7 +129,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
             var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };
             vm.MesList.splice(0, 0, Msg);
             vm.NewBind = { Action: "I", CreateBy: $rootScope.User.UserNo, Customer: "D" };
-            vm.Focus = 0;
+            vm.Focus = { InCode: true, SnCode: false, IdCode: false };
         });
     }
 

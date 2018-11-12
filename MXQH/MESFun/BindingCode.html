@@ -10,20 +10,20 @@
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">生产条码</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : bind.BindingForm.InCode.$invalid }">
-                                    <input type="text" class="form-control" ui-focus="bind.Focus == 0" name="InCode" ng-model="bind.NewBind.InternalCode" placeholder="生产条码" ng-keyup="bind.KeyDonwInCode($event)" required>
+                                    <input type="text" class="form-control" ui-focus="bind.Focus.InCode" name="InCode" ng-model="bind.NewBind.InternalCode" placeholder="生产条码" ng-keyup="bind.KeyDonwInCode($event)" required>
                                     
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">SN码</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : bind.BindingForm.SnCode.$invalid }">
-                                    <input type="text" class="form-control" ui-focus="bind.Focus == 1" name="SnCode" ng-model="bind.NewBind.SNCode" placeholder="SN码" ng-keyup="bind.KeyDonwSnCode($event)" required>
+                                    <input type="text" class="form-control" ui-focus="bind.Focus.SnCode" name="SnCode" ng-model="bind.NewBind.SNCode" placeholder="SN码" ng-keyup="bind.KeyDonwSnCode($event)" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">模块二维码</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : bind.BindingForm.IdCode.$invalid }">
-                                    <input type="text" class="form-control" ui-focus="bind.Focus == 2" name="IdCode" placeholder="模块二维码" ng-model="bind.NewBind.IDCode1" ng-keyup="bind.KeyDonwIdCode($event)" required>
+                                    <input type="text" class="form-control" ui-focus="bind.Focus.IdCode" name="IdCode" placeholder="模块二维码" ng-model="bind.NewBind.IDCode1" ng-keyup="bind.KeyDonwIdCode($event)" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -68,7 +68,7 @@
         <div class="wrapper-md">
             <div class="form-inline">
                 <div class="form-group">
-                    <input type="text" class="form-control" ui-focus="bind.Focus == -1" ng-model="bind.Ser.InternalCode" placeholder="生产条码">
+                    <input type="text" class="form-control" ng-model="bind.Ser.InternalCode" placeholder="生产条码">
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control" ng-model="bind.Ser.SNCode" placeholder="SN码">
