@@ -141,6 +141,7 @@ function ($scope, $rootScope, toastr, AjaxService) {
             vm.Item.ModifyDate = new Date();
             AjaxService.PlanUpdate("JobSetting", vm.Item).then(function (data) {
                 toastr.success("储存成功");
+                Reflash(vm.Item.JobName);
                 $(".insert-job").removeClass("active");
                 PageChange();
             })
@@ -149,11 +150,11 @@ function ($scope, $rootScope, toastr, AjaxService) {
             vm.Item.CreateBy = $rootScope.User.UserNo;
             AjaxService.PlanInsert("JobSetting", vm.Item).then(function (data) {
                 toastr.success("储存成功");
+                Reflash(vm.Item.JobName);
                 $(".insert-job").removeClass("active");
                 PageChange();
             })
         }
-
     }
 
     function ListToStr(list) {
@@ -180,7 +181,7 @@ function ($scope, $rootScope, toastr, AjaxService) {
 
     function convertToUnit(s) {
         if (s == "S") return '秒';
-        if (s == "F") return '分钟';
+        if (s == "M") return '分钟';
         if (s == "H") return '小时';
     }
 
@@ -198,8 +199,15 @@ function ($scope, $rootScope, toastr, AjaxService) {
     function JobDelete(item) {
         AjaxService.PlanDelete("JobSetting", item).then(function (data) {
             toastr.success("删除成功");
+            Reflash(item.JobName);
             PageChange();
         })
+    }
+
+    function Reflash(name) {
+        var en = {};
+        en.JobName = name;
+        AjaxService.DoBefore("ReflashJob", en);
     }
 }
 ]);
