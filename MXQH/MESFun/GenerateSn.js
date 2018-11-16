@@ -7,7 +7,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
     var vm = this;
     vm.NewBind = { Action: "I", CreateBy: $rootScope.User.UserNo, Customer:"U" };
     vm.MesList = [];
-    vm.Focus = 0;
+    vm.Focus = { InCode: true, SnCode: false};
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
     vm.NewItemType = {};
@@ -83,7 +83,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
     }
 
     function SelectTab(index) {
-        vm.Focus = index;
+        //vm.Focus = index;
     }
 
     //生成内部码
@@ -115,7 +115,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
             var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };
             vm.MesList.splice(0, 0, Msg);
             vm.NewBind = { Action: "I", CreateBy: $rootScope.User.UserNo, Customer: "U" };
-            vm.Focus = 0;
+            vm.Focus = { InCode: true, SnCode: false };
         });
     }
 

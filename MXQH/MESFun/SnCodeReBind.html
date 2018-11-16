@@ -1,19 +1,12 @@
 ﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="bind.promise">
     <uib-tab index="0" select="bind.SelectTab(0)" deselect="bind.SelectTab(-1)">
-        <uib-tab-heading class="h5">条码绑定</uib-tab-heading>
+        <uib-tab-heading class="h5">条码绑定-返工</uib-tab-heading>
         <div class="wrapper-md">
             <div class="col-sm-6">
                 <div class="panel panel-default" ng-form="bind.BindingForm">
-                    <div class="panel-heading font-bold">条码绑定</div>
+                    <div class="panel-heading font-bold">条码绑定-返工</div>
                     <div class="panel-body">
                         <div class="form-horizontal">
-                            <div class="form-group">
-                                <label class="col-lg-4 control-label">生产条码</label>
-                                <div class="col-lg-8" ng-class="{ 'has-error' : bind.BindingForm.InCode.$invalid }">
-                                    <input type="text" class="form-control" ui-focus="bind.Focus.InCode" name="InCode" ng-model="bind.NewBind.InternalCode" placeholder="生产条码" ng-keyup="bind.KeyDonwInCode($event)" required>
-                                    
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">SN码</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : bind.BindingForm.SnCode.$invalid }">
@@ -21,20 +14,26 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">模块二维码</label>
-                                <div class="col-lg-8" ng-class="{ 'has-error' : bind.BindingForm.IdCode.$invalid }">
-                                    <input type="text" class="form-control" ui-focus="bind.Focus.IdCode" name="IdCode" placeholder="模块二维码" ng-model="bind.NewBind.IDCode1" ng-keyup="bind.KeyDonwIdCode($event)" required>
+                                <label class="col-lg-4 control-label">现内部码</label>
+                                <div class="col-lg-8" ng-class="{ 'has-error' : bind.BindingForm.InCode.$invalid }">
+                                    <input type="text" class="form-control" ui-focus="bind.Focus.InCode" name="InCode" ng-model="bind.NewBind.InternalCode" placeholder="生产条码" ng-keyup="bind.KeyDonwInCode($event)" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">原内部码</label>
+                                <div class="col-lg-8 form-control-static">
+                                    <span class="text-info h4">{{ bind.OldInCode }}</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-offset-4 col-lg-8">
                                     <div class="checkbox col-md-5">
                                         <label class="i-checks">
-                                            <input type="checkbox" ng-model="bind.IsAuto"><i></i> 自动绑定
+                                            <input type="checkbox" ng-model="bind.IsAuto"><i></i> 自动重绑
                                         </label>
                                     </div>
                                     <div class="col-md-3">
-                                        <button type="submit" class="btn btn-sm btn-success" ng-click="bind.BindCode()" ng-disabled="bind.BindingForm.$invalid || bind.IsAuto">绑定</button>
+                                        <button type="submit" class="btn btn-sm btn-success" ng-click="bind.BindCode()" ng-disabled="bind.BindingForm.$invalid || bind.IsAuto">确定</button>
                                     </div>
                                 </div>
                             </div>
@@ -44,7 +43,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="panel panel-default scroll-y" style="max-height:600px">
-                    <div class="panel-heading font-bold text-center">绑定信息展示</div>
+                    <div class="panel-heading font-bold text-center">信息展示</div>
                     <div class="panel-body">
                         <div class="list-group">
                             <ul class="list-group bg-white">
@@ -77,28 +76,28 @@
                     <input type="text" class="form-control" ng-model="bind.Ser.IDCode1" placeholder="模块二维码">
                 </div>
                 <button class="btn btn-sm btn-info" ng-click="bind.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
-                <button class="btn btn-sm btn-success"  ng-click="bind.ExportExcel()"><i class="glyphicon glyphicon-export"></i> 导出</button>
+                <button class="btn btn-sm btn-success" ng-click="bind.ExportExcel()"><i class="glyphicon glyphicon-export"></i> 导出</button>
             </div>
         </div>
         <div class="padder-md">
             <table class="table">
                 <tr>
-                    <td class="col-md-1">生产条码</td>
                     <td class="col-md-2">SN码</td>
-                    <td class="col-md-2">模块二维码</td>
-                    <td class="col-md-2">绑定人</td>
-                    <td class="col-md-2">绑定时间</td>
+                    <td class="col-md-1">现内控码</td>
+                    <td class="col-md-1">原内控码</td>
+                    <td class="col-md-2">操作人</td>
+                    <td class="col-md-2">操作时间</td>
                 </tr>
                 <tr ng-repeat="item in bind.BindList">
-                    <td>{{ item.InternalCode }}</td>
                     <td>{{ item.SNCode }}</td>
-                    <td>{{ item.IDCode1 }}</td>
-                    <td>{{ item.Emp.Name }}</td>
+                    <td>{{ item.InternalCode }}</td>
+                    <td>{{ item.OldInternalCode }}</td>
+                    <td>{{ item.ChiName }}</td>
                     <td>{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                 </tr>
             </table>
             <div class="col-md-12 text-center" ng-if="bind.page.total>bind.page.size">
-                <div uib-pagination total-items="bind.page.total" ng-model="bind.page.index" items-per-page="bind.page.size" max-size="10" first-text="第一页" previous-text="上一页" 
+                <div uib-pagination total-items="bind.page.total" ng-model="bind.page.index" items-per-page="bind.page.size" max-size="10" first-text="第一页" previous-text="上一页"
                      ng-change="bind.PageChange()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
             </div>
         </div>

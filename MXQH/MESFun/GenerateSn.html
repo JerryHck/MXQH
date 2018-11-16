@@ -23,14 +23,14 @@
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">生产条码</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : gen.BindingForm.InCode.$invalid }">
-                                    <input type="text" class="form-control" ui-focus="gen.Focus == 0" name="InCode" ng-model="gen.NewBind.InternalCode" placeholder="生产条码" ng-keyup="gen.KeyDonwInCode($event)" required>
+                                    <input type="text" class="form-control" ui-focus="gen.Focus.InCode" name="InCode" ng-model="gen.NewBind.InternalCode" placeholder="生产条码" ng-keyup="gen.KeyDonwInCode($event)" required>
 
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">SN码</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : gen.BindingForm.SnCode.$invalid }">
-                                    <input type="text" class="form-control" ui-focus="gen.Focus == 1" name="SnCode" ng-model="gen.NewBind.SNCode" placeholder="SN码" ng-keyup="gen.KeyDonwSnCode($event)" required disabled>
+                                    <input type="text" class="form-control" ui-focus="gen.Focus.SnCode" name="SnCode" ng-model="gen.NewBind.SNCode" placeholder="SN码" ng-keyup="gen.KeyDonwSnCode($event)" required disabled>
                                 </div>
                             </div>
                             <div class="form-group">
