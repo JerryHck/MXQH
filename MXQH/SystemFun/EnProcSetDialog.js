@@ -4,7 +4,7 @@ angular.module('app')
 .controller('EnProcSetDialogCtrl', ['$scope', '$uibModalInstance', 'ItemData', 'toastr', 'AjaxService', '$rootScope',
 function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) {
     var vm = this;
-    
+    vm.titile = ItemData.ShortName == '--' ? "实体自身" : "存储过程";
     vm.SelectAll = SelectAll;
     vm.IsExcelChange = IsExcelChange;
     vm.DeleteExcel = DeleteExcel;
@@ -18,7 +18,19 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
 
     GetList();
     function GetList() {
-        vm.promise = AjaxService.GetProcColumns(ItemData.ConnectName, ItemData.ProcSchema + '.' + ItemData.ProcName).then(function (data) {
+        var en = {}, method = 'GetProcColumns';
+        //实体自身的栏位取值
+        if (ItemData.ShortName == '--') {
+            en.planName = ItemData.EntityName;
+            en.shortName = '--';
+            method = 'GetPlanColumns';
+        }
+        else {
+            en.connName = ItemData.ConnectName;
+            en.strProc = ItemData.ProcSchema + '.' + ItemData.ProcName;
+            method = 'GetProcColumns';
+        }
+        vm.promise = AjaxService.BasicCustom(method, en).then(function (data) {
             vm.List = data;
 
             var enList = [];

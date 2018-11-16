@@ -11,7 +11,9 @@
             //登录前服务
             DoBefore: DoBefore,
             //自定义服务方法
-            Custom:Custom,
+            Custom: Custom,
+            //
+            BasicCustom:BasicCustom,
 
             //获得实体资料-单个
             GetPlan: GetPlan,
@@ -21,6 +23,7 @@
             GetPlansPage: GetPlansPage,
             //实体计划excel导出
             GetPlanExcel: GetPlanExcel,
+            GetPlanOwnExcel:GetPlanOwnExcel,
             //保存计划实体
             SavePlan: SavePlan,
             //刷新计划实体
@@ -51,14 +54,6 @@
             HandleFile: HandleFile,
             //
             AddDialog: AddDialog,
-            //链接对象列表
-            GetConnect: GetConnect,
-            //数据对象
-            GetDbObject: GetDbObject,
-            //获取表栏位
-            GetColumns: GetColumns,
-            GetTbColumns: GetTbColumns,
-            GetProcColumns: GetProcColumns,
             GetTableConfig: GetTableConfig,
             //User
             AddUser: AddUser,
@@ -69,8 +64,6 @@
             ExecPlanUpload: ExecPlanUpload,
             //发送邮件
             ExecPlanMail: ExecPlanMail,
-
-
         };
 
         return obj;
@@ -159,56 +152,6 @@
             return q.promise;
         }
 
-        function GetConnect() {
-            var d = $q.defer(), url = serviceUrl + generic;
-            return Ajax(d, url, {}, "GetConnectList");
-        }
-
-        function GetDbObject(con, type, ser) {
-            var d = $q.defer(),
-                 url = serviceUrl + generic;
-            var en = {};
-            en.strCon = con;
-            en.strType = type;
-            en.strSearch = ser;
-            return Ajax(d, url, en, "GetDbObject");
-        }
-
-        function GetColumns(con) {
-            var d = $q.defer(), g = $q.defer(),
-                 url = serviceUrl + generic;
-            var en = {};
-            en.planName = con;
-            Ajax(d, url, en, "GetTbViewColumns").then(
-                function (data) { g.resolve(data.data); },
-                function () { g.reject(); }
-            );
-            return g.promise;
-        }
-
-        function GetProcColumns(conn, proc) {
-            var d = $q.defer(),
-                 url = serviceUrl + generic;
-            var en = {};
-            en.connName = conn;
-            en.strProc = proc;
-            return Ajax(d, url, en, "GetProcColumns");
-        }
-
-        function GetTbColumns(schema, table, con) {
-            var d = $q.defer(), g = $q.defer(),
-                 url = serviceUrl + generic;
-            var en = {};
-            en.Schema = schema;
-            en.TableName = table;
-            en.ConnectName = con;
-            Ajax(d, url, en, "GetTbColumns").then(
-                function (data) { g.resolve(data.data); },
-                function () { g.reject(); }
-            );
-            return g.promise;
-        }
-
         function entity(name, json, funName) {
             var d = $q.defer(),
                 url = serviceUrl + generic;
@@ -285,6 +228,14 @@
             return Ajax(d, url, en, "GetPlanExcel")
         }
 
+        function GetPlanOwnExcel(name, json)
+        {
+            var d = $q.defer(), url = serviceUrl + generic;
+            json = json || [];
+            var en = getEn(name, "--", json);
+            return Ajax(d, url, en, "GetPlanOwnExcel")
+        }
+
         function AddUser(json) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = {};
@@ -302,6 +253,13 @@
             var d = $q.defer(), url = serviceUrl + generic;
             en = en || {};
             return Ajax(d, url, en, method, undefined, 'Authorization');
+        }
+
+        //基础呼叫方法
+        function BasicCustom(method, en) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            en = en || {};
+            return Ajax(d, url, en, method);
         }
 
         function Custom(method, en) {

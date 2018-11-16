@@ -24,6 +24,12 @@ function ($scope, $rootScope, toastr, AjaxService) {
         //formatTime: 'H:i:s',
         step: 1
     };
+    vm.StartOption = {
+        timepicker: false,
+        format: 'Y/m/d',
+        formatDate: 'Y/m/d',
+        minDate: new Date(), // yesterday is minimum date
+    };
     vm.TimeOption = {
         datepicker: false,
         format: 'H:i',
@@ -36,7 +42,7 @@ function ($scope, $rootScope, toastr, AjaxService) {
     vm.Search = Search;
     vm.JobEdit = JobEdit;
     vm.Insert = Insert;
-    vm.isProExists = isProExists;
+    vm.isJobExists = isJobExists;
     vm.JobDelete = JobDelete;
 
     AjaxService.GetPlans("PlanEntity").then(function (data) {
@@ -57,7 +63,7 @@ function ($scope, $rootScope, toastr, AjaxService) {
         vm.Item = {
             IsStart: true, JobType: 'R', RepeatType: 'D', FrequencyUnit: 'D', MethodType: 'PlanExec',
             NextRunTime: new Date().Format("yyyy-MM-dd hh:mm:ss"),
-            StartDate: new Date().Format("yyyy-MM-dd hh:mm:ss"),
+            StartDate: new Date().Format("yyyy-MM-dd"),
             DayFreUnit:'F'
         };
     }
@@ -67,7 +73,7 @@ function ($scope, $rootScope, toastr, AjaxService) {
         if (vm.Ser.ProNo) {
             list.push({ name: "JobName", value: vm.Ser.JobName });
         }
-        vm.promise = AjaxService.GetPlansPage("JobSetting", list, vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("JobSet", list, vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
@@ -126,6 +132,8 @@ function ($scope, $rootScope, toastr, AjaxService) {
                         "每 " + vm.Item.DayInterval + " " + convertToUnit(vm.Item.DayFreUnit) + " 重复执行");
                     break;
             }
+            vm.Item.JobDesc += '，从' + new Date(vm.Item.StartDate).Format("yyyy-MM-dd") + "开始";
+            vm.Item.JobDesc += vm.Item.NoEndDate ? "一直执行。" : ("到" + new Date(vm.Item.EndDate).Format("yyyy-MM-dd") + "结束。");
         }
 
         if (vm.isEdit) {
@@ -133,6 +141,7 @@ function ($scope, $rootScope, toastr, AjaxService) {
             vm.Item.ModifyDate = new Date();
             AjaxService.PlanUpdate("JobSetting", vm.Item).then(function (data) {
                 toastr.success("储存成功");
+                Reflash(vm.Item.JobName);
                 $(".insert-job").removeClass("active");
                 PageChange();
             })
@@ -141,11 +150,11 @@ function ($scope, $rootScope, toastr, AjaxService) {
             vm.Item.CreateBy = $rootScope.User.UserNo;
             AjaxService.PlanInsert("JobSetting", vm.Item).then(function (data) {
                 toastr.success("储存成功");
+                Reflash(vm.Item.JobName);
                 $(".insert-job").removeClass("active");
                 PageChange();
             })
         }
-
     }
 
     function ListToStr(list) {
@@ -172,30 +181,33 @@ function ($scope, $rootScope, toastr, AjaxService) {
 
     function convertToUnit(s) {
         if (s == "S") return '秒';
-        if (s == "F") return '分钟';
+        if (s == "M") return '分钟';
         if (s == "H") return '小时';
     }
 
-    function isProExists() {
-        if (vm.Item.ProNo && vm.Item.Version) {
+    function isJobExists() {
+        if (vm.Item.JobName) {
             var list = [];
-            list.push({ name: "ProNo", value: vm.Item.ProNo });
-            list.push({ name: "Version", value: vm.Item.Version });
-            AjaxService.GetPlan("SDKPro", list).then(function (data) {
-                vm.ProductForm.Version.$setValidity('unique', !data.ProNo);
+            console.log(vm.Item)
+            list.push({ name: "JobName", value: vm.Item.JobName });
+            AjaxService.GetPlan("JobSetting", list).then(function (data) {
+                vm.JobForm.JobName.$setValidity('unique', !data.JobName);
             });
         }
     }
 
     function JobDelete(item) {
-        var en = {};
-        en.ProNo = item.ProNo;
-        en.Version = item.Version;
-        en.CreateBy = $rootScope.User.UserNo;
-        AjaxService.ExecPlan("SDKPro", "delete", item).then(function (data) {
+        AjaxService.PlanDelete("JobSetting", item).then(function (data) {
             toastr.success("删除成功");
+            Reflash(item.JobName);
             PageChange();
         })
+    }
+
+    function Reflash(name) {
+        var en = {};
+        en.JobName = name;
+        AjaxService.DoBefore("ReflashJob", en);
     }
 }
 ]);

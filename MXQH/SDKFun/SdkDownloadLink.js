@@ -18,7 +18,7 @@ function ($scope, AjaxService, toastr, $location, $window) {
                 vm.IsOk = false;
             }
             else if (data.Name == "Success") {
-                $window.open(data.Msg);
+                $window.location.href = data.Msg;
                 vm.IsOk = true;
             }
             //setTimeout(function () {

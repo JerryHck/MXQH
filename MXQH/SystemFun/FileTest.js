@@ -19,11 +19,14 @@ function ($scope, $http, $window, AjaxService, FileService, toastr) {
         //    toastr.success("储存成功");
         //})
 
-
-        vm.promise = AjaxService.ExecPlanMail("PLMPrecess", "mail", en).then(function (data) {
+        vm.promise = AjaxService.GetPlanOwnExcel("BindCode").then(function (data) {
             vm.List = data;
-            toastr.success("储存成功");
         })
+
+        //vm.promise = AjaxService.ExecPlanMail("PLMPrecess", "mail", en).then(function (data) {
+        //    vm.List = data;
+        //    toastr.success("储存成功");
+        //})
     }
 
     //vm.FileData = { header: { header: "A" }, sheetNum: 1 };
@@ -50,6 +53,9 @@ function ($scope, $http, $window, AjaxService, FileService, toastr) {
     //})
 
     function Do() {
+
+       
+
         vm.List = angular.copy(vm.FileData.data[0]);
         console.log(vm.List)
     }

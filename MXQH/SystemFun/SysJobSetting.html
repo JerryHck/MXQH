@@ -13,24 +13,24 @@
 </div>
 <div class="wrapper-md">
     <div class="col-md-4" ng-repeat="item in job.List">
-        <div class="panel panel-default">
+        <div class="panel" ng-class="{'panel-success': item.IsStart, 'panel-danger': !item.IsStart}">
             <div class="panel-heading text-center">
                 <a class="h3 pull-left thumb-sm text-success" ng-click="job.JobEdit(item)" title="编辑产品"><i class="glyphicon glyphicon-edit"></i></a>
                 <a class="h3">{{ item.JobName }}</a>
-                <a class="h3 pull-right thumb-sm text-danger" ng-click="job.JobDelete(item)" title="删除计划"><i class="glyphicon glyphicon-remove"></i></a>
+                <a class="h3 pull-right thumb-sm text-danger" ng-confirm="{text:'确定要删除任务吗'}" ng-click="job.JobDelete(item)" title="删除计划"><i class="glyphicon glyphicon-remove"></i></a>
             </div>
             <div class="panel-body">
                 <article class="media">
-                    <small class="media-left pull-left">上次执行时间:</small>
+                    <small class="media-left pull-left">上次执行:</small>
                     <div class="media-body">
                         <small class="block">{{ item.LastRunTime | date:'yyyy-MM-dd HH:mm:ss' }}</small>
                         <span></span>
                     </div>
                 </article>
                 <article class="media">
-                    <small class="media-left pull-left">下次执行时间:</small>
+                    <small class="media-left pull-left">下次执行:</small>
                     <div class="media-body">
-                        <small class="block">{{ item.NextRunTime | date:'yyyy-MM-dd HH:mm:ss' }}</small>
+                        <small class="h4 text-info font-bold block">{{ item.NextTime | date:'yyyy-MM-dd HH:mm:ss' }} &nbsp;</small>
                         <span></span>
                     </div>
                 </article>
@@ -64,8 +64,10 @@
                         <div class="col-sm-6">
                             <label class="control-label col-md-4">计划名</label>
                             <div class="col-md-8" ng-class="{ 'has-error' : job.JobForm.JobName.$invalid }">
-                                <input type="text" class="form-control" name="JobName" placeholder="计划名"
-                                       ng-model="job.Item.JobName" ng-disabled="job.isEdit || job.isCopy" ng-blur="job.isJobExists()" required>
+                                <input type="text" class="form-control" name="JobName" placeholder="计划名" ng-model="job.Item.JobName" ng-disabled="job.isEdit || job.isCopy" ng-blur="job.isJobExists()" required>
+                                <div ng-messages="job.JobForm.JobName.$error" class="help-block" role="alert">
+                                    <div ng-message="unique">任务名已经存在</div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -141,13 +143,13 @@
                         <div class="col-sm-6" ng-if="job.Item.DayType=='O'">
                             <label class="control-label col-md-4">执行时间</label>
                             <div class="col-md-8">
-                                <input  type="text" date-time-picker class="form-control" placeholder="执行时间" ng-model="job.Item.DayOneTime" option="job.TimeOption" />
+                                <input type="text" date-time-picker class="form-control" placeholder="执行时间" ng-model="job.Item.DayOneTime" option="job.TimeOption" />
                             </div>
                         </div>
                         <div class="col-sm-6" ng-if="job.Item.DayType=='R'">
                             <label class="control-label col-md-4">每</label>
                             <div class="col-md-8">
-                                <div class="col-md-5" ng-class="{ 'has-error' : job.JobForm.DayInterval.$invalid }">
+                                <div class="col-md-6" ng-class="{ 'has-error' : job.JobForm.DayInterval.$invalid }">
                                     <input type="number" name="DayInterval" min="1" max="100" class="form-control" ng-model="job.Item.DayInterval" required />
                                 </div>
                                 <div class="col-md-6" ng-class="{ 'has-error' : job.JobForm.DayFreUnit.$invalid }">
@@ -160,7 +162,7 @@
                         <div class="col-sm-6">
                             <label class="control-label col-md-4">开始时间</label>
                             <div class="col-md-8" ng-class="{ 'has-error' : job.JobForm.StartDate.$invalid }">
-                                <input type="text" name="StartDate" date-time-picker class="form-control" placeholder="开始时间" ng-model="job.Item.StartDate" option="job.NextOption" required/>
+                                <input type="text" name="StartDate" date-time-picker class="form-control" placeholder="开始时间" ng-model="job.Item.StartDate" option="job.StartOption" required />
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -172,7 +174,7 @@
                                             <input type="checkbox" ng-model="job.Item.NoEndDate"><i></i>无
                                         </label>
                                     </span>
-                                    <input type="text" ng-disabled="job.Item.NoEndDate" name="EndDate" date-time-picker class="form-control" placeholder="结束时间" ng-model="job.Item.EndDate" option="job.Option" />
+                                    <input type="text" ng-disabled="job.Item.NoEndDate" name="EndDate" date-time-picker class="form-control" placeholder="结束时间" ng-model="job.Item.EndDate" option="job.StartOption" />
                                 </div>
                             </div>
                         </div>
@@ -190,7 +192,7 @@
                         <div class="col-sm-6">
                             <label class="control-label col-md-4">方法名</label>
                             <div class="col-md-8" ng-if="job.Item.MethodType=='Custom'" ng-class="{ 'has-error' : job.JobForm.JobExecMethod.$invalid }">
-                                <input type="text"  class="form-control" name="JobExecMethod" placeholder="方法名" ng-model="job.Item.JobExecMethod">
+                                <input type="text" class="form-control" name="JobExecMethod" placeholder="方法名" ng-model="job.Item.JobExecMethod">
                             </div>
                             <div class="col-md-8" ng-if="job.Item.MethodType!='Custom'">
                                 <div ng-class="{ 'has-error' : job.JobForm.JobExecMethod.$invalid }">
@@ -220,6 +222,6 @@
             <button class="btn btn-warning" type="button" ui-remove-class="active" target=".insert-job">取消</button>
         </div>
 
-        
+
     </div>
 </div>
