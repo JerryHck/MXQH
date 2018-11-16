@@ -312,7 +312,11 @@ angular.module('MyDirective')
         function getData(newValue, oldValue) {
             if (scope.obConnect) {
                 scope.data = undefined;
-                AjaxService.GetDbObject(scope.obConnect, scope.obType, '').then(function (data) {
+                var en = {};
+                en.strCon = scope.obConnect;
+                en.strType = scope.obType;
+                en.strSearch = '';
+                AjaxService.BasicCustom('GetDbObject', en).then(function (data) {
                     scope.data = data.data;
                     scope.ListData = angular.copy(scope.data);
                 });
@@ -331,7 +335,11 @@ angular.module('MyDirective')
                 //取服务器获取新数据
                 if (scope.data.length === 0) {
                     scope.data = undefined;
-                    AjaxService.GetDbObject(scope.obConnect, scope.obType, ser).then(function (data) {
+                    var en = {};
+                    en.strCon = scope.obConnect;
+                    en.strType = scope.obType;
+                    en.strSearch = ser;
+                    AjaxService.BasicCustom('GetDbObject', en).then(function (data) {
                         scope.data = data.data;
                     });
                 }
@@ -372,7 +380,7 @@ angular.module('MyDirective')
         link: link
     };
     function link(scope, element, attrs) {
-        AjaxService.GetConnect().then(function (data) {
+        AjaxService.BasicCustom("GetConnectList").then(function (data) {
             scope.data = data;
             scope.ListData = angular.copy(scope.data);
             scope.ngModel = scope.ngModel || data[0];

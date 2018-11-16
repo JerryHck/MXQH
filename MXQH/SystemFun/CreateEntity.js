@@ -38,6 +38,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
     vm.DownLoadPlan = DownLoadPlan;
     vm.planBak = planBak;
     vm.OpenProc = OpenProc;
+    vm.OpenEntityExcel = OpenEntityExcel;
     
     vm.ConfigOrderWay = { Table: "EntityProperty", Column: "OrderWay" };
     vm.ConfigColumnType = { Table: "EntityProperty", Column: "ColumnType" };
@@ -184,8 +185,14 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
         if (vm.EnTable) {
             vm.SelectedEn.TableSchema = vm.EnTable.DbSchema;
             vm.SelectedEn.TableName = vm.EnTable.Name;
-            AjaxService.GetTbColumns(vm.EnTable.DbSchema, vm.EnTable.Name, vm.ConnectName).then(function (data) {
-                vm.TbColunms = data;
+
+            var en = {};
+            en.Schema = vm.EnTable.DbSchema;
+            en.TableName = vm.EnTable.Name;
+            en.ConnectName = vm.ConnectName;
+
+            AjaxService.BasicCustom("GetTbColumns", en).then(function (data) {
+                vm.TbColunms = data.data;
                 if (vm.newRelCon) {
                     vm.newRelCon.ParentKey = undefined;
                 }
@@ -197,8 +204,11 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
         vm.ProItem.RelateList = [];
         vm.TbChildColunms = [];
         if (vm.ProItem.RelateEntity) {
-            AjaxService.GetColumns(vm.ProItem.RelateEntity).then(function (data) {
-                vm.TbChildColunms = data;
+
+            var en = {};
+            en.planName = vm.ProItem.RelateEntity;
+            AjaxService.BasicCustom("GetTbViewColumns", en).then(function (data) {
+                vm.TbChildColunms = data.data;
                 if (vm.newRelCon) {
                     vm.newRelCon.ChildKey = undefined;
                 }
@@ -486,6 +496,24 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
             };
             FileLoad.Load(option);
         })
+    }
+
+    function OpenEntityExcel(EntityName) {
+        var item = {};
+        item.EntityName = EntityName;
+        item.ShortName = "--";
+        item.ProcName = "--";
+        item.ProcSchema = "--";
+        item.ConnectName = vm.ConnectName;
+        var resolve = {
+            ItemData: function () {
+                return item;
+            }
+        };
+        Dialog.open("EnProcSetDialog", resolve).then(function (data) {
+
+        }).catch(function (reason) {
+        });
     }
 
     function OpenProc(proc) {
