@@ -96,8 +96,16 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                     vm.MesList.splice(0, 0, Msg);
                 }
                 else {
-                    vm.OldInCode = data2.InternalCode;
-                    vm.Focus = { InCode: true, SnCode: false };
+                    var sub = data2.SNCode.substring(0, 3);
+                    if (sub != '158') {
+                        vm.NewBind.SNCode = undefined;
+                        //toastr.error(mes);
+                        vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '不允许解绑,只允许解绑158开头的SN码' });
+                    }
+                    else {
+                        vm.OldInCode = data2.InternalCode;
+                        vm.Focus = { InCode: true, SnCode: false };
+                    }
                 }
             })
         }
@@ -119,11 +127,17 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function ExportExcel() {
-        var en = {};
-        en.InternalCode = vm.Ser.InternalCode;
-        en.SNCode = vm.Ser.SNCode;
-        en.IDCode1 = vm.Ser.IDCode1;
-        vm.promise = AjaxService.GetPlanExcel("BindCode", 'BindExcel', en).then(function (data) {
+        var list = [];
+        if (vm.Ser.InternalCode) {
+            list.push({ name: "InternalCode", value: vm.Ser.InternalCode });
+        }
+        if (vm.Ser.SNCode) {
+            list.push({ name: "SNCode", value: vm.Ser.SNCode });
+        }
+        if (vm.Ser.OldInternalCode) {
+            list.push({ name: "OldInternalCode", value: vm.Ser.OldInternalCode });
+        }
+        vm.promise = AjaxService.GetPlanOwnExcel("SnCodeReBind", list).then(function (data) {
             //console.log(data);
             $window.location.href = data.File;
         });

@@ -9,8 +9,9 @@
                         <div class="form-horizontal">
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">SN码</label>
-                                <div class="col-lg-8" ng-class="{ 'has-error' : bind.BindingForm.SnCode.$invalid }">
+                                <div class="col-lg-8" ng-class="{ 'has-error' : bind.BindingForm.SnCode.$invalid }">    
                                     <input type="text" class="form-control" ui-focus="bind.Focus.SnCode" name="SnCode" ng-model="bind.NewBind.SNCode" placeholder="SN码" ng-keyup="bind.KeyDonwSnCode($event)" required>
+                                    <div class="h6 text-danger">注:只允许返工开头为158的SN码</div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -71,9 +72,6 @@
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control" ng-model="bind.Ser.SNCode" placeholder="SN码">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" ng-model="bind.Ser.IDCode1" placeholder="模块二维码">
                 </div>
                 <button class="btn btn-sm btn-info" ng-click="bind.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
                 <button class="btn btn-sm btn-success" ng-click="bind.ExportExcel()"><i class="glyphicon glyphicon-export"></i> 导出</button>
