@@ -52,12 +52,12 @@ function ($rootScope, $scope, FileUrl, AjaxService, toastr, serviceUrl, $window)
 
     function Edit(item) {
         var str = 'BarCode:' + serviceUrl + '-' + item.TemplateId + "-" + item.TypeID;
-        //console.log(str);
+        console.log(str);
         $window.location.href = str;
     }
 
     function NewLabel() {
-        var str = 'BarCode:' + '//192.168.11.75:8080' + '-0-' + (vm.SelectedType && vm.SelectedType.ID ? vm.SelectedType : "0");
+        var str = 'BarCode:' + serviceUrl + '-0-' + (vm.SelectedType && vm.SelectedType.ID ? vm.SelectedType : "0");
         //console.log(str);
         $window.location.href = str;
     }

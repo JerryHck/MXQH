@@ -6,8 +6,8 @@ angular.module('appData')
 .constant('appUrl', '../')
 .constant('FileUrl', 'http://localhost:8080/File/')
 //Service URL
-.constant('serviceUrl', '//localhost:13439/')
-.constant('FileServiceUrl', '//192.168.11.75:8080/FileService/') 
+.constant('serviceUrl', 'http://localhost:13439/')
+.constant('FileServiceUrl', 'http://192.168.11.75:8080/FileService/')
  //表單設定
 .constant('Form', [
     { index: 0, title: '新增', action: 'Insert' },

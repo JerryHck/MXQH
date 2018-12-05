@@ -178,6 +178,8 @@
     <Content Include="js\plugin.min.js" />
     <Content Include="MESFun\SnCodeReBind.html" />
     <Content Include="MESFun\SnCodeReBind.js" />
+    <Content Include="MESFun\SnOrderCheck.html" />
+    <Content Include="MESFun\SnOrderCheck.js" />
     <Content Include="MESFun\SnPackageCheck.html" />
     <Content Include="MESFun\SnPackageCheck.js" />
     <Content Include="Scripts\angular-ui\angular-locale_zh-cn.js" />

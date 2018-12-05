@@ -1,9 +1,9 @@
 ﻿(function () {
     angular.module('AjaxServiceModule').factory('AjaxService', AjaxService);
 
-    AjaxService.$inject = ['$rootScope', '$http', '$q', 'serviceUrl', 'appUrl', 'toastr', '$cookieStore', '$window'];
+    AjaxService.$inject = ['$rootScope', '$http', '$q', 'serviceUrl', 'appUrl', 'toastr', 'MyPop', '$cookieStore', '$window'];
 
-    function AjaxService($rootScope, $http, $q, serviceUrl, appUrl, toastr, $cookieStore, $window) {
+    function AjaxService($rootScope, $http, $q, serviceUrl, appUrl, toastr, MyPop, $cookieStore, $window) {
         var generic = 'Common.asmx/Do';
         var tableConfigList = [];
 
@@ -64,6 +64,15 @@
             ExecPlanUpload: ExecPlanUpload,
             //发送邮件
             ExecPlanMail: ExecPlanMail,
+
+            //获取本地默认打印机
+            GetDefaultPrinter: GetDefaultPrinter,
+            //获取本地打印机列表
+            GetLocalPrinters: GetLocalPrinters,
+            //
+            Print: Print,
+            //
+            PrintMulti: PrintMulti,
         };
 
         return obj;
@@ -381,6 +390,92 @@
                 enNew.push(en);
                 return enNew;
             }
+        }
+
+        //socket 编程
+        //---------------------------------------------------------------------------------------------------
+        function GetDefaultPrinter(hostIp) {
+            return SocketSend("GetDefaultPrinter", undefined, undefined, undefined, undefined, hostIp);
+        }
+        //获取打印机列表
+        function GetLocalPrinters(hostIp) {
+            var d = $q.defer();
+            SocketSend("GetLocalPrinters", undefined, undefined, undefined, undefined, hostIp).then(function (data) {
+                d.resolve(JSON.parse(data));
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+        //单笔打印
+        function Print(templateId, TS, postData, printerName, hostIp) {
+            var d = $q.defer();
+            //var postData = {};
+            //postData.ParaData = JSON.stringify(paraData || {});
+            //postData.OutList = JSON.stringify(outList||[]);
+            SocketSend("Print", templateId, TS, postData, printerName, hostIp).then(function (data) {
+                d.resolve(data);
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+        //多笔打印
+        function PrintMulti(templateId, TS, postData, printerName, hostIp) {
+            var d = $q.defer();
+            SocketSend("PrintMulti", templateId, TS, postData, printerName, hostIp).then(function (data) {
+                d.resolve(data);
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+        function SocketSend(method, Id, TS, postData, printerName, hostIp) {
+            var g = $q.defer();
+            try {
+                var strAddress = "ws://" + (hostIp || "127.0.0.1") + ":2018";
+                var socket = new WebSocket(strAddress);
+                socket.onerror = function (evt) {
+                    console.log(evt.currentTarget);
+                    if (evt.currentTarget.readyState == 3) {
+                        var en = {};
+                        $window.location.href = "MxqhPrinter:" + serviceUrl;
+                        en.text = "打印服务正在启动，重新发送数据？";
+                        MyPop.Confirm(en, function () {
+                            SocketSend(method, Id, TS, postData, printerName, hostIp);
+                        });
+                    }
+                };
+                socket.onopen = function () {
+                    var en = {};
+                    en.Method = method;
+                    en.TemplateId = Id;
+                    en.TS = TS;
+                    en.Data = JSON.stringify(postData);
+                    en.ServiceUrl = serviceUrl;
+                    en.PrinterName = printerName;
+                    socket.send(JSON.stringify(en));
+                };
+                socket.onclose = function (e) {
+                    //toastr.error("打印服务已经停止", '服务错误');
+                    //g.reject("打印服务已经停止", '服务错误');
+                };
+                socket.onmessage = function (evt) {
+                    var reData = JSON.parse(evt.data);
+                    if (reData.MesType == "Success") {
+                        g.resolve(reData.Data);
+                    }
+                    else if (reData.MesType == "Error") {
+                        toastr.error(reData.Data, '服务错误');
+                        g.reject(reData.Data);
+                    }
+                    else if (reData.MesType == "Update") {
+                        toastr.warning('服务器已有新版本的打印插件，请下载更新');
+                        $window.location.href = reData.Data;
+                    }
+                };
+            }
+            catch (e) {
+                toastr.error(e, '服务错误');
+            }
+            return g.promise;
         }
     }
 })();

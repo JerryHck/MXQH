@@ -44,7 +44,8 @@
     margin: 60px auto 30px;
     padding: 10px;
     overflow: hidden;
-
+    filter:alpha(Opacity=40);-moz-opacity:0.7;opacity: 0.7;
+    /* 修改登陆窗口透明度 */
     /* Styles */
     background: #7f7181; 
     border-radius: 0.4em;
