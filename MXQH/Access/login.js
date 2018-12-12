@@ -14,7 +14,8 @@ function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $wi
     vm.reflashSecCode = reflashSecCode;
     vm.CheckCode = CheckCode;
     vm.Go = Go;
-
+    vm.KeyDonw = KeyDonw;
+    vm.Login = Login;
     function RndNum(n) {
         var rnd = "";
         for (var i = 0; i < n; i++)
@@ -26,7 +27,7 @@ function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $wi
     reflashSecCode();
 
     //登录方法
-    vm.Login = function () {
+    function Login() {
         $cookieStore.remove('user-token');
         var en = {};
         en.User = vm.UserName;
@@ -98,6 +99,13 @@ function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $wi
         AjaxService.DoBefore("GenSecCodeImg", en).then(function (data) {
             vm.SecDataUrl = data.File;
         });
+    }
+
+    function KeyDonw(e) {
+        var keycode = window.event ? e.keyCode : e.which;
+        if (keycode == 13 && vm.SecCode && vm.UserName && vm.Pwd) {
+            Login();
+        }
     }
 
     function Go(name) {

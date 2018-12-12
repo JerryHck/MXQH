@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('InCodePrintCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
+.controller('InCodePrintCtrl', ['$rootScope', '$scope', 'FileUrl', 'AjaxService', 'toastr', '$window',
+function ($rootScope, $scope, FileUrl, AjaxService, toastr, $window) {
 
     var vm = this;
     vm.DeleteItem = { CreateBy: $rootScope.User.UserNo };
@@ -14,6 +14,15 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.KeyDonwInCode = KeyDonwInCode;
     vm.PrintCode = PrintCode;
     vm.SelectTab = SelectTab;
+    vm.DownExe = DownExe;
+
+
+    AjaxService.GetLocalPrinters().then(function (data) {
+        vm.PrintList = data;
+        console.log(data);
+    }, function (err) {
+        console.log(err);
+    });
 
     //内部码验证
     function KeyDonwInCode(e) {
@@ -65,7 +74,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         postData.ParaData = JSON.stringify({});
         postData.OutList = JSON.stringify(list);
 
-        AjaxService.Print("1", "dfs", postData).then(function (data) {
+        AjaxService.Print("1", "dfs", postData, vm.PrinterName).then(function (data) {
             console.log(data);
         }, function (err) {
             console.log(err);
@@ -78,6 +87,10 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         //    vm.DeleteItem.InternalCode = undefined;
         //    vm.Focus = 0;
         //});
+    }
+
+    function DownExe() {
+        $window.location.href = FileUrl + "DownLoad/打印插件.exe";
     }
 }
 ]);

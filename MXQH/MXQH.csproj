@@ -171,6 +171,10 @@
     <Content Include="js\dobefore.min.js" />
     <Content Include="MESFun\BarCodeList.html" />
     <Content Include="MESFun\BarCodeList.js" />
+    <Content Include="MESFun\InCodePrint.html" />
+    <Content Include="MESFun\InCodePrint.js" />
+    <Content Include="MESFun\OrderOnLine.html" />
+    <Content Include="MESFun\OrderOnLine.js" />
     <Content Include="MESFun\OrderReWork.html" />
     <Content Include="MESFun\OrderReWork.js" />
     <Content Include="js\mxqh.min.js" />

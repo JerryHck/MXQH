@@ -101,21 +101,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     function KeyDonwIdCode(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.NewBind.IDCode1) {
-            var en = {};
-            en.name = "IDCode1";
-            en.value = vm.NewBind.IDCode1;
-            AjaxService.GetPlan("MESSNCode", en).then(function (data2) {
-                var mss = "模块二维码 [" + vm.NewBind.IDCode1 + '] ';
-                if (data2.IDCode1) {
-                    vm.NewBind.IDCode1 = undefined;
-                    //toastr.error(mes);
-                    var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过生产条码[' + data2.InternalCode + "]" };
-                    vm.MesList.splice(0, 0, Msg);
-                }
-                else if (vm.IsAuto){
-                    BindCode();
-                }
-            })
+            BindCode();
         }
     }
 
@@ -124,6 +110,24 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function BindCode() {
+        var en = {};
+        en.name = "IDCode1";
+        en.value = vm.NewBind.IDCode1;
+        AjaxService.GetPlan("MESSNCode", en).then(function (data2) {
+            var mss = "模块二维码 [" + vm.NewBind.IDCode1 + '] ';
+            if (data2.IDCode1) {
+                vm.NewBind.IDCode1 = undefined;
+                //toastr.error(mes);
+                var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过生产条码[' + data2.InternalCode + "]" };
+                vm.MesList.splice(0, 0, Msg);
+            }
+            else if (vm.IsAuto) {
+                BindCode1();
+            }
+        })
+    }
+
+    function BindCode1() {
         vm.promise = AjaxService.ExecPlan("BindCode", 'bindCode', vm.NewBind).then(function (data) {
             var mss = "生产条码 [" + vm.NewBind.InternalCode + ']  SN码 [' + vm.NewBind.SNCode + ']  模块二维码[' + vm.NewBind.IDCode1 + '] 绑定成功';
             var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };

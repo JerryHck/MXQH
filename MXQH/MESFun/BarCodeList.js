@@ -63,7 +63,7 @@ function ($rootScope, $scope, FileUrl, AjaxService, toastr, serviceUrl, $window)
     }
 
     function DownExe() {
-        $window.location.href = FileUrl + "DownLoad/MXQH 标签设计.zip";
+        $window.location.href = FileUrl + "DownLoad/MXQH标签设计.exe";
     }
 }
 ]);

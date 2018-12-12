@@ -59,30 +59,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     function KeyDonwInCode(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.DeleteItem.InternalCode) {
-            var en = {};
-            en.name = "InternalCode";
-            en.value = vm.DeleteItem.InternalCode;
-            AjaxService.GetPlan("MesPlanMain", en).then(function (data) {
-                var mss = "生产条码 [" + vm.DeleteItem.InternalCode + '] ';
-                if (!data.InternalCode) {
-                    vm.DeleteItem.InternalCode = undefined;
-                    //toastr.error(mes);
-                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或还没有上线' });
-                }
-                else {
-                    AjaxService.GetPlan("MESSNCode", en).then(function (data2) {
-                        if (data2.InternalCode) {
-                            vm.DeleteItem.InternalCode = undefined;
-                            //toastr.error(mes);
-                            var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过SN码[' + data2.SNCode + "], 不可再解绑" };
-                            vm.MesList.splice(0, 0, Msg);
-                        }
-                        else if (vm.IsAuto) {
-                            DeleteCode();
-                        }
-                    })
-                }
-            });
+            DeleteCode();
         }
     }
 
@@ -91,6 +68,33 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function DeleteCode() {
+        var en = {};
+        en.name = "InternalCode";
+        en.value = vm.DeleteItem.InternalCode;
+        AjaxService.GetPlan("MesPlanMain", en).then(function (data) {
+            var mss = "生产条码 [" + vm.DeleteItem.InternalCode + '] ';
+            if (!data.InternalCode) {
+                vm.DeleteItem.InternalCode = undefined;
+                //toastr.error(mes);
+                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或还没有上线' });
+            }
+            else {
+                AjaxService.GetPlan("MESSNCode", en).then(function (data2) {
+                    if (data2.InternalCode) {
+                        vm.DeleteItem.InternalCode = undefined;
+                        //toastr.error(mes);
+                        var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过SN码[' + data2.SNCode + "], 不可再解绑" };
+                        vm.MesList.splice(0, 0, Msg);
+                    }
+                    else if (vm.IsAuto) {
+                        DeleteCode2();
+                    }
+                })
+            }
+        });
+    }
+
+    function DeleteCode2() {
         vm.promise = AjaxService.ExecPlan("MESDeleteCode", 'delete', vm.DeleteItem).then(function (data) {
             var mss = "内部码 [" + vm.DeleteItem.InternalCode + '] 解绑成功';
             var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };

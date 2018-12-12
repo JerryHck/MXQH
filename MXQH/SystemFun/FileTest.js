@@ -85,22 +85,37 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr) {
         });
     }
 
+    AjaxService.GetPlans("EnProcExcelCol").then(function (data) {
+        vm.List = data;
+    })
+
     function GetPrintName(printIP) {
-            //socket = new WebSocket('ws://127.0.0.1:2012');
-            AjaxService.GetPlan("EnProcExcelCol").then(function (data) {
 
-                var postData = {};
-                postData.ParaData = JSON.stringify(data);
-                //postData.OutList = JSON.stringify(outList || []);
+        var postData = {};
+        postData.ParaData = JSON.stringify(vm.PrintData);
+        //postData.OutList = JSON.stringify(outList || []);
 
-                AjaxService.Print("816", "dfs", postData).then(function (data) {
-                    console.log(data);
-                }, function (err) {
-                    console.log(err);
-                })
+        AjaxService.Print("816", "dfs", postData).then(function (data) {
+            console.log(data);
+        }, function (err) {
+            console.log(err);
+        })
+
+          //  //socket = new WebSocket('ws://127.0.0.1:2012');
+          //  AjaxService.GetPlan("EnProcExcelCol").then(function (data) {
+
+          //      var postData = {};
+          //      postData.ParaData = JSON.stringify(data);
+          //      //postData.OutList = JSON.stringify(outList || []);
+
+          //      AjaxService.Print("816", "dfs", postData).then(function (data) {
+          //          console.log(data);
+          //      }, function (err) {
+          //          console.log(err);
+          //      })
 
               
-          })
+          //})
     }
 }
 ]);

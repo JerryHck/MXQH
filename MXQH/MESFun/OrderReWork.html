@@ -22,7 +22,7 @@
                     <ul class="list-group bg-white">
                         <li class="list-group-item" ng-repeat="item in order.MesList track by item.Id" ng-class="{ 'text-danger' : !item.IsOk, 'text-success':item.IsOk }">
                             <span herf class="pull-left">
-                                <i class="glyphicon glyphicon-remove"></i>
+                                <i class="glyphicon" ng-class="{ 'glyphicon-remove' : !item.IsOk, 'glyphicon-ok':item.IsOk }"></i>
                             </span>
                             <div class="clear">
                                 <div>{{ item.Msg }}</div>

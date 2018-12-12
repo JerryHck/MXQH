@@ -53,29 +53,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     function KeyDonwInCode(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.DeleteItem.InternalCode) {
-            var en = {};
-            en.name = "InternalCode";
-            en.value = vm.DeleteItem.InternalCode;
-            AjaxService.GetPlan("MESSNCode", en).then(function (data) {
-                var mss = "生产条码 [" + vm.DeleteItem.InternalCode + '] ';
-                if (!data.InternalCode) {
-                    vm.DeleteItem.InternalCode = undefined;
-                    //toastr.error(mes);
-                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或还没有绑定SN码' });
-                }
-                else {
-                    vm.SNCode = data.SNCode;
-                    var sub = data.SNCode.substring(0, 2);
-                    if (sub != '83' && sub != '93' && sub != '45') {
-                        vm.DeleteItem.InternalCode = undefined;
-                        //toastr.error(mes);
-                        vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '不允许解绑该SN码[' + data.SNCode + ']' });
-                    }
-                    else if (vm.IsAuto) {
-                        DeleteCode();
-                    }
-                }
-            });
+            DeleteCode();
         }
     }
 
@@ -84,6 +62,32 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function DeleteCode() {
+        var en = {};
+        en.name = "InternalCode";
+        en.value = vm.DeleteItem.InternalCode;
+        AjaxService.GetPlan("MESSNCode", en).then(function (data) {
+            var mss = "生产条码 [" + vm.DeleteItem.InternalCode + '] ';
+            if (!data.InternalCode) {
+                vm.DeleteItem.InternalCode = undefined;
+                //toastr.error(mes);
+                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或还没有绑定SN码' });
+            }
+            else {
+                vm.SNCode = data.SNCode;
+                var sub = data.SNCode.substring(0, 2);
+                if (sub != '83' && sub != '93' && sub != '45') {
+                    vm.DeleteItem.InternalCode = undefined;
+                    //toastr.error(mes);
+                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '不允许解绑该SN码[' + data.SNCode + ']' });
+                }
+                else if (vm.IsAuto) {
+                    DeleteCode2();
+                }
+            }
+        });
+    }
+
+    function DeleteCode2() {
         vm.promise = AjaxService.ExecPlan("MESSnDelete", 'delete', vm.DeleteItem).then(function (data) {
             var mss = "内部码 [" + vm.DeleteItem.InternalCode + '] 解绑SN码[' + vm.SNCode + ']成功';
             var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };

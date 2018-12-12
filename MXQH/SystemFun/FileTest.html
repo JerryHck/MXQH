@@ -15,6 +15,13 @@
             <div file-upload file-data="file.UploadFile2" file-type=".xls,.xlsx"></div>
         </div>
     </div>
+
+    <div class="row wrapper-sm">
+        <div class="col-md-8">
+            <input type="text" ng-model="file.PrintData" uib-typeahead="order as order.EntityName for order in file.List | filter:$viewValue | limitTo:8"/>
+        </div>
+    </div>
+
     <button class="btn btn-success" ng-click="file.save()">保存</button>
     <div>
         <pre>{{ file.UploadFile | json }}</pre>
