@@ -21,8 +21,9 @@
             <input type="text" ng-model="file.PrintData" uib-typeahead="order as order.EntityName for order in file.List | filter:$viewValue | limitTo:8"/>
         </div>
     </div>
-
+    <audio autoplay="autoplay" id="auto" src=""></audio>
     <button class="btn btn-success" ng-click="file.save()">保存</button>
+    <button class="btn btn-success" ng-click="file.Vioce()">声音</button>
     <div>
         <pre>{{ file.UploadFile | json }}</pre>
         <pre>{{ file.UploadFile2 | json }}</pre>

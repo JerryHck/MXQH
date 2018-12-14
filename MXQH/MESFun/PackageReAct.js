@@ -10,6 +10,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.Focus = { SNCode: true, Order: false, SN: false };
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
+    vm.IsAuto = true;
 
     vm.KeyDonwSnCode = KeyDonwSnCode;
     vm.KeyDonwOrder = KeyDonwOrder;

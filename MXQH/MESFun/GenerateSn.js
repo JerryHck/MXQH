@@ -11,6 +11,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
     vm.NewItemType = {};
+    vm.IsAuto = true;
 
     vm.KeyDonwInCode = KeyDonwInCode;
     vm.BindCode = BindCode;
@@ -55,35 +56,41 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
     function KeyDonwInCode(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.NewBind.InternalCode) {
-            var en = {};
-            en.name = "InternalCode";
-            en.value = vm.NewBind.InternalCode;
-            AjaxService.GetPlan("MesPlanMain", en).then(function (data) {
-                var mss = "生产条码 [" + vm.NewBind.InternalCode + '] ';
-                if (!data.InternalCode) {
-                    vm.NewBind.InternalCode = undefined;
-                    //toastr.error(mes);
-                    vm.MesList.splice(0, 0, { IsOk: false, Msg: mss + '  不存在或还没有上线' });
-                }
-                else {
-                    AjaxService.GetPlan("MESSNCode", en).then(function (data2) {
-                        if (data2.InternalCode) {
-                            vm.NewBind.InternalCode = undefined;
-                            //toastr.error(mes);
-                            var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过SN码[' + data2.SNCode + "]" };
-                            vm.MesList.splice(0, 0, Msg);
-                        }
-                        else {
-                            GetSnCode();
-                        }
-                    })
-                }
-            });
+            Action();
         }
     }
 
     function SelectTab(index) {
         //vm.Focus = index;
+    }
+
+    function Action() {
+        var en = {};
+        en.name = "InternalCode";
+        en.value = vm.NewBind.InternalCode;
+        AjaxService.GetPlan("MesPlanMain", en).then(function (data) {
+            var mss = "生产条码 [" + vm.NewBind.InternalCode + '] ';
+            if (!data.InternalCode) {
+                vm.NewBind.InternalCode = undefined;
+                //toastr.error(mes);
+                vm.MesList.splice(0, 0, { IsOk: false, Msg: mss + '  不存在或还没有上线' });
+                AjaxService.PlayVoice('3331142.mp3');
+            }
+            else {
+                AjaxService.GetPlan("MESSNCode", en).then(function (data2) {
+                    if (data2.InternalCode) {
+                        vm.NewBind.InternalCode = undefined;
+                        //toastr.error(mes);
+                        var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过SN码[' + data2.SNCode + "]" };
+                        vm.MesList.splice(0, 0, Msg);
+                        AjaxService.PlayVoice('3331142.mp3');
+                    }
+                    else {
+                        GetSnCode();
+                    }
+                })
+            }
+        });
     }
 
     //生成内部码

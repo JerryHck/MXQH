@@ -10,6 +10,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.Focus = { InCode: true, SnCode: false, IdCode: false };
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
+    vm.IsAuto = true;
 
     vm.KeyDonwInCode = KeyDonwInCode;
     vm.KeyDonwSnCode = KeyDonwSnCode;
@@ -59,6 +60,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                     vm.NewBind.InternalCode = undefined;
                     //toastr.error(mes);
                     vm.MesList.splice(0, 0, { IsOk: false, Msg: mss + '  不存在或还没有上线' });
+                    AjaxService.PlayVoice('3331142.mp3');
                 }
                 else {
                     AjaxService.GetPlan("MESSNCode", en).then(function (data2) {
@@ -67,6 +69,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                             //toastr.error(mes);
                             var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过SN码[' + data2.SNCode + "]" };
                             vm.MesList.splice(0, 0, Msg);
+                            AjaxService.PlayVoice('3331142.mp3');
                         }
                         else {
                             vm.Focus = { InCode: false, SnCode: true, IdCode: false };
@@ -90,6 +93,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                     //toastr.error(mes);
                     var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过生产条码[' + data2.InternalCode + "]" };
                     vm.MesList.splice(0, 0, Msg);
+                    AjaxService.PlayVoice('3331142.mp3');
                 }
                 else {
                     vm.Focus = { InCode: false, SnCode: false, IdCode: true };
@@ -120,6 +124,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                 //toastr.error(mes);
                 var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过生产条码[' + data2.InternalCode + "]" };
                 vm.MesList.splice(0, 0, Msg);
+                AjaxService.PlayVoice('3331142.mp3');
             }
             else if (vm.IsAuto) {
                 BindCode1();

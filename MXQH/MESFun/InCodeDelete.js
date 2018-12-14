@@ -10,6 +10,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.Focus = 0;
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
+    vm.IsAuto = true;
 
     vm.KeyDonwInCode = KeyDonwInCode;
     vm.DeleteCode = DeleteCode;
@@ -77,6 +78,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                 vm.DeleteItem.InternalCode = undefined;
                 //toastr.error(mes);
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或还没有上线' });
+                AjaxService.PlayVoice('3331142.mp3');
             }
             else {
                 AjaxService.GetPlan("MESSNCode", en).then(function (data2) {
@@ -85,6 +87,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                         //toastr.error(mes);
                         var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过SN码[' + data2.SNCode + "], 不可再解绑" };
                         vm.MesList.splice(0, 0, Msg);
+                        AjaxService.PlayVoice('3331142.mp3');
                     }
                     else if (vm.IsAuto) {
                         DeleteCode2();

@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('FunctionCtrl', ['$scope', '$http', 'Dialog', 'toastr', 'AjaxService', 'MyPop',
-function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
+.controller('FunctionCtrl', ['$rootScope', '$scope', '$http', 'Dialog', 'toastr', 'AjaxService', 'MyPop',
+function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, MyPop) {
 
     var vm = this;
     //查询所有功能
@@ -17,6 +17,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
     vm.OpenIcon = OpenIcon;
     //编辑根目录
     vm.DoneRootEdit = DoneRootEdit;
+    vm.DoneRootSysEdit = DoneRootSysEdit;
     //rootDrop
     vm.RootDrop = RootDrop;
     //调整根目录顺序
@@ -39,24 +40,39 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
     vm.FunLoadDelete = FunLoadDelete;
     vm.FunLoadAdd = FunLoadAdd;
     vm.SaveFunInfo = SaveFunInfo;
+
+    //选择系统
+    vm.ChangeSys = ChangeSys;
+
     vm.Cancel = Cancel;
     vm.SelectedRoot = { FunNo: '' };
     vm.editFun = false;
 
-    var en = {};
-    en.name = 'FunType';
-    en.value = 1
-    vm.promise = AjaxService.GetEntities("FunRoot", en).then(function (data) {
-        vm.List = data;
-    });
+
+    vm.promise = AjaxService.GetPlans("System").then(function (data) {
+        vm.SystemList = data;
+        vm.SystemItem = data[0];
+        ChangeSys();
+    })
+
+    function ChangeSys() {
+        var en = [{ name: 'FunType', value: 1 }, { name: 'SysNo', value: vm.SystemItem ? vm.SystemItem.SysNo : undefined }];
+        AjaxService.GetEntities("FunRoot", en).then(function (data) {
+            vm.List = data;
+        });
+    }
+
+    vm.AllSys = function () {
+        vm.SystemItem = undefined;
+        ChangeSys();
+    }
 
     //查询所有功能
     function SelectAllFun() {
         if (!showPop(vm.editFun)) {
             vm.SelectedRoot = { FunNo: '' };
-            var en = {};
-            en.name = 'FunType';
-            en.value = 2
+            var en = [{ name: 'FunType', value: 2 }];
+            console.log(en)
             vm.promise = AjaxService.GetEntities("FunRoot", en).then(function (data) {
                 vm.FunList = data;
             });
@@ -100,7 +116,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
             root.FunName = "新根目录";
             root.OrderBy = vm.List ? vm.List.Length : 0;
             root.FunType = 1;
-            root.SysNo = 'MXQH';
+            root.SysNo = vm.SystemItem.SysNo;
             root.FunImge = 'glyphicon glyphicon-chevron-right';
             root.editing = true;
             angular.forEach(vm.List, function (r) {
@@ -113,13 +129,15 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
         }
     }
 
-    function EditRoot(root) {
+    function EditRoot(root, t) {
         if (!showPop(vm.editFun)) {
             if (vm.IsEditing = true) {
                 DoneRootEdit();
             }
             root.selected = true;
             root.editing = true;
+            root.editName = t == 'name';
+            root.editSys = t == 'sys';
             vm.editRootItem = root;
             vm.IsEditing = true;
         }
@@ -145,6 +163,27 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
                 vm.editRootItem.editing = false;
                 vm.editRootItem.selected = false;
                 vm.IsEditing = false;
+            }
+        }
+    }
+
+    function DoneRootSysEdit() {
+        if (!showPop(vm.editFun)) {
+            if (vm.editRootItem) {
+                vm.editRootItem.editing = false;
+                vm.editRootItem.selected = false;
+                vm.IsEditing = false;
+
+                var en = {};
+                en.FunNo = vm.editRootItem.FunNo;
+                en.SysNo = vm.editRootItem.SysNo;
+                en.ModifyBy = $rootScope.User.UserNo;
+                en.ModifyDate = new Date();
+                //保存到数据库
+                AjaxService.PlanUpdate('Function', en).then(function (data) {
+                    toastr.success('保存成功');
+                    ChangeSys();
+                })
             }
         }
     }
@@ -303,9 +342,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
     }
 
     function reflashData() {
-        var en = {};
-        en.name = 'FunType';
-        en.value = 1
+        var en = [{ name: 'FunType', value: 1 }, { name: 'SysNo', value: vm.SystemItem ? vm.SystemItem.SysNo : undefined }];
         vm.promise = AjaxService.GetEntities("FunRoot", en).then(function (data) {
             vm.List = data;
             angular.forEach(data, function (r) {
@@ -338,7 +375,8 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
             });
             var json = {};
             json.FunType = type;
-            json.SysNo = "MXQH";
+            json.SysNo = vm.SystemItem ? vm.SystemItem.SysNo : "";
+            json.CreateBy = $rootScope.User.UserNo;
             json.RootList = JSON.stringify(List);
             json.TempColumns = 'RootList';
             vm.promise = AjaxService.ExecPlan("FunRoot", "saveRoot", json).then(function (data) {

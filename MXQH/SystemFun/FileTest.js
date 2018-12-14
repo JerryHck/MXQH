@@ -1,13 +1,19 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('FileCtrl', ['$scope', 'serviceUrl', '$window', 'AjaxService', 'FileService', 'toastr',
-function ($scope, serviceUrl, $window, AjaxService, FileService, toastr) {
+.controller('FileCtrl', ['$scope', 'serviceUrl', '$window', 'AjaxService', 'FileService', 'toastr', 'FileUrl',
+function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl) {
 
     var vm = this;
     $scope.importf = importf;
     vm.Do = Do;
     vm.save = save;
+    vm.Vioce = Vioce;
+
+    function Vioce() {
+        var auto = $("#auto");
+        auto.attr("src", FileUrl + '/Voice/5611.mp3');
+    }
 
     function save() {
         var en = {};

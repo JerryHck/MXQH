@@ -69,7 +69,8 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             vm.Item.InCode = undefined;
             return false;
         }
-        if (vm.OrderData.Quantity - vm.OrderCount.ToTalCount <= 0) {
+        if (vm.OrderData.Quantity - vm.OrderCount.ToTalCount == 0) {
+            AjaxService.PlayVoice('5611.mp3');
             MyPop.ngConfirm({ text: "投入数量已达到生产量, 是否继续投入?" }).then(function (data) {
                 Check();
             });
@@ -82,6 +83,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     function showError(mes)
     {
         vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mes });
+        AjaxService.PlayVoice('3331142.mp3');
         toastr.error(mes);
     }
 
@@ -116,7 +118,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
                 vm.OrderCount = data.data1[0];
                 //打印
-                if (vm.RoutingData.IsPrint) {
+                if (vm.RoutingData.IsPrint == 'True') {
                     var postData = {}, list = [];
 
                     list.push(en.InternalCode);

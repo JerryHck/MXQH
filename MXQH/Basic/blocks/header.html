@@ -26,6 +26,19 @@
             <i class="icon-user fa-fw"></i>
         </a>
     </div>
+
+    <ul class="nav navbar-nav hidden-sm">
+        <li class="dropdown" dropdown>
+            <a class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-fw fa-plus visible-xs-inline-block"></i>
+                <span>{{ vm.SelectedSys.SysName }}</span> <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-repeat="item in vm.SysList"><a ng-click="vm.ChangeSys(item)">{{ item.SysName }}</a></li>
+            </ul>
+        </li>
+    </ul>
+
     <!-- / buttons -->
     <!-- search form -->
     <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" target=".navbar-collapse" role="search">

@@ -140,14 +140,13 @@
                             <p class="form-control-static font-bold  h4 text-success">{{order.OrderCount.ToDayCount}}</p>
                         </div>
                     </div>
+                    <div class="form-group" ng-if="order.OrderCount.ToTalCount>order.OrderData.ERPQuantity">
+                        <label class="control-label col-sm-2">警告:</label>
+                        <div class="col-sm-10">
+                            <p class="form-control-static font-bold text-danger"> 当前工单投入量已大于工单计划量</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="panel-footer text-center" ng-if="order.IsEdit">
-                <button class="btn btn-success" type="button" ng-disabled="order.UpdateForm.$invalid" ng-confirm="{text:'确定要更新包装吗'}" ng-click="order.Save('U')">更新包装</button>
-                <button class="btn btn-danger" type="button" ng-disabled="order.UpdateForm.$invalid" ng-confirm="{text:'确定要删除并重新包装吗'}" ng-click="order.Save('R')">
-                    删除重包装
-                </button>
-                <button class="btn btn-warning" type="button" ng-click="order.IsEdit = false">取消</button>
             </div>
             <!--<pre>{{ order.OrderData | json }}</pre>-->
         </div>

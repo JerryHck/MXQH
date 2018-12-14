@@ -187,6 +187,8 @@
     <Content Include="MESFun\SnPackageCheck.html" />
     <Content Include="MESFun\SnPackageCheck.js" />
     <Content Include="Scripts\angular-ui\angular-locale_zh-cn.js" />
+    <Content Include="Scripts\angular\angular-sweetalert\SweetAlert.js" />
+    <Content Include="Scripts\angular\angular-sweetalert\SweetAlert.min.js" />
     <Content Include="Scripts\assets\js\unlock.js" />
     <Content Include="Scripts\assets\less\unlock.css" />
     <Content Include="Access\ForgotPassword.html" />
@@ -203,6 +205,7 @@
     <Content Include="Scripts\jquery\ystep\css\ystep.css" />
     <Content Include="Scripts\jquery\ystep\ystep.js" />
     <Content Include="Scripts\sweetalert.js" />
+    <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="SDKFun\ATEQuery.html" />
     <Content Include="SDKFun\ATEQuery.js" />
     <Content Include="SDKFun\RegUserSignDialog.html" />

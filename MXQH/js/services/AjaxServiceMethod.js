@@ -1,9 +1,9 @@
 ﻿(function () {
     angular.module('AjaxServiceModule').factory('AjaxService', AjaxService);
 
-    AjaxService.$inject = ['$rootScope', '$http', '$q', 'serviceUrl', 'appUrl', 'toastr', 'MyPop', '$cookieStore', '$window'];
+    AjaxService.$inject = ['$rootScope', '$http', '$q', 'serviceUrl', 'appUrl', 'toastr', 'MyPop', '$cookieStore', '$window', 'FileUrl'];
 
-    function AjaxService($rootScope, $http, $q, serviceUrl, appUrl, toastr, MyPop, $cookieStore, $window) {
+    function AjaxService($rootScope, $http, $q, serviceUrl, appUrl, toastr, MyPop, $cookieStore, $window, FileUrl) {
         var generic = 'Common.asmx/Do';
         var tableConfigList = [];
 
@@ -73,9 +73,16 @@
             Print: Print,
             //
             PrintMulti: PrintMulti,
+            //播放声音
+            PlayVoice: PlayVoice
         };
 
         return obj;
+
+        function PlayVoice(name) {
+            var auto = $("#autoVoice");
+            auto.attr("src", FileUrl + '/Voice/' + name);
+        }
 
         //JSON Data取得
         function GetJson(data) {

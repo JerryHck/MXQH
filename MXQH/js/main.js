@@ -12,11 +12,14 @@ angular.module('app')
         var vm = this;
 
         vm.FunctionList = [];
+        vm.SysList = [];
+        vm.FunTree = [];
         //路由状态改变
         vm.Go = Go;
         vm.ChangPsw = ChangPsw;
         vm.LogOff = LogOff;
         vm.Reflash = Reflash;
+        vm.ChangeSys = ChangeSys;
         
         // config
         vm.app = {
@@ -64,24 +67,57 @@ angular.module('app')
         }, true);
 
         function GetList() {
-            vm.promise = AjaxService.LoginAction("GetUserRoot").then(function (data) {
-                vm.FunTree = data;
-                vm.FunctionList = [];
-                for (var i = 0, len = data.length; i < len; i++) {
-                    for (var j = 0, len2 = data[i].FunList.length; j < len2; j++) {
-                        var en = {};
-                        en.RouteName = data[i].FunList[j].RouteName;
-                        en.FunName = data[i].FunName + '/' + data[i].FunList[j].FunName;
-                        vm.FunctionList.push(en);
+            vm.promise = AjaxService.GetPlans("System").then(function (dataSys) {
+                AjaxService.LoginAction("GetUserRoot").then(function (data) {
+                    vm.FunData = data;
+                    //vm.FunTree = data;
+                    vm.FunctionList = [];
+                    for (var i = 0, len = data.length; i < len; i++) {
+                        //获取具有的系统列表
+                        var sysEn = {};
+                        sysEn.SysNo = data[i].SysNo;
+                        for (var h = 0, len1 = dataSys.length; h < len1; h++) {
+                            if (sysEn.SysNo == dataSys[h].SysNo) {
+                                sysEn.SysName = dataSys[h].SysName; break;
+                            }
+                        }
+                        //添加到列表
+                        var have = false;
+                        for (var a = 0, len3 = vm.SysList.length; a < len3; a++) {
+                            if (sysEn.SysNo == vm.SysList[a].SysNo) {
+                                have = true; break;
+                            }
+                        }
+                        if (!have) {
+                            vm.SysList.push(sysEn);
+                        }
+                        //获取所有功能列表
+                        for (var j = 0, len2 = data[i].FunList.length; j < len2; j++) {
+                            var en = {};
+                            en.RouteName = data[i].FunList[j].RouteName;
+                            en.FunName = data[i].FunName + '/' + data[i].FunList[j].FunName;
+                            vm.FunctionList.push(en);
+                        }
                     }
-                }
-
-                //console.log(data);
-            });
-
-            vm.ConfigData = [];
+                    //默认第一项
+                    ChangeSys(vm.SysList[0]);
+                });
+            })
         }
         
+        function ChangeSys(item) {
+            if (!item) {
+                return;
+            }
+            vm.SelectedSys = item;
+            vm.FunTree = [];
+            for (var i = 0, len = vm.FunData.length; i < len; i++) {
+                if (vm.SelectedSys.SysNo == vm.FunData[i].SysNo) {
+                    vm.FunTree.push(vm.FunData[i]);
+                }
+            }
+        }
+
         function Go(routeName) {
             $state.go(routeName);
         }

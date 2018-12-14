@@ -10,6 +10,7 @@ function ($rootScope, $scope, FileUrl, AjaxService, toastr, $window) {
     vm.Focus = 0;
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
+    vm.IsAuto = true;
 
     vm.KeyDonwInCode = KeyDonwInCode;
     vm.PrintCode = PrintCode;

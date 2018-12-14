@@ -10,6 +10,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.Focus = { InCode: false, SnCode: true };
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
+    vm.IsAuto = true;
 
     vm.KeyDonwInCode = KeyDonwInCode;
     vm.KeyDonwSnCode = KeyDonwSnCode;
@@ -66,6 +67,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                     //toastr.error(mes);
                     var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '不存在或还未绑定内控码' };
                     vm.MesList.splice(0, 0, Msg);
+                    AjaxService.PlayVoice('3331142.mp3');
                 }
                 else {
                     var sub = data2.SNCode.substring(0, 3);
@@ -73,6 +75,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                         vm.NewBind.SNCode = undefined;
                         //toastr.error(mes);
                         vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '不允许解绑,只允许解绑158开头的SN码' });
+                        AjaxService.PlayVoice('3331142.mp3');
                     }
                     else {
                         vm.OldInCode = data2.InternalCode;
@@ -105,14 +108,16 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                         //toastr.error(mes);
                         var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过SN码[' + data2.SNCode + "]" };
                         vm.MesList.splice(0, 0, Msg);
+                        AjaxService.PlayVoice('3331142.mp3');
                     }
                     else if (data2.InternalCode && data2.InternalCode == vm.OldInCode) {
                         vm.NewBind.InternalCode = undefined;
                         var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '与原内控码[' + vm.OldInCode + "]一致" };
                         vm.MesList.splice(0, 0, Msg);
+                        AjaxService.PlayVoice('3331142.mp3');
                     }
                     else if (vm.IsAuto) {
-                        BindCode();
+                        BindCode2();
                     }
                 })
             }

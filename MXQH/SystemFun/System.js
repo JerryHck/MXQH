@@ -41,7 +41,7 @@ function ($scope, $http, Dialog, AjaxService) {
         var en = {};
         en.SysNo = item.SysNo;
         en.CompanyNo = item.Company.CompanyNo;
-        vm.promise = AjaxService.Action('System', "delete", en).then(function (data) {
+        vm.promise = AjaxService.ExecPlan('System', "delete", en).then(function (data) {
             GetList();
             toastr.success('删除');
         });

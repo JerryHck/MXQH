@@ -88,9 +88,6 @@ angular.module('appData')
                     if (isConfirm) {
                         q.resolve(true);
                     }
-                    else {
-                        q.reject(false);
-                    }
                 });
             }, 1);
             return q.promise;
