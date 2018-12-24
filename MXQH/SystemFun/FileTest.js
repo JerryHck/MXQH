@@ -15,7 +15,19 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
         auto.attr("src", FileUrl + '/Voice/5611.mp3');
     }
 
+    AjaxService.GetComPortList().then(function (data) {
+        vm.ComList = JSON.parse(data);
+        console.log(data);
+    })
+
+
+
     function save() {
+        AjaxService.GetComWeigth(vm.ComName).then(function (data) {
+            vm.Weigth = data;
+            console.log(data);
+        })
+
         var en = {};
         //en.List = JSON.stringify(vm.UploadFile);
         //en.TempColumns = 'List';
@@ -24,7 +36,7 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
         //    vm.List = data;
         //    toastr.success("储存成功");
         //})
-        GetPrintName('127.0.0.1');
+        //GetPrintName('127.0.0.1');
         //var json = "";
         //JSON.stringify(json);
 

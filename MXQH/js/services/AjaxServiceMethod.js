@@ -73,6 +73,8 @@
             Print: Print,
             //
             PrintMulti: PrintMulti,
+            GetComPortList: GetComPortList,
+            GetComWeigth:GetComWeigth,
             //播放声音
             PlayVoice: PlayVoice
         };
@@ -433,6 +435,26 @@
             }, function (mes) { d.reject(mes); });
             return d.promise;
         }
+
+        //获取com口列表
+        function GetComPortList(hostIp) {
+            var d = $q.defer();
+            SocketSend("GetComPortList", undefined, undefined, undefined, undefined, hostIp).then(function (data) {
+                d.resolve(data);
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+        //获取com口重量数据
+        function GetComWeigth(com, hostIp) {
+            var d = $q.defer();
+            SocketSend("GetComWeigth", undefined, undefined, undefined, com, hostIp).then(function (data) {
+                d.resolve(data);
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+
 
         function SocketSend(method, Id, TS, postData, printerName, hostIp) {
             var g = $q.defer();

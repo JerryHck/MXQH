@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('OrderOnLineCtrl', ['$rootScope', '$scope', 'MyPop', 'AjaxService', 'toastr', '$window',
+.controller('WorkOrderOnLineCtrl', ['$rootScope', '$scope', 'MyPop', 'AjaxService', 'toastr', '$window',
 function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
 
     var vm = this;
@@ -114,7 +114,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         en.RoutingId = vm.RoutingData.ID;
         en.CreateBy = $rootScope.User.UserNo;
         vm.promise = AjaxService.ExecPlan("MESOrderOnLine", "save", en).then(function (data) {
-            if (data.data[0].MsgType == 'Seccuss') {
+            if (data.data[0].MsgType == 'Success') {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
                 vm.OrderCount = data.data1[0];
                 //打印

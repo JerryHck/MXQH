@@ -1,22 +1,22 @@
 ﻿<div class="wrapper-xs">
     <div class="col-sm-5">
-        <div class="panel panel-default" ng-form="order.OrderForm">
+        <div class="panel panel-default" ng-form="wo.OrderForm">
             <div class="panel-heading font-bold text-center">工单上线</div>
             <div class="panel-body">
                 <div class="form-horizontal">
                     <div class="form-group">
                         <label class="col-lg-3 control-label">输入工单</label>
-                        <div class="col-lg-8" ng-class="{ 'has-error' : order.OrderForm.Order.$invalid }">
-                            <input type="text" name="Order" ng-model="order.Item.WorOrder" uib-typeahead="item.WorOrder as item.WorOrder for item in order.OrderList | filter:$viewValue | limitTo:8"
-                                   class="form-control" placeholder="工单号" ng-keyup="order.KeyDonwOrder($event)" required>
+                        <div class="col-lg-8" ng-class="{ 'has-error' : wo.OrderForm.wo.$invalid }">
+                            <input type="text" name="Order" ng-model="wo.Item.WorOrder" uib-typeahead="item.WorOrder as item.WorOrder for item in wo.OrderList | filter:$viewValue | limitTo:8"
+                                   class="form-control" placeholder="工单号" ng-keyup="wo.KeyDonwOrder($event)" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label">工艺流程</label>
-                        <div class="col-lg-8" ng-class="{ 'has-error' : order.OrderForm.router.$invalid }">
-                            <ui-select name="router" ng-model="order.RoutingData" theme="bootstrap" search-enabled="true" ng-required="true">
-                                <ui-select-match placeholder="选择类型..." class="h6">{{ $select.selected.RoutingName }}</ui-select-match>
-                                <ui-select-choices repeat="item in order.RoutingList | filter: $select.search track by item.ID">
+                        <div class="col-lg-8" ng-class="{ 'has-error' : wo.OrderForm.router.$invalid }">
+                            <ui-select name="router" ng-model="wo.RoutingData" theme="bootstrap" search-enabled="true" ng-required="true">
+                                <ui-select-match placeholder="选择工艺..." class="h6">{{ $select.selected.RoutingName }}</ui-select-match>
+                                <ui-select-choices repeat="item in wo.RoutingList | filter: $select.search track by item.ID">
                                     <div ng-bind-html="item.RoutingName | highlight: $select.search"></div>
                                 </ui-select-choices>
                             </ui-select>
@@ -25,17 +25,17 @@
                     <div class="form-group">
                         <label class="col-lg-3 control-label">当前工序</label>
                         <div class="col-lg-8 form-control-static">
-                            <span class="text-info font-bold" ng-if="order.RoutingData.Code">
-                                <!--[{{ order.RoutingData.Code }}]-->
-                                {{ order.RoutingData.ProcedureName }}
+                            <span class="text-info font-bold" ng-if="wo.RoutingData.Code">
+                                <!--[{{ wo.RoutingData.Code }}]-->
+                                {{ wo.RoutingData.ProcedureName }}
                             </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 control-label">内控码</label>
-                        <div class="col-lg-8" ng-class="{ 'has-error' : order.OrderForm.InCode.$invalid }">
-                            <input type="text" ng-disabled="order.OrderForm.Order.$invalid|| order.OrderForm.router.$invalid" class="form-control"
-                                   ui-focus="order.Focus.SNCode" name="InCode" ng-model="order.Item.InCode" placeholder="生产条码" ng-keyup="order.KeyDonwInCode($event)" required>
+                        <div class="col-lg-8" ng-class="{ 'has-error' : wo.OrderForm.InCode.$invalid }">
+                            <input type="text" ng-disabled="wo.OrderForm.wo.$invalid|| wo.OrderForm.router.$invalid" class="form-control"
+                                   ui-focus="wo.Focus.SNCode" name="InCode" ng-model="wo.Item.InCode" placeholder="生产条码" ng-keyup="wo.KeyDonwInCode($event)" required>
                             <div class="h6 text-danger">扫描内控码上线</div>
                         </div>
                     </div>
@@ -43,12 +43,12 @@
                         <div class="col-lg-offset-3 col-lg-9">
                             <div class="checkbox col-md-5">
                                 <label class="i-checks">
-                                    <input type="checkbox" ng-model="order.IsAuto"><i></i> 自动合格
+                                    <input type="checkbox" ng-model="wo.IsAuto"><i></i> 自动合格
                                 </label>
                             </div>
                             <div class="col-md-7">
-                                <span><button type="submit" class="btn btn-sm btn-success" ng-click="order.InCodeToDb()" ng-disabled="order.OrderForm.$invalid || order.IsAuto">合格</button></span>
-                                <!--<span class="pl-md-1"><button type="submit" class="btn btn-sm btn-success" ng-click="order.NgSave()" ng-disabled="order.OrderForm.$invalid || order.IsAuto">不良</button></span>-->
+                                <span><button type="submit" class="btn btn-sm btn-success" ng-click="wo.InCodeToDb()" ng-disabled="wo.OrderForm.$invalid || wo.IsAuto">合格</button></span>
+                                <!--<span class="pl-md-1"><button type="submit" class="btn btn-sm btn-success" ng-click="wo.NgSave()" ng-disabled="wo.OrderForm.$invalid || wo.IsAuto">不良</button></span>-->
                             </div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
             <div class="panel-body">
                 <div class="list-group">
                     <ul class="list-group bg-white">
-                        <li class="list-group-item" ng-repeat="item in order.MesList track by item.Id" ng-class="{ 'text-danger' : !item.IsOk, 'text-success':item.IsOk }">
+                        <li class="list-group-item" ng-repeat="item in wo.MesList track by item.Id" ng-class="{ 'text-danger' : !item.IsOk, 'text-success':item.IsOk }">
                             <span herf class="pull-left">
                                 <i class="glyphicon" ng-class="{ 'glyphicon-remove' : !item.IsOk, 'glyphicon-ok':item.IsOk }"></i>
                             </span>
@@ -73,74 +73,74 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6" ng-form="order.UpdateForm">
+    <div class="col-sm-6" ng-form="wo.UpdateForm">
         <div class="panel panel-default scroll-y" style="max-height:600px">
             <div class="panel-heading font-bold text-center">
-                工单 <span class="h4 font-bold text-info">{{ order.OrderData.WorOrder }}</span>信息
+                工单 <span class="h4 font-bold text-info">{{ wo.OrderData.WorOrder }}</span>信息
             </div>
             <div class="panel-body h5">
-                <div class="form-horizontal" ng-show="order.OrderData">
+                <div class="form-horizontal" ng-show="wo.OrderData">
                     <div class="form-group">
                         <label class="control-label col-sm-2">产品编号:</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static font-bold">{{order.OrderData.MaterialCode}}</p>
+                            <p class="form-control-static font-bold">{{wo.OrderData.MaterialCode}}</p>
                         </div>
                         <label class="control-label col-sm-2">产品名称:</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static font-bold">{{order.OrderData.MaterialName}}</p>
+                            <p class="form-control-static font-bold">{{wo.OrderData.MaterialName}}</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2">计划日期:</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static font-bold">{{order.OrderData.AssemblyDate}}</p>
+                            <p class="form-control-static font-bold">{{wo.OrderData.AssemblyDate}}</p>
                         </div>
                         <label class="control-label col-sm-2">产线名称:</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static font-bold">{{order.OrderData.AssemblyLineName}}</p>
+                            <p class="form-control-static font-bold">{{wo.OrderData.AssemblyLineName}}</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2">出货地:</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static font-bold">{{order.OrderData.SendPlaceName}}</p>
+                            <p class="form-control-static font-bold">{{wo.OrderData.SendPlaceName}}</p>
                         </div>
                         <label class="control-label col-sm-2">ERP销售单:</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static font-bold">{{order.OrderData.ERPSO}}</p>
+                            <p class="form-control-static font-bold">{{wo.OrderData.ERPSO}}</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2">工单数量:</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static font-bold h4 text-success">{{order.OrderData.Quantity}}</p>
+                            <p class="form-control-static font-bold h4 text-success">{{wo.OrderData.Quantity}}</p>
                         </div>
                         <label class="control-label col-sm-2">ERP订单数:</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static font-bold">{{order.OrderData.ERPQuantity}}</p>
+                            <p class="form-control-static font-bold">{{wo.OrderData.ERPQuantity}}</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2">最大可投量:</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static font-bold  h4 text-success">{{order.OrderData.MaxOverCount}}</p>
+                            <p class="form-control-static font-bold  h4 text-success">{{wo.OrderData.MaxOverCount}}</p>
                         </div>
-                        <label class="control-label col-sm-2">要求直通率:</label>
+                        <label class="control-label col-sm-2">最低直通率:</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static font-bold  h4 text-success">{{order.RoutingData.LowerFPY}}%</p>
+                            <p class="form-control-static font-bold  h4 text-success">{{wo.RoutingData.LowerFPY}}%</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-2">已总投入:</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static font-bold  h4 text-success">{{order.OrderCount.ToTalCount}}</p>
+                            <p class="form-control-static font-bold  h4 text-success">{{wo.OrderCount.ToTalCount}}</p>
                         </div>
                         <label class="control-label col-sm-2">今日投入:</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static font-bold  h4 text-success">{{order.OrderCount.ToDayCount}}</p>
+                            <p class="form-control-static font-bold  h4 text-success">{{wo.OrderCount.ToDayCount}}</p>
                         </div>
                     </div>
-                    <div class="form-group" ng-if="order.OrderCount.ToTalCount>order.OrderData.ERPQuantity">
+                    <div class="form-group" ng-if="wo.OrderCount.ToTalCount>wo.OrderData.ERPQuantity">
                         <label class="control-label col-sm-2">警告:</label>
                         <div class="col-sm-10">
                             <p class="form-control-static font-bold text-danger"> 当前工单投入量已大于工单计划量</p>
@@ -148,15 +148,15 @@
                     </div>
                 </div>
             </div>
-            <!--<pre>{{ order.OrderData | json }}</pre>-->
+            <!--<pre>{{ wo.OrderData | json }}</pre>-->
         </div>
     </div>
     <!--<div class="col-sm-2">
         <div class="panel panel-default">
             <div class="panel-heading font-bold text-center">今日上线内控码</div>
             <div class="panel-body" style="height: 500px">
-                <div class="list-group" ng-show="order.TodayInCodeList">
-                    <a class="list-group-item" ng-repeat="sn in order.TodayInCodeList">
+                <div class="list-group" ng-show="wo.TodayInCodeList">
+                    <a class="list-group-item" ng-repeat="sn in wo.TodayInCodeList">
                         <span class="badge badge-sm bg-danger pull-left">{{ $index + 1 }}</span>
                         <span class="padder">{{ sn.InternalCode }}</span>
                     </a>
