@@ -233,7 +233,7 @@
                 </div>
             </div>
             <div id="step4" class="tab-pane fade" ng-class="{ 'active in' : sign.indextab == 3 }">
-                <div class="col">
+                <div class="col" ng-if="!sign.Mes">
                     <div id="bower" class="wrapper"></div>
                     <div class="line b-b"></div>
                     <h2 class="m-t-xl text-center">确认注册</h2>
@@ -250,6 +250,7 @@
                         </span>
                     </div>
                 </div>
+                <div ng-if="sign.Mes" class="h3 text-center text-success">{{ sign.Mes }}</div>
                 <br /><br /><br /><br /><br />
             </div>
         </div>
