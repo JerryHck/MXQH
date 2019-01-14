@@ -189,12 +189,19 @@
                                     <div class="form-horizontal">
                                         <div class="col-sm-12">
                                             <div class="form-group py-xl-1 pt-xl-1" ng-class="{ 'has-error' : FormFun.Html.$invalid }">
-                                                <label class="col-lg-2 control-label text-info">HTML文件</label>
-                                                <div class="col-lg-10">
+                                                <label class="col-sm-2 control-label text-info">HTML文件</label>
+                                                <div class="col-sm-3">
+                                                    <span class="btn-group">
+                                                        <label class="btn btn-default" ng-model="fun.SelectedFun.IsSystem" ng-disabled="!fun.editFun" uib-btn-radio="true" ng-click="fun.FunctionFile()">内置</label>
+                                                        <label class="btn btn-default" ng-model="fun.SelectedFun.IsSystem" ng-disabled="!fun.editFun" uib-btn-radio="false" ng-click="fun.FunctionFile()">自定义</label>
+                                                    </span>
+                                                </div>
+                                                <div class="col-sm-7" ng-if="fun.SelectedFun.IsSystem">
                                                     <div fun-file-select file-type="1" ng-model="fun.SelectedFun.FunHtml" ng-disabled="!fun.editFun" clear="true" ng-name="Html" my-required="true"></div>
-                                                    <div ng-messages="FormFun.Html.$error" class="help-block" role="alert">
-                                                        <div ng-message="required">请选择对应Html文件</div>
-                                                    </div>
+                                                </div>
+                                                <div class="col-sm-7 input-group" ng-if="!fun.SelectedFun.IsSystem">
+                                                    <span class="input-group-addon" ng-if="fun.editFun" title="编辑html/js文件"><a class="text-success" ng-click="fun.OpenHtmlJs()"><i class="glyphicon glyphicon-edit"></i></a></span>
+                                                    <input class="form-control" ng-model="fun.SelectedFun.FunHtml" disabled />
                                                 </div>
                                             </div>
                                             <div class="form-group-sm py-xl-1 pt-xl-1" ng-if="fun.editFun">

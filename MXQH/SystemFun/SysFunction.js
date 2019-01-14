@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('FunctionCtrl', ['$rootScope', '$scope', '$http', 'Dialog', 'toastr', 'AjaxService', 'MyPop',
-function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, MyPop) {
+.controller('FunctionCtrl', ['$rootScope', '$scope', '$window', 'Dialog', 'toastr', 'AjaxService', 'MyPop',
+function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
 
     var vm = this;
     //查询所有功能
@@ -40,6 +40,9 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, MyPop) {
     vm.FunLoadDelete = FunLoadDelete;
     vm.FunLoadAdd = FunLoadAdd;
     vm.SaveFunInfo = SaveFunInfo;
+
+    vm.FunctionFile = FunctionFile;
+    vm.OpenHtmlJs = OpenHtmlJs;
 
     //选择系统
     vm.ChangeSys = ChangeSys;
@@ -252,8 +255,10 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, MyPop) {
             vm.SelectedFun.FunImge = 'glyphicon glyphicon-chevron-right';
             vm.SelectedFun.SysNo = vm.SelectedRoot.SysNo;
             vm.SelectedFun.ParFunNo = vm.SelectedRoot.FunNo;
+            vm.SelectedFun.IsSystem = false;
             vm.SelectedFun.FunLoad = [];
             vm.FunList.push(vm.SelectedFun);
+            //FunctionFile();
         }
     }
 
@@ -323,6 +328,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, MyPop) {
             l.SortNo = i;
         });
         var en = angular.copy(vm.SelectedFun);
+        en.Content = undefined;
         en.FunLoad = undefined;
         en.ListLoad = JSON.stringify(vm.SelectedFun.FunLoad);
         en.FunHtml = vm.SelectedFun.FunHtml || '';
@@ -330,13 +336,30 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, MyPop) {
         en.ControllerAs = vm.SelectedFun.ControllerAs || '';
         en.FunDesc = vm.SelectedFun.FunDesc || '';
         en.OrderBy = vm.FunList.Length || 1;
-        en.CreateBy = "Sys";
+        en.IsSystem = vm.SelectedFun.IsSystem;
+        en.CreateBy = $rootScope.User.UserNo;
         en.TempColumns = 'ListLoad';
         vm.promise = AjaxService.ExecPlan('FunRoot', "save", en).then(function (data) {
+            var Content = vm.SelectedFun.Content;
             //更新数据
             reflashData();
             //更新功能基本信息
-            AjaxService.LoginAction("ReInit")
+            AjaxService.LoginAction("ReInit");
+            //保存文件
+            if (!en.IsSystem && data.data[0] && data.data[0].FunNo && Content) {
+                var htmlEn = {};
+                htmlEn.FileName = data.data[0].FunNo + ".html";
+                htmlEn.Text = $window.btoa($window.encodeURIComponent(Content.Html));
+                //保存html
+                AjaxService.AjaxHandle("WriteFile", JSON.stringify(htmlEn));
+
+                var JsEn = {};
+                JsEn.FileName = data.data[0].FunNo + ".js";
+                JsEn.Text = $window.btoa($window.encodeURIComponent(Content.Js));
+                //保存html
+                AjaxService.AjaxHandle("WriteFile", JSON.stringify(JsEn));
+
+            }
             toastr.success('储存成功');
         })
     }
@@ -385,6 +408,77 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, MyPop) {
                 AjaxService.LoginAction("ReInit");
             })
         }
+    }
+
+    //切换文件方式
+    function FunctionFile(f) {
+        //添加文件
+        if (vm.SelectedFun.IsSystem) {
+            var have = false, index = -1;
+            vm.SelectedFun.FunHtml = vm.OriHtml;
+            var js = "CustomFun\\" + vm.SelectedFun.FunNo + '.js';
+            angular.forEach(vm.SelectedFun.FunLoad, function (f, i) {
+                if (f.LoadName == js) {
+                    have = true;
+                    index = i; return;
+                }
+            });
+            if (have) {
+                vm.SelectedFun.FunLoad.splice(index, 1);
+            }
+        }
+        else {
+            var have = false;
+            vm.OriHtml = vm.SelectedFun.FunHtml;
+            vm.SelectedFun.FunHtml = "CustomFun\\" + vm.SelectedFun.FunNo + '.html';
+            var js = "CustomFun\\" + vm.SelectedFun.FunNo + '.js';
+            angular.forEach(vm.SelectedFun.FunLoad, function (f) {
+                if (f.LoadName == js) {
+                    have = true; return;
+                }
+            });
+            if (!have) {
+                var en = {};
+                en.FunNo = vm.SelectedFun.FunNo;
+                en.LoadName = js;
+                vm.SelectedFun.FunLoad = vm.SelectedFun.FunLoad || [];
+                vm.SelectedFun.FunLoad.push(en);
+            }
+        }
+    }
+
+    //打开html 编辑窗口
+    function OpenHtmlJs() {
+        //if (!vm.SelectedFun.Content) {
+        //    //获取js， html文件
+        //    AjaxService.AjaxHandle("GetFileText", vm.SelectedFun.FunNo).then(function (data) {
+        //        vm.SelectedFun.Content = {};
+        //        vm.SelectedFun.Content.Html = (data.Html || "").replace(/ControlNew/g, vm.SelectedFun.ControllerAs);
+        //        vm.SelectedFun.Content.Js = (data.Js || "").replace(/NewJsCtrl/g, vm.SelectedFun.Controller);
+        //        OpenConten();
+        //    })
+        //}
+        //else {
+        //    OpenConten();
+        //}
+
+        OpenConten();
+    }
+
+    function OpenConten() {
+        var resolve = {
+            ItemData: function () {
+                return vm.SelectedFun;
+            }
+        };
+        Dialog.open("FunFileContenDialog", resolve).then(function (data) {
+            vm.SelectedFun.Content = data;
+        }).catch(function (reason) {
+        });
+    }
+
+    function GetNewJs() {
+        var js = ""
     }
 }
 ]);

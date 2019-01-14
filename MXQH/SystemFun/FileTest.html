@@ -30,8 +30,20 @@
         <pre>{{ file.List | json }}</pre>-->
     </div>
     <a href="BarCode:hello">调用exe</a>
-    <form style="width:300px; height:300px"></form>
+    
+    <!--<div text-angular ng-model="file.richtext"></div>-->
+    <!--<div class="wrapper-md">
+        <div text-angular ng-model="file.htmlVariable"></div>
+    </div>-->
+    <div class="row wrapper-sm">
+        <div class="col-md-12">
+            <textarea class="form-control" rows="15" ng-model="file.htmlVariable "></textarea>
+        </div>
+    </div>
+    
+    <!--<div text-angular="text-angular" name="htmlcontent" ng-model="file.htmlVariable"></div>-->
 
+    <pre>{{ file.htmlVariable }}</pre>
 
     <div class="form-horizontal">
         <div class="form-group col-md-6">
@@ -50,7 +62,7 @@
     </div>
 
 
-    <pre><span class="h2">{{ vm.Weigth }}</span></pre>
+    <pre><span class="h2">{{ file.Weigth }}</span></pre>
 
     <!--<div id="file2" import-sheet-js opts="file.FileData2" ng-complete="file.Do2()"></div>-->
     <!--<div import-sheet-js opts="file.FileData3" ng-complete="file.Do()"></div>-->

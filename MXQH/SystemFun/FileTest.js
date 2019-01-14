@@ -20,13 +20,15 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
         console.log(data);
     })
 
+    AjaxService.AjaxHandle("GetFileText", "System.html").then(function (data) {
+        vm.htmlVariable = data.Msg;
+    })
 
 
     function save() {
-        AjaxService.GetComWeigth(vm.ComName).then(function (data) {
+        AjaxService.GetComWeigth(vm.ComName, function (data) {
             vm.Weigth = data;
-            console.log(data);
-        })
+        });
 
         var en = {};
         //en.List = JSON.stringify(vm.UploadFile);

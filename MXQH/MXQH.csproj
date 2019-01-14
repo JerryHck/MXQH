@@ -63,6 +63,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Access.html" />
+    <Content Include="css\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="css\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="css\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="css\font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="css\font-awesome.min.css" />
+    <Content Include="Data\Handler\New.html" />
+    <Content Include="Data\Handler\New.js" />
     <Content Include="index.html" />
     <Content Include="js\Access.js" />
     <Content Include="Access\ChangePassword.html" />
@@ -180,7 +187,6 @@
     <Content Include="MESFun\OrderReWork.html" />
     <Content Include="MESFun\OrderReWork.js" />
     <Content Include="js\mxqh.min.js" />
-    <Content Include="js\plugin.js" />
     <Content Include="js\plugin.min.js" />
     <Content Include="MESFun\SnCodeReBind.html" />
     <Content Include="MESFun\SnCodeReBind.js" />
@@ -210,6 +216,14 @@
     <Content Include="Scripts\jquery\ystep\ystep.js" />
     <Content Include="Scripts\sweetalert.js" />
     <Content Include="Scripts\sweetalert.min.js" />
+    <Content Include="Scripts\TestAngular\textAngular-rangy.min.js" />
+    <Content Include="Scripts\TestAngular\textAngular-sanitize.js" />
+    <Content Include="Scripts\TestAngular\textAngular-sanitize.min.js" />
+    <Content Include="Scripts\TestAngular\textAngular.css" />
+    <Content Include="Scripts\TestAngular\textAngular.js" />
+    <Content Include="Scripts\TestAngular\textAngular.min.js" />
+    <Content Include="Scripts\TestAngular\textAngular.umd.js" />
+    <Content Include="Scripts\TestAngular\textAngularSetup.js" />
     <Content Include="SDKFun\ATEQuery.html" />
     <Content Include="SDKFun\ATEQuery.js" />
     <Content Include="SDKFun\RegUserSignDialog.html" />
@@ -350,6 +364,39 @@
     <Content Include="Content\font\fontawesome-webfont.eot" />
     <Content Include="Content\font\fontawesome-webfont.ttf" />
     <Content Include="Content\font\fontawesome-webfont.woff" />
+    <Content Include="css\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="css\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="css\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="css\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="css\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="css\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="css\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="css\font-awesome-4.7.0\less\core.less" />
+    <Content Include="css\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="css\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="css\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="css\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="css\font-awesome-4.7.0\less\list.less" />
+    <Content Include="css\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="css\font-awesome-4.7.0\less\path.less" />
+    <Content Include="css\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="css\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="css\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="css\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="css\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="css\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="css\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="css\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="css\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="css\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="css\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="css\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="css\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="css\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="css\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="css\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="css\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="css\font-awesome-4.7.0\scss\_variables.scss" />
     <None Include="css\less\app.table.less" />
     <None Include="Properties\PublishProfiles\2.pubxml" />
     <None Include="Properties\PublishProfiles\MXQH.pubxml" />
@@ -473,6 +520,8 @@
     <Content Include="SystemFun\EnProcSetDialog.js" />
     <Content Include="SystemFun\FileTest.html" />
     <Content Include="SystemFun\FileTest.js" />
+    <Content Include="SystemFun\FunFileContenDialog.html" />
+    <Content Include="SystemFun\FunFileContenDialog.js" />
     <Content Include="SystemFun\IconDialog.html" />
     <Content Include="SystemFun\IconDialog.js" />
     <Content Include="SystemFun\RoleDialog.html" />
@@ -547,7 +596,6 @@
   <ItemGroup>
     <Content Include="css\animate.css" />
     <Content Include="css\bootstrap.css" />
-    <Content Include="css\font-awesome.min.css" />
     <Content Include="css\font.css" />
     <Content Include="css\simple-line-icons.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -649,6 +697,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Handler\FileSave.cs" />
     <Compile Include="Data\Handler\FileData.ashx.cs">
       <DependentUpon>FileData.ashx</DependentUpon>
     </Compile>

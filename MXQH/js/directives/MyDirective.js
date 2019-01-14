@@ -59,6 +59,31 @@ angular.module('MyDirective')
         }
     }
 }])
+.directive("datePicker", ['$ocLazyLoad', function ($ocLazyLoad) {
+    return {
+        require: '?ngModel',
+        restrict: 'A',
+        scope: {
+            ngModel: '=',
+            option: '='
+        },
+        link: function (scope, element, attr, ngModel) {
+            scope.option = scope.option ||
+                {
+                    formatTime: 'H:i',
+                    formatDate: 'Y.m.d',
+                    timepicker: false,
+                }
+            //scope.option.formatTime = scope.option.formatTime || 'H:i';
+            //scope.option.formatDate = scope.option.formatDate || 'Y.m.d';
+
+            $ocLazyLoad.load('datetimepicker').then(function () {
+                $.datetimepicker.setLocale('zh');
+                element.datetimepicker(scope.option);
+            })
+        }
+    }
+}])
 .directive('companySelect', ['AjaxService', function (AjaxService) {
     return {
         restrict: 'A',
@@ -518,12 +543,13 @@ angular.module('MyDirective')
             connectName: "=",
             clear: '=',
             selectClass: '@',
+            autoFirst: '@',
             myRequired: '@',
             ngName: '@',
             ngChange:'&'
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '    <ui-select ng-model="$parent.ngModel" ng-change="ngChange()" class="{{ selectClass }}" theme="bootstrap" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
+                  + '    <ui-select ng-model="$parent.ngModel" ng-change="ValueChange()" class="{{ selectClass }}" theme="bootstrap" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
                   + '         <ui-select-match placeholder="请选择...">{{ $select.selected.EntityName }}</ui-select-match>'
                   + '          <ui-select-choices class="pl-1" repeat="item.EntityName as item in data | filter: $select.search track by item.EntityName" refresh="refresh($select.search)" refresh-delay="0">'
                   + '             <div ng-bind-html="item.EntityName | highlight: $select.search"></div>'
@@ -540,6 +566,7 @@ angular.module('MyDirective')
     };
     function link(scope, element, attrs) {
         scope.$watch('connectName', getData);
+        scope.autoFirst = scope.autoFirst || "false";
         scope.data = undefined;
         function getData(newValue, oldValue) {
             scope.data = undefined;
@@ -549,8 +576,17 @@ angular.module('MyDirective')
             en.value = scope.connectName || '';
             AjaxService.GetPlans("SelectEntity", en).then(function (data) {
                 scope.data = data;
+                if (data.length > 0 && scope.autoFirst.toLowerCase() == 'true') {
+                    scope.ngModel = scope.ngModel || data[0].EntityName;
+                }
                 scope.ListData = angular.copy(scope.data);
             });
+        }
+
+        scope.ValueChange = function () {
+            setTimeout(function () {
+                scope.ngChange();
+            }, 100);
         }
 
         scope.refresh = function refresh(ser) {

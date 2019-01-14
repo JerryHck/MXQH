@@ -1,0 +1,153 @@
+﻿<div class="wrapper-xs bg-light">
+    <uib-tabset active="active" type="tabs">
+        <uib-tab index="0">
+            <uib-tab-heading class="h5">功能设定</uib-tab-heading>
+            <div class="panel">
+                <div class="form-horizontal col-md-12 wrapper-xs">
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label text-info">功能类型：</label>
+                        <div class="col-md-8">
+                            <span class="btn-group">
+                                <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.FunType" uib-btn-radio="'B'" ng-click="fun.FunctionFile()">功能</label>
+                                <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.FunType" uib-btn-radio="'R'" ng-click="fun.FunctionFile()">报表</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label text-info">数据类型：</label>
+                        <div class="col-md-8">
+                            <span class="btn-group">
+                                <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.DataType" uib-btn-radio="'E'" ng-click="fun.FunType()">实体</label>
+                                <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.DataType" uib-btn-radio="'P'" ng-click="fun.FunType()">存储过程</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-4 control-label text-info">查询实体：</label>
+                        <div class="col-md-8">
+                            <div entity-select ng-model="fun.ThisFun.EntityName" auto-first="true" select-class="'text-xs'" ng-change="fun.ChangeEntity()"></div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6" ng-show="fun.ThisFun.DataType == 'P'">
+                        <label class="col-md-4 control-label text-info">存储过程：</label>
+                        <div class="col-md-8">
+                            <ui-select name="remark" ng-model="fun.ThisFun.ShortName" theme="bootstrap" search-enabled="true" ng-change="fun.ChangeProc()">
+                                <ui-select-match placeholder="选择存储过程.."><span>{{ $select.selected.ProcSchema }}.{{ $select.selected.ProcName }}</span></ui-select-match>
+                                <ui-select-choices repeat="item.ShortName as item in fun.ProcList | filter: $select.search track by item.ShortName">
+                                    <div><span ng-bind-html="item.ProcSchema | highlight: $select.search"></span>.<span ng-bind-html="item.ProcName | highlight: $select.search"></span></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default col-md-12 wrapper-xs">
+                    <div class="panel-heading text-center font-bold">
+                        条件栏位设定
+                        <span class="pull-right">
+                            <a class="text-success" ng-click="fun.GenCode()">
+                                <i class="fa fa-support"></i>生成代码
+                            </a>
+                        </span>
+                    </div>
+                    <div class="panel-body scroll-y" style="height:450px;">
+                        <div class="form-horizontal wrapper-xs">
+                            <div class="form-group col-md-12">
+                                <label class="col-md-2 control-label text-danger">查询条件：</label>
+                                <div class="col-md-10">
+                                    <div class="col-md-12" ng-if="fun.ThisFun.DataType == 'E'" ng-form="fun.NewSerForm">
+                                        <div class="col-md-1 col-sm-2 col-xs-2 form-group-sm no-padder">
+                                            <button class="btn btn-sm btn-success" ng-disabled="fun.NewSerForm.$invalid" ng-click="fun.AddSer()"><i class="glyphicon glyphicon-plus"></i></button>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-6 no-padder form-group-sm " ng-class="{ 'has-error' : fun.NewSerForm.ColumnName.$invalid }">
+                                            <ui-select name="ColumnName" ng-model="fun.newSer.ColumnName" theme="bootstrap" search-enabled="true" ng-required="true" ng-change="fun.ChangeSys()">
+                                                <ui-select-match placeholder="选择条件属性.."><span>{{ $select.selected.ColumnName }}</span></ui-select-match>
+                                                <ui-select-choices repeat="item.ColumnName as item in fun.EnColList | filter: $select.search track by item.ColumnName">
+                                                    <div><span ng-bind-html="item.ColumnName | highlight: $select.search"></span></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        <div class="col-md-2 col-sm-2 col-xs-4 form-group-sm" ng-class="{ 'has-error' : fun.NewSerForm.SerType.$invalid }">
+                                            <div config-select ng-model="fun.newSer.SerType" ng-name="SerType" config-option="fun.SerTypeConfig" my-required="true"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 wrapper-xs" ng-repeat="ser in fun.ThisFun.SerList ">
+                                        <div class="col-md-1 col-sm-2 col-xs-2">
+                                            <label class="control-label">
+                                                <a ng-click="fun.DeleteSer($index)" class="text-danger"><i class="glyphicon glyphicon-trash"></i></a>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-6 form-group-sm no-padder">
+                                            <label class="control-label text-left">{{ ser.ColumnName }}</label>
+                                        </div>
+                                        <div class="col-md-2 col-sm-2 col-xs-4 form-group-sm">
+                                            <div config-select ng-model="ser.SerType" ng-name="SeType" config-option="fun.SerTypeConfig" my-required="true"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row no-padder">
+                            <div class="col-md-4 text-xs wrapper-xs">
+                                <div class="b bg-light list-group-item">
+                                    <div class="row v-middle">
+                                        <label class="col-md-5 font-bold text-info">栏名</label>
+                                        <label class="col-md-4 font-bold text-info">中文名</label>
+                                        <label class="col-md-3 i-checks i-checks-sm">
+                                            <input type="checkbox" ng-change="fun.IsColAll()" ng-model="fun.IsAll"><i></i>All
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="b list-group-item" ng-repeat="col in fun.EnColList">
+                                    <div class="row v-middle">
+                                        <label class="col-md-5">{{ col.ColumnName }}</label>
+                                        <label class="col-md-5">{{ col.ColumnText }}</label>
+                                        <label class="col-md-2 i-checks i-checks-sm">
+                                            <input type="checkbox" ng-change="fun.IsColChange(col)" ng-model="col.IsShow"><i></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="wrapper-xs col-md-12 b-b" ng-repeat="show in fun.ThisFun.ColList " ng-drop="true" ng-drop-success="fun.Drop($data,$index)">
+                                    <div class="col-md-3 no-padder">
+                                        <label class="control-label text-left">
+                                            <i class="glyphicon glyphicon-move text-info" ng-drag="true"
+                                               ng-drag-data="show" ng-drag-success="fun.Drag($data,$index)"></i>{{ show.ColumnName }}
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4 form-group-sm no-padder">
+                                        <input type="text" name="ColumnText" class="form-control" placeholder="中文栏名" ng-model="show.ColumnText" />
+                                    </div>
+                                    <div class="col-md-2 form-group-sm m-l-xs">
+                                        <input type="text" name="Width" class="form-control" placeholder="宽度" ng-model="show.Width" />
+                                    </div>
+                                    <div class="col-md-1 no-padder">
+                                        <a class="text-danger pull-right" ng-click="fun.DeleteFunCol(show, $index)"><i class="glyphicon glyphicon-remove"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<pre>{{ fun.List|json }}</pre>-->
+            </div>
+        </uib-tab>
+        <uib-tab index="1">
+            <uib-tab-heading class="h5">HTML文件代码</uib-tab-heading>
+            <div class="panel">
+                <textarea class="form-control" rows="22" ng-model="fun.NewItem.Content.Html"></textarea>
+            </div>
+        </uib-tab>
+        <uib-tab index="2">
+            <uib-tab-heading class="h5">Js文件代码</uib-tab-heading>
+            <div class="panel">
+                <textarea class="form-control" rows="22" ng-model="fun.NewItem.Content.Js"></textarea>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</div>
+<div class="bg-light padder-v text-center">
+    <button class="btn btn-success" type="button" ng-click="fun.Ok()">确定</button>
+    <button class="btn btn-primary" type="button" ng-click="fun.cancel()">关闭</button>
+</div>
+

@@ -40,6 +40,8 @@
             PlanBak: PlanBak,
             //执行计划实体
             ExecPlan: ExecPlan,
+            //执行存储过程， 获取分页数据
+            ExecPlanPage:ExecPlanPage,
             //执行实体关联的存储过程,获取Excel文件
             ExecPlanToExcel: ExecPlanToExcel,
             //获得实体资料-单个
@@ -52,6 +54,8 @@
             Action: Action,
             //文件
             HandleFile: HandleFile,
+            //AjaxHandle
+            AjaxHandle:AjaxHandle,
             //
             AddDialog: AddDialog,
             GetTableConfig: GetTableConfig,
@@ -109,6 +113,16 @@
             return plan(name, json, "GetPlansPage", s, s + size, limitCol);
         }
 
+        //执行存储过程， 获取分页数据
+        function ExecPlanPage(name, shortName, json, index, size) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var s = index <= 1 ? 1 : (index - 1) * size + 1;
+            var en = getEn(name, shortName, json);
+            en.start = s;
+            en.end = s + size;
+            return Ajax(d, url, en, "ExecPlanPage");
+        }
+
         //获得计划资料-新增
         function PlanInsert(name, json) {
             return planAjax(name, JSON.stringify(json), "Insert");
@@ -153,18 +167,16 @@
         }
 
         function HandleFile(type) {
-            var d = $q.defer();
-            return AjaxHandle(d, "GetFileList", type);
+            return AjaxHandle("GetFileList", type);
         }
 
         function AddDialog(data) {
-            var d = $q.defer();
-            return AjaxHandle(d, "AddDialog", data);
+            return AjaxHandle("AddDialog", data);
         }
 
         //HTTP AJAX
-        function AjaxHandle(q, method, data) {
-
+        function AjaxHandle(method, data) {
+            var q = $q.defer();
             var en = { "method": method, "data": data };
             httpFun(q, appUrl + 'Data/Handler/FileData.ashx', en);
             return q.promise;
@@ -216,13 +228,13 @@
         function ExecPlan(name, shortName, json) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = getEn(name, shortName, json);
-            return Ajax(d, url, en, "ExecPlan")
+            return Ajax(d, url, en, "ExecPlan");
         }
 
         function ExecPlanMail(name, shortName, json) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = getEn(name, shortName, json);
-            return Ajax(d, url, en, "ExecPlanMail")
+            return Ajax(d, url, en, "ExecPlanMail");
         }
 
         function ExecPlanUpload(name, shortName, json, fileJson, dir) {
@@ -446,17 +458,15 @@
         }
 
         //获取com口重量数据
-        function GetComWeigth(com, hostIp) {
+        function GetComWeigth(com, Do) {
             var d = $q.defer();
-            SocketSend("GetComWeigth", undefined, undefined, undefined, com, hostIp).then(function (data) {
+            SocketSend("GetComWeigth", undefined, undefined, undefined, com, undefined, Do).then(function (data) {
                 d.resolve(data);
             }, function (mes) { d.reject(mes); });
             return d.promise;
         }
 
-
-
-        function SocketSend(method, Id, TS, postData, printerName, hostIp) {
+        function SocketSend(method, Id, TS, postData, printerName, hostIp, Do) {
             var g = $q.defer();
             try {
                 var strAddress = "ws://" + (hostIp || "127.0.0.1") + ":2018";
@@ -499,6 +509,11 @@
                         toastr.warning('服务器已有新版本的打印插件，请下载更新');
                         $window.location.href = reData.Data;
                     }
+
+                    if (Do) {
+                        Do(reData);
+                    }
+
                 };
             }
             catch (e) {
