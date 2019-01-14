@@ -143,10 +143,11 @@ function SignUpCtrl($scope, AjaxService, toastr, appUrl, FileUrl, $window) {
         en.dir = "SDKRegister";
 
         AjaxService.DoBefore("ExecPlanUpload", en).then(function (data) {
-            toastr.success("储存成功");
+            vm.Mes = "已注册成功， 审核结果会发送至您填写的邮箱";
+            toastr.success(vm.Mes);
             setTimeout(function () {
-                $window.location.href = appUrl + 'Acess.html#!/login';
-            }, 3000);
+                $window.location.href = appUrl + 'Access.html#!/login';
+            }, 6000);
         })
     }
 
