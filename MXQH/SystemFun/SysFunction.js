@@ -359,6 +359,9 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
                 //保存html
                 AjaxService.AjaxHandle("WriteFile", JSON.stringify(JsEn));
 
+                //保存代码设定
+                AjaxService.ExecPlan('FunCodeSet', "save", vm.FunCodeSetting);
+
             }
             toastr.success('储存成功');
         })
@@ -472,7 +475,8 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
             }
         };
         Dialog.open("FunFileContenDialog", resolve).then(function (data) {
-            vm.SelectedFun.Content = data;
+            vm.SelectedFun.Content = data.Content;
+            vm.FunCodeSetting = data.FunSetting;
         }).catch(function (reason) {
         });
     }

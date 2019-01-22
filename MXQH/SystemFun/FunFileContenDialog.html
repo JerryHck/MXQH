@@ -1,10 +1,42 @@
 ﻿<div class="wrapper-xs bg-light">
-    <uib-tabset active="active" type="tabs">
+    <uib-tabset active="fun.Index" type="tabs">
         <uib-tab index="0">
+            <uib-tab-heading class="h5">HTML文件代码</uib-tab-heading>
+            <div class="panel">
+                <textarea class="form-control" rows="22" ng-model="fun.NewItem.Content.Html"></textarea>
+            </div>
+        </uib-tab>
+        <uib-tab index="1">
+            <uib-tab-heading class="h5">Js文件代码</uib-tab-heading>
+            <div class="panel">
+                <textarea class="form-control" rows="22" ng-model="fun.NewItem.Content.Js"></textarea>
+            </div>
+        </uib-tab>
+        <uib-tab index="2">
             <uib-tab-heading class="h5">功能设定</uib-tab-heading>
             <div class="panel">
                 <div class="form-horizontal col-md-12 wrapper-xs">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-12">
+                        <div class="row no-padder">
+                            <div class="col-md-6">
+                                <label class="col-md-4 control-label text-info">功能名称：</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" ng-model="fun.ThisFun.FunName" placeholder="功能名称" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-md-4 control-label text-info">数据类型：</label>
+                                <div class="col-md-8">
+                                    <span class="btn-group">
+                                        <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.DataType" uib-btn-radio="'E'" ng-click="fun.FunType()">实体</label>
+                                        <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.DataType" uib-btn-radio="'P'" ng-click="fun.FunType()">存储过程</label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!--<div class="form-group col-md-6">
                         <label class="col-md-4 control-label text-info">功能类型：</label>
                         <div class="col-md-8">
                             <span class="btn-group">
@@ -12,16 +44,7 @@
                                 <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.FunType" uib-btn-radio="'R'" ng-click="fun.FunctionFile()">报表</label>
                             </span>
                         </div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="col-md-4 control-label text-info">数据类型：</label>
-                        <div class="col-md-8">
-                            <span class="btn-group">
-                                <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.DataType" uib-btn-radio="'E'" ng-click="fun.FunType()">实体</label>
-                                <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.DataType" uib-btn-radio="'P'" ng-click="fun.FunType()">存储过程</label>
-                            </span>
-                        </div>
-                    </div>
+                    </div>-->
                     <div class="form-group col-md-6">
                         <label class="col-md-4 control-label text-info">查询实体：</label>
                         <div class="col-md-8">
@@ -49,7 +72,7 @@
                             </a>
                         </span>
                     </div>
-                    <div class="panel-body scroll-y" style="height:450px;">
+                    <div class="panel-body scroll-y" style="height:400px;">
                         <div class="form-horizontal wrapper-xs">
                             <div class="form-group col-md-12">
                                 <label class="col-md-2 control-label text-danger">查询条件：</label>
@@ -59,12 +82,15 @@
                                             <button class="btn btn-sm btn-success" ng-disabled="fun.NewSerForm.$invalid" ng-click="fun.AddSer()"><i class="glyphicon glyphicon-plus"></i></button>
                                         </div>
                                         <div class="col-md-4 col-sm-4 col-xs-6 no-padder form-group-sm " ng-class="{ 'has-error' : fun.NewSerForm.ColumnName.$invalid }">
-                                            <ui-select name="ColumnName" ng-model="fun.newSer.ColumnName" theme="bootstrap" search-enabled="true" ng-required="true" ng-change="fun.ChangeSys()">
+                                            <ui-select name="ColumnName" ng-model="fun.newSer.ColumnName" theme="bootstrap" search-enabled="true" ng-required="true">
                                                 <ui-select-match placeholder="选择条件属性.."><span>{{ $select.selected.ColumnName }}</span></ui-select-match>
                                                 <ui-select-choices repeat="item.ColumnName as item in fun.EnColList | filter: $select.search track by item.ColumnName">
                                                     <div><span ng-bind-html="item.ColumnName | highlight: $select.search"></span></div>
                                                 </ui-select-choices>
                                             </ui-select>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-6 form-group-sm no-padder" ng-class="{ 'has-error' : fun.NewSerForm.SerName.$invalid }">
+                                            <input type="text" class="form-control" name="SerName" ng-model="fun.newSer.SerName" placeholder="查询描述" required />
                                         </div>
                                         <div class="col-md-2 col-sm-2 col-xs-4 form-group-sm" ng-class="{ 'has-error' : fun.NewSerForm.SerType.$invalid }">
                                             <div config-select ng-model="fun.newSer.SerType" ng-name="SerType" config-option="fun.SerTypeConfig" my-required="true"></div>
@@ -78,6 +104,9 @@
                                         </div>
                                         <div class="col-md-4 col-sm-4 col-xs-6 form-group-sm no-padder">
                                             <label class="control-label text-left">{{ ser.ColumnName }}</label>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-6 form-group-sm no-padder">
+                                            <input type="text" class="form-control" ng-model="ser.SerName" placeholder="查询描述" />
                                         </div>
                                         <div class="col-md-2 col-sm-2 col-xs-4 form-group-sm">
                                             <div config-select ng-model="ser.SerType" ng-name="SeType" config-option="fun.SerTypeConfig" my-required="true"></div>
@@ -129,19 +158,7 @@
                         </div>
                     </div>
                 </div>
-                <!--<pre>{{ fun.List|json }}</pre>-->
-            </div>
-        </uib-tab>
-        <uib-tab index="1">
-            <uib-tab-heading class="h5">HTML文件代码</uib-tab-heading>
-            <div class="panel">
-                <textarea class="form-control" rows="22" ng-model="fun.NewItem.Content.Html"></textarea>
-            </div>
-        </uib-tab>
-        <uib-tab index="2">
-            <uib-tab-heading class="h5">Js文件代码</uib-tab-heading>
-            <div class="panel">
-                <textarea class="form-control" rows="22" ng-model="fun.NewItem.Content.Js"></textarea>
+                <!--<pre>{{ fun.ThisFun|json }}</pre>-->
             </div>
         </uib-tab>
     </uib-tabset>

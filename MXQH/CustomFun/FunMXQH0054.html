@@ -1,7 +1,48 @@
-﻿<div class="h3 text-center">{{ t.Text }}!d领导开房间啊来看</div>
-
-
-<button class="btn btn-sm btn-success" ng-click="t.ExportExcel()"><i class="glyphicon glyphicon-export"></i> 导出</button>
-<div class="h3 text-center">{{ t.Text }}!架看</div>
-
-<pre>{{ t.List | json }}</pre>
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="t.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">新自定义功能</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="t.Ser.a_InternalCode" placeholder="Nemsd">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "t.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "t.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <table class= "table " >
+                <tr>
+                    <td style= "width:100px ">a_DeleteBy</td>
+                    <td style= "width:100px ">ID编号</td>
+                    <td style= "width:100px ">现内控码</td>
+                    <td style= "width:100px ">a_MaterialName</td>
+                    <td style= "width:100px ">a_WorkOrder</td>
+                    <td style= "width:100px ">a_WorkOrderId</td>
+                    <td style= "width:100px ">c_CustomerName</td>
+                    <td style= "width:100px ">c_ERPOrderQty</td>
+                    <td style= "width:100px ">c_ERPSO</td>
+                    <td style= "width:100px ">c_SendPlaceName</td>
+                    <td style= "width:100px ">c_WorOrder</td>
+                </tr>
+                <tr ng-repeat= "item in t.List ">
+                    <td>{{ item.DeleteBy }}</td>
+                    <td>{{ item.Id }}</td>
+                    <td>{{ item.InternalCode }}</td>
+                    <td>{{ item.MaterialName }}</td>
+                    <td>{{ item.WorkOrder }}</td>
+                    <td>{{ item.WorkOrderId }}</td>
+                    <td>{{ item.CustomerName }}</td>
+                    <td>{{ item.ERPOrderQty }}</td>
+                    <td>{{ item.ERPSO }}</td>
+                    <td>{{ item.SendPlaceName }}</td>
+                    <td>{{ item.WorOrder }}</td>
+                </tr>
+            </table>
+            <div class= "col-md-12 text-center " ng-if= "t.page.total>t.page.size ">
+                <div uib-pagination total-items= "t.page.total " ng-model= "t.page.index " items-per-page= "t.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "t.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

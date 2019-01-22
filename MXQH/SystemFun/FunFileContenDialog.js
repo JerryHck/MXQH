@@ -6,7 +6,8 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
     var vm = this;
     vm.NewItem = ItemData;
     vm.ThisFun = {
-        FunNo:ItemData.FunNo,
+        FunNo: ItemData.FunNo,
+        FunName:"新自定义功能",
         FunType: "R",
         DataType: "E",
         Controller: vm.NewItem.Controller,
@@ -28,9 +29,14 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
     vm.IsColAll = IsColAll;
     vm.GenCode = GenCode;
 
-    //AjaxService.ExecPlanPage("MESSnDelete", "excel", {}, 1, 10).then(function (data) {
-    //    vm.List = data;
-    //})
+    //获取数据设定
+    AjaxService.GetPlan("FunCodeSet", [{ name: "FunNo", value: ItemData.FunNo }]).then(function (data) {
+        if (data.FunNo) {
+            vm.ThisFun = data;
+            GetColList(true);
+            GetEnProcList();
+        }
+    })
 
     //取消
     vm.cancel = cancel;
@@ -56,15 +62,35 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
         vm.EnColList = [];
         if (vm.ThisFun.DataType == 'P') {
             vm.ThisFun.ShortName = undefined;
-            var en = {};
-            en.name = "EntityName";
-            en.value = vm.ThisFun.EntityName;
-            AjaxService.GetPlans("EntityProcedure", en).then(function (data) {
-                vm.ProcList = data;
-            });
+            GetEnProcList();
         }
         if (vm.ThisFun.DataType == 'E') {
             GetColList();
+        }
+    }
+
+    function GetEnProcList() {
+        var en = {};
+        en.name = "EntityName";
+        en.value = vm.ThisFun.EntityName;
+        AjaxService.GetPlans("EntityProcedure", en).then(function (data) {
+            vm.ProcList = data;
+        });
+    }
+
+    function MergeEnColList() {
+        vm.ThisFun.ColList = vm.ThisFun.ColList || [];
+        var count = 0;
+        for (var i = 0, len = vm.EnColList.length; i < len; i++) {
+            for (var j = 0, len = vm.ThisFun.ColList.length; j < len; j++) {
+                if (vm.EnColList[i].ColumnName == vm.ThisFun.ColList[j].ColumnName) {
+                    vm.EnColList[i].IsShow = true;
+                    count++;
+                }
+            }
+        }
+        if (count == vm.EnColList.length) {
+            vm.IsAll = true;
         }
     }
 
@@ -72,9 +98,25 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
         vm.ThisFun.ColList = [];
         vm.EnColList = [];
         GetColList();
+
+        var en = {};
+        en.planName = vm.ThisFun.EntityName;
+        en.shortName = vm.ThisFun.ShortName;
+
+        //获取存储过程查询条件
+        AjaxService.Custom("GetProcPara", en).then(function (data) {
+            vm.ThisFun.SerList = [];
+            for (var i = 0, len = data.length; i < len; i++) {
+                var Ser = {};
+                Ser.ColumnName = data[i].ColumnName;
+                Ser.SerName = data[i].SerName;
+                Ser.SerType = data[i].SerType;
+                vm.ThisFun.SerList.push(Ser);
+            }
+        });
     }
 
-    function GetColList() {
+    function GetColList(isLoad) {
         var en = {};
         en.planName = vm.ThisFun.EntityName;
         //实体自身的栏位取值
@@ -126,6 +168,9 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
                     }
                 }
                 vm.EnColList = vm.List[0].Columns;
+                if(isLoad){
+                    MergeEnColList();
+                }
             })
         })
     }
@@ -151,7 +196,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
             if (!checkHaveCol(vm.ThisFun.ColList, col.ColumnName)) {
                 var en = col;
                 en.ColumnText = en.ColumnText || en.ColumnName;
-                en.Weigth = "100px";
+                en.Width = "100px";
                 vm.ThisFun.ColList.push(en);
             }
         }
@@ -175,7 +220,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
                     var en = vm.EnColList[i];
                     vm.EnColList[i].IsShow = true;
                     en.ColumnText = en.ColumnText || en.ColumnName;
-                    en.Weigth = "100px";
+                    en.Width = "100px";
                     vm.ThisFun.ColList.push(en);
                 }
             }
@@ -222,13 +267,27 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
         var en = {};
         en.strJson = JSON.stringify(vm.ThisFun);
         AjaxService.Custom("GenFuntionCode", en).then(function (data) {
-            console.log(data);
+            vm.NewItem.Content = data;
+            toastr.success('生成成功');
+            vm.Index = 0;
         })
     }
 
     //关闭
     function Ok() {
-        $uibModalInstance.close(vm.NewItem.Content);
+        vm.NewItem.FunSetting = angular.copy(vm.ThisFun);
+        vm.NewItem.FunSetting.SerList = JSON.stringify(vm.ThisFun.SerList);
+        var ColList = [];
+        for (var j = 0, len2 = vm.ThisFun.ColList.length; j < len2; j++) {
+            var col = {};
+            col.ColumnName = vm.ThisFun.ColList[j].ColumnName;
+            col.ColumnText = vm.ThisFun.ColList[j].ColumnText;
+            col.Width = vm.ThisFun.ColList[j].Width;
+            ColList.push(col);
+        }
+        vm.NewItem.FunSetting.ColList = JSON.stringify(ColList);
+        vm.NewItem.FunSetting.TempColumns = "SerList,ColList";
+        $uibModalInstance.close(vm.NewItem);
     };
 
     //关闭
