@@ -39,6 +39,7 @@
         </li>
     </ul>
 
+
     <!-- / buttons -->
     <!-- search form -->
     <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" target=".navbar-collapse" role="search">
@@ -56,19 +57,23 @@
     <!-- nabar right -->
     <ul class="nav navbar-nav navbar-right">
         <li class="hidden-xs">
+            <a class="h6 text-info-dker pull-down pull-right-xs">{{ vm.SysTime }}</a>
+        </li>
+        <li class="hidden-xs">
             <a class="text-success h4" ng-click="vm.Reflash()"><i class="glyphicon glyphicon-refresh"></i></a>
         </li>
         <li class="hidden-xs">
             <a ui-fullscreen></a>
         </li>
         <li class="dropdown" dropdown>
-            <a href class="dropdown-toggle clear" data-toggle="dropdown">
+            <a class="dropdown-toggle clear" data-toggle="dropdown">
                 <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
                     <img src="img/a0.jpg" alt="...">
                     <i class="on md b-white bottom"></i>
                 </span>
                 <span class="hidden-sm hidden-md">{{ User.ChiLastName }}{{ User.ChiFirstName }}</span> <b class="caret"></b>
             </a>
+
             <!-- dropdown -->
             <ul class="dropdown-menu animated fadeInRight w">
                 <li>
@@ -86,5 +91,5 @@
         </li>
     </ul>
     <!-- / navbar right -->
-
+    
 </div>

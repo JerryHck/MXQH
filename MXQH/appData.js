@@ -9,6 +9,7 @@ angular.module('appData')
 .constant('serviceUrl', 'http://localhost:13439/')
 //.constant('FileServiceUrl', 'http://192.168.11.75:8080/FileService/')
     .constant('FileServiceUrl', 'http://localhost:8080/FileService/')
+    .constant('SocketServiceUrl', 'ws://localhost:2019')
  //表單設定
 .constant('Form', [
     { index: 0, title: '新增', action: 'Insert' },

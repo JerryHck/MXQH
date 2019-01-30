@@ -51,6 +51,9 @@ angular.module('app')
         }
         GetList();
 
+        //显示系统时间
+        ShowServerTime();
+
         // save settings to local storage
         if (angular.isDefined($localStorage.settings)) {
             vm.app.settings = $localStorage.settings;
@@ -151,6 +154,14 @@ angular.module('app')
             var ua = $window['navigator']['userAgent'] || $window['navigator']['vendor'] || $window['opera'];
             // Checks for iOs, Android, Blackberry, Opera Mini, and Windows mobile devices
             return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
+        }
+
+        function ShowServerTime() {
+            AjaxService.GetServerTime(function (data) {
+                $scope.$apply(function () {
+                    vm.SysTime = data;
+                });
+            })
         }
 
     }]);

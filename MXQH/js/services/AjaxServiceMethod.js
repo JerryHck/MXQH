@@ -1,9 +1,9 @@
 ﻿(function () {
     angular.module('AjaxServiceModule').factory('AjaxService', AjaxService);
 
-    AjaxService.$inject = ['$rootScope', '$http', '$q', 'serviceUrl', 'appUrl', 'toastr', 'MyPop', '$cookieStore', '$window', 'FileUrl'];
+    AjaxService.$inject = ['$rootScope', '$http', '$q', 'serviceUrl', 'appUrl', 'toastr', 'MyPop', '$cookieStore', '$window', 'FileUrl', 'SocketServiceUrl', '$state'];
 
-    function AjaxService($rootScope, $http, $q, serviceUrl, appUrl, toastr, MyPop, $cookieStore, $window, FileUrl) {
+    function AjaxService($rootScope, $http, $q, serviceUrl, appUrl, toastr, MyPop, $cookieStore, $window, FileUrl, SocketServiceUrl, $state) {
         var generic = 'Common.asmx/Do';
         var tableConfigList = [];
 
@@ -80,7 +80,13 @@
             GetComPortList: GetComPortList,
             GetComWeigth:GetComWeigth,
             //播放声音
-            PlayVoice: PlayVoice
+            PlayVoice: PlayVoice,
+
+            //Server Socket
+            GetServerTime: GetServerTime,
+            GetServerSocket: GetServerSocket
+
+
         };
 
         return obj;
@@ -521,5 +527,66 @@
             }
             return g.promise;
         }
+
+        function GetServerTime(Do) {
+            return CallServerSocket("Time", undefined, Do);
+        }
+
+        function GetServerSocket(json, Do) {
+            return CallServerSocket("Request", JSON.stringify(json), Do);
+        }
+
+        function CallServerSocket(MsgType, json, Do) {
+            var g = $q.defer();
+            try {
+                var en = {};
+                en.Header = "MXQHServer";
+                en.MsgType = MsgType;
+                en.LoginKey = $cookieStore.get('user-token');
+                en.RouteName = $state.current.name;
+                en.Data = json;
+
+                var socket = new WebSocket(SocketServiceUrl);
+                socket.onerror = function (evt) {
+                    console.log(evt);
+                    toastr.error(evt, '服务错误');
+                };
+                socket.onopen = function () {
+                    socket.send(JSON.stringify(en));
+                };
+                socket.onclose = function (e) {
+                };
+                socket.onmessage = function (evt) {
+                    var data = JSON.parse(evt.data);
+                    if (data.MsgType == "Heartbeat") {
+                        if (data.RouteName == $state.current.name || en.MsgType == "Time") {
+                            socket.send(evt.data);
+                        }
+                        else {
+                            //console.log(data.RouteName + "《——》" + $state.current.name);
+                            console.log(evt.data);
+                        }
+                        
+                    }
+                    else {
+                        if (data.Response == "Success") {
+                            g.resolve(data.Data);
+                        }
+                        else if (data.Response == "Error") {
+                            toastr.error(data.Data, '服务错误');
+                            g.reject(data.Data);
+                        }
+                        if (Do) {
+                            Do(data.Data);
+                        }
+                    }
+                };
+            }
+            catch (e) {
+                toastr.error(e, '服务错误');
+            }
+            return g.promise;
+        }
+
     }
 })();

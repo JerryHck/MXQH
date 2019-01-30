@@ -13,30 +13,10 @@
         <div class= "padder-md ">
             <table class= "table " >
                 <tr>
-                    <td style= "width:100px ">a_DeleteBy</td>
                     <td style= "width:100px ">ID编号</td>
-                    <td style= "width:100px ">现内控码</td>
-                    <td style= "width:100px ">a_MaterialName</td>
-                    <td style= "width:100px ">a_WorkOrder</td>
-                    <td style= "width:100px ">a_WorkOrderId</td>
-                    <td style= "width:100px ">c_CustomerName</td>
-                    <td style= "width:100px ">c_ERPOrderQty</td>
-                    <td style= "width:100px ">c_ERPSO</td>
-                    <td style= "width:100px ">c_SendPlaceName</td>
-                    <td style= "width:100px ">c_WorOrder</td>
                 </tr>
                 <tr ng-repeat= "item in t.List ">
-                    <td>{{ item.DeleteBy }}</td>
                     <td>{{ item.Id }}</td>
-                    <td>{{ item.InternalCode }}</td>
-                    <td>{{ item.MaterialName }}</td>
-                    <td>{{ item.WorkOrder }}</td>
-                    <td>{{ item.WorkOrderId }}</td>
-                    <td>{{ item.CustomerName }}</td>
-                    <td>{{ item.ERPOrderQty }}</td>
-                    <td>{{ item.ERPSO }}</td>
-                    <td>{{ item.SendPlaceName }}</td>
-                    <td>{{ item.WorOrder }}</td>
                 </tr>
             </table>
             <div class= "col-md-12 text-center " ng-if= "t.page.total>t.page.size ">

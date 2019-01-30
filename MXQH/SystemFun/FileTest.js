@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('FileCtrl', ['$scope', 'serviceUrl', '$window', 'AjaxService', 'FileService', 'toastr', 'FileUrl',
-function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl) {
+.controller('FileCtrl', ['$scope', 'serviceUrl', '$window', 'AjaxService', 'FileService', 'toastr', 'FileUrl', '$cookieStore', '$state',
+function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl, $cookieStore, $state) {
 
     var vm = this;
     $scope.importf = importf;
@@ -15,14 +15,14 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
         auto.attr("src", FileUrl + '/Voice/5611.mp3');
     }
 
-    AjaxService.GetComPortList().then(function (data) {
-        vm.ComList = JSON.parse(data);
-        console.log(data);
-    })
+    //AjaxService.GetComPortList().then(function (data) {
+    //    vm.ComList = JSON.parse(data);
+    //    console.log(data);
+    //})
 
-    AjaxService.AjaxHandle("GetFileText", "System.html").then(function (data) {
-        vm.htmlVariable = data.Msg;
-    })
+    //AjaxService.AjaxHandle("GetFileText", "System.html").then(function (data) {
+    //    vm.htmlVariable = data.Msg;
+    //})
 
 
     function save() {
@@ -80,9 +80,21 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
     function Do() {
 
         //GetPrintName('127.0.0.1');
+        var en = {};
+        en.Method = 'GetPlans';
+        en.PlanName = "CommonData"
+        en.Json = "[]";
 
-        //vm.List = angular.copy(vm.FileData.data[0]);
-        //console.log(vm.List)
+        AjaxService.GetServerSocket(en, function (data) {
+            console.log(data);
+        })
+
+    }
+
+    function Show(data) {
+        $scope.$apply(function () {
+            vm.Test1 = data.data;
+        });
     }
 
     /*
