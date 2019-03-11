@@ -9,13 +9,6 @@ function SystemDialogCtrl($rootScope, $scope, $uibModalInstance, Form, ItemData,
     vm.Item = ItemData;
     vm.isExists = isExists;
 
-    //获取组织信息
-    if (vm.form.index == 0) {
-        AjaxService.GetEntities("Company").then(function (data) {
-            vm.CompanyList = data;
-        });
-    }
-
     //储存
     vm.Save = function () {
         var en = {};
@@ -23,17 +16,14 @@ function SystemDialogCtrl($rootScope, $scope, $uibModalInstance, Form, ItemData,
         en.SysName = vm.Item.SysName;
         en.SysDesc = vm.Item.SysDesc;
         en.CompanyNo = vm.Item.Company.CompanyNo;
+        en.OrderNo = vm.Item.OrderNo;
         if (vm.form.index == 0) {
-            en.CreateBy = $rootScope.User.UserNo;
             AjaxService.PlanInsert('System', en).then(function (data) {
                 toastr.success('储存成功');
-                console.log(231);
                 $uibModalInstance.close(en);
             });
         }
         else if(vm.form.index == 1) {
-            en.ModifyBy = $rootScope.User.UserNo;
-            en.ModifyDate = new Date();
             AjaxService.PlanUpdate('System', en).then(function (data) {
                 toastr.success('储存成功');
                 $uibModalInstance.close(en);

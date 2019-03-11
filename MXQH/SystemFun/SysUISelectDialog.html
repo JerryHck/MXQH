@@ -1,0 +1,185 @@
+﻿<div class="modal-header text-center">
+    <span class="modal-title h3">UISelect{{ u.form.title }}</span>
+</div>
+<div class="modal-body wrapper-xs">
+    <uib-tabset active="active" type="tabs" class="h-100">
+        <uib-tab index="0">
+            <uib-tab-heading class="h5">基本信息</uib-tab-heading>
+            <div class="panel panel-default scroll-y" ng-form="u.DialogForm">
+                <div class="panel-body">
+                    <div class="form-horizontal no-padder">
+                        <div class="form-group no-padder">
+                            <div class="col-md-6 padder-xs">
+                                <label class="col-md-4 control-label">下拉名称</label>
+                                <div class="col-md-8 no-padder" ng-class="{ 'has-error' : u.DialogForm.SelectName.$invalid }">
+                                    <input type="text" class="form-control" name="SelectName" placeholder="下拉名称"
+                                           ng-model="u.Item.SelectName" ng-disabled="u.form.index == 1" ng-blur="u.isExists()" required>
+                                    <div ng-messages="u.DialogForm.SelectName.$error" class="help-block" role="alert">
+                                        <div ng-message="unique">下拉名称重复</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 padder-xs">
+                                <label class="col-md-4 control-label">实体名称</label>
+                                <div class="col-md-8 no-padder" ng-class="{ 'has-error' : u.DialogForm.EntityName.$invalid }">
+                                    <div entity-select ng-name="EntityName" ng-model="u.Item.EntityName" ng-change="u.ChangeEntity()" select-class="'text-xs'" my-required="true"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group no-padder">
+                            <div class="col-md-6 padder-xs">
+                                <label class="col-md-4 control-label">返回栏</label>
+                                <div class="col-md-8 no-padder" title="不选则返回实体数据">
+                                    <div class="py-xl-0 pt-xl-0 input-group">
+                                        <ui-select name="ReturnColumn" ng-model="u.Item.ReturnColumn" theme="bootstrap" search-enabled="true">
+                                            <ui-select-match placeholder="选择返回栏...">{{ $select.selected.ColumnName }}</ui-select-match>
+                                            <ui-select-choices repeat="item.ColumnName as item in u.EnColumns | filter: $select.search">
+                                                <div ng-bind-html="item.ColumnName | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <span class="input-group-btn">
+                                            <button ng-click="u.Item.ReturnColumn= undefined" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-trash text-danger"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 padder-xs">
+                                <label class="col-md-4 control-label">选中显示</label>
+                                <div class="col-md-8 no-padder" ng-class="{ 'has-error' : u.DialogForm.SelectedColumn.$invalid }">
+                                    <div class="py-xl-0 pt-xl-0 input-group">
+                                        <ui-select name="SelectedColumn" ng-model="u.Item.SelectedColumn" theme="bootstrap" search-enabled="true" required>
+                                            <ui-select-match placeholder="选中显示...">{{ $select.selected.ColumnName }}</ui-select-match>
+                                            <ui-select-choices repeat="item.ColumnName as item in u.EnColumns | filter: $select.search">
+                                                <div ng-bind-html="item.ColumnName | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group no-padder">
+                            <div class="col-md-6 padder-xs">
+                                <label class="col-md-4 control-label">列表显示</label>
+                                <div class="col-md-8 no-padder" ng-class="{ 'has-error' : u.DialogForm.ShowColumn.$invalid }">
+                                    <div class="py-xl-0 pt-xl-0 input-group">
+                                        <ui-select name="ShowColumn" ng-model="u.Item.ShowColumn" theme="bootstrap" search-enabled="true" required>
+                                            <ui-select-match placeholder="列表显示栏...">{{ $select.selected.ColumnName }}</ui-select-match>
+                                            <ui-select-choices repeat="item.ColumnName as item in u.EnColumns | filter: $select.search">
+                                                <div ng-bind-html="item.ColumnName | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 padder-xs">
+                                <label class="col-md-4 control-label">列表Small</label>
+                                <div class="col-md-8 no-padder">
+                                    <div class="py-xl-0 pt-xl-0 input-group">
+                                        <ui-select name="ShowSmallColumn" ng-model="u.Item.ShowSmallColumn" theme="bootstrap" search-enabled="true">
+                                            <ui-select-match placeholder="列表small栏...">{{ $select.selected.ColumnName }}</ui-select-match>
+                                            <ui-select-choices repeat="item.ColumnName as item in u.EnColumns | filter: $select.search">
+                                                <div ng-bind-html="item.ColumnName | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <span class="input-group-btn">
+                                            <button ng-click="u.Item.ShowSmallColumn= undefined" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-trash text-danger"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group no-padder">
+                            <div class="col-md-12 padder-xs">
+                                <label class="col-md-2 control-label">Placeholder</label>
+                                <div class="col-md-8 no-padder">
+                                    <input type="text" name="Placeholder" class="form-control" placeholder="Placeholder" ng-model="u.Item.Placeholder">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group no-padder">
+                            <div class="col-md-12 padder-xs">
+                                <label class="col-md-2 control-label">备注</label>
+                                <div class="col-md-8 no-padder">
+                                    <textarea type="text" rows="2" name="Remark" class="form-control" placeholder="备注" ng-model="u.Item.Remark"></textarea>
+                                </div>
+                                <div class="col-md 2">
+                                    <span class="pull-right">
+                                        <a class="text-success" ng-click="u.ToHtml()">
+                                            <i class="fa fa-support"></i>生成模版
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="1">
+            <uib-tab-heading class="h5">查询条件</uib-tab-heading>
+            <div class="panel panel-default wrapper-xs" style="max-height:600px; min-height:300px">
+                <div class="panel-body">
+                    <div class="row" ng-form="SerForm">
+                        <div class="col-md-1 padder-xs"><button class="btn btn-sm btn-success" ng-click="u.AddSer()" ng-disabled="SerForm.$invalid"><i class="glyphicon glyphicon-plus"></i></button></div>
+                        <div class="col-md-3 padder-xs" ng-class="{ 'has-error' : SerForm.ColumnName.$invalid }">
+                            <ui-select name="ColumnName" ng-model="u.Ser.ColName" theme="bootstrap" search-enabled="true" required>
+                                <ui-select-match placeholder="栏位">{{ $select.selected.ColumnName }}</ui-select-match>
+                                <ui-select-choices repeat="item.ColumnName as item in u.EnColumns | filter: $select.search">
+                                    <div ng-bind-html="item.ColumnName | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="col-md-2 padder-xs" ng-class="{ 'has-error' : SerForm.SerExp.$invalid }">
+                            <div config-select ng-name="SerExp" auto-first="true" my-required="true" ng-model="u.Ser.SerExp" select-class="text-xs" config-option="u.EntityRelationExp"></div>
+                        </div>
+                        <div class="col-md-2 padder-xs" title="留空默认空字符串">
+                            <input type="text" class="form-control" placeholder="值" ng-model="u.Ser.SerValue" />
+                        </div>
+                        <div class="col-md-2 padder-xs" ng-class="{ 'has-error' : SerForm.SerAss.$invalid }">
+                            <div config-select ng-name="SerAss" auto-first="true" my-required="true" ng-model="u.Ser.SerAss" select-class="text-xs" config-option="u.EntityRelationAss"></div>
+                        </div>
+                        <div class="col-md-2 padder-xs" ng-class="{ 'has-error' : SerForm.SerLevel.$invalid }">
+                            <input type="number" name="SerLevel" placeholder="层级" class="form-control" max="10" min="0" ng-model="u.Ser.SerLevel" required/>
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <div class="row" ng-repeat="s in u.SerList">
+                        <div class="col-md-1 padder-xs" ><a class="btn btn-sm btn-danger" ng-click="u.DeleteSer($index)"><i class="glyphicon glyphicon-remove"></i></a></div>
+                        <div class="col-md-3 padder-xs form-control-static">
+                            <span class="text-info h4">{{ s.ColName }}</span>
+                        </div>
+                        <div class="col-md-2 padder-xs">
+                            <div config-select ng-name="SerExp" auto-first="true" ng-model="s.SerExp" select-class="text-xs" config-option="u.EntityRelationExp"></div>
+                        </div>
+                        <div class="col-md-2 padder-xs">
+                            <input type="text" class="form-control" placeholder="值" ng-model="s.SerValue" />
+                        </div>
+                        <div class="col-md-2 padder-xs">
+                            <div config-select ng-name="SerAss" auto-first="true" ng-model="s.SerAss" select-class="text-xs" config-option="u.EntityRelationAss"></div>
+                        </div>
+                        <div class="col-md-2 padder-xs">
+                            <input type="number" name="SerLevel" placeholder="层级" class="form-control" max="10" min="0" ng-model="s.SerLevel" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="2">
+            <uib-tab-heading class="h5">模版代码</uib-tab-heading>
+            <div class="panel">
+                <textarea class="form-control" rows="15" ng-model="u.tempHtml"></textarea>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</div>
+<div class="modal-footer">
+    <div class="col-md-12 text-center">
+        <button class="btn btn-success pull-none" type="button" ng-disabled="u.DialogForm.$invalid" ng-click="u.Save()">储存</button>
+        <button class="btn btn-warning pull-none" type="button" ng-click="u.cancel()">取消</button>
+    </div>
+</div>
+<!--<pre>{{ u.SerList | json }}</pre>-->

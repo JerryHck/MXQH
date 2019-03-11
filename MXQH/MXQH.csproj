@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Access.html" />
+    <Content Include="Board.html" />
     <Content Include="css\font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="css\font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="css\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
@@ -175,7 +176,9 @@
     <Content Include="Images\progressbar.gif" />
     <Content Include="Images\select2-spinner.gif" />
     <Content Include="Images\select2.png" />
+    <Content Include="js\Board.js" />
     <Content Include="js\dobefore.min.js" />
+    <Content Include="js\doboard.min.js" />
     <Content Include="MESFun\BarCodeList.html" />
     <Content Include="MESFun\BarCodeList.js" />
     <Content Include="MESFun\InCodePrint.html" />
@@ -236,9 +239,6 @@
     <Content Include="SDKFun\SDKUpload.js" />
     <Content Include="Access\SignUp.html" />
     <Content Include="Access\SignUp.js" />
-    <Content Include="js\app\contact\contacts.json" />
-    <Content Include="js\app\mail\mails.json" />
-    <Content Include="js\app\note\notes.json" />
     <Content Include="js\controllers\bootstrap.js" />
     <Content Include="js\controllers\chart.js" />
     <Content Include="js\Dialog.js" />
@@ -647,20 +647,6 @@
     <Content Include="img\logo.png" />
     <Content Include="img\p0.jpg" />
     <Content Include="js\app.js" />
-    <Content Include="js\app\calendar\calendar.js" />
-    <Content Include="js\app\contact\contact.js" />
-    <Content Include="js\app\mail\mail-service.js" />
-    <Content Include="js\app\mail\mail.js" />
-    <Content Include="js\app\map\load-google-maps.js" />
-    <Content Include="js\app\map\map.js" />
-    <Content Include="js\app\map\ui-map.js" />
-    <Content Include="js\app\music\ctrl.js" />
-    <Content Include="js\app\music\theme.css" />
-    <Content Include="js\app\music\videogular.css" />
-    <Content Include="js\app\note\note.js" />
-    <Content Include="js\app\weather\angular-skycons.js" />
-    <Content Include="js\app\weather\ctrl.js" />
-    <Content Include="js\app\weather\skycons.js" />
     <Content Include="js\config.js" />
     <Content Include="js\config.lazyload.js" />
     <Content Include="js\config.router.js" />
@@ -681,6 +667,10 @@
     <Content Include="l10n\de_DE.js" />
     <Content Include="l10n\en.js" />
     <Content Include="l10n\it_IT.js" />
+    <Content Include="SystemFun\SysUISelect.html" />
+    <Content Include="SystemFun\SysUISelect.js" />
+    <Content Include="SystemFun\SysUISelectDialog.html" />
+    <Content Include="SystemFun\SysUISelectDialog.js" />
     <Content Include="SystemFun\SysUser.html" />
     <Content Include="SystemFun\SysUser.js" />
     <Content Include="SystemFun\UserDialog.html" />
@@ -692,6 +682,16 @@
     <Content Include="U9Fun\DSInfo.js" />
     <Content Include="U9Fun\DSInfoDialog.html" />
     <Content Include="U9Fun\DSInfoDialog.js" />
+    <Content Include="UIFun\WPOFun\Mate.html" />
+    <Content Include="UIFun\WPOFun\Mate.js" />
+    <Content Include="UIFun\WPOFun\MateDialog.html" />
+    <Content Include="UIFun\WPOFun\MateDialog.js" />
+    <Content Include="UIFun\WPOFun\WPOFun.html" />
+    <Content Include="UIFun\WPOFun\WPOFun.js" />
+    <Content Include="UIFun\WPOFun\WPOFunDialog.html" />
+    <Content Include="UIFun\WPOFun\WPOFunDialog.js" />
+    <Content Include="UIFun\WPOFun\WPOPackage.html" />
+    <Content Include="UIFun\WPOFun\WPOPackage.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -705,6 +705,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Board\" />
     <Folder Include="js\controllers\uploads\" />
     <Folder Include="src\" />
   </ItemGroup>

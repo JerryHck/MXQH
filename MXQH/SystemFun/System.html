@@ -12,6 +12,7 @@
             <td class="col-md-1">系统编号</td>
             <td class="col-md-2">系统名称</td>
             <td class="col-md-2">备注</td>
+            <td class="col-md-2">排序</td>
             <td class="col-md-2">所属组织</td>
             <td class="col-md-1">创建人</td>
         </tr>
@@ -23,6 +24,7 @@
             <td>{{ item.SysNo }}</td>
             <td>{{ item.SysName }}</td>
             <td>{{ item.SysDesc }}</td>
+            <td>{{ item.OrderNo }}</td>
             <td>{{ item.Company.CompanyName }}</td>
             <td>
                 {{ item.ChiName }}

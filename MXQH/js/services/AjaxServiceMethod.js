@@ -88,7 +88,7 @@
 
 
         };
-
+        var conect = 0;
         return obj;
 
         function PlayVoice(name) {
@@ -545,42 +545,10 @@
                 en.LoginKey = $cookieStore.get('user-token');
                 en.RouteName = $state.current.name;
                 en.Data = json;
-
-                var socket = new WebSocket(SocketServiceUrl);
-                socket.onerror = function (evt) {
-                    console.log(evt);
-                    toastr.error(evt, '服务错误');
-                };
-                socket.onopen = function () {
-                    socket.send(JSON.stringify(en));
-                };
-                socket.onclose = function (e) {
-                };
-                socket.onmessage = function (evt) {
-                    var data = JSON.parse(evt.data);
-                    if (data.MsgType == "Heartbeat") {
-                        if (data.RouteName == $state.current.name || en.MsgType == "Time") {
-                            socket.send(evt.data);
-                        }
-                        else {
-                            //console.log(data.RouteName + "《——》" + $state.current.name);
-                            console.log(evt.data);
-                        }
-                        
-                    }
-                    else {
-                        if (data.Response == "Success") {
-                            g.resolve(data.Data);
-                        }
-                        else if (data.Response == "Error") {
-                            toastr.error(data.Data, '服务错误');
-                            g.reject(data.Data);
-                        }
-                        if (Do) {
-                            Do(data.Data);
-                        }
-                    }
-                };
+                var Option = { Do: Do, data: en };
+                var socket = undefined;
+                var interval = undefined;
+                CallSocket(g, en, socket, Do, interval);
             }
             catch (e) {
                 toastr.error(e, '服务错误');
@@ -588,5 +556,51 @@
             return g.promise;
         }
 
+        function CallSocket(g, en, socket, Do, interval) {
+            socket = new WebSocket(SocketServiceUrl);
+            socket.onerror = function (evt) {
+                //console.log(evt);
+                //toastr.error(evt, '服务错误');
+            };
+            socket.onopen = function () {
+                socket.send(JSON.stringify(en));
+                
+                if (interval != undefined) {
+                    clearInterval(interval);
+                }
+                
+                interval = setInterval(function () {
+                    if (socket.readyState == 3) {
+                        CallSocket(g, en, socket, Do, interval);
+                    }
+                }, 15000);
+            };
+            socket.onclose = function (e) {
+            };
+            socket.onmessage = function (evt) {
+                var data = JSON.parse(evt.data);
+                if (data.MsgType == "Heartbeat") {
+                    if (data.RouteName == $state.current.name || en.MsgType == "Time") {
+                        socket.send(evt.data);
+                    }
+                    else {
+                        console.log(evt.data);
+                    }
+
+                }
+                else {
+                    if (data.Response == "Success") {
+                        g.resolve(data.Data);
+                    }
+                    else if (data.Response == "Error") {
+                        toastr.error(data.Data, '服务错误');
+                        g.reject(data.Data);
+                    }
+                    if (Do) {
+                        Do(data.Data);
+                    }
+                }
+            };
+        }
     }
 })();

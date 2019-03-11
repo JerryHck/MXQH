@@ -81,14 +81,22 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
 
         //GetPrintName('127.0.0.1');
         var en = {};
-        en.Method = 'GetPlans';
+        en.Method = 'GetPlansPage';
         en.PlanName = "CommonData"
+        en.Intervel = 5;
         en.Json = "[]";
 
         AjaxService.GetServerSocket(en, function (data) {
-            console.log(data);
+            //console.log(data);
+            $scope.$apply(function () {
+                vm.SocketData = JSON.parse(data);
+            });
         })
 
+    }
+
+    vm.change = function () {
+        console.log(vm.Select);
     }
 
     function Show(data) {

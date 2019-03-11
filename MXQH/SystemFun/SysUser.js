@@ -24,6 +24,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
     vm.SelectUserRole = SelectUserRole;
     //删除用户角色
     vm.DeleteUserRole = DeleteUserRole;
+    vm.GetData = GetData;
 
     vm.ConfigSex = { Table: "BasicData", Column: "Sex" };
     vm.UserType = 'E';
@@ -66,12 +67,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
     }
 
     function Insert() {
-        var resolve = {
-            ItemData: function () {
-                return {};
-            }
-        };
-        Open("I", resolve);
+        Open({ UserType: vm.UserType });
     }
 
     function change() {
@@ -83,7 +79,12 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
         });
     }
 
-    function Open(type, resolve) {
+    function Open(item) {
+        var resolve = {
+            ItemData: function () {
+                return item;
+            }
+        };
         Dialog.open("UserDialog", resolve).then(function (data) {
             getList();
         }).catch(function (reason) {
@@ -131,6 +132,16 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
             toastr.success('移除成功');
             getListUserRole();
         });
+    }
+
+    function GetData() {
+        var s = '';
+        switch (vm.UserType) {
+            case 'E': s = '员工'; break;
+            case 'C': s = '客户'; break;
+            case 'S': s = '供应商'; break;
+        }
+        return s;
     }
 }
 ]);

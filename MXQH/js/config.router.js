@@ -19,22 +19,24 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
     AjaxService.LoginAction("GetFunRoute").then(function (data) {
         angular.forEach(data, function (item) {
             var route = {};
-            route.Name = item.RouteName;
-            route.Url = item.RouteUrl;
-            route.Controller = item.Controller;
-            route.ControllerAs = item.ControllerAs;
-            route.TempleteUrl = item.FunHtml + "?v=" + Version;
-            route.FunNo = item.FunNo;
-            if (item.FunLoad) {
-                var loadJs = [];
-                angular.forEach(item.FunLoad, function (l) {
-                    loadJs.push(l.LoadName + "?v=" + Version);
-                });
-                route.LazyLoad = loadJs;
-            }
-            router.setDataRouters(route);
-            if ($cookieStore.get('active-router') == item.RouteName) {
-                $state.go(item.RouteName);
+            if (item.RouteName && item.RouteName != '') {
+                route.Name = item.RouteName;
+                route.Url = item.RouteUrl;
+                route.Controller = item.Controller;
+                route.ControllerAs = item.ControllerAs;
+                route.TempleteUrl = item.FunHtml + "?v=" + Version;
+                route.FunNo = item.FunNo;
+                if (item.FunLoad) {
+                    var loadJs = [];
+                    angular.forEach(item.FunLoad, function (l) {
+                        loadJs.push(l.LoadName + "?v=" + Version);
+                    });
+                    route.LazyLoad = loadJs;
+                }
+                router.setDataRouters(route);
+                if ($cookieStore.get('active-router') == item.RouteName) {
+                    $state.go(item.RouteName);
+                }
             }
         });
     });

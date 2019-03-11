@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="row text-center" ng-if="col.IsConvert">
                                     <div ng-class="{ 'has-error' : proc.ProcSetForm.ConvertType.$invalid }">
-                                        <div common-data-select ng-model="col.ConvertType" placeholder="选择转换方式" ng-name="ConvertType" my-required="true"></div>
+                                        <div basic-select="CommonData" ng-model="col.ConvertType" placeholder="选择转换方式" ng-name="ConvertType" my-required="true"></div>
                                     </div>
                                 </div>
                             </div>

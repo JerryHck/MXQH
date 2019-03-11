@@ -46,7 +46,7 @@
         <div class="form-group">
             <div class="input-group">
                 <input type="text" ng-model="vm.SelectedFun" uib-typeahead="fun as fun.FunName for fun in vm.FunctionList | filter:$viewValue | limitTo:8"
-                       class="form-control input-sm bg-light no-border rounded padder" placeholder="查找功能...">
+                       class="form-control input-sm bg-light no-border rounded padder" placeholder="查找功能..." ng-keypress="vm.Go(vm.SelectedFun.RouteName)">
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-sm bg-light rounded" ng-click="vm.Go(vm.SelectedFun.RouteName)">Go</button>
                 </span>

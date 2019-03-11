@@ -7,9 +7,10 @@ angular.module('appData')
 .constant('FileUrl', 'http://localhost:8080/File/')
 //Service URL
 .constant('serviceUrl', 'http://localhost:13439/')
-//.constant('FileServiceUrl', 'http://192.168.11.75:8080/FileService/')
-    .constant('FileServiceUrl', 'http://localhost:8080/FileService/')
-    .constant('SocketServiceUrl', 'ws://localhost:2019')
+//.constant('serviceUrl', 'http://202.96.135.74:9090/MXQHService/')
+.constant('FileServiceUrl', 'http://192.168.11.75:8080/FileService/')
+//   .constant('FileServiceUrl', 'http://localhost:8080/FileService/')
+    .constant('SocketServiceUrl', 'ws://192.168.1.226:2019')
  //表單設定
 .constant('Form', [
     { index: 0, title: '新增', action: 'Insert' },

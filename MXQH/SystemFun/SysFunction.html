@@ -103,17 +103,17 @@
                 </div>
                 <div class="wrapper b-t">
                     <button class="btn btn-sm btn-info col-md-offset-1" ng-disabled="!fun.SelectedRoot.FunNo|| fun.editFun || !fun.SystemItem.SysNo" ng-click="fun.AddFun()"><i class="glyphicon glyphicon-plus"></i></button>
-                    <button class="btn btn-sm btn-success col-md-offset-1" ng-disabled="!fun.SelectedRoot.FunNo || fun.editFun || !fun.SystemItem.SysNo" ng-click="fun.SaveFun()"><i class="glyphicon glyphicon-save"></i></button>
+                    <button class="btn btn-sm btn-success col-md-offset-1" ng-disabled="fun.FormFun.$invalid|| !fun.SelectedRoot.FunNo || fun.editFun || !fun.SystemItem.SysNo" ng-click="fun.SaveFun()"><i class="glyphicon glyphicon-save"></i></button>
                 </div>
             </div>
         </div>
         <!-- /column -->
-        <div class="col w-auto lter b-r" cg-busy="fun.promise" ng-form="FormFun">
+        <div class="col w-auto lter b-r" cg-busy="fun.promise" ng-form="fun.FormFun">
             <div class="vbox" ng-if="fun.SelectedFun">
                 <div class="wrapper-xs b-b">
                     <div class="m-t-n-xxs m-b-n-xxs m-l-xs">
                         <button class="btn btn-sm btn-info col-md-offset-1" ng-if="!fun.editFun" ng-click="fun.editFun = !fun.editFun"><i class="glyphicon glyphicon-edit"></i>编辑</button>
-                        <button class="btn btn-sm btn-info col-md-offset-1" ng-if="fun.editFun" ng-click="fun.SaveFunInfo()" ng-disabled="FormFun.$invalid"><i class="glyphicon glyphicon-save"></i>储存</button>
+                        <button class="btn btn-sm btn-info col-md-offset-1" ng-if="fun.editFun" ng-click="fun.SaveFunInfo()" ng-disabled="fun.FormFun.$invalid"><i class="glyphicon glyphicon-save"></i>储存</button>
                         <button class="btn btn-sm btn-warning" type="button" ng-if="fun.editFun" ng-click="fun.Cancel()">取消</button>
                     </div>
                 </div>
@@ -136,7 +136,7 @@
                                                     <input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.FunNo" disabled>
                                                 </div>
                                             </div>
-                                            <div class="form-group" ng-class="{ 'has-error' : FormFun.par.$invalid }">
+                                            <div class="form-group" ng-class="{ 'has-error' : fun.FormFun.par.$invalid }">
                                                 <label class="col-lg-4 control-label text-info">所属目录</label>
                                                 <div class="col-lg-8">
                                                     <div function-select fun-type="1" ng-model="fun.SelectedFun.ParFunNo" ng-disabled="!fun.editFun" ng-name="par" my-required="true"></div>
@@ -157,20 +157,20 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <div class="form-horizontal" ng-class="{ 'has-error' : FormFun.mysys.$invalid }">
-                                            <div class="form-group" ng-class="{ 'has-error' : FormFun.FunName.$invalid }">
+                                        <div class="form-horizontal" ng-class="{ 'has-error' : fun.FormFun.mysys.$invalid }">
+                                            <div class="form-group" ng-class="{ 'has-error' : fun.FormFun.FunName.$invalid }">
                                                 <label class="col-lg-4 control-label text-info">功能名称</label>
                                                 <div class="col-lg-8">
                                                     <input class="form-control text-xs" name="FunName" type="text" ng-model="fun.SelectedFun.FunName" ng-disabled="!fun.editFun" required>
                                                 </div>
                                             </div>
-                                            <div class="form-group" ng-class="{ 'has-error' : FormFun.Route.$invalid }">
+                                            <div class="form-group" ng-class="{ 'has-error' : fun.FormFun.Route.$invalid }">
                                                 <label class="col-lg-4 control-label text-info">路由</label>
                                                 <div class="col-lg-8">
                                                     <input class="form-control text-xs" name="Route" type="text" ng-model="fun.SelectedFun.RouteName" ng-disabled="!fun.editFun" required>
                                                 </div>
                                             </div>
-                                            <div class="form-group" ng-class="{ 'has-error' : FormFun.routeUrl.$invalid }">
+                                            <div class="form-group" ng-class="{ 'has-error' : fun.FormFun.routeUrl.$invalid }">
                                                 <label class="col-lg-4 control-label text-info">路由路径</label>
                                                 <div class="col-lg-8">
                                                     <input class="form-control text-xs" name="routeUrl" type="text" ng-model="fun.SelectedFun.RouteUrl" ng-disabled="!fun.editFun" required>
@@ -188,7 +188,7 @@
                                 <div class="row">
                                     <div class="form-horizontal">
                                         <div class="col-sm-12">
-                                            <div class="form-group py-xl-1 pt-xl-1" ng-class="{ 'has-error' : FormFun.Html.$invalid }">
+                                            <div class="form-group py-xl-1 pt-xl-1" ng-class="{ 'has-error' : fun.FormFun.Html.$invalid }">
                                                 <label class="col-sm-2 control-label text-info">HTML文件</label>
                                                 <div class="col-sm-3">
                                                     <span class="btn-group">

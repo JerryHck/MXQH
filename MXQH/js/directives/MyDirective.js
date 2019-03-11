@@ -84,65 +84,7 @@ angular.module('MyDirective')
         }
     }
 }])
-.directive('companySelect', ['AjaxService', function (AjaxService) {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        scope: {
-            ngModel: '=',
-            Clear: '=',
-            ngDisabled: '=',
-            searchEnabled: '=',
-            selectClass: '@',
-            myRequired: '@',
-            ngName: '@',
-            ngChange:'&'
-        },
-        template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '<ui-select name="{{ ngName }}" ng-model="$parent.ngModel"  class="{{ selectClass }}" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="myRequired">'
-                  + '  <ui-select-match placeholder="选择组织...">{{ $select.selected.CompanyName }}</ui-select-match>       '
-                  + ' <ui-select-choices repeat="item.CompanyNo as item in data | filter: $select.search track by item.CompanyNo">                          '
-                  + '      <div ng-bind-html="item.CompanyNo | highlight: $select.search"></div>                             '
-                  + '      <small ng-bind-html="item.CompanyName | highlight: $select.search"></small>                       '
-                  + '  </ui-select-choices>                                                                                  '
-                  + '</ui-select>'
-                  + '    <span class="input-group-btn" ng-if="clear">'
-                  + '        <button ng-click="$parent.ngModel= undefined" class="btn btn-default" ng-disabled="ngDisabled">'
-                  + '            <span class="glyphicon glyphicon-trash text-danger"></span>'
-                  + '         </button>'
-                  + '     </span>'
-                  + '</div>'
-        ,
-        link: link,
-        compile: function (tELe, tAttrs, transcludeFn) {
-            //进行编译后的dom操作
-            return {
-                pre: function (scope, iElement, iAttrs, controller) {
-                    //// 在子元素被链接之前执行
-                    //uiLoad.Load("ui.select");
-                },
-                post: function (scope, iElement, iAttrs, controller) {
-                    // 在子元素被链接之后执行
-                }
-            }
-        }
-    };
-
-    function link(scope, element, attrs) {
-        scope.data = undefined;
-        //组织
-        AjaxService.GetEntities("Company").then(function (data) {
-            scope.data = data;
-            $.grep(data, function (e) {
-                if (e.CompanyNo === scope.ngModel) {
-                    scope.selectItem = e;
-                    return;
-                }
-            });
-        });
-    }
-}])
-.directive('systemSelect', ['AjaxService', function (AjaxService) {
+.directive('basicSelect', ['AjaxService', 'appUrl', function (AjaxService, appUrl) {
     return {
         restrict: 'A',
         require: 'ngModel',
@@ -152,35 +94,94 @@ angular.module('MyDirective')
             searchEnabled: '=',
             clear: '=',
             selectClass: '@',
-            myRequired: '@',
+            autoFirst: '@',
+            basicSelect: '@',
+            placeholder: '@',
+            ngRequired: '@',
             ngName: '@',
-            ngChange:'&'
+            ngChange: '&'
         },
-        template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '<ui-select  ng-model="$parent.ngModel" theme="bootstrap"  class="{{ selectClass }}" search-enabled="searchEnabled" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
-                  + ' <ui-select-match placeholder="选择系统...">{{ $select.selected.SysName }}</ui-select-match>       '
-                  + ' <ui-select-choices repeat="item.SysNo as item in data | filter: $select.search track by item.SysNo">             '
-                  + '      <div ng-bind-html="item.SysNo | highlight: $select.search"></div>                             '
-                  + '      <small ng-bind-html="item.SysName | highlight: $select.search"></small>                       '
-                  + '  </ui-select-choices>                                                                                  '
-                  + '</ui-select>'
-                  + '    <span class="input-group-btn" ng-if="clear">'
-                  + '        <button ng-click="$parent.ngModel= undefined" class="btn btn-default" ng-disabled="ngDisabled">'
-                  + '            <span class="glyphicon glyphicon-trash text-danger"></span>'
-                  + '         </button>'
-                  + '     </span>'
-                  + ' </div>'
-                  ,
-
-        link: link
+        templateUrl: function (element, attrs) {
+            var url = appUrl + "CustomFun/UISelect/" + attrs.basicSelect + ".html?date="+(new Date()).toString();
+            return url;
+        },
+        link: link,
     };
-
     function link(scope, element, attrs) {
         scope.data = undefined;
-        //组织
-        AjaxService.GetEntities("SystemList").then(function (data) {
-            scope.data = data;
-        });
+        scope.autoFirst = scope.autoFirst || "false";
+        if (scope.basicSelect) {
+            var en = [{ name: "SelectName", value: scope.basicSelect }];
+            //组织
+            var promise = AjaxService.GetPlan("SysUISelect", en).then(function (data) {
+                if (data.SelectName) {
+                    //获取数据
+                    var list = [];
+                    var holder = data.Placeholder || "请选择...";
+                    scope.placeholder = scope.placeholder || holder;
+                    if (data.SerList && data.SerList.length > 0) {
+                        for (var i = 0, len = data.SerList.length; i < len; i++) {
+                            var en = {};
+                            en.name = data.SerList[i].ColName;
+                            en.value = data.SerList[i].SerValue;
+                            en.type = data.SerList[i].SerExp;
+                            en.action = data.SerList[i].SerAss;
+                            en.level = data.SerList[i].SerLevel;
+                            list.push(en);
+                        }
+                    }
+                    AjaxService.GetPlans(data.EntityName, list).then(function (data2) {
+                        scope.data = data2;
+                        if (data2.length > 0 && scope.autoFirst.toLowerCase() == 'true' && !scope.ngModel) {
+                            scope.ngModel = data.ReturnColumn == undefined || data.ReturnColumn == '' ? data2[0] : data2[0][data.ReturnColumn];
+                        }
+                    });
+                }
+            });
+        }
+
+        scope.ValueChange = function () {
+            setTimeout(function () {
+                scope.ngChange();
+            }, 1);
+        }
+    }
+}])
+.directive('serData', ['AjaxService', 'appUrl', function (AjaxService, appUrl) {
+    return {
+        restrict: 'A',
+        scope: {
+            list: '=',
+            serData: '@',
+        },
+        link: link,
+    };
+    function link(scope, element, attrs) {
+        console.log(scope.serData);
+        if (scope.serData) {
+            var en = [{ name: "SelectName", value: scope.serData }];
+            //组织
+            var promise = AjaxService.GetPlan("SysUISelect", en).then(function (data) {
+                if (data.SelectName) {
+                    //获取数据
+                    var list = [];
+                    if (data.SerList && data.SerList.length > 0) {
+                        for (var i = 0, len = data.SerList.length; i < len; i++) {
+                            var en = {};
+                            en.name = data.SerList[i].ColName;
+                            en.value = data.SerList[i].SerValue;
+                            en.type = data.SerList[i].SerExp;
+                            en.action = data.SerList[i].SerAss;
+                            en.level = data.SerList[i].SerLevel;
+                            list.push(en);
+                        }
+                    }
+                    AjaxService.GetPlans(data.EntityName, list).then(function (data2) {
+                        scope.list = data2;
+                    });
+                }
+            });
+        }
     }
 }])
 .directive('functionSelect', ['AjaxService', function (AjaxService) {
@@ -201,8 +202,8 @@ angular.module('MyDirective')
                   + '<ui-select ng-model="$parent.ngModel" ng-change="ngChange()" theme="bootstrap" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
                   + '  <ui-select-match placeholder="请选择...">{{ $select.selected.FunName }}</ui-select-match>'
                   + ' <ui-select-choices repeat="item.FunNo as item in data | filter: $select.search track by item.FunNo">'
-                  + '      <div ng-bind-html="item.FunNo | highlight: $select.search"></div>'
-                  + '      <small ng-bind-html="item.FunName | highlight: $select.search"></small>'
+                  + '      <div ng-bind-html="item.FunName | highlight: $select.search"></div>'
+                  //+ '      <small ng-bind-html="item.FunNo | highlight: $select.search"></small>'
                   + '  </ui-select-choices>'
                   + '</ui-select>'
                   + '    <span class="input-group-btn" ng-if="clear">'
@@ -223,47 +224,6 @@ angular.module('MyDirective')
         //组织
         AjaxService.GetEntities("Function", en).then(function (data) {
             scope.data = data;
-        });
-    }
-}])
-.directive('userSelect', ['AjaxService', function (AjaxService) {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        scope: {
-            ngModel: '=',
-            ngDisabled: '=',
-            clear: '=',
-            selectClass: '@',
-            myRequired: '@',
-            placeholder: '@',
-            ngName: '@',
-            ngChange:'&'
-        },
-        template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '<ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
-                  + '  <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.ChiLastName }}{{ $select.selected.ChiFirstName }}</ui-select-match>'
-                  + ' <ui-select-choices repeat="item.UserNo as item in data | filter: $select.search track by item.UserNo">'
-                  + '      <div ng-bind-html="item.UserNo | highlight: $select.search"></div>'
-                  + '      <small><span ng-bind-html="item.ChiLastName | highlight: $select.search"></span><span ng-bind-html="item.ChiFirstName | highlight: $select.search"></span></small>'
-                  + '  </ui-select-choices>'
-                  + '</ui-select>'
-                  + '    <span class="input-group-btn" ng-if="clear">'
-                  + '        <button ng-click="$parent.ngModel= undefined" class="btn btn-default" ng-disabled="ngDisabled">'
-                  + '            <span class="glyphicon glyphicon-trash text-danger"></span>'
-                  + '         </button>'
-                  + '     </span>'
-                  + ' </div>'
-        ,
-        link: link
-    };
-
-    function link($scope, element, attrs) {
-        $scope.data = undefined;
-        $scope.placeholder = $scope.placeholder || "请选择...";
-        //组织
-        AjaxService.GetPlans("User").then(function (data) {
-            $scope.data = data;
         });
     }
 }])
@@ -497,41 +457,6 @@ angular.module('MyDirective')
             }
         }
     }])
-.directive('commonDataSelect', ['AjaxService', function (AjaxService) {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        scope: {
-            ngModel: '=',
-            ngDisabled: '=',
-            searchEnabled: '=',
-            placeholder: '@',
-            selectClass: '@',
-            myRequired: '@',
-            ngName: '@',
-            ngChange: '&'
-        },
-        template: '<ui-select name="{{ ngName }}" ng-change="ngChange()" class="{{ selectClass }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="myRequired">'
-                    + ' <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.ComName }}</ui-select-match>       '
-                    + ' <ui-select-choices repeat="item.ComName as item in data | propsFilter: {ComName: $select.search}">                          '
-                    + '      <div ng-bind-html="item.ComName | highlight: $select.search"></div>'
-                    + '  </ui-select-choices>'
-                    + '</ui-select>'
-        ,
-        link: link
-    };
-
-    function link(scope, element, attrs) {
-        scope.data = undefined;
-        scope.placeholder = scope.placeholder || "请选择...";
-        AjaxService.GetPlans("CommonData").then(function (data) {
-            scope.data = data;
-            if (data.length > 0) {
-                scope.ngModel = scope.ngModel || data[0].ComName;
-            }
-        });
-    }
-}])
 .directive('entitySelect', ['AjaxService', function (AjaxService) {
     return {
         restrict: 'A',

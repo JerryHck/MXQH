@@ -75,6 +75,8 @@ angular.module('app')
                     vm.FunData = data;
                     //vm.FunTree = data;
                     vm.FunctionList = [];
+                    vm.SysList = vm.SysList || [];
+                    dataSys = dataSys || [];
                     for (var i = 0, len = data.length; i < len; i++) {
                         //获取具有的系统列表
                         var sysEn = {};
@@ -95,6 +97,7 @@ angular.module('app')
                             vm.SysList.push(sysEn);
                         }
                         //获取所有功能列表
+                        data[i].FunList = data[i].FunList || [];
                         for (var j = 0, len2 = data[i].FunList.length; j < len2; j++) {
                             var en = {};
                             en.RouteName = data[i].FunList[j].RouteName;
@@ -122,7 +125,9 @@ angular.module('app')
         }
 
         function Go(routeName) {
-            $state.go(routeName);
+            if (routeName) {
+                $state.go(routeName);
+            }
         }
 
         function Reflash() {

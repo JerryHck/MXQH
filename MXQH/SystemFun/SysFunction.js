@@ -258,7 +258,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
             vm.SelectedFun.IsSystem = false;
             vm.SelectedFun.FunLoad = [];
             vm.FunList.push(vm.SelectedFun);
-            //FunctionFile();
+            FunctionFile();
         }
     }
 
@@ -317,7 +317,6 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
     function Cancel() {
         //vm.SelectedFun = undefined;
         vm.editFun = false;
-        console.log($scope.FormFun);
     }
 
     function SaveFunInfo() {
@@ -347,6 +346,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
             AjaxService.LoginAction("ReInit");
             //保存文件
             if (!en.IsSystem && data.data[0] && data.data[0].FunNo && Content) {
+                vm.FunCodeSetting.FunNo = data.data[0].FunNo;
                 var htmlEn = {};
                 htmlEn.FileName = data.data[0].FunNo + ".html";
                 htmlEn.Text = $window.btoa($window.encodeURIComponent(Content.Html));

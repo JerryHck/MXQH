@@ -200,7 +200,7 @@
                                                                     <div class="col-md-7" title="选择公共件">
                                                                         <label class="sr-only">选择公共件</label>
                                                                         <div ng-class="{ 'has-error' : en.ClassForm.BasicData.$invalid }">
-                                                                            <div common-data-select ng-model="en.ProItem.BasicName" select-class="text-xs" ng-disabled="!en.isEditing" ng-name="BasicData" my-required="true"></div>
+                                                                            <div basic-select="CommonData" ng-model="en.ProItem.BasicName" select-class="text-xs" ng-disabled="!en.isEditing" ng-name="BasicData" my-required="true"></div>
                                                                             <div ng-messages="en.ClassForm.BasicData.$error" class="help-block" role="alert">
                                                                                 <div ng-message="required">选择公共件</div>
                                                                             </div>

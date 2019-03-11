@@ -18,7 +18,6 @@ namespace MXQH.Data.Handers
         {
             try
             {
-                //传入值 type 1- 取HTML文件，2-js 文件，css文件
                 string method = context.Request.Form["method"] ?? "";
                 string data = context.Request.Form["data"] ?? "";
                 string strJson = "";
@@ -27,7 +26,9 @@ namespace MXQH.Data.Handers
                     case "GetFileList": strJson = GetFileList(data);break;
                     case "AddDialog": strJson = AddDialog(data); break;
                     case "GetFileText": strJson = GetFileText(data); break;
+                    case "GetSelectText": strJson = GetSelectText(data); break;
                     case "WriteFile": strJson = WriteFileText(data); break;
+                    case "AddUISelect": strJson = WriteFileText(data, "UISelect"); break;
                 }
 
                 context.Response.ContentType = "text/Json";
@@ -99,20 +100,43 @@ namespace MXQH.Data.Handers
             }
         }
 
+        //获取Select 的值
+        private string GetSelectText(string FileName)
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            try
+            {
+                string strPath = AppDomain.CurrentDomain.BaseDirectory + "CustomFun\\UISelect\\";
+                string strHtmlPath = strPath + FileName + ".html";
+                if (!File.Exists(strHtmlPath)) { return "{}"; }
+                using (StreamReader sr = new StreamReader(strHtmlPath, Encoding.UTF8))
+                {
+                    string str1 = sr.ReadToEnd(); // 读取文件
+                    dic.Add("Html", str1);
+                }
+                return JsonConvert.SerializeObject(dic); ;
+            }
+            catch (Exception ex)
+            {
+                dic.Add("Error", ex.Message);
+                return JsonConvert.SerializeObject(dic); ;
+            }
+        }
+
         //写取文件内容
-        private string WriteFileText(string data)
+        private string WriteFileText(string data, string Dir = "")
         {
             try
             {
                 FileSave f = JsonConvert.DeserializeObject<FileSave>(data);
-
+                string dirPath = AppDomain.CurrentDomain.BaseDirectory + "CustomFun\\" + (Dir == "" ? "" : Dir + "\\");
                 //验证文件路径
-                if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "CustomFun\\"))
+                if (!Directory.Exists(dirPath))
                 {
-                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "CustomFun\\");
+                    Directory.CreateDirectory(dirPath);
                 }
 
-                string strFilePath = AppDomain.CurrentDomain.BaseDirectory + "CustomFun\\" + f.FileName;
+                string strFilePath = dirPath + f.FileName;
                 using (StreamWriter sw = new StreamWriter(strFilePath, false, Encoding.UTF8))
                 {
                     byte[] bytes = Convert.FromBase64String(f.Text);
@@ -123,7 +147,7 @@ namespace MXQH.Data.Handers
             }
             catch (Exception ex)
             {
-                return "{Error: \"" +  ex.Message + "\"}";
+                return "{Error: \"" + ex.Message + "\"}";
             }
         }
 
