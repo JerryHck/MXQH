@@ -11,9 +11,10 @@
             <td class="col-md-1">编辑</td>
             <td class="col-md-1">系统编号</td>
             <td class="col-md-2">系统名称</td>
+            <td class="col-md-1">使用状态</td>
             <td class="col-md-2">备注</td>
-            <td class="col-md-2">排序</td>
-            <td class="col-md-2">所属组织</td>
+            <td class="col-md-1">排序</td>
+            <td class="col-md-1">所属组织</td>
             <td class="col-md-1">创建人</td>
         </tr>
         <tr ng-repeat="item in sys.List">
@@ -23,6 +24,9 @@
             </td>
             <td>{{ item.SysNo }}</td>
             <td>{{ item.SysName }}</td>
+            <td>
+                <div toggle-switch ng-model="item.IsUsed" class="w-xs switch-success" on-label="启用" off-label="停用" on-value="1" off-value="0" is-disabled="true"></div>
+            </td>
             <td>{{ item.SysDesc }}</td>
             <td>{{ item.OrderNo }}</td>
             <td>{{ item.Company.CompanyName }}</td>

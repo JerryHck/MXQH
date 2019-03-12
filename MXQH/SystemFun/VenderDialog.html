@@ -1,0 +1,55 @@
+﻿<div class="modal-header text-center">
+    <span class="modal-title h3">Auctus WPO 单据{{ v.form.title }}</span>
+</div>
+<div class="modal-body wrapper-xs">
+    <div class="panel panel-default scroll-y" ng-form="v.DialogForm">
+        <div class="panel-body">
+            <div class="form-horizontal no-padder">
+                <div class="form-group no-padder">
+                    <div class="col-md-12 padder-xs">
+                        <label class="col-md-3 control-label">供应商编号</label>
+                        <div class="col-md-8 no-padder" ng-class="{ 'has-error' : v.DialogForm.VenderSN.$invalid }">
+                            <input type="text" class="form-control"  ng-disabled="v.form.index == 1" name="VenderSN" ng-blur="v.isExists()" placeholder="供应商编号" ng-model="v.Item.VenderSN" required>
+                            <div ng-messages="v.DialogForm.VenderSN.$error" class="help-block" role="alert">
+                                <div ng-message="unique">单据重复</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group no-padder">
+                    <div class="col-md-12 padder-xs">
+                        <label class="col-md-3 control-label">供应商简称</label>
+                        <div class="col-md-8 no-padder" ng-class="{ 'has-error' : v.DialogForm.ShortName.$invalid }">
+                            <input type="text" class="form-control" name="ShortName" placeholder="供应商简称"
+                                   ng-model="v.Item.ShortName"  required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group no-padder">
+                    <div class="col-md-12 padder-xs">
+                        <label class="col-md-3 control-label">供应商名称</label>
+                        <div class="col-md-8 no-padder" title="供应商名称" ng-class="{ 'has-error' : v.DialogForm.VenderName.$invalid }">
+                            <input type="text" class="form-control" name="ShortName" placeholder="供应商简称"
+                                   ng-model="v.Item.VenderName" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group no-padder">
+                    <div class="col-md-12 padder-xs">
+                        <label class="col-md-3 control-label">备注</label>
+                        <div class="col-md-8 no-padder" title="备注">
+                            <textarea type="text" rows="2" name="AucMateSpes" class="form-control" placeholder="备注" ng-model="v.Item.Remark"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="col-md-12 text-center">
+        <button class="btn btn-success pull-none" type="button" ng-disabled="v.DialogForm.$invalid" ng-click="v.Save()">储存</button>
+        <button class="btn btn-warning pull-none" type="button" ng-click="v.cancel()">取消</button>
+    </div>
+</div>
+<!--<pre>{{ v.SerList | json }}</pre>-->

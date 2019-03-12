@@ -334,6 +334,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
         en.Controller = vm.SelectedFun.Controller || '';
         en.ControllerAs = vm.SelectedFun.ControllerAs || '';
         en.FunDesc = vm.SelectedFun.FunDesc || '';
+        en.IsUsed = vm.SelectedFun.IsUsed;
         en.OrderBy = vm.FunList.Length || 1;
         en.IsSystem = vm.SelectedFun.IsSystem;
         en.CreateBy = $rootScope.User.UserNo;

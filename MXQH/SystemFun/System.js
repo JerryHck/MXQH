@@ -43,6 +43,8 @@ function ($scope, $http, Dialog, AjaxService) {
         en.CompanyNo = item.Company.CompanyNo;
         vm.promise = AjaxService.ExecPlan('System', "delete", en).then(function (data) {
             GetList();
+            //更新功能基本信息
+            AjaxService.LoginAction("ReInit");
             toastr.success('删除');
         });
     }

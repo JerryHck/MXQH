@@ -189,7 +189,7 @@
                                                         <div class="form-group pull-in clearfix  m-t-xs" title="所属供应商">
                                                             <label class="col-md-4 control-label font-bold">所属供应商:</label>
                                                             <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.OrgSn.$invalid }">
-                                                                <div basic-select="VerderSelect" placeholder="选择所属供应商" ng-name="OrgSn" ng-required="true" ng-model="use.EmpItem.OrgSn"></div>
+                                                                <div basic-select="VerderSelect" placeholder="选择所属供应商" ng-disabled="!use.isEditEmp" ng-name="OrgSn" ng-required="true" ng-model="use.EmpItem.OrgSn"></div>
                                                             </div>
                                                         </div>
                                                         <div class="form-group pull-in clearfix  m-t-xs" title="固定电话">

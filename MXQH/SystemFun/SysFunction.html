@@ -124,16 +124,17 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-horizontal">
-                                            <div class="form-group">
-                                                <label class="col-lg-4 control-label text-info">功能编号</label>
-                                                <div class="col-lg-8 text-xs input-group">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default" ng-disabled="!fun.editFun" ng-click="fun.OpenFunIcon()">
-                                                            <i ng-class="fun.SelectedFun.FunImge"></i>
-                                                        </button>
-                                                    </span>
-                                                    <!--<span class="btn btn-default"><i ng-class="fun.SelectedFun.FunImge"></i></span>-->
-                                                    <input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.FunNo" disabled>
+                                            <div class="form-group" ng-class="{ 'has-error' : fun.FormFun.FunName.$invalid }">
+                                                <label class="col-lg-4 control-label text-info">功能名称</label>
+                                                <div class="col-lg-8">
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-default" ng-disabled="!fun.editFun" ng-click="fun.OpenFunIcon()">
+                                                                <i ng-class="fun.SelectedFun.FunImge"></i>
+                                                            </button>
+                                                        </span>
+                                                        <input class="form-control text-xs" name="FunName" type="text" ng-model="fun.SelectedFun.FunName" ng-disabled="!fun.editFun" required>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group" ng-class="{ 'has-error' : fun.FormFun.par.$invalid }">
@@ -158,10 +159,10 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-horizontal" ng-class="{ 'has-error' : fun.FormFun.mysys.$invalid }">
-                                            <div class="form-group" ng-class="{ 'has-error' : fun.FormFun.FunName.$invalid }">
-                                                <label class="col-lg-4 control-label text-info">功能名称</label>
-                                                <div class="col-lg-8">
-                                                    <input class="form-control text-xs" name="FunName" type="text" ng-model="fun.SelectedFun.FunName" ng-disabled="!fun.editFun" required>
+                                            <div class="form-group">
+                                                <label class="col-lg-4 control-label text-info">功能状态</label>
+                                                <div class="col-lg-8 text-xs input-group">
+                                                    <div toggle-switch ng-model="fun.SelectedFun.IsUsed" class="w-xs switch-success m-l-md" on-label="启用" off-label="停用" on-value="1" off-value="0" is-disabled="!fun.editFun"></div>
                                                 </div>
                                             </div>
                                             <div class="form-group" ng-class="{ 'has-error' : fun.FormFun.Route.$invalid }">
