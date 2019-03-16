@@ -70,14 +70,16 @@ angular.module('MyDirective')
         link: function (scope, element, attr, ngModel) {
             scope.option = scope.option ||
                 {
-                    formatTime: 'H:i',
-                    formatDate: 'Y.m.d',
+                    //formatTime: 'H:i',
+                    format: 'Y/m/d',
+                    formatDate: 'Y/m/d',
                     timepicker: false,
                 }
             //scope.option.formatTime = scope.option.formatTime || 'H:i';
             //scope.option.formatDate = scope.option.formatDate || 'Y.m.d';
 
             $ocLazyLoad.load('datetimepicker').then(function () {
+                console.log(scope.option);
                 $.datetimepicker.setLocale('zh');
                 element.datetimepicker(scope.option);
             })

@@ -27,6 +27,14 @@
                 </div>
                 <div class="form-group no-padder">
                     <div class="col-md-12 padder-xs">
+                        <label class="col-md-3 control-label">包装箱模版</label>
+                        <div class="col-md-8 no-padder" title="包装箱模版" ng-class="{ 'has-error' : m.DialogForm.Template.$invalid }">
+                            <div basic-select="MESTemplate" ng-name="Template" ng-model="m.Item.TemplateId" ng-required="true"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group no-padder">
+                    <div class="col-md-12 padder-xs">
                         <label class="col-md-3 control-label">力同料号</label>
                         <div class="col-md-8 no-padder" ng-class="{ 'has-error' : m.DialogForm.AucMateCode.$invalid }">
                             <input type="text" class="form-control" name="AucMateCode" placeholder="力同料号" ng-model="m.Item.AucMateCode" required>

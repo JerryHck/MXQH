@@ -45,9 +45,10 @@ function SysUISelectDialogCtrl($rootScope, $scope, $uibModalInstance, Form, Item
     function GetTbColumns(name) {
         if (name) {
             var en = {};
-            en.planName = vm.Item.EntityName;
-            AjaxService.BasicCustom("GetTbViewColumns", en).then(function (data) {
-                vm.EnColumns = data.data;
+            en.name = "EntityName";
+            en.value = name;
+            AjaxService.GetPlans("PlanProperty", en).then(function (data) {
+                vm.EnColumns = data;
             });
         }
     }
