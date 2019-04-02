@@ -11,6 +11,7 @@ function MateDialogCtrl($rootScope, $scope, $uibModalInstance, Form, ItemData, t
 
     //储存
     vm.Save = function () {
+        vm.Item.IsUpload = false;
         if (ItemData.Id) {
             AjaxService.PlanUpdate("WPOMate", vm.Item).then(function (data) {
                 toastr.success('储存成功');

@@ -43,10 +43,18 @@ function ($rootScope, $scope, Dialog, AjaxService, toastr, $window) {
     }
 
     function Delete(item) {
-        AjaxService.PlanDelete("WPOMate", item).then(function (data) {
-            toastr.success('删除成功');
-            PageChange();
+        AjaxService.GetPlan("WPOFun", { name: "AucMateId", value: item.Id }).then(function (data) {
+            if (!data.Id) {
+                AjaxService.PlanDelete("WPOMate", item).then(function (data) {
+                    toastr.success('删除成功');
+                    PageChange();
+                });
+            }
+            else {
+                toastr.error('料号已经被使用不可再删除');
+            }
         });
+        
     }
 
     function ExportExcel() {

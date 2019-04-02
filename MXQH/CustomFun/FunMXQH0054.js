@@ -16,13 +16,12 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         vm.page.index = 1;
         PageChange();
     }
+    
+    AjaxService.GetPlans("WPOPackPrint").then(function (data) { vm.POData = data; })
 
     function PageChange() {
         var list = [];
-        if (vm.Ser.a_InternalCode) {
-            list.push({ name: "InternalCode", value: vm.Ser.a_InternalCode });
-        }
-        vm.promise = AjaxService.GetPlansPage("MESDeleteCode", list, vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("EnProcExcel", list, vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
@@ -30,10 +29,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
     function ExportExcel() {
         var list = [];
-        if (vm.Ser.a_InternalCode) {
-            list.push({ name: "InternalCode", value: vm.Ser.a_InternalCode });
-        }
-        vm.promise = AjaxService.GetPlanOwnExcel("MESDeleteCode", list).then(function (data) {
+        vm.promise = AjaxService.GetPlanOwnExcel("EnProcExcel", list).then(function (data) {
             $window.location.href = data.File;
         });
     }

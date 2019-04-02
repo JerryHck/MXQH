@@ -76,7 +76,7 @@ function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $wi
         $window.localStorage["IsSave"] = vm.IsSave;
         $cookieStore.remove('user-token');
         $cookieStore.put('user-token', data.Session);
-        $window.location.href = appUrl + '/index.html';
+        $window.location.href = appUrl + '/index.html?v=' + (new Date().getSeconds()).toString();
     }
 
     function CheckCode() {

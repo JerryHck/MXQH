@@ -1,0 +1,85 @@
+﻿<div class="col-md-8 col-md-offset-2">
+    <div class="wrapper-md m-n font-bold h3 text-center">包装参数设定</div>
+    <div class="wrapper-xs">
+        <div class="form-horizontal">
+            <div class="form-group" uib-collapse="!ps.isAddItemType">
+                <div class="col-sm-12" ng-form="ps.NewItemForm">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="input-group" ng-class="{ 'has-error' : ps.NewItemForm.SetName.$invalid }">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="ps.Insert()" ng-disabled="ps.NewItemForm.$invalid">
+                                        <i class="glyphicon glyphicon-plus text-success"></i>
+                                    </button>
+                                </span>
+                                <input type="text" name="SetName" class="form-control" placeholder="名称" ng-model="ps.NewItem.SetName" required />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group" ng-class="{ 'has-error' : ps.NewItemForm.SetValue.$invalid }">
+                                <input type="text" name="SetValue" class="form-control" placeholder="值" ng-model="ps.NewItem.SetValue" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group" ng-class="{ 'has-error' : ps.NewItemForm.SetDesc.$invalid }">
+                                <input type="text" name="SetDesc" class="form-control" placeholder="备注" ng-model="ps.NewItem.SetDesc" required>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-light" ng-click="ps.isAddItemType=!ps.isAddItemType"><i class="icon icon-action-undo"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" uib-collapse="ps.isAddItemType">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="input-group col-md-10 col-md-offset-1">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" ng-click="ps.isAddItemType=!ps.isAddItemType">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                </button>
+                            </span>
+                            <input type="text" class="form-control" placeholder="查询" ng-model="ps.itemQuenry">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" disabled>
+                                    <i class="glyphicon glyphicon-search text-success"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper-xs">
+            <table class="table">
+                <tr>
+                    <td style="width:80px ">操作</td>
+                    <td style="width:100px ">设定名</td>
+                    <td style="width:150px ">设定值</td>
+                    <td style="width:250px ">备注</td>
+                </tr>
+                <tr ng-repeat="item in ps.ParList | filter:ps.itemQuenry" ng-form="item.form">
+                    <td>
+                        <button class="btn btn-xs btn-success" ng-if="!item.isEdit" ng-click="item.isEdit = !item.isEdit"><i class="glyphicon glyphicon-edit"></i></button>
+                        <button class="btn btn-xs btn-success" ng-disabled="item.form.$invalid" ng-if="item.isEdit" ng-click="ps.Edit(item)"><i class="glyphicon glyphicon-save"></i></button>
+                        <button class="btn btn-xs btn-danger" ng-if="!item.isEdit" ng-confirm="{text:'确定要删除吗'}" ng-click="ps.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                    </td>
+                    <td>{{ item.SetName }}</td>
+                    <td>
+                        <span ng-if="!item.isEdit">{{ item.SetValue }}</span>
+                        <div ng-if="item.isEdit" ng-class="{ 'has-error' : item.form.SetValue.$invalid }">
+                            <input type="text" name="SetValue" class="form-control" placeholder="值" ng-model="item.SetValue" required>
+                        </div>
+                    </td>
+                    <td>
+                        <span ng-if="!item.isEdit">{{ item.SetDesc }}</span>
+                        <div ng-if="item.isEdit">
+                            <input type="text" name="SetDesc" class="form-control" placeholder="值" ng-model="item.SetDesc" >
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

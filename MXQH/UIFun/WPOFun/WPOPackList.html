@@ -1,0 +1,70 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="wpo.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">包装列表</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    <ui-select ng-model="wpo.Ser.State" theme="bootstrap">
+                        <ui-select-match placeholder="包装状态">{{ $select.selected.Name }}</ui-select-match>
+                        <ui-select-choices repeat="item.State as item in wpo.StateList | filter: $select.search">
+                            <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="wpo.Ser.a_PackageSN" placeholder="箱号">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="wpo.Ser.a_AucMateCode" placeholder="料号">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="wpo.Ser.a_AuctusWPO" placeholder="力同委外单">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "wpo.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "wpo.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <table class= "table" >
+                <tr>
+                    <td style="width:65px ">操作</td>
+                    <td style= "width:110px ">箱号</td>
+                    <td style= "width:60px ">箱序</td>
+                    <td style="width:50px ">状态</td>
+                    <td style= "width:60px ">包装数量</td>
+                    <td style= "width:100px ">包装日期</td>
+                    <td style="width:100px ">生产订单</td>
+                    <td style= "width:80px ">料号</td>
+                    <td style= "width:100px ">料名</td>
+                    <td style= "width:100px ">型号</td>
+                    <td style= "width:100px ">力同委外单</td>
+                    <td style= "width:100px ">备注</td>
+                </tr>
+                <tr ng-repeat= "item in wpo.List ">
+                    <td>
+                        <button class="btn btn-xs btn-primary" title="补打包装箱标签" ng-if="item.State=='1'" ng-confirm="{text:'确定要重新打印包装箱吗'}" ng-click="wpo.Print(item)"><i class="glyphicon glyphicon-print"></i></button>
+                        <button class="btn btn-xs btn-danger" title="包装箱拆包" ng-if="item.State=='1'" ng-confirm="{text:'确定要对包装箱进行拆包处理吗'}" ng-click="wpo.UnDo(item)"><i class="icon-action-undo"></i></button>
+                        <button class="btn btn-xs btn-success" title="重包装处理" ng-if="item.State=='2'" ng-click="wpo.OpenRePack(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                    </td>
+                    <td>{{ item.PackageSN }}</td>
+                    <td>{{ item.PackNo }}</td>
+                    <td>
+                        <span class="h4"><i ng-class="{'text-danger fa fa-meh-o': item.State=='0', 'text-success icon-emoticon-smile': item.State=='1', 'text-warning fa fa-frown-o': item.State=='2', }"></i></span>{{ item.state }}
+                    </td>
+                    <td>{{ item.PackNum }}</td>
+                    <td>{{ item.PackDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td>{{ item.MO }}</td>
+                    <td>{{ item.AucMateCode }}</td>
+                    <td>{{ item.AucMateName }}</td>
+                    <td>{{ item.AucModelName }}</td>
+                    <td>{{ item.AuctusWPO }}</td>
+                    <td>{{ item.Remark }}</td>
+                </tr>
+            </table>
+            <div class= "col-md-12 text-center " ng-if= "wpo.page.total>wpo.page.size ">
+                <div uib-pagination total-items= "wpo.page.total " ng-model= "wpo.page.index " items-per-page= "wpo.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "wpo.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

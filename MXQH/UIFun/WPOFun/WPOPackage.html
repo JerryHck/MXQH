@@ -4,7 +4,7 @@
         <div class="wrapper-xs">
             <div class="col-sm-5">
                 <div class="panel panel-default" ng-form="w.OrderForm">
-                    <div class="panel-heading font-bold  text-center">SN包装</div>
+                    <div class="panel-heading font-bold  text-center">包装</div>
                     <div class="panel-body">
                         <div class="form-horizontal">
                             <div class="form-group">
@@ -27,19 +27,13 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">包装数量/箱</label>
                                 <div class="col-lg-3" ng-class="{ 'has-error' : w.OrderForm.PackNum.$invalid }">
-                                    <input type="number" class="form-control" name="PackNum" ng-model="w.Item.PackNum" placeholder="包装数量" required>
+                                    <input type="number" min="0" class="form-control" name="PackNum" ng-model="w.Item.PackNum" placeholder="包装数量" required>
                                 </div>
                                 <label class="col-lg-3 control-label">未包装数</label>
                                 <div class="col-lg-2" ng-class="{ 'has-error' : w.OrderForm.PackNum.$invalid }">
                                     <span class="form-control-static h4 text-success">{{ w.Item.NoPackQty }}</span>
                                 </div>
                             </div>
-                            <!--<div class="form-group">
-                                <label class="col-lg-3 control-label">包装数量/箱</label>
-                                <div class="col-lg-8" ng-class="{ 'has-error' : w.OrderForm.PackNum.$invalid }">
-                                    <input type="number" class="form-control" name="PackNum" ng-model="w.Item.PackNum" placeholder="包装数量" required>
-                                </div>
-                            </div>-->
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">备注</label>
                                 <div class="col-lg-8">
@@ -57,7 +51,7 @@
                             <div class="form-group">
                                 <div class="col-lg-offset-4 col-lg-8">
                                     <div class="checkbox col-md-5">
-                                        
+
                                     </div>
                                     <div class="col-md-3">
                                         <button type="submit" class="btn btn-sm btn-success" ng-click="w.Done()" ng-confirm="{text:'强制包装会自动根据已包装数量更新包装箱的包装数量并结束包装'}" ng-disabled="w.OrderForm.MO.$invalid||w.OrderForm.PackNum.$invalid||!w.SNList||w.SNList.length == 0">强制包装</button>
@@ -110,11 +104,14 @@
             </div>
             <div class="col-sm-5" ng-form="w.UpdateForm">
                 <div class="panel panel-default">
-                    <div class="panel-heading font-bold text-center">信息显示</div>
+                    <div class="panel-heading font-bold text-center">
+                        信息显示
+                        <span class="pull-right text-danger h6">已包:{{ w.SNList.length }}</span>
+                    </div>
                     <div class="panel-body scroll-y" style="max-height:550px">
                         <div class="list-group">
                             <ul class="list-group bg-white">
-                                <li class="list-group-item" ng-repeat="item in w.MesList track by item.Id" ng-class="{ 'text-danger' : !item.IsOk, 'text-success':item.IsOk }">
+                                <li class="list-group-item" ng-repeat="item in w.MesList | limitTo:100" ng-class="{ 'text-danger' : !item.IsOk, 'text-success':item.IsOk }">
                                     <span herf class="pull-left">
                                         <i class="glyphicon" ng-class="{ 'glyphicon-remove' : !item.IsOk, 'glyphicon-ok':item.IsOk }"></i>
                                     </span>
@@ -129,13 +126,22 @@
             </div>
             <div class="col-sm-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading font-bold text-center">包装SN列表</div>
-                    <div class="panel-body" style="max-height:550px">
-                        <div class="list-group">
-                            <div class="list-group-item" ng-repeat="sn in w.SNList">
-                                <span class="col-1 badge badge-sm bg-danger pull-left">{{ $index + 1 }}</span>
-                                <span class="col-6" ng-class="{ 'font-bold text-success' : sn.BSN==w.StaticBSN }">{{ sn.BSN }}</span>
-                                <span class="pull-right"><a class="text-danger" ng-click="w.RemoveBSN(sn)" ng-confirm="{text:'确定从包装箱中移除该SN吗'}"><i class="glyphicon glyphicon-remove"></i></a></span>
+                    <div class="panel-heading font-bold text-center">
+                        包装SN列表
+                        <span title="清空所有SN"><a class="text-danger" ng-confirm="{text:'确定要清空包装箱所有SN吗'}" ng-click="w.ClearAll()"><i class="glyphicon glyphicon-remove"></i></a></span>
+                    </div>
+                    <div class="panel-body padder-xs" style="min-height:400px" >
+                        <div class="input-group no-padder">
+                            <span class="text-success input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                            <input type="text" class="form-control input-sm" ng-model="w.SerBSN" />
+                        </div>
+                        <div class="scroll-y m-t-xs" style="max-height:530px">
+                            <div class="list-group">
+                                <div class="list-group-item" ng-repeat="sn in w.SNList | filter:w.SerBSN  | limitTo:100 ">
+                                    <span class="col-1 badge badge-sm bg-danger pull-left">{{ $index + 1 }}</span>
+                                    <span class="col-6" ng-class="{ 'font-bold text-success' : sn.BSN==w.StaticBSN }">{{ sn.BSN }}</span>
+                                    <span class="pull-right"><a class="text-danger" ng-click="w.RemoveBSN(sn)" ng-confirm="{text:'确定从包装箱中移除该SN吗'}"><i class="glyphicon glyphicon-remove"></i></a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -147,10 +153,13 @@
         <uib-tab-heading class="h5">包装补打印</uib-tab-heading>
         <div class="wrapper-md">
             <div class="col-sm-6">
-                <div class="panel panel-default" ng-form="w.DeleteForm">
-                    <div class="panel-heading font-bold">
-                        包装补打印
-                        <button class="btn btn-sm btn-success pull-right" ng-click="w.DownExe()">下载打印插件</button>
+                <div class="panel panel-default" ng-form="w.PrintForm">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-md-3"><button class="btn btn-sm btn-success pull-left" ng-click="w.DownNet()">下载.net 4.5</button></div>
+                            <div class="col-md-6 font-bold h3 text-center">包装补打印</div>
+                            <div class="col-md-3"><button class="btn btn-sm btn-success pull-right" ng-click="w.DownExe()">下载打印插件</button></div>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <div class="form-horizontal">
@@ -167,9 +176,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">内部码</label>
-                                <div class="col-lg-8" ng-class="{ 'has-error' : w.DeleteForm.w.$invalid }">
-                                    <input type="text" class="form-control" ui-focus="w.Focus == 1" name="InCode" ng-model="w.DeleteItem.InternalCode" placeholder="生产条码" ng-keyup="w.KeyDonwInCode($event)" required>
+                                <label class="col-lg-3 control-label">包装箱号</label>
+                                <div class="col-lg-8" ng-class="{ 'has-error' : w.PrintForm.PackSn.$invalid }">
+                                    <input type="text" class="form-control" ui-focus="w.Focus == 1" name="PackSn" ng-model="w.PrintItem.PackSn" placeholder="包装箱号" ng-keyup="w.KeyDonwPackSn($event)" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -180,11 +189,13 @@
                                         </label>
                                     </div>
                                     <div class="col-md-3">
-                                        <button type="submit" class="btn btn-sm btn-success" ng-click="w.PrintCode()" ng-disabled="w.DeleteForm.$invalid || w.IsAuto">打印</button>
+                                        <button type="submit" class="btn btn-sm btn-success" ng-click="w.RePrint()" ng-disabled="w.PrintForm.$invalid || w.IsAuto">打印</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <!--<pre>{{ w.PackList | json }}</pre>-->
                     </div>
                 </div>
             </div>

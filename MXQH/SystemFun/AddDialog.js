@@ -58,7 +58,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, $rootScope) {
             }
         };
         Dialog.open("DialogDialog", resolve).then(function (data) {
-            Search()
+            PageChange();
         }).catch(function (reason) {
         });
     }

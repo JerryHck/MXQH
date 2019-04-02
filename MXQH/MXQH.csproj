@@ -690,12 +690,18 @@
     <Content Include="UIFun\WPOFun\Mate.js" />
     <Content Include="UIFun\WPOFun\MateDialog.html" />
     <Content Include="UIFun\WPOFun\MateDialog.js" />
+    <Content Include="UIFun\WPOFun\WPOAteData.html" />
+    <Content Include="UIFun\WPOFun\WPOAteData.js" />
     <Content Include="UIFun\WPOFun\WPOFun.html" />
     <Content Include="UIFun\WPOFun\WPOFun.js" />
     <Content Include="UIFun\WPOFun\WPOFunDialog.html" />
     <Content Include="UIFun\WPOFun\WPOFunDialog.js" />
     <Content Include="UIFun\WPOFun\WPOPackage.html" />
     <Content Include="UIFun\WPOFun\WPOPackage.js" />
+    <Content Include="UIFun\WPOFun\WPOPackList.html" />
+    <Content Include="UIFun\WPOFun\WPOPackList.js" />
+    <Content Include="UIFun\WPOFun\WPORePackage.html" />
+    <Content Include="UIFun\WPOFun\WPORePackage.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

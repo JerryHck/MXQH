@@ -9,8 +9,15 @@ function WPOFunDialogCtrl($rootScope, $scope, $uibModalInstance, Form, ItemData,
     vm.Item = angular.copy(ItemData);
     vm.isExists = isExists;
 
+    if (ItemData.Id) {
+        AjaxService.GetPlan("WPOPackage", { name: "MOId", value: ItemData.Id }).then(function (data) {
+            vm.IsPack = data.Id;
+        });
+    }
+
     //储存
     vm.Save = function () {
+        vm.Item.IsUpload = false;
         if (ItemData.Id) {
             AjaxService.PlanUpdate("WPOFun", vm.Item).then(function (data) {
                 toastr.success('储存成功');

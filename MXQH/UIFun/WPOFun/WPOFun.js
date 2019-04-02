@@ -42,9 +42,16 @@ function ($rootScope, $scope, Dialog, AjaxService, toastr, $window) {
     }
 
     function Delete(item) {
-        AjaxService.PlanDelete("WPOFun", item).then(function (data) {
-            toastr.success('删除成功');
-            PageChange();
+        AjaxService.GetPlan("WPOPackage", { name: "MOId", value: item.Id }).then(function (data) {
+            if (!data.Id) {
+                AjaxService.PlanDelete("WPOFun", item).then(function (data) {
+                    toastr.success('删除成功');
+                    PageChange();
+                });
+            }
+            else {
+                toastr.error('工单已经包装不可再删除');
+            }
         });
     }
 

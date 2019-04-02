@@ -420,8 +420,10 @@
                 <div class="wrapper b-t m-t-xxs">
                     <p class="text-black-50">{{  en.SelectedEn.TableSchema  + (en.SelectedEn.TableSchema?".":"") + en.SelectedEn.TableName }}栏位列表</p>
                     <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" title="全选" class="input-group-sm" ng-model="en.IsTbAll" ng-change="en.TbAllChecked()" ng-disabled="!en.isEditing"><i></i>
+                        </span>
                         <input type="text" class="form-control input-sm" placeholder="查询" ng-model="en.TbColunmName">
-                        <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
                     </div>
                 </div>
                 <div class="row-row">

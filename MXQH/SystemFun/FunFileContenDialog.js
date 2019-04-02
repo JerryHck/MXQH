@@ -33,6 +33,9 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
     AjaxService.GetPlan("FunCodeSet", [{ name: "FunNo", value: ItemData.FunNo }]).then(function (data) {
         if (data.FunNo) {
             vm.ThisFun = data;
+            vm.ThisFun.FunNo = ItemData.FunNo;
+            vm.ThisFun.Controller = vm.NewItem.Controller;
+            vm.ThisFun.ControllerAs = vm.NewItem.ControllerAs;
             GetColList(true);
             GetEnProcList();
         }

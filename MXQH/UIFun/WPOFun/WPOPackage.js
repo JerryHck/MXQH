@@ -1,12 +1,12 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('WPOPackageCtrl', ['$rootScope', '$scope', 'AjaxService', 'toastr', '$window', '$state', 'FileUrl',
-function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl) {
+.controller('WPOPackageCtrl', ['$rootScope', '$scope', 'AjaxService', 'toastr', '$window', '$state', 'FileUrl', 'MyPop',
+function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyPop) {
 
     var vm = this;
     //vm.currentRouterName = angular.copy($state.current.name);
-    vm.page = { index: 1, size: 12 };
+    vm.page = { index: 1, size: 10 };
     vm.Ser = {};
     vm.Item = {};
     vm.PageChange = PageChange;
@@ -19,15 +19,24 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl) {
     vm.ChangePack = ChangePack;
     vm.RemoveBSN = RemoveBSN;
     vm.Done = Done;
+    vm.RePrint = RePrint;
+    vm.ClearAll = ClearAll;
+    vm.DownNet = DownNet;
+
+    vm.KeyDonwPackSn = KeyDonwPackSn;
 
     vm.PackId = -1;
+    vm.PrintPackId = 1;
+    vm.NumIndex = 0;
     vm.MesList = [];
-
-    vm.Text = "我是新的功能！";
     //PageChange();
 
     AjaxService.GetDefaultPrinter().then(function (data) {
         console.log(data);
+    })
+
+    AjaxService.GetPlan("WPOPackagePara", { name: "SetName", value: "NoticeNum" }).then(function (data) {
+        vm.NoticeNum = parseInt(data.SetValue);
     })
 
     function Search() {
@@ -38,6 +47,7 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl) {
     function GetNoPackList() {
         AjaxService.GetPlans("WPOPackage", [{ name: "State", value: 0 }]).then(function (data) {
             vm.NotPackList = data;
+            
         })
     }
 
@@ -65,8 +75,15 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl) {
     //    }
     //});
 
+
     function SelectTab(index) {
         vm.Focus = index;
+        if (index == 1) {
+            AjaxService.GetPlans("WPOPackage", [{ name: "State", value: 1 }]).then(function (data) {
+                vm.PackList = data;
+                console.log(1);
+            })
+        }
     }
 
     function ChangePack() {
@@ -84,6 +101,7 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl) {
             //获取包装SN列表
             AjaxService.GetPlans("WPOpackageDtl", [{ name: "PackId", value: vm.PackId }]).then(function (data) {
                 vm.SNList = data;
+                vm.NumIndex = data.length % vm.NoticeNum;
             });
         }
     }
@@ -91,6 +109,8 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl) {
     function ChangeMO() {
         AjaxService.ExecPlan("WPOFun", 'order', { Id: vm.MOId }).then(function (data) {
             if (data.data[0]) {
+                vm.PackId = -1;
+                vm.NumIndex = 0;
                 vm.OrderData = data.data[0];
                 vm.Item.PackNum = parseInt(vm.OrderData.PackNum);
                 vm.Item.NoPackQty = vm.OrderData.AucPOQty - (data.data1[0] && data.data1[0].HavePackQty ? data.data1[0].HavePackQty : 0);
@@ -109,7 +129,7 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl) {
             en.UserNo = $rootScope.User.UserNo;
             en.PackNum = vm.Item.PackNum;
             en.VenderSn = $rootScope.User.OrgSn;
-            en.Remark = vm.Item.Remark;
+            en.Remark = vm.Item.Remark;          
 
             AjaxService.ExecPlan("WPOPackage", 'pack', en).then(function (data) {
                 vm.Item.BSN = undefined;
@@ -120,20 +140,71 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl) {
                     //toastr.error(mes);
                     showMsg(msg.Msg, true);
                     var parkid = data.data2[0].PackId;
+                    vm.PrintPackId = data.data2[0].OriPackId;
                     //判断打印,包装完成需要打印
                     if (parkid == -1) {
-                        //打印
-                        PrintCode(vm.PackId);
+                        MyPop.ngConfirm({ text: "包装箱已经完成，是否要打印标签" }).then(function () {
+                            console.log(vm.PrintPackId)
+                            //打印
+                            PrintCode(vm.PrintPackId);
+                        })
+
                         vm.Package = undefined;
                         GetNoPackList();
                     }
-                    vm.PackId = angular.copy(data.data2[0].PackId);
+                    vm.NumIndex++
+                    if (vm.NumIndex == vm.NoticeNum) {
+                        AjaxService.PlayVoice('5611.mp3');
+                        MyPop.Show(true, { text: "已经扫描了" + vm.vm.NumIndex +"个" }).then(function () {
+                        })
+                        vm.NumIndex = 0;
+                    }
 
+                    vm.PackId = angular.copy(data.data2[0].PackId);
+                    //更新计数
+                    AjaxService.ExecPlan("WPOFun", 'order', { Id: vm.MOId }).then(function (data) {
+                        if (data.data[0]) {
+                            vm.Item.NoPackQty = vm.OrderData.AucPOQty - (data.data1[0] && data.data1[0].HavePackQty ? data.data1[0].HavePackQty : 0);
+                        }
+                    })
                 }
                 else if (msg.MsgType == 'fail') {
                     showMsg(msg.Msg, false);
                 }
             });
+        }
+    }
+
+    function KeyDonwPackSn(e) {
+        var keycode = window.event ? e.keyCode : e.which;
+        if (keycode == 13 && vm.PrintItem.PackSn && vm.IsAuto) {
+            RePrint();
+        }
+    }
+
+    function RePrint() {
+        if (vm.PrintItem.PackSn) {
+            AjaxService.GetPlan("WPOPackPrint", { name: "PackageSN", value: vm.PrintItem.PackSn }).then(function (data) {
+                vm.PrintItem.PackSn = undefined;
+                if (!data.Id) {
+                    toastr.error('包装箱不存在');
+                    return;
+                }
+                if (data.State != 1) {
+                    toastr.error('包装箱还未完成包装，不可打印');
+                    return;
+                }
+                var postData = {}, list = [];
+                list.push();
+                postData.ParaData = JSON.stringify(data);
+                postData.OutList = JSON.stringify(list);
+
+                AjaxService.Print(data.TemplateId, data.TemplateVersion, postData, vm.PrinterName).then(function (data) {
+                    console.log(data);
+                }, function (err) {
+                    console.log(err);
+                })
+            })
         }
     }
 
@@ -145,9 +216,15 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl) {
             en.Remark = vm.Item.Remark;
             AjaxService.ExecPlan("WPOPackage", "force", en).then(function (data) {
                 //打印
-                PrintCode(vm.PackId);
+                vm.PrintPackId = angular.copy(vm.PackId);
+                
+                MyPop.ngConfirm({ text: "要打印标签吗" }).then(function () {
+                    //打印
+                    PrintCode(vm.PrintPackId);
+                })
 
                 vm.PackId = -1;
+                vm.NumIndex = 0;
                 vm.Package = undefined;
                 GetNoPackList();
                 vm.SNList = [];
@@ -162,10 +239,17 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl) {
             return;
         }
         AjaxService.PlanDelete("WPOpackageDtl", item).then(function (data) {
+            //更新计数
+            AjaxService.ExecPlan("WPOFun", 'order', { Id: vm.MOId }).then(function (data) {
+                if (data.data[0]) {
+                    vm.Item.NoPackQty = vm.OrderData.AucPOQty - (data.data1[0] && data.data1[0].HavePackQty ? data.data1[0].HavePackQty : 0);
+                }
+            })
             //获取包装SN列表
             AjaxService.GetPlans("WPOpackageDtl", [{ name: "PackId", value: vm.PackId }]).then(function (data) {
                 vm.SNList = data;
             });
+            showMsg("SN码[" + item.BSN + "]已经成功从包装箱["+ item.PackageNO + "中移除", true);
         })
     }
 
@@ -199,8 +283,24 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl) {
         //}
     }
 
+    function ClearAll() {
+        if (vm.PackId != -1 && vm.SNList && vm.SNList.length > 0) {
+            var en = {};
+            en.PackId = vm.PackId;
+            AjaxService.ExecPlan("WPOPackage", "clear", en).then(function (data) {
+                vm.SNList = [];
+                toastr.success("清空完成");
+                ChangeMO();
+            })
+        }
+    }
+
     function DownExe() {
         $window.location.href = FileUrl + "DownLoad/打印插件.exe";
+    }
+
+    function DownNet() {
+        $window.location.href = FileUrl + "DownLoad/NDP452-KB2901907-x86-x64-AllOS-ENU.exe";
     }
 }
 ]);

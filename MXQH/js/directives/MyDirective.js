@@ -79,7 +79,7 @@ angular.module('MyDirective')
             //scope.option.formatDate = scope.option.formatDate || 'Y.m.d';
 
             $ocLazyLoad.load('datetimepicker').then(function () {
-                console.log(scope.option);
+                //console.log(scope.option);
                 $.datetimepicker.setLocale('zh');
                 element.datetimepicker(scope.option);
             })
