@@ -69,7 +69,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
     }
 
     function DeleteRole(role) {
-        MyPop.Confirm({ text: "确定要删除该角色吗" }, function () {
+        MyPop.ngConfirm({ text: "确定要删除该角色吗" }).then(function () {
             var en = {};
             en.RoleSn = role.RoleSn;
             vm.promise = AjaxService.PlanDelete("Role", en).then(function (data) {

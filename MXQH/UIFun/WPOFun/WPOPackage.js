@@ -47,7 +47,6 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
     function GetNoPackList() {
         AjaxService.GetPlans("WPOPackage", [{ name: "State", value: 0 }]).then(function (data) {
             vm.NotPackList = data;
-            
         })
     }
 
@@ -81,7 +80,6 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
         if (index == 1) {
             AjaxService.GetPlans("WPOPackage", [{ name: "State", value: 1 }]).then(function (data) {
                 vm.PackList = data;
-                console.log(1);
             })
         }
     }
@@ -102,6 +100,7 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
             AjaxService.GetPlans("WPOpackageDtl", [{ name: "PackId", value: vm.PackId }]).then(function (data) {
                 vm.SNList = data;
                 vm.NumIndex = data.length % vm.NoticeNum;
+                vm.NumIndex = vm.NumIndex || 0;
             });
         }
     }
@@ -144,22 +143,21 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
                     //判断打印,包装完成需要打印
                     if (parkid == -1) {
                         MyPop.ngConfirm({ text: "包装箱已经完成，是否要打印标签" }).then(function () {
-                            console.log(vm.PrintPackId)
                             //打印
                             PrintCode(vm.PrintPackId);
                         })
-
+                        vm.NumIndex = 0;
                         vm.Package = undefined;
                         GetNoPackList();
                     }
-                    vm.NumIndex++
-                    if (vm.NumIndex == vm.NoticeNum) {
-                        AjaxService.PlayVoice('5611.mp3');
-                        MyPop.Show(true, { text: "已经扫描了" + vm.vm.NumIndex +"个" }).then(function () {
-                        })
-                        vm.NumIndex = 0;
+                    else {
+                        vm.NumIndex++
+                        if (vm.NumIndex == vm.NoticeNum) {
+                            AjaxService.PlayVoice('5611.mp3');
+                            MyPop.ngConfirm({ text: "已经扫描了" + vm.NumIndex + "个" });
+                            vm.NumIndex = 0;
+                        }
                     }
-
                     vm.PackId = angular.copy(data.data2[0].PackId);
                     //更新计数
                     AjaxService.ExecPlan("WPOFun", 'order', { Id: vm.MOId }).then(function (data) {
@@ -244,10 +242,12 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
                 if (data.data[0]) {
                     vm.Item.NoPackQty = vm.OrderData.AucPOQty - (data.data1[0] && data.data1[0].HavePackQty ? data.data1[0].HavePackQty : 0);
                 }
-            })
+            });
             //获取包装SN列表
             AjaxService.GetPlans("WPOpackageDtl", [{ name: "PackId", value: vm.PackId }]).then(function (data) {
                 vm.SNList = data;
+                vm.NumIndex = data.length % vm.NoticeNum;
+                vm.NumIndex = vm.NumIndex || 0;
             });
             showMsg("SN码[" + item.BSN + "]已经成功从包装箱["+ item.PackageNO + "中移除", true);
         })

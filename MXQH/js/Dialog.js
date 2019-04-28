@@ -3,10 +3,21 @@ angular.module('app').factory('Dialog', ['$rootScope', '$ocLazyLoad', '$uibModal
 function ($rootScope, $ocLazyLoad, $uibModal, $q, AjaxService, Version) {
     var obj = {
         //開啟
-        open: open
+        open: open,
+        OpenDialog: OpenDialog
     };
 
     return obj;
+
+
+    function OpenDialog(name, item) {
+        var NewItem = {
+            ItemData: function () {
+                return item;
+            }
+        };
+        return open(name, NewItem);
+    }
 
     //開啟
     function open(name, resolve, option) {

@@ -93,7 +93,7 @@
                                             <input type="text" class="form-control" name="SerName" ng-model="fun.newSer.SerName" placeholder="查询描述" required />
                                         </div>
                                         <div class="col-md-2 col-sm-2 col-xs-4 form-group-sm" ng-class="{ 'has-error' : fun.NewSerForm.SerType.$invalid }">
-                                            <div config-select ng-model="fun.newSer.SerType" ng-name="SerType" config-option="fun.SerTypeConfig" my-required="true"></div>
+                                            <div config-select ng-model="fun.newSer.SerType" ng-name="SerType" config-option="fun.SerTypeConfig" ng-required="true"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-12 wrapper-xs" ng-repeat="ser in fun.ThisFun.SerList ">
@@ -109,7 +109,7 @@
                                             <input type="text" class="form-control" ng-model="ser.SerName" placeholder="查询描述" />
                                         </div>
                                         <div class="col-md-2 col-sm-2 col-xs-4 form-group-sm">
-                                            <div config-select ng-model="ser.SerType" ng-name="SeType" config-option="fun.SerTypeConfig" my-required="true"></div>
+                                            <div config-select ng-model="ser.SerType" ng-name="SeType" config-option="fun.SerTypeConfig" ng-required="true"></div>
                                         </div>
                                     </div>
                                 </div>

@@ -18,6 +18,7 @@ function ($rootScope, $scope, AjaxService, toastr, FileUrl, MyPop, $uibModalInst
 
     vm.PackId = -1;
     vm.PrintPackId = 1;
+    vm.NumIndex = 0;
     vm.MesList = [];
 
     vm.MOId = vm.DialogItem.MOId;
@@ -30,11 +31,16 @@ function ($rootScope, $scope, AjaxService, toastr, FileUrl, MyPop, $uibModalInst
         vm.SNList = data;
     });
 
+    AjaxService.GetPlan("WPOPackagePara", { name: "SetName", value: "NoticeNum" }).then(function (data) {
+        vm.NoticeNum = parseInt(data.SetValue);
+    })
+
     function ChangeMO() {
         AjaxService.ExecPlan("WPOFun", 'order', { Id: vm.MOId }).then(function (data) {
             if (data.data[0]) {
                 vm.OrderData = data.data[0];
                 //vm.Item.PackNum = parseInt(vm.OrderData.PackNum);
+                vm.NumIndex = 0;
                 vm.Item.NoPackQty = vm.OrderData.AucPOQty - (data.data1[0] && data.data1[0].HavePackQty ? data.data1[0].HavePackQty : 0);
             }
         })
@@ -69,10 +75,23 @@ function ($rootScope, $scope, AjaxService, toastr, FileUrl, MyPop, $uibModalInst
                             //打印
                             PrintCode(vm.PrintPackId);
                         })
+                        vm.NumIndex = 0;
                         $uibModalInstance.close(vm.Item);
+                    } else {
+                        vm.NumIndex++
+                        if (vm.NumIndex == vm.NoticeNum) {
+                            AjaxService.PlayVoice('5611.mp3');
+                            MyPop.ngConfirm({ text: "已经扫描了" + vm.NumIndex + "个" });
+                            vm.NumIndex = 0;
+                        }
                     }
                     vm.PackId = angular.copy(data.data2[0].PackId);
-                    ChangeMO();
+                    //更新计数
+                    AjaxService.ExecPlan("WPOFun", 'order', { Id: vm.MOId }).then(function (data) {
+                        if (data.data[0]) {
+                            vm.Item.NoPackQty = vm.OrderData.AucPOQty - (data.data1[0] && data.data1[0].HavePackQty ? data.data1[0].HavePackQty : 0);
+                        }
+                    })
                 }
                 else if (msg.MsgType == 'fail') {
                     showMsg(msg.Msg, false);
@@ -105,11 +124,18 @@ function ($rootScope, $scope, AjaxService, toastr, FileUrl, MyPop, $uibModalInst
             return;
         }
         AjaxService.PlanDelete("WPOpackageDtl", item).then(function (data) {
-            ChangeMO();
+            //更新计数
+            AjaxService.ExecPlan("WPOFun", 'order', { Id: vm.MOId }).then(function (data) {
+                if (data.data[0]) {
+                    vm.Item.NoPackQty = vm.OrderData.AucPOQty - (data.data1[0] && data.data1[0].HavePackQty ? data.data1[0].HavePackQty : 0);
+                }
+            });
             //获取包装SN列表
             AjaxService.GetPlans("WPOpackageDtl", [{ name: "PackId", value: vm.PackId }]).then(function (data) {
                 showMsg("SN码[" + item.BSN + "]已经成功从包装箱[" + item.PackageNO + "中移除", true);
                 vm.SNList = data;
+                vm.NumIndex = data.length % vm.NoticeNum;
+                vm.NumIndex = vm.NumIndex || 0;
             });
         })
     }

@@ -10,7 +10,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
     vm.Focus = { InCode: true, SnCode: false};
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
-    vm.NewItemType = {};
+    vm.NewItemType = { IsPKGen: 1 };
     vm.IsAuto = true;
 
     vm.KeyDonwInCode = KeyDonwInCode;
@@ -73,7 +73,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
             if (!data.InternalCode) {
                 vm.NewBind.InternalCode = undefined;
                 //toastr.error(mes);
-                vm.MesList.splice(0, 0, { IsOk: false, Msg: mss + '  不存在或还没有上线' });
+                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或还没有上线' });
                 AjaxService.PlayVoice('3331142.mp3');
             }
             else {
@@ -96,32 +96,59 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
     //生成内部码
     function GetSnCode(isUpdate) {
         var enSn = angular.copy(vm.SelectedItemType);
-        enSn.Company = "L";
-        enSn.Action = vm.IsAuto ? "U" : "S";
-        AjaxService.ExecPlan("BindCode", "SnCode", enSn).then(function (data3) {
-            vm.NewBind.SNCode = data3.data[0].SNCode;
-            if (vm.IsAuto) {
-                SaveBindCode();
-            }
-        })
+        if (enSn.IsPKGen == 0) {
+            enSn.Company = "L";
+            enSn.Action = vm.IsAuto ? "U" : "S";
+            AjaxService.ExecPlan("BindCode", "SnCode", enSn).then(function (data3) {
+                vm.NewBind.SNCode = data3.data[0].SNCode;
+                if (vm.IsAuto) {
+                    SaveBindCode();
+                }
+            })
+        }
+        //平台生成方式-预览
+        else if (enSn.IsPKGen == 1 && !vm.IsAuto) {
+            var en = {};
+            en.TbName = enSn.TbName;
+            en.ClName = enSn.ClName;
+            en.CharName = "";
+            AjaxService.ExecPlan("SerialNumberSet", "preview", en).then(function (data) {
+                vm.NewBind.SNCode = data.data[0].SN;
+            })
+        }
+            //平台生成方式-保存
+        else if (enSn.IsPKGen == 1 && vm.IsAuto) {
+            vm.NewBind.SNCode = "";
+            var SNList = [{ name: enSn.TbName, col: enSn.ClName, parm: "SNCode" }];
+            vm.NewBind.SNColumns = JSON.stringify(SNList);
+            SaveBindCode();
+        }
     }
 
     function BindCode() {
         var enSn = angular.copy(vm.SelectedItemType);
-        enSn.Company = "L";
-        enSn.Action = "U";
-        AjaxService.ExecPlan("BindCode", "SnCode", enSn).then(function (data3) {
-            vm.NewBind.SNCode = data3.data[0].SNCode;
+        if (enSn.IsPKGen == 0) {
+            enSn.Company = "L";
+            enSn.Action = "U";
+            AjaxService.ExecPlan("BindCode", "SnCode", enSn).then(function (data3) {
+                vm.NewBind.SNCode = data3.data[0].SNCode;
+                SaveBindCode();
+            })
+        }
+        else if (enSn.IsPKGen == 1) {
+            vm.NewBind.SNCode = "";
+            var SNList = [{ name: enSn.TbName, col: enSn.ClName, parm: "SNCode" }];
+            vm.NewBind.SNColumns = JSON.stringify(SNList);
             SaveBindCode();
-        })
+        }
     }
 
     function SaveBindCode(){
         vm.promise = AjaxService.ExecPlan("BindCode", 'bindCode', vm.NewBind).then(function (data) {
-            var mss = "生产条码 [" + vm.NewBind.InternalCode + ']  SN码 [' + vm.NewBind.SNCode + '] 绑定成功';
+            var mss = "生产条码 [" + vm.NewBind.InternalCode + ']  SN码 [' + data.data[0].SNCode + '] 绑定成功';
             var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };
             vm.MesList.splice(0, 0, Msg);
-            vm.NewBind = { Action: "I", CreateBy: $rootScope.User.UserNo, Customer: "U" };
+            vm.NewBind = { Action: "I" };
             vm.Focus = { InCode: true, SnCode: false };
         });
     }
@@ -140,9 +167,13 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
     }
 
     function InsertItemType() {
+        vm.NewItemType.TbName = vm.NewItemType.PkSet ? vm.NewItemType.PkSet.TbName : "";
+        vm.NewItemType.ClName = vm.NewItemType.PkSet ? vm.NewItemType.PkSet.ClName : "";
+        vm.NewItemType.IsPKGen = parseInt(vm.NewItemType.IsPKGen);
+        console.log(vm.NewItemType)
         vm.promise = AjaxService.PlanInsert("MesItemType", vm.NewItemType).then(function (data) {
             toastr.success("新增成功");
-            vm.NewItemType = {};
+            vm.NewItemType = { IsPKGen: 1 };
             GetItemTypeList();
         })
     }
@@ -150,7 +181,6 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
     function GetItemTypeList() {
         AjaxService.GetPlans("MesItemType").then(function (data) {
             vm.ItemTypeList = data;
-            
         })
     }
 

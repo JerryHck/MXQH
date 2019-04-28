@@ -22,7 +22,7 @@
                             <div class="col-md-6 padder-xs">
                                 <label class="col-md-4 control-label">实体名称</label>
                                 <div class="col-md-8 no-padder" ng-class="{ 'has-error' : u.DialogForm.EntityName.$invalid }">
-                                    <div entity-select ng-name="EntityName" ng-model="u.Item.EntityName" ng-change="u.ChangeEntity()" select-class="'text-xs'" my-required="true"></div>
+                                    <div entity-select ng-name="EntityName" ng-model="u.Item.EntityName" ng-change="u.ChangeEntity()" select-class="'text-xs'" ng-required="true"></div>
                                 </div>
                             </div>
                         </div>
@@ -134,13 +134,13 @@
                             </ui-select>
                         </div>
                         <div class="col-md-2 padder-xs" ng-class="{ 'has-error' : SerForm.SerExp.$invalid }">
-                            <div config-select ng-name="SerExp" auto-first="true" my-required="true" ng-model="u.Ser.SerExp" select-class="text-xs" config-option="u.EntityRelationExp"></div>
+                            <div config-select ng-name="SerExp" auto-first="true" ng-required="true" ng-model="u.Ser.SerExp" select-class="text-xs" config-option="u.EntityRelationExp"></div>
                         </div>
                         <div class="col-md-2 padder-xs" title="留空默认空字符串">
                             <input type="text" class="form-control" placeholder="值" ng-model="u.Ser.SerValue" />
                         </div>
-                        <div class="col-md-2 padder-xs" ng-class="{ 'has-error' : SerForm.SerAss.$invalid }">
-                            <div config-select ng-name="SerAss" auto-first="true" my-required="true" ng-model="u.Ser.SerAss" select-class="text-xs" config-option="u.EntityRelationAss"></div>
+                        <div class="col-md-2 padder-xs">
+                            <div config-select ng-name="SerAss" auto-first="true" ng-model="u.Ser.SerAss" select-class="text-xs" config-option="u.EntityRelationAss"></div>
                         </div>
                         <div class="col-md-2 padder-xs" ng-class="{ 'has-error' : SerForm.SerLevel.$invalid }">
                             <input type="number" name="SerLevel" placeholder="层级" class="form-control" max="10" min="0" ng-model="u.Ser.SerLevel" required/>

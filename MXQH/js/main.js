@@ -103,10 +103,14 @@ angular.module('app')
                             en.RouteName = data[i].FunList[j].RouteName;
                             en.FunName = data[i].FunName + '/' + data[i].FunList[j].FunName;
                             vm.FunctionList.push(en);
+                            if ($cookieStore.get('active-router') == en.RouteName) {
+                                vm.DefaultSys = sysEn;
+                            }
+
                         }
                     }
                     //默认第一项
-                    ChangeSys(vm.SysList[0]);
+                    ChangeSys(vm.DefaultSys || vm.SysList[0]);
                 });
             })
         }

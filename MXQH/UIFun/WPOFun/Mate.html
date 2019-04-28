@@ -26,8 +26,8 @@
             </tr>
             <tr ng-repeat="item in w.List ">
                 <td>
-                    <button class="btn btn-xs btn-primary" ng-click="w.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
-                    <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="w.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                    <button class="btn btn-xs btn-primary" title="编辑料品"  ng-click="w.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                    <button class="btn btn-xs btn-danger" title="删除料品"  ng-confirm="{text:'确定要删除吗'}" ng-click="w.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
                 </td>
                 <td>{{ item.MateCode }}</td>
                 <td>{{ item.MateName }}</td>

@@ -113,68 +113,79 @@
     <uib-tab index="2">
         <uib-tab-heading class="h5">编码类型</uib-tab-heading>
         <div class="wrapper-xs">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="wrapper-md">
-                    <div class="form-horizontal">
-                        <div class="form-group" uib-collapse="!gen.isAddItemType">
-                            <div class="col-sm-12" ng-form="gen.NewItemTypeForm">
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <div class="input-group" ng-class="{ 'has-error' : gen.NewItemTypeForm.NewItemType.$invalid }">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" ng-click="gen.InsertItemType()" ng-disabled="gen.NewItemTypeForm.$invalid">
-                                                    <i class="glyphicon glyphicon-plus text-success"></i>
-                                                </button>
-                                            </span>
-                                            <input type="text" name="NewItemType" class="form-control" placeholder="规格" ng-model="gen.NewItemType.ItemSpec" required />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="input-group" ng-class="{ 'has-error' : gen.NewItemTypeForm.CharName.$invalid }">
-                                            <input type="text" name="CharName" class="form-control" placeholder="简写" ng-model="gen.NewItemType.CharName" required>
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-light" ng-click="gen.isAddItemType=!gen.isAddItemType"><i class="icon icon-action-undo"></i></button>
-                                            </span>
-                                        </div>
+            <div class="wrapper-md">
+                <div class="form-horizontal">
+                    <div class="form-group" uib-collapse="!gen.isAddItemType">
+                        <div class="col-sm-12" ng-form="gen.NewItemTypeForm">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="input-group" ng-class="{ 'has-error' : gen.NewItemTypeForm.NewItemType.$invalid }">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" ng-click="gen.InsertItemType()" ng-disabled="gen.NewItemTypeForm.$invalid">
+                                                <i class="glyphicon glyphicon-plus text-success"></i>
+                                            </button>
+                                        </span>
+                                        <input type="text" name="NewItemType" class="form-control" placeholder="规格" ng-model="gen.NewItemType.ItemSpec" required />
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group" uib-collapse="gen.isAddItemType">
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <div class="input-group col-md-7 col-md-offset-1">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-success" ng-click="gen.isAddItemType=!gen.isAddItemType">
-                                                <i class="glyphicon glyphicon-plus"></i>
-                                            </button>
-                                        </span>
-                                        <input type="text" class="form-control" placeholder="查询" ng-model="gen.itemTypeQuenry">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" disabled>
-                                                <i class="glyphicon glyphicon-search text-success"></i>
-                                            </button>
-                                        </span>
+                                <div class="col-md-2 padder-xs">
+                                    <div class="input-group" ng-class="{ 'has-error' : gen.NewItemTypeForm.CharName.$invalid }">
+                                        <input type="text" name="CharName" class="form-control" placeholder="简写" ng-model="gen.NewItemType.CharName" required>
                                     </div>
+                                </div>
+                                <div class="col-md-2 no-padder">
+                                    <div toggle-switch ng-model="gen.NewItemType.IsPKGen" class="w-full i-switch-lg switch-bool" on-label="MES内置" off-label="平台编码" on-value="0" off-value="1"></div>
+                                </div>
+                                <div class="col-md-4 padder-xs" ng-if="gen.NewItemType.IsPKGen == 1" ng-class="{ 'has-error' : gen.NewItemTypeForm.PkSet.$invalid }">
+                                    <div basic-select="SerNumSelect" ng-required="true" ng-name="PkSet" ng-model="gen.NewItemType.PkSet"></div>
+                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-light" ng-click="gen.isAddItemType=!gen.isAddItemType"><i class="icon icon-action-undo"></i></button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <ul class="list-group bg-white">
-                        <li class="list-group-item" ng-repeat="type in gen.ItemTypeList | filter:gen.itemTypeQuenry ">
-                            <a herf class="pull-left">
-                                <b class="badge bg-success h2"><i class="fa fa-dot-circle-o"></i></b>
-                            </a>
-                            <div class="clear">
-                                <div>
-                                    <a ng-click='gen.DeleteItemType(type)' class="pull-right hover text-muted h4"><i class="fa fa-times text-danger"></i></a>
-                                    <div class="text-info h4">{{ type.ItemSpec }}</div>
+                    <div class="form-group" uib-collapse="gen.isAddItemType">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="input-group col-md-8 col-md-offset-1">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" ng-click="gen.isAddItemType=!gen.isAddItemType">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                        </button>
+                                    </span>
+                                    <input type="text" class="form-control" placeholder="查询" ng-model="gen.itemTypeQuenry">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" disabled>
+                                            <i class="glyphicon glyphicon-search text-success"></i>
+                                        </button>
+                                    </span>
                                 </div>
-                                <small class="text-muted">{{ type.CharName }}</small>
                             </div>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </div>
+                <ul class="list-group bg-white">
+                    <li class="list-group-item" ng-repeat="type in gen.ItemTypeList | filter:gen.itemTypeQuenry ">
+                        <a herf class="pull-left">
+                            <b class="badge bg-success h2"><i class="fa fa-dot-circle-o"></i></b>
+                        </a>
+                        <div class="clear">
+                            <div class="col-md-12">
+                                <a ng-click='gen.DeleteItemType(type)' class="pull-right hover text-muted h4"><i class="fa fa-times text-danger"></i></a>
+                                <div class="h4">
+                                    <div class="col-md-4 text-info">{{ type.ItemSpec }}</div>
+                                    <div class="col-md-1 h3 font-bold text-danger">{{ type.CharName }}</div>
+                                    <div class="col-md-3 h6">
+                                        <div toggle-switch ng-model="type.IsPKGen" is-disabled="true" class="w-full i-switch-lg switch-bool" on-label="MES内置" off-label="平台编码" on-value="0" off-value="1"></div>
+                                    </div>
+                                    <div class="col-md-2" title="平台编码">{{ type.TbName }}</div>
+                                    <div class="col-md-1" title="平台编码">{{ type.ClName }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </uib-tab>

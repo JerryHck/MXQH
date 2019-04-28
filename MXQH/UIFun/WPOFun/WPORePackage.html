@@ -12,7 +12,7 @@
                         <div class="col-lg-7">
                             <div class="form-control-static text-success">
                                 {{ w.DialogItem.PackageSN }}
-                                <span class="text-danger pull-right">已包:{{ w.SNList.length }}</span>
+                                <!--<span class="text-danger pull-right">已包:{{ w.SNList.length }}</span>-->
                             </div>
                         </div>
                     </div>
@@ -106,7 +106,9 @@
     </div>
     <div class="col-sm-5 padder-xs" ng-form="w.UpdateForm">
         <div class="panel panel-default">
-            <div class="panel-heading font-bold text-center">信息显示</div>
+            <div class="panel-heading font-bold text-center">
+                信息显示<span class="pull-right text-danger h6">已包:{{ w.SNList.length }}</span>
+            </div>
             <div class="panel-body scroll-y" style="max-height:550px">
                 <div class="list-group">
                     <ul class="list-group bg-white">

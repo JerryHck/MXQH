@@ -10,7 +10,7 @@ function RoleDialogCtrl($scope, $uibModalInstance, Form, ItemData, toastr, AjaxS
     vm.Item.Action = ItemData.RoleSn ? "U" : "I";
     vm.Item.State = vm.Item.State || "S";
     vm.Item.RoleSn = vm.Item.RoleSn || "-1";
-    vm.Item.PKColumn = "RoleSn";
+    vm.Item.SNColumns = "RoleSn";
     //储存
     vm.Save = function () {
         if (vm.Item.Action == "I") {

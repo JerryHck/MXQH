@@ -1,0 +1,162 @@
+﻿<div class="modal-body wrapper-xs h5">
+    <div class="panel panel-default scroll-y" style="max-height:600px">
+        <div class="panel-heading"><div class="text-center h3 text-success">{{ pk.form.title }}编码规则</div></div>
+        <div class="panel-body">
+            <div class="form-horizontal col-md-4 padder-xs" ng-form="pk.DialogForm">
+                <div class="form-group">
+                    <label class="col-md-3 padder-xs control-label">规则名:</label>
+                    <div class="col-md-9" no-padder ng-class="{ 'has-error' : pk.DialogForm.TbName.$invalid }">
+                        <input type="text" class="form-control" name="TbName" placeholder="规则名" maxlength="30" ng-blur="pk.isExists()"
+                               ng-model="pk.Item.TbName" ng-disabled="pk.form.index>0" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 padder-xs  control-label">规则栏:</label>
+                    <div class="col-md-9" ng-class="{ 'has-error' : pk.DialogForm.ClName.$invalid }">
+                        <input type="text" name="ClName" class="form-control" ng-maxlength="30" ng-blur="pk.isExists()"
+                               ng-disabled="pk.form.index>0" placeholder="规则栏" ng-model="pk.Item.ClName" required>
+                        <div ng-messages="pk.DialogForm.ClName.$error" class="help-block" role="alert">
+                            <div ng-message="unique">规则名和规则栏重复</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 padder-xs  control-label">前字串:</label>
+                    <div class="col-md-9">
+                        <input type="text" name="PreFixChar" class="form-control" ng-maxlength="30" placeholder="前字串" ng-model="pk.Item.PreFixChar">
+                    </div>
+                </div>
+                <!--<div class="form-group">
+                    <label class="col-md-3 padder-xs  control-label">默认分割符:</label>
+                    <div class="col-md-9">
+                        <input type="text" name="PartitionChar" class="form-control" ng-maxlength="1" placeholder="默认分割符" ng-model="pk.Item.PartitionChar">
+                    </div>
+                </div>-->
+                <div class="form-group">
+                    <label class="col-md-3 padder-xs  control-label">流水重置:</label>
+                    <div class="col-md-9" ng-class="{ 'has-error' : pk.DialogForm.ResetSerial.$invalid }">
+                        <div config-select ng-name="ResetSerial" ng-required="true" ng-model="pk.Item.ResetSerial" config-option="pk.RSOption"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 padder-xs  control-label">流水长度:</label>
+                    <div class="col-md-9" ng-class="{ 'has-error' : pk.DialogForm.SerialLenth.$invalid }">
+                        <input type="number" name="SerialLenth" class="form-control" ng-maxlength="15" placeholder="流水长度" ng-model="pk.Item.SerialLenth" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 padder-xs  control-label">使用状态:</label>
+                    <div class="col-md-9">
+                        <div toggle-switch ng-model="pk.Item.StsInfo" class="w-xxs switch-bool" on-label="启用" off-label="停用" on-value="S" off-value="E"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 padder-xs  control-label">备注:</label>
+                    <div class="col-md-9">
+                        <textarea rows="2" class="form-control" ng-model="pk.Item.Remark"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 padder-xs  control-label">序号状态:</label>
+                    <div class="col-md-9">
+                        <div class="input-group" ng-repeat="now in pk.Item.Info">
+                            <span class="input-group-addon">{{ now.CharName }}</span>
+                            <input type="text" class="form-control" placeholder="序号" ng-model="now.NextSerialSN">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 padder-xs">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        编码组合设定
+                        <div class="pull-right col-md-7 text-left">
+                            <span class="text-danger h4">{{ pk.PKData.SN }}</span>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-horizontal" ng-form="pk.ListForm">
+                            <div class="form-group" ng-form="pk.InsertForm">
+                                <div class="col-sm-12 padder-xs">
+                                    <div class="col-sm-1 padder-xs">
+                                        <span class="btn btn-default" ng-click="pk.AddCom()" ng-disabled="pk.InsertForm.$invalid" title="新增">
+                                            <i class="glyphicon glyphicon-plus text-success"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-4 padder-xs" ng-class="{ 'has-error' : pk.InsertForm.CharTyped.$invalid }">
+                                        <div config-select ng-name="CharTyped" ng-required="true" ng-model="pk.NewCom.CharType" config-option="pk.CTOption"></div>
+                                    </div>
+                                    <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='FIX'" ng-class="{ 'has-error' : pk.InsertForm.FixValue.$invalid }">
+                                        <input class="form-control" name="FixValue" title="字符" placeholder="字符" min="1" maxlength="30" type="text" ng-model="pk.NewCom.CValue" required />
+                                    </div>
+                                    <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='YC'" ng-class="{ 'has-error' : pk.InsertForm.YCYear.$invalid }">
+                                        <input class="form-control" name="YCYear" title="从哪一年转换" placeholder="年(YYYY)" min="2000" maxlength="4" type="number" ng-model="pk.NewCom.YCYear" required />
+                                    </div>
+                                    <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='MC'" ng-class="{ 'has-error' : pk.InsertForm.MCMonth.$invalid }">
+                                        <input class="form-control" name="MCMonth" title="从哪月份开始转换" placeholder="月(MM)" min="01" max="12" maxlength="2" type="text" ng-model="pk.NewCom.MCMonth" required />
+                                    </div>
+                                    <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='YC'|| pk.NewCom.CharType =='MC'" ng-class="{ 'has-error' : pk.InsertForm.CTo.$invalid }">
+                                        <input class="form-control" name="CTo" title="转成的字母" placeholder="转成" maxlength="1" type="text" ng-model="pk.NewCom.CTo" required />
+                                    </div>
+                                    <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='YC'|| pk.NewCom.CharType =='MC'">
+                                        <input class="form-control" name="CEx" title="需要排除的字母" placeholder="排除" maxlength="10" type="text" ng-model="pk.NewCom.CEx" />
+                                    </div>
+                                    <div class="col-sm-1 padder-xs">
+                                        <input class="form-control" name="PartChar" title="分隔符" maxlength="1" type="text" ng-model="pk.NewCom.PartChar" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                            <div class="form-group" ng-repeat="com in pk.Item.Compose" ng-drop="true" ng-drop-success="pk.DropCom($data,$index)">
+                                <div class="col-sm-12 padder-xs">
+                                    <div class="col-sm-1 padder-xs">
+                                        <span class="h3 text-info">
+                                            <i class="glyphicon glyphicon-move text-info" ng-drag="true" ng-drag-data="com" ng-drag-success="pk.DragCom($data,$index)"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-1 padder-xs">
+                                        <span class="btn btn-default" ng-click="pk.DeleteCom($index)" title="删除编码序列">
+                                            <i class="glyphicon glyphicon-remove text-danger"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-4 padder-xs" ng-class="{ 'has-error' : pk.ListForm.CharTyped.$invalid }">
+                                        <div config-select ng-name="CharTyped" ng-required="true" ng-disabled="true" ng-model="com.CharType" config-option="pk.CTOption"></div>
+                                    </div>
+                                    <div class="col-sm-2 padder-xs" ng-if="com.CharType =='FIX'" ng-class="{ 'has-error' : pk.ListForm.FixValue.$invalid }">
+                                        <input class="form-control" name="FixValue" title="字符" placeholder="字符" min="1" maxlength="30" type="text" ng-model="com.CValue" required />
+                                    </div>
+                                    <div class="col-sm-2 padder-xs" ng-if="com.CharType =='YC'" ng-class="{ 'has-error' : pk.ListForm.YCYear.$invalid }">
+                                        <input class="form-control" name="YCYear" title="从哪一年转换" placeholder="年(YYYY)" min="2000" maxlength="4" type="number" ng-model="com.YCYear" required />
+                                    </div>
+                                    <div class="col-sm-2 padder-xs" ng-if="com.CharType =='MC'" ng-class="{ 'has-error' : pk.ListForm.MCMonth.$invalid }">
+                                        <input class="form-control" name="MCMonth" title="从哪月份开始转换" placeholder="月(MM)" min="01" max="12" maxlength="2" type="text" ng-model="com.MCMonth" required />
+                                    </div>
+                                    <div class="col-sm-1 padder-xs" ng-if="com.CharType =='YC'|| com.CharType =='MC'" ng-class="{ 'has-error' : pk.ListForm.CTo.$invalid }">
+                                        <input class="form-control" name="CTo" title="转成的字母" placeholder="转成" maxlength="1" type="text" ng-model="com.CTo" required />
+                                    </div>
+                                    <div class="col-sm-2 padder-xs" ng-if="com.CharType =='YC'|| com.CharType =='MC'">
+                                        <input class="form-control" name="CEx" title="需要排除的字母" placeholder="排除" maxlength="10" type="text" ng-model="com.CEx" />
+                                    </div>
+                                    <div class="col-sm-1 padder-xs">
+                                        <input class="form-control" name="PartChar" title="分隔符" maxlength="1" type="text" ng-model="com.PartChar" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="text-center">
+        <button class="btn btn-sm btn-success text-success" ng-disabled="pk.DialogForm.$invalid || pk.form.index==0" ng-click="pk.PreViewOnly()">仅预览</button>
+        <button class="btn btn-sm btn-success text-success" ng-disabled="pk.DialogForm.$invalid" ng-click="pk.PreView()">
+            <i class="fa fa-support"></i>储存并预览
+        </button>
+        <button class="btn btn-success" type="button" ng-disabled="pk.DialogForm.$invalid" ng-click="pk.Save()">储存</button>
+        <button class="btn btn-warning" type="button" ng-click="pk.cancel()">关闭</button>
+    </div>
+</div>
+<!--<pre>{{ pk.Item.Compose | json }}</pre>-->

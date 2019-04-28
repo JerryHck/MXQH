@@ -17,7 +17,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         PageChange();
     }
     
-    AjaxService.GetPlans("WPOPackPrint").then(function (data) { vm.POData = data; })
+    AjaxService.GetPlans("SerialNumberSet").then(function (data) { vm.POData = data; })
 
     function PageChange() {
         var list = [];

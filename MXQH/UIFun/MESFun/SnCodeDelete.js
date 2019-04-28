@@ -76,7 +76,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
             else {
                 vm.SNCode = data.SNCode;
                 var sub = data.SNCode.substring(0, 2);
-                if (sub != '83' && sub != '93' && sub != '45') {
+                if (sub != '83' && sub != '93' && sub != '45' && !checkMonth(sub)) {
                     vm.DeleteItem.InternalCode = undefined;
                     //toastr.error(mes);
                     vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '不允许解绑该SN码[' + data.SNCode + ']' });
@@ -86,6 +86,26 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                 }
             }
         });
+    }
+
+    function checkMonth(s) {
+        var b = false;
+        switch (s) {
+            case "01":
+            case "02":
+            case "03":
+            case "04":
+            case "05":
+            case "06":
+            case "07":
+            case "08":
+            case "09":
+            case "10":
+            case "11":
+            case "12":
+                b = true; break;
+        }
+        return b;
     }
 
     function DeleteCode2() {

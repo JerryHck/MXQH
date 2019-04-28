@@ -140,7 +140,7 @@
                                             <div class="form-group" ng-class="{ 'has-error' : fun.FormFun.par.$invalid }">
                                                 <label class="col-lg-4 control-label text-info">所属目录</label>
                                                 <div class="col-lg-8">
-                                                    <div function-select fun-type="1" ng-model="fun.SelectedFun.ParFunNo" ng-disabled="!fun.editFun" ng-name="par" my-required="true"></div>
+                                                    <div function-select fun-type="1" ng-model="fun.SelectedFun.ParFunNo" ng-disabled="!fun.editFun" ng-name="par" ng-required="true"></div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -198,7 +198,7 @@
                                                     </span>
                                                 </div>
                                                 <div class="col-sm-7" ng-if="fun.SelectedFun.IsSystem">
-                                                    <div fun-file-select file-type="1" ng-model="fun.SelectedFun.FunHtml" ng-disabled="!fun.editFun" clear="true" ng-name="Html" my-required="true"></div>
+                                                    <div fun-file-select file-type="1" ng-model="fun.SelectedFun.FunHtml" ng-disabled="!fun.editFun" clear="true" ng-name="Html" ng-required="true"></div>
                                                 </div>
                                                 <div class="col-sm-7 input-group" ng-if="!fun.SelectedFun.IsSystem">
                                                     <span class="input-group-addon" ng-if="fun.editFun" title="编辑html/js文件"><a class="text-success" ng-click="fun.OpenHtmlJs()"><i class="glyphicon glyphicon-edit"></i></a></span>

@@ -31,7 +31,7 @@ function ($rootScope, $scope, AjaxService, toastr, $window) {
         var en = {};
         en.SetName = item.SetName;
         en.SetValue = item.SetValue;
-        en.SetDesc = item.SetValue;
+        en.SetDesc = item.SetDesc;
         AjaxService.PlanUpdate("WPOPackagePara", en).then(function (data) {
             vm.NewItem = {};
             toastr.success('更新成功');

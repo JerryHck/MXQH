@@ -196,12 +196,12 @@ angular.module('MyDirective')
             ngDisabled: '=',
             clear: '=',
             selectClass: '@',
-            myRequired: '@',
+            ngRequired: '@',
             ngName: '@',
             ngChange:'&'
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '<ui-select ng-model="$parent.ngModel" ng-change="ngChange()" theme="bootstrap" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
+                  + '<ui-select ng-model="$parent.ngModel" ng-change="ngChange()" theme="bootstrap" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">'
                   + '  <ui-select-match placeholder="请选择...">{{ $select.selected.FunName }}</ui-select-match>'
                   + ' <ui-select-choices repeat="item.FunNo as item in data | filter: $select.search track by item.FunNo">'
                   + '      <div ng-bind-html="item.FunName | highlight: $select.search"></div>'
@@ -239,12 +239,12 @@ angular.module('MyDirective')
             ngDisabled: '=',
             clear: '=',
             selectClass: '@',
-            myRequired: '@',
+            ngRequired: '@',
             ngName: '@',
             ngChange:'&'
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
+                  + '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">'
                   + '         <ui-select-match placeholder="请选择...">{{ $select.selected }}</ui-select-match>'
                   + '          <ui-select-choices repeat="item in data | filter: $select.search track by item">'
                   + '             <div ng-bind-html="item | highlight: $select.search"></div>'
@@ -278,11 +278,11 @@ angular.module('MyDirective')
             ngDisabled: '=',
             placeholder: '@',
             selectClass: '@',
-            myRequired: '@',
+            ngRequired: '@',
             ngName: '@',
             ngChange:'&'
         },
-        template:  '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
+        template:  '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">'
                   + '         <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>'
                   + '          <ui-select-choices class="pl-1" repeat="item in data | filter: $select.search track by item.Name" refresh="refresh($select.search)" refresh-delay="0">'
                   + '             <small><span ng-bind-html="item.DbSchema | highlight: $select.search"></span>.<span ng-bind-html="item.Name | highlight: $select.search"</span></small>'
@@ -346,12 +346,12 @@ angular.module('MyDirective')
             ngDisabled: '=',
             clear: '=',
             selectClass: '@',
-            myRequired: '@',
+            ngRequired: '@',
             ngName: '@',
             ngChange: '&'
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()"  class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
+                  + '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()"  class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">'
                   + '         <ui-select-match placeholder="请选择...">{{ $select.selected }}</ui-select-match>'
                   + '          <ui-select-choices class="pl-1" repeat="item in data | filter: $select.search track by item" refresh-delay="0">'
                   + '             <div ng-bind-html="item | highlight: $select.search"></div>'
@@ -385,12 +385,12 @@ angular.module('MyDirective')
             configOption: '=',
             placeholder: '@',
             selectClass: '@',
-            myRequired: '@',
+            ngRequired: '@',
             ngName: '@',
             autoFirst:'@',
             ngChange:'&'
         },
-        template: '<ui-select name="{{ ngName }}" ng-change="ngChange()" class="{{ selectClass }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="myRequired">'
+        template: '<ui-select name="{{ ngName }}" ng-change="ngChange()" class="{{ selectClass }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="ngRequired">'
                   + ' <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.ClDesc }}</ui-select-match>       '
                   + ' <ui-select-choices repeat="item.ClInf as item in data | propsFilter: {ClInf: $select.search, ClDesc: $select.search}">                          '
                   + '      <div ng-bind-html="item.ClDesc | highlight: $select.search"></div>'
@@ -426,12 +426,12 @@ angular.module('MyDirective')
                 configOption: '=',
                 placeholder: '@',
                 selectClass: '@',
-                myRequired: '@',
+                ngRequired: '@',
                 ngName: '@',
                 autoFirst: '@',
                 ngChange: '&'
             },
-            template: '<ui-select name="{{ ngName }}" ng-change="ngChange()" class="{{ selectClass }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="myRequired" multiple>'
+            template: '<ui-select name="{{ ngName }}" ng-change="ngChange()" class="{{ selectClass }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="ngRequired" multiple>'
                       + ' <ui-select-match placeholder="{{ placeholder }}">{{ $item.ClDesc }}</ui-select-match>       '
                       + ' <ui-select-choices repeat="item.ClInf as item in data | propsFilter: {ClInf: $select.search, ClDesc: $select.search}">                          '
                       + '      <div ng-bind-html="item.ClDesc | highlight: $select.search"></div>'
@@ -471,12 +471,12 @@ angular.module('MyDirective')
             clear: '=',
             selectClass: '@',
             autoFirst: '@',
-            myRequired: '@',
+            ngRequired: '@',
             ngName: '@',
             ngChange:'&'
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '    <ui-select ng-model="$parent.ngModel" ng-change="ValueChange()" class="{{ selectClass }}" theme="bootstrap" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="myRequired">'
+                  + '    <ui-select ng-model="$parent.ngModel" ng-change="ValueChange()" class="{{ selectClass }}" theme="bootstrap" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">'
                   + '         <ui-select-match placeholder="请选择...">{{ $select.selected.EntityName }}</ui-select-match>'
                   + '          <ui-select-choices class="pl-1" repeat="item.EntityName as item in data | filter: $select.search track by item.EntityName" refresh="refresh($select.search)" refresh-delay="0">'
                   + '             <div ng-bind-html="item.EntityName | highlight: $select.search"></div>'
