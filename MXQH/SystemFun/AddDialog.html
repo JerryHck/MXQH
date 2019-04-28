@@ -8,8 +8,8 @@
 </div>
 <div class="wrapper-md" uib-collapse="dailog.isAdd">
     <div class="input-group m-b-xxs">
-        <span class="input-group-addon input-sm no-border no-bg"><i class="icon-magnifier text-md m-t-xxs"></i></span>
-        <input type="text" class="form-control input-sm no-border no-bg text-xs" placeholder="查询" ng-model="dailog.search">
+        <input type="text" class="form-control input-sm no-border no-bg text-xs" placeholder="查询" ng-model="dailog.Ser.name" ng-keyup="dailog.KeyDonwSer($event)">
+        <span class="input-group-addon input-sm no-border no-bg" ng-click="dailog.Search()"><i class="icon-magnifier text-md m-t-xxs"></i></span>
     </div>
     <div>
         <table class="table b-2x" cg-busy="sys.promise">
@@ -40,9 +40,10 @@
             </tr>
         </table>
     </div>
-    <!--<div class="col-md-12 text-center">
-        <uib-pagination total-items="sys.page.total" ng-model="sys.page.index" items-per-page="sys.page.size" max-size="4" class="pagination-sm" boundary-links="true"></uib-pagination>
-    </div>-->
+    <div class="col-md-12 text-center">
+        <div uib-pagination total-items="dailog.page.total " ng-model="dailog.page.index " items-per-page="dailog.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+             ng-change="dailog.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+    </div>
 </div>
 <div class="wrapper-xs" uib-collapse="!dailog.isAdd">
     

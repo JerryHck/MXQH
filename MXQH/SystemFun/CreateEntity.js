@@ -18,6 +18,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
     vm.TbChecked = TbChecked;
     vm.CheckChange = CheckChange;
     vm.setClass = setClass;
+    vm.TbAllChecked = TbAllChecked;
 
     vm.SaveProClass = SaveProClass;
     vm.SaveProBasic = SaveProBasic;
@@ -69,6 +70,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
         vm.EnTable = { Name: vm.SelectedEn.TableName, DbSchema: vm.SelectedEn.TableSchema };
         getEntityProList();
         vm.isEditing = false;
+        vm.IsTbAll = false;
     }
 
     //保存实体
@@ -266,6 +268,14 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
             });
         }
     }
+
+    function TbAllChecked() {
+        for (var i = 0, len = vm.TbColunms.length; i < len; i++) {
+            vm.TbColunms[i].isCheck = vm.IsTbAll;
+            CheckChange(vm.TbColunms[i]);
+        }
+    }
+
     function TbChecked(item) {
         var check = false;
         for (var i = 0, len = vm.PropertyList.length; i < len; i++) {

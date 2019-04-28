@@ -1,0 +1,149 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="pack.promise">
+    <uib-tab index="0" select="pack.SelectTab(0)" deselect="pack.SelectTab(-1)">
+        <uib-tab-heading class="h5">包装异常处理</uib-tab-heading>
+        <div class="wrapper-xs">
+            <div class="col-sm-4">
+                <div class="panel panel-default" ng-form="pack.PackageForm">
+                    <div class="panel-heading font-bold text-center">扫描内部码或输入</div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">SNCode</label>
+                                <div class="col-lg-8" ng-class="{ 'has-error' : pack.PackageForm.InCode.$invalid }">
+                                    <input type="text" ng-disabled="pack.IsEdit" class="form-control" ui-focus="pack.Focus.SNCode" name="InCode" ng-model="pack.Item.SNCode" placeholder="生产条码" ng-keyup="pack.KeyDonwSnCode($event)" required>
+                                    <div class="h6 text-danger">扫SN可带出包装箱信息</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">工单号</label>
+                                <div class="col-lg-8">
+                                    <input type="text" ng-disabled="pack.IsEdit" ng-model="pack.Item.WorOrder" uib-typeahead="order.WorOrder as order.WorOrder for order in pack.OrderList | filter:$viewValue | limitTo:8"
+                                           class="form-control" placeholder="工单号" ng-keyup="pack.KeyDonwOrder($event)">
+                                    <!--<input type="text" class="form-control" ng-model="pack.Item.WorOrder" placeholder="工单号">-->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">箱号</label>
+                                <div class="col-lg-8">
+                                    <input type="text" ng-disabled="pack.IsEdit" class="form-control" ng-model="pack.Item.BoxNumber" placeholder="箱号" ng-keyup="pack.KeyDonwNum($event)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default scroll-y" style="max-height:350px">
+                    <div class="panel-heading font-bold text-center">信息显示</div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            <ul class="list-group bg-white">
+                                <li class="list-group-item" ng-repeat="item in pack.MesList track by item.Id" ng-class="{ 'text-danger' : !item.IsOk, 'text-success':item.IsOk }">
+                                    <span herf class="pull-left">
+                                        <i class="glyphicon" ng-class="{ 'glyphicon-remove' : !item.IsOk, 'glyphicon-ok':item.IsOk }"></i>
+                                    </span>
+                                    <div class="clear">
+                                        <div>{{ item.Msg }}</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6" ng-form="pack.UpdateForm">
+                <div class="panel panel-default scroll-y" style="max-height:600px">
+                    <div class="panel-heading font-bold text-center">
+                        <span class="btn btn-default btn-xs up pull-left" ng-disabled="pack.IsEdit" ng-show="pack.PackDetail" ng-click="pack.Edit()"><i class="glyphicon glyphicon-edit"></i>编辑</span>
+                        包装信息
+                    </div>
+                    <div class="panel-body h5">
+                        <div class="form-horizontal col-md-6"  ng-show="pack.PackMain">
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold text-info">产品编号:</label>
+                                <div class="col-sm-7">
+                                    <p class="form-control-static">{{pack.PackMain.Order.MaterialCode}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold text-info">包装编号:</label>
+                                <div class="col-sm-7">
+                                    <p class="form-control-static">{{pack.PackMain.PackListNo}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold text-info">计划数量:</label>
+                                <div class="col-sm-7">
+                                    <p class="form-control-static">{{pack.PackMain.PlanQuantity}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold text-info">Erp销售单号:</label>
+                                <div class="col-sm-7">
+                                    <p class="form-control-static">{{pack.PackMain.Order.ERPSO}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold text-info">栈板号:</label>
+                                <div class="col-sm-7">
+                                    <p class="form-control-static"  ng-if="!pack.IsEdit">{{pack.PackDetail.PalletCode}}</p>
+                                    <input type="text" ng-show="pack.IsEdit" class="form-control" ng-model="pack.PackDetail.PalletCode" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-horizontal col-md-6"  ng-if="pack.PackMain">
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold text-info">产品名称:</label>
+                                <div class="col-sm-7">
+                                    <p class="form-control-static">{{pack.PackMain.Order.MaterialName}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold text-info">工单号:</label>
+                                <div class="col-sm-7">
+                                    <p class="form-control-static">{{pack.PackMain.Order.WorOrder}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold text-info">状态</label>
+                                <div class="col-sm-7">
+                                    <p class="form-control-static">{{ pack.PackDetail.IsHasPrint ? "已包装" : "待包装"}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold text-info">Erp订单数量:</label>
+                                <div class="col-sm-7">
+                                    <p class="form-control-static">{{pack.PackMain.Order.ERPOrderQty}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold text-info">包装重量:</label>
+                                <div class="col-sm-7" ng-class="{ 'has-error' : pack.UpdateForm.Packweigth.$invalid }">
+                                    <p class="form-control-static" ng-if="!pack.IsEdit">{{pack.PackDetail.Packweight}}</p>
+                                    <input type="number" ng-if="pack.IsEdit" name="Packweigth" class="form-control" ng-model="pack.PackDetail.Packweight"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-center" ng-if="pack.IsEdit">
+                        <button class="btn btn-success" type="button" ng-disabled="pack.UpdateForm.$invalid" ng-confirm="{text:'确定要更新包装吗'}" ng-click="pack.Save('U')">更新包装</button>
+                        <button class="btn btn-danger" type="button" ng-disabled="pack.UpdateForm.$invalid" ng-confirm="{text:'确定要删除并重新包装吗'}" ng-click="pack.Save('R')">删除重包装</button>
+                        <button class="btn btn-warning" type="button" ng-click="pack.IsEdit = false">取消</button>
+                    </div>
+                    <!--<pre>{{ pack.List | json }}</pre>-->
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading font-bold text-center">包装SN列表</div>
+                    <div class="panel-body">
+                        <div class="list-group" ng-show="pack.PackDetail">
+                            <a class="list-group-item" ng-repeat="sn in pack.PackDetail.PackChi">
+                                <span class="col-1 badge badge-sm bg-danger pull-left">{{ $index + 1 }}</span>
+                                <span class="col-6" ng-class="{ 'font-bold text-danger' : sn.SNCode==pack.Item.SNCode }">{{ sn.SNCode }}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

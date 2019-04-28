@@ -14,7 +14,8 @@ function ChangePswDialogCtrl($rootScope, $scope, $uibModalInstance, $window, Ite
         AjaxService.LoginAction("ChangePwd", en).then(function (data) {
             toastr.success('储存成功');
             setTimeout(function () {
-                $window.location.href = appUrl + 'Login.html';}, 500)
+                $window.location.href = appUrl + 'Access.html';
+            }, 500)
         });
     };
 

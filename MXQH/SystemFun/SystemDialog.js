@@ -1,20 +1,13 @@
 ﻿'use strict';
 angular.module('app').controller('SystemDialogCtrl', SystemDialogCtrl);
 
-SystemDialogCtrl.$inject = ['$scope', '$uibModalInstance', 'Form', 'ItemData', 'toastr', 'AjaxService'];
+SystemDialogCtrl.$inject = ['$rootScope', '$scope', '$uibModalInstance', 'Form', 'ItemData', 'toastr', 'AjaxService'];
 
-function SystemDialogCtrl($scope, $uibModalInstance, Form, ItemData, toastr, AjaxService) {
+function SystemDialogCtrl($rootScope, $scope, $uibModalInstance, Form, ItemData, toastr, AjaxService) {
     var vm = this;
     vm.form = Form[ItemData.SysNo ? 1 : 0];
-    vm.Item = ItemData;
+    vm.Item = angular.copy(ItemData);
     vm.isExists = isExists;
-
-    //获取组织信息
-    if (vm.form.index == 0) {
-        AjaxService.GetEntities("Company").then(function (data) {
-            vm.CompanyList = data;
-        });
-    }
 
     //储存
     vm.Save = function () {
@@ -23,11 +16,25 @@ function SystemDialogCtrl($scope, $uibModalInstance, Form, ItemData, toastr, Aja
         en.SysName = vm.Item.SysName;
         en.SysDesc = vm.Item.SysDesc;
         en.CompanyNo = vm.Item.Company.CompanyNo;
-        en.CreateBy = "SYS";
-        AjaxService.Action('Sys_System', en, vm.form.action).then(function (data) {
-            toastr.success('储存成功');
-            $uibModalInstance.close(en);
-        });
+        en.OrderNo = vm.Item.OrderNo;
+        en.IsUsed = vm.Item.IsUsed;
+        if (vm.form.index == 0) {
+            AjaxService.PlanInsert('System', en).then(function (data) {
+                toastr.success('储存成功');
+                //更新功能基本信息
+                AjaxService.LoginAction("ReInit");
+                $uibModalInstance.close(en);
+            });
+        }
+        else if(vm.form.index == 1) {
+            AjaxService.PlanUpdate('System', en).then(function (data) {
+                toastr.success('储存成功');
+                //更新功能基本信息
+                AjaxService.LoginAction("ReInit");
+                $uibModalInstance.close(en);
+            });
+        }
+        
     };
 
     //取消
@@ -39,8 +46,8 @@ function SystemDialogCtrl($scope, $uibModalInstance, Form, ItemData, toastr, Aja
     function isExists() {
         if (vm.Item.SysNo) {
             var en  = { name: "SysNo", value: vm.Item.SysNo };
-            AjaxService.GetTbView('Sys_System', en).then(function (data) {
-                $scope.SystemForm.No.$setValidity('unique', !data);
+            AjaxService.GetPlan('System', en).then(function (data) {
+                $scope.SystemForm.No.$setValidity('unique', !data.SysNo);
             });
         }
     }

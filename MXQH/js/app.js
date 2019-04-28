@@ -18,6 +18,7 @@ angular.module('app', [
     'ui.jq',
     'ui.validate',
     'oc.lazyLoad',
+    //'oitozero.ngSweetAlert',
     'pascalprecht.translate',
     'AjaxServiceModule',
     'ui.router.requirePolyfill',

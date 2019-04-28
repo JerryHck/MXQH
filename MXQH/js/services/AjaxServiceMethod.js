@@ -1,9 +1,9 @@
 ﻿(function () {
     angular.module('AjaxServiceModule').factory('AjaxService', AjaxService);
 
-    AjaxService.$inject = ['$rootScope', '$http', '$q', 'serviceUrl', 'appUrl', 'toastr', '$cookieStore', '$window'];
+    AjaxService.$inject = ['$rootScope', '$http', '$q', 'serviceUrl', 'appUrl', 'toastr', 'MyPop', '$cookieStore', '$window', 'FileUrl', 'SocketServiceUrl', '$state'];
 
-    function AjaxService($rootScope, $http, $q, serviceUrl, appUrl, toastr, $cookieStore, $window) {
+    function AjaxService($rootScope, $http, $q, serviceUrl, appUrl, toastr, MyPop, $cookieStore, $window, FileUrl, SocketServiceUrl, $state) {
         var generic = 'Common.asmx/Do';
         var tableConfigList = [];
 
@@ -40,6 +40,8 @@
             PlanBak: PlanBak,
             //执行计划实体
             ExecPlan: ExecPlan,
+            //执行存储过程， 获取分页数据
+            ExecPlanPage:ExecPlanPage,
             //执行实体关联的存储过程,获取Excel文件
             ExecPlanToExcel: ExecPlanToExcel,
             //获得实体资料-单个
@@ -52,6 +54,8 @@
             Action: Action,
             //文件
             HandleFile: HandleFile,
+            //AjaxHandle
+            AjaxHandle:AjaxHandle,
             //
             AddDialog: AddDialog,
             GetTableConfig: GetTableConfig,
@@ -64,9 +68,33 @@
             ExecPlanUpload: ExecPlanUpload,
             //发送邮件
             ExecPlanMail: ExecPlanMail,
-        };
 
+            //获取本地默认打印机
+            GetDefaultPrinter: GetDefaultPrinter,
+            //获取本地打印机列表
+            GetLocalPrinters: GetLocalPrinters,
+            //
+            Print: Print,
+            //
+            PrintMulti: PrintMulti,
+            GetComPortList: GetComPortList,
+            GetComWeigth:GetComWeigth,
+            //播放声音
+            PlayVoice: PlayVoice,
+
+            //Server Socket
+            GetServerTime: GetServerTime,
+            GetServerSocket: GetServerSocket
+
+
+        };
+        var conect = 0;
         return obj;
+
+        function PlayVoice(name) {
+            var auto = $("#autoVoice");
+            auto.attr("src", FileUrl + '/Voice/' + name);
+        }
 
         //JSON Data取得
         function GetJson(data) {
@@ -89,6 +117,16 @@
         function GetPlansPage(name, json, index, size, limitCol) {
             var s = index <= 1 ? 1 : (index - 1) * size + 1;
             return plan(name, json, "GetPlansPage", s, s + size, limitCol);
+        }
+
+        //执行存储过程， 获取分页数据
+        function ExecPlanPage(name, shortName, json, index, size) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var s = index <= 1 ? 1 : (index - 1) * size + 1;
+            var en = getEn(name, shortName, json);
+            en.start = s;
+            en.end = s + size;
+            return Ajax(d, url, en, "ExecPlanPage");
         }
 
         //获得计划资料-新增
@@ -135,18 +173,16 @@
         }
 
         function HandleFile(type) {
-            var d = $q.defer();
-            return AjaxHandle(d, "GetFileList", type);
+            return AjaxHandle("GetFileList", type);
         }
 
         function AddDialog(data) {
-            var d = $q.defer();
-            return AjaxHandle(d, "AddDialog", data);
+            return AjaxHandle("AddDialog", data);
         }
 
         //HTTP AJAX
-        function AjaxHandle(q, method, data) {
-
+        function AjaxHandle(method, data) {
+            var q = $q.defer();
             var en = { "method": method, "data": data };
             httpFun(q, appUrl + 'Data/Handler/FileData.ashx', en);
             return q.promise;
@@ -198,13 +234,13 @@
         function ExecPlan(name, shortName, json) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = getEn(name, shortName, json);
-            return Ajax(d, url, en, "ExecPlan")
+            return Ajax(d, url, en, "ExecPlan");
         }
 
         function ExecPlanMail(name, shortName, json) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = getEn(name, shortName, json);
-            return Ajax(d, url, en, "ExecPlanMail")
+            return Ajax(d, url, en, "ExecPlanMail");
         }
 
         function ExecPlanUpload(name, shortName, json, fileJson, dir) {
@@ -381,6 +417,190 @@
                 enNew.push(en);
                 return enNew;
             }
+        }
+
+        //socket 编程
+        //---------------------------------------------------------------------------------------------------
+        function GetDefaultPrinter(hostIp) {
+            return SocketSend("GetDefaultPrinter", undefined, undefined, undefined, undefined, hostIp);
+        }
+        //获取打印机列表
+        function GetLocalPrinters(hostIp) {
+            var d = $q.defer();
+            SocketSend("GetLocalPrinters", undefined, undefined, undefined, undefined, hostIp).then(function (data) {
+                d.resolve(JSON.parse(data));
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+        //单笔打印
+        function Print(templateId, TS, postData, printerName, hostIp) {
+            var d = $q.defer();
+            //var postData = {};
+            //postData.ParaData = JSON.stringify(paraData || {});
+            //postData.OutList = JSON.stringify(outList||[]);
+            SocketSend("Print", templateId, TS, postData, printerName, hostIp).then(function (data) {
+                d.resolve(data);
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+        //多笔打印
+        function PrintMulti(templateId, TS, postData, printerName, hostIp) {
+            var d = $q.defer();
+            SocketSend("PrintMulti", templateId, TS, postData, printerName, hostIp).then(function (data) {
+                d.resolve(data);
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+        //获取com口列表
+        function GetComPortList(hostIp) {
+            var d = $q.defer();
+            SocketSend("GetComPortList", undefined, undefined, undefined, undefined, hostIp).then(function (data) {
+                d.resolve(data);
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+        //获取com口重量数据
+        function GetComWeigth(com, Do) {
+            var d = $q.defer();
+            SocketSend("GetComWeigth", undefined, undefined, undefined, com, undefined, Do).then(function (data) {
+                d.resolve(data);
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+        function SocketSend(method, Id, TS, postData, printerName, hostIp, Do) {
+            var g = $q.defer();
+            try {
+                var strAddress = "ws://" + (hostIp || "127.0.0.1") + ":2018";
+                var socket = new WebSocket(strAddress);
+                socket.onerror = function (evt) {
+                    console.log(evt.currentTarget);
+                    if (evt.currentTarget.readyState == 3) {
+                        var en = {};
+                        $window.location.href = "MxqhPrinter:" + serviceUrl;
+                        en.text = "打印服务正在启动，重新发送数据？";
+                        MyPop.Confirm(en, function () {
+                            SocketSend(method, Id, TS, postData, printerName, hostIp);
+                        });
+                    }
+                };
+                socket.onopen = function () {
+                    var en = {};
+                    en.Method = method;
+                    en.TemplateId = Id;
+                    en.TS = TS;
+                    en.Data = JSON.stringify(postData);
+                    en.ServiceUrl = serviceUrl;
+                    en.PrinterName = printerName;
+                    socket.send(JSON.stringify(en));
+                };
+                socket.onclose = function (e) {
+                    //toastr.error("打印服务已经停止", '服务错误');
+                    //g.reject("打印服务已经停止", '服务错误');
+                };
+                socket.onmessage = function (evt) {
+                    var reData = JSON.parse(evt.data);
+                    if (reData.MesType == "Success") {
+                        g.resolve(reData.Data);
+                    }
+                    else if (reData.MesType == "Error") {
+                        toastr.error(reData.Data, '服务错误');
+                        g.reject(reData.Data);
+                    }
+                    else if (reData.MesType == "Update") {
+                        toastr.warning('服务器已有新版本的打印插件，请下载更新');
+                        $window.location.href = reData.Data;
+                    }
+
+                    if (Do) {
+                        Do(reData);
+                    }
+
+                };
+            }
+            catch (e) {
+                toastr.error(e, '服务错误');
+            }
+            return g.promise;
+        }
+
+        function GetServerTime(Do) {
+            return CallServerSocket("Time", undefined, Do);
+        }
+
+        function GetServerSocket(json, Do) {
+            return CallServerSocket("Request", JSON.stringify(json), Do);
+        }
+
+        function CallServerSocket(MsgType, json, Do) {
+            var g = $q.defer();
+            try {
+                var en = {};
+                en.Header = "MXQHServer";
+                en.MsgType = MsgType;
+                en.LoginKey = $cookieStore.get('user-token');
+                en.RouteName = $state.current.name;
+                en.Data = json;
+                var Option = { Do: Do, data: en };
+                var socket = undefined;
+                var interval = undefined;
+                CallSocket(g, en, socket, Do, interval);
+            }
+            catch (e) {
+                toastr.error(e, '服务错误');
+            }
+            return g.promise;
+        }
+
+        function CallSocket(g, en, socket, Do, interval) {
+            socket = new WebSocket(SocketServiceUrl);
+            socket.onerror = function (evt) {
+                //console.log(evt);
+                //toastr.error(evt, '服务错误');
+            };
+            socket.onopen = function () {
+                socket.send(JSON.stringify(en));
+                
+                if (interval != undefined) {
+                    clearInterval(interval);
+                }
+                
+                interval = setInterval(function () {
+                    if (socket.readyState == 3) {
+                        CallSocket(g, en, socket, Do, interval);
+                    }
+                }, 15000);
+            };
+            socket.onclose = function (e) {
+            };
+            socket.onmessage = function (evt) {
+                var data = JSON.parse(evt.data);
+                if (data.MsgType == "Heartbeat") {
+                    if (data.RouteName == $state.current.name || en.MsgType == "Time") {
+                        socket.send(evt.data);
+                    }
+                    else {
+                        console.log(evt.data);
+                    }
+
+                }
+                else {
+                    if (data.Response == "Success") {
+                        g.resolve(data.Data);
+                    }
+                    else if (data.Response == "Error") {
+                        toastr.error(data.Data, '服务错误');
+                        g.reject(data.Data);
+                    }
+                    if (Do) {
+                        Do(data.Data);
+                    }
+                }
+            };
         }
     }
 })();

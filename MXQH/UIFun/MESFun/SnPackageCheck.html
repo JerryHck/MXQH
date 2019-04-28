@@ -1,0 +1,158 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="sn.promise">
+    <uib-tab index="0" select="sn.SelectTab(0)" deselect="sn.SelectTab(-1)">
+        <uib-tab-heading class="h5">包装纸盒验证</uib-tab-heading>
+        <div class="wrapper-xs">
+            <div class="col-sm-5">
+                <div class="panel panel-default" ng-form="sn.PackageForm">
+                    <div class="panel-heading font-bold text-center">彩盒条码/SN码校验</div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">工单号</label>
+                                <div class="col-lg-8">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="sn.Item.WorOrder" uib-typeahead="order as order.WorOrder for order in sn.OrderList | filter:$viewValue | limitTo:8"
+                                               class="form-control" placeholder="工单号" ng-keyup="sn.KeyDonwOrder($event)" ui-focus="sn.Focus.Order">
+                                        <span class="input-group-addon">
+                                            <a ng-if="sn.Item.WorOrder.ID" class="text-success"><i class="glyphicon glyphicon-ok"></i></a>
+                                            <a ng-if="!sn.Item.WorOrder.ID" class="text-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">纸盒条码</label>
+                                <div class="col-lg-8" ng-class="{'has-error': sn.PackageForm.Antenna.$invalid}">
+                                    <input type="text" ng-model="sn.Item.Antenna" name="Antenna" ui-focus="sn.Focus.Antenna" class="form-control" placeholder="纸盒条码" ng-keyup="sn.KeyDonwAntenna($event)" required>
+                                </div>
+                            </div>
+                            <!--<div class="form-group">
+                                <label class="col-lg-3 control-label">SNCode</label>
+                                <div class="col-lg-8" ng-class="{ 'has-error' : sn.PackageForm.InCode.$invalid }">
+                                    <input type="text" class="form-control" ng-disabled="sn.PackageForm.Antenna.$invalid" ui-focus="sn.Focus.SN" name="InCode" ng-model="sn.Item.SNCode" placeholder="生产条码" ng-keyup="sn.KeyDonwSnCode($event)" required>
+                                    <div class="h6 text-danger">扫SN进行信息验证</div>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                    <!--{{ sn.Item | json }}-->
+                </div>
+                <div class="panel panel-default scroll-y" style="max-height:350px">
+                    <div class="panel-heading font-bold text-center">信息显示</div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            <ul class="list-group bg-white">
+                                <li class="list-group-item" ng-repeat="item in sn.MesList track by item.Id" ng-class="{ 'text-danger' : !item.IsOk, 'text-success':item.IsOk }">
+                                    <span herf class="pull-left">
+                                        <i class="glyphicon" ng-class="{ 'glyphicon-remove' : !item.IsOk, 'glyphicon-ok':item.IsOk }"></i>
+                                    </span>
+                                    <div class="clear">
+                                        <div>{{ item.Msg }}</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6" ng-if="sn.OrderData">
+                <div class="panel panel-default scroll-y" style="max-height:600px">
+                    <div class="panel-heading font-bold text-center">
+                        <span class="btn btn-default btn-xs up pull-left" ng-disabled="sn.IsEdit" ng-show="sn.PackDetail" ng-click="sn.Edit()"><i class="glyphicon glyphicon-edit"></i>编辑</span>
+                        {{ sn.OrderData.WorOrder }}工单信息
+                    </div>
+                    <div class="panel-body h5">
+                        <div class="form-horizontal col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold">产品编号:</label>
+                                <div class="col-sm-7">
+                                    <p class="form-control-static">{{sn.OrderData.MaterialCode}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold">生产数量:</label>
+                                <div class="col-sm-7">
+                                    <p class="form-control-static h4 text-info">{{sn.OrderData.Quantity}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold">客户名称:</label>
+                                <div class="col-sm-7">
+                                    <p class="form-control-static">{{sn.OrderData.CustomerName}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold">纸盒条码:</label>
+                                <div class="col-sm-7">
+                                    <p class="form-control-static h4 text-danger">{{sn.OrderData.Antenna}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-horizontal col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold">产品名称:</label>
+                                <div class="col-sm-7">
+                                    <p class="form-control-static">{{sn.OrderData.MaterialName}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold">包装总数:</label>
+                                <div class="col-sm-7">
+                                    <p class="form-control-static text-info h4">{{sn.OrderData.HaveCount}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-5 font-bold">销售目的:</label>
+                                <div class="col-sm-7">
+                                    <p class="form-control-static">{{sn.OrderData.SendPlaceName}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <!--<pre>{{ sn.OrderData | json }}</pre>-->
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="1">
+        <uib-tab-heading class="h5">Sn纸盒列表</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control" uib-typeahead="order as order.WorOrder for order in sn.OrderList | filter:$viewValue | limitTo:8" ui-focus="sn.Focus == -1" ng-model="sn.Ser.PlanDetailId" placeholder="工单号">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="sn.Ser.SNCode" placeholder="SN码">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="sn.Ser.PackNoCode" placeholder="纸盒条码">
+                </div>
+                <button class="btn btn-sm btn-info" ng-click="sn.PageChange()"><i class="glyphicon glyphicon-search"></i>查询</button>
+            </div>
+        </div>
+        <div class="padder-md">
+            <table class="table">
+                <tr>
+                    <td class="col-md-1">工单号</td>
+                    <td class="col-md-2">SN码</td>
+                    <td class="col-md-2">纸盒条码</td>
+                    <td class="col-md-2">操作人</td>
+                    <td class="col-md-2">操作时间</td>
+                </tr>
+                <tr ng-repeat="item in sn.BindList">
+                    <td>{{ item.Order.WorOrder }}</td>
+                    <td>{{ item.SNCode }}</td>
+                    <td>{{ item.PackNoCode }}</td>
+                    <td>{{ item.UserName }}</td>
+                    <td>{{ item.ActionDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                </tr>
+            </table>
+            <div class="col-md-12 text-center" ng-if="sn.page.total>sn.page.size">
+                <div uib-pagination total-items="sn.page.total" ng-model="sn.page.index" items-per-page="sn.page.size" max-size="10" first-text="第一页" previous-text="上一页"
+                     ng-change="sn.PageChange()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

@@ -73,7 +73,7 @@
                         <div class="col-sm-6">
                             <label class="control-label col-md-4">计划类型</label>
                             <div class="col-md-8" ng-class="{ 'has-error' : job.JobForm.JobType.$invalid }">
-                                <div config-select ng-name="JobType" ng-model="job.Item.JobType" auto-first="true" placeholder="请选择执行类型" select-class="text-xs" config-option="job.JobType" my-required="true"></div>
+                                <div config-select ng-name="JobType" ng-model="job.Item.JobType" auto-first="true" placeholder="请选择执行类型" select-class="text-xs" config-option="job.JobType" ng-required="true"></div>
                             </div>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                         <div class="col-sm-6" ng-if="job.Item.JobType=='R'">
                             <label class="control-label col-md-4">执行方式</label>
                             <div class="col-md-8" ng-class="{ 'has-error' : job.JobForm.RepeatType.$invalid }">
-                                <div config-select ng-model="job.Item.RepeatType" auto-first="true" placeholder="请选择执行方式" select-class="text-xs" config-option="job.RepeatType" my-required="true"></div>
+                                <div config-select ng-model="job.Item.RepeatType" auto-first="true" placeholder="请选择执行方式" select-class="text-xs" config-option="job.RepeatType" ng-required="true"></div>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -119,7 +119,7 @@
                         <div class="col-sm-6" ng-if="job.Item.RepeatType =='W'">
                             <label class="control-label col-md-4">在</label>
                             <div class="col-md-8" ng-class="{ 'has-error' : job.JobForm.IntervalWeek.$invalid }">
-                                <div config-select-multi ng-name="IntervalWeek" ng-model="job.Item.IntervalWeekList" auto-first="true" placeholder="请选择执行日" select-class="text-xs" config-option="job.Week" my-required="true"></div>
+                                <div config-select-multi ng-name="IntervalWeek" ng-model="job.Item.IntervalWeekList" auto-first="true" placeholder="请选择执行日" select-class="text-xs" config-option="job.Week" ng-required="true"></div>
                             </div>
                         </div>
                         <div class="col-sm-6" ng-if="job.Item.RepeatType =='M'">
@@ -137,7 +137,7 @@
                         <div class="col-sm-6">
                             <label class="control-label col-md-4">一天频率</label>
                             <div class="col-md-8" ng-class="{ 'has-error' : job.JobForm.DayType.$invalid }">
-                                <div config-select ng-name="DayType" ng-model="job.Item.DayType" auto-first="true" placeholder="请选择执行类型" select-class="text-xs" config-option="job.JobType" my-required="true"></div>
+                                <div config-select ng-name="DayType" ng-model="job.Item.DayType" auto-first="true" placeholder="请选择执行类型" select-class="text-xs" config-option="job.JobType" ng-required="true"></div>
                             </div>
                         </div>
                         <div class="col-sm-6" ng-if="job.Item.DayType=='O'">
@@ -153,7 +153,7 @@
                                     <input type="number" name="DayInterval" min="1" max="100" class="form-control" ng-model="job.Item.DayInterval" required />
                                 </div>
                                 <div class="col-md-6" ng-class="{ 'has-error' : job.JobForm.DayFreUnit.$invalid }">
-                                    <div config-select ng-name="DayFreUnit" ng-model="job.Item.DayFreUnit" auto-first="true" placeholder="请选择执行类型" select-class="text-xs" config-option="job.Unit" my-required="true"></div>
+                                    <div config-select ng-name="DayFreUnit" ng-model="job.Item.DayFreUnit" auto-first="true" placeholder="请选择执行类型" select-class="text-xs" config-option="job.Unit" ng-required="true"></div>
                                 </div>
                             </div>
                         </div>
@@ -186,7 +186,7 @@
                         <div class="col-sm-6">
                             <label class="control-label col-md-4">方法类型</label>
                             <div class="col-md-8" ng-class="{ 'has-error' : job.JobForm.MethodType.$invalid }">
-                                <div config-select ng-name="MethodType" ng-model="job.Item.MethodType" auto-first="true" placeholder="请选择执行类型" select-class="text-xs" config-option="job.MethodType" my-required="true"></div>
+                                <div config-select ng-name="MethodType" ng-model="job.Item.MethodType" auto-first="true" placeholder="请选择执行类型" select-class="text-xs" config-option="job.MethodType" ng-required="true"></div>
                             </div>
                         </div>
                         <div class="col-sm-6">

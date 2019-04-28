@@ -19,7 +19,7 @@
                         {{ item.name }}
                     </div>
                     <div class="panel-body list-icon">
-                        <div class="col-md-1 col-sm-2" ng-repeat="c in item.List"><i ng-class="c" ng-click="ico.SelectIcon(c)" ng-dblclick="ico.MakeSure(c)"></i></div>
+                        <div class="col-md-1 col-sm-2" ng-repeat="c in item.List"><i ng-class="c" title="{{ c }}" ng-click="ico.SelectIcon(c)" ng-dblclick="ico.MakeSure(c)"></i></div>
                     </div>
                 </div>
             </div>

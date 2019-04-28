@@ -1,0 +1,67 @@
+﻿<div class="modal-header text-center">
+    <span class="modal-title h3">{{ pro.form.title }}力同成品-SMT-测试机型对照</span>
+</div>
+<div class="modal-body wrapper-xs">
+    <div class="panel panel-default scroll-y" ng-form="pro.DialogForm">
+        <div class="panel-body">
+            <div class="form-horizontal no-padder">
+                <div class="form-group no-padder">
+                    <div class="col-md-12 padder-xs">
+                        <label class="col-md-3 control-label">机型代码</label>
+                        <div class="col-md-8 no-padder" ng-class="{ 'has-error' : pro.DialogForm.AuModelCode.$invalid }">
+                            <input type="text" class="form-control" name="AuModelCode" placeholder="机型代码"
+                                   ng-model="pro.Item.AuModelCode" ng-disabled="pro.form.index == 1" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group no-padder">
+                    <div class="col-md-12 padder-xs">
+                        <label class="col-md-3 control-label">ATE测试型号</label>
+                        <div class="col-md-8 no-padder" title="ATE测试型号" ng-class="{ 'has-error' : pro.DialogForm.TestModelName.$invalid }">
+                            <input type="text" class="form-control" name="TestModelName" placeholder="ATE测试型号" ng-model="pro.Item.TestModelName" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group no-padder">
+                    <div class="col-md-12 padder-xs">
+                        <label class="col-md-3 control-label">力同料品SMT料号</label>
+                        <div class="col-md-8 no-padder" ng-class="{ 'has-error' : pro.DialogForm.AuItemCode.$invalid }">
+                            <input type="text" class="form-control" name="AuItemCode" placeholder="力同料品SMT料号" ng-model="pro.Item.AuItemCode" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group no-padder">
+                    <div class="col-md-12 padder-xs">
+                        <label class="col-md-3 control-label">成品料号</label>
+                        <div class="col-md-8 no-padder" title="成品料号" ng-class="{ 'has-error' : pro.DialogForm.ProItemCode.$invalid }">
+                            <input type="text" class="form-control" name="ProItemCode" placeholder="成品料号" ng-model="pro.Item.ProItemCode" required>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="form-group no-padder">
+                    <div class="col-md-12 padder-xs">
+                        <label class="col-md-3 control-label">国家</label>
+                        <div class="col-md-8 no-padder" title="国家">
+                            <input type="text" class="form-control" name="Country" placeholder="国家" ng-model="pro.Item.Country">
+                        </div>
+                    </div>
+                </div>-->
+                <div class="form-group no-padder">
+                    <div class="col-md-12 padder-xs">
+                        <label class="col-md-3 control-label">备注</label>
+                        <div class="col-md-8 no-padder" title="备注">
+                            <textarea type="text" rows="2" name="Remark" class="form-control" placeholder="备注" ng-model="pro.Item.Remark"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="col-md-12 text-center">
+        <button class="btn btn-success pull-none" type="button" ng-disabled=" pro.DialogForm.$invalid" ng-click="pro.Save()">储存</button>
+        <button class="btn btn-warning pull-none" type="button" ng-click="pro.cancel()">取消</button>
+    </div>
+</div>
+<!--<pre>{{ pro.SerList | json }}</pre>-->

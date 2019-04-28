@@ -1,17 +1,20 @@
-﻿<div class="bg-light lter b-b wrapper-md">
-    <h3 class="m-n font-thin h3">系统信息列表</h3>
+﻿<div class="bg-light lter b-b wrapper-md text-center">
+    <span style="padding-bottom:5px">
+        <button class="btn btn-sm btn-success pull-left" ng-click="sys.Insert()"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+    </span>
+    <span class="m-n font-thin h3">系统信息列表</span>
 </div>
 <div class="wrapper-md">
-    <div style="padding-bottom:5px">
-        <button class="btn btn-sm btn-success" ng-click="sys.Insert()"><i class="glyphicon glyphicon-plus"></i> 新增</button>
-    </div>
+    
     <table class="table" cg-busy="sys.promise">
         <tr>
             <td class="col-md-1">编辑</td>
             <td class="col-md-1">系统编号</td>
             <td class="col-md-2">系统名称</td>
+            <td class="col-md-1">使用状态</td>
             <td class="col-md-2">备注</td>
-            <td class="col-md-2">所属组织</td>
+            <td class="col-md-1">排序</td>
+            <td class="col-md-1">所属组织</td>
             <td class="col-md-1">创建人</td>
         </tr>
         <tr ng-repeat="item in sys.List">
@@ -21,10 +24,14 @@
             </td>
             <td>{{ item.SysNo }}</td>
             <td>{{ item.SysName }}</td>
+            <td>
+                <div toggle-switch ng-model="item.IsUsed" class="w-xs switch-success" on-label="启用" off-label="停用" on-value="1" off-value="0" is-disabled="true"></div>
+            </td>
             <td>{{ item.SysDesc }}</td>
+            <td>{{ item.OrderNo }}</td>
             <td>{{ item.Company.CompanyName }}</td>
             <td>
-                {{ item.CreateBy }}
+                {{ item.ChiName }}
             </td>
         </tr>
     </table>

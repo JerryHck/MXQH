@@ -5,42 +5,60 @@ angular.module('app')
 function ($scope, $http, Dialog, AjaxService, toastr, $rootScope) {
     var vm = this;
     vm.NewItem = { LoadFiles: [] };
+    vm.page = { index: 1, size: 6 };
+    vm.Ser = {};
 
     vm.Insert = Insert;
     vm.Edit = Edit;
     vm.Delete = Delete;
     vm.JsonToDb = JsonToDb;
     vm.SaveToJson = SaveToJson;
+    vm.Search = Search;
+    vm.KeyDonwSer = KeyDonwSer;
+    vm.PageChange = PageChange;
 
     //
-    GetList();
-    function GetList() {
-        vm.promise = AjaxService.GetPlans('Dialog').then(function (data) {
-            vm.List = data;
+    PageChange();
+
+    function Search() {
+        vm.page.index = 1;
+        PageChange();
+    }
+
+    function KeyDonwSer(e) {
+        var keycode = window.event ? e.keyCode : e.which;
+        if (keycode == 13 && vm.Ser.name) {
+            Search();
+        }
+    }
+
+    function PageChange() {
+        var list = [];
+        if (vm.Ser.name) {
+            list.push({ name: "name", value: vm.Ser.name });
+        }
+        vm.promise = AjaxService.GetPlansPage("Dialog", list, vm.page.index, vm.page.size).then(function (data) {
+            vm.List = data.List;
+            vm.page.total = data.Count;
         });
     }
 
     function Insert() {
-        var resolve = {
-            ItemData: function () {
-                return {};
-            }
-        };
-        Open("I", resolve);
+        Open({});
     }
 
     function Edit(item) {
+        Open(item);
+    }
+
+    function Open(item) {
         var resolve = {
             ItemData: function () {
                 return item;
             }
         };
-        Open("U", resolve);
-    }
-
-    function Open(type, resolve) {
         Dialog.open("DialogDialog", resolve).then(function (data) {
-            GetList();
+            PageChange();
         }).catch(function (reason) {
         });
     }
