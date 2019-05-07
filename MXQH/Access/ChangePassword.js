@@ -27,7 +27,7 @@ function ChangePasswordCtrl($scope, $location, $state, toastr, AjaxService, appU
         var en = {};
         en.Token = vm.token;
         en.NewPsd = vm.Item.NewPwdSign;
-        AjaxService.DoBefore("ChangePsd", en).then(function (data) {
+        AjaxService.DoBefore("ChangePwd", en).then(function (data) {
             if (data.Name == "Error") {
                 toastr.error(data.Msg);
             }

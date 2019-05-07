@@ -3,9 +3,12 @@
         <div class="col w-md lt b-r text-xs">
             <div class="vbox">
                 <div class="wrapper">
-                    <div class="h4 text-center">用户列表</div>
+                    <div class="h4 text-center">
+                        用户列表
+                        <span class="text-info h7 pull-right">总在线:{{ use.OnList.length }}</span>
+                    </div>
                 </div>
-                <div class="wrapper-sm b-t">
+                <div class="wrapper-xs b-t">
                     <div class="form-group text-center">
                         <span class="btn-group">
                             <label class="btn btn-default" ng-model="use.UserType" uib-btn-radio="'E'" ng-click="use.getList()">员工</label>
@@ -15,9 +18,9 @@
                     </div>
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" class="form-control input-sm" placeholder="查询" ng-model="use.UserQuery">
+                            <input type="text" class="form-control" placeholder="查询" ng-model="use.UserQuery">
                             <span class="input-group-btn">
-                                <button class="btn btn-sm btn-default" ng-click="use.Insert()">
+                                <button class="btn btn-default" ng-click="use.Insert()">
                                     <i class="glyphicon glyphicon-plus text-success">新增</i>
                                 </button>
                             </span>
@@ -29,12 +32,17 @@
                         <div class="cell-inner">
                             <div class="wrapper-xs">
                                 <div class="list-group">
-                                    <a ng-repeat="item in use.List | filter:use.UserQuery " class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.UserNo == use.SelectedUser.UserNo, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="use.SelectUser(item)">
-                                        <span class="pull-left h2 mr-1">
-                                            <i class="fa" ng-class="{ 'fa-male text-success': item.Sex=='M', 'fa-female text-danger': item.Sex=='F' }"></i>
+                                    <a ng-repeat="item in use.List | filter:use.UserQuery " class="list-group-item b-l-3x hover-anchor"
+                                       ng-class="{'hover': item.UserNo == use.SelectedUser.UserNo, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="use.SelectUser(item)">
+                                        <span class="pull-left h4 mr-1">
+                                            <i ng-class="{ 'icon-user text-success': item.Sex=='M', 'icon-user-female text-danger': item.Sex=='F' }"></i>
                                         </span>
-                                        <div class="clear ml-1">
-                                            <span class="block text-info text-lg" ng-bind-html="item.UserNo | highlight: use.EntityQuery" ng-click="use.SelectEn(item)"></span>
+                                        <div class="clear ml-3 text-info">
+                                            <span class="block" ng-click="use.SelectEn(item)">
+                                                <span class="text-lg" ng-bind-html="item.UserNo | highlight: use.EntityQuery"></span>
+                                                <span ng-if="item.IsOn" class="pull-right"><i class="text-color h7">在线</i></span>
+                                            </span>
+                                            <btn class="pull-right text-success" title="重置账号密码" ng-click="use.Reset(item)"><i class="icon-key"></i></btn>
                                             <small class="text-muted">
                                                 <span>{{ item.ChiLastName }}{{ item.ChiFirstName }}</span>
                                             </small><br />
@@ -44,6 +52,8 @@
                                         </div>
                                     </a>
                                 </div>
+
+                                <!--<pre>{{ use.OnList |json }}</pre>-->
                             </div>
                         </div>
                     </div>
@@ -63,7 +73,7 @@
                                             <div class="row">
                                                 <div class="col-md-6 b-r m-t-xs" ng-if="use.UserType=='E'">
                                                     <div class="row">
-                                                        <span class="m-l-md">
+                                                        <div class="m-l-md m-r-md">
                                                             <button class="btn btn-sm btn-success" ng-click="use.EditEmp()" ng-if="!use.isEditEmp">
                                                                 <i class="glyphicon glyphicon-edit">编辑</i>
                                                             </button>
@@ -71,7 +81,7 @@
                                                                 <i class="glyphicon glyphicon-edit">确定</i>
                                                             </button>
                                                             <button class="btn btn-sm btn-warning m-l-xs m-r-lg" ng-if="use.isEditEmp" ng-click="use.CancelEmp()"> 取消</button>
-                                                        </span>
+                                                        </div>
                                                     </div>
                                                     <div class="form form-horizontal b m-t-md" ng-form="use.EmpForm">
                                                         <div class="form-group pull-in clearfix  m-t-xs" title="员工编号">
@@ -286,4 +296,5 @@
         </div>
     </div>
 </div>
+
 

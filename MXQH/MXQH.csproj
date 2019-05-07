@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Access.html" />
+    <Content Include="Access\login-.html" />
     <Content Include="Board.html" />
     <Content Include="css\font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="css\font-awesome-4.7.0\css\font-awesome.min.css" />
@@ -179,6 +180,8 @@
     <Content Include="js\Board.js" />
     <Content Include="js\dobefore.min.js" />
     <Content Include="js\doboard.min.js" />
+    <Content Include="SystemFun\ResetPswDialog.html" />
+    <Content Include="SystemFun\ResetPswDialog.js" />
     <Content Include="SystemFun\SerialNumber.html" />
     <Content Include="SystemFun\SerialNumber.js" />
     <Content Include="SystemFun\SerialNumberDialog .html" />
@@ -401,6 +404,7 @@
     <Content Include="css\font-awesome-4.7.0\scss\_screen-reader.scss" />
     <Content Include="css\font-awesome-4.7.0\scss\_stacked.scss" />
     <Content Include="css\font-awesome-4.7.0\scss\_variables.scss" />
+    <None Include="css\less\app.font.less" />
     <None Include="css\less\app.table.less" />
     <None Include="Properties\PublishProfiles\2.pubxml" />
     <None Include="Properties\PublishProfiles\MXQH.pubxml" />

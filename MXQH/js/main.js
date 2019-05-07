@@ -73,6 +73,7 @@ angular.module('app')
             vm.promise = AjaxService.GetPlans("System").then(function (dataSys) {
                 AjaxService.LoginAction("GetUserRoot").then(function (data) {
                     vm.FunData = data;
+                    //console.log(data);
                     //vm.FunTree = data;
                     vm.FunctionList = [];
                     vm.SysList = vm.SysList || [];
@@ -106,9 +107,9 @@ angular.module('app')
                             if ($cookieStore.get('active-router') == en.RouteName) {
                                 vm.DefaultSys = sysEn;
                             }
-
                         }
                     }
+                    GenRoot();
                     //默认第一项
                     ChangeSys(vm.DefaultSys || vm.SysList[0]);
                 });
@@ -119,13 +120,31 @@ angular.module('app')
             if (!item) {
                 return;
             }
-            vm.SelectedSys = item;
-            vm.FunTree = [];
-            for (var i = 0, len = vm.FunData.length; i < len; i++) {
-                if (vm.SelectedSys.SysNo == vm.FunData[i].SysNo) {
-                    vm.FunTree.push(vm.FunData[i]);
+            if (!item.SysList) {
+                for (var i = 0, len = vm.SysList.length; i < len; i++) {
+                    if (vm.SysList[i].SysNo == item.SysNo) {
+                        item = vm.SysList[i];
+                    }
                 }
             }
+            vm.SelectedSys = item;
+        }
+
+        function GenRoot() {
+            for (var j = 0, len1 = vm.SysList.length; j < len1; j++) {
+                vm.SysList[j].FunTree = [];
+                for (var i = 0, len = vm.FunData.length; i < len; i++) {
+                    if (vm.SysList[j].SysNo == vm.FunData[i].SysNo) {
+                        vm.SysList[j].FunTree.push(vm.FunData[i]);
+                    }
+                }
+            }
+        }
+        GetBrowse();
+        function GetBrowse() {
+            AjaxService.GetPlans("VwUserBro", { name: "UserNo", value: ($rootScope.User? $rootScope.User.UserNo:"") }).then(function (data) {
+                vm.BrowseList = data;
+            })
         }
 
         function Go(routeName) {
@@ -140,12 +159,8 @@ angular.module('app')
         }
 
         function ChangPsw() {
-            var resolve = {
-                ItemData: function () {
-                    return {};
-                }
-            };
-            Dialog.open("ChangePswDialog", resolve).then(function (data) {
+
+            Dialog.OpenDialog("ChangePswDialog", {}).then(function (data) {
                 getListRole();
             }).catch(function (reason) {
             });
