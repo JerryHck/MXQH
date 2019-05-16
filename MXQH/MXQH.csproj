@@ -686,6 +686,12 @@
     <Content Include="SystemFun\VenderDialog.html" />
     <Content Include="SystemFun\VenderDialog.js" />
     <Content Include="Template\UIAccordionTemplate.html" />
+    <Content Include="UIFun\U9Fun\AuctusSO.html" />
+    <Content Include="UIFun\U9Fun\AuctusSO.js" />
+    <Content Include="UIFun\U9Fun\AuctusSODialog.html" />
+    <Content Include="UIFun\U9Fun\AuctusSODialog.js" />
+    <Content Include="UIFun\U9Fun\CBO_Itemmaster.html" />
+    <Content Include="UIFun\U9Fun\CBO_Itemmaster.js" />
     <Content Include="UIFun\U9Fun\DSInfo.html" />
     <Content Include="UIFun\U9Fun\DSInfo.js" />
     <Content Include="UIFun\U9Fun\DSInfoDialog.html" />
