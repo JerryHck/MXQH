@@ -36,11 +36,11 @@
                                         <span class="text-info h5 font-bold" ng-bind-html="r.RoleName | highlight: role.EntityQuery"></span><br />
                                         <small class="text-muted">
                                             <span class="h5">{{ r.RoleSn }}</span>
+                                            <br />
+                                            <span class="h6">{{ r.RoleDesc }}</span>
                                             <span class="pull-right">
                                                 <i class="glyphicon" ng-class="{ 'glyphicon-ok-circle text-success': r.State=='S', 'glyphicon-remove-circle  text-danger': r.State=='E' }"></i>
                                             </span>
-                                            <br />
-                                            <span class="h6">{{ r.RoleDesc }}</span>
                                         </small>
                                     </div>
                                 </a>

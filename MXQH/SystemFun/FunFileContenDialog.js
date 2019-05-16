@@ -5,6 +5,7 @@ angular.module('app')
 function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) {
     var vm = this;
     vm.NewItem = ItemData;
+    vm.Index = 2;
     vm.ThisFun = {
         FunNo: ItemData.FunNo,
         FunName:"新自定义功能",
@@ -16,6 +17,8 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
         ColList:[],
     };
     vm.SerTypeConfig = { Table: "BasicData", Column: "SerType" };
+    vm.ColTypeConfig = { Table: "FunCodeColSet", Column: "ColType" };
+    vm.AbleNullConfig = { Table: "FunCodeColSet", Column: "ABleNull" };
 
     vm.ChangeEntity = ChangeEntity;
     vm.ChangeProc = ChangeProc;
@@ -32,6 +35,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
     //获取数据设定
     AjaxService.GetPlan("FunCodeSet", [{ name: "FunNo", value: ItemData.FunNo }]).then(function (data) {
         if (data.FunNo) {
+            console.log(data);
             vm.ThisFun = data;
             vm.ThisFun.FunNo = ItemData.FunNo;
             vm.ThisFun.Controller = vm.NewItem.Controller;
@@ -39,7 +43,11 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
             GetColList(true);
             GetEnProcList();
         }
-    })
+    });
+
+    AjaxService.GetPlans("SysUISelect").then(function (data) {
+        vm.SelectList = data;
+    });
 
     //取消
     vm.cancel = cancel;
@@ -85,6 +93,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
         vm.ThisFun.ColList = vm.ThisFun.ColList || [];
         var count = 0;
         for (var i = 0, len = vm.EnColList.length; i < len; i++) {
+            if (!vm.EnColList[i]) continue;
             for (var j = 0, len = vm.ThisFun.ColList.length; j < len; j++) {
                 if (vm.EnColList[i].ColumnName == vm.ThisFun.ColList[j].ColumnName) {
                     vm.EnColList[i].IsShow = true;
@@ -200,6 +209,11 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
                 var en = col;
                 en.ColumnText = en.ColumnText || en.ColumnName;
                 en.Width = "100px";
+                en.EnNameDiv = en.EnNameDiv || '';
+                en.EditCol = en.ColumnName;
+                en.EditColDiv = en.EnNameDiv;
+                en.ColType = 'Text';
+                en.ABleNull = '1';
                 vm.ThisFun.ColList.push(en);
             }
         }
@@ -224,6 +238,11 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
                     vm.EnColList[i].IsShow = true;
                     en.ColumnText = en.ColumnText || en.ColumnName;
                     en.Width = "100px";
+                    en.EnNameDiv = en.EnNameDiv || '';
+                    en.EditCol = en.ColumnName;
+                    en.EditColDiv = en.EnNameDiv;
+                    en.ColType = 'Text';
+                    en.ABleNull = '1';
                     vm.ThisFun.ColList.push(en);
                 }
             }
@@ -286,6 +305,12 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
             col.ColumnName = vm.ThisFun.ColList[j].ColumnName;
             col.ColumnText = vm.ThisFun.ColList[j].ColumnText;
             col.Width = vm.ThisFun.ColList[j].Width;
+            col.EnNameDiv = vm.ThisFun.ColList[j].EnNameDiv || '';
+            col.EditCol = vm.ThisFun.ColList[j].EditCol || '';
+            col.EditColDiv = vm.ThisFun.ColList[j].EditColDiv || '';
+            col.ColType = vm.ThisFun.ColList[j].ColType || '';
+            col.ColValue = vm.ThisFun.ColList[j].ColValue || '';
+            col.ABleNull = vm.ThisFun.ColList[j].ABleNull || '1';
             ColList.push(col);
         }
         vm.NewItem.FunSetting.ColList = JSON.stringify(ColList);

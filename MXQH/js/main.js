@@ -3,8 +3,8 @@
 /* Controllers */
 
 angular.module('app')
-  .controller('AppCtrl', ['$scope', '$localStorage', '$window', 'AjaxService', '$state', '$rootScope', '$cookieStore', 'appUrl', 'Dialog',
-    function ($scope, $localStorage, $window, AjaxService, $state, $rootScope, $cookieStore, appUrl, Dialog) {
+  .controller('AppCtrl', ['$scope', '$localStorage', '$window', 'AjaxService', '$state', '$rootScope', '$cookieStore', 'appUrl', 'Dialog', 'FileUrl',
+    function ($scope, $localStorage, $window, AjaxService, $state, $rootScope, $cookieStore, appUrl, Dialog, FileUrl) {
         // add 'ie' classes to html
         var isIE = !!navigator.userAgent.match(/MSIE/i);
         isIE && angular.element($window.document.body).addClass('ie');
@@ -20,6 +20,7 @@ angular.module('app')
         vm.LogOff = LogOff;
         vm.Reflash = Reflash;
         vm.ChangeSys = ChangeSys;
+        vm.DownTool = DownTool;
         
         // config
         vm.app = {
@@ -114,6 +115,11 @@ angular.module('app')
                     ChangeSys(vm.DefaultSys || vm.SysList[0]);
                 });
             })
+
+            AjaxService.GetPlans("DownloadPlugin").then(function (data) {
+                vm.DownList = data;
+                //console.log(data);
+            })
         }
         
         function ChangeSys(item) {
@@ -186,6 +192,10 @@ angular.module('app')
                     vm.SysTime = data;
                 });
             })
+        }
+
+        function DownTool(path) {
+            $window.location.href = FileUrl + "DownLoad/" + path;
         }
 
     }]);

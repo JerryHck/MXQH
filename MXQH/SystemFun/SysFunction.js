@@ -468,7 +468,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
 
         OpenConten();
     }
-
+    
     function OpenConten() {
         var resolve = {
             ItemData: function () {

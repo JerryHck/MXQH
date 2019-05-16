@@ -153,6 +153,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
         AjaxService.GetServerSocket(en, function (data) {
             $scope.$apply(function () {
                 vm.OnList = JSON.parse(data);
+                vm.List = vm.List || [];
                 for (var i = 0, len = vm.List.length; i < len; i++) {
                     checkOnlien(vm.List[i]);
                 }

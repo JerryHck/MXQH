@@ -1,2 +1,89 @@
-﻿<div class="h3 text-center">{{ undefined.Text }}!</div>
-<pre>{{ undefined.List | json }}</pre>
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="w.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">UISelect管理</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class= "btn btn-sm btn-success " ng-click= "w.Insert() "><i class= "glyphicon glyphicon-plus "></i>新增</button>
+                <button class= "btn btn-sm btn-info " ng-click= "w.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "w.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <table class= "table pad-xs" >
+                <thead>
+                    <tr>
+                        <td style= "width:60px">操作</td>
+                        <td style= "width:100px ">a_Code</td>
+                        <td style= "width:100px ">a_ID</td>
+                        <td style= "width:100px ">a_Line</td>
+                        <td style= "width:100px ">a_Name</td>
+                        <td style= "width:100px ">a_SPEC</td>
+                    </tr>
+                </thead>
+                <tr ng-if="w.IsInsert" ng-form="to.InsertForm">
+                    <td>
+                        <button class="btn btn-xs btn-success" ng-disabled="w.InsertForm.$invalid" ng-click="w.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                        <button class="btn btn-xs btn-warning" ng-click="w.IsInsert=false" ><i class="fa fa-undo"></i></button>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': "w.InsertForm.a_Code.$invalid }">
+                            <input type="text" name="a_Code" class="form-control" placeholder="a_Code" ng-model="w.NewItem.a_Code"  />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': "w.InsertForm.a_ID.$invalid }">
+                            <input type="number" name="a_ID" class="form-control" placeholder="a_ID" ng-model="w.NewItem.a_ID"  />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': "w.InsertForm.a_Line.$invalid }">
+                            <div basic-select="MESTemplate" ng-name="a_Line" placeholder="a_Line" ng-model="w.NewItem.a_Line" ></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': "w.InsertForm.a_Name.$invalid }">
+                            <input type="text" name="a_Name" class="form-control" placeholder="a_Name" ng-model="w.NewItem.a_Name"  />
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr ng-repeat= "item in w.List " ng-form="item.ItemForm">
+                    <td>
+                        <span ng-if="!item.IsEdit">
+                            <button class="btn btn-xs btn-primary" ng-click="w.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                            <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="w.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                        </span>
+                        <span ng-if="item.IsEdit">
+                            <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="w.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="w.IsEdit=false"><i class="fa fa-undo"></i></button>
+                        </span>
+                    </td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.TName }}</span>
+                        <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_a_Code.$invalid }">
+                            <input type="text" name="item_a_Code" class="form-control" placeholder="a_Code" ng-model="w.EditItem.a_Code"  />
+                        </div>
+                    </td>
+                    <td>{{ item.ID }}</td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.TName }}</span>
+                        <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_a_Line.$invalid }">
+                            <div basic-select="MESTemplate" ng-name="item_a_Line" placeholder="a_Line" ng-model="w.EditItem.a_Line" ></div>
+                        </div>
+                    </td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.TName }}</span>
+                        <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_a_Name.$invalid }">
+                            <input type="text" name="item_a_Name" class="form-control" placeholder="a_Name" ng-model="w.EditItem.a_Name"  />
+                        </div>
+                    </td>
+                    <td>{{ item.SPEC }}</td>
+                </tr>
+            </table>
+            <div class= "col-md-12 text-center " ng-if= "w.page.total>w.page.size ">
+                <div uib-pagination total-items= "w.page.total " ng-model= "w.page.index " items-per-page= "w.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "w.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
