@@ -1,7 +1,7 @@
 ﻿'use strict';
 angular.module('app')
-.controller('AuctusSOCtrl', ['$rootScope', '$scope', '$http', 'Dialog', 'toastr', 'AjaxService', 'Form', 'MyPop','$window',
-function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop,$window) {
+.controller('AuctusSOCtrl', ['$rootScope', '$scope', '$http', 'Dialog', 'toastr', 'AjaxService', 'Form', 'MyPop', '$window',
+function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $window) {
     var auctusSO = this;
     auctusSO.tabIndex = 0;//选中的Tab索引
     auctusSO.SO = { Operator: $rootScope.User.Name };
@@ -85,10 +85,10 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop,$w
         //auctusSO.page.Code = '2';
         //console.log(auctusSO.Code);
         //console.log(auctusSO.Customer_DocNo);
-        auctusSO.promise = AjaxService.ExecPlan("AuctusSO", "GetList", auctusSO.page).then(function (data) {            
+        auctusSO.promise = AjaxService.ExecPlan("AuctusSO", "GetList", auctusSO.page).then(function (data) {
             auctusSO.List = data.data;
             auctusSO.page.total = data.data1[0].TotalCount
-        });        
+        });
     }
 
 
@@ -136,11 +136,11 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop,$w
         en.TempColumns = 'SO,SOLines';
         if (auctusSO.IsEdit) {
             for (var i = 0; i < auctusSO.SOLines.length; i++) {
-                var sl =angular.copy(auctusSO.SOLines[i]);
+                var sl = angular.copy(auctusSO.SOLines[i]);
                 console.log(auctusSO.SOLines[i]);
                 console.log(sl);
                 if (!sl.IsAdd) {
-                   sl.IsAdd = false;
+                    sl.IsAdd = false;
                 }
                 console.log(sl);
             }
@@ -203,7 +203,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop,$w
                 auctusSO.DocLineNo = 0;
                 DataBind();
             });
-        }       
+        }
     }
     //打开弹窗
     function Open(type, resolve) {
@@ -229,7 +229,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop,$w
     }
     //删除销售订单
     function DeleteSOLine(id) {
-        var en = {};        
+        var en = {};
         en.ID = id;
         auctusSO.promise = AjaxService.ExecPlan("AuctusSO", "DeleteLine", en).then(function (data) {
             toastr.success("删除成功！");
@@ -258,7 +258,13 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop,$w
         }
         if (!auctusSO.SOLine.CreateBy) {
             auctusSO.SOLine.CreateBy = $rootScope.User.Name;
-        }        
+        }
+        if (!auctusSO.SOLine.U9_DocNo) {
+            auctusSO.SOLine.U9_DocNo = '';
+        }
+        if (!auctusSO.SOLine.HK_DocNo) {
+            auctusSO.SOLine.HK_DocNo = '';
+        }
         var soline = angular.copy(auctusSO.SOLine);
         if (soline.IsAdd) {//新增
             auctusSO.DocLineNo = auctusSO.DocLineNo + 10;
@@ -272,7 +278,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop,$w
             auctusSO.IsAddLine = false;
         }
         console.log(soline);
-    
+
     }
     //编辑订单行
     function EditSOLine(item) {
