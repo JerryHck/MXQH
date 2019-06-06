@@ -113,6 +113,7 @@ angular.module('app')
                     GenRoot();
                     //默认第一项
                     ChangeSys(vm.DefaultSys || vm.SysList[0]);
+                    GetBrowse();
                 });
             })
 
@@ -146,7 +147,7 @@ angular.module('app')
                 }
             }
         }
-        GetBrowse();
+        
         function GetBrowse() {
             AjaxService.GetPlans("VwUserBro", { name: "UserNo", value: ($rootScope.User? $rootScope.User.UserNo:"") }).then(function (data) {
                 vm.BrowseList = data;

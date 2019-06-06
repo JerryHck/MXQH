@@ -28,7 +28,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function SaveInsert() {
-        vm.promise = AjaxService.PlanInsert("AuctusBom", vm.NewItem).then(function (data) {
+        vm.promise = AjaxService.PlanInsert("Comany", vm.NewItem).then(function (data) {
             PageChange();
             toastr.success('新增成功');
             vm.IsInsert = false;
@@ -46,7 +46,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     function Delete(item) {
         var en = angular.copy(item);
         en.ItemForm = undefined;
-        vm.promise = AjaxService.PlanDelete("AuctusBom", en).then(function (data) {
+        vm.promise = AjaxService.PlanDelete("Comany", en).then(function (data) {
             PageChange();
             toastr.success('删除成功');
         });
@@ -54,30 +54,32 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     function SaveEdit(index) {
         var en = {};
-        en.a_Code = vm.EditItem.a_Code;
-        en.a_ID = vm.EditItem.a_ID;
-        en.a_Line = vm.EditItem.a_Line;
-        en.a_Name = vm.EditItem.a_Name;
-        vm.promise = AjaxService.PlanUpdate("AuctusBom", en).then(function (data) {
+        en.CompanyNo = vm.EditItem.CompanyNo;
+        en.CompanyName = vm.EditItem.CompanyName;
+        en.Remark = vm.EditItem.Remark;
+        vm.promise = AjaxService.PlanUpdate("Comany", en).then(function (data) {
             PageChange();
             toastr.success('更新成功');
         });
     }
 
     function PageChange() {
-        vm.promise = AjaxService.GetPlansPage("AuctusBom", GetContition(), vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("Comany", GetContition(), vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
 
     }
     function ExportExcel() {
-        vm.promise = AjaxService.GetPlanOwnExcel("AuctusBom", GetContition()).then(function (data) {
+        vm.promise = AjaxService.GetPlanOwnExcel("Comany", GetContition()).then(function (data) {
             $window.location.href = data.File;
         });
     }
     function GetContition() {
         var list = [];
+        if (vm.Ser.a_CompanyNo) {
+            list.push({ name: "CompanyNo", value: vm.Ser.a_CompanyNo });
+        }
         return list;
     }
 

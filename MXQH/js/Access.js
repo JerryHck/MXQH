@@ -99,11 +99,11 @@ function Config($stateProvider, $urlRouterProvider, Version) {
             url: '/sdkdownload',
             controllerAs: 'sdk',
             controller: 'SdkDownloadLinkCtrl',
-            templateUrl: 'SDKFun/SdkDownloadLink.html' + "?v=" + Version,
+            templateUrl: 'UIFun/SDKFun/SdkDownloadLink.html' + "?v=" + Version,
             resolve: {
                 deps: ['$ocLazyLoad',
                   function ($ocLazyLoad) {
-                      return $ocLazyLoad.load(['SDKFun/SdkDownloadLink.js' + "?v=" + Version]);
+                      return $ocLazyLoad.load(['UIFun/SDKFun/SdkDownloadLink.js' + "?v=" + Version]);
                   }]
             }
         })

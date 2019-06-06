@@ -17,7 +17,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         PageChange();
     }
     
-    AjaxService.GetPlans("SerialNumberSet").then(function (data) { vm.POData = data; })
+    AjaxService.GetPlans("MesMateType", { name: "ID", value: 1 }).then(function (data) { vm.POData = data; })
 
     function PageChange() {
         var list = [];

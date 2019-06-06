@@ -12,6 +12,7 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
     vm.AddCom = AddCom;
     vm.Item.Compose = vm.Item.Compose || [];
     vm.Item.StsInfo = "S";
+    vm.Item.IsByPara = vm.Item.IsByPara || 0;
 
     vm.RSOption = { Table: "SerialNumber", Column: "ResetSerial" };
     vm.CTOption = { Table: "SerialNumber", Column: "CharType" };

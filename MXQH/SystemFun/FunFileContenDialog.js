@@ -298,7 +298,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
     //关闭
     function Ok() {
         vm.NewItem.FunSetting = angular.copy(vm.ThisFun);
-        vm.NewItem.FunSetting.SerList = JSON.stringify(vm.ThisFun.SerList);
+        vm.NewItem.FunSetting.SerList = JSON.stringify(vm.ThisFun.SerList||[]);
         var ColList = [];
         for (var j = 0, len2 = vm.ThisFun.ColList.length; j < len2; j++) {
             var col = {};
@@ -314,7 +314,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
             ColList.push(col);
         }
         vm.NewItem.FunSetting.ColList = JSON.stringify(ColList);
-        vm.NewItem.FunSetting.TempColumns = "SerList,ColList";
+        vm.NewItem.FunSetting.TempColumns = "ColList,SerList";
         $uibModalInstance.close(vm.NewItem);
     };
 

@@ -193,8 +193,12 @@
     <Content Include="UIFun\MESFun\BarCodeList.js" />
     <Content Include="UIFun\MESFun\InCodePrint.html" />
     <Content Include="UIFun\MESFun\InCodePrint.js" />
+    <Content Include="UIFun\MESFun\PackageAct.html" />
+    <Content Include="UIFun\MESFun\PackageAct.js" />
     <Content Include="UIFun\MESFun\SnCodePrint.html" />
     <Content Include="UIFun\MESFun\SnCodePrint.js" />
+    <Content Include="UIFun\MESFun\SNWeigth.html" />
+    <Content Include="UIFun\MESFun\SNWeigth.js" />
     <Content Include="UIFun\MESFun\WorkOrderAssNgDialog.html" />
     <Content Include="UIFun\MESFun\WorkOrderAssNgDialog.js" />
     <Content Include="UIFun\MESFun\WorkOrderOnLine.html" />
