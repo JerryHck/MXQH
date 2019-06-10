@@ -65,6 +65,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
     }
 
     function Action() {
+        vm.KeySn = undefined;
         var en = {};
         en.name = "InternalCode";
         en.value = vm.NewBind.InternalCode;
@@ -86,11 +87,18 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
                         AjaxService.PlayVoice('3331142.mp3');
                     }
                     else {
+                        vm.KeySn = data.InternalCode;
                         GetSnCode();
                     }
                 })
             }
         });
+    }
+
+    //获取生成编码参数值
+    function getGenCodePara() {
+
+        enSn.IsPKGen == 1
     }
 
     //生成内部码
@@ -108,10 +116,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
         }
         //平台生成方式-预览
         else if (enSn.IsPKGen == 1 && !vm.IsAuto) {
-            var en = {};
-            en.TbName = enSn.TbName;
-            en.ClName = enSn.ClName;
-            en.CharName = "";
+            var en = { TbName: enSn.TbName, ClName: enSn.ClName, CharName: "" };
             AjaxService.ExecPlan("SerialNumberSet", "preview", en).then(function (data) {
                 vm.NewBind.SNCode = data.data[0].SN;
             })

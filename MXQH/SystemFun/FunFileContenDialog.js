@@ -311,6 +311,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
             col.ColType = vm.ThisFun.ColList[j].ColType || '';
             col.ColValue = vm.ThisFun.ColList[j].ColValue || '';
             col.ABleNull = vm.ThisFun.ColList[j].ABleNull || '1';
+            col.SortNo = j + 1;
             ColList.push(col);
         }
         vm.NewItem.FunSetting.ColList = JSON.stringify(ColList);
