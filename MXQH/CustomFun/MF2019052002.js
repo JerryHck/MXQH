@@ -1,41 +1,35 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('ADRCtrl', ['$rootScope', '$scope', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, AjaxService, toastr, $window) {
+.controller('ADRCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
+function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
-    vm.Ser = {};
+    var td = new Date();
+    vm.Ser = { SD: td.toLocaleDateString(), ED: new Date(td.setDate(td.getDate() + 1)).toLocaleDateString() };    
+
     vm.PageChange = PageChange;
     vm.Search = Search;
-
-    vm.Text = "我是新的功能！";
-    //PageChange();
+    vm.ExportExcel = ExportExcel;
 
     function Search() {
         vm.page.index = 1;
-        PageChange()
+        PageChange();
     }
 
     function PageChange() {
-        var list = [];
-        if (vm.Ser.Name) {
-            list.push({ name: "name", value: vm.Ser.InternalCode });
-        }
-        //if (vm.Ser.DeleteBy) {
-        //    list.push({ name: "DeleteBy", value: vm.Ser.DeleteBy });
-        //}
-        //if (vm.Ser.StartDate) {
-        //    list.push({ name: "DeleteDate", value: vm.Ser.StartDate, type: ">=" });
-        //}
-        //if (vm.Ser.EndDate) {
-        //    list.push({ name: "DeleteDate", value: vm.Ser.EndDate, type: "<=" });
-        //}
-        vm.promise = AjaxService.GetPlansPage("Dialog", list, vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.ExecPlanPage("AssemblyLine", "GetList", vm.Ser, vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
+
     }
-}
-]);
+
+    function ExportExcel() {
+        vm.promise = AjaxService.GetPlanExcel("AssemblyLine", "GetList", vm.Ser).then(function (data) {
+            $window.location.href = data.File;
+        });
+    }
+
+}]);
