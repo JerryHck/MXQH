@@ -104,13 +104,15 @@
         </div>
         <div class="padder-md">
             <table class="table" >
-                <tr>
-                    <td style="width:10%">内部码</td>
-                    <td style="width:13%">SN码</td>
-                    <td style="width:8%">操作者</td>
-                    <td style="width:13%">操作时间</td>
-                    <td style="width:12%">备注</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <td style="width:10%">内部码</td>
+                        <td style="width:13%">SN码</td>
+                        <td style="width:8%">操作者</td>
+                        <td style="width:13%">操作时间</td>
+                        <td style="width:12%">备注</td>
+                    </tr>
+                </thead>
                 <tr ng-repeat="item in sn.DeleteList">
                     <td>{{ item.InternalCode }}</td>
                     <td>{{ item.SNCode }}</td>

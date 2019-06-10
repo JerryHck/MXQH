@@ -102,6 +102,7 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
         en.Method = 'GetPlansPage';
         en.PlanName = "CommonData"
         en.Intervel = 5;
+        //传送的参数字符串
         en.Json = "[]";
 
         AjaxService.GetServerSocket(en, function (data) {

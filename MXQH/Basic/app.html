@@ -1,19 +1,25 @@
   <!-- navbar -->
-  <div data-ng-include="'Basic/blocks/header.html?v=8303763406' " class="app-header navbar">
+  <div data-ng-include="'Basic/blocks/header.html?v=1655a9baf5' " class="app-header navbar">
   </div>
   <!-- / navbar -->
   <!-- menu -->
-  <div data-ng-include="'Basic/blocks/aside.html?v=6263c208e4'" class="app-aside hidden-xs {{vm.app.settings.asideColor}}">
+  <div data-ng-include="'Basic/blocks/aside.html?v=67f3d624e2'" class="app-aside hidden-xs {{vm.app.settings.asideColor}}">
   </div>
   <!-- / menu -->
 
   <!-- content -->
-  <div class="app-content">
+  <!--<div class="app-content">
     <audio autoplay="autoplay" id="autoVoice" src=""></audio>
     <div ui-butterbar></div>
     <a href class="off-screen-toggle hide" ui-toggle-class="off-screen" data-target=".app-aside" ></a>
     <div class="app-content-body fade-in-up" ui-view></div>
-  </div>
+  </div>-->
+    <div class="app-content h-full">
+        <audio autoplay="autoplay" id="autoVoice" src=""></audio>
+        <div ui-butterbar></div>
+        <a href class="off-screen-toggle hide" ui-toggle-class="off-screen" data-target=".app-aside"></a>
+        <div class="app-content-body h-full fade-in-up" ui-view></div>
+    </div>
   <!-- /content -->
 
   <!-- aside right -->
@@ -81,5 +87,8 @@
       力同科技&copy;Copyright(C)2018-2019
   </div>
   <!-- / footer -->
-  <div data-ng-include=" 'Basic/blocks/settings.html?v=90c775c2d8' " class="settings panel panel-default">
+  <div data-ng-include=" 'Basic/blocks/settings.html?v=09ff17fa52' " class="fram settings panel panel-default">
   </div>
+
+<div data-ng-include=" 'Basic/blocks/tool.html?v=321cf5b991' " class="tool d-r sm panel panel-default">
+</div>

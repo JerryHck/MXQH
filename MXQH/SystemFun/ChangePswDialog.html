@@ -7,7 +7,7 @@
             <div class="form-horizontal">
                 <div class="form-group">
                     <label class="col-md-4 control-label">姓名</label>
-                    <div class="col-md-6">
+                    <div class="col-md-6  form-control-static">
                         {{ psw.Item.Name }}
                     </div>
                 </div>
@@ -54,7 +54,9 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-success" type="button" ng-disabled="psw.PswForm.$invalid" ng-click="psw.Save()">储存</button>
-    <button class="btn btn-warning" type="button" ng-click="psw.cancel()">取消</button>
+    <div class="col-md-12 text-center">
+        <button class="btn btn-success" type="button" ng-disabled="psw.PswForm.$invalid" ng-click="psw.Save()">储存</button>
+        <button class="btn btn-warning" type="button" ng-click="psw.cancel()">取消</button>
+    </div>
 </div>
 <!--<pre>{{ psw.Item | json }}</pre>-->

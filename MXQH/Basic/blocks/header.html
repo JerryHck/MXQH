@@ -22,11 +22,9 @@
         <a href class="btn no-shadow navbar-btn" ng-click="vm.app.settings.asideFolded = !vm.app.settings.asideFolded">
             <i class="fa {{vm.app.settings.asideFolded ? 'fa-indent' : 'fa-dedent'}} fa-fw"></i>
         </a>
-        <a href class="btn no-shadow navbar-btn" ui-toggle-class="show" target="#aside-user">
-            <i class="icon-user fa-fw"></i>
-        </a>
     </div>
 
+    <!-- / buttons -->
     <ul class="nav navbar-nav hidden-sm">
         <li class="dropdown" dropdown>
             <a class="dropdown-toggle" data-toggle="dropdown">
@@ -37,23 +35,63 @@
                 <li ng-repeat="item in vm.SysList"><a ng-click="vm.ChangeSys(item)">{{ item.SysName }}</a></li>
             </ul>
         </li>
+        <li class="dropdown pos-stc" dropdown>
+            <a href class="dropdown-toggle" data-toggle="dropdown">
+                <span>所有功能</span>
+                <span class="caret"></span>
+            </a>
+            <div class="dropdown-menu wrapper w-full bg-white">
+                <div class="wrapper-xs">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label class="control-label text-primary-lter">最近浏览:</label>
+                        </div>
+                        <div class="form-group" ng-repeat="b in vm.BrowseList">
+                            <label class="control-label col-md-12">
+                                <a ui-sref="{{ b.RouteName }}">
+                                    <span class="text-xs">{{ b.FunName }}</span>
+                                </a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 b-l" ng-repeat="sys in vm.SysList">
+                        <div class="text-center m-l-xs m-t-xs m-b-xs font-bold h4 text-primary">
+                            <span class="font-bold ml-6">{{ sys.SysName }}</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 scroll-y wrapper-xs" style="max-height:700px">
+                                <ul class="nav">
+                                    <li ng-repeat="root in sys.FunTree">
+                                        <span class="auto text-primary-dker h5 text-success">
+                                            <span><i ng-class="root.FunImge"></i></span>
+                                            <span class="font-bold ml-1">{{ root.FunName }}</span>
+                                        </span>
+                                        <ul class="list-unstyled l-h-2x m-l-md">
+                                            <li ng-repeat="fun in root.FunList">
+                                                <a ui-sref="{{ fun.RouteName }}">
+                                                    <span><i ng-class="fun.FunImge"></i></span>
+                                                    <span class="text-xs">{{ fun.FunName }}</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
     </ul>
-
-
-    <!-- / buttons -->
     <!-- search form -->
     <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" target=".navbar-collapse" role="search">
         <div class="form-group">
-            <div class="input-group">
-                <input type="text" ng-model="vm.SelectedFun" uib-typeahead="fun as fun.FunName for fun in vm.FunctionList | filter:$viewValue | limitTo:8"
-                       class="form-control input-sm bg-light no-border rounded padder" placeholder="查找功能..." ng-keypress="vm.Go(vm.SelectedFun.RouteName)">
-                <span class="input-group-btn">
-                    <button type="submit" class="btn btn-sm bg-light rounded" ng-click="vm.Go(vm.SelectedFun.RouteName)">Go</button>
-                </span>
-            </div>
+            <input type="text" ng-model="vm.SelectedFun" uib-typeahead="fun as fun.FunName for fun in vm.FunctionList | filter:$viewValue | limitTo:8"
+                   class="form-control input-sm bg-light no-border rounded padder" placeholder="查找功能..." ng-keypress="vm.Go(vm.SelectedFun.RouteName)">
         </div>
     </form>
-    <!-- / search form -->
     <!-- nabar right -->
     <ul class="nav navbar-nav navbar-right">
         <li class="hidden-xs">
@@ -77,7 +115,10 @@
             <!-- dropdown -->
             <ul class="dropdown-menu animated fadeInRight w">
                 <li>
-                    <a><span ui-toggle-class="active" target=".settings">调整布局</span></a>
+                    <a><span ui-toggle-class="active" target=".tool">工具下载</span></a>
+                </li>
+                <li>
+                    <a><span ui-toggle-class="active" target=".fram">调整布局</span></a>
                 </li>
                 <li>
                     <a ng-click="vm.ChangPsw()">修改密码</a>

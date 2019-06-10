@@ -45,6 +45,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-md-3 padder-xs  control-label">随参变化:</label>
+                    <div class="col-md-9">
+                        <div toggle-switch ng-model="pk.Item.IsByPara" class="w-xxs switch-bool" on-label="是" off-label="否" on-value="1" off-value="0"></div>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-md-3 padder-xs  control-label">使用状态:</label>
                     <div class="col-md-9">
                         <div toggle-switch ng-model="pk.Item.StsInfo" class="w-xxs switch-bool" on-label="启用" off-label="停用" on-value="S" off-value="E"></div>
@@ -159,4 +165,4 @@
         <button class="btn btn-warning" type="button" ng-click="pk.cancel()">关闭</button>
     </div>
 </div>
-<!--<pre>{{ pk.Item.Compose | json }}</pre>-->
+<!--<pre>{{ pk.Item | json }}</pre>-->

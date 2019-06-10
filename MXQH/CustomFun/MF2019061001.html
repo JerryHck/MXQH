@@ -1,0 +1,96 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="so.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">SN销售批次</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class= "btn btn-sm btn-success " ng-click= "so.Insert() "><i class= "glyphicon glyphicon-plus "></i>新增</button>
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="so.Ser.a_SaleNo" placeholder="销售单号">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "so.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "so.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <table class= "table pad-xs" >
+                <thead>
+                    <tr>
+                        <td style= "width:60px">操作</td>
+                        <td style= "width:100px ">销售单</td>
+                        <td style= "width:100px ">品号</td>
+                        <td style= "width:100px ">客户订单</td>
+                        <td style= "width:100px ">批次号</td>
+                        <td style= "width:100px ">创建人</td>
+                        <td style= "width:100px ">创建时间</td>
+                        <td style= "width:100px ">修改人</td>
+                        <td style= "width:100px ">修改时间</td>
+                    </tr>
+                </thead>
+                <tr ng-if="so.IsInsert" ng-form="so.InsertForm">
+                    <td>
+                        <button class="btn btn-xs btn-success" ng-disabled="so.InsertForm.$invalid" ng-click="so.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                        <button class="btn btn-xs btn-warning" ng-click="so.IsInsert=false" ><i class="fa fa-undo"></i></button>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': so.InsertForm.SaleNo.$invalid }">
+                            <input type="text" name="SaleNo" class="form-control" placeholder="销售单" ng-model="so.NewItem.SaleNo" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': so.InsertForm.ItemCode.$invalid }">
+                            <input type="text" name="ItemCode" class="form-control" placeholder="品号" ng-model="so.NewItem.ItemCode" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div >
+                            <input type="text" name="CusOrderNo" class="form-control" placeholder="客户订单" ng-model="so.NewItem.CusOrderNo"  />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': so.InsertForm.Batch.$invalid }">
+                            <input type="text" name="Batch" class="form-control" placeholder="批次号" ng-model="so.NewItem.Batch" required />
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr ng-repeat= "item in so.List " ng-form="item.ItemForm">
+                    <td>
+                        <span ng-if="!item.IsEdit">
+                            <button class="btn btn-xs btn-primary" ng-click="so.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                            <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="so.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                        </span>
+                        <span ng-if="item.IsEdit">
+                            <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="so.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                        </span>
+                    </td>
+                    <td>{{ item.SaleNo }}</td>
+                    <td>{{ item.ItemCode }}</td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.CusOrderNo }}</span>
+                        <div ng-if="item.IsEdit">
+                            <input type="text" name="item_CusOrderNo" class="form-control" placeholder="客户订单" ng-model="so.EditItem.CusOrderNo"  />
+                        </div>
+                    </td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.Batch }}</span>
+                        <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_Batch.$invalid }">
+                            <input type="text" name="item_Batch" class="form-control" placeholder="批次号" ng-model="so.EditItem.Batch" required />
+                        </div>
+                    </td>
+                    <td>{{ item.CreateBy }}</td>
+                    <td>{{ item.CreateDate }}</td>
+                    <td>{{ item.ModifyBy }}</td>
+                    <td>{{ item.ModifyDate }}</td>
+                </tr>
+            </table>
+            <div class= "col-md-12 text-center " ng-if= "so.page.total>so.page.size ">
+                <div uib-pagination total-items= "so.page.total " ng-model= "so.page.index " items-per-page= "so.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "so.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

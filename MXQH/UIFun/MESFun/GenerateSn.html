@@ -41,7 +41,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-3">
-                                        <button type="submit" class="btn btn-sm btn-success" ng-click="gen.BindCode()" ng-disabled="gen.BindingForm.$invalid || gen.IsAuto">绑定</button>
+                                        <button type="submit" class="btn btn-sm btn-success" ng-click="gen.BindCode()" ng-disabled="gen.BindingForm.$invalid || gen.IsAuto || gen.KeySn">绑定</button>
                                     </div>
                                 </div>
                             </div>
@@ -89,13 +89,15 @@
         </div>
         <div class="padder-md">
             <table class="table">
-                <tr>
-                    <td class="col-md-1">生产条码</td>
-                    <td class="col-md-2">SN码</td>
-                    <td class="col-md-2">模块二维码</td>
-                    <td class="col-md-2">绑定人</td>
-                    <td class="col-md-2">绑定时间</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <td class="col-md-1">生产条码</td>
+                        <td class="col-md-2">SN码</td>
+                        <td class="col-md-2">模块二维码</td>
+                        <td class="col-md-2">绑定人</td>
+                        <td class="col-md-2">绑定时间</td>
+                    </tr>
+                </thead>
                 <tr ng-repeat="item in gen.BindList">
                     <td>{{ item.InternalCode }}</td>
                     <td>{{ item.SNCode }}</td>

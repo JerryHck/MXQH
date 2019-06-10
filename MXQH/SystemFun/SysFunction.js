@@ -336,7 +336,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
         en.FunDesc = vm.SelectedFun.FunDesc || '';
         en.IsUsed = vm.SelectedFun.IsUsed;
         en.OrderBy = vm.FunList.Length || 1;
-        en.IsSystem = vm.SelectedFun.IsSystem;
+        en.IsSystem = vm.SelectedFun.IsSystem || 0;
         en.CreateBy = $rootScope.User.UserNo;
         en.TempColumns = 'ListLoad';
         vm.promise = AjaxService.ExecPlan('FunRoot', "save", en).then(function (data) {
@@ -345,17 +345,20 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
             reflashData();
             //更新功能基本信息
             AjaxService.LoginAction("ReInit");
+
+            console.log(!en.IsSystem && data.data[0] && data.data[0].FunNo && Content);
+            console.log(data);
             //保存文件
-            if (!en.IsSystem && data.data[0] && data.data[0].FunNo && Content) {
-                vm.FunCodeSetting.FunNo = data.data[0].FunNo;
+            if (!en.IsSystem && data.data[0] && data.data[0].SN && Content) {
+                vm.FunCodeSetting.FunNo = data.data[0].SN;
                 var htmlEn = {};
-                htmlEn.FileName = data.data[0].FunNo + ".html";
+                htmlEn.FileName = data.data[0].SN + ".html";
                 htmlEn.Text = $window.btoa($window.encodeURIComponent(Content.Html));
                 //保存html
                 AjaxService.AjaxHandle("WriteFile", JSON.stringify(htmlEn));
 
                 var JsEn = {};
-                JsEn.FileName = data.data[0].FunNo + ".js";
+                JsEn.FileName = data.data[0].SN + ".js";
                 JsEn.Text = $window.btoa($window.encodeURIComponent(Content.Js));
                 //保存html
                 AjaxService.AjaxHandle("WriteFile", JSON.stringify(JsEn));
@@ -468,7 +471,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
 
         OpenConten();
     }
-
+    
     function OpenConten() {
         var resolve = {
             ItemData: function () {

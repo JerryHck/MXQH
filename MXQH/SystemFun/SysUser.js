@@ -25,12 +25,14 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
     //删除用户角色
     vm.DeleteUserRole = DeleteUserRole;
     vm.GetData = GetData;
+    vm.Reset = Reset;
 
     vm.ConfigSex = { Table: "BasicData", Column: "Sex" };
     vm.UserType = 'E';
 
     getList();
     getListRole();
+    GetLogin();
 
     function getList() {
         var en = { name: "UserType", value: vm.UserType }
@@ -54,6 +56,10 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
         vm.isEditEmp = !vm.isEditEmp;
     }
 
+    function Reset(item) {
+        Dialog.OpenDialog("ResetUserPwdDialog", item);
+    }
+
     function SaveEmp() {
         vm.EmpItem.OrgSn = vm.EmpItem.OrgSn || "1";
         vm.promise = AjaxService.PlanUpdate("Employee", vm.EmpItem).then(function (data) {
@@ -68,7 +74,10 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
     }
 
     function Insert() {
-        Open({ UserType: vm.UserType });
+        Dialog.OpenDialog("UserDialog", { UserType: vm.UserType }).then(function (data) {
+            getList();
+        }).catch(function (reason) {
+        });
     }
 
     function change() {
@@ -79,19 +88,6 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
             toastr.success('成功');
         });
     }
-
-    function Open(item) {
-        var resolve = {
-            ItemData: function () {
-                return item;
-            }
-        };
-        Dialog.open("UserDialog", resolve).then(function (data) {
-            getList();
-        }).catch(function (reason) {
-        });
-    }
-
 
     function getListRole() {
         vm.promise = AjaxService.GetPlans("Role").then(function (data) {
@@ -143,6 +139,38 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
             case 'S': s = '供应商'; break;
         }
         return s;
+    }
+
+    function GetLogin() {
+        var en = {};
+        //呼叫的方法
+        en.Method = 'GetOnline';
+        //呼叫的实体参数
+        en.PlanName = ""
+        en.Intervel = 1;
+        //传送的参数字符串
+        en.Json = "[]";
+        AjaxService.GetServerSocket(en, function (data) {
+            $scope.$apply(function () {
+                vm.OnList = JSON.parse(data);
+                vm.List = vm.List || [];
+                for (var i = 0, len = vm.List.length; i < len; i++) {
+                    checkOnlien(vm.List[i]);
+                }
+            });
+        })
+    }
+
+    function checkOnlien(user) {
+        user.IsOn = false;
+        if (vm.OnList) {
+            for (var i = 0, len = vm.OnList.length; i < len; i++) {
+                if (user.UserNo.toUpperCase() == vm.OnList[i].UserNo.toUpperCase()) {
+                    user.IsOn = true;
+                    return;
+                }
+            }
+        }
     }
 }
 ]);

@@ -8,6 +8,8 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
     
     //State Change Start
     $rootScope.$on('$stateChangeStart', onStateChangeStart);
+    $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
+    
     //console.log($state.current.name)
     //檢查是否登入
     function onStateChangeStart(e, toState, toParams, fromState, fromParams) {
@@ -15,6 +17,11 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
             $window.location.href = appUrl + 'Access.html#!/login';
         }
     }
+
+    function onStateChangeSuccess(e, toState, toParams, fromState, fromParams) {
+        AjaxService.Custom("LogBrowse");
+    }
+
     //获取路由信息
     AjaxService.LoginAction("GetFunRoute").then(function (data) {
         angular.forEach(data, function (item) {

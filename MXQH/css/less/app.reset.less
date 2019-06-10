@@ -162,6 +162,15 @@ blockquote{
       text-align: left;
    }
 }
+.form-group-xxs{
+   margin-bottom: 0.1rem;
+}
+.form-group-xs{
+   margin-bottom: 0.2rem;
+}
+.form-group-md{
+   margin-bottom: 0.4rem;
+}
 
 .form-control-spin{
   position: absolute;
@@ -461,16 +470,83 @@ blockquote{
   > tfoot {
     > tr {
       > td {
-        padding:8px 15px;
         border-top: 1px solid @table-border-color;
       }
     }
   }
-  > thead > tr > th{
-    padding:8px 15px;
-    border-bottom: 1px solid @table-border-color;
+  > thead > tr{
+      > th{
+        border-bottom: 1px solid @table-border-color;
+      }
+      background-color:#e5d7d7
+  } 
+  &.pad-md{
+        > tbody,
+        > tfoot {
+        > tr {
+          > td {
+            padding:8px 15px !important;
+          }
+        }
+      }
+      > thead > tr > th{
+        padding:8px 15px !important;
+      }
+    }
+  &.pad-xm{
+        > tbody,
+        > tfoot {
+        > tr {
+          > td {
+            padding:5px 8px !important;
+          }
+        }
+      }
+      > thead > tr > th{
+        padding:5px 8px !important;
+      }
+    }
+  &.pad-xs{
+        > tbody,
+        > tfoot {
+        > tr {
+          > td {
+            padding:5px 3px !important;
+          }
+        }
+      }
+      > thead > tr > th{
+        padding:5px 3px !important;
+      }
+  }
+  &.pad-xss{
+        > tbody,
+        > tfoot {
+        > tr {
+          > td {
+            padding:2px 1px !important;
+          }
+        }
+      }
+      > thead > tr > th{
+        padding:2px 1px!important;
+      }
+  }
+  &.pad-none{
+        > tbody,
+        > tfoot {
+        > tr {
+          > td {
+            padding:0px !important;
+          }
+        }
+      }
+      > thead > tr > th{
+        padding:0px !important;
+      }
   }
 }
+
 .table-bordered{
   border-color: @table-border-color;
   > tbody{

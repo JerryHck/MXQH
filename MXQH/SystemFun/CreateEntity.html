@@ -89,7 +89,7 @@
                                         <div class="panel panel-danger">
                                             <div class="panel-body">
                                                 <div uib-collapse="en.isProAdd">
-                                                    <div class="col-lg-4 col-md-6 col-xs-12" ng-repeat="pro in en.PropertyList">
+                                                    <div class="col-lg-4 col-md-6 col-xs-12 padder-xs" ng-repeat="pro in en.PropertyList">
                                                         <!--<div class="col-lg-4 col-md-6 col-xs-12" ng-repeat="pro in en.PropertyList | orderBy:'ColumnType'">-->
                                                         <div class="panel {{ en.setClass(pro.ColumnType) }}">
                                                             <div class="panel-heading h4">
@@ -252,7 +252,7 @@
                                                                             </div>
                                                                             <div class="col-lg-5" ng-class="{ 'has-error' : en.RelateForm.ChildKey.$invalid }" title="关联实体条件">
                                                                                 <ui-select name="ChildKey" ng-model="en.newRelCon.ChildKey" theme="bootstrap" ng-if="en.newRelCon.ChildType=='0'" ng-required="true">
-                                                                                    <ui-select-match placeholder="父实体栏位">{{ $select.selected.ColumnName }}</ui-select-match>
+                                                                                    <ui-select-match placeholder="子实体栏位">{{ $select.selected.ColumnName }}</ui-select-match>
                                                                                     <ui-select-choices repeat="item.ColumnName as item in en.TbChildColunms | filter: $select.search track by item.ColumnName">
                                                                                         <div ng-bind-html="item.ColumnName | highlight: $select.search"></div>
                                                                                     </ui-select-choices>
