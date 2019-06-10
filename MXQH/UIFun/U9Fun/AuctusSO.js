@@ -6,21 +6,14 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     auctusSO.tabIndex = 0;//选中的Tab索引
     auctusSO.SO = { Operator: $rootScope.User.Name };
     auctusSO.IsAddLine = false;
-    //auctusSO.form = Form[auctusSO.ID ? 1 : 0];
-    //auctusSO.formSOLine = Form[1];
     auctusSO.SOLines = [];//当前订单
     auctusSO.SOLine = {};
-    //auctusSO.Code = '';
-    //auctusSO.U9_DocNo = '';
-    //auctusSO.Customer_DocNo = '';
-    //auctusSO.HK_DocNo = '';
     auctusSO.page = { pageIndex: 1, pageSize: 10, maxSize: 10, DocNo: '', Code: '', U9_DocNo: '', Customer_DocNo: '', HK_DocNo: '' };
     auctusSO.pageDetail = { pageIndex: 1, pageSize: 10, maxSize: 10, DocNo: '', Code: '', U9_DocNo: '', Customer_DocNo: '', HK_DocNo: '', UserNo: $rootScope.User.UserNo };
     auctusSO.DataBind = DataBind;
+    auctusSO.DataBindDetail = DataBindDetail;    
     auctusSO.Search = Search;
     auctusSO.SearchSO = SearchSO;
-    //auctusSO.BatchSave = BatchSave;
-    //auctusSO.Edit = Edit;
     auctusSO.List = {};
     auctusSO.Insert = Insert;
     auctusSO.Save = Save;
@@ -28,6 +21,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     auctusSO.Delete = Delete;
     auctusSO.Cancel = Cancel;
     auctusSO.SelectItem = SelectItem;//选择客户
+    auctusSO.SelectSOItem = SelectSOItem;//选择客户
     auctusSO.AddSOLine = AddSOLine;//新增销售行
     auctusSO.SaveSOLine = SaveSOLine;
     auctusSO.EditSOLine = EditSOLine;
@@ -37,7 +31,24 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     auctusSO.Export = Export;//导出
     auctusSO.Import = Import;//导出
     DataBind();//绑定数据
+    function SelectSOItem() {
+        var resolve = {
+            ItemData: function () {
+                return {};
+            }
+        }
+        Dialog.open("CBOItemDialog", resolve).then(function (data) {
+            //Dialog.open(name, resolve).then(function (data) {
+            if (data) {
+                auctusSO.SO.Itemmaster = data.ID;
+                auctusSO.SO.Code = data.Code;
+                auctusSO.SO.Name = data.Name;
+                auctusSO.SO.SPECS = data.SPECS;
+            }
+        }).catch(function (reason) {
 
+        });
+    }
     function Import() {
         var resolve = {
             ItemData: function () {
@@ -82,9 +93,6 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
         else {
             auctusSO.page.HK_DocNo = '%' + auctusSO.HK_DocNo + '%';
         }
-        //auctusSO.page.Code = '2';
-        //console.log(auctusSO.Code);
-        //console.log(auctusSO.Customer_DocNo);
         auctusSO.promise = AjaxService.ExecPlan("AuctusSO", "GetList", auctusSO.page).then(function (data) {
             auctusSO.List = data.data;
             auctusSO.page.total = data.data1[0].TotalCount
@@ -137,15 +145,11 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
         if (auctusSO.IsEdit) {
             for (var i = 0; i < auctusSO.SOLines.length; i++) {
                 var sl = angular.copy(auctusSO.SOLines[i]);
-                console.log(auctusSO.SOLines[i]);
-                console.log(sl);
                 if (!sl.IsAdd) {
                     sl.IsAdd = false;
                 }
-                console.log(sl);
             }
             en.SOLines = JSON.stringify(auctusSO.SOLines);
-            console.log(en.SOLines);
             auctusSO.promise = AjaxService.ExecPlan("AuctusSO", "Update", en).then(function (data) {
                 toastr.success("修改成功");
                 auctusSO.pageDetail.DocNo = auctusSO.SO.DocNo;
@@ -182,17 +186,32 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     function Edit(item) {
         auctusSO.IsEdit = true;
         ChangeTabIndex(0);
+        auctusSO.pageDetail.pageIndex = 1;
         auctusSO.pageDetail.DocNo = item.DocNo;
         auctusSO.promise = AjaxService.ExecPlan("AuctusSO", "Select", auctusSO.pageDetail).then(function (data) {
             auctusSO.pageDetail.total = data.data2[0].TotalCount;
             auctusSO.SO = data.data[0];
+            auctusSO.SO.Qty = parseInt(auctusSO.SO.Qty);
             auctusSO.SOLines = data.data1;
             auctusSO.DocLineNo = parseInt(auctusSO.SOLines[auctusSO.SOLines.length - 1].DocLineNo)
             auctusSO.IsAddLine = false;
         });
     }
+
+    function DataBindDetail() {
+        auctusSO.IsEdit = true;
+        auctusSO.promise = AjaxService.ExecPlan("AuctusSO", "Select", auctusSO.pageDetail).then(function (data) {
+            auctusSO.pageDetail.total = data.data2[0].TotalCount;
+            auctusSO.SO = data.data[0];
+            auctusSO.SO.Qty = parseInt(auctusSO.SO.Qty);
+            auctusSO.SOLines = data.data1;
+            auctusSO.DocLineNo = parseInt(auctusSO.SOLines[auctusSO.SOLines.length - 1].DocLineNo)
+            auctusSO.IsAddLine = false;
+        });
+
+    }
+
     function Delete() {
-        console.log(auctusSO.SO.ID);
         if (auctusSO.SO.ID) {
             var en = {};
             en.ID = auctusSO.SO.ID;
@@ -206,8 +225,9 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
         }
     }
     //打开弹窗
-    function Open(type, resolve) {
+    function Open(type,name, resolve) {
         Dialog.open("CBOItemDialog", resolve).then(function (data) {
+        //Dialog.open(name, resolve).then(function (data) {
             if (data) {
                 auctusSO.SOLine.Itemmaster = data.ID;
                 auctusSO.SOLine.Code = data.Code;
@@ -216,7 +236,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
             }
         }).catch(function (reason) {
 
-        });
+        });        
     }
     //选择料品信息
     function SelectItem() {
@@ -225,8 +245,9 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
                 return {};
             }
         }
-        Open("I", resolve)
+        Open("I", "CBOItemDialog", resolve)
     }
+
     //删除销售订单
     function DeleteSOLine(id) {
         var en = {};
@@ -277,7 +298,6 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
             auctusSO.SOLine = {};
             auctusSO.IsAddLine = false;
         }
-        console.log(soline);
 
     }
     //编辑订单行

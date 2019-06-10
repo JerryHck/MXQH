@@ -35,13 +35,52 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-1 control-label text-lg text-left">整机料号：</label>
+                                <div class="col-md-2" ng-class="{ 'has-error' : auctusSO.form.Code.$invalid }">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="Code" placeholder="料号"
+                                               ng-model="auctusSO.SO.Code" ng-click="auctusSO.SelectSOItem()" required>
+
+                                        <input type="hidden" ng-model="auctusSO.SO.Itemmaster" />
+                                        <span class="input-group-btn">
+                                            <button class="btn" ng-click="auctusSO.SelectSOItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">整机品名：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.form.Name.$invalid }">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="Name" placeholder="品名"
+                                               ng-model="auctusSO.SO.Name" ng-click="auctusSO.SelectSOItem()" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn" ng-click="auctusSO.SelectSOItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <label class="col-md-2 control-label text-lg text-left">整机规格：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.form.SPECS.$invalid }">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="SPECS" placeholder="规格"
+                                               ng-model="auctusSO.SO.SPECS" ng-click="auctusSO.SelectSOItem()" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn" ng-click="auctusSO.SelectSOItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label text-lg text-left">数量：</label>
+                                <div class="col-md-2" ng-class="{ 'has-error' : auctusSO.form.Qty.$invalid }">
+                                    <input type="number" class="form-control" name="Qty" placeholder="数量"
+                                           ng-model="auctusSO.SO.Qty" required>
+                                </div>
                                 <label class="col-md-1 control-label text-lg text-left">制单人：</label>
                                 <div class="col-md-2" ng-class="{ 'has-error' : auctusSO.form.Operator.$invalid }">
                                     <input type="text" disabled="disabled" class="form-control" name="Operator" placeholder="制单人"
                                            ng-model="auctusSO.SO.Operator" required>
                                 </div>
                                 <label class="col-md-1 control-label text-lg text-left">备注：</label>
-                                <div class="col-md-8">
+                                <div class="col-md-5">
                                     <textarea class="form-control" name="Remark" ng-model="auctusSO.SO.Remark"></textarea>
                                 </div>
                             </div>
@@ -90,7 +129,7 @@
                 <!--订单行分页-->
                 <div class="col-md-12 text-center" ng-if="auctusSO.pageDetail.total>auctusSO.pageDetail.pageSize">
                     <div uib-pagination total-items="auctusSO.pageDetail.total" ng-model="auctusSO.pageDetail.pageIndex" items-per-page="auctusSO.pageDetail.pageSize" max-size="auctusSO.pageDetail.maxSize" first-text="第一页" previous-text="上一页"
-                         ng-change="auctusSO.DataBind()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
+                         ng-change="auctusSO.DataBindDetail()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
                 </div>
             </div>
             <!--订单行表单-->
