@@ -3,11 +3,14 @@ angular.module('appData', []);
 angular.module('appData')
 //APP URL
 .constant('appUrl', '../')
-.constant('FileUrl', 'http://localhost:8080/File/')
+.constant('FileUrl', 'http://192.168.30.6:9090/File/')
+//    .constant('FileUrl', 'http://192.168.11.75:8080/File/')
 //Service URL
-.constant('serviceUrl', 'http://localhost:13439/')
-//.constant('serviceUrl', 'http://202.96.135.74:9090/MXQHService/')
-.constant('FileServiceUrl', 'http://192.168.11.75:8080/FileService/')
+//.constant('serviceUrl', 'http://localhost:13439/')
+.constant('serviceUrl', 'http://192.168.30.6:9090/MXQHService/')
+//.constant('serviceUrl', 'http://192.168.11.75:8080/MXQHService/')
+.constant('FileServiceUrl', 'http://192.168.30.6:9090/FileService/')
+//.constant('FileServiceUrl', 'http://192.168.11.75:8080/FileService/')
 //   .constant('FileServiceUrl', 'http://localhost:8080/FileService/')
  .constant('SocketServiceUrl', 'ws://192.168.1.226:2019')
    // .constant('SocketServiceUrl', 'ws://localhost:2019')

@@ -1,0 +1,304 @@
+﻿<uib-tabset ng-attr-active="auctusSO.tabIndex" type="tabs" class="h-100" cg-busy="AuctusSO.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">订单详情</uib-tab-heading>
+        <!--销售订单列表-->
+        <div class="wrapper-md">
+            <!--订单头表单-->
+            <form name="form">
+                <div class="form-group">
+                    <button class="btn btn-sm btn-success" style="margin-left:5px;" type="submit" ng-click="auctusSO.Save(form)"><i class="glyphicon glyphicon-save"></i>保存</button>
+                    <button class="btn btn-sm btn-warning" style="margin-left:5px;" type="button" ng-click="auctusSO.Cancel()"><i class="glyphicon glyphicon-remove"></i>放弃</button>
+                    <button class="btn btn-sm btn-success" style="margin-left:5px;" ng-click="auctusSO.Insert()"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+                    <button class="btn btn-sm btn-success" style="margin-left:5px;"ng-confirm="{text:'确定要删除吗'}" ng-click="auctusSO.Delete()"><i class="glyphicon glyphicon-plus"></i> 删除</button>
+                    <!--<button class="btn btn-sm btn-success" style="margin-left:5px;" ng-click="auctusSO.SearchSO()"><i class="glyphicon glyphicon-search"></i> 查找</button>-->
+                </div>
+                <div class="panel panel-default" ng-form="auctusSO.form">
+                    <div class="panel-heading font-bold h4">订单头</div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label text-lg text-left">订单号：</label>
+                                <div class="col-md-2">
+                                    <input type="text" disabled="disabled" class="form-control" name="DocNo" placeholder="订单号"
+                                           ng-model="auctusSO.SO.DocNo">
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">客户：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.form.Customer_Name.$invalid }">
+                                    <div basic-select="CBO_Customer" ng-model="auctusSO.SO.Customer_Name" select-class="text-xs" ng-name="Customer_Name" ng-required="true"></div>
+                                </div>
+                                <label class="col-md-2 control-label text-lg text-left">业务日期：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.form.BusinessDate.$invalid }">
+                                    <input type="text" date-time-picker class="form-control" name="BusinessDate" placeholder="业务日期" option="auctusSO.UnExist2"
+                                           ng-model="auctusSO.SO.BusinessDate" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label text-lg text-left">整机料号：</label>
+                                <div class="col-md-2" ng-class="{ 'has-error' : auctusSO.form.Code.$invalid }">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="Code" placeholder="料号"
+                                               ng-model="auctusSO.SO.Code" ng-click="auctusSO.SelectSOItem()" required>
+
+                                        <input type="hidden" ng-model="auctusSO.SO.Itemmaster" />
+                                        <span class="input-group-btn">
+                                            <button class="btn" ng-click="auctusSO.SelectSOItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">整机品名：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.form.Name.$invalid }">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="Name" placeholder="品名"
+                                               ng-model="auctusSO.SO.Name" ng-click="auctusSO.SelectSOItem()" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn" ng-click="auctusSO.SelectSOItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <label class="col-md-2 control-label text-lg text-left">整机规格：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.form.SPECS.$invalid }">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="SPECS" placeholder="规格"
+                                               ng-model="auctusSO.SO.SPECS" ng-click="auctusSO.SelectSOItem()" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn" ng-click="auctusSO.SelectSOItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label text-lg text-left">数量：</label>
+                                <div class="col-md-2" ng-class="{ 'has-error' : auctusSO.form.Qty.$invalid }">
+                                    <input type="number" class="form-control" name="Qty" placeholder="数量"
+                                           ng-model="auctusSO.SO.Qty" required>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">制单人：</label>
+                                <div class="col-md-2" ng-class="{ 'has-error' : auctusSO.form.Operator.$invalid }">
+                                    <input type="text" disabled="disabled" class="form-control" name="Operator" placeholder="制单人"
+                                           ng-model="auctusSO.SO.Operator" required>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">备注：</label>
+                                <div class="col-md-5">
+                                    <textarea class="form-control" name="Remark" ng-model="auctusSO.SO.Remark"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!--订单行列表-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-sm btn-success" ng-click="auctusSO.AddSOLine(formSOLine)" value="新增行" />
+                    </div>
+                    <table class="table b-2x table-responsive" style="word-break:break-all; word-wrap:break-word;">
+                        <tr class="text-center bg-gd-dk h4">
+                            <td style="width:7%;">编辑</td>
+                            <td style="width:10%;" class="">行号</td>
+                            <td style="width:7%;" class="">料号</td>
+                            <td style="width:13%;" class="">品名</td>
+                            <td style="width:10%;" class="">数量</td>
+                            <td style="width:10%;" class="">交期</td>
+                            <td style="width:10%;" class="">客户订单</td>
+                            <td style="width:10%;" class="">U9_DocNo</td>
+                            <td style="width:10%;" class="">整机订单</td>
+                            <td style="width:10%;" class="">备注</td>
+                        </tr>
+                        <!--filter: auctusSO.search-->
+                        <!---->
+                        <tr ng-if="auctusSO.SOLines.length>0" ng-repeat="item in auctusSO.SOLines">
+                            <td>
+                                <button class="btn btn-xs btn-primary" ng-click="auctusSO.EditSOLine(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="auctusSO.DeleteSOLine(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </td>
+                            <td>{{ item.DocLineNo }}</td>
+                            <td>{{ item.Code }}</td>
+                            <td>{{ item.Name }}</td>
+                            <td>{{ item.Qty }}</td>
+                            <td>{{ item.RequireDate }}</td>
+                            <td>{{ item.Customer_DocNo }}</td>
+                            <td>{{ item.U9_DocNo }}</td>
+                            <td>{{ item.HK_DocNo }}</td>
+                            <td>{{ item.Remark }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <!--订单行分页-->
+                <div class="col-md-12 text-center" ng-if="auctusSO.pageDetail.total>auctusSO.pageDetail.pageSize">
+                    <div uib-pagination total-items="auctusSO.pageDetail.total" ng-model="auctusSO.pageDetail.pageIndex" items-per-page="auctusSO.pageDetail.pageSize" max-size="auctusSO.pageDetail.maxSize" first-text="第一页" previous-text="上一页"
+                         ng-change="auctusSO.DataBindDetail()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
+                </div>
+            </div>
+            <!--订单行表单-->
+            <form name="formSOLine">
+                <div ng-if="auctusSO.IsAddLine" class="panel panel-default" ng-form="auctusSO.formSOLine">
+                    <div class="panel-heading font-bold h4">
+                        新增订单行
+                        <button class="btn btn-xs btn-danger pull-right" ng-click="auctusSO.CancelSOLine()"><i class="glyphicon glyphicon-remove"></i></button>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-sm btn-success" style="margin-left:15px;" ng-click="auctusSO.SaveSOLine(formSOLine)" value="保存" />
+                                <input type="button" class="btn btn-sm btn-warning" style="margin-left:5px;" ng-click="auctusSO.CancelSOLine()" value="放弃" />
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label text-lg text-left">料号：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.formSOLine.Code.$invalid }">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="Code" placeholder="料号"
+                                               ng-model="auctusSO.SOLine.Code" ng-click="auctusSO.SelectItem()" required>
+
+                                        <input type="hidden" ng-model="auctusSO.SOLine.Itemmaster" />
+                                        <span class="input-group-btn">
+                                            <button class="btn" ng-click="auctusSO.SelectItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">品名：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.formSOLine.Name.$invalid }">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="Name" placeholder="品名"
+                                               ng-model="auctusSO.SOLine.Name" ng-click="auctusSO.SelectItem()" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn" ng-click="auctusSO.SelectItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">规格：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.formSOLine.SPECS.$invalid }">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="SPECS" placeholder="规格"
+                                               ng-model="auctusSO.SOLine.SPECS" ng-click="auctusSO.SelectItem()" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn" ng-click="auctusSO.SelectItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label text-lg text-left">数量：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.formSOLine.Qty.$invalid }">
+                                    <input type="number" class="form-control" name="Qty" placeholder="数量"
+                                           ng-model="auctusSO.SOLine.Qty" required>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">交期：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.formSOLine.RequireDate.$invalid }">
+                                    <input type="text" date-picker class="form-control" name="RequireDate" placeholder="交期" option="auctusSO.UnExist"
+                                           ng-model="auctusSO.SOLine.RequireDate" required>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left" style="padding-right:0px;">客户单号：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.formSOLine.Customer_DocNo.$invalid }">
+                                    <input type="text" class="form-control" name="Customer_DocNo" placeholder="客户单号"
+                                           ng-model="auctusSO.SOLine.Customer_DocNo" required>
+                                </div>
+                              
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label text-lg text-left" style="padding-left:0px;padding-right:0px;">U9订单号：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.formSOLine.U9_DocNo.$invalid }">
+                                    <div basic-select="SM_SO" ng-model="auctusSO.SOLine.U9_DocNo" select-class="text-xs" ng-name="auctusSO.SOLine.U9_DocNo"></div>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left" style="padding-right:0px;">整机订单：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.formSOLine.HK_DocNo.$invalid }">
+                                    <div basic-select="Auctus_HkPO" ng-model="auctusSO.SOLine.HK_DocNo" select-class="text-xs" ng-name="auctusSO.SOLine.HK_DocNo" ></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label text-lg text-left">备注：</label>
+                                    <div class="col-md-3">
+                                        <textarea class="form-control" ng-model="auctusSO.SOLine.Remark"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </uib-tab>
+
+
+    <!--销售订单列表-->
+    <uib-tab index="1">
+        <uib-tab-heading class="h5">订单列表</uib-tab-heading>
+        <div class="bg-light lter b-b wrapper-md" cg-busy="auctusSO.promise">
+            <h3 class="m-n font-thin h3 text-center">
+                马来销售订单列表
+            </h3>
+        </div>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs" style="padding-bottom:10px;">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="auctusSO.Code" placeholder="料号">
+                            <span class="input-group-btn"><button class="btn" style="background:white;border:1px solid #cfdadd;"><i class="fa fa-search"></i></button></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="auctusSO.Customer_DocNo" placeholder="客户订单">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="auctusSO.U9_DocNo" placeholder="U9订单号">
+                    </div>              
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="auctusSO.HK_DocNo" placeholder="整机订单">
+                    </div>
+                    <button class="btn btn-sm btn-info" ng-click="auctusSO.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
+                    <button class="btn btn-sm btn-success" ng-click="auctusSO.Export()"><i class="glyphicon glyphicon-search"></i>导出</button>                    
+                    <button class="btn btn-sm btn-success" ng-click="auctusSO.Import()"><i class="glyphicon glyphicon-search"></i>导入</button>
+                    <!--<pre>{{auctusSO.page}}</pre>-->
+                    <!--<button class="btn btn-sm btn-success" ng-click="auctusSO.BatchSave()"><i class="glyphicon glyphicon-floppy-save"></i>全部保存</button>-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped b-2x table-responsive" style="word-break:break-all; word-wrap:break-word;">
+                        <tr class="text-center bg-gd-dk h4">
+                            <td style="width:7%;">编辑</td>
+                            <td style="width:10%;" class="">单号</td>
+                            <td style="width:7%;" class="">行号</td>
+                            <td style="width:13%;" class="">客户</td>
+                            <td style="width:10%;" class="">料号</td>
+                            <td style="width:13%;" class="">品名</td>
+                            <td style="width:10%;" class="">数量</td>
+                            <td style="width:10%;" class="">交期</td>
+                            <td style="width:10%;" class="">客户订单</td>
+                            <td style="width:10%;" class="">整机订单</td>
+                        </tr>
+                        <!--filter: auctusSO.search-->
+                        <!---->
+                        <tr ng-repeat="item in auctusSO.List">
+                            <td>
+                                <button class="btn btn-xs btn-primary" ng-click="auctusSO.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="auctusSO.DeleteSOLine(item.SOLine)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </td>
+                            <td>{{ item.DocNo }}</td>
+                            <td>{{ item.DocLineNo }}</td>
+                            <td>{{ item.Customer_Name }}</td>
+                            <td>{{ item.Code }}</td>
+                            <td>{{ item.Name }}</td>
+                            <td>{{ item.Qty }}</td>
+                            <td>{{ item.RequireDate }}</td>
+                            <td>{{ item.Customer_DocNo }}</td>
+                            <td>{{ item.HK_DocNo }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12 text-center" ng-if="auctusSO.page.total>auctusSO.page.pageSize">
+                <div uib-pagination total-items="auctusSO.page.total" ng-model="auctusSO.page.pageIndex" items-per-page="auctusSO.page.pageSize" max-size="auctusSO.page.maxSize" first-text="第一页" previous-text="上一页"
+                     ng-change="auctusSO.DataBind()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
+            </div>
+        </div>
+        <!--销售订单列表 End-->
+    </uib-tab>
+</uib-tabset>
+
+
+
+
