@@ -26,15 +26,15 @@ function ($scope, $http, Dialog, toastr, AjaxService, Form, MyPop) {
 
     function ExportExcel() {
         var en = {};
-        if (itemmaster.S.DocLineNo) {
-            en.DocLineNo = itemmaster.S.DocLineNo
-        }        
+        //if (itemmaster.S.DocLineNo) {
+        //    en.DocLineNo = itemmaster.S.DocLineNo
+        //}
         var sheet = {};
         sheet.SheetName = "BOM列表";
-        sheet.ColumnsName = ["组号", "料品", "品名","规格","料品类型"]
+        sheet.ColumnsName = ["组号", "料品", "品名","规格","优选顺序"]
         sheet.FirstColunms = false;
         console.log(itemmaster.S);
-        itemmaster.promise = AjaxService.ExecPlanToExcel("AuctusItemMaster", 'AuctusExcelTest', en, sheet).then(function (data) {            
+        itemmaster.promise = AjaxService.ExecPlanToExcel("AuctusItemMaster", 'Export', en, sheet).then(function (data) {            
             window.location.href = data.File;
         });
     }

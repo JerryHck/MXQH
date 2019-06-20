@@ -24,7 +24,8 @@
                 <td class="col-md-1">组号</td>
                 <td class="col-md-1">料号</td>
                 <td class="col-md-3">品名</td>
-                <td class="col-md-1">类型</td>
+                <!--<td class="col-md-1">类型</td>-->
+                <td class="col-md-1">优选顺序</td>
                 <td class="col-md-5">规格</td>
             </tr>
             <!--filter: itemmaster.search-->
@@ -36,9 +37,10 @@
                 <td>{{ item.DocLineNo }}</td>
                 <td>{{ item.Code }}</td>
                 <td>{{ item.Name }}</td>
-                <td ng-if="item.ComponentType==null">无</td>
+                <!--<td ng-if="item.ComponentType==null">无</td>
                 <td ng-if="item.ComponentType==0">标准</td>
-                <td ng-if="item.ComponentType==2">替代</td>
+                <td ng-if="item.ComponentType==2">替代</td>-->
+                <td>{{item.OrderNo}}</td>
                 <td>{{ item.SPEC }}</td>
             </tr>
         </table>
