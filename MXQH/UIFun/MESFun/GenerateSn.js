@@ -5,7 +5,7 @@ angular.module('app')
 function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
 
     var vm = this;
-    vm.NewBind = { Action: "I", CreateBy: $rootScope.User.UserNo, Customer:"U" };
+    vm.NewBind = { Action: "I", Customer:"U" };
     vm.MesList = [];
     vm.Focus = { InCode: true, SnCode: false};
     vm.page = { index: 1, size: 12 };
@@ -23,7 +23,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
 
     vm.InsertItemType = InsertItemType;
 
-    PageChange();
+    //PageChange();
     GetItemTypeList();
 
     function Search() {
@@ -34,7 +34,8 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
     function PageChange() {
         var list = [];
         if (vm.Ser.InternalCode) {
-            list.push({ name: "InternalCode", value: vm.Ser.InternalCode });
+            li
+            st.push({ name: "InternalCode", value: vm.Ser.InternalCode });
         }
         if (vm.Ser.SNCode) {
             list.push({ name: "SNCode", value: vm.Ser.SNCode });
@@ -48,6 +49,8 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
             vm.BindList = data.List;
             vm.page.total = data.Count;
         });
+
+
     }
 
     //
@@ -66,33 +69,26 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
 
     function Action() {
         vm.KeySn = undefined;
-        var en = {};
-        en.name = "InternalCode";
-        en.value = vm.NewBind.InternalCode;
-        AjaxService.GetPlan("MesPlanMain", en).then(function (data) {
-            var mss = "生产条码 [" + vm.NewBind.InternalCode + '] ';
-            if (!data.InternalCode) {
-                vm.NewBind.InternalCode = undefined;
-                //toastr.error(mes);
-                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或还没有上线' });
+        vm.Batch = undefined;
+        var en = { InternalCode: vm.NewBind.InternalCode };
+
+        AjaxService.ExecPlan("BindCode", "checkIn", en).then(function (data) {
+            if (data.data[0].MsgType == "Error") {
+                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: data.data[0].MsgText });
                 AjaxService.PlayVoice('3331142.mp3');
+                vm.NewBind.InternalCode = undefined;
             }
-            else {
-                AjaxService.GetPlan("MESSNCode", en).then(function (data2) {
-                    if (data2.InternalCode) {
-                        vm.NewBind.InternalCode = undefined;
-                        //toastr.error(mes);
-                        var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过SN码[' + data2.SNCode + "]" };
-                        vm.MesList.splice(0, 0, Msg);
-                        AjaxService.PlayVoice('3331142.mp3');
-                    }
-                    else {
-                        vm.KeySn = data.InternalCode;
-                        GetSnCode();
-                    }
-                })
+            else if (data.data[0].MsgType == "Success") {
+                vm.KeySn = data.InternalCode;
+                vm.Batch = data.data1[0] && data.data1[0].Batch ? data.data1[0].Batch : "";
+                if (vm.Batch == "" && vm.SelectedItemType.CharName == 'RT49') {
+                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: "未设置销售单批次号, 无法生成SN码, 请联系业务部门设定批次号" });
+                    vm.NewBind.InternalCode = undefined;
+                    return;
+                }
+                GetSnCode();
             }
-        });
+        })
     }
 
     //获取生成编码参数值
@@ -101,8 +97,8 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
         enSn.IsPKGen == 1
     }
 
-    //生成内部码
-    function GetSnCode(isUpdate) {
+    //生成内部码 
+    function GetSnCode() {
         var enSn = angular.copy(vm.SelectedItemType);
         if (enSn.IsPKGen == 0) {
             enSn.Company = "L";
@@ -116,7 +112,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
         }
         //平台生成方式-预览
         else if (enSn.IsPKGen == 1 && !vm.IsAuto) {
-            var en = { TbName: enSn.TbName, ClName: enSn.ClName, CharName: "" };
+            var en = { TbName: enSn.TbName, ClName: enSn.ClName, CharName: vm.Batch };
             AjaxService.ExecPlan("SerialNumberSet", "preview", en).then(function (data) {
                 vm.NewBind.SNCode = data.data[0].SN;
             })
@@ -124,7 +120,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
             //平台生成方式-保存
         else if (enSn.IsPKGen == 1 && vm.IsAuto) {
             vm.NewBind.SNCode = "";
-            var SNList = [{ name: enSn.TbName, col: enSn.ClName, parm: "SNCode" }];
+            var SNList = [{ name: enSn.TbName, col: enSn.ClName, parm: "SNCode", charName: vm.Batch }];
             vm.NewBind.SNColumns = JSON.stringify(SNList);
             SaveBindCode();
         }
@@ -142,7 +138,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
         }
         else if (enSn.IsPKGen == 1) {
             vm.NewBind.SNCode = "";
-            var SNList = [{ name: enSn.TbName, col: enSn.ClName, parm: "SNCode" }];
+            var SNList = [{ name: enSn.TbName, col: enSn.ClName, parm: "SNCode", charName: vm.Batch }];
             vm.NewBind.SNColumns = JSON.stringify(SNList);
             SaveBindCode();
         }
@@ -150,10 +146,10 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
 
     function SaveBindCode(){
         vm.promise = AjaxService.ExecPlan("BindCode", 'bindCode', vm.NewBind).then(function (data) {
-            var mss = "生产条码 [" + vm.NewBind.InternalCode + ']  SN码 [' + data.data[0].SNCode + '] 绑定成功';
+            var mss = "内控码[" + vm.NewBind.InternalCode + ']  SN码 [' + data.data[0].SNCode + '] 绑定成功';
             var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };
             vm.MesList.splice(0, 0, Msg);
-            vm.NewBind = { Action: "I" };
+            vm.NewBind = { Action: "I", Customer: "U" };
             vm.Focus = { InCode: true, SnCode: false };
         });
     }

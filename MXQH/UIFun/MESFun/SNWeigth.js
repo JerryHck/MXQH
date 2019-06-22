@@ -34,10 +34,11 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     })
 
     function GetWeigth() {
-        AjaxService.GetComWeigth(vm.ComName||"Com1", function (data) {
+        AjaxService.GetComWeigth(vm.ComName || "Com1", function (data) {
+            console.log(data);
             if (data.MesType == "Success") {
                 $scope.$apply(function () {
-                    vm.SNWeigth = data.Data;
+                    vm.Weigth = data.Data;
                 });
             }
         });

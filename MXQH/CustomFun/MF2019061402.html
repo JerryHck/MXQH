@@ -1,0 +1,120 @@
+﻿<div class="app-content-full" cg-busy="hk.promise">
+    <div class="hbox hbox-auto-xs hbox-auto-sm bg-light">
+        <div class="col w-md lt b-r text-xs">
+            <div class="vbox">
+                <div class="wrapper">
+                    <div class="h3 text-center">
+                        成品列表信息
+                    </div>
+                </div>
+                <div class="row-row">
+                    <div class="cell scrollable hover">
+                        <div class="cell-inner">
+                            <div class="wrapper-xs">
+                                <table class="table ">
+                                    <thead>
+                                        <tr>
+                                            <td style="width:100px ">品号</td>
+                                            <td style="width:100px ">总量</td>
+                                            <td style="width:100px ">累收量</td>
+                                            <td style="width:100px ">品号缩写</td>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="item in hk.ProList ">
+                                        <td>{{ item.Code }}</td>
+                                        <td>{{ item.SupConQtyTu }}</td>
+                                        <td>{{ item.RangeRcvSumQty }}</td>
+                                        <td>{{ item.MateNo }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col w-auto w-lg lt b-r text-xs">
+            <div class="vbox">
+                <div class="row-row">
+                    <div class="cell hover">
+                        <div class="cell-inner">
+                            <div class="padder-xs">
+                                <div class="wrapper-xs">
+                                    <div class="wrapper-sm">
+                                        <div class="form-inline">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" title="料号" ng-model="hk.Ser.ItemCode" placeholder="料号">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" date-picker class="form-control" title="开始日期" ng-model="hk.Ser.StartDate" placeholder="开始日期" option="vm.DateOption">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" date-picker class="form-control" title="结束日期" ng-model="hk.Ser.EndDate" placeholder="结束日期" option="vm.DateOption">
+                                            </div>
+                                            <button class="btn btn-sm btn-info " ng-click="hk.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                                            <button class="btn btn-sm btn-success " ng-click="hk.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="wrapper-sm h-100">
+                                    <div class="scroll-x">
+                                        <table class="table one-line pad-xs">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width:100px ">料号</td>
+                                                    <td style="width:100px ">品名</td>
+                                                    <td style="width:100px ">规格</td>
+                                                    <td style="width:100px ">发料方式</td>
+                                                    <td style="width:100px ">需求用量(BOM)</td>
+                                                    <td style="width:100px ">总出货量(整)</td>
+                                                    <td style="width:100px ">总出货量(PIE/CG)</td>
+                                                    <td style="width:100px ">总退货量</td>
+                                                    <td style="width:100px ">PO收消耗量</td>
+                                                    <td style="width:100px ">标准结存价</td>
+                                                    <td style="width:100px ">最新采购价</td>
+                                                    <td style="width:130px " ng-repeat="row in hk.ColList">
+                                                        {{ row.Code }}
+                                                    </td>
+                                                    <td style="width:100px ">总出货量(未扣退货)</td>
+                                                    <td style="width:100px;">销售单信息</td>
+                                                </tr>
+                                            </thead>
+                                            <tr ng-repeat="item in hk.List ">
+                                                <td>{{ item.Code }}</td>
+                                                <td>{{ item.Name }}</td>
+                                                <td title="{{ item.SPECS }}">{{ item.SPECS }}</td>
+                                                <td class="font-v3">{{ item.MateType }}</td>
+                                                <td class="font-v3">{{ item.BomNeedQty }}</td>
+                                                <td class="font-v3">{{ item.TotalShipCount }}</td>
+                                                <td class="font-v3">{{ item.AllShipCount }}</td>
+                                                <td class="font-v3">{{ item.RtnQtyPUSum }}</td>
+                                                <td class="font-v3">{{ item.ToTalNeedRecive }}</td>
+                                                <td class="font-v3">{{ item.CostStorePrice }}</td>
+                                                <td class="font-v3">{{ item.Price }}</td>
+                                                <td class="multi-line text-left" ng-repeat="row in hk.ColList">
+                                                    <div ng-repeat="p in row.List">
+                                                        {{ p.Name }}:
+                                                        <span class="font-v3">{{ item[p.Col] }}</span>
+                                                    </div>
+                                                </td>
+                                                <!--<td ng-repeat="row in hk.ColList">
+                                                    <span class="font-v3">{{ item[row.Col] }}</span>
+                                                </td>-->
+                                                <td>{{ item.NoRtnShipCount }}</td>
+                                                <td title="{{ item.SoDtl }}">{{ item.SoDtl }}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-12 text-center " ng-if="hk.page.total>hk.page.size ">
+                                        <div uib-pagination total-items="hk.page.total " ng-model="hk.page.index " items-per-page="hk.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                                             ng-change="hk.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

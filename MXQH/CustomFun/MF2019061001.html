@@ -81,10 +81,10 @@
                             <input type="text" name="item_Batch" class="form-control" placeholder="批次号" ng-model="so.EditItem.Batch" required />
                         </div>
                     </td>
-                    <td>{{ item.CreateBy }}</td>
-                    <td>{{ item.CreateDate }}</td>
-                    <td>{{ item.ModifyBy }}</td>
-                    <td>{{ item.ModifyDate }}</td>
+                    <td>{{ item.CreaterName }}</td>
+                    <td>{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td>{{ item.ModifyName }}</td>
+                    <td>{{ item.ModifyDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                 </tr>
             </table>
             <div class= "col-md-12 text-center " ng-if= "so.page.total>so.page.size ">

@@ -104,7 +104,10 @@
                                     <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='YC'|| pk.NewCom.CharType =='MC'" ng-class="{ 'has-error' : pk.InsertForm.CTo.$invalid }">
                                         <input class="form-control" name="CTo" title="转成的字母" placeholder="转成" maxlength="1" type="text" ng-model="pk.NewCom.CTo" required />
                                     </div>
-                                    <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='YC'|| pk.NewCom.CharType =='MC'">
+                                    <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='SER'">
+                                        <input class="form-control" name="SERTo" title="流水达最大值时转成的字母" placeholder="转成" maxlength="1" type="text" ng-model="pk.NewCom.CTo"/>
+                                    </div>
+                                    <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='YC'|| pk.NewCom.CharType =='MC'|| pk.NewCom.CharType =='SER'">
                                         <input class="form-control" name="CEx" title="需要排除的字母" placeholder="排除" maxlength="10" type="text" ng-model="pk.NewCom.CEx" />
                                     </div>
                                     <div class="col-sm-1 padder-xs">
@@ -140,7 +143,10 @@
                                     <div class="col-sm-1 padder-xs" ng-if="com.CharType =='YC'|| com.CharType =='MC'" ng-class="{ 'has-error' : pk.ListForm.CTo.$invalid }">
                                         <input class="form-control" name="CTo" title="转成的字母" placeholder="转成" maxlength="1" type="text" ng-model="com.CTo" required />
                                     </div>
-                                    <div class="col-sm-2 padder-xs" ng-if="com.CharType =='YC'|| com.CharType =='MC'">
+                                    <div class="col-sm-2 padder-xs" ng-if="com.CharType =='SER'">
+                                        <input class="form-control" title="流水达最大值时转成的字母" placeholder="转成" maxlength="1" type="text" ng-model="com.CTo" />
+                                    </div>
+                                    <div class="col-sm-2 padder-xs" ng-if="com.CharType =='YC'|| com.CharType =='MC'|| com.CharType =='SER'">
                                         <input class="form-control" name="CEx" title="需要排除的字母" placeholder="排除" maxlength="10" type="text" ng-model="com.CEx" />
                                     </div>
                                     <div class="col-sm-1 padder-xs">

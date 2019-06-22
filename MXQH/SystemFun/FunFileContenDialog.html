@@ -116,32 +116,32 @@
                             </div>
                         </div>
                         <div class="row no-padder">
-                            <div class="col-md-4 text-xs wrapper-xs scroll-y" style="max-height:400px">
-                                <table class="table pad-xs col-md-12">
+                            <div class="col-md-2 text-xs wrapper-xs scroll-y" style="max-height:400px">
+                                <table class="table pad-xs col-md-12 no-fix one-line">
                                     <thead>
                                         <tr>
-                                            <td class="col-md-5">栏名</td>
-                                            <td class="col-md-6">中文名</td>
-                                            <td class="col-md-1 text-center">
+                                            <td class="col-md-2 text-center">
                                                 <label class="i-checks i-checks-sm">
                                                     <input type="checkbox" ng-change="fun.IsColAll()" ng-model="fun.IsAll"><i></i>
                                                 </label>
                                             </td>
+                                            <td class="col-md-10">栏名</td>
+                                            <!--<td class="col-md-6">中文名</td>-->
                                         </tr>
                                     </thead>
                                     <tr class="text-left" ng-repeat="col in fun.EnColList">
-                                        <td>{{ col.ColumnName }}</td>
-                                        <td>{{ col.ColumnText }}</td>
+                                        <!--<td>{{ col.ColumnText }}</td>-->
                                         <td class="text-center">
                                             <label class="i-checks i-checks-sm">
                                                 <input type="checkbox" ng-change="fun.IsColChange(col)" ng-model="col.IsShow"><i></i>
                                             </label>
                                         </td>
+                                        <td title="{{ col.ColumnName }}">{{ col.ColumnName }}</td>
                                     </tr>
                                 </table>
                             </div>
-                            <div class="col-md-8 wrapper-xs scroll-y"  style="max-height:400px" ng-form="fun.ColForm">
-                                <table class="table pad-xs col-md-12">
+                            <div class="col-md-10 wrapper-xs scroll-y"  style="max-height:400px" ng-form="fun.ColForm">
+                                <table class="table pad-xs col-md-12 one-line">
                                     <thead>
                                         <tr>
                                             <td style="width:30px"></td>
@@ -159,10 +159,10 @@
                                             <i class="glyphicon glyphicon-move text-info" ng-drag="true"
                                                ng-drag-data="show" ng-drag-success="fun.Drag($data,$index)"></i>
                                         </td>
-                                        <td>{{ show.ColumnName }}</td>
-                                        <td><input type="text" name="ColumnText" class="form-control" placeholder="中文栏名" ng-model="show.ColumnText" /></td>
-                                        <td><input type="text" name="Width" class="form-control" placeholder="宽度" ng-model="show.Width" /></td>
-                                        <td class="text-center" ng-if="fun.ThisFun.FunType=='B'">
+                                        <td title="{{ show.ColumnName }}">{{ show.ColumnName }}</td>
+                                        <td class="multi-line"><input type="text" name="ColumnText" class="form-control" placeholder="中文栏名" ng-model="show.ColumnText" /></td>
+                                        <td class="multi-line"><input type="text" name="Width" class="form-control" placeholder="宽度" ng-model="show.Width" /></td>
+                                        <td class="text-center multi-line" ng-if="fun.ThisFun.FunType=='B'">
                                             <div ng-class="{ 'has-error' : fun.ColForm.editCol.$invalid }">
                                                 <ui-select name="editCol" ng-model="show.EditCol" theme="bootstrap" search-enabled="true" ng-required="true">
                                                     <ui-select-match placeholder="选择条件属性.."><span>{{ $select.selected.ColumnName }}</span></ui-select-match>
@@ -172,7 +172,7 @@
                                                 </ui-select>
                                             </div>
                                         </td>
-                                        <td class="text-center" ng-if="fun.ThisFun.FunType=='B'">
+                                        <td class="text-center multi-line" ng-if="fun.ThisFun.FunType=='B'">
                                             <div config-select ng-model="show.ColType" ng-name="ColType" config-option="fun.ColTypeConfig" ng-required="true"></div>
                                             <div ng-if="show.ColType=='Select'" class="m-t-xs" ng-class="{ 'has-error' : fun.ColForm.ColValue.$invalid }">
                                                 <ui-select name="ColValue" ng-model="show.ColValue" theme="bootstrap" search-enabled="true" ng-required="true">
@@ -186,7 +186,7 @@
                                                 <div basic-select="TableCofig" ng-model="show.ColValue" ng-name="TableCofig" ng-required="true"></div>
                                             </div>
                                         </td>
-                                        <td class="text-center" ng-if="fun.ThisFun.FunType=='B'">
+                                        <td class="text-center multi-line" ng-if="fun.ThisFun.FunType=='B'">
                                             <div config-select ng-model="show.ABleNull" ng-name="ColType" config-option="fun.AbleNullConfig" ng-required="true"></div>
                                         </td>
                                         <td class="text-center h4">

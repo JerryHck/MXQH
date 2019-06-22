@@ -1,0 +1,133 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="te.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">Test</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class= "btn btn-sm btn-success " ng-click= "te.Insert() "><i class= "glyphicon glyphicon-plus "></i>新增</button>
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="te.Ser.a_FunNo" placeholder="funNO">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "te.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "te.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <table class= "table pad-xs" >
+                <thead>
+                    <tr>
+                        <td style= "width:60px">操作</td>
+                        <td style= "width:100px ">a_FunNo</td>
+                        <td style= "width:100px ">a_FunType</td>
+                        <td style= "width:100px ">a_ModifyBy</td>
+                        <td style= "width:100px ">a_ModifyDate</td>
+                        <td style= "width:100px ">a_ParFunNo</td>
+                        <td style= "width:100px ">a_RouteName</td>
+                        <td style= "width:100px ">a_SysNo</td>
+                        <td style= "width:100px ">a_CreateBy</td>
+                        <td style= "width:100px ">a_CreateDate</td>
+                        <td style= "width:100px ">a_FunHtml</td>
+                        <td style= "width:100px ">a_FunName</td>
+                    </tr>
+                </thead>
+                <tr ng-if="te.IsInsert" ng-form="te.InsertForm">
+                    <td>
+                        <button class="btn btn-xs btn-success" ng-disabled="te.InsertForm.$invalid" ng-click="te.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                        <button class="btn btn-xs btn-warning" ng-click="te.IsInsert=false" ><i class="fa fa-undo"></i></button>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': te.InsertForm.FunNo.$invalid }">
+                            <div basic-select="FunSelect" ng-name="FunNo" placeholder="a_FunNo" ng-model="te.NewItem.FunNo"  ng-required ="true"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': te.InsertForm.FunType.$invalid }">
+                            <input type="text" name="FunType" class="form-control" placeholder="a_FunType" ng-model="te.NewItem.FunType" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': te.InsertForm.ModifyBy.$invalid }">
+                            <input type="text" name="ModifyBy" class="form-control" placeholder="a_ModifyBy" ng-model="te.NewItem.ModifyBy" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': te.InsertForm.ModifyDate.$invalid }">
+                            <input type="text" name="ModifyDate" class="form-control" placeholder="a_ModifyDate" ng-model="te.NewItem.ModifyDate" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': te.InsertForm.ParFunNo.$invalid }">
+                            <input type="text" name="ParFunNo" class="form-control" placeholder="a_ParFunNo" ng-model="te.NewItem.ParFunNo" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': te.InsertForm.RouteName.$invalid }">
+                            <input type="text" name="RouteName" class="form-control" placeholder="a_RouteName" ng-model="te.NewItem.RouteName" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': te.InsertForm.SysNo.$invalid }">
+                            <input type="text" name="SysNo" class="form-control" placeholder="a_SysNo" ng-model="te.NewItem.SysNo" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': te.InsertForm.CreateBy.$invalid }">
+                            <input type="text" name="CreateBy" class="form-control" placeholder="a_CreateBy" ng-model="te.NewItem.CreateBy" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': te.InsertForm.CreateDate.$invalid }">
+                            <input type="text" name="CreateDate" class="form-control" placeholder="a_CreateDate" ng-model="te.NewItem.CreateDate" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': te.InsertForm.FunHtml.$invalid }">
+                            <input type="text" name="FunHtml" class="form-control" placeholder="a_FunHtml" ng-model="te.NewItem.FunHtml" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': te.InsertForm.FunName.$invalid }">
+                            <input type="text" name="FunName" class="form-control" placeholder="a_FunName" ng-model="te.NewItem.FunName" required />
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-repeat= "item in te.List " ng-form="item.ItemForm">
+                    <td>
+                        <span ng-if="!item.IsEdit">
+                            <button class="btn btn-xs btn-primary" ng-click="te.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                            <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="te.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                        </span>
+                        <span ng-if="item.IsEdit">
+                            <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="te.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                        </span>
+                    </td>
+                    <td>{{ item.FunNo }}</td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.FunType }}</span>
+                        <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_FunType.$invalid }">
+                            <input type="text" name="item_FunType" class="form-control" placeholder="a_FunType" ng-model="te.EditItem.FunType" required />
+                        </div>
+                    </td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.ModifyBy }}</span>
+                        <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_ModifyBy.$invalid }">
+                            <input type="text" name="item_ModifyBy" class="form-control" placeholder="a_ModifyBy" ng-model="te.EditItem.ModifyBy" required />
+                        </div>
+                    </td>
+                    <td>{{ item.ModifyDate }}</td>
+                    <td>{{ item.ParFunNo }}</td>
+                    <td>{{ item.RouteName }}</td>
+                    <td>{{ item.SysNo }}</td>
+                    <td>{{ item.CreateBy }}</td>
+                    <td>{{ item.CreateDate }}</td>
+                    <td>{{ item.FunHtml }}</td>
+                    <td>{{ item.FunName }}</td>
+                </tr>
+            </table>
+            <div class= "col-md-12 text-center " ng-if= "te.page.total>te.page.size ">
+                <div uib-pagination total-items= "te.page.total " ng-model= "te.page.index " items-per-page= "te.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "te.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
