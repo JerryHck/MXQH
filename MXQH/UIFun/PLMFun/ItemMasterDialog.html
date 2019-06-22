@@ -34,11 +34,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-2 control-label">类型</label>
-                    <div class="col-md-4" ng-class="{ 'has-error' : ItemmasterDialog.form.ComponentType.$invalid }">
-                        <div config-select name="ComponentType" ng-model="ItemmasterDialog.Item.ComponentType" config-option="ItemmasterDialog.ConfigComponentType"></div>
-                        <div ng-messages="ItemmasterDialog.form.ComponentType.$error" class="help-block" role="alert">
-                            <div ng-message="required">请选择类型</div>
+                    <label class="col-md-2 control-label">优选顺序</label>
+                    <div class="col-md-4" ng-class="{ 'has-error' : ItemmasterDialog.form.OrderNo.$invalid }">
+                        <input type="number" class="form-control" name="OrderNo" placeholder="组号"
+                               ng-model="ItemmasterDialog.Item.OrderNo" required>
+                        <div ng-messages="ItemmasterDialog.form.OrderNo.$error" class="help-block" role="alert">
+                            <div ng-message="required">组号不能为空</div>
+                            <div ng-message="number">组号必须是数字</div>
                         </div>
                     </div>
                     <label class="col-md-2 control-label">组号</label>

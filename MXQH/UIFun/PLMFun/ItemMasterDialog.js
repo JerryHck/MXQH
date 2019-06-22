@@ -17,7 +17,7 @@ function AuctusItemMasterDialog($scope, $uibModalInstance, Form, ItemData, toast
         en.Code = itemmaster.Item.Code;
         en.Name = itemmaster.Item.Name;
         en.SPEC = itemmaster.Item.SPEC;
-        en.ComponentType = itemmaster.Item.ComponentType;
+        en.OrderNo = itemmaster.Item.OrderNo;
         en.DocLineNo = itemmaster.Item.DocLineNo;
         if (itemmaster.Action == "I") {//新增
             AjaxService.PlanInsert('AuctusItemMaster', en).then(function (data) {
