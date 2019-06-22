@@ -87,7 +87,7 @@
                                     <uib-tab index="0">
                                         <uib-tab-heading class="h5">属性信息</uib-tab-heading>
                                         <div class="panel panel-danger">
-                                            <div class="panel-body">
+                                            <div class="panel-body wrapper-xs padder-xs">
                                                 <div uib-collapse="en.isProAdd">
                                                     <div class="col-lg-4 col-md-6 col-xs-12 padder-xs" ng-repeat="pro in en.PropertyList">
                                                         <!--<div class="col-lg-4 col-md-6 col-xs-12" ng-repeat="pro in en.PropertyList | orderBy:'ColumnType'">-->
@@ -96,29 +96,32 @@
                                                                 {{ pro.ColumnName }}
                                                                 <span ng-click='en.DeletePro(pro)' ng-if="en.isEditing" class="pull-right text-xs text-danger"><i class="fa fa-times"></i></span>
                                                             </div>
-                                                            <div class="form form-horizontal m-t-xxs">
+                                                            <div class="form form-horizontal m-t-xs">
                                                                 <div class="form-group" ng-if="pro.ColumnType == '0'">
-                                                                    <label class="col-sm-4 control-label">主键:</label>
-                                                                    <div class="col-sm-6">
-                                                                        <div toggle-switch ng-model="pro.IsKey" class="w-xxs switch-small switch-danger" on-label="是" off-label="否"
-                                                                             on-value="1" off-value="0" is-disabled="!en.isEditing"></div>
+                                                                    <label class="col-sm-3 control-label padder-xs">主键:</label>
+                                                                    <div class="col-sm-8 padder-xs">
+                                                                        <div class="padder-xs">
+                                                                            <div toggle-switch ng-model="pro.IsKey" class="w-xxs switch-small switch-danger" on-label="是" off-label="否"
+                                                                                 on-value="1" off-value="0" is-disabled="!en.isEditing"></div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group" ng-if="pro.ColumnType == '0'">
-                                                                    <label class="col-sm-4 control-label">排序:</label>
-                                                                    <div class="col-sm-7">
-                                                                        <div class="m-b-sm">
+                                                                    <label class="col-sm-3 control-label padder-xs">排序:</label>
+                                                                    <div class="col-sm-8 padder-xs">
+                                                                        <div class="m-b-sm col-lg-8 col-md-12 col-sm-12 padder-xs">
                                                                             <div config-select ng-model="pro.OrderWay" config-option="en.ConfigOrderWay" ng-disabled="!en.isEditing"></div>
                                                                         </div>
-                                                                        <div>
-                                                                            <input ui-jq="TouchSpin" type="text" ng-model="pro.OrderNum" class="form-control-sm input-sm" data-min='0' data-max="20" ng-disabled="!en.isEditing"
-                                                                                   data-verticalbuttons="false" data-verticalupclass="btn-xs fa fa-caret-up" data-verticaldownclass="btn-xs btn-sm fa fa-caret-down">
+                                                                        <div class="col-lg-4 col-md-12 col-sm-12 padder-xs">
+                                                                            <input type="number" class="form-control" ng-model="pro.OrderNum" ng-disabled="!en.isEditing" maxlength="2" min="0" max="20" />
+                                                                            <!--<input ui-jq="TouchSpin" type="text" ng-model="pro.OrderNum" class="form-control-sm input-sm" data-min='0' data-max="20" ng-disabled="!en.isEditing"
+                                                                                   data-verticalbuttons="false" data-verticalupclass="btn-xs fa fa-caret-up" data-verticaldownclass="btn-xs btn-sm fa fa-caret-down">-->
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group" ng-show="pro.ColumnType != '0'">
-                                                                    <label class="col-sm-4 control-label">属性:</label>
-                                                                    <div class="col-sm-7 input-group">
+                                                                    <label class="col-sm-3 control-label padder-xs">属性:</label>
+                                                                    <div class="col-sm-8 input-group padder-xs">
                                                                         <span class="input-group-btn">
                                                                             <button ng-click="en.EditProClass(pro)" class="btn btn-default">
                                                                                 <span class="icon icon-settings text-success"></span>

@@ -110,10 +110,7 @@ function ($scope, toastr, Dialog, AjaxService) {
 
     //删除
     function Delete(item) {
-        var en = {};
-        en.SysNo = item.SysNo;
-        en.CompanyNo = item.Company.CompanyNo;
-        vm.promise = AjaxService.ExecPlan('System', "delete", en).then(function (data) {
+        vm.promise = AjaxService.PlanDelete('ToolPlugin', item).then(function (data) {
             GetList();
             //更新功能基本信息
             AjaxService.LoginAction("ReInit");

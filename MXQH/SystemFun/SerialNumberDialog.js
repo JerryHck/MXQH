@@ -33,7 +33,11 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
         else if (vm.Item.Compose[i].CharType == "MC") {
             vm.Item.Compose[i].MCMonth = vm.Item.Compose[i].CValue.substr(0, 2);
             vm.Item.Compose[i].CTo = vm.Item.Compose[i].CValue.substr(2, 1)
-            vm.Item.Compose[i].CEx = vm.Item.Compose[i].CValue.length > 7 ? vm.Item.Compose[i].CValue.substr(5) : undefined;
+            vm.Item.Compose[i].CEx = vm.Item.Compose[i].CValue.length > 5 ? vm.Item.Compose[i].CValue.substr(5) : undefined;
+        }
+        else if (vm.Item.Compose[i].CharType == "SER" && vm.Item.Compose[i].CValue.length > 1) {
+            vm.Item.Compose[i].CTo = vm.Item.Compose[i].CValue.substr(0, 1)
+            vm.Item.Compose[i].CEx = vm.Item.Compose[i].CValue.length > 3 ? vm.Item.Compose[i].CValue.substr(3) : undefined;
         }
     }
 
@@ -116,6 +120,9 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
             }
             else if (com.CharType == "MC") {
                 com.CValue = com.MCMonth + com.CTo + (com.CEx ? "Ex" : "") + (com.CEx || "");
+            }
+            else if (com.CharType == "SER") {
+                com.CValue = (com.CTo || "") + (com.CEx ? "Ex" : "") + (com.CEx || "");
             }
             com.CValue = com.CValue || "";
             com.PartChar = com.PartChar || "";

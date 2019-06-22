@@ -167,8 +167,9 @@
                     <div class="panel-footer text-center" ng-if="pack.Item.BoxNumber && pack.PackDetail">
                         <button class="btn btn-success" ng-if="!pack.PackDetail.IsHasPrint" type="button" ng-disabled="pack.UpdateForm.$invalid" ng-confirm="{text:'确定要包装吗'}" ng-click="pack.PackSave()">包装</button>
                         <button class="btn btn-danger" ng-if="!pack.PackDetail.IsHasPrint" type="button" ng-disabled="pack.UpdateForm.$invalid" ng-confirm="{text:'确定要删除SN列表吗'}" ng-click="pack.DeleteSn()">清空SN</button>
-                        <button class="btn btn-success" type="button" ng-disabled="pack.UpdateForm.$invalid" ng-click="pack.PackSave()">打印3S</button>
-                        <button class="btn btn-success" type="button" ng-disabled="pack.UpdateForm.$invalid" ng-click="pack.Save('U')">打印4S</button>
+                        <button class="btn btn-success" type="button" ng-disabled="!pack.PackDetail.IsHasPrint" ng-click="pack.Print('COTTONCODE')">打印</button>
+                        <button class="btn btn-success" type="button" ng-disabled="!pack.PackDetail.IsHasPrint" ng-click="pack.Print('3SCODE')">打印3S</button>
+                        <button class="btn btn-success" type="button" ng-disabled="!pack.PackDetail.IsHasPrint" ng-click="pack.Print('4SCODE')">打印4S</button>
                     </div>
                     <!--<pre>{{ pack.PackDetail | json }}</pre>-->
                 </div>

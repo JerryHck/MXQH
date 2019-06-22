@@ -19,7 +19,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     vm.ChangeBoxNum = ChangeBoxNum;
     vm.NewPaletCode = NewPaletCode;
     vm.DeleteSn = DeleteSn;
-
+    vm.Print = Print;
    
     //获取包装信息-未完工的资料
     AjaxService.GetPlans("MESOrder", [{ name: "ExtendOne", type: "null" }, { name: "WorOrder", value: "AMO%", type:"not like", action:"and" }]).then(function (data) {
@@ -77,7 +77,17 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     }
 
     function DeleteSn() {
-
+        var en = {};
+        en.PackDetailID = vm.PackDetail.ID;
+        vm.promise = AjaxService.ExecPlan("MESPackChi", "deleteSN", en).then(function (data) {
+            if (data.data[0].MsgType == "Error") {
+                MyPop.Show(true, data.data[0].MsgText);
+            }
+            else if (data.data[0].MsgType == "Success") {
+                toastr.success('SN清空成功');
+                ChangeBoxNum(vm.Item.BoxNumber);
+            }
+        })
     }
 
     function KeyDonwOrder(e) {
@@ -144,16 +154,50 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     }
 
     function PackSave(t) {
-        getBoxList();
         var en = {};
         en.PackDetailID = vm.PackDetail.ID;
         en.PalletCode = vm.PackDetail.PalletCode;
         en.Packweight = vm.PackDetail.Packweight;
-        en.CreateBy = $rootScope.User.UserNo;
-        en.ActType = t;
-        vm.promise = AjaxService.ExecPlan("MESPackageDtl", "save", en).then(function (data) {
-            toastr.success('操作成功');
-            vm.IsEdit = false;
+        vm.promise = AjaxService.ExecPlan("MESPackChi", "pack", en).then(function (data) {
+            if (data.data[0].MsgType == "Error") {
+                MyPop.Show(true, data.data[0].MsgText);
+            }
+            else if (data.data[0].MsgType == "Success") {
+                toastr.success('包装成功');
+                getBoxList();
+                vm.IsEdit = false;
+                //打印询问
+                MyPop.Confirm({ text: "是否打印包装箱" }, function () {
+                    Print("COTTONCODE");
+                });
+            }
+        })
+    }
+
+    function Print(type) {
+        var en = {};
+        en.PackDetailID = vm.PackDetail.ID;
+        en.TypeCode = type;
+        AjaxService.ExecPlan("MESPackChi", "print", en).then(function (data) {
+            if (data.data3[0].MsgType == "Error") {
+                MyPop.Show(true, data.data3[0].MsgText);
+            }
+            else if (data.data3[0].MsgType == "Success") {
+                var postData = {}, list = [];
+                postData.ParaData = JSON.stringify(data.data1[0]);
+                for (var i = 0, len = data.data2.length; i < len; i++) {
+                    list.push(data.data2[i].SNCode);
+                }
+                postData.OutList = JSON.stringify(list);
+                console.log(data)
+                var temp = data.data[0];
+
+                AjaxService.Print(temp.TemplateId, temp.TS, postData, vm.PrintName).then(function (data2) {
+                    console.log(data2);
+                }, function (err) {
+                    console.log(err);
+                })
+            }
         })
     }
 }
