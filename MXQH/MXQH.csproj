@@ -66,6 +66,8 @@
     <Content Include="Access\login-.html" />
     <Content Include="Basic\blocks\tool.html" />
     <Content Include="Board.html" />
+    <Content Include="Content\bootstrap-treeview.css" />
+    <Content Include="Content\bootstrap-treeview.min.css" />
     <Content Include="css\font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="css\font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="css\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
@@ -181,6 +183,8 @@
     <Content Include="js\Board.js" />
     <Content Include="js\dobefore.min.js" />
     <Content Include="js\doboard.min.js" />
+    <Content Include="Scripts\bootstrap-treeview.js" />
+    <Content Include="Scripts\bootstrap-treeview.min.js" />
     <Content Include="SystemFun\ResetPswDialog.html" />
     <Content Include="SystemFun\ResetPswDialog.js" />
     <Content Include="SystemFun\SerialNumber.html" />
@@ -193,6 +197,8 @@
     <Content Include="UIFun\MESFun\BarCodeList.js" />
     <Content Include="UIFun\MESFun\InCodePrint.html" />
     <Content Include="UIFun\MESFun\InCodePrint.js" />
+    <Content Include="UIFun\MESFun\MaterialType.html" />
+    <Content Include="UIFun\MESFun\MaterialType.js" />
     <Content Include="UIFun\MESFun\PackageAct.html" />
     <Content Include="UIFun\MESFun\PackageAct.js" />
     <Content Include="UIFun\MESFun\SnCodePrint.html" />
@@ -699,6 +705,8 @@
     <Content Include="SystemFun\VenderDialog.html" />
     <Content Include="SystemFun\VenderDialog.js" />
     <Content Include="Template\UIAccordionTemplate.html" />
+    <Content Include="UIFun\U9Fun\AuctusForecast.html" />
+    <Content Include="UIFun\U9Fun\AuctusForecast.js" />
     <Content Include="UIFun\U9Fun\AuctusSO.html" />
     <Content Include="UIFun\U9Fun\AuctusSO.js" />
     <Content Include="UIFun\U9Fun\AuctusSODialog.html" />
