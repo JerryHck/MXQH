@@ -58,6 +58,7 @@ function ($rootScope, $scope, $http,  toastr, AjaxService, Form, MyPop, $window,
                 toastr.error('供应商名称不对！');
             } else {
                 //更新功能基本信息
+                DataBind();
                 toastr.success('储存成功');
             }
 
