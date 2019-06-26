@@ -49,6 +49,17 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
         vm.SelectList = data;
     });
 
+    //获取config数据
+    //AjaxService.GetTableConfig(vm.SerTypeConfig.Table, vm.SerTypeConfig.Column).then(function (data) {
+    //    vm.SerTypeData = data;
+    //});
+    //AjaxService.GetTableConfig(vm.ColTypeConfig.Table, vm.ColTypeConfig.Column).then(function (data) {
+    //    vm.ColTypeData = data;
+    //});
+    //AjaxService.GetTableConfig(vm.AbleNullConfig.Table, vm.AbleNullConfig.Column).then(function (data) {
+    //    vm.AbleNullData = data;
+    //});
+
     //取消
     vm.cancel = cancel;
     vm.Ok = Ok;

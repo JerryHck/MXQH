@@ -193,6 +193,10 @@
     <Content Include="UIFun\MESFun\BarCodeList.js" />
     <Content Include="UIFun\MESFun\InCodePrint.html" />
     <Content Include="UIFun\MESFun\InCodePrint.js" />
+    <Content Include="UIFun\MESFun\Material.html" />
+    <Content Include="UIFun\MESFun\Material.js" />
+    <Content Include="UIFun\MESFun\MaterialDialog.html" />
+    <Content Include="UIFun\MESFun\MaterialDialog.js" />
     <Content Include="UIFun\MESFun\PackageAct.html" />
     <Content Include="UIFun\MESFun\PackageAct.js" />
     <Content Include="UIFun\MESFun\SnCodePrint.html" />
