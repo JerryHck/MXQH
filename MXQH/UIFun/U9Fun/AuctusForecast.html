@@ -1,0 +1,278 @@
+﻿<uib-tabset ng-attr-active="auFc.tabIndex" type="tabs" class="h-100" cg-busy="auFc.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">订单详情</uib-tab-heading>
+        <div class="bg-light lter b-b wrapper-md">
+            <h3 class="m-n font-thin h3 text-center font-bold">
+                风险备料预测订单
+            </h3>
+        </div>
+        <!--销售订单列表-->
+        <div class="wrapper-md">
+            <!--订单头表单-->
+            <form name="form">
+                <div class="form-group">
+                    <button class="btn btn-sm btn-success" style="margin-left:5px;" type="submit" ng-click="auFc.Save(form)"><i class="glyphicon glyphicon-save"></i>保存</button>
+                    <button class="btn btn-sm btn-warning" style="margin-left:5px;" type="button" ng-click="auFc.Cancel()"><i class="glyphicon glyphicon-remove"></i>放弃</button>
+                    <button class="btn btn-sm btn-success" style="margin-left:5px;" ng-click="auFc.Add()"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+                    <button class="btn btn-sm btn-success" style="margin-left:5px;" ng-confirm="{text:'确定要删除订单吗'}" ng-click="auFc.Delete()"><i class="glyphicon glyphicon-plus"></i> 删除</button>
+                    <!--<button class="btn btn-sm btn-success" style="margin-left:5px;" ng-click="auFc.SearchSO()"><i class="glyphicon glyphicon-search"></i> 查找</button>-->
+                </div>
+                <div class="panel panel-default" ng-form="auFc.form">
+                    <div class="panel-heading font-bold h4">订单头</div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label text-lg text-left">订单号：</label>
+                                <div class="col-md-2">
+                                    <input type="text" disabled="disabled" class="form-control" name="DocNo" placeholder="订单号"
+                                           ng-model="auFc.Forecast.DocNo">
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">客户：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auFc.form.Customer_Name.$invalid }">
+                                    <div basic-select="CBO_Customer" ng-model="auFc.Forecast.Customer_Name" select-class="text-xs" ng-name="Customer_Name" ng-required="true"></div>
+                                </div>
+                                <label class="col-md-2 control-label text-lg text-left">业务日期：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auFc.form.BusinessDate.$invalid }">
+                                    <input type="text" date-time-picker class="form-control" name="BusinessDate" placeholder="业务日期" option="auFc.UnExist2"
+                                           ng-model="auFc.Forecast.BusinessDate" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label text-lg text-left">制单人：</label>
+                                <div class="col-md-2" ng-class="{ 'has-error' : auFc.form.CreatedBy.$invalid }">
+                                    <input type="text" disabled="disabled" class="form-control" name="Forecast" placeholder="制单人"
+                                           ng-model="auFc.Forecast.CreatedBy" required>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">备注：</label>
+                                <div class="col-md-5">
+                                    <textarea class="form-control" name="Remark" ng-model="auFc.Forecast.Remark"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!--订单行列表-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-sm btn-success" ng-click="auFc.AddLine()" value="新增行" />
+                    </div>
+                    <table class="table b-2x table-responsive" style="word-break:break-all; word-wrap:break-word;">
+                        <tr class="text-center bg-gd-dk h4">
+                            <td style="width:7%;">编辑</td>
+                            <td style="width:10%;" class="">行号</td>
+                            <td style="width:7%;" class="">料号</td>
+                            <td style="width:13%;" class="">品名</td>
+                            <td style="width:13%;" class="">规格</td>
+                            <td style="width:10%;" class="">数量</td>
+                            <td style="width:10%;" class="">交期</td>
+                            <td style="width:10%;" class="">所属月份</td>
+                            <td style="width:10%;" class="">备注</td>
+                        </tr>
+                        <!--filter: auFc.search-->
+                        <!---->
+                        <tr ng-if="auFc.Lines.length>0" ng-repeat="item in auFc.Lines">
+                            <td>
+                                <button class="btn btn-xs btn-primary" ng-click="auFc.EditLine(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除订单行吗'}" ng-click="auFc.DeleteLine(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </td>
+                            <td>{{ item.DocLineNo }}</td>
+                            <td>{{ item.Code }}</td>
+                            <td>{{ item.Name }}</td>
+                            <td>{{ item.SPECS }}</td>
+                            <td>{{ item.Qty }}</td>
+                            <td>{{ item.DeliveryDate }}</td>
+                            <td>{{ item.DemandDate }}</td>
+                            <td>{{ item.Remark }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <!--订单行分页-->
+                <div class="col-md-12 text-center" ng-if="auFc.pageDetail.total>auFc.pageDetail.pageSize">
+                    <div uib-pagination total-items="auFc.pageDetail.total" ng-model="auFc.pageDetail.pageIndex" items-per-page="auFc.pageDetail.pageSize" max-size="auFc.pageDetail.maxSize" first-text="第一页" previous-text="上一页"
+                         ng-change="auFc.GetDetail()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
+                </div>
+            </div>
+            <!--订单行表单-->
+            <form name="formLine">
+                <div ng-if="auFc.showLineForm" class="panel panel-default" ng-form="auFc.formLine">
+                    <div class="panel-heading font-bold h4">
+                        新增订单行
+                        <button class="btn btn-xs btn-danger pull-right" ng-click="auFc.CancelLine()"><i class="glyphicon glyphicon-remove"></i></button>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-sm btn-success" style="margin-left:15px;" ng-click="auFc.SaveLine(formLine)" value="保存" />
+                                <input type="button" class="btn btn-sm btn-warning" style="margin-left:5px;" ng-click="auFc.CancelLine()" value="放弃" />
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label text-lg text-left">料号：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auFc.formLine.Code.$invalid }">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="Code" placeholder="料号"
+                                               ng-model="auFc.ForecastLine.Code" ng-click="auFc.SelectItem()" required>
+
+                                        <input type="hidden" ng-model="auFc.ForecastLine.Itemmaster" />
+                                        <span class="input-group-btn">
+                                            <button class="btn" ng-click="auFc.SelectItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">品名：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auFc.formLine.Name.$invalid }">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="Name" placeholder="品名"
+                                               ng-model="auFc.ForecastLine.Name" ng-click="auFc.SelectItem()" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn" ng-click="auFc.SelectItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">规格：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auFc.formLine.SPECS.$invalid }">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="SPECS" placeholder="规格"
+                                               ng-model="auFc.ForecastLine.SPECS" ng-click="auFc.SelectItem()" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn" ng-click="auFc.SelectItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label text-lg text-left">数量：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auFc.formLine.Qty.$invalid }">
+                                    <input type="number" class="form-control" name="Qty" placeholder="数量"
+                                           ng-model="auFc.ForecastLine.Qty" required>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">交期：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auFc.formLine.DeliveryDate.$invalid }">
+                                    <input type="text" date-picker class="form-control" name="DeliveryDate" placeholder="交期" option="auFc.dp"
+                                           ng-model="auFc.ForecastLine.DeliveryDate" required>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left" style="padding-right:0px;">所属月份：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auFc.formLine.DemandDate.$invalid }">
+                                    <input type="text" date-picker class="form-control" name="DemandDate" placeholder="所属月份" option="auFc.DateOption"
+                                           ng-model="auFc.ForecastLine.DemandDate" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label text-lg text-left">备注：</label>
+                                <div class="col-md-3">
+                                    <textarea class="form-control" ng-model="auFc.ForecastLine.Remark"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </uib-tab>
+
+
+    <!--预测订单列表-->
+    <uib-tab index="1">
+        <uib-tab-heading class="h5">订单列表</uib-tab-heading>
+        <div class="bg-light lter b-b wrapper-md">
+            <h3 class="m-n font-thin h3 text-center font-bold">
+                风险备料预测订单列表
+            </h3>
+        </div>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs" style="padding-bottom:10px;">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="auFc.page.Code" placeholder="料号">
+                            <!--<span class="input-group-btn"><button class="btn" style="background:white;border:1px solid #cfdadd;"><i class="fa fa-search"></i></button></span>-->
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-info" ng-click="auFc.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
+                    <button class="btn btn-sm btn-success" ng-click="auFc.Export()"><i class="glyphicon glyphicon-search"></i>导出</button>
+                    <button class="btn btn-sm btn-success" ng-click="auFc.OpenImport()"><i class="glyphicon glyphicon-search"></i>导入</button>
+            
+                    <!--<pre>{{auFc.page}}</pre>-->
+                    <!--<button class="btn btn-sm btn-success" ng-click="auFc.BatchSave()"><i class="glyphicon glyphicon-floppy-save"></i>全部保存</button>-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped b-2x table-responsive" style="word-break:break-all; word-wrap:break-word;">
+                        <tr class="text-center bg-gd-dk h4">
+                            <td style="width:7%;">编辑</td>
+                            <td style="width:10%;" class="">单号</td>
+                            <td style="width:7%;" class="">行号</td>
+                            <td style="width:13%;" class="">客户</td>
+                            <td style="width:10%;" class="">料号</td>
+                            <td style="width:13%;" class="">品名</td>
+                            <td style="width:10%;" class="">数量</td>
+                            <td style="width:10%;" class="">交期</td>
+                            <td style="width:10%;" class="">所属月份</td>
+                        </tr>
+                        <!--filter: auFc.search-->
+                        <!---->
+                        <tr ng-repeat="item in auFc.List">
+                            <td>
+                                <button class="btn btn-xs btn-primary" ng-click="auFc.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除订单行吗'}" ng-click="auFc.DeleteLine(item.LineID)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </td>
+                            <td>{{ item.DocNo }}</td>
+                            <td>{{ item.DocLineNo }}</td>
+                            <td>{{ item.Customer_Name }}</td>
+                            <td>{{ item.Code }}</td>
+                            <td>{{ item.Name }}</td>
+                            <td>{{ item.Qty }}</td>
+                            <td>{{ item.DeliveryDate }}</td>
+                            <td>{{ item.DemandDate }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12 text-center" ng-if="auFc.page.total>auFc.page.pageSize">
+                <div uib-pagination total-items="auFc.page.total" ng-model="auFc.page.pageIndex" items-per-page="auFc.page.pageSize" max-size="auFc.page.maxSize" first-text="第一页" previous-text="上一页"
+                     ng-change="auFc.DataBind()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
+            </div>
+        </div>
+        <!--销售订单列表 End-->
+    </uib-tab>
+</uib-tabset>
+
+<div class="pro-file d-r lg bg-light dk wrapper-md padder-md scroll-y">
+    <div class="padder-md wrapper">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="modal-header">
+                    <h3 class="modal-title">预测订单导入<button class="btn btn-xs btn-danger center pull-right" ng-click="auFc.CloseImport()"><i class="glyphicon glyphicon-remove"></i></button></h3>
+                </div>
+                <div class="modal-body wrapper-md">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12 form-inline">
+                                    <div id="file1" import-sheet-js opts="auFc.FileData" ng-model="auFc.nm"  ng-complete="auFc.Do()"></div>
+                                </div>
+                                <div class="col-md-12 form-inline" style="padding-left:30px;">
+                                    <button ng-disabled="!auFc.IsValid" class="btn btn-sm btn-success" ng-click="auFc.Import()"><i class="glyphicon glyphicon-import"></i>导入</button>
+                                    <a class="btn btn-link text-danger" href="\File\DownLoad\预测订单导入模板.xls">点击下载预测订单导入模板</a>
+                                </div>
+                                <!--<pre style="margin-left:30px;height:300px;">{{ auFc.ListImport | json }}</pre>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--<pre>{{ sdk.FileItem | json }}</pre>-->
+    </div>
+
+</div>
+
+
+
+
