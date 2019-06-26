@@ -5,8 +5,7 @@
 
     function AjaxService($rootScope, $http, $q, serviceUrl, appUrl, toastr, MyPop, $cookieStore, $window, FileUrl, SocketServiceUrl, $state) {
         var generic = 'Common.asmx/Do';
-        var tableConfigList = [];
-
+        var tableConfigList = new Array();
         var obj = {
             //登录前服务
             DoBefore: DoBefore,
@@ -306,14 +305,10 @@
 
         function GetTableConfig(tbName, clName) {
             var d = $q.defer(), listHave = [];
-            //从缓存中获取数据
-            for (var j = 0, len = tableConfigList.length; j < len; j++) {
-                if (tableConfigList[j].TbName == tbName && tableConfigList[j].ClName == clName) {
-                    listHave.push(tableConfigList[j])
-                }
-            }
-            if (listHave.length > 0) {
-                d.resolve(listHave);
+            var name = tbName + '-' + clName;
+            if (tableConfigList[tbName + '-' + clName] && tableConfigList[tbName + '-' + clName].length > 0) {
+                d.resolve(tableConfigList[tbName + '-' + clName]);
+                console.log('have')
             }
             else {
                 var list = [
@@ -321,18 +316,7 @@
                     { name: "ClName", value: clName }
                 ];
                 GetPlans("TableConfig", list).then(function (data) {
-                    for (var j = 0, len = data.length; j < len; j++) {
-                        var have = false;
-                        for (var h = 0, len = tableConfigList.length; h < len; h++) {
-                            if (tableConfigList[h].TbName == data[j].TbName && tableConfigList[h].ClName == data[j].ClName &&
-                                tableConfigList[h].ClInf == data[j].ClInf) {
-                                have = true;
-                            }
-                        }
-                        if (have) {
-                            tableConfigList.push(data[j]);
-                        }
-                    }
+                    tableConfigList[tbName + '-' + clName] = data;
                     d.resolve(data);
                 });
             }
@@ -496,6 +480,7 @@
                     en.Data = JSON.stringify(postData);
                     en.ServiceUrl = serviceUrl;
                     en.PrinterName = printerName;
+                    console.log(en);
                     socket.send(JSON.stringify(en));
                 };
                 socket.onclose = function (e) {
@@ -523,6 +508,7 @@
                 };
             }
             catch (e) {
+                console.log("服务错误");
                 toastr.error(e, '服务错误');
             }
             return g.promise;

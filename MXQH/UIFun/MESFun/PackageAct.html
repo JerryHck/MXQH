@@ -113,8 +113,8 @@
                         <div class="form-horizontal no-padder" ng-if="pack.PackMain">
                             <div class="form-group-xs">
                                 <div class="col-sm-6 no-pader">
-                                    <label class="control-label padder-xs col-sm-5">栈板号:</label>
-                                    <div class="col-sm-7 padder-xs input-group" ng-class="{ 'has-error' : pack.UpdateForm.PalletCode.$invalid }">
+                                    <label class="control-label padder-xs col-sm-3">栈板号:</label>
+                                    <div class="col-sm-9 padder-xs input-group" ng-class="{ 'has-error' : pack.UpdateForm.PalletCode.$invalid }">
                                         <input type="text" class="form-control" name="PalletCode" ng-disabled="pack.PackDetail.IsHasPrint" ng-model="pack.PackDetail.PalletCode" required/>
                                         <span class="input-group-btn">
                                             <button class="btn text-success h3" ng-confirm="{text:'确定要生成新的栈板号吗'}" title="新栈板号"
@@ -125,22 +125,22 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6 no-pader">
-                                    <label class="control-label padder-xs col-sm-5">包装重量:</label>
-                                    <div class="col-sm-7 padder-xs" ng-class="{ 'has-error' : pack.UpdateForm.Packweigth.$invalid }">
-                                        <input type="number" name="Packweigth" ng-disabled="pack.PackDetail.IsHasPrint" class="form-control" ng-model="pack.PackDetail.Packweight" required/>
+                                    <label class="control-label padder-xs col-sm-3">包装重量:</label>
+                                    <div class="col-sm-9 padder-xs" ng-class="{ 'has-error' : pack.UpdateForm.Packweigth.$invalid }">
+                                        <input type="number" name="Packweigth" ng-disabled="pack.PackDetail.IsHasPrint" class="form-control" ng-model="pack.Weight" required/>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group-xs">
                                 <div class="col-sm-6 no-pader">
-                                    <label class="control-label padder-xs col-sm-5">箱号:</label>
-                                    <div class="col-sm-7 padder-xs">
+                                    <label class="control-label padder-xs col-sm-3">箱号:</label>
+                                    <div class="col-sm-9 padder-xs">
                                         <p class="form-control-static font-v3">{{pack.Item.BoxNumber}}</p>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 no-pader">
-                                    <label class="control-label padder-xs col-sm-5">包装状态:</label>
-                                    <div class="col-sm-7 padder-xs">
+                                    <label class="control-label padder-xs col-sm-3">包装状态:</label>
+                                    <div class="col-sm-9 padder-xs">
                                         <p class="form-control-static font-bold text-danger" ng-if="pack.PackDetail">
                                             {{ pack.PackDetail.IsHasPrint ? "已完成包装" : "待包装"}}
                                         </p>
@@ -149,14 +149,14 @@
                             </div>
                             <div class="form-group-xs">
                                 <div class="col-sm-6 no-pader">
-                                    <label class="control-label padder-xs col-sm-5">本箱总包装数:</label>
-                                    <div class="col-sm-7 padder-xs">
+                                    <label class="control-label padder-xs col-sm-3">本箱总包装数:</label>
+                                    <div class="col-sm-9 padder-xs">
                                         <p class="form-control-static font-v3">{{pack.PackDetail.ProductCount}}</p>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 no-pader">
-                                    <label class="control-label padder-xs col-sm-5">S/N号:</label>
-                                    <div class="col-sm-7 padder-xs">
+                                    <label class="control-label padder-xs col-sm-3">S/N号:</label>
+                                    <div class="col-sm-9 padder-xs">
                                         <input type="text" ng-disabled="pack.UpdateForm.$invalid || !pack.Item.BoxNumber || pack.PackDetail.IsHasPrint" class="form-control"
                                                name="InCode" ng-model="pack.Item.SNCode" placeholder="生产条码" ng-keyup="pack.KeyDonwSnCode($event)">
                                     </div>
