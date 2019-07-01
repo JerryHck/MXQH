@@ -1,7 +1,7 @@
 ﻿<div class="py-xl-0 pt-xl-0" ng-class="{ 'input-group' : clear }">
     <ui-select ng-model="$parent.ngModel" ng-change="ValueChange()" theme="bootstrap" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">
         <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.TName }}</ui-select-match>
-        <ui-select-choices repeat="item.TCode as item in data | filter: $select.search">
+        <ui-select-choices repeat="item.TCode as item in data | filter: $select.search"  refresh="refresh($select.search)">
             <div ng-bind-html="item.TName | highlight: $select.search"></div>
         </ui-select-choices>
     </ui-select>

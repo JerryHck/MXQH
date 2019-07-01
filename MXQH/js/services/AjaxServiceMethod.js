@@ -18,6 +18,7 @@
             GetPlan: GetPlan,
             //获得实体资料-列表
             GetPlans: GetPlans,
+            GetPlansTop:GetPlansTop,
             //分页获取实体资料
             GetPlansPage: GetPlansPage,
             //实体计划excel导出
@@ -112,6 +113,10 @@
             return plan(name, json, "GetPlans", undefined, undefined, limitCol);
         }
 
+        function GetPlansTop(name, json, top, limitCol) {
+            return plan(name, json, "GetPlansTop", undefined, undefined, limitCol, top);
+        }
+
         //获得计划资料-分页
         function GetPlansPage(name, json, index, size, limitCol) {
             var s = index <= 1 ? 1 : (index - 1) * size + 1;
@@ -196,18 +201,19 @@
             return Ajax(d, url, en, funName);
         }
 
-        function plan(name, json, funName, start, end, limitCol) {
+        function plan(name, json, funName, start, end, limitCol, top) {
             var enJson = JSON.stringify(convertArray(json)) || '[]';
-            return planAjax(name, enJson, funName, start, end, limitCol);
+            return planAjax(name, enJson, funName, start, end, limitCol, top);
         }
 
-        function planAjax(name, json, funName, start, end, limitCol) {
+        function planAjax(name, json, funName, start, end, limitCol, top) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = {};
             en.planName = name;
             en.strJson = json;
             en.start = start;
             en.end = end;
+            en.top = top;
             en.limitUserCol = limitCol;
             return Ajax(d, url, en, funName)
         }
@@ -353,14 +359,20 @@
         }
 
         function httpFun(q, url, postData, type) {
+            //if (postData.method == 'GetPlansPage') { console.log(postData) }
             $http({
                 method: type || 'POST',
-                url: url,
+                url: url + '?v=' + (postData.method == 'GetPlansPage'?"sdfa": Math.random()),
                 dataType: 'json',
                 data: postData
             })
             .then(
-                function (data) { q.resolve(data.data); },
+                function (data) {
+                    q.resolve(data.data);
+                    if (postData.method == 'GetPlansPage') {
+                        console.log(data);
+                    }
+                },
                 function (data) {
                     q.reject();
                     if (data.status == 401) {

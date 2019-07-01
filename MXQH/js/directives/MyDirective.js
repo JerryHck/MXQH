@@ -97,7 +97,6 @@ angular.module('MyDirective')
             clear: '=',
             selectClass: '@',
             autoFirst: '@',
-            basicSelect: '@',
             placeholder: '@',
             ngRequired: '@',
             ngName: '@',
@@ -112,13 +111,14 @@ angular.module('MyDirective')
     function link(scope, element, attrs) {
         scope.data = undefined;
         scope.autoFirst = scope.autoFirst || "false";
-        if (scope.basicSelect) {
-            var en = [{ name: "SelectName", value: scope.basicSelect }];
+
+        if (attrs.basicSelect) {
+            var en = [{ name: "SelectName", value: attrs.basicSelect }];
             //组织
             var promise = AjaxService.GetPlan("SysUISelect", en).then(function (data) {
-                if (data.SelectName) {
+                if (data.SelectName == attrs.basicSelect) {
+                    var list = [], enName = data, ListData = [];
                     //获取数据
-                    var list = [];
                     var holder = data.Placeholder || "请选择...";
                     scope.placeholder = scope.placeholder || holder;
                     if (data.SerList && data.SerList.length > 0) {
@@ -132,12 +132,46 @@ angular.module('MyDirective')
                             list.push(en);
                         }
                     }
-                    AjaxService.GetPlans(data.EntityName, list).then(function (data2) {
+                    var list2 = angular.copy(list);
+                    //if (enName.ReturnColumn && enName.ReturnColumn != null && enName.ReturnColumn != 'null' && scope.ngModel) {
+                    //    list2.push({ name: enName.ReturnColumn, value: '%' + scope.ngModel + '%' })
+                    //}
+                    AjaxService.GetPlansTop(data.EntityName, list, 100).then(function (data2) {
                         scope.data = data2;
+                        ListData = angular.copy(scope.data);
                         if (data2.length > 0 && scope.autoFirst.toLowerCase() == 'true' && !scope.ngModel) {
                             scope.ngModel = data.ReturnColumn == undefined || data.ReturnColumn == '' ? data2[0] : data2[0][data.ReturnColumn];
                         }
                     });
+
+                    scope.refresh = function refresh(ser) {
+                        if (ser) {
+                            console.log(ser)
+                            scope.data = [];
+                            ListData = ListData || [];
+                            for (var j = 0, len = ListData.length; j < len; j++) {
+                                if ((ListData[j][enName.ShowColumn].toUpperCase().indexOf(ser.toUpperCase()) !== -1) ||
+                                    (ListData[j][enName.ShowSmallColumn] && ListData[j][enName.ShowSmallColumn].toUpperCase().indexOf(ser.toUpperCase()) !== -1)) {
+                                    scope.data.push(ListData[j]);
+                                }
+                            }
+                            //取服务器获取新数据
+                            if (scope.data.length === 0) {
+                                scope.data = [];
+                                var list2 = angular.copy(list);
+                                list2.push({ name: enName.ShowColumn, value: '%' + ser + '%' })
+                                AjaxService.GetPlansTop(enName.EntityName, list2, 100).then(function (data) {
+                                    scope.data = data;
+                                    if (scope.data.length > 0) {
+                                        ListData = angular.copy(scope.data);
+                                    }
+                                });
+                            }
+                        }
+                        else if (scope.data && scope.data.length == 0) {
+                            scope.data = angular.copy(ListData);
+                        }
+                    }
                 }
             });
         }

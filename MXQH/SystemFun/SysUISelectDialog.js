@@ -95,7 +95,7 @@ function SysUISelectDialogCtrl($rootScope, $scope, $uibModalInstance, Form, Item
         html = '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">\n';
         html += '    <ui-select ng-model="$parent.ngModel" ng-change="ValueChange()" theme="bootstrap" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">\n';
         html += '        <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.' + data.SelectedColumn + ' }}</ui-select-match>\n';
-        html += '        <ui-select-choices repeat="' + (data.ReturnColumn && data.ReturnColumn != '' ? 'item.' + data.ReturnColumn + ' as ' : "") + 'item in data | filter: $select.search">\n';
+        html += '        <ui-select-choices repeat="' + (data.ReturnColumn && data.ReturnColumn != '' ? 'item.' + data.ReturnColumn + ' as ' : "") + 'item in data | filter: $select.search"  refresh="refresh($select.search)">\n';
         html += '            <div ng-bind-html="item.' + data.ShowColumn + ' | highlight: $select.search"></div>\n';
         html += data.ShowSmallColumn && data.ShowSmallColumn != '' ? ('            <small ng-bind-html="item.' + data.ShowSmallColumn + ' | highlight: $select.search"></small>\n') : "";
         html += '        </ui-select-choices>\n';
