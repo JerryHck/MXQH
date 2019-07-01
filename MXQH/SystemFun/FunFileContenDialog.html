@@ -161,7 +161,9 @@
                                                 <i class="glyphicon glyphicon-move text-info" ng-drag="true"
                                                    ng-drag-data="show" ng-drag-success="fun.Drag($data,$index)"></i>
                                             </td>
-                                            <td class="one-line" title="{{ show.ColumnName }}">{{ show.ColumnName }}</td>
+                                            <td class="one-line" title="{{ show.ColumnName }}">
+                                                <div style="width:80px" class="width-fix">{{ show.ColumnName }}</div>
+                                            </td>
                                             <td class="multi-line"><input type="text" name="ColumnText" class="form-control" placeholder="中文栏名" ng-model="show.ColumnText" /></td>
                                             <td class="multi-line"><input type="text" name="Width" class="form-control" placeholder="宽度" ng-model="show.Width" /></td>
                                             <td class="text-center multi-line" ng-if="fun.ThisFun.FunType=='B'">

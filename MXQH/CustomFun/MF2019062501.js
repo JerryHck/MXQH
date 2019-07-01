@@ -111,4 +111,11 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         return list;
     }
 
+    //AjaxService.GetPlan("SysUISelect", [{ name: "SelectName", value: "PID" }]).then(function (data) {
+    //    vm.PidData = data;
+    //})
+
+    //AjaxService.GetPlan("SysUISelect", [{ name: "SelectName", value: "CID" }]).then(function (data) {
+    //    vm.CidData = data;
+    //})
 }]);
