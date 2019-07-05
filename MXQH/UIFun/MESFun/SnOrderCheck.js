@@ -16,14 +16,14 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     vm.SelectTab = SelectTab;
 
     //获取工单信息
-    AjaxService.GetPlans("MESOrder").then(function (data) {
+    AjaxService.GetPlans("MesMxWOrder").then(function (data) {
         vm.OrderList = data;
     })
 
     function KeyDonwOrder(e) {
         var keycode = window.event ? e.keyCode : e.which;
-        if (keycode == 13 && vm.Item.WorOrder && vm.Item.WorOrder.ID) {
-            vm.OrderData = vm.Item.WorOrder;
+        if (keycode == 13 && vm.Item.WorkOrder && vm.Item.WorkOrder.ID) {
+            vm.OrderData = vm.Item.WorkOrder;
         }
     }
 
@@ -41,8 +41,8 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 if (!data.SNCode) {
                     vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或未绑定内部码' });
                 }
-                else if ((data.ID != vm.Item.WorOrder.ID)) {
-                    var s = mss + ', 料号[' + data.MaterialCode + ']，与当前工单[' + vm.Item.WorOrder.WorOrder + ']不符';
+                else if ((data.ID != vm.Item.WorkOrder.ID)) {
+                    var s = mss + ', 料号[' + data.MaterialCode + ']，与当前工单[' + vm.Item.WorkOrder.WorkOrder + ']不符';
                     vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: s });
                     MyPop.Show(true, s);
                 }

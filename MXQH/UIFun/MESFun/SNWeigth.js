@@ -1,11 +1,11 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('SnWeigthCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
+.controller('SnWeigthCtrl', ['$scope', '$http', 'AjaxService', 'toastr', '$window',
+function ($scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
-    vm.DeleteItem = { CreateBy: $rootScope.User.UserNo };
+    vm.DeleteItem = {};
     vm.MesList = [];
     vm.Focus = 0;
     vm.page = { index: 1, size: 12 };

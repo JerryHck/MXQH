@@ -22,7 +22,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     vm.Print = Print;
    
     //获取包装信息-未完工的资料
-    AjaxService.GetPlans("MESOrder", [{ name: "ExtendOne", type: "null" }, { name: "WorOrder", value: "AMO%", type:"not like", action:"and" }]).then(function (data) {
+    AjaxService.GetPlans("MesMxWOrder", [{ name: "Status", value: 4, type: "!=" }, { name: "WorkOrder", value: "AMO%", type: "not like", action: "and" }]).then(function (data) {
         vm.OrderList = data;
     })
 
@@ -92,16 +92,16 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
 
     function KeyDonwOrder(e) {
         var keycode = window.event ? e.keyCode : e.which;
-        if (keycode == 13 && vm.Item.WorOrder) {
+        if (keycode == 13 && vm.Item.WorkOrder) {
             vm.IsEdit = false;
             var en = {};
-            en.name = "WorOrder";
-            en.value = vm.Item.WorOrder;
+            en.name = "WorkOrder";
+            en.value = vm.Item.WorkOrder;
             AjaxService.GetPlan("MESPackageMain", en).then(function (data) {
                 vm.ItemData = data;
                 var mss = "工单 [" + vm.Item.SNCode + '] ';
                 if (!data.ID) {
-                    vm.Item.WorOrder = undefined;
+                    vm.Item.WorkOrder = undefined;
                     vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或未包装' });
                 }
                 else {

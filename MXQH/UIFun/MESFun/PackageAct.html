@@ -13,7 +13,7 @@
                                 <div class="col-sm-6 no-padder">
                                     <label class="col-sm-5 padder-xs control-label">工单号:</label>
                                     <div class="col-sm-7 padder-xs" ng-class="{ 'has-error' : pack.UpdateForm.Order.$invalid }">
-                                        <input type="text" name="Order" ng-model="pack.Item.WorOrder" uib-typeahead="order.WorOrder as order.WorOrder for order in pack.OrderList | filter:$viewValue | limitTo:8"
+                                        <input type="text" name="Order" ng-model="pack.Item.WorkOrder" uib-typeahead="order.WorkOrder as order.WorkOrder for order in pack.OrderList | filter:$viewValue | limitTo:8"
                                                class="form-control" placeholder="工单号" ng-keyup="pack.KeyDonwOrder($event)" required>
                                     </div>
                                 </div>

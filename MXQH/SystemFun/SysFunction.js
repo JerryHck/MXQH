@@ -180,8 +180,6 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
                 var en = {};
                 en.FunNo = vm.editRootItem.FunNo;
                 en.SysNo = vm.editRootItem.SysNo;
-                en.ModifyBy = $rootScope.User.UserNo;
-                en.ModifyDate = new Date();
                 //保存到数据库
                 AjaxService.PlanUpdate('Function', en).then(function (data) {
                     toastr.success('保存成功');
@@ -406,7 +404,6 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
             var json = {};
             json.FunType = type;
             json.SysNo = vm.SystemItem ? vm.SystemItem.SysNo : "";
-            json.CreateBy = $rootScope.User.UserNo;
             json.RootList = JSON.stringify(List);
             json.TempColumns = 'RootList';
             vm.promise = AjaxService.ExecPlan("FunRoot", "saveRoot", json).then(function (data) {

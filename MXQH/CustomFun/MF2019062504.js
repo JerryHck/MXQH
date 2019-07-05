@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('ctrl-PC', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
+.controller('ctrl-BR', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
 function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
@@ -16,7 +16,9 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.PageChange = PageChange;
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
-    vm.InserLiaoPin = InserLiaoPin;
+    vm.AddBoRouting = AddBoRouting;
+
+    
 
     function Search() {
         vm.page.index = 1;
@@ -25,22 +27,23 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     function Insert() {
         vm.NewItem = {};
+        vm.NewItem.IsDefault = false;
+        vm.NewItem.IsControl = false;
         vm.IsInsert = true;
     }
 
     function SaveInsert() {
-        vm.promise = AjaxService.PlanInsert("ProductNumber", vm.NewItem).then(function (data) {
+        vm.promise = AjaxService.PlanInsert("mxqh_BoRouting", vm.NewItem).then(function (data) {
             PageChange();
             toastr.success('新增成功');
             vm.IsInsert = false;
         });
     }
-
-    function InserLiaoPin() {
+    function AddBoRouting() {
         var en = {};
-        en.PID = vm.NewItem.PID;
-        en.CID = vm.NewItem.CID;
-        vm.promise = AjaxService.ExecPlan("ProductNumber", 'insert', en).then(function (data) {
+        en.ProductID = vm.NewItem.ProductID;
+        en.RoutingName = vm.NewItem.RoutingName;
+        vm.promise = AjaxService.ExecPlan("mxqh_BoRouting", 'add', en).then(function (data) {
             if (data.data[0].MsgType == "Success") {
                 SaveInsert();
             }
@@ -62,7 +65,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     function Delete(item) {
         var en = angular.copy(item);
         en.ItemForm = undefined;
-        vm.promise = AjaxService.PlanDelete("ProductNumber", en).then(function (data) {
+        vm.promise = AjaxService.PlanDelete("mxqh_BoRouting", en).then(function (data) {
             PageChange();
             toastr.success('删除成功');
         });
@@ -70,15 +73,18 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     function SaveEdit(index) {
         var en = {};
-        en.Id = vm.EditItem.Id;
-        en.PID = vm.EditItem.PID;
-        en.CID = vm.EditItem.CID;
-
-        vm.promise = AjaxService.ExecPlan("ProductNumber", 'alter', en).then(function (data) {
+        en.ID = vm.EditItem.ID;
+        en.ProductID = vm.EditItem.ProductID;
+        en.RoutingName = vm.EditItem.RoutingName;
+        en.IsDefault = vm.EditItem.IsDefault;
+        en.IsControl = vm.EditItem.IsControl;
+        
+        vm.promise = AjaxService.ExecPlan("mxqh_BoRouting", 'alter', en).then(function (data) {
             if (data.data[0].MsgType == "Success") {
-                vm.promise = AjaxService.PlanUpdate("ProductNumber", en).then(function (data) {
+                vm.promise = AjaxService.PlanUpdate("mxqh_BoRouting", en).then(function (data) {
                     PageChange();
                     toastr.success('更新成功');
+
                 });
             }
             else {
@@ -86,29 +92,30 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
             }
 
         });
+     
     }
 
     function PageChange() {
-        vm.promise = AjaxService.GetPlansPage("ProductNumber", GetContition(), vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("mxqh_BoRouting", GetContition(), vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
 
     }
     function ExportExcel() {
-        vm.promise = AjaxService.GetPlanOwnExcel("ProductNumber", GetContition()).then(function (data) {
+        vm.promise = AjaxService.GetPlanOwnExcel("mxqh_BoRouting", GetContition()).then(function (data) {
             $window.location.href = data.File;
         });
     }
     function GetContition() {
         var list = [];
-        if (vm.Ser.a_CID) {
-            list.push({ name: "CID", value: vm.Ser.a_CID });
-        }
-        if (vm.Ser.a_PID) {
-            list.push({ name: "PID", value: vm.Ser.a_PID });
+        if (vm.Ser.a_ProductID) {
+            list.push({ name: "ProductID", value: vm.Ser.a_ProductID });
         }
         return list;
     }
+
+
+
 
 }]);

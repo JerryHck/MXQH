@@ -5,7 +5,7 @@ angular.module('app')
 function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
 
     var vm = this;
-    vm.Item = { CreateBy: $rootScope.User.UserNo };
+    vm.Item = { };
     vm.MesList = [];
     vm.Focus = { Order: false, InCode: true, SN: false };
     vm.page = { index: 1, size: 12 };
@@ -40,7 +40,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
     function InCodeToDb() {
         var en = {};
         en.InternalCode = vm.Item.InCode;
-        AjaxService.ExecPlan("MESOrderOnLine", 'ass', en).then(function (data) {
+        AjaxService.ExecPlan("MesMxWOrder", 'ass', en).then(function (data) {
             if (data.data[0].MsgType == 'Error') {
                 vm.Item.InCode = undefined;
                 showError(data.data[0].Msg);
@@ -66,8 +66,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
         }
         en.InternalCode = vm.Item.InCode;
         en.ProcedureID = vm.ProcedureItem.boProcedureID;
-        en.CreateBy = $rootScope.User.UserNo;
-        vm.promise = AjaxService.ExecPlan("MESOrderOnLine", "saveass", en).then(function (data) {
+        vm.promise = AjaxService.ExecPlan("MesMxWOrder", "saveass", en).then(function (data) {
             if (data.data[0].MsgType == 'Success') {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
                 vm.PassCount = data.data1[0].ToTalCount;
@@ -89,7 +88,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
         en.RouteId = item.ID;
         en.ProcedureID = item.boProcedureID;
         //console.log(en);
-        AjaxService.ExecPlan("MESOrderOnLine", "sum", en).then(function (data) {
+        AjaxService.ExecPlan("MesMxWOrder", "sum", en).then(function (data) {
             //console.log(data);
             vm.PassCount = data.data[0].TotalCount;
         });
@@ -104,7 +103,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
         }
         en.InternalCode = vm.Item.InCode;
         en.ProcedureID = vm.ProcedureItem.boProcedureID;
-        AjaxService.ExecPlan("MESOrderOnLine", "checkNg", en).then(function (data) {
+        AjaxService.ExecPlan("MesMxWOrder", "checkNg", en).then(function (data) {
             if (data.data[0].MsgType == 'Success') {
                 //打开窗体 WoAssNgDialog
                 var resolve = {

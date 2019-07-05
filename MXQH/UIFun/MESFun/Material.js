@@ -13,6 +13,8 @@ function (Dialog, $scope, $http, AjaxService, toastr, $window) {
     vm.PageChange = PageChange;
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
+    vm.type = {};
+    vm.Delete = Delete;
 
     function Search() {
         vm.page.index = 1;
@@ -33,11 +35,22 @@ function (Dialog, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function Insert() {
-        Open({});
+        Open({});  
     }
 
     function Edit(item) {
+        item.type = 1;
         Open(item);
+        
+    }
+
+    function Delete(item) {
+        var en = angular.copy(item);
+        en.ItemForm = undefined;
+        vm.promise = AjaxService.PlanDelete("MesMXMaterial", en).then(function (data) {
+            PageChange();
+            toastr.success('删除成功');
+        });
     }
 
     function Open(item) {

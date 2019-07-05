@@ -11,6 +11,19 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
     vm.ChangeMonitor = ChangeMonitor;
     vm.OpenMate = OpenMate;
 
+    vm.ConfigCodeType = { Table: 'MaterialCodeType', Column: 'CodeType' };
+    vm.ConfigMaterialUnit = { Table: 'MaterialUnit', Column: 'Unit' };
+    
+    if (vm.Item.TbName == null & vm.Item.ClName == null) {
+    } else {
+        vm.SerialNum = {};
+        vm.SerialNum.TbName = vm.Item.TbName;
+        vm.SerialNum.ClName = vm.Item.ClName;
+    }
+   
+   
+
+
     //获取组织信息
 
     AjaxService.GetPlans("syQpoor", [{ name: "Layer", value: 1 }, { name: "IsMonitor", value: 1 }]).then(function (data) {
@@ -31,27 +44,65 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
         });
     }
 
-    //储存
+    //储存或修改
     vm.Save = function () {
         var en = {};
-        en.InternalCode = vm.Item.InCode;
-        en.ProcedureID = vm.Item.ProcedureItem.boProcedureID;
-        en.FirstPoor = vm.DialogItem.NgType;
-        en.SecondPoor = vm.DialogItem.Ng;
-        en.ThridPoor = 0;
-        en.PoorReason = vm.DialogItem.Reason;
+        //vm.Item.type = 0;
+        en.type = vm.Item.type;//新增 null ，更新 1
+        en.Id = vm.Item.Id;
+        en.MaterialCode = vm.Item.MaterialCode;//料号
+        en.Spec = vm.Item.Spec;//规格
+        en.MaterialName = vm.Item.MaterialName;//料品名称
+        en.Unit = vm.Item.Unit;//重量
+        en.MaterialTypeID = vm.Item.MaterialTypeID;//料号分类
+        en.Color = vm.Item.Color;//颜色
+        en.Texture = vm.Item.Texture;//
+        en.LowerFPY = vm.Item.LowerFPY;//
+        en.Weight = vm.Item.Weight;//
+        en.PalletSumWight = vm.Item.PalletSumWight;//
+        en.BoxWeight = vm.Item.BoxWeight;//盒子
+        en.BoxCount = vm.Item.BoxCount;//
+        en.PerBoxCount = vm.Item.PerBoxCount;//
+        en.ColorBoxCount = vm.Item.ColorBoxCount;//
+        en.PalletRoughWeight = vm.Item.PalletRoughWeight;//
+        en.ColorBoxPrintNum = vm.Item.ColorBoxPrintNum;//
+        en.UPPH = vm.Item.UPPH;//
+        en.PersonCount = vm.Item.PersonCount;//
+        en.ProductSwitch = vm.Item.ProductSwitch;//
+        en.PassSwitch = vm.Item.PassSwitch;//
+        en.Remark = vm.Item.Remark;//备注
+        en.Brand = vm.Item.Brand;//品牌
+        en.CreateBy = vm.Item.CreateBy;
+        en.ModifyBy;
+        en.ModifyDate;
+        en.TbName = vm.SerialNum.TbName;
+        en.ClName = vm.SerialNum.ClName;
 
         console.log(en);
-
-        vm.promise = AjaxService.ExecPlan("MESOrderOnLine", "saveNg", en).then(function (data) {
-            if (data.data[0].MsgType == 'Success') {
-                toastr.success('储存成功');
-                $uibModalInstance.close(en);
-            }
-            else if (data.data[0].MsgType == 'Error') {
-                toastr.error(data.data[0].Msg);
-            }
-        })
+        if (en.Id != null) {
+            vm.promise = AjaxService.ExecPlan("MesMXMaterial", "alter", en).then(function (data) {
+                console.log(data);
+                if (data.data[0].MsgType == 'Success') {
+                    toastr.success('更新成功');
+                    $uibModalInstance.close(en);
+                }
+                else if (data.data[0].MsgType == 'Error') {
+                    toastr.error(data.data[0].Msg);
+                }
+            })
+        } else if (en.Id == null) {
+            vm.promise = AjaxService.ExecPlan("MesMXMaterial", "add", en).then(function (data) {
+                console.log(data);
+                if (data.data[0].MsgType == 'Success') {
+                    toastr.success('新增成功');
+                    $uibModalInstance.close(en);
+                }
+                else if (data.data[0].MsgType == 'Error') {
+                    toastr.error(data.data[0].Msg);
+                }
+            })
+        }
+    
     };
 
     //取消
@@ -61,10 +112,10 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
 
     //验证是否存在
     function isExists() {
-        if (vm.Item.SysNo) {
-            var en = { name: "SysNo", value: vm.Item.SysNo };
-            AjaxService.GetPlan('System', en).then(function (data) {
-                $scope.SystemForm.No.$setValidity('unique', !data.SysNo);
+        if (vm.Item.MaterialCode) {
+            var en = { name: "MaterialCode", value: vm.Item.MaterialCode };
+            AjaxService.GetPlan('MesMXMaterial', en).then(function (data) {
+                $scope.DialogForm.MaterialCode.$setValidity('unique', !data.MaterialCode);
             });
         }
     }

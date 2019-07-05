@@ -18,7 +18,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     vm.PageChange = PageChange;
 
     //获取工单信息
-    AjaxService.GetPlans("MESOrder", { name: "ExtendOne", type:"null" }).then(function (data) {
+    AjaxService.GetPlans("MesMxWOrder", [{ name: "Status", value: 4, type: "!=" }]).then(function (data) {
         vm.OrderList = data;
     })
 
@@ -41,8 +41,8 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
 
     function KeyDonwOrder(e) {
         var keycode = window.event ? e.keyCode : e.which;
-        if (keycode == 13 && vm.Item.WorOrder && vm.Item.WorOrder.ID) {
-            var en = { name: "ID", value: vm.Item.WorOrder.ID };
+        if (keycode == 13 && vm.Item.WorkOrder && vm.Item.WorkOrder.ID) {
+            var en = { name: "ID", value: vm.Item.WorkOrder.ID };
             AjaxService.GetPlan("OrderPackgeSn", en).then(function (data) {
                 vm.OrderData = data;
                 vm.Focus = { Order: false, Antenna: true, SN: false };
@@ -62,15 +62,15 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                     vm.Item.Antenna = undefined;
                     vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  在MES系统中不存在' });
                 }
-                else if (vm.Item.WorOrder.ID) {
+                else if (vm.Item.WorkOrder.ID) {
                     var en = {};
                     en.name = "ID";
-                    en.value = vm.Item.WorOrder.ID;
+                    en.value = vm.Item.WorkOrder.ID;
                     AjaxService.GetPlan("OrderPackgeSn", en).then(function (data) {
-                        var mss = "工单 [" + vm.Item.WorOrder.WorOrder + '] ';
+                        var mss = "工单 [" + vm.Item.WorkOrder.WorkOrder + '] ';
                         vm.PackData = data;
                         if (!data.ID) {
-                            vm.Item.WorOrder = undefined;
+                            vm.Item.WorkOrder = undefined;
                             vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在' });
                         }
                         else if ((data.Antenna != vm.Item.Antenna)) {

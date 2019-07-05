@@ -1,11 +1,11 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('SnCodePrintCtrl', ['$rootScope', '$scope', 'FileUrl', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, FileUrl, AjaxService, toastr, $window) {
+.controller('SnCodePrintCtrl', [ '$scope', 'FileUrl', 'AjaxService', 'toastr', '$window',
+function ( $scope, FileUrl, AjaxService, toastr, $window) {
 
     var vm = this;
-    vm.DeleteItem = { CreateBy: $rootScope.User.UserNo };
+    vm.DeleteItem = {};
     vm.MesList = [];
     vm.Focus = 0;
     vm.page = { index: 1, size: 12 };
@@ -45,7 +45,7 @@ function ($rootScope, $scope, FileUrl, AjaxService, toastr, $window) {
         list.push(data.SnCode);
 
         postData.ParaData = JSON.stringify({});
-        postData.OutList = JSON.stringify(list);
+        postData.OutList =list;
         //console.log(data);
         AjaxService.Print(data.TemplateId, data.TS, postData, vm.PrinterName).then(function (data) {
             console.log(data);
