@@ -362,16 +362,13 @@
             //if (postData.method == 'GetPlansPage') { console.log(postData) }
             $http({
                 method: type || 'POST',
-                url: url + '?v=' + (postData.method == 'GetPlansPage'?"sdfa": Math.random()),
+                url: url + '?v=' + Math.random(),
                 dataType: 'json',
                 data: postData
             })
             .then(
                 function (data) {
                     q.resolve(data.data);
-                    if (postData.method == 'GetPlansPage') {
-                        console.log(data);
-                    }
                 },
                 function (data) {
                     q.reject();

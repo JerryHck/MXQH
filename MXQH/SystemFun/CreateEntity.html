@@ -351,8 +351,8 @@
                                                                     <div object-select ob-type="'P'" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.ConnectName" ng-disabled="!en.isEditing"
                                                                          ng-model="proc.EnProcedure" ng-name="obProc" ng-required="true"></div>
                                                                 </div>
-                                                                <div class="col-sm-2" ng-class="{ 'has-error' : en.ProcedureForm.ActionType.$invalid }">
-                                                                    <div config-select ng-model="proc.ActionType" ng-name="ActionType" ng-required="true" config-option="en.ActionType" ng-disabled="!en.isEditing"></div>
+                                                                <div class="col-sm-2" ng-class="{ 'has-error' : en.ProcedureForm.ActionTypeItem.$invalid }">
+                                                                    <div config-select ng-model="proc.ActionType" ng-name="ActionTypeItem" ng-required="true" config-option="en.ActionType" ng-disabled="!en.isEditing"></div>
                                                                 </div>
                                                                 <div class="col-sm-2" ng-class="{ 'has-error' : en.ProcedureForm.roleSn.$invalid }">
                                                                     <ui-select name="roleSn" class="h6" ng-model="proc.RoleSn" theme="bootstrap" search-enabled="true" required ng-disabled="!en.isEditing">

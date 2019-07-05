@@ -5,7 +5,7 @@ angular.module('app')
 function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
 
     var vm = this;
-    vm.Item = { CreateBy: $rootScope.User.UserNo };
+    vm.Item = {};
     vm.MesList = [];
     vm.Focus = { Order: true, SNCode: false, SN: false };
     vm.page = { index: 1, size: 12 };
@@ -20,7 +20,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
 
 
     //获取包装信息
-    AjaxService.GetPlans("MESOrder", [{name:"ExtendOne", type:"null"}]).then(function (data) {
+    AjaxService.GetPlans("MesMxWOrder", [{ name: "Status", value: 4, type:"!=" }]).then(function (data) {
         vm.OrderList = data;
     })
 
@@ -38,14 +38,14 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
 
     function KeyDonwOrder(e) {
         var keycode = window.event ? e.keyCode : e.which;
-        if (keycode == 13 && vm.Item.WorOrder) {
+        if (keycode == 13 && vm.Item.WorkOrder) {
             var en = {};
-            en.WorOrder = vm.Item.WorOrder;
-            AjaxService.ExecPlan("MESOrderOnLine", "order", en).then(function (data) {
-                var mss = "工单 [" + vm.Item.WorOrder + '] ';
+            en.WorkOrder = vm.Item.WorkOrder;
+            AjaxService.ExecPlan("MesMxWOrder", "order", en).then(function (data) {
+                var mss = "工单 [" + vm.Item.WorkOrder + '] ';
                 vm.OrderData = undefined;
-                if (!data.data[0] || !data.data[0].WorOrder) {
-                    vm.Item.WorOrder = undefined;
+                if (!data.data[0] || !data.data[0].WorkOrder) {
+                    vm.Item.WorkOrder = undefined;
                     showError(mss + '  不存在或已完工');
                 }
                 else {
@@ -72,11 +72,13 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         if (vm.OrderData.Quantity - vm.OrderCount.ToTalCount == 0) {
             AjaxService.PlayVoice('5611.mp3');
             MyPop.ngConfirm({ text: "投入数量已达到生产量, 是否继续投入?" }).then(function (data) {
-                Check();
+                if (vm.IsAuto) {
+                    Save();
+                }
             });
         }
-        else {
-            Check();
+        else if (vm.IsAuto) {
+            Save();
         }
     }
 
@@ -91,29 +93,12 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         vm.Focus = index;
     }
 
-    function Check() {
-        var en = {};
-        en.name = "InternalCode";
-        en.value = vm.Item.InCode;
-        AjaxService.GetPlan("InternalCode", en).then(function (data) {
-            var mss = "内控码 [" + vm.Item.InCode + '] ';
-            if (!data.InternalCode) {
-                vm.Item.InCode = undefined;
-                showError(mss + '  不存在');
-            }
-            else if (vm.IsAuto) {
-                Save();
-            }
-        });
-    }
-
     function Save() {
         var en = {};
-        en.WorOrder = vm.Item.WorOrder;
+        en.WorkOrder = vm.Item.WorkOrder;
         en.InternalCode = vm.Item.InCode;
         en.RoutingId = vm.RoutingData.ID;
-        en.CreateBy = $rootScope.User.UserNo;
-        vm.promise = AjaxService.ExecPlan("MESOrderOnLine", "save", en).then(function (data) {
+        vm.promise = AjaxService.ExecPlan("MesMxWOrder", "save", en).then(function (data) {
             if (data.data[0].MsgType == 'Success') {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
                 vm.OrderCount = data.data1[0];

@@ -21,7 +21,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
 
     //获取包装信息
-    AjaxService.GetPlans("MESOrder").then(function (data) {
+    AjaxService.GetPlans("MesMxWOrder").then(function (data) {
         vm.OrderList = data;
     })
 
@@ -41,7 +41,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                     vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或未包装' });
                 }
                 else {
-                    vm.Item.WorOrder = data.PackDtl.PackMain.Order.WorOrder;
+                    vm.Item.WorkOrder = data.PackDtl.PackMain.Order.WorkOrder;
                     vm.Item.BoxNumber = data.PackDtl.BoxNumber;
                     vm.PackMain = data.PackDtl.PackMain;
                     vm.PackDetail = data.PackDtl;
@@ -52,16 +52,16 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     function KeyDonwOrder(e) {
         var keycode = window.event ? e.keyCode : e.which;
-        if (keycode == 13 && vm.Item.WorOrder) {
+        if (keycode == 13 && vm.Item.WorkOrder) {
             vm.IsEdit = false;
             var en = {};
-            en.name = "WorOrder";
-            en.value = vm.Item.WorOrder;
+            en.name = "WorkOrder";
+            en.value = vm.Item.WorkOrder;
             AjaxService.GetPlan("MESPackageMain", en).then(function (data) {
                 vm.ItemData = data;
                 var mss = "工单 [" + vm.Item.SNCode + '] ';
                 if (!data.ID) {
-                    vm.Item.WorOrder = undefined;
+                    vm.Item.WorkOrder = undefined;
                     vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或未包装' });
                 }
                 else {
@@ -97,7 +97,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
             vm.ItemData = data;
             var mss = "箱号 [" + vm.Item.BoxNumber + '] ';
             if (!data.ID) {
-                vm.Item.WorOrder = undefined;
+                vm.Item.WorkOrder = undefined;
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在' });
             }
             else {

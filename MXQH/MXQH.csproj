@@ -195,6 +195,8 @@
     <Content Include="SystemFun\ToolManager.js" />
     <Content Include="UIFun\MESFun\BarCodeList.html" />
     <Content Include="UIFun\MESFun\BarCodeList.js" />
+    <Content Include="UIFun\MESFun\InCodeBindSN.html" />
+    <Content Include="UIFun\MESFun\InCodeBindSN.js" />
     <Content Include="UIFun\MESFun\InCodePrint.html" />
     <Content Include="UIFun\MESFun\InCodePrint.js" />
     <Content Include="UIFun\MESFun\MaterialType.html" />

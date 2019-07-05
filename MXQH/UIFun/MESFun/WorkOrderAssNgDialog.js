@@ -36,7 +36,7 @@ function WorkOrderAssNgDialogCtrl($rootScope, $scope, $uibModalInstance, Form, I
 
         console.log(en);
 
-        vm.promise = AjaxService.ExecPlan("MESOrderOnLine", "saveNg", en).then(function (data) {
+        vm.promise = AjaxService.ExecPlan("MesMxWOrder", "saveNg", en).then(function (data) {
             if (data.data[0].MsgType == 'Success') {
                 toastr.success('储存成功');
                 $uibModalInstance.close(en);

@@ -6,7 +6,7 @@ SerialNumberDialogCtrl.$inject = ['$scope', '$uibModalInstance', 'MyPop', 'Form'
 function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData, toastr, AjaxService) {
 
     var vm = this;
-    vm.form = Form[ItemData.TbName ? 1 : 0];
+    vm.form = Form[ItemData.ClName ? 1 : 0];
     vm.Item = angular.copy(ItemData);
     vm.isExists = isExists;
     vm.AddCom = AddCom;

@@ -12,6 +12,7 @@ function ($rootScope, $scope, Dialog, AjaxService, toastr, $window) {
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
     vm.Open = Open;
+    vm.Copy = Copy;
     vm.Delete = Delete;
     vm.Preview = Preview;
 
@@ -49,6 +50,12 @@ function ($rootScope, $scope, Dialog, AjaxService, toastr, $window) {
             list.push({ name: "StsInfo", value: vm.Ser.StsInfo });
         }
         return list;
+    }
+
+    function Copy(item) {
+        var newItem = angular.copy(item);
+        newItem.ClName = undefined;
+        Open(newItem);
     }
 
     function Open(item) {

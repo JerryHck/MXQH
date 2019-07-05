@@ -44,136 +44,156 @@
                                         </small>
                                     </div>
                                 </a>
+                                <div uib-pagination total-items="role.page.total " ng-model="role.page.index " items-per-page="role.page.size " max-size="5" first-text="<<" previous-text="<"
+                                     ng-change="role.getListRole()" next-text=">" last-text=">> " boundary-links="false" boundary-link-numbers="false"></div>
                             </div>
-                            <div uib-pagination total-items="role.page.total " ng-model="role.page.index " items-per-page="role.page.size " max-size="5" first-text="<<" previous-text="<"
-                                 ng-change="role.getListRole()" next-text=">" last-text=">> " boundary-links="true " boundary-link-numbers="true"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col w-auto padder w-tab-full">
-            <div class="padder-md" ng-if="role.SelectedRole">
-                <div class="row">
-                    <div class="col-md-7">
-                        <div class="panel panel-default">
-                            <div class="panel-heading text-center h4 font-bold">
-                                功能权限
+        <div class="col w-auto padder-xs">
+            <div class="vbox" ng-if="role.SelectedRole">
+                <div class="wrapper-xs">
+                    <div class="panel panel-default">
+                        <div class="panel-heading text-center h4 font-bold">
+                            功能权限
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group" uib-collapse="!role.isAddRoleFun">
+                                <div class="input-group col-md-12">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" ng-click="role.InsertRoleFun()" ng-disabled="!role.NewRoleFun">
+                                            <i class="glyphicon glyphicon-plus text-success"></i>
+                                        </button>
+                                    </span>
+                                    <div function-select fun-type="2" ng-model="role.NewRoleFun" ng-change="role.changeRoleFun()"></div>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" ng-click="role.isAddRoleFun=!role.isAddRoleFun">
+                                            <i class="glyphicon glyphicon-search text-success"></i>
+                                        </button>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="panel-body">
-                                <div class="form-group" uib-collapse="!role.isAddRoleFun">
-                                    <div class="input-group col-md-12">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" ng-click="role.InsertRoleFun()" ng-disabled="!role.NewRoleFun">
-                                                <i class="glyphicon glyphicon-plus text-success"></i>
-                                            </button>
-                                        </span>
-                                        <div function-select fun-type="2" ng-model="role.NewRoleFun" ng-change="role.changeRoleFun()"></div>
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" ng-click="role.isAddRoleFun=!role.isAddRoleFun">
-                                                <i class="glyphicon glyphicon-search text-success"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="form-group" uib-collapse="role.isAddRoleFun">
-                                    <div class="input-group">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-success" ng-click="role.isAddRoleFun=!role.isAddRoleFun">
-                                                <i class="glyphicon glyphicon-plus"></i>
-                                            </button>
-                                        </span>
-                                        <input type="text" class="form-control" placeholder="查询" ng-model="role.RoleFunQuery">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" disabled>
-                                                <i class="glyphicon glyphicon-search text-success"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="list-group">
-                                    <ul class="list-group bg-white">
-                                        <li class="list-group-item" ng-repeat="rf in role.RoleHaveFun | filter:role.RoleFunQuery ">
-                                            <a herf class="pull-left">
-                                                <b class="badge bg-success h2"><i class="glyphicon glyphicon-lock text-white"></i></b>
-                                            </a>
-                                            <div class="clear">
-                                                <div>
-                                                    <p class="text-info h5">
-                                                        {{ rf.Fun.FunName }}
-                                                        <a ng-click='role.DeleteRoleFun(rf)' class="pull-right hover text-muted h4"><i class="fa fa-times text-danger"></i></a>
-                                                        <span class="form-group h5 text-success pull-right padder-md">
-                                                            <label class="checkbox-inline">
-                                                                <input type="checkbox" ng-model="rf.AbleInsert" ng-checked="rf.AbleInsert" ng-change="role.UpdateRoleFun(rf)"> 增
-                                                            </label>
-                                                            <label class="checkbox-inline">
-                                                                <input type="checkbox" ng-model="rf.AbleDelete" ng-checked="rf.AbleDelete" ng-change="role.UpdateRoleFun(rf)"> 删
-                                                            </label>
-                                                            <label class="checkbox-inline">
-                                                                <input type="checkbox" ng-model="rf.AbleUpdate" ng-checked="rf.AbleUpdate" ng-change="role.UpdateRoleFun(rf)"> 改
-                                                            </label>
-                                                        </span>
-                                                    </p>
-                                                </div>
-                                                <small class="text-muted"> {{ rf.FunNo }} </small>
-                                            </div>
-                                        </li>
-                                    </ul>
+                            <div class="form-group" uib-collapse="role.isAddRoleFun">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" ng-click="role.isAddRoleFun=!role.isAddRoleFun">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                        </button>
+                                    </span>
+                                    <input type="text" class="form-control" placeholder="查询" ng-model="role.RoleFunQuery">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" disabled>
+                                            <i class="glyphicon glyphicon-search text-success"></i>
+                                        </button>
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
-                        <div class="panel panel-default">
-                            <div class="panel-heading text-center">角色用户</div>
-                            <div class="panel-body">
-
-                                <div class="form-group" uib-collapse="!role.isAddRoleUser">
-                                    <div class="input-group col-md-12">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" ng-click="role.InsertRoleUser()" ng-disabled="!role.NewRoleUser">
-                                                <i class="glyphicon glyphicon-plus text-success"></i>
-                                            </button>
-                                        </span>
-                                        <div basic-select="User" ng-model="role.NewRoleUser" ng-change="role.changeRoleUser(role.NewRoleUser)"></div>
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" ng-click="role.isAddRoleUser=!role.isAddRoleUser">
-                                                <i class="glyphicon glyphicon-search text-success"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="form-group" uib-collapse="role.isAddRoleUser">
-                                    <div class="input-group">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-success" ng-click="role.isAddRoleUser=!role.isAddRoleUser">
-                                                <i class="glyphicon glyphicon-plus"></i>
-                                            </button>
-                                        </span>
-                                        <input type="text" class="form-control" placeholder="查询" ng-model="role.RoleUserQuery">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" disabled>
-                                                <i class="glyphicon glyphicon-search text-success"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="list-group">
-                                    <ul class="list-group bg-white">
-                                        <li class="list-group-item" ng-repeat="ur in role.RoleUserList | filter:role.RoleUserQuery ">
-                                            <a herf class="pull-left">
-                                                <b class="badge bg-success h2"><i class="icon icon-user text-white"></i></b>
-                                            </a>
-                                            <div class="clear">
-                                                <div>
-                                                    <a ng-click='role.DeleteRoleUser(ur)' class="pull-right hover text-muted h4"><i class="fa fa-times text-danger"></i></a>
-                                                    <div class="text-info h5">{{ ur.Emp.ChiLastName }}{{ ur.Emp.ChiFirstName }}</div>
+                </div>
+                <div class="row-row">
+                    <div class="cell scrollable hover">
+                        <div class="cell-inner wrapper-xs">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="list-group">
+                                        <ul class="list-group bg-white">
+                                            <li class="list-group-item" ng-repeat="rf in role.RoleHaveFun | filter:role.RoleFunQuery ">
+                                                <a herf class="pull-left">
+                                                    <b class="badge bg-success h2"><i class="glyphicon glyphicon-lock text-white"></i></b>
+                                                </a>
+                                                <div class="clear">
+                                                    <div>
+                                                        <p class="text-info h5">
+                                                            {{ rf.Fun.FunName }}
+                                                            <a ng-click='role.DeleteRoleFun(rf)' class="pull-right hover text-muted h4"><i class="fa fa-times text-danger"></i></a>
+                                                            <span class="form-group h5 text-success pull-right padder-md">
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" ng-model="rf.AbleInsert" ng-checked="rf.AbleInsert" ng-change="role.UpdateRoleFun(rf)"> 增
+                                                                </label>
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" ng-model="rf.AbleDelete" ng-checked="rf.AbleDelete" ng-change="role.UpdateRoleFun(rf)"> 删
+                                                                </label>
+                                                                <label class="checkbox-inline">
+                                                                    <input type="checkbox" ng-model="rf.AbleUpdate" ng-checked="rf.AbleUpdate" ng-change="role.UpdateRoleFun(rf)"> 改
+                                                                </label>
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                    <small class="text-muted"> {{ rf.FunNo }} </small>
                                                 </div>
-                                                <small class="text-muted">{{ ur.UserNo }}</small>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col w-xl padder-xs">
+            <div class="vbox" ng-if="role.SelectedRole">
+                <div class="wrapper-xs">
+                    <div class="panel panel-default">
+                        <div class="panel-heading text-center">角色用户</div>
+                        <div class="panel-body">
+                            <div class="form-group" uib-collapse="!role.isAddRoleUser">
+                                <div class="input-group col-md-12">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" ng-click="role.InsertRoleUser()" ng-disabled="!role.NewRoleUser">
+                                            <i class="glyphicon glyphicon-plus text-success"></i>
+                                        </button>
+                                    </span>
+                                    <div basic-select="User" ng-model="role.NewRoleUser" ng-change="role.changeRoleUser(role.NewRoleUser)"></div>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" ng-click="role.isAddRoleUser=!role.isAddRoleUser">
+                                            <i class="glyphicon glyphicon-search text-success"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group" uib-collapse="role.isAddRoleUser">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" ng-click="role.isAddRoleUser=!role.isAddRoleUser">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                        </button>
+                                    </span>
+                                    <input type="text" class="form-control" placeholder="查询" ng-model="role.RoleUserQuery">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" disabled>
+                                            <i class="glyphicon glyphicon-search text-success"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-row">
+                    <div class="cell scrollable hover">
+                        <div class="cell-inner wrapper-xs">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="list-group">
+                                        <ul class="list-group bg-white">
+                                            <li class="list-group-item" ng-repeat="ur in role.RoleUserList | filter:role.RoleUserQuery ">
+                                                <a herf class="pull-left">
+                                                    <b class="badge bg-success h2"><i class="icon icon-user text-white"></i></b>
+                                                </a>
+                                                <div class="clear">
+                                                    <div>
+                                                        <a ng-click='role.DeleteRoleUser(ur)' class="pull-right hover text-muted h4"><i class="fa fa-times text-danger"></i></a>
+                                                        <div class="text-info h5">{{ ur.Emp.ChiLastName }}{{ ur.Emp.ChiFirstName }}</div>
+                                                    </div>
+                                                    <small class="text-muted">{{ ur.UserNo }}</small>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -111,13 +111,13 @@ angular.module('MyDirective')
     function link(scope, element, attrs) {
         scope.data = undefined;
         scope.autoFirst = scope.autoFirst || "false";
-
+        var list = [], enName = undefined, ListData = [], NowList = [];
         if (attrs.basicSelect) {
             var en = [{ name: "SelectName", value: attrs.basicSelect }];
             //组织
             var promise = AjaxService.GetPlan("SysUISelect", en).then(function (data) {
                 if (data.SelectName == attrs.basicSelect) {
-                    var list = [], enName = data, ListData = [];
+                    enName = data;
                     //获取数据
                     var holder = data.Placeholder || "请选择...";
                     scope.placeholder = scope.placeholder || holder;
@@ -132,48 +132,73 @@ angular.module('MyDirective')
                             list.push(en);
                         }
                     }
-                    var list2 = angular.copy(list);
-                    //if (enName.ReturnColumn && enName.ReturnColumn != null && enName.ReturnColumn != 'null' && scope.ngModel) {
-                    //    list2.push({ name: enName.ReturnColumn, value: '%' + scope.ngModel + '%' })
-                    //}
-                    AjaxService.GetPlansTop(data.EntityName, list, 100).then(function (data2) {
-                        scope.data = data2;
-                        ListData = angular.copy(scope.data);
-                        if (data2.length > 0 && scope.autoFirst.toLowerCase() == 'true' && !scope.ngModel) {
-                            scope.ngModel = data.ReturnColumn == undefined || data.ReturnColumn == '' ? data2[0] : data2[0][data.ReturnColumn];
-                        }
-                    });
-
-                    scope.refresh = function refresh(ser) {
-                        if (ser) {
-                            console.log(ser)
-                            scope.data = [];
-                            ListData = ListData || [];
-                            for (var j = 0, len = ListData.length; j < len; j++) {
-                                if ((ListData[j][enName.ShowColumn].toUpperCase().indexOf(ser.toUpperCase()) !== -1) ||
-                                    (ListData[j][enName.ShowSmallColumn] && ListData[j][enName.ShowSmallColumn].toUpperCase().indexOf(ser.toUpperCase()) !== -1)) {
-                                    scope.data.push(ListData[j]);
-                                }
-                            }
-                            //取服务器获取新数据
-                            if (scope.data.length === 0) {
-                                scope.data = [];
-                                var list2 = angular.copy(list);
-                                list2.push({ name: enName.ShowColumn, value: '%' + ser + '%' })
-                                AjaxService.GetPlansTop(enName.EntityName, list2, 100).then(function (data) {
-                                    scope.data = data;
-                                    if (scope.data.length > 0) {
-                                        ListData = angular.copy(scope.data);
-                                    }
-                                });
-                            }
-                        }
-                        else if (scope.data && scope.data.length == 0) {
-                            scope.data = angular.copy(ListData);
-                        }
-                    }
+                    IntiData(1);
                 }
             });
+        }
+
+        function IntiData(index) {
+            var list2 = angular.copy(list);
+            AjaxService.GetPlans(enName.EntityName, list2).then(function (data2) {
+                ListData = angular.copy(data2);
+                if (data2.length > 0 && scope.autoFirst.toLowerCase() == 'true' && !scope.ngModel) {
+                    scope.ngModel = enName.ReturnColumn == undefined || enName.ReturnColumn == '' ? data2[0] : data2[0][enName.ReturnColumn];
+                }
+                InitSerData(1, ListData.length);
+            });
+        }
+
+        function InitSerData(index, total) {
+            if (scope.ngModel && scope.ngModel != "" && Math.ceil(1.0 * total / 50) >= index) {
+                var have = false, count = index * 50;
+                var Templist = [];
+                for (var j = count - 50, len = count >= total ? total + 50 - count : count; j < len; j++) {
+                    if (enName.ReturnColumn && ListData[j][enName.ReturnColumn] == scope.ngModel) {
+                        have = true;
+                    }
+                    else if (!enName.ReturnColumn && ListData[j] == scope.ngModel) {
+                        have = true;
+                    }
+                    Templist.push(ListData[j]);
+                }
+                if (have) {
+                    scope.data = Templist;
+                    NowList = angular.copy(Templist);
+                }
+                if (!have) {
+                    //递回取值
+                    InitSerData(index + 1, total);
+                }
+            }
+            else {
+                scope.data = ListData;
+                NowList = angular.copy(ListData);
+            }
+        }
+
+        scope.refresh = function refresh(ser) {
+            if (ser) {
+                scope.data = [];
+                ListData = ListData || [];
+                for (var j = 0, len = ListData.length; j < len; j++) {
+                    if ((ListData[j][enName.ShowColumn].toUpperCase().indexOf(ser.toUpperCase()) !== -1) ||
+                        (ListData[j][enName.ShowSmallColumn] && ListData[j][enName.ShowSmallColumn].toUpperCase().indexOf(ser.toUpperCase()) !== -1)) {
+                        scope.data.push(ListData[j]);
+                    }
+                }
+                //取服务器获取新数据
+                if (scope.data.length === 0) {
+                    scope.data = [];
+                    var list2 = angular.copy(list);
+                    list2.push({ name: enName.ShowColumn, value: '%' + ser + '%' })
+                    AjaxService.GetPlansTop(enName.EntityName, list2, 30).then(function (data) {
+                        scope.data = data;
+                    });
+                }
+            }
+            else if (!ser || ser == "") {
+                scope.data = angular.copy(NowList);
+            }
         }
 
         scope.ValueChange = function () {
@@ -220,7 +245,7 @@ angular.module('MyDirective')
         }
     }
 }])
-.directive('functionSelect', ['AjaxService', function (AjaxService) {
+.directive('functionSelect', ['AjaxService', 'appUrl', function (AjaxService, appUrl) {
     return {
         restrict: 'A',
         require: 'ngModel',
@@ -234,21 +259,10 @@ angular.module('MyDirective')
             ngName: '@',
             ngChange:'&'
         },
-        template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
-                  + '<ui-select ng-model="$parent.ngModel" ng-change="ngChange()" theme="bootstrap" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">'
-                  + '  <ui-select-match placeholder="请选择...">{{ $select.selected.FunName }}</ui-select-match>'
-                  + ' <ui-select-choices repeat="item.FunNo as item in data | filter: $select.search track by item.FunNo">'
-                  + '      <div ng-bind-html="item.FunName | highlight: $select.search"></div>'
-                  //+ '      <small ng-bind-html="item.FunNo | highlight: $select.search"></small>'
-                  + '  </ui-select-choices>'
-                  + '</ui-select>'
-                  + '    <span class="input-group-btn" ng-if="clear">'
-                  + '        <button ng-click="$parent.ngModel= undefined" class="btn btn-default" ng-disabled="ngDisabled">'
-                  + '            <span class="glyphicon glyphicon-trash text-danger"></span>'
-                  + '         </button>'
-                  + '     </span>'
-                  + ' </div>'
-        ,
+        templateUrl: function (element, attrs) {
+            var url = appUrl + "CustomFun/UISelect/FunSelect.html?date=" + (new Date()).toString();
+            return url;
+        },
         link: link
     };
 
@@ -258,7 +272,7 @@ angular.module('MyDirective')
         en.name = 'FunType';
         en.value = scope.funType == 1 ? 1 : 2;
         //组织
-        AjaxService.GetEntities("Function", en).then(function (data) {
+        AjaxService.GetPlans("FunSelect", en).then(function (data) {
             scope.data = data;
         });
     }

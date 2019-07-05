@@ -73,9 +73,9 @@ function ($rootScope, $scope, FileUrl, AjaxService, toastr, $window) {
         console.log(JSON.stringify(list));
 
         postData.ParaData = JSON.stringify({});
-        postData.OutList = JSON.stringify(list);
+        postData.OutList = list;
 
-        AjaxService.Print("1", "dfs", postData, vm.PrinterName).then(function (data) {
+        AjaxService.Print("1", (new Date().getDate()).toString(), postData, vm.PrinterName).then(function (data) {
             console.log(data);
         }, function (err) {
             console.log(err);

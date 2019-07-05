@@ -27,6 +27,11 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         vm.IsInsert = true;
     }
 
+
+AjaxService.GetPlans("FunSelect", []).then(function (data) {
+            vm.DataList = data;
+        });
+
     function SaveInsert() {
         vm.promise = AjaxService.PlanInsert("MESPlanMain", vm.NewItem).then(function (data) {
             PageChange();

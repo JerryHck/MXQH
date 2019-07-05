@@ -21,8 +21,8 @@
                 <thead>
                     <tr>
                         <td style= "width:60px">操作</td>
-                        <td style= "width:100px ">成品</td>
-                        <td style= "width:100px ">半成品</td>
+                        <td style= "width:100px ">成品料号（品名）</td>
+                        <td style= "width:100px ">半成品料号（品名）</td>
                         <td style= "width:100px ">操作人</td>
                         <td style= "width:100px ">创建时间</td>
                     </tr>
@@ -58,13 +58,13 @@
                         </span>
                     </td>
                     <td>
-                        <span ng-if="!item.IsEdit">{{ item.one.MaterialCode }}</span>
-                        <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_PID.$invalid }">
+                        <span>{{ item.one.MaterialCode +'  ('+ item.one.MaterialName +')' }}</span>
+                        <!--<div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_PID.$invalid }">
                             <div basic-select="PID" ng-name="item_PID" placeholder="成品" ng-model="pc.EditItem.PID"  ng-required ="true"></div>
-                        </div>
+                        </div>-->
                     </td>
                     <td>
-                        <span ng-if="!item.IsEdit">{{ item.two.MaterialCode }}</span>
+                        <span ng-if="!item.IsEdit">{{ item.two.MaterialCode +'  ('+ item.two.MaterialName +')' }}</span>
                         <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_CID.$invalid }">
                             <div basic-select="CID" ng-name="item_CID" placeholder="半成品" ng-model="pc.EditItem.CID"  ng-required ="true"></div>
                         </div>
@@ -78,9 +78,5 @@
                      ng-change= "pc.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
             </div>
         </div>
-        <!--<pre>PID: {{ pc.PidData |json}}</pre>
-        <pre>CID: {{ pc.CidData |json}}</pre>-->
-
     </uib-tab>
 </uib-tabset>
-

@@ -7,7 +7,7 @@
                     <div class="form-group">
                         <label class="col-lg-3 control-label">输入工单</label>
                         <div class="col-lg-8" ng-class="{ 'has-error' : wo.OrderForm.wo.$invalid }">
-                            <input type="text" name="Order" ng-model="wo.Item.WorOrder" uib-typeahead="item.WorOrder as item.WorOrder for item in wo.OrderList | filter:$viewValue | limitTo:8"
+                            <input type="text" name="Order" ng-model="wo.Item.WorkOrder" uib-typeahead="item.WorkOrder as item.WorkOrder for item in wo.OrderList | filter:$viewValue | limitTo:8"
                                    class="form-control" placeholder="工单号" ng-keyup="wo.KeyDonwOrder($event)" required>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
     <div class="col-sm-6" ng-form="wo.UpdateForm">
         <div class="panel panel-default scroll-y" style="max-height:600px">
             <div class="panel-heading font-bold text-center">
-                工单 <span class="h4 font-bold text-info">{{ wo.OrderData.WorOrder }}</span>信息
+                工单 <span class="h4 font-bold text-info">{{ wo.OrderData.WorkOrder }}</span>信息
             </div>
             <div class="panel-body h5">
                 <div class="form-horizontal" ng-show="wo.OrderData">

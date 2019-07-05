@@ -20,7 +20,7 @@
                 <div class="form-group col-md-6">
                     <label class="control-label col-md-4 wrapper-xs">工单:</label>
                     <div class="col-md-8 wrapper-xs">
-                        <span class="form-control-static">{{ wo.Item.OrderData.WorOrder }}</span>
+                        <span class="form-control-static">{{ wo.Item.OrderData.WorkOrder }}</span>
                     </div>
                 </div>
                 <div class="col-md-6 form-group">
@@ -77,7 +77,9 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-success" type="button" ng-disabled="QcForm.$invalid" ng-click="wo.Save()">储存</button>
-    <button class="btn btn-warning" type="button" ng-click="wo.cancel()">取消</button>
+    <div class="col-md-12 text-center">
+        <button class="btn btn-success" type="button" ng-disabled="QcForm.$invalid" ng-click="wo.Save()">储存</button>
+        <button class="btn btn-warning" type="button" ng-click="wo.cancel()">取消</button>
+    </div>
 </div>
 <!--<pre>{{ wo.Item | json }}</pre>-->
