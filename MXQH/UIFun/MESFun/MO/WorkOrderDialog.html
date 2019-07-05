@@ -29,9 +29,7 @@
                 <div class="form-group">
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">生产线名称：</label>
-                        <div class="col-sm-8 padder-xs" >
-                            <!--<input type="text" class="form-control" name="AssemblyLineID" placeholder="生产线名称"
-                                   ng-model="moDialog.Item.AssemblyLineID" required>-->
+                        <div class="col-sm-8 padder-xs">
                             <div ng-class="{ 'has-error' : DialogForm.AssemblyLineID.$invalid }" ng-name="AssemblyLineID" ng-required="true" basic-select="AssemblyLine" placeholder="线别" ng-model="moDialog.Item.AssemblyLineID" select-class="text-xs"></div>
                         </div>
                     </div>
@@ -40,7 +38,10 @@
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaterialCode.$invalid }">
                             <div class="input-group">
                                 <input type="text" name="MaterialCode" disabled="disabled" class="form-control" placeholder="产品编号" ng-model="moDialog.Item.MaterialCode" required>
-                                <span class="input-group-addon"><a ng-disabled="moDialog.IsEdit" class="" ng-click="moDialog.SelectProduct()"><i class="glyphicon glyphicon-search"></i></a></span>
+                                <span class="input-group-addon">
+                                    <a class="" ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-search"></i></a>
+                                    <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.SelectProduct()"><i class="glyphicon glyphicon-search"></i></a>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -49,7 +50,10 @@
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaterialName.$invalid }">
                             <div class="input-group">
                                 <input type="text" name="MaterialName" disabled="disabled" class="form-control" placeholder="产品名称" ng-model="moDialog.Item.MaterialName" required>
-                                <span class="input-group-addon"><a class="" ng-disabled="moDialog.IsEdit" ng-click="moDialog.SelectProduct()"><i class="glyphicon glyphicon-search"></i></a></span>
+                                <span class="input-group-addon">
+                                    <a class="" ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-search"></i></a>
+                                    <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.SelectProduct()"><i class="glyphicon glyphicon-search"></i></a>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -57,12 +61,14 @@
                 <div class="form-group">
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">产品工艺：</label>
-                        <div class="col-sm-8 padder-xs" >
+                        <div class="col-sm-8 padder-xs">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="RoutingName" placeholder="产品工艺"
                                        ng-model="moDialog.Routing.RoutingName">
-                                <span class="input-group-addon"><a class="" ng-disabled="moDialog.IsEdit" ng-click="moDialog.SelectRouting()"><i class="glyphicon glyphicon-search"></i></a></span>
-
+                                <span class="input-group-addon">
+                                    <a class="" ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-search"></i></a>
+                                    <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.SelectRouting()"><i class="glyphicon glyphicon-search"></i></a>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -86,7 +92,10 @@
                             <div class="input-group">
                                 <input type="text" class="form-control" disabled="disabled" name="CustomerCode" placeholder="客户编号"
                                        ng-model="moDialog.Item.CustomerCode" required>
-                                <span class="input-group-addon"><a class="" ng-disabled="moDialog.IsEdit" ng-click="moDialog.SelectCustomer()"><i class="glyphicon glyphicon-search"></i></a></span>
+                                <span class="input-group-addon">
+                                    <a class="" ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-search"></i></a>
+                                    <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.SelectCustomer()"><i class="glyphicon glyphicon-search"></i></a>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -95,7 +104,10 @@
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.CustomerName.$invalid }">
                             <div class="input-group">
                                 <input type="text" name="CustomerName" disabled="disabled" class="form-control" placeholder="客户名称" ng-model="moDialog.Item.CustomerName" required>
-                                <span class="input-group-addon"><a class="" ng-disabled="moDialog.IsEdit" ng-click="moDialog.SelectCustomer()"><i class="glyphicon glyphicon-search"></i></a></span>
+                                <span class="input-group-addon">
+                                    <a  ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-search"></i></a>
+                                    <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.SelectCustomer()"><i class="glyphicon glyphicon-search"></i></a>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -108,8 +120,8 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">到货地</label>                    
-                        <div ng-class="{ 'has-error' : DialogForm.SendPlaceID.$invalid }" ng-name="SendPlaceID" class="col-sm-8 padder-xs"  basic-select="MesSendPlace" placeholder="到货地" ng-model="moDialog.Item.SendPlaceID" select-class="text-xs"  ng-required="true"></div>
+                        <label class="control-label col-sm-4 padder-xs">到货地</label>
+                        <div ng-class="{ 'has-error' : DialogForm.SendPlaceID.$invalid }" ng-disabled="moDialog.IsEdit" ng-name="SendPlaceID" class="col-sm-8 padder-xs" basic-select="MesSendPlace" placeholder="到货地" ng-model="moDialog.Item.SendPlaceID" select-class="text-xs" ng-required="true"></div>
                     </div>
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">ERP销售单号</label>
@@ -128,8 +140,8 @@
                 <div class="form-group">
                     <div class="col-sm-8 padder-xs">
                         <label class="control-label col-sm-2 padder-xs">编码规则</label>
-                        <div   class="col-sm-10 padder-xs" basic-select="SerialNum" placeholder="编码规则" ng-model="moDialog.SNRule" select-class="text-xs" ></div>
-                    </div>                    
+                        <div class="col-sm-10 padder-xs" basic-select="SerialNum" placeholder="编码规则" ng-model="moDialog.SNRule" select-class="text-xs"></div>
+                    </div>
                 </div>
                 <!--<div class="form-group">
                     <div class="col-sm-8 padder-xs">

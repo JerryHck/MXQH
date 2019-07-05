@@ -23,6 +23,8 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
     if (vm.Item.ID) {
         vm.Routing.ID = vm.Item.boRoutingID;
         vm.Routing.RoutingName = vm.Item.RoutingName;
+        vm.SNRule.TbName = vm.Item.TbName;
+        vm.SNRule.ClName = vm.Item.ClName;
     }
     function Save() {
         if (!vm.SNRule.TbName) {
