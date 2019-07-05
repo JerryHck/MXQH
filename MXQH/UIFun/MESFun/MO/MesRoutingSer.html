@@ -1,0 +1,44 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">工艺信息</h3>
+</div>
+
+<div class="modal-body wrapper-sm h6" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body wrapper-xs">
+            <div class="wrapper-md">
+                <div class="form-inline">
+                    <button class="btn btn-sm btn-info " ng-click="mrSer.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                </div>
+            </div>
+            <div class="padder-md ">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <td style="width:100px ">工艺名称</td>
+                            <td style="width:100px ">是否默认</td>
+                            <td style="width:100px ">是否后焊控制</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in mrSer.List " ng-click="mrSer.Cancel(item)">
+                        <td title="{{ item.RoutingName }}">{{ item.RoutingName }}</td>
+                        <td ng-if="item.IsDefault==true" title="{{ item.IsDefault }}">√</td>
+                        <td ng-if="item.IsDefault==false" title="{{ item.IsDefault }}"></td>
+                        <td ng-if="item.IsControl==false" title="{{ item.IsControl }}"></td>
+                        <td ng-if="item.IsControl==true" title="{{ item.IsControl }}">√</td>
+                    </tr>
+                </table>
+                <div class="col-md-12 text-center " ng-if="mrSer.page.total>mrSer.page.size ">
+                    <div uib-pagination total-items="mrSer.page.total " ng-model="mrSer.page.index " items-per-page="mrSer.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                         ng-change="mrSer.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div class="text-center">
+        <button class="btn btn-warning" type="button" ng-click="mrSer.Cancel()">取消</button>
+    </div>
+</div>

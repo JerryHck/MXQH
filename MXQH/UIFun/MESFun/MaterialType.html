@@ -1,22 +1,10 @@
 ﻿<div class="app-content-full" cg-busy="materialType.promise">
     <div class="hbox hbox-auto-xs hbox-auto-sm bg-light">
-        <div class="col w-md lt b-r text-xs">
+        <div class="col w-xl padder b-r h-100">
             <div class="vbox">
                 <div class="wrapper">
                     <div class="h4 text-center">物料分类</div>
                 </div>
-                <!--<div class="wrapper-sm b-t">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input type="text" class="form-control input-sm" placeholder="查询" ng-model="bar.TypeQuery">
-                            <span class="input-group-btn">
-                                <button class="btn btn-sm btn-default" ng-click="bar.Insert()">
-                                    <i class="glyphicon glyphicon-plus text-success">新增</i>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </div>-->
                 <div class="row-row">
                     <div class="cell scrollable hover">
                         <div class="cell-inner">
@@ -34,43 +22,39 @@
             </div>
         </div>
         <div class="col w-auto w-lg lt b-r text-xs">
-            <div class="vbox">
-                <div class="row-row">
-                    <div class="cell scrollable hover">
-                        <div class="cell-inner">
-                            <div class="wrapper-md">
-                                <div class="input-group m-b-xxs" style="padding-bottom:10px;">
-                                    <div class="form-inline">
-                                        <button class="btn btn-sm btn-success" ng-click="materialType.Add()"><i class="glyphicon glyphicon-plus"></i>新增分类</button>
-                                        <!--<button class="btn btn-sm btn-info" ng-click="materialType.Edit()"><i class="glyphicon glyphicon-edit"></i>修改分类</button>
-                                        <button class="btn btn-sm btn-danger" ng-click="materialType.Delete()"><i class="glyphicon glyphicon-remove"></i>删除分类</button>-->
-                                    </div>
+            <div class="row-row">
+                <div class="cell scrollable hover">
+                    <div class="cell-inner">
+                        <div class="wrapper-md">
+                            <div class="input-group m-b-xxs" style="padding-bottom:10px;">
+                                <div class="form-inline">
+                                    <button class="btn btn-sm btn-success" ng-click="materialType.Add()"><i class="glyphicon glyphicon-plus"></i>新增分类</button>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <table class="table table-striped b-2x table-responsive" style="word-break:break-all; word-wrap:break-word;">
-                                            <tr class="text-center bg-gd-dk h4">
-                                                <td style="width:7%;">编辑</td>
-                                                <td style="width:10%;" class="">分类编码</td>
-                                                <td style="width:7%;" class="">分类名称</td>
-                                            </tr>
-                                            <!--filter: auctusSO.search-->
-                                            <!---->
-                                            <tr ng-repeat="item in materialType.List">
-                                                <td>
-                                                    <button class="btn btn-xs btn-primary" ng-click="materialType.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
-                                                    <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="materialType.Delete(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>
-                                                </td>
-                                                <td>{{ item.TypeCode }}</td>
-                                                <td>{{ item.text }}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-striped b-2x table-responsive" style="word-break:break-all; word-wrap:break-word;">
+                                        <tr class="text-center bg-gd-dk h4">
+                                            <td style="width:7%;">编辑</td>
+                                            <td style="width:10%;" class="">分类编码</td>
+                                            <td style="width:7%;" class="">分类名称</td>
+                                        </tr>
+                                        <!--filter: auctusSO.search-->
+                                        <!---->
+                                        <tr ng-repeat="item in materialType.List">
+                                            <td>
+                                                <button class="btn btn-xs btn-primary" ng-click="materialType.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                                <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="materialType.Delete(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>
+                                            </td>
+                                            <td>{{ item.TypeCode }}</td>
+                                            <td>{{ item.text }}</td>
+                                        </tr>
+                                    </table>
                                 </div>
-                                <div class="col-md-12 text-center" ng-if="materialType.page.total>materialType.page.pageSize">
-                                    <div uib-pagination total-items="materialType.page.total" ng-model="materialType.page.pageIndex" items-per-page="materialType.page.pageSize" max-size="materialType.page.maxSize" first-text="第一页" previous-text="上一页"
-                                         ng-change="materialType.DataBind()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
-                                </div>
+                            </div>
+                            <div class="col-md-12 text-center" ng-if="materialType.page.total>materialType.page.pageSize">
+                                <div uib-pagination total-items="materialType.page.total" ng-model="materialType.page.pageIndex" items-per-page="materialType.page.pageSize" max-size="materialType.page.maxSize" first-text="第一页" previous-text="上一页"
+                                     ng-change="materialType.DataBind()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
                             </div>
                         </div>
                     </div>
