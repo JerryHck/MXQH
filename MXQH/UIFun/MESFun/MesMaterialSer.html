@@ -1,0 +1,44 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">产品信息</h3>
+</div>
+<div class="modal-body wrapper-sm h6" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body wrapper-xs">
+            <div class="wrapper-md">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="mmSer.Ser.a_MaterialCode" placeholder="产品编码">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="mmSer.Ser.a_MaterialName" placeholder="产品名称">
+                    </div>
+                    <button class="btn btn-sm btn-info " ng-click="mmSer.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                </div>
+            </div>
+            <div class="padder-md table-responsive">
+                <table class="table one-line">
+                    <thead>
+                        <tr>
+                            <td style="width:100px ">产品编码</td>
+                            <td style="width:100px ">产品名称</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in mmSer.List " ng-click="mmSer.Cancel(item)">
+                        <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                        <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
+                    </tr>
+                </table>
+                <div class="col-md-12 text-center " ng-if="mmSer.page.total>mmSer.page.size ">
+                    <div uib-pagination total-items="mmSer.page.total " ng-model="mmSer.page.index " items-per-page="mmSer.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                         ng-change="mmSer.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="text-center">
+        <button class="btn btn-warning" type="button" ng-click="mmSer.Cancel()">取消</button>
+    </div>
+</div>
+

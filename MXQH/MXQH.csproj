@@ -205,6 +205,16 @@
     <Content Include="UIFun\MESFun\Material.js" />
     <Content Include="UIFun\MESFun\MaterialDialog.html" />
     <Content Include="UIFun\MESFun\MaterialDialog.js" />
+    <Content Include="UIFun\MESFun\MesMaterialSer.html" />
+    <Content Include="UIFun\MESFun\MesMaterialSer.js" />
+    <Content Include="UIFun\MESFun\MO\MesCustomerSer.html" />
+    <Content Include="UIFun\MESFun\MO\MesCustomerSer.js" />
+    <Content Include="UIFun\MESFun\MO\MesRoutingSer.html" />
+    <Content Include="UIFun\MESFun\MO\MesRoutingSer.js" />
+    <Content Include="UIFun\MESFun\MO\WorkOrder.html" />
+    <Content Include="UIFun\MESFun\MO\WorkOrder.js" />
+    <Content Include="UIFun\MESFun\MO\WorkOrderDialog.html" />
+    <Content Include="UIFun\MESFun\MO\WorkOrderDialog.js" />
     <Content Include="UIFun\MESFun\PackageAct.html" />
     <Content Include="UIFun\MESFun\PackageAct.js" />
     <Content Include="UIFun\MESFun\SnCodePrint.html" />
