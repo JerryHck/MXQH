@@ -27,10 +27,10 @@ function ($rootScope, $scope, ItemData,$http,$uibModalInstance, AjaxService, toa
     function GetContition() {
         var list = [];
         if (vm.Ser.a_MaterialCode) {
-            list.push({ name: "MaterialCode", value: vm.Ser.a_MaterialCode });
+            list.push({ name: "MaterialCode", value: '%'+vm.Ser.a_MaterialCode + '%' });
         }
         if (vm.Ser.a_MaterialName) {
-            list.push({ name: "MaterialName", value: vm.Ser.a_MaterialName });
+            list.push({ name: "MaterialName", value:'%'+ vm.Ser.a_MaterialName + '%' });
         }
         return list;
     }

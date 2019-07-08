@@ -10,7 +10,6 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
     vm.Add = Add;
     vm.Edit = Edit;
     DataBind();
-
     //绑定数据
     function DataBind() {
         GetCondition();
@@ -24,6 +23,7 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
         vm.page.pageIndex = 1;
         DataBind();
     }
+
     //查询条件
     function GetCondition() {
         vm.page.DocNo = vm.Ser.DocNo == '' ? undefined : vm.Ser.DocNo;
