@@ -1,0 +1,14 @@
+﻿<div class="py-xl-0 pt-xl-0" ng-class="{ 'input-group' : clear }">
+    <ui-select ng-model="$parent.ngModel" ng-change="ValueChange()" theme="bootstrap" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">
+        <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.State }}</ui-select-match>
+        <ui-select-choices repeat="item.State as item in data | filter: $select.search  | limitTo:50"  refresh="refresh($select.search)">
+            <div ng-bind-html="item.State | highlight: $select.search"></div>
+            <small ng-bind-html="item.State | highlight: $select.search"></small>
+        </ui-select-choices>
+    </ui-select>
+    <span class="input-group-btn" ng-if="clear">
+        <button ng-click="$parent.ngModel= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+            <span class="glyphicon glyphicon-trash text-danger"></span>
+        </button>
+    </span>
+</div>

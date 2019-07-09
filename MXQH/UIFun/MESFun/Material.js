@@ -15,6 +15,7 @@ function (Dialog, $scope, $http, AjaxService, toastr, $window) {
     vm.ExportExcel = ExportExcel;
     vm.type = {};
     vm.Delete = Delete;
+    vm.State = { Table: 'MaterialState', Column: 'State' };
 
     function Search() {
         vm.page.index = 1;
@@ -68,6 +69,10 @@ function (Dialog, $scope, $http, AjaxService, toastr, $window) {
         if (vm.Ser.a_MaterialName) {
             list.push({ name: "MaterialName", value: vm.Ser.a_MaterialName });
         }
+        if (vm.Ser.a_MaterialState) {
+            list.push({ name: "State", value: vm.Ser.a_MaterialState });
+        }
+   
         return list;
     }
 

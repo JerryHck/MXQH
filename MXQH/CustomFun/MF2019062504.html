@@ -6,7 +6,7 @@
                 <button class= "btn btn-sm btn-success " ng-click= "br.Insert() "><i class= "glyphicon glyphicon-plus "></i>新增</button>
                 <div class="form-group">
                     <!--<input type="text" class="form-control"  ng-model="br.Ser.a_ProductID" placeholder="总成名称">-->
-                    <div basic-select="BoRouting_MC" ng-name="a_ProductID" placeholder="总成名称" clear="true" ng-model="br.Ser.a_ProductID" width="100px"></div>
+                    <div basic-select="BoRouting_MC" ng-name="a_ProductID" placeholder="料号（品名）" clear="true" ng-model="br.Ser.a_ProductID" width="100px"></div>
                 </div>
                 <button class= "btn btn-sm btn-info " ng-click= "br.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
                 <button class= "btn btn-sm btn-success " ng-click= "br.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
@@ -17,7 +17,7 @@
                 <thead>
                     <tr>
                         <td style= "width:60px">操作</td>
-                        <td style= "width:100px ">总成名称</td>
+                        <td style= "width:100px ">料号（品名）</td>
                         <td style= "width:100px ">工艺名称</td>
                         <td style= "width:100px ">是否默认</td>
                         <td style= "width:100px ">是否后焊控制</td>
@@ -32,7 +32,7 @@
                     </td>
                     <td>
                         <div ng-class="{ 'has-error': br.InsertForm.ProductID.$invalid }">
-                            <div basic-select="BoRouting_MC" ng-name="ProductID" placeholder="总成名称" ng-model="br.NewItem.ProductID"  ng-required ="true"></div>
+                            <div basic-select="BoRouting_MC" ng-name="ProductID" placeholder="料号（品名）" ng-model="br.NewItem.ProductID"  ng-required ="true"></div>
                         </div>
                     </td>
                     <td>
