@@ -9,6 +9,7 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
     vm.SelectProduct = SelectProduct;
     vm.SelectCustomer = SelectCustomer;
     vm.SelectRouting = SelectRouting;
+    vm.Item.ListNo = ItemData.ListNo==undefined?GetListNo():ItemData.ListNo;
     vm.IsEdit = ItemData.ID == undefined ? false : true;    
     if (!vm.Item.AssemblyDate) {
         vm.Item.AssemblyDate = GetCurrentDate();
@@ -25,7 +26,16 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
         vm.Routing.RoutingName = vm.Item.RoutingName;
         vm.SNRule.TbName = vm.Item.TbName;
         vm.SNRule.ClName = vm.Item.ClName;
+        vm.IsEditSNRule = false;
     }
+    //自动生成计划序号
+    function GetListNo() {
+        var en = { TbName: "MesPlan", ClName: "Detail", CharName: null };
+        AjaxService.ExecPlan("SerialNumberSet", "preview", en).then(function (data) {
+            vm.Item.ListNo = data.data[0].SN;
+        })
+    }
+    //保存
     function Save() {
         if (!vm.SNRule.TbName) {
             vm.Item.TbName = '';
@@ -69,9 +79,11 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
                     $uibModalInstance.close(returnData);
                 }
             }).catch(function (data) {
-                toastr.error(data);
             });
         } else {//新增操作
+            var SNList = [{ name: "MesPlan", col: "Detail", parm: "ListNo", charName: null }]
+            en.SNColumns = JSON.stringify(SNList);
+            en.ListNo = "";
             vm.promise = AjaxService.ExecPlan("MesPlanDetail", "Add", en).then(function (data) {
                 if (data.data[0].MsgType == "0") {
                     toastr.error(data.data[0].Msg);
@@ -81,7 +93,6 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
                     $uibModalInstance.close(returnData);
                 }
             }).catch(function (data) {
-                toastr.error(data);
             });
         }
     }
