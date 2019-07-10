@@ -205,6 +205,8 @@
     <Content Include="UIFun\MESFun\Material.js" />
     <Content Include="UIFun\MESFun\MaterialDialog.html" />
     <Content Include="UIFun\MESFun\MaterialDialog.js" />
+    <Content Include="UIFun\MESFun\MateRouter.html" />
+    <Content Include="UIFun\MESFun\MateRouter.js" />
     <Content Include="UIFun\MESFun\MesMaterialSer.html" />
     <Content Include="UIFun\MESFun\MesMaterialSer.js" />
     <Content Include="UIFun\MESFun\MO\MesCustomerSer.html" />

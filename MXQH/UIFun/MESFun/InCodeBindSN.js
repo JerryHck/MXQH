@@ -16,11 +16,11 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
 
     vm.KeyDonwOrder = KeyDonwOrder;
     vm.KeyDonwInCode = KeyDonwInCode;
+    vm.KeyDonwPrint = KeyDonwPrint;
     vm.BindCode = BindCode;
     vm.PageChange = PageChange;
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
-    vm.SelectTab = SelectTab;
 
     //PageChange();
     //未完工工单
@@ -28,6 +28,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
         vm.OrderList = data;
     })
 
+    //工单确认
     function KeyDonwOrder(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.Item.WorkOrder) {
@@ -81,9 +82,18 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
             Action();
         }
     }
-
-    function SelectTab(index) {
-        //vm.Focus = index;
+    
+    //补打印
+    function KeyDonwPrint(e) {
+        var keycode = window.event ? e.keyCode : e.which;
+        if (keycode == 13 && vm.PrintItem.InternalCode) {
+            //获取打印数据
+            var en = { SNCode: vm.PrintItem.InternalCode };
+            AjaxService.ExecPlan("MESSNCode", "printsn", en).then(function (data) {
+                PrintCode(data.data1[0], data.data[0]);
+                vm.PrintItem.InternalCode = undefined;
+            })
+        }
     }
 
     function Action() {
@@ -106,12 +116,6 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
                 GetSnCode();
             }
         })
-    }
-
-    //获取生成编码参数值
-    function getGenCodePara() {
-
-        enSn.IsPKGen == 1
     }
 
     //生成内部码 
@@ -151,10 +155,10 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
                 var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };
                 vm.MesList.splice(0, 0, Msg);
                 vm.NewBind = {};
-                vm.OrderCount = data.data2[0];
+                vm.OrderCount = data.data3[0];
                 //一般打印
                 if (vm.PrintType == 'G') {
-                    PrintCode(data.data1[0])
+                    PrintCode(data.data2[0], data.data1[0]);
                 }
                 //镭雕打印
                 else if (vm.PrintType == 'L') {
@@ -166,15 +170,22 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     }
 
     //一般打印
-    function PrintCode(data) {
-        if (!vm.OrderData.TemplateId || vm.OrderData.TemplateId == null) {
+    function PrintCode(teData, data) {
+        console.log(data)
+        if (!data || !data.SNCode || data.SNCode == null) {
+            toastr.error("SN不存在或还未生成");
+            AjaxService.PlayVoice('3331142.mp3');
+            return;
+        }
+        if (!teData || !teData.TemplateId || teData.TemplateId == null) {
             toastr.error("打印模版获取失败");
+            AjaxService.PlayVoice('3331142.mp3');
             return;
         }
         var postData = {}, list = [];
         postData.ParaData = JSON.stringify(data);
         postData.OutList = list;
-        AjaxService.Print(vm.OrderData.TemplateId, vm.OrderData.TemplateTime, postData, vm.PrinterName).then(function (data) {
+        AjaxService.Print(teData.TemplateId, teData.TemplateTime, postData, vm.PrinterName).then(function (data) {
             console.log(data);
         }, function (err) {
             console.log(err);
@@ -190,7 +201,6 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     function GetContition() {
         var list = [];
         if (vm.Ser.InternalCode) {
-            li
             st.push({ name: "InternalCode", value: vm.Ser.InternalCode });
         }
         if (vm.Ser.SNCode) {

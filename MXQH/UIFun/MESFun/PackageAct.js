@@ -40,8 +40,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             
             for (var i=0, len = vm.SNList.length; i < len; i++) {
                 if (vm.Item.SNCode == vm.SNList[i].SNCode) {
-                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: 'SN[' + vm.Item.SNCode + ']已经包含在此箱中' });
-                    AjaxService.PlayVoice('3331142.mp3');
+                    showErr('SN[' + vm.Item.SNCode + ']已经包含在此箱中');
                     vm.Item.SNCode = undefined;
                     return;
                 }
@@ -52,8 +51,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             en.PackDetailID = vm.PackDetail.ID;
             AjaxService.ExecPlan("MESPackageDtl", 'checkSn', en).then(function (data) {
                 if (data.data[0].MsgType == "Error") {
-                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: data.data[0].MsgText });
-                    AjaxService.PlayVoice('3331142.mp3');
+                    showErr(data.data[0].MsgText);
                 }
                 else if (data.data[0].MsgType == "Success") {
                     vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].MsgText });
@@ -99,10 +97,10 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             en.value = vm.Item.WorkOrder;
             AjaxService.GetPlan("MESPackageMain", en).then(function (data) {
                 vm.ItemData = data;
-                var mss = "工单 [" + vm.Item.SNCode + '] ';
+                var mss = "工单 [" + vm.Item.WorkOrder + '] ';
                 if (!data.ID) {
                     vm.Item.WorkOrder = undefined;
-                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或未包装' });
+                    showErr(mss + '  不存在或未进行包装登记');
                 }
                 else {
                     vm.PackMain = data;
@@ -133,8 +131,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         var en = { PackMainID: vm.ItemData.ID, BoxNumber: vm.Item.BoxNumber };
         vm.promise = AjaxService.ExecPlan("MESPackageDtl", 'getdtl', en).then(function (data) {
             if (data.data[0].MsgType == "Error") {
-                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: data.data[0].MsgText });
-                AjaxService.PlayVoice('3331142.mp3');
+                showErr(data.data[0].MsgText);
                 vm.Item.BoxNumber = undefined;
             }
             else if (data.data[0].MsgType == "Success") {
@@ -177,6 +174,12 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 });
             }
         })
+    }
+
+    function showErr(msg) {
+        vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: msg });
+        AjaxService.PlayVoice('3331142.mp3');
+        toastr.error(msg);
     }
 
     function Print(type) {

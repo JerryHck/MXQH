@@ -100,6 +100,7 @@ angular.module('MyDirective')
             placeholder: '@',
             ngRequired: '@',
             ngName: '@',
+            limit: '@',
             ngChange: '&'
         },
         templateUrl: function (element, attrs) {
@@ -144,15 +145,20 @@ angular.module('MyDirective')
                 if (data2.length > 0 && scope.autoFirst.toLowerCase() == 'true' && !scope.ngModel) {
                     scope.ngModel = enName.ReturnColumn == undefined || enName.ReturnColumn == '' ? data2[0] : data2[0][enName.ReturnColumn];
                 }
+                scope.limit = scope.limit || ListData.length;
+                scope.limit = scope.limit == 0 ? 1 : scope.limit;
+                //超过100时限定
+                scope.limit = scope.limit > 100 ? 100 : scope.limit;
                 InitSerData(1, ListData.length);
             });
         }
 
         function InitSerData(index, total) {
-            if (scope.ngModel && scope.ngModel != "" && Math.ceil(1.0 * total / 50) >= index) {
-                var have = false, count = index * 50;
+            
+            if (scope.ngModel && scope.ngModel != "" && Math.ceil(1.0 * total / scope.limit) >= index) {
+                var have = false, count = index * scope.limit;
                 var Templist = [];
-                for (var j = count - 50, len = count >= total ? total + 50 - count : count; j < len; j++) {
+                for (var j = count - scope.limit, len = count >= total ? total + scope.limit - count : count; j < len; j++) {
                     if (enName.ReturnColumn && ListData[j][enName.ReturnColumn] == scope.ngModel) {
                         have = true;
                     }
