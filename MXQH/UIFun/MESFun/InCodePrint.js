@@ -32,32 +32,10 @@ function ($rootScope, $scope, FileUrl, AjaxService, toastr, $window) {
             var en = {};
             en.name = "InternalCode";
             en.value = vm.DeleteItem.InternalCode;
-
              if (vm.IsAuto) {
                  PrintCode();
-            }
-
-            //AjaxService.GetPlan("MesPlanMain", en).then(function (data) {
-            //    var mss = "生产条码 [" + vm.DeleteItem.InternalCode + '] ';
-            //    if (!data.InternalCode) {
-            //        vm.DeleteItem.InternalCode = undefined;
-            //        //toastr.error(mes);
-            //        vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或还没有上线' });
-            //    }
-            //    else {
-            //        AjaxService.GetPlan("MESSNCode", en).then(function (data2) {
-            //            if (data2.InternalCode) {
-            //                vm.DeleteItem.InternalCode = undefined;
-            //                //toastr.error(mes);
-            //                var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过SN码[' + data2.SNCode + "], 不可再解绑" };
-            //                vm.MesList.splice(0, 0, Msg);
-            //            }
-            //            else if (vm.IsAuto) {
-            //                DeleteCode();
-            //            }
-            //        })
-            //    }
-            //});
+             }
+             vm.DeleteItem.InternalCode = undefined;
         }
     }
 
@@ -80,14 +58,6 @@ function ($rootScope, $scope, FileUrl, AjaxService, toastr, $window) {
         }, function (err) {
             console.log(err);
         })
-
-        //vm.promise = AjaxService.ExecPlan("MESDeleteCode", 'delete', vm.DeleteItem).then(function (data) {
-        //    var mss = "内部码 [" + vm.DeleteItem.InternalCode + '] 解绑成功';
-        //    var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };
-        //    vm.MesList.splice(0, 0, Msg);
-        //    vm.DeleteItem.InternalCode = undefined;
-        //    vm.Focus = 0;
-        //});
     }
 
     function DownExe() {

@@ -1,0 +1,249 @@
+﻿<div class="app-content-full" cg-busy="pr.promise">
+    <div class="hbox hbox-auto-xs hbox-auto-sm bg-light">
+        <div class="col w lt b-r text-xs">
+            <div class="vbox">
+                <div class="wrapper">
+                    <div class="h4 text-center">产品列表</div>
+                </div>
+                <div class="wrapper-xs b-t m-b-xxs">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" placeholder="查询" ng-model="pr.MateQuery">
+                            <span class="input-group-btn">
+                                <button class="btn btn-sm btn-default" disabled>
+                                    <i class="glyphicon glyphicon-search text-success"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-row">
+                    <div class="cell scrollable hover">
+                        <div class="cell-inner">
+                            <div class="padder-xs">
+                                <div class="list-group">
+                                    <a ng-repeat="item in pr.MateList | filter:pr.MateQuery " class="list-group-item b-l-3x hover-anchor cl" ng-click="pr.SelectMate(item)" ng-class="{'hover': item.Id == pr.SelectetMate.Id, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}">
+                                        <span class="block text-info text-lg" ng-bind-html="item.MaterialCode | highlight: pr.MateQuery"></span>
+                                        <small class="text-muted">
+                                            <span>{{ item.MaterialName }}</span>
+                                        </small>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col w-md lter b-r">
+            <div class="vbox">
+                <div class="wrapper">
+                    <div class="h4 text-center">产品工艺列表</div>
+                </div>
+                <div class="row-row">
+                    <div class="cell scrollable hover">
+                        <div class="cell-inner">
+                            <div class="list-group list-group-lg">
+                                <a ng-repeat="f in pr.MateRouteList" title="{{ f.IsDefault ? '默认工艺':'' }}" class="list-group-item m-l b-l-2" ng-class="{'select': pr.SelectedRo.ID == f.ID }" ng-click="pr.SelectRoute(f)">
+                                    <span ng-if="!pr.editRoute" ng-confirm="{text:'确定要删除该工艺吗'}" ng-click='pr.Delete(f.FunNo)' class="pull-right text-danger">
+                                        <i class="fa fa-times"></i>
+                                    </span>
+                                    <span class="block h5 text-info-dker" ng-class="{'m-n': pr.SelectedRo.ID == f.ID }">
+                                        <span class="h3"><i class="fa fa-hand-o-right" ng-class="{'text-danger':f.IsDefault,'text-info':!f.IsDefault}"></i></span>
+                                        {{ f.RoutingName }}
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="text-center pos-abt w-full" style="top:50%;" ng-hide="pr.MateRouteList.length">没有工艺</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrapper b-t">
+                    <button class="btn btn-sm btn-success pull-right" ng-disabled="!pr.SelectetMate.Id || pr.editRoute" ng-click="pr.AddRoute()"><i class="glyphicon glyphicon-plus"></i>工艺</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col w-auto lter b-r" ng-form="pr.RouteForm">
+            <div class="vbox" ng-if="pr.SelectedRo">
+                <div class="wrapper-xs b-b">
+                    <div class="m-t-n-xxs m-b-n-xxs m-l-xs">
+                        <button class="btn btn-sm btn-info col-md-offset-1" ng-if="!pr.editRoute" ng-click="pr.editRoute = !pr.editRoute"><i class="glyphicon glyphicon-edit"></i>编辑</button>
+                        <button class="btn btn-sm btn-info col-md-offset-1" ng-if="pr.editRoute" ng-click="pr.SaveFunInfo()" ng-disabled="pr.RouteForm.$invalid"><i class="glyphicon glyphicon-save"></i>储存</button>
+                        <button class="btn btn-sm btn-warning" type="button" ng-if="pr.editRoute" ng-click="pr.Cancel()">取消</button>
+                    </div>
+                </div>
+                <div class="row-row">
+                    <div class="cell scrollable hover h5">
+                        <div class="form-horizontal m-t-md">
+                            <div class="form-group col-md-12">
+                                <div class="col-md-12 padder-xs">
+                                    <label class="col-lg-2 control-label text-info">工艺名称:</label>
+                                    <div class="col-lg-10" ng-class="{ 'has-error' : pr.RouteForm.RouteName.$invalid }">
+                                        <input class="form-control text-xs" name="RouteName" type="text" ng-model="pr.SelectedRo.RoutingName" ng-disabled="!pr.editRoute" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <div class="col-md-6 no-padder">
+                                    <label class="col-lg-4 padder-xs control-label text-info">是否默认</label>
+                                    <div class="col-lg-8 text-xs form-control-static padder-md">
+                                        <label class="i-checks i-checks m-l-md">
+                                            <input type="checkbox" ng-disabled="!pr.editRoute" ng-model="pr.SelectedRo.IsDefault"><i></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 no-padder">
+                                    <label class="col-lg-4 control-label text-info">是否控制</label>
+                                    <div class="col-lg-8 text-xs form-control-static">
+                                        <label class="i-checks i-checks">
+                                            <input type="checkbox" ng-disabled="!pr.editRoute" ng-model="pr.SelectedRo.IsControl"><i></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="col-md-12">
+                                    <label class="col-lg-2 control-label text-info">工艺流程</label>
+                                    <div class="col-lg-10">
+                                        <div class="col-md-12" ng-if="pr.editRoute">
+                                            <button class="btn btn-sm btn-success" ng-click="pr.AddProcedure()"><i class="glyphicon glyphicon-plus"></i>添加</button>
+                                        </div>
+                                        <div class="panel panel-default panel-body col-md-12 m-t-xs">
+                                            <div class="list-group no-radius no-border no-bg m-b-none">
+                                                <div ng-repeat="pro in pr.SelectedRo.Procedure | orderBy:'pro.OrderNum'" class="list-group-item col-md-12">
+                                                    <!--ng-drop="true" ng-drop-success="pr.FunLoadDrop($data,$index)">-->
+                                                    <!--<i class="glyphicon glyphicon-move text-info pull-left" ng-drag="true" ng-if="pr.editRoute"
+                                                        ng-drag-data="pro" ng-drag-success="pr.FunLoadDrag($data,$index)"></i>-->
+                                                    <div class="col-md-8">
+                                                        <a class="text-success" ng-if="!pr.editRoute" ng-click="pr.OpenProcedure(pro, $index)"><i class="glyphicon glyphicon-search"></i></a>
+                                                        <a class="text-success" ng-if="pr.editRoute" ng-click="pr.OpenProcedure(pro, $index)"><i class="glyphicon glyphicon-edit"></i></a>
+                                                        {{ pro.ProcedureInfo.Name }}
+                                                    </div>
+                                                    <span ng-if="pr.editRoute" ng-click='pr.FunLoadDelete($index)' class="pull-right text-danger">
+                                                        <i class="fa fa-times"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="col-md-12">
+                                <pre>{{ pr.SelectedRo | json }}</pre>
+                            </div>-->
+                        </div>
+
+                        <div class="procudure d-r lg bg-light dk wrapper-md padder-md">
+                            <!--<div class="blur-close" ui-remove-class="active" target=".procudure"></div>-->
+                            <div class="padder-md wrapper">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading text-center">
+                                        <button class="btn btn-success btn-sm pull-left" ng-if="pr.editRoute || pr.ProcForm.$invalid" type="button" ng-click="pr.Download()" title="确认">
+                                            <i class="glyphicon glyphicon-save"></i>确认
+                                        </button>
+                                        <button class="btn btn-warning btn-sm pull-right" ui-remove-class="active" target=".procudure"><i class="glyphicon glyphicon-remove"></i>关闭</button>
+                                        <h3 class="m-n font-thin h3"><span class="text-danger-lter">{{ pr.ProcItem.ProcedureInfo.Name }}</span>流程{{ pr.editRoute ? '设置':'查看' }}</h3>
+                                    </div>
+                                    <div class="panel-body padder-md scroll-y" style="max-height:600px">
+                                        <div class="form-horizontal m-t-xs col-md-12" ng-form="pr.ProcForm">
+                                            <div class="form-group col-md-12">
+                                                <div class="col-md-12 padder-xs">
+                                                    <label class="col-lg-2 control-label text-info">工序:</label>
+                                                    <div class="col-lg-10 padder-xs  text-xs">
+                                                        <ui-select ng-model="pr.ProcItem.ProcedureInfo" theme="bootstrap"  ng-disabled="!pr.editRoute" name="Procedure" ng-required="true">
+                                                            <ui-select-match>{{ $select.selected.Name }}</ui-select-match>
+                                                            <ui-select-choices repeat="item in pr.ProcedureList | filter: $select.search">
+                                                                <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                                            </ui-select-choices>
+                                                        </ui-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12 padder-xs">
+                                                <div class="col-md-6 no-padder">
+                                                    <label class="col-lg-4  padder-xs  control-label text-info">顺序号:</label>
+                                                    <div class="col-lg-8 text-xs form-control-static">{{ pr.ProcItem.OrderNum }}</div>
+                                                </div>
+                                                <div class="col-md-6 no-padder">
+                                                    <label class="col-lg-4 control-label text-info">UPPH:</label>
+                                                    <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : pr.ProcForm.UPPH.$invalid }">
+                                                        <input type="number"  ng-disabled="!pr.editRoute" class="form-control" name="UPPH" placeholder="UPPH" ng-model="pr.ProcItem.StandardCapacity" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12 padder-xs">
+                                                <div class="col-md-6 no-padder">
+                                                    <label class="col-lg-4  padder-xs  control-label text-info">单位:</label>
+                                                    <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : pr.ProcForm.Unit.$invalid }">
+                                                        <input type="text" ng-disabled="!pr.editRoute" class="form-control" name="Unit" placeholder="单位" ng-model="pr.ProcItem.Unit" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 no-padder">
+                                                    <label class="col-lg-4 control-label text-info">工位人数:</label>
+                                                    <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : pr.ProcForm.Remark.$invalid }">
+                                                        <input type="text" ng-disabled="!pr.editRoute" class="form-control" name="Remark" placeholder="工位人数" ng-model="pr.ProcItem.Remark" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12 padder-xs">
+                                                <div class="col-md-6 no-padder">
+                                                    <label class="col-lg-4  padder-xs  control-label text-info">标准工时:</label>
+                                                    <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : pr.ProcForm.Item1.$invalid }">
+                                                        <input type="text" ng-disabled="!pr.editRoute" class="form-control" name="Item1" placeholder="标准工时" ng-model="pr.ProcItem.Item1" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 no-padder">
+                                                    <label class="col-lg-4 control-label text-info">直通率预警:</label>
+                                                    <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : pr.ProcForm.Item2.$invalid }">
+                                                        <input type="text" ng-disabled="!pr.editRoute" class="form-control" name="Item2" placeholder="直通率预警" ng-model="pr.ProcItem.Item2" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12 padder-xs">
+                                                <div class="col-md-6 no-padder">
+                                                    <label class="col-lg-4  padder-xs  control-label text-info">工段人数:</label>
+                                                    <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : pr.ProcForm.Item3.$invalid }">
+                                                        <input type="text" ng-disabled="!pr.editRoute" class="form-control" name="Item3" placeholder="工段人数" ng-model="pr.ProcItem.Item3" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 no-padder">
+                                                    <label class="col-lg-4 control-label text-info">产出报警:</label>
+                                                    <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : pr.ProcForm.Item4.$invalid }">
+                                                        <input type="text" ng-disabled="!pr.editRoute" class="form-control" name="Item4" placeholder="产出报警" ng-model="pr.ProcItem.Item4" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12 padder-xs">
+                                                <div class="col-md-6 no-padder">
+                                                    <label class="col-lg-4  padder-xs  control-label text-info">返修工序:</label>
+                                                    <div class="col-lg-8 no-padder text-xs">
+                                                        <div class="col-md-12 m-t-xs padder-xs b-b" ng-repeat="item in pr.SelectedRo.Procedure | limitTo: pr.ProIndex+1">
+                                                            <label class="i-checks i-checks m-l-md">
+                                                                <input type="checkbox" ng-disabled="!pr.editRoute" ng-model="item.IsBack"><i></i>
+                                                            </label>{{ item.ProcedureInfo.Name }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 no-padder">
+                                                    <label class="col-lg-4  padder-xs  control-label text-info">是否打印:</label>
+                                                    <div class="col-lg-8 text-xs form-control-static">
+                                                        <label class="i-checks i-checks m-l-md">
+                                                            <input type="checkbox" ng-disabled="!pr.editRoute" ng-model="pr.ProcItem.IsPrint"><i></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <pre>{{ pr.ProcItem | json }}</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

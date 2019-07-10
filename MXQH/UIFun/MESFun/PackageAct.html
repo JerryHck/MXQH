@@ -2,14 +2,14 @@
     <uib-tab index="0" select="pack.SelectTab(0)" deselect="pack.SelectTab(-1)">
         <uib-tab-heading class="h5">包装处理</uib-tab-heading>
         <div class="wrapper-xs">
-            <div class="col-sm-6" ng-form="pack.UpdateForm">
+            <div class="col-sm-6 padder-xs" ng-form="pack.UpdateForm">
                 <div class="panel panel-default scroll-y">
                     <div class="panel-heading font-bold text-center">
                         包装信息
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body padder-xs">
                         <div class="form-horizontal no-padder">
-                            <div class="form-group-xs no-padder">
+                            <div class="form-group-xs col-md-12 no-padder">
                                 <div class="col-sm-6 no-padder">
                                     <label class="col-sm-5 padder-xs control-label">工单号:</label>
                                     <div class="col-sm-7 padder-xs" ng-class="{ 'has-error' : pack.UpdateForm.Order.$invalid }">
@@ -20,11 +20,11 @@
                                 <div class="col-sm-6 no-padder">
                                     <label class="control-label padder-xs col-sm-5">客户订单:</label>
                                     <div class="col-sm-7 padder-xs">
-                                        <p class="form-control-static font-bold">{{pack.PackMain.Order.CustomerOrder}}</p>
+                                        <p class="form-control-static font-bold">{{pack.PackMain.TransID}}</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group-xs">
+                            <div class="form-group-xs col-md-12">
                                 <div class="col-sm-6 no-padder">
                                     <label class="control-label padder-xs col-sm-5">产品编号:</label>
                                     <div class="col-sm-7 padder-xs">
@@ -38,9 +38,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group-xs">
+                            <div class="form-group-xs col-md-12">
                                 <div class="col-sm-6 no-padder">
-                                    <label class="control-label padder-xs col-sm-5">客户零件号:</label>
+                                    <label class="control-label padder-xs col-sm-5">零件号:</label>
                                     <div class="col-sm-7 padder-xs">
                                         <p class="form-control-static font-bold">{{pack.PackMain.CustomPartNo}}</p>
                                     </div>
@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group-xs no-padder">
+                            <div class="form-group-xs col-md-12 no-padder">
                                 <div class="col-sm-6 no-padder">
                                     <label class="control-label padder-xs col-sm-5">包装编号:</label>
                                     <div class="col-sm-7 padder-xs">
@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group-xs no-padder">
+                            <div class="form-group-xs col-md-12 no-padder">
                                 <div class="col-sm-6 no-padder">
                                     <label class="control-label padder-xs col-sm-5">计划数量:</label>
                                     <div class="col-sm-7 padder-xs">
@@ -80,7 +80,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group-xs no-padder">
+                            <div class="form-group-xs col-md-12 no-padder">
                                 <div class="col-sm-6 no-padder">
                                     <label class="control-label padder-xs col-sm-5">Erp销售单:</label>
                                     <div class="col-sm-7 padder-xs">
@@ -94,15 +94,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group-xs no-padder">
+                            <div class="form-group-xs col-md-12 no-padder">
                                 <div class="col-sm-6 no-padder">
-                                    <label class="control-label padder-xs col-sm-5">每箱单机头:</label>
+                                    <label class="control-label padder-xs col-sm-5">单机头:</label>
                                     <div class="col-sm-7 padder-xs">
                                         <p class="form-control-static font-v3">{{pack.PackMain.PerBoxQuantity}}</p>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 no-padder">
-                                    <label class="control-label padder-xs col-sm-5">每箱彩盒数:</label>
+                                    <label class="control-label padder-xs col-sm-5">彩盒数:</label>
                                     <div class="col-sm-7 padder-xs">
                                         <p class="form-control-static font-v3">{{pack.PackMain.PerColorBoxQty}}</p>
                                     </div>
@@ -111,7 +111,7 @@
                         </div>
                         <div class="line line-dashed b-b line-lg pull-in"></div>
                         <div class="form-horizontal no-padder" ng-if="pack.PackMain">
-                            <div class="form-group-xs">
+                            <div class="form-group-xs col-md-12">
                                 <div class="col-sm-6 no-pader">
                                     <label class="control-label padder-xs col-sm-3">栈板号:</label>
                                     <div class="col-sm-9 padder-xs input-group" ng-class="{ 'has-error' : pack.UpdateForm.PalletCode.$invalid }">
@@ -131,7 +131,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group-xs">
+                            <div class="form-group-xs col-md-12">
                                 <div class="col-sm-6 no-pader">
                                     <label class="control-label padder-xs col-sm-3">箱号:</label>
                                     <div class="col-sm-9 padder-xs">
@@ -147,9 +147,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group-xs">
+                            <div class="form-group-xs col-md-12">
                                 <div class="col-sm-6 no-pader">
-                                    <label class="control-label padder-xs col-sm-3">本箱总包装数:</label>
+                                    <label class="control-label padder-xs col-sm-3">本箱数量:</label>
                                     <div class="col-sm-9 padder-xs">
                                         <p class="form-control-static font-v3">{{pack.PackDetail.ProductCount}}</p>
                                     </div>
@@ -171,7 +171,7 @@
                         <button class="btn btn-success" type="button" ng-disabled="!pack.PackDetail.IsHasPrint" ng-click="pack.Print('3SCODE')">打印3S</button>
                         <button class="btn btn-success" type="button" ng-disabled="!pack.PackDetail.IsHasPrint" ng-click="pack.Print('4SCODE')">打印4S</button>
                     </div>
-                    <!--<pre>{{ pack.PackDetail | json }}</pre>-->
+                    <!--<pre>{{ pack.PackMain | json }}</pre>-->
                 </div>
                 <div class="panel panel-default scroll-y" style="max-height:350px">
                     <div class="panel-heading font-bold text-center">信息显示</div>

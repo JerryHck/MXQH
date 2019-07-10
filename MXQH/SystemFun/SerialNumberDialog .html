@@ -163,6 +163,7 @@
 </div>
 <div class="modal-footer">
     <div class="text-center">
+        <button class="btn btn-sm btn-success text-success" ng-disabled="pk.DialogForm.$invalid || pk.form.index==0" ng-click="pk.GetOneSn()">生成编号</button>
         <button class="btn btn-sm btn-success text-success" ng-disabled="pk.DialogForm.$invalid || pk.form.index==0" ng-click="pk.PreViewOnly()">仅预览</button>
         <button class="btn btn-sm btn-success text-success" ng-disabled="pk.DialogForm.$invalid" ng-click="pk.PreView()">
             <i class="fa fa-support"></i>储存并预览
