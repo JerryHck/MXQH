@@ -66,10 +66,10 @@ function (Dialog, $scope, $http, AjaxService, toastr, $window) {
     function GetContition() {
         var list = [];
         if (vm.Ser.a_MaterialCode) {
-            list.push({ name: "MaterialCode", value: vm.Ser.a_MaterialCode });
+            list.push({ name: "MaterialCode",value: '%'+vm.Ser.a_MaterialCode+'%' });
         }
         if (vm.Ser.a_MaterialName) {
-            list.push({ name: "MaterialName", value: vm.Ser.a_MaterialName });
+            list.push({ name: "MaterialName", value: '%' + vm.Ser.a_MaterialName + '%' });
         }
         if (vm.Ser.a_MaterialState) {
             list.push({ name: "State", value: vm.Ser.a_MaterialState });
