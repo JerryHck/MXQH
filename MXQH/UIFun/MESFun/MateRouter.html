@@ -45,12 +45,21 @@
                         <div class="cell-inner">
                             <div class="list-group list-group-lg">
                                 <a ng-repeat="f in pr.MateRouteList" title="{{ f.IsDefault ? '默认工艺':'' }}" class="list-group-item m-l b-l-2" ng-class="{'select': pr.SelectedRo.ID == f.ID }" ng-click="pr.SelectRoute(f)">
-                                    <span ng-if="!pr.editRoute" ng-confirm="{text:'确定要删除该工艺吗'}" ng-click='pr.Delete(f.FunNo)' class="pull-right text-danger">
+                                    <span ng-if="!pr.editRoute" ng-confirm="{text:'确定要删除该工艺吗'}" ng-click='pr.Delete(f.ID)' class="pull-right text-danger">
                                         <i class="fa fa-times"></i>
                                     </span>
                                     <span class="block h5 text-info-dker" ng-class="{'m-n': pr.SelectedRo.ID == f.ID }">
                                         <span class="h3"><i class="fa fa-hand-o-right" ng-class="{'text-danger':f.IsDefault,'text-info':!f.IsDefault}"></i></span>
                                         {{ f.RoutingName }}
+                                    </span>
+                                </a>
+                                <a ng-if="pr.NewRoute.ID==-1" title="新工艺" class="list-group-item m-l b-l-2" ng-class="{'select': pr.SelectedRo.ID == pr.NewRoute.ID }" ng-click="pr.SelectRoute(pr.NewRoute)">
+                                    <span ng-if="!pr.editRoute" ng-confirm="{text:'确定要删除该工艺吗'}" ng-click='pr.NewRoute = {}' class="pull-right text-danger">
+                                        <i class="fa fa-times"></i>
+                                    </span>
+                                    <span class="block h5 text-info-dker" ng-class="{'m-n': pr.SelectedRo.ID == pr.NewRoute.ID }">
+                                        <span class="h3"><i class="fa fa-hand-o-right" ng-class="{'text-danger':pr.NewRoute.IsDefault,'text-info':!pr.NewRoute.IsDefault}"></i></span>
+                                        {{ pr.NewRoute.RoutingName }}
                                     </span>
                                 </a>
                             </div>
@@ -64,23 +73,30 @@
             </div>
         </div>
 
-        <div class="col w-auto lter b-r" ng-form="pr.RouteForm">
+        <div class="col w-auto lter b-r">
             <div class="vbox" ng-if="pr.SelectedRo">
                 <div class="wrapper-xs b-b">
                     <div class="m-t-n-xxs m-b-n-xxs m-l-xs">
                         <button class="btn btn-sm btn-info col-md-offset-1" ng-if="!pr.editRoute" ng-click="pr.editRoute = !pr.editRoute"><i class="glyphicon glyphicon-edit"></i>编辑</button>
-                        <button class="btn btn-sm btn-info col-md-offset-1" ng-if="pr.editRoute" ng-click="pr.SaveFunInfo()" ng-disabled="pr.RouteForm.$invalid"><i class="glyphicon glyphicon-save"></i>储存</button>
+                        <button class="btn btn-sm btn-success col-md-offset-1" ng-if="pr.editRoute" ng-click="pr.SaveRoute()" 
+                                ng-disabled="pr.RouteForm.$invalid">
+                            <i class="glyphicon glyphicon-save"></i>储存
+                        </button>
                         <button class="btn btn-sm btn-warning" type="button" ng-if="pr.editRoute" ng-click="pr.Cancel()">取消</button>
                     </div>
                 </div>
                 <div class="row-row">
                     <div class="cell scrollable hover h5">
-                        <div class="form-horizontal m-t-md">
+                        <div class="form-horizontal m-t-md" ng-form="pr.RouteForm">
                             <div class="form-group col-md-12">
                                 <div class="col-md-12 padder-xs">
                                     <label class="col-lg-2 control-label text-info">工艺名称:</label>
                                     <div class="col-lg-10" ng-class="{ 'has-error' : pr.RouteForm.RouteName.$invalid }">
-                                        <input class="form-control text-xs" name="RouteName" type="text" ng-model="pr.SelectedRo.RoutingName" ng-disabled="!pr.editRoute" required>
+                                        <input class="form-control text-xs" name="RouteName" type="text" ng-model="pr.SelectedRo.RoutingName"
+                                               ng-blur="pr.isExists()" ng-disabled="!pr.editRoute" required>
+                                        <div ng-messages="pr.RouteForm.RouteName.$error" class="help-block" role="alert">
+                                            <div ng-message="unique" class="h6">工艺名称重复</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -112,26 +128,24 @@
                                         <div class="panel panel-default panel-body col-md-12 m-t-xs">
                                             <div class="list-group no-radius no-border no-bg m-b-none">
                                                 <div ng-repeat="pro in pr.SelectedRo.Procedure | orderBy:'pro.OrderNum'" class="list-group-item col-md-12">
-                                                    <!--ng-drop="true" ng-drop-success="pr.FunLoadDrop($data,$index)">-->
-                                                    <!--<i class="glyphicon glyphicon-move text-info pull-left" ng-drag="true" ng-if="pr.editRoute"
-                                                        ng-drag-data="pro" ng-drag-success="pr.FunLoadDrag($data,$index)"></i>-->
                                                     <div class="col-md-8">
                                                         <a class="text-success" ng-if="!pr.editRoute" ng-click="pr.OpenProcedure(pro, $index)"><i class="glyphicon glyphicon-search"></i></a>
                                                         <a class="text-success" ng-if="pr.editRoute" ng-click="pr.OpenProcedure(pro, $index)"><i class="glyphicon glyphicon-edit"></i></a>
                                                         {{ pro.ProcedureInfo.Name }}
                                                     </div>
-                                                    <span ng-if="pr.editRoute" ng-click='pr.FunLoadDelete($index)' class="pull-right text-danger">
+                                                    <a ng-if="pr.editRoute" ng-click='pr.RoProDelete($index, pro)' class="pull-right text-danger">
                                                         <i class="fa fa-times"></i>
-                                                    </span>
+                                                    </a>
                                                 </div>
                                             </div>
+                                            <div class="text-danger h6 m-t-lg col-md-12" ng-if="pr.editRoute">注：最少要有一个流程节点</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!--<div class="col-md-12">
-                                <pre>{{ pr.SelectedRo | json }}</pre>
-                            </div>-->
+                            <div class="col-md-12">
+                                <!--<pre>{{ pr.SelectedRo | json }}</pre>-->
+                            </div>
                         </div>
 
                         <div class="procudure d-r lg bg-light dk wrapper-md padder-md">
@@ -139,7 +153,7 @@
                             <div class="padder-md wrapper">
                                 <div class="panel panel-default">
                                     <div class="panel-heading text-center">
-                                        <button class="btn btn-success btn-sm pull-left" ng-if="pr.editRoute || pr.ProcForm.$invalid" type="button" ng-click="pr.Download()" title="确认">
+                                        <button class="btn btn-success btn-sm pull-left" ng-disabled="pr.ProcForm.$invalid || pr.RepairTurnList.length==0" ng-if="pr.editRoute" type="button" ng-click="pr.ProcOk()" title="确认">
                                             <i class="glyphicon glyphicon-save"></i>确认
                                         </button>
                                         <button class="btn btn-warning btn-sm pull-right" ui-remove-class="active" target=".procudure"><i class="glyphicon glyphicon-remove"></i>关闭</button>
@@ -151,7 +165,7 @@
                                                 <div class="col-md-12 padder-xs">
                                                     <label class="col-lg-2 control-label text-info">工序:</label>
                                                     <div class="col-lg-10 padder-xs  text-xs">
-                                                        <ui-select ng-model="pr.ProcItem.ProcedureInfo" theme="bootstrap"  ng-disabled="!pr.editRoute" name="Procedure" ng-required="true">
+                                                        <ui-select ng-model="pr.ProcItem.ProcedureInfo" theme="bootstrap"  ng-disabled="pr.ProcItem.ID !=-1" ng-change="pr.ChangeProc()" name="Procedure" ng-required="true">
                                                             <ui-select-match>{{ $select.selected.Name }}</ui-select-match>
                                                             <ui-select-choices repeat="item in pr.ProcedureList | filter: $select.search">
                                                                 <div ng-bind-html="item.Name | highlight: $select.search"></div>
@@ -218,11 +232,12 @@
                                                 <div class="col-md-6 no-padder">
                                                     <label class="col-lg-4  padder-xs  control-label text-info">返修工序:</label>
                                                     <div class="col-lg-8 no-padder text-xs">
-                                                        <div class="col-md-12 m-t-xs padder-xs b-b" ng-repeat="item in pr.SelectedRo.Procedure | limitTo: pr.ProIndex+1">
+                                                        <div class="col-md-12 m-t-xs padder-xs b-b" ng-repeat="item in pr.ProcWPList | limitTo: pr.ProIndex+1">
                                                             <label class="i-checks i-checks m-l-md">
-                                                                <input type="checkbox" ng-disabled="!pr.editRoute" ng-model="item.IsBack"><i></i>
+                                                                <input type="checkbox" ng-disabled="!pr.editRoute" ng-model="item.IsCheck" ng-change="pr.RepairCheck()"><i></i>
                                                             </label>{{ item.ProcedureInfo.Name }}
                                                         </div>
+                                                        <span class="text-danger h6" ng-if="pr.editRoute">注：必须选一个返修工序</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 no-padder">
@@ -236,7 +251,7 @@
                                             </div>
                                         </div>
 
-                                        <pre>{{ pr.ProcItem | json }}</pre>
+                                        <!--<pre>{{ pr.ProcItem | json }}</pre>-->
                                     </div>
                                 </div>
                             </div>

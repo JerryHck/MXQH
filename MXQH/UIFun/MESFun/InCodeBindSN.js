@@ -12,7 +12,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     vm.Ser = {};
     vm.NewItemType = { IsPKGen: 1 };
     vm.IsAuto = true;
-    vm.PrintType = 'N';
+    vm.PrintType = 'G';
 
     vm.KeyDonwOrder = KeyDonwOrder;
     vm.KeyDonwInCode = KeyDonwInCode;
@@ -45,11 +45,11 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
                     || data.data[0].ClName == "" || data.data[0].ClName == undefined || data.data[0].ClName == null ) {
                     vm.Item.WorkOrder = undefined;
                     showError(mss + '  工单未设定SN生成编码规则，请联系管理员设定');
-                    console.log(data.data[0])
                 }
                 else {
                     vm.OrderData = data.data[0];
                     vm.OrderCount = data.data1[0];
+                    vm.Focus.InCode = true;
                 }
             });
         }
@@ -144,8 +144,8 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
 
     function SaveBindCode() {
         vm.NewBind.MOId = vm.OrderData.ID;
+        console.log(123)
         vm.promise = AjaxService.ExecPlan("BindCode", 'saveBind', vm.NewBind).then(function (data) {
-            console.log(data);
             if (data.data[0].MsgType == "Error") {
                 showError(data.data[0].MsgText);
                 vm.NewBind = {};
