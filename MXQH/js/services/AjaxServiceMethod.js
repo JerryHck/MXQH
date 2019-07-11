@@ -314,7 +314,7 @@
             var name = tbName + '-' + clName;
             if (tableConfigList[tbName + '-' + clName] && tableConfigList[tbName + '-' + clName].length > 0) {
                 d.resolve(tableConfigList[tbName + '-' + clName]);
-                console.log('have')
+                //console.log('have')
             }
             else {
                 var list = [

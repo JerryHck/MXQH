@@ -11,7 +11,6 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.Ser = {};
 
     vm.Insert = Insert;
-    vm.SaveInsert = SaveInsert;
     vm.Edit = Edit;
     vm.Delete = Delete;
     vm.SaveEdit = SaveEdit;
@@ -38,12 +37,14 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     function SendCode(item) {    
         vm.SelectId = item.ID;
+        vm.SelectedType = angular.copy(item);
         vm.page.index = 1;
         vm.promise = AjaxService.GetPlansPage("MesProductTemplate", GetContition2(), vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
-       
+        //console.log(vm.EditItem.TypeID);
+        CodeTypeSelect(item.ID);
     }
 
     function Search() {
@@ -58,32 +59,24 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     function Insert() {
         //vm.NewItem = {};
-        vm.CodeTypeID = {};
         vm.ProductID = {};
         vm.CustomAddrID = {};
         vm.TemplateID = {};
         vm.IsInsert = true;
     }
 
-    function SaveInsert() {
-        vm.promise = AjaxService.PlanInsert("MesProductTemplate", vm.NewItem).then(function (data) {
-            PageChange();
-            toastr.success('新增成功');
-            vm.IsInsert = false;
-        });
-    }
-
     function add() {
         var n = {};
-        n.TypeID = vm.CodeTypeID.ID;
+        n.TypeID = vm.SelectedType.ID;
         n.ProductId = vm.ProductID.Id;
         n.CustomAddr = vm.CustomAddrID.ID;
-        n.TemplateId = vm.TemplateID.ID;
+        n.TemplateId = vm.TemplateID;
         //console.log(n);
         vm.promise = AjaxService.ExecPlan("MesProductTemplate", 'add', n).then(function (data) {
             if (data.data[0].MsgType == "Success") {
                 toastr.success(data.data[0].Msg);
                 vm.IsInsert = false;
+                PageChange();
             }
             else {
                 toastr.error(data.data[0].Msg);
@@ -95,8 +88,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     function alter() {
         var u = {};
         u.ID = vm.EditItem.ID;
-        u.TemplateId = vm.EditTemplateID.ID;
-        console.log(u);
+        u.TemplateId = vm.EditTemplateID;
         vm.promise = AjaxService.ExecPlan("MesProductTemplate", 'alter', u).then(function (data) {
             if (data.data[0].MsgType == "Success") {
                 PageChange();
@@ -111,14 +103,12 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
 
     function Edit(item) {
-        
+        console.log(item);
         for (var i = 0, len = vm.List.length; i < len; i++) {
             vm.List[i].IsEdit = false;
         }
         vm.EditItem = angular.copy(item);
-        //console.log(vm.EditItem.TypeID);
-        CodeTypeSelect(vm.EditItem.TypeID);
-        vm.EditTemplateID = undefined;
+        vm.EditTemplateID = item.TemplateId;
         item.IsEdit = true;
     }
 
@@ -134,14 +124,8 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     function SaveEdit(index) {
         var en = {};
         en.ID = vm.EditItem.ID; //id
-        en.TypeCode = vm.EditItem.TypeCode;
-        en.TypeName = vm.EditItem.TypeName;
-        en.MaterialCode = vm.EditItem.MaterialCode;
-        en.MaterialName = vm.EditItem.MaterialName;
-        en.Code = vm.EditItem.Code;
-        en.Name = vm.EditItem.Name;
-        en.Code = vm.EditItem.Code;
-        en.Name = vm.EditItem.Name;
+        en.TemplateId = vm.EditTemplateID;
+        console.log(en);
         vm.promise = AjaxService.PlanUpdate("MesProductTemplate", en).then(function (data) {
             PageChange();
             toastr.success('更新成功');
@@ -149,7 +133,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function PageChange() {
-        vm.promise = AjaxService.GetPlansPage("MesProductTemplate", GetContition(), vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("MesProductTemplate", GetContition2(), vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
@@ -157,7 +141,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
     //根据标签类型查询模板编码
     function CodeTypeSelect(TypeID) {
-        vm.TemplateID = null;
+        vm.TemplateID = {};
         vm.promise = AjaxService.GetPlans("MESbaBarcodeTemplate", GetContition4(TypeID)).then(function (data) {
             //console.log(data);
             vm.Template = data;
@@ -188,7 +172,10 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
     function GetContition2() {
         var list = [];
-        list.push({ name: "TypeID", value: vm.SelectId });
+        if (vm.Ser.e_MaterialCode) {
+            list.push({ name: "MaterialCode", value: vm.Ser.e_MaterialCode });
+        }
+        list.push({ name: "TypeID", value: vm.SelectId }, { name: "State", value: 1 });
         return list;
     }
     function GetContition3() {

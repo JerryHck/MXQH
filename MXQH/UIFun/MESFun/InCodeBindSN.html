@@ -10,7 +10,14 @@
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">包装工单</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : sn.BindingForm.Order.$invalid }">
-                                    <input type="text" name="Order" ng-model="sn.Item.WorkOrder" uib-typeahead="item.WorkOrder as item.WorkOrder for item in sn.OrderList | filter:$viewValue | limitTo:8"
+                                    <!--<ui-select ng-model="sn.Item.WorkOrder" theme="bootstrap" ng-keyup="sn.KeyDonwOrder($event)" name="Order" ng-required="true">
+                                        <ui-select-match>{{ $select.selected.WorkOrder }}</ui-select-match>
+                                        <ui-select-choices repeat="item.WorkOrder as item in sn.OrderList | orderBy:'WorkOrder':true | filter: $select.search">
+                                            <div ng-bind-html="item.WorkOrder | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>-->
+
+                                    <input type="text" name="Order" ng-model="sn.Item.WorkOrder" uib-typeahead="item.WorkOrder as item.WorkOrder for item in sn.OrderList | orderBy:'WorkOrder':true | filter:$viewValue | limitTo:8"
                                            class="form-control" placeholder="工单号" ng-keyup="sn.KeyDonwOrder($event)" required>
                                 </div>
                             </div>

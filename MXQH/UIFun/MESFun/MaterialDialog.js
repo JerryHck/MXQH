@@ -75,8 +75,10 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
         en.CreateBy = vm.Item.CreateBy;
         en.ModifyBy;
         en.ModifyDate;
+        vm.SerialNum = {};
         en.TbName = vm.SerialNum.TbName;
         en.ClName = vm.SerialNum.ClName;
+    
         if (vm.Item.State == false) {
             vm.Item.State = 0;
         } else if (vm.Item.State == true) {
