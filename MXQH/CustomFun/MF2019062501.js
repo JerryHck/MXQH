@@ -102,11 +102,11 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
     function GetContition() {
         var list = [];
-        if (vm.Ser.a_CID) {
-            list.push({ name: "CID", value: vm.Ser.a_CID });
+        if (vm.Ser.b_MaterialCode) {
+            list.push({ name: "MaterialCode", value: '%' + vm.Ser.b_MaterialCode + '%' });
         }
-        if (vm.Ser.a_PID) {
-            list.push({ name: "PID", value: vm.Ser.a_PID });
+        if (vm.Ser.b_MaterialName) {
+            list.push({ name: "MaterialName", value: '%' + vm.Ser.b_MaterialName + '%' });
         }
         return list;
     }
