@@ -101,6 +101,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         vm.promise = AjaxService.ExecPlan("MESDeleteCode", 'delete', vm.DeleteItem).then(function (data) {
             var mss = "内部码 [" + vm.DeleteItem.InternalCode + '] 解绑成功';
             var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };
+            AjaxService.PlayVoice('success.mp3');
             vm.MesList.splice(0, 0, Msg);
             vm.DeleteItem.InternalCode = undefined;
             vm.Focus = 0;

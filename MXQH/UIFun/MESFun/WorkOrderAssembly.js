@@ -17,13 +17,20 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
     vm.NgSave = NgSave;
     vm.SelectTab = SelectTab;
     vm.ChangePro = ChangePro;
+    vm.IsFisnish = true;
 
     //内部码验证
     function KeyDonwInCode(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.Item.InCode) {
-            vm.InCodeControl = vm.Item.InCode;
-            InCodeToDb();
+            if (vm.IsFisnish) {
+                vm.InCodeControl = angular.copy(vm.Item.InCode);
+                InCodeToDb();
+            }
+            else {
+                showError("您扫描太快了，请等待系统处理完成")
+            }
+            vm.Item.InCode = undefined;
         }
     }
 
@@ -38,8 +45,9 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
     }
 
     function InCodeToDb() {
+        if (vm.InCodeControl == undefined) return;
         var en = {};
-        en.InternalCode = vm.Item.InCode;
+        en.InternalCode = vm.InCodeControl;
         AjaxService.ExecPlan("MesMxWOrder", 'ass', en).then(function (data) {
             if (data.data[0].MsgType == 'Error') {
                 vm.Item.InCode = undefined;
@@ -64,20 +72,20 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
             showError("请先选择工序");
             return;
         }
-        en.InternalCode = vm.Item.InCode;
+        en.InternalCode = vm.InCodeControl;
         en.ProcedureID = vm.ProcedureItem.boProcedureID;
         vm.promise = AjaxService.ExecPlan("MesMxWOrder", "saveass", en).then(function (data) {
             if (data.data[0].MsgType == 'Success') {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
                 vm.PassCount = data.data1[0].ToTalCount;
-                vm.Item.InCode = undefined;
+                AjaxService.PlayVoice('success.mp3');
                 vm.InCodeControl = undefined;
             }
             else if (data.data[0].MsgType == 'Error') {
                 showError(data.data[0].Msg);
-                vm.Item.InCode = undefined;
                 vm.InCodeControl = undefined;
             }
+            vm.IsFisnish = true;
         })
     }
 

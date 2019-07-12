@@ -156,6 +156,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
                 vm.MesList.splice(0, 0, Msg);
                 vm.NewBind = {};
                 vm.OrderCount = data.data3[0];
+                AjaxService.PlayVoice('success.mp3');
                 //一般打印
                 if (vm.PrintType == 'G') {
                     PrintCode(data.data2[0], data.data1[0]);

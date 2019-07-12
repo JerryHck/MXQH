@@ -32,6 +32,7 @@ function ( $scope, FileUrl, AjaxService, toastr, $window) {
                 AjaxService.PlayVoice('3331142.mp3');
             }
             else if (data.data[0].MsgType == "Success") {
+                AjaxService.PlayVoice('success.mp3');
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].MsgText });
                 PrintCode(data.data1[0]);
             }
