@@ -4,11 +4,18 @@ angular.module('app')
 function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
     var vm = this;
     vm.page = { pageSize: 10, pageIndex: 1, maxSize: 10 };
+    vm.pageCom = { pageSize: 10, pageIndex: 1, maxSize: 10 };
     vm.DataBind = DataBind;
     vm.Ser = {};
+    vm.Ser2 = {};
     vm.Search = Search;
     vm.Add = Add;
     vm.Edit = Edit;
+    vm.DataBindCom = DataBindCom;
+    vm.EditCom = EditCom;
+    vm.SearchCom = SearchCom;
+    vm.Complete = Complete;
+    //vm.Delete = Delete;
     DataBind();
     //绑定数据
     function DataBind() {
@@ -18,10 +25,26 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
             vm.page.total = data.data1[0].TotalCount;
         });
     }
+
+    //绑定数据完工工单
+    function DataBindCom() {
+        GetConditionCom();
+        vm.promise = AjaxService.ExecPlan("MesPlanDetail", "GetList", vm.pageCom).then(function (data) {
+            vm.CompleteList = data.data;
+            vm.pageCom.total = data.data1[0].TotalCount;
+        });
+    }
+
     //查询功能
     function Search() {
         vm.page.pageIndex = 1;
         DataBind();
+    }
+
+    //查寻完工工单
+    function SearchCom() {
+        vm.pageCom.pageIndex = 1;
+        DataBindCom();
     }
 
     //查询条件
@@ -31,6 +54,13 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
         vm.page.AssemblyDate = vm.Ser.AssemblyDate == '' ? undefined : vm.Ser.AssemblyDate;
     }
 
+    //查询完工工单条件
+    function GetConditionCom() {
+        vm.pageCom.DocNo = vm.Ser2.DocNo == '' ? undefined : vm.Ser2.DocNo;
+        vm.pageCom.LineID = vm.Ser2.LineID == '' ? undefined : vm.Ser2.LineID;
+        vm.pageCom.AssemblyDate = vm.Ser2.AssemblyDate == '' ? undefined : vm.Ser2.AssemblyDate;
+        vm.pageCom.Status = 4;
+    }
     //编辑
     function Edit(item) {
         var resolve = {
@@ -40,6 +70,18 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
         }
         Open(resolve);
     }
+
+    //编辑
+    function EditCom(item) {
+        item.IsComplete = true;//完工列表不允许编辑
+        var resolve = {
+            ItemData: function () {
+                return item;
+            }
+        }
+        Open(resolve);
+    }
+
     //新增
     function Add() {
         var resolve = {
@@ -57,6 +99,30 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
             }
         }).catch(function (reason) {
 
+        });
+    }
+
+    //删除工单
+    function Delete(id) {
+        var en = { ID: id };
+        console.log(en);
+        vm.promise = AjaxService.ExecPlan("MesPlanDetail", "Delete", en).then(function (data) {
+            conosole.log(data);
+            if (data.data[0].MsgType == "1") {
+                DataBind();
+                toastr.success(data.data[0].Msg);
+            } else {
+                toastr.success(data.data[0].Msg);
+            }            
+            
+        });
+    }
+    //工单完工
+    function Complete(id) {
+        var en = {ID:id};
+        vm.promise = AjaxService.ExecPlan("MesPlanDetail", "Complete", en).then(function (data) {
+                DataBind();
+                toastr.success("成功");
         });
     }
 
