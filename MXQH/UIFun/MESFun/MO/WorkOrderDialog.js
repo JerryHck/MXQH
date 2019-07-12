@@ -13,6 +13,7 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
     vm.IsEdit = ItemData.ID == undefined ? false : true;    
     if (!vm.Item.AssemblyDate) {
         vm.Item.AssemblyDate = GetCurrentDate();
+        vm.Item.DeliveryDate = GetCurrentDate();
     }
     vm.SNRule = {};//编码规则
     vm.Routing = {};//产品工艺
