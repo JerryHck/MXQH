@@ -47,6 +47,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                     MyPop.Show(true, s);
                 }
                 else {
+                    AjaxService.PlayVoice('success.mp3');
                     var s = mss + ', 料号[' + data.MaterialCode + ']校验通过';
                     vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: s });
                 }

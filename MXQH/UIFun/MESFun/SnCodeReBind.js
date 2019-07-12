@@ -126,6 +126,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     function BindCode2() {
         vm.promise = AjaxService.ExecPlan("SnCodeReBind", 'bind', vm.NewBind).then(function (data) {
+            AjaxService.PlayVoice('success.mp3');
             var mss = ' SN码 [' + vm.NewBind.SNCode + ']与原内部码[' + vm.OldInCode + ']解绑，与现内部码[' + vm.NewBind.InternalCode + '] 绑定成功';
             var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };
             vm.MesList.splice(0, 0, Msg);

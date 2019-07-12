@@ -133,6 +133,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             else if (data.data[0].MesType == 'Success') {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
                 vm.OrderData = data.data1[0];
+                AjaxService.PlayVoice('success.mp3');
             }
             else {
                 vm.OrderData = data.data1[0];
