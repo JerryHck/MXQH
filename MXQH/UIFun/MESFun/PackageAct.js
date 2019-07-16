@@ -179,11 +179,18 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
 
     function showErr(msg) {
         vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: msg });
-        AjaxService.PlayVoice('3331142.mp3');
+        AjaxService.PlayVoice('error.mp3');
         toastr.error(msg);
     }
 
     function Print(type) {
+
+        var ef = {
+            "Para": "\"{\"Box3S\":\"1/834\",\"TotalCt4S\":\"834\",\"Quantity\":6,\"BoxTotalQuantity\":5004,\"Packweight\":\"10.2KG\",\"Packweight_KG\":\"10.2KG\",\"Packweight_KGS\":\"10.2KGS\",\"Packweight_Ibs\":\"22.5Ibs\",\"Packweight_KG_Ibs\":\"10.2KG(22.5Ibs)\",\"AssemblyPlanDetailID\":3029,\"PerColorBoxQty\":6,\"PerBoxQuantity\":24,\"ShipForm\":\"\",\"MODELNUMBER\":\"B8P00811YDEMAQ\",\"Tanapa\":\"IXUE2113A\",\"Ean\":\"5031753007218\",\"TransID\":\"IT83027133\",\"COO\":\"CN\",\"BoxNumber\":1,\"ProductCount\":24,\"MODELNAME\":\"101010161\",\"ERPQuantity\":20000}\""
+        }
+
+        //console.log(JSON.stringify(ef));
+
         var en = {};
         en.PackDetailID = vm.PrintDtlId;
         en.TypeCode = type;
@@ -193,12 +200,12 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             }
             else if (data.data3[0].MsgType == "Success") {
                 var postData = {}, list = [];
-                postData.ParaData = JSON.stringify(data.data1[0]);
+                postData.ParaData = JSON.stringify(data.data[0]);
                 for (var i = 0, len = data.data2.length; i < len; i++) {
                     list.push(data.data2[i].SNCode);
                 }
                 postData.OutList = list;
-                var temp = data.data[0];
+                var temp = data.data1[0];
                 AjaxService.Print(temp.TemplateId, temp.TS, postData, vm.PrintName).then(function (data2) {
                     console.log(data2);
                 }, function (err) {

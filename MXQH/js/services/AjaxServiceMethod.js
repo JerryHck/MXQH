@@ -489,7 +489,6 @@
                     en.Data = JSON.stringify(postData);
                     en.ServiceUrl = serviceUrl;
                     en.PrinterName = printerName;
-                    console.log(en);
                     socket.send(JSON.stringify(en));
                 };
                 socket.onclose = function (e) {

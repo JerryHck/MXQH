@@ -8,7 +8,7 @@
                     <div class="panel-body">
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">内部码</label>
+                                <label class="col-lg-3 control-label">内部码/Sn码</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : sn.DeleteForm.InCode.$invalid }">
                                     <input type="text" class="form-control" ui-focus="sn.Focus == 0" name="InCode" ng-model="sn.DeleteItem.InternalCode" placeholder="生产条码" ng-keyup="sn.KeyDonwInCode($event)" required>
                                 </div>
@@ -17,7 +17,7 @@
                                 <label class="col-lg-3 control-label">Sn码</label>
                                 <div class="col-lg-8">
                                     <input type="text" class="form-control" ng-model="sn.SNCode" placeholder="Sn码" disabled>
-                                    <div class="h6 text-danger">注:只允许解绑开头为45,83,93开头的SN码</div>
+                                    <!--<div class="h6 text-danger">注:只允许解绑开头为45,83,93开头的SN码</div>-->
                                 </div>
                             </div>
                             <div class="form-group">

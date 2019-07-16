@@ -87,7 +87,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     function showError(mes)
     {
         vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mes });
-        AjaxService.PlayVoice('3331142.mp3');
+        AjaxService.PlayVoice('error.mp3');
         toastr.error(mes);
     }
 

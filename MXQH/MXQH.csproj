@@ -191,6 +191,8 @@
     <Content Include="SystemFun\SerialNumber.js" />
     <Content Include="SystemFun\SerialNumberDialog .html" />
     <Content Include="SystemFun\SerialNumberDialog.js" />
+    <Content Include="SystemFun\SysOrg.html" />
+    <Content Include="SystemFun\SysOrg.js" />
     <Content Include="SystemFun\ToolManager.html" />
     <Content Include="SystemFun\ToolManager.js" />
     <Content Include="UIFun\MESFun\BarCodeList.html" />

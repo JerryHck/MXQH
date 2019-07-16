@@ -30,13 +30,12 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
             else {
                 showError("您扫描太快了，请等待系统处理完成")
             }
-            vm.Item.InCode = undefined;
         }
     }
 
     function showError(mes) {
         vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mes });
-        AjaxService.PlayVoice('3331142.mp3');
+        AjaxService.PlayVoice('error.mp3');
         toastr.error(mes);
     }
 
@@ -72,6 +71,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
             showError("请先选择工序");
             return;
         }
+        vm.Item.InCode = undefined;
         en.InternalCode = vm.InCodeControl;
         en.ProcedureID = vm.ProcedureItem.boProcedureID;
         vm.promise = AjaxService.ExecPlan("MesMxWOrder", "saveass", en).then(function (data) {
