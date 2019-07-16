@@ -1,0 +1,129 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">包装信息</h3>
+</div>
+<div class="modal-body wrapper-sm" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body wrapper-xs">
+            <div class="form-group">
+                <button ng-if="!packDialog.Item.IsComplete" class="btn btn-success" type="button" ng-disabled="DialogForm.$invalid" ng-click="packDialog.Save()">储存</button>
+                <button class="btn btn-warning" type="button" ng-click="packDialog.Cancel()">取消</button>
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">每箱单机头数</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.PerBoxQuantity.$invalid }">
+                            <input type="text" disabled="disabled" class="form-control" name="PerBoxQuantity" placeholder="每箱单机头数"
+                                   ng-model="packDialog.Item.PerBoxQuantity" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">每箱彩盒数</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.PerColorBoxQty.$invalid }">
+                            <input type="text" name="PerColorBoxQty" class="form-control" placeholder="每箱彩盒数" ng-model="packDialog.Item.PerColorBoxQty" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">客户订单号</label>
+                            <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.TransID.$invalid }">
+                                <input type="text" name="TransID" class="form-control" placeholder="客户订单号" ng-model="packDialog.Item.TransID" required>
+                            </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">发货来源地</label>
+                        <div class="col-sm-8 padder-xs">
+                            <input type="text" name="ShipForm" class="form-control" placeholder="发货来源地" ng-model="packDialog.Item.ShipForm">
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">出货说明</label>
+                        <div class="col-sm-8 padder-xs">
+                            <input type="text" name="ShipInstruction" class="form-control" placeholder="出货说明" ng-model="packDialog.Item.ShipInstruction">
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">机身SN零件号</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.CustomPartNo.$invalid }">
+                            <input type="text" name="CustomPartNo" class="form-control" placeholder="机身SN零件号" ng-model="packDialog.Item.CustomPartNo" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">单个彩盒最小重量(g)</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MinWeight.$invalid }">
+                            <input type="number"  name="MinWeight" class="form-control" placeholder="单个彩盒最小重量" ng-model="packDialog.Item.MinWeight" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">单个彩盒最大重量(g)</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaxWeight.$invalid }">
+                            <input type="number"  name="MaxWeight" class="form-control" placeholder="单个彩盒最大重量" ng-model="packDialog.Item.MaxWeight" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">国家代码</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.CountryCode.$invalid }">
+                            <input type="text" name="CountryCode" class="form-control" placeholder="国家代码" ng-model="packDialog.Item.CountryCode" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">卡通箱3S4S零件号</label>
+                        <div class="col-sm-8 padder-xs" >
+                            <input type="text" class="form-control" name="Tanapa" placeholder="卡通箱3S4S零件号"
+                                   ng-model="packDialog.Item.Tanapa">
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">Model Number</label>
+                        <div class="col-sm-8 padder-xs" >
+                            <input type="text" class="form-control" name="Model" placeholder="Model Number"
+                                   ng-model="packDialog.Item.Model">
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">总重量</label>
+                        <div class="col-sm-8 padder-xs" >
+                            <input type="number" name="PKGWT" class="form-control" placeholder="总重量" ng-model="packDialog.Item.PKGWT">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">RadioKit</label>
+                        <div class="col-sm-8 padder-xs" >
+                            <input type="text" name="RadioKit" class="form-control" placeholder="RadioKit" ng-model="packDialog.Item.RadioKit">
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">Ean销售单号</label>
+                        <div class="col-sm-8  padder-xs" ng-class="{ 'has-error' : DialogForm.Ean.$invalid }">
+                            <input type="text" class="form-control" name="Ean" placeholder="Ean"
+                                   ng-model="packDialog.Item.Ean" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">PKGID</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.PKGID.$invalid }">
+                            <input type="text" name="PKGID" class="form-control" placeholder="PKGID" ng-model="packDialog.Item.PKGID" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs"  ng-class="{ 'has-error' : DialogForm.PackListNo.$invalid }">包装标签号</label>
+                        <div class="col-sm-8 padder-xs">
+                            <input type="text" name="PackListNo" class="form-control" disabled="disabled" placeholder="PackListNo" ng-model="packDialog.Item.PackListNo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
