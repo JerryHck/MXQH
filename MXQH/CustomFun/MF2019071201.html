@@ -1,0 +1,131 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="baq.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">返修记录登记</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class= "btn btn-sm btn-success " ng-click= "baq.Insert() "><i class= "glyphicon glyphicon-plus "></i>增加返修记录登记</button>
+                <div class="form-group">
+                    开始时间: <input type="text" date-picker class="form-control"  ng-model="baq.Ser.a_CreateDate" placeholder="开始时间" option="vm.DateTimeOption">
+                </div>
+                <div class="form-group">
+                    结束时间:<input type="text" date-picker class="form-control" ng-model="baq.Ser.b_CreateDate" placeholder="结束时间" option="vm.DateTimeOption">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "baq.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <!--<button class= "btn btn-sm btn-success " ng-click= "baq.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>-->
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <table class= "table pad-xs" >
+                <thead>
+                    <tr>
+                        <!--<td style= "width:60px">操作</td>-->
+                        <td style= "width:100px ">是否修复</td>
+                        <td style= "width:100px ">维修时间</td>
+                        <td style= "width:100px ">工单号</td>
+                        <td style= "width:100px ">客户订单号</td>
+                        <td style= "width:100px ">产品名称</td>
+                        <td style= "width:100px ">客户名称</td>
+                        <td style= "width:100px ">条码</td>
+                        <td style= "width:100px ">一级不良</td>
+                        <td style= "width:100px ">二级不良</td>
+                        <td style= "width:100px ">创建人</td>
+                        <td style="width:100px ">创建时间</td>
+                        <td style="width:100px ">问题原因</td>
+                    </tr>
+                </thead>
+                <tr ng-if="baq.IsInsert" ng-form="baq.InsertForm">
+                    <!--<td>
+                        <button class="btn btn-xs btn-success" ng-disabled="baq.InsertForm.$invalid" ng-click="baq.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                        <button class="btn btn-xs btn-warning" ng-click="baq.IsInsert=false" ><i class="fa fa-undo"></i></button>
+                    </td>-->
+                    <td>
+                        <div ng-class="{ 'has-error': baq.InsertForm.IsRepair.$invalid }">
+                            <input type="text" name="IsRepair" class="form-control" placeholder="a_IsRepair" ng-model="baq.NewItem.IsRepair" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': baq.InsertForm.RepairTime.$invalid }">
+                            <input type="text" name="RepairTime" class="form-control" placeholder="a_RepairTime" ng-model="baq.NewItem.RepairTime" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': baq.InsertForm.WorOrder.$invalid }">
+                            <input type="text" name="WorOrder" class="form-control" placeholder="a_WorOrder" ng-model="baq.NewItem.WorOrder" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': baq.InsertForm.CustomerOrder.$invalid }">
+                            <input type="text" name="CustomerOrder" class="form-control" placeholder="a_CustomerOrder" ng-model="baq.NewItem.CustomerOrder" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': baq.InsertForm.MaterialName.$invalid }">
+                            <input type="text" name="MaterialName" class="form-control" placeholder="a_MaterialName" ng-model="baq.NewItem.MaterialName" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': baq.InsertForm.CustomerName.$invalid }">
+                            <input type="text" name="CustomerName" class="form-control" placeholder="a_CustomerName" ng-model="baq.NewItem.CustomerName" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': baq.InsertForm.BarCode.$invalid }">
+                            <input type="text" name="BarCode" class="form-control" placeholder="a_BarCode" ng-model="baq.NewItem.BarCode" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': baq.InsertForm.CreateDate.$invalid }">
+                            <input type="text" name="CreateDate" class="form-control" placeholder="a_CreateDate" ng-model="baq.NewItem.CreateDate" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': baq.InsertForm.FirstPoorName.$invalid }">
+                            <input type="text" name="FirstPoorName" class="form-control" placeholder="a_FirstPoorName" ng-model="baq.NewItem.FirstPoorName" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': baq.InsertForm.SecondPoorName.$invalid }">
+                            <input type="text" name="SecondPoorName" class="form-control" placeholder="a_SecondPoorName" ng-model="baq.NewItem.SecondPoorName" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': baq.InsertForm.CreateName.$invalid }">
+                            <input type="text" name="CreateName" class="form-control" placeholder="a_CreateName" ng-model="baq.NewItem.CreateName" required />
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-repeat= "item in baq.List " ng-form="item.ItemForm">
+                    <!--<td>
+                        <span ng-if="!item.IsEdit">
+                            <button class="btn btn-xs btn-primary" ng-click="baq.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                            <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="baq.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                        </span>
+                        <span ng-if="item.IsEdit">
+                            <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="baq.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                        </span>
+                    </td>-->
+                    <!--<td title="{{ item.IsRepair }}">{{ item.IsRepair }}</td>-->
+                    <td><input ng-if="!item.IsEdit" disabled="disabled" type="checkbox"
+                               name="IsRepair" class="form-control ng-pristine ng-untouched ng-valid ng-scope ng-not-empty"
+                               placeholder="IsRepair" ng-model="item.IsRepair"></td>
+                    <td title="{{ item.RepairTime }}">{{ item.RepairTime }}</td>
+                    <td title="{{ item.WorOrder }}">{{ item.WorOrder }}</td>
+                    <td title="{{ item.CustomerOrder }}">{{ item.CustomerOrder }}</td>
+                    <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
+                    <td title="{{ item.CustomerName }}">{{ item.CustomerName }}</td>
+                    <td title="{{ item.BarCode }}">{{ item.BarCode }}</td>
+                    <td title="{{ item.FirstPoorName }}">{{ item.FirstPoorName }}</td>
+                    <td title="{{ item.SecondPoorName }}">{{ item.SecondPoorName }}</td>
+                    <td title="{{ item.CreateName }}">{{ item.CreateName }}</td>
+                    <td title="{{ item.CreateDate }}">{{ item.CreateDate }}</td>
+                    <td title="{{ item.PoorReason }}">{{ item.PoorReason }}</td>
+                </tr>
+            </table>
+            <div class= "col-md-12 text-center " ng-if= "baq.page.total>baq.page.size ">
+                <div uib-pagination total-items= "baq.page.total " ng-model= "baq.page.index " items-per-page= "baq.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "baq.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>     
+    </uib-tab>
+</uib-tabset>
