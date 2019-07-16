@@ -1,11 +1,10 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('SnCodeDeleteCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
+.controller('SnCodeDeleteCtrl', ['$scope', '$http', 'AjaxService', 'toastr', '$window',
+function ($scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
-    vm.DeleteItem = { CreateBy: $rootScope.User.UserNo };
     vm.MesList = [];
     vm.Focus = 0;
     vm.page = { index: 1, size: 12 };
@@ -63,29 +62,32 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function DeleteCode() {
-        var en = {};
-        en.name = "InternalCode";
-        en.value = vm.DeleteItem.InternalCode;
-        AjaxService.GetPlan("MESSNCode", en).then(function (data) {
-            var mss = "生产条码 [" + vm.DeleteItem.InternalCode + '] ';
-            if (!data.InternalCode) {
-                vm.DeleteItem.InternalCode = undefined;
-                //toastr.error(mes);
-                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或还没有绑定SN码' });
-            }
-            else {
-                vm.SNCode = data.SNCode;
-                var sub = data.SNCode.substring(0, 2);
-                if (sub != '83' && sub != '93' && sub != '45' && !checkMonth(sub)) {
-                    vm.DeleteItem.InternalCode = undefined;
-                    //toastr.error(mes);
-                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '不允许解绑该SN码[' + data.SNCode + ']' });
-                }
-                else if (vm.IsAuto) {
-                    DeleteCode2();
-                }
-            }
-        });
+        if (vm.IsAuto) {
+            DeleteCode2();
+        }
+        //var en = {};
+        //en.name = "InternalCode";
+        //en.value = vm.DeleteItem.InternalCode;
+        //AjaxService.GetPlan("MESSNCode", en).then(function (data) {
+        //    var mss = "生产条码 [" + vm.DeleteItem.InternalCode + '] ';
+        //    if (!data.InternalCode) {
+        //        vm.DeleteItem.InternalCode = undefined;
+        //        //toastr.error(mes);
+        //        vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或还没有绑定SN码' });
+        //    }
+        //    else {
+        //        vm.SNCode = data.SNCode;
+        //        var sub = data.SNCode.substring(0, 2);
+        //        if (sub != '83' && sub != '93' && sub != '45' && !checkMonth(sub)) {
+        //            vm.DeleteItem.InternalCode = undefined;
+        //            //toastr.error(mes);
+        //            vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '不允许解绑该SN码[' + data.SNCode + ']' });
+        //        }
+        //        else if (vm.IsAuto) {
+        //            DeleteCode2();
+        //        }
+        //    }
+        //});
     }
 
     function checkMonth(s) {
@@ -109,15 +111,24 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function DeleteCode2() {
-        vm.promise = AjaxService.ExecPlan("MESSnDelete", 'delete', vm.DeleteItem).then(function (data) {
-            var mss = "内部码 [" + vm.DeleteItem.InternalCode + '] 解绑SN码[' + vm.SNCode + ']成功';
-            var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };
-            AjaxService.PlayVoice('success.mp3');
-            vm.MesList.splice(0, 0, Msg);
-            vm.DeleteItem.InternalCode = undefined;
-            vm.SNCode = undefined;
-            vm.Focus = 0;
+        var en = angular.copy(vm.DeleteItem);
+        vm.DeleteItem = {};
+        vm.promise = AjaxService.ExecPlan("MESSnDelete", 'delete', en).then(function (data) {
+            if (data.data[0].MesType == 'Error') {
+                showError(data.data[0].Msg);
+            }
+            else if (data.data[0].MesType == 'Success') {
+                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
+                vm.OrderData = data.data1[0];
+                AjaxService.PlayVoice('success.mp3');
+            }
         });
+    }
+
+    function showError(mes) {
+        vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mes });
+        AjaxService.PlayVoice('error.mp3');
+        toastr.error(mes);
     }
 
     function ExportExcel() {

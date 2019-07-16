@@ -75,7 +75,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
         AjaxService.ExecPlan("BindCode", "checkIn", en).then(function (data) {
             if (data.data[0].MsgType == "Error") {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: data.data[0].MsgText });
-                AjaxService.PlayVoice('3331142.mp3');
+                AjaxService.PlayVoice('error.mp3');
                 vm.NewBind.InternalCode = undefined;
             }
             else if (data.data[0].MsgType == "Success") {

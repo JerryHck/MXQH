@@ -6,7 +6,7 @@ function (Dialog, $scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
-    vm.Ser = {};
+    vm.Ser = { a_MaterialState : "1"};
 
     vm.Insert = Insert;
     vm.Edit = Edit;

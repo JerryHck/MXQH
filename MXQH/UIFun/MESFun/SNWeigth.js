@@ -81,7 +81,7 @@ function ($scope, $http, AjaxService, toastr, $window) {
         AjaxService.ExecPlan("MESSnCodeWeigth", "weigth", en).then(function (data) {
             if (data.data[0].MsgType == "Error") {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: data.data[0].MsgText });
-                AjaxService.PlayVoice('3331142.mp3');
+                AjaxService.PlayVoice('error.mp3');
             }
             else if (data.data[0].MsgType == "Success") {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].MsgText });

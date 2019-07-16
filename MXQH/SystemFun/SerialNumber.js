@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('SerialNumberCtrl', ['$rootScope', '$scope', 'Dialog', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, Dialog, AjaxService, toastr, $window) {
+.controller('SerialNumberCtrl', ['$scope', 'Dialog', 'AjaxService', 'toastr', '$window',
+function ($scope, Dialog, AjaxService, toastr, $window) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
@@ -44,7 +44,7 @@ function ($rootScope, $scope, Dialog, AjaxService, toastr, $window) {
             list.push({ name: "TbName", value: vm.Ser.TbName });
         }
         if (vm.Ser.ClName) {
-            list.push({ name: "ShortName", value: vm.Ser.ClName });
+            list.push({ name: "ClName", value: vm.Ser.ClName });
         }
         if (vm.Ser.StsInfo) {
             list.push({ name: "StsInfo", value: vm.Ser.StsInfo });

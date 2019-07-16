@@ -29,7 +29,7 @@ function ( $scope, FileUrl, AjaxService, toastr, $window) {
         AjaxService.ExecPlan("MESSNCode", 'snprint', en).then(function (data) {
             if (data.data[0].MsgType == "Error") {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: data.data[0].MsgText });
-                AjaxService.PlayVoice('3331142.mp3');
+                AjaxService.PlayVoice('error.mp3');
             }
             else if (data.data[0].MsgType == "Success") {
                 AjaxService.PlayVoice('success.mp3');
@@ -47,7 +47,7 @@ function ( $scope, FileUrl, AjaxService, toastr, $window) {
 
         postData.ParaData = JSON.stringify({});
         postData.OutList =list;
-        //console.log(data);
+        console.log(postData);
         AjaxService.Print(data.TemplateId, data.TS, postData, vm.PrinterName).then(function (data) {
             console.log(data);
         }, function (err) {

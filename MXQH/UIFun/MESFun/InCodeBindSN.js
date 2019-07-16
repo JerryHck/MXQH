@@ -13,6 +13,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     vm.NewItemType = { IsPKGen: 1 };
     vm.IsAuto = true;
     vm.PrintType = 'G';
+    vm.isFinist = true;
 
     vm.KeyDonwOrder = KeyDonwOrder;
     vm.KeyDonwInCode = KeyDonwInCode;
@@ -62,7 +63,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
 
     function showError(mes) {
         vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mes });
-        AjaxService.PlayVoice('3331142.mp3');
+        AjaxService.PlayVoice('error.mp3');
         toastr.error(mes);
     }
 
@@ -79,7 +80,12 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     function KeyDonwInCode(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.NewBind.InternalCode) {
-            Action();
+            if (vm.isFinist)
+            vm.KeyInCode = angular.copy(vm.NewBind.InternalCode);
+            if (vm.isFinist) {
+                vm.isFinist = false;
+                Action();
+            }
         }
     }
     
@@ -101,25 +107,25 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
             showError('请先选择工单');
             return;
         }
-
         vm.KeySn = undefined;
         vm.CharName = undefined;
-        var en = { InternalCode: vm.NewBind.InternalCode, WorkOrder: vm.OrderData.WorkOrder, TbName: vm.OrderData.TbName, ClName: vm.OrderData.ClName };
+        var en = { InternalCode: vm.KeyInCode, WorkOrder: vm.OrderData.WorkOrder, TbName: vm.OrderData.TbName, ClName: vm.OrderData.ClName };
         AjaxService.ExecPlan("BindCode", "checkSn", en).then(function (data) {
             if (data.data[0].MsgType == "Error") {
                 showError(data.data[0].MsgText);
                 vm.NewBind.InternalCode = undefined;
+                vm.isFinist = true;
             }
             else if (data.data[0].MsgType == "Success") {
-                vm.KeySn = data.InternalCode;
                 vm.CharName = data.data1[0] && data.data1[0].CharName ? data.data1[0].CharName : "";
-                GetSnCode();
+                GetSnCode(data.data1[0].InternalCode);
+                vm.NewBind.InternalCode = undefined;
             }
         })
     }
 
     //生成内部码 
-    function GetSnCode() {
+    function GetSnCode(inCode) {
         //平台生成方式-预览
         if (!vm.IsAuto) {
             var en = { TbName: vm.OrderData.TbName, ClName: vm.OrderData.ClName, CharName: vm.CharName };
@@ -128,30 +134,29 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
             })
         }
         else{
-            vm.NewBind.SNCode = "";
-            var SNList = [{ name: vm.OrderData.TbName, col: vm.OrderData.ClName, parm: "SNCode", charName: vm.CharName }];
-            vm.NewBind.SNColumns = JSON.stringify(SNList);
-            SaveBindCode();
+            SaveBindCode(inCode);
         }
     }
 
     function BindCode() {
-        vm.NewBind.SNCode = "";
-        var SNList = [{ name: vm.OrderData.TbName, col: vm.OrderData.ClName, parm: "SNCode", charName: vm.Batch }];
-        vm.NewBind.SNColumns = JSON.stringify(SNList);
-        SaveBindCode();
+        SaveBindCode(vm.NewBind.InternalCode);
     }
 
-    function SaveBindCode() {
-        vm.NewBind.MOId = vm.OrderData.ID;
-        console.log(123)
-        vm.promise = AjaxService.ExecPlan("BindCode", 'saveBind', vm.NewBind).then(function (data) {
+    function SaveBindCode(KeyInCode) {
+        vm.ThisBind = {};
+        vm.ThisBind.MOId = vm.OrderData.ID;
+        vm.ThisBind.SNCode = "";
+        vm.ThisBind.InternalCode = KeyInCode;
+        var SNList = [{ name: vm.OrderData.TbName, col: vm.OrderData.ClName, parm: "SNCode", charName: vm.CharName }];
+        vm.ThisBind.SNColumns = JSON.stringify(SNList);
+        vm.promise = AjaxService.ExecPlan("BindCode", 'saveBind', vm.ThisBind).then(function (data) {
+            vm.isFinist = true;
             if (data.data[0].MsgType == "Error") {
                 showError(data.data[0].MsgText);
                 vm.NewBind = {};
             }
             else if (data.data[0].MsgType == "Success") {
-                var mss = "内控码[" + vm.NewBind.InternalCode + ']  SN码 [' + data.data1[0].SNCode + '] 绑定成功';
+                var mss = "内控码[" + KeyInCode + ']  SN码 [' + data.data1[0].SNCode + '] 绑定成功';
                 var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };
                 vm.MesList.splice(0, 0, Msg);
                 vm.NewBind = {};
@@ -175,12 +180,12 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
         console.log(data)
         if (!data || !data.SNCode || data.SNCode == null) {
             toastr.error("SN不存在或还未生成");
-            AjaxService.PlayVoice('3331142.mp3');
+            AjaxService.PlayVoice('error.mp3');
             return;
         }
         if (!teData || !teData.TemplateId || teData.TemplateId == null) {
             toastr.error("打印模版获取失败");
-            AjaxService.PlayVoice('3331142.mp3');
+            AjaxService.PlayVoice('error.mp3');
             return;
         }
         var postData = {}, list = [];
