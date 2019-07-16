@@ -4,19 +4,13 @@
             <div class="vbox">
                 <div class="wrapper">
                     <div class="h4 text-center">所有标签类型</div>
-                    <!--<div class="wrapper-md">
-                        <div class="form-inline">
-                            <button class="btn btn-sm btn-info " ng-click="pt.SearchCodeType()"><i class="glyphicon glyphicon-search "></i>查询</button>
-                        </div>
-                    </div>-->
                 </div>
-            
                 <div>
-                    <div class="list-group">
+                    <div class="list-group h5" >
                         <a ng-repeat="item in pt.CodeList" class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.SendCode, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="pt.SendCode(item)">
                             <span class="pull-left"><i class="glyphicon glyphicon-tree-conifer"></i></span>
                             <small class="text-muted">
-                                <span>{{ item.TypeCode }}({{ item.TypeName }})</span>
+                                <span >{{ item.TypeCode }}({{ item.TypeName }})</span>
                             </small>
                         </a>
                     </div>
@@ -147,7 +141,6 @@
                                                 <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>
                                                 <ui-select-choices style="font-size:6px" repeat="item in pt.Template | filter: $select.search | limitTo:50" refresh="refresh($select.search)">
                                                     <div ng-bind-html="item.Name | highlight: $select.search"></div>
-                                                    <small ng-bind-html="item.Code | highlight: $select.search"></small>
                                                 </ui-select-choices>
                                             </ui-select>
                                         </div>
@@ -167,7 +160,7 @@
             <!--<pre>{{pt.CodeTypeID | json}}</pre>
             <pre>{{pt.ProductID | json}}</pre>
             <pre>{{pt.CustomAddrID | json}}</pre>
-            <pre>{{pt.TemplateID | json}}</pre>-->
+            <pre>{{pt.TemplateID | json}}</pre>-->          
         </div>
     </div>
 </div>

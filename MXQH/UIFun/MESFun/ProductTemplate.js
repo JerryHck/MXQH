@@ -96,7 +96,6 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         var u = {};
         u.ID = vm.EditItem.ID;
         u.TemplateId = vm.EditTemplateID.ID;
-        console.log(u);
         vm.promise = AjaxService.ExecPlan("MesProductTemplate", 'alter', u).then(function (data) {
             if (data.data[0].MsgType == "Success") {
                 PageChange();
@@ -111,14 +110,14 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
 
     function Edit(item) {
-        
+        console.log(item);
         for (var i = 0, len = vm.List.length; i < len; i++) {
             vm.List[i].IsEdit = false;
         }
         vm.EditItem = angular.copy(item);
         //console.log(vm.EditItem.TypeID);
         CodeTypeSelect(vm.EditItem.TypeID);
-        vm.EditTemplateID = undefined;
+        vm.EditTemplateID = item.BarcodeTemplateID;
         item.IsEdit = true;
     }
 
@@ -157,7 +156,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
     //根据标签类型查询模板编码
     function CodeTypeSelect(TypeID) {
-        vm.TemplateID = null;
+        vm.TemplateID = {};
         vm.promise = AjaxService.GetPlans("MESbaBarcodeTemplate", GetContition4(TypeID)).then(function (data) {
             //console.log(data);
             vm.Template = data;
