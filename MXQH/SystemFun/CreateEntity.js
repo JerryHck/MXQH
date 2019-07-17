@@ -77,7 +77,6 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
     function SaveEntity() {
         var en = angular.copy(vm.SelectedEn), haveRel = false, haveProc = false;
         en.ConnectName = vm.ConnectName;
-        en.CreateBy = $rootScope.User.UserNo;
         var ProList = [], RelList = [], ProcList = [];
         for (var i = 0, len = vm.PropertyList.length; i < len; i++) {
             var pro = {};
@@ -162,6 +161,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
         Cancel();
         vm.SelectedEn.ActionType = "I";
         vm.SelectedEn.AutoDelLog = false;
+        vm.SelectedEn.IsPrint = false;
         vm.isAddOpen = true;
         vm.isEditing = true;
         vm.isAdd = true;
