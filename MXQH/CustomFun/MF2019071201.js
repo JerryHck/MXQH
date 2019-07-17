@@ -6,8 +6,9 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
+    vm.page2 = { index: 1, size: 12 };
     vm.Ser = {};
-
+    vm.Focus = 0;
     vm.Insert = Insert;
     vm.SaveInsert = SaveInsert;
     vm.Edit = Edit;
@@ -15,11 +16,21 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
     vm.SaveEdit = SaveEdit;
     vm.PageChange = PageChange;
     vm.Search = Search;
+    vm.PageChange2 = PageChange2;
+    vm.Search2 = Search2;
     vm.ExportExcel = ExportExcel;
-
+    vm.SelectTab = SelectTab;
+   
+    function SelectTab(index) {
+        vm.Focus = index;
+    }
     function Search() {
         vm.page.index = 1;
         PageChange();
+    }
+    function Search2() {
+        vm.page2.index = 1;
+        PageChange2();
     }
 
     //function Insert() {
@@ -29,6 +40,10 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
 
     function Insert() {
         Open({});
+    }
+
+    function Edit(e) {
+        Open(e);
     }
 
     function Open(item) {
@@ -46,13 +61,13 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
         });
     }
 
-    function Edit(item) {
-        for (var i = 0, len = vm.List.length; i < len; i++) {
-            vm.List[i].IsEdit = false;
-        }
-        vm.EditItem = angular.copy(item);
-        item.IsEdit = true;
-    }
+    //function Edit(item) {
+    //    for (var i = 0, len = vm.List.length; i < len; i++) {
+    //        vm.List[i].IsEdit = false;
+    //    }
+    //    vm.EditItem = angular.copy(item);
+    //    item.IsEdit = true;
+    //}
 
     function Delete(item) {
         var en = angular.copy(item);
@@ -89,6 +104,13 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
         });
 
     }
+    function PageChange2() {
+        vm.promise = AjaxService.GetPlansPage("MESvw_qlBadAcquisition", GetContition2(), vm.page2.index, vm.page2.size).then(function (data) {
+            vm.List2 = data.List;
+            vm.page2.total = data.Count;
+        });
+
+    }
     function ExportExcel() {
         vm.promise = AjaxService.GetPlanOwnExcel("MESvw_qlBadAcquisition", GetContition()).then(function (data) {
             $window.location.href = data.File;
@@ -100,7 +122,8 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
         var endTime = new Date(vm.Ser.b_CreateDate);
         var start = $filter('date')(startTime, "yyyy-MM-dd hh:mm:ss");
         var end = $filter('date')(endTime, "yyyy-MM-dd hh:mm:ss");
-        console.log(start + '  ' + end);
+    
+        list.push({ name: "IsRepair", value: '0' });
         if (start) {
             list.push({ name: "CreateDate", value: start, type: '>=' });
         }
@@ -109,5 +132,23 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
         }
         return list;
     }
+    function GetContition2() {
+        var list = [];
+        var startTime2 = new Date(vm.Ser.a_CreateDate2);
+        var endTime2 = new Date(vm.Ser.b_CreateDate2);
+        var start2 = $filter('date')(startTime2, "yyyy-MM-dd hh:mm:ss");
+        var end2 = $filter('date')(endTime2, "yyyy-MM-dd hh:mm:ss");
+       
 
+        if (start2) {
+            list.push({ name: "CreateDate", value: start2, type: '>=' });
+        }
+        if (end2) {
+            list.push({ name: "CreateDate", value: end2, type: '<=' });
+        }
+       
+        list.push({ name: "IsRepair", value: '1' });
+        
+        return list;
+    }
 }]);
