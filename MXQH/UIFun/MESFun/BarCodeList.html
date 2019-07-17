@@ -58,7 +58,7 @@
                             <div class="wrapper-xs">
 
                                 <div class="col-md-4" ng-repeat="item in bar.BarList">
-                                    <div class="panel panel-default">
+                                    <div class="panel" ng-class="{'panel-danger':item.Have==0, 'panel-success':item.Have==1}">
                                         <div class="panel-heading text-center">
                                             <a class="h5 pull-left thumb-sm text-success" ng-click="bar.Edit(item)" title="编辑"><i class="glyphicon glyphicon-edit"></i></a>
                                             <a class="h5">{{ item.Name }}</a>
