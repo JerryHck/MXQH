@@ -120,7 +120,7 @@
         //获得计划资料-分页
         function GetPlansPage(name, json, index, size, limitCol) {
             var s = index <= 1 ? 1 : (index - 1) * size + 1;
-            return plan(name, json, "GetPlansPage", s, s + size, limitCol);
+            return plan(name, json, "GetPlansPage", s, s + size - 1, limitCol);
         }
 
         //执行存储过程， 获取分页数据
@@ -314,7 +314,7 @@
             var name = tbName + '-' + clName;
             if (tableConfigList[tbName + '-' + clName] && tableConfigList[tbName + '-' + clName].length > 0) {
                 d.resolve(tableConfigList[tbName + '-' + clName]);
-                console.log('have')
+                //console.log('have')
             }
             else {
                 var list = [
@@ -489,7 +489,6 @@
                     en.Data = JSON.stringify(postData);
                     en.ServiceUrl = serviceUrl;
                     en.PrinterName = printerName;
-                    console.log(en);
                     socket.send(JSON.stringify(en));
                 };
                 socket.onclose = function (e) {

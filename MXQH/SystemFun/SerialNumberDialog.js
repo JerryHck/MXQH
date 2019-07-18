@@ -10,7 +10,7 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
     vm.Item = angular.copy(ItemData);
     vm.isExists = isExists;
     vm.AddCom = AddCom;
-    vm.Item.Compose = vm.Item.Compose || [];
+    vm.Item.Compose = vm.Item.Compose == undefined || vm.Item.Compose == null ? [] : vm.Item.Compose;
     vm.Item.StsInfo = "S";
     vm.Item.IsByPara = vm.Item.IsByPara || 0;
 
@@ -23,6 +23,7 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
     vm.AddCom = AddCom;
     vm.PreView = PreView;
     vm.PreViewOnly = PreViewOnly;
+    vm.GetOneSn = GetOneSn;
 
     for (var i = 0, len = vm.Item.Compose.length; i < len; i++) {
         if (vm.Item.Compose[i].CharType == "YC") {
@@ -95,6 +96,16 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
             vm.PKData = data.data[0];
             toastr.success('储存成功');
             vm.form = Form[1];
+        })
+    }
+
+    function GetOneSn() {
+        var en = {};
+        en.TbName = vm.Item.TbName;
+        en.ClName = vm.Item.ClName;
+        en.CharName = "";
+        AjaxService.ExecPlan("SerialNumberSet", "getSn", en).then(function (data) {
+            vm.PKData = data.data[0];
         })
     }
 

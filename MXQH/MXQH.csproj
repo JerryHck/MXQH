@@ -194,6 +194,8 @@
     <Content Include="SystemFun\SerialNumber.js" />
     <Content Include="SystemFun\SerialNumberDialog .html" />
     <Content Include="SystemFun\SerialNumberDialog.js" />
+    <Content Include="SystemFun\SysOrg.html" />
+    <Content Include="SystemFun\SysOrg.js" />
     <Content Include="SystemFun\ToolManager.html" />
     <Content Include="SystemFun\ToolManager.js" />
     <Content Include="UIFun\MESFun\BarCodeList.html" />
@@ -208,6 +210,8 @@
     <Content Include="UIFun\MESFun\Material.js" />
     <Content Include="UIFun\MESFun\MaterialDialog.html" />
     <Content Include="UIFun\MESFun\MaterialDialog.js" />
+    <Content Include="UIFun\MESFun\MateRouter.html" />
+    <Content Include="UIFun\MESFun\MateRouter.js" />
     <Content Include="UIFun\MESFun\MesMaterialSer.html" />
     <Content Include="UIFun\MESFun\MesMaterialSer.js" />
     <Content Include="UIFun\MESFun\MO\MesCustomerSer.html" />

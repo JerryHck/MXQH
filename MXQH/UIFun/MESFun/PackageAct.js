@@ -40,8 +40,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             
             for (var i=0, len = vm.SNList.length; i < len; i++) {
                 if (vm.Item.SNCode == vm.SNList[i].SNCode) {
-                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: 'SN[' + vm.Item.SNCode + ']已经包含在此箱中' });
-                    AjaxService.PlayVoice('3331142.mp3');
+                    showErr('SN[' + vm.Item.SNCode + ']已经包含在此箱中');
                     vm.Item.SNCode = undefined;
                     return;
                 }
@@ -52,12 +51,12 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             en.PackDetailID = vm.PackDetail.ID;
             AjaxService.ExecPlan("MESPackageDtl", 'checkSn', en).then(function (data) {
                 if (data.data[0].MsgType == "Error") {
-                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: data.data[0].MsgText });
-                    AjaxService.PlayVoice('3331142.mp3');
+                    showErr(data.data[0].MsgText);
                 }
                 else if (data.data[0].MsgType == "Success") {
                     vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].MsgText });
                     vm.SNList = data.data1;
+                    AjaxService.PlayVoice('success.mp3');
                 }
                 vm.Item.SNCode = undefined;
             });
@@ -99,10 +98,10 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             en.value = vm.Item.WorkOrder;
             AjaxService.GetPlan("MESPackageMain", en).then(function (data) {
                 vm.ItemData = data;
-                var mss = "工单 [" + vm.Item.SNCode + '] ';
+                var mss = "工单 [" + vm.Item.WorkOrder + '] ';
                 if (!data.ID) {
                     vm.Item.WorkOrder = undefined;
-                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '  不存在或未包装' });
+                    showErr(mss + '  不存在或未进行包装登记');
                 }
                 else {
                     vm.PackMain = data;
@@ -133,8 +132,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         var en = { PackMainID: vm.ItemData.ID, BoxNumber: vm.Item.BoxNumber };
         vm.promise = AjaxService.ExecPlan("MESPackageDtl", 'getdtl', en).then(function (data) {
             if (data.data[0].MsgType == "Error") {
-                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: data.data[0].MsgText });
-                AjaxService.PlayVoice('3331142.mp3');
+                showErr(data.data[0].MsgText);
                 vm.Item.BoxNumber = undefined;
             }
             else if (data.data[0].MsgType == "Success") {
@@ -179,7 +177,20 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         })
     }
 
+    function showErr(msg) {
+        vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: msg });
+        AjaxService.PlayVoice('error.mp3');
+        toastr.error(msg);
+    }
+
     function Print(type) {
+
+        var ef = {
+            "Para": "\"{\"Box3S\":\"1/834\",\"TotalCt4S\":\"834\",\"Quantity\":6,\"BoxTotalQuantity\":5004,\"Packweight\":\"10.2KG\",\"Packweight_KG\":\"10.2KG\",\"Packweight_KGS\":\"10.2KGS\",\"Packweight_Ibs\":\"22.5Ibs\",\"Packweight_KG_Ibs\":\"10.2KG(22.5Ibs)\",\"AssemblyPlanDetailID\":3029,\"PerColorBoxQty\":6,\"PerBoxQuantity\":24,\"ShipForm\":\"\",\"MODELNUMBER\":\"B8P00811YDEMAQ\",\"Tanapa\":\"IXUE2113A\",\"Ean\":\"5031753007218\",\"TransID\":\"IT83027133\",\"COO\":\"CN\",\"BoxNumber\":1,\"ProductCount\":24,\"MODELNAME\":\"101010161\",\"ERPQuantity\":20000}\""
+        }
+
+        //console.log(JSON.stringify(ef));
+
         var en = {};
         en.PackDetailID = vm.PrintDtlId;
         en.TypeCode = type;
@@ -189,12 +200,12 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             }
             else if (data.data3[0].MsgType == "Success") {
                 var postData = {}, list = [];
-                postData.ParaData = JSON.stringify(data.data1[0]);
+                postData.ParaData = JSON.stringify(data.data[0]);
                 for (var i = 0, len = data.data2.length; i < len; i++) {
                     list.push(data.data2[i].SNCode);
                 }
                 postData.OutList = list;
-                var temp = data.data[0];
+                var temp = data.data1[0];
                 AjaxService.Print(temp.TemplateId, temp.TS, postData, vm.PrintName).then(function (data2) {
                     console.log(data2);
                 }, function (err) {

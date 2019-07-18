@@ -161,7 +161,7 @@ function ($rootScope, $scope, AjaxService, toastr, FileUrl, MyPop, $uibModalInst
         }
         else {
             vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: msg });
-            AjaxService.PlayVoice('3331142.mp3');
+            AjaxService.PlayVoice('error.mp3');
             toastr.error(msg);
         }
     }

@@ -67,7 +67,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                     //toastr.error(mes);
                     var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '不存在或还未绑定内控码' };
                     vm.MesList.splice(0, 0, Msg);
-                    AjaxService.PlayVoice('3331142.mp3');
+                    AjaxService.PlayVoice('error.mp3');
                 }
                 else {
                     var sub = data2.SNCode.substring(0, 3);
@@ -75,7 +75,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                         vm.NewBind.SNCode = undefined;
                         //toastr.error(mes);
                         vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '不允许解绑,只允许解绑158开头的SN码' });
-                        AjaxService.PlayVoice('3331142.mp3');
+                        AjaxService.PlayVoice('error.mp3');
                     }
                     else {
                         vm.OldInCode = data2.InternalCode;
@@ -108,13 +108,13 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
                         //toastr.error(mes);
                         var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '已绑定过SN码[' + data2.SNCode + "]" };
                         vm.MesList.splice(0, 0, Msg);
-                        AjaxService.PlayVoice('3331142.mp3');
+                        AjaxService.PlayVoice('error.mp3');
                     }
                     else if (data2.InternalCode && data2.InternalCode == vm.OldInCode) {
                         vm.NewBind.InternalCode = undefined;
                         var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: mss + '与原内控码[' + vm.OldInCode + "]一致" };
                         vm.MesList.splice(0, 0, Msg);
-                        AjaxService.PlayVoice('3331142.mp3');
+                        AjaxService.PlayVoice('error.mp3');
                     }
                     else if (vm.IsAuto) {
                         BindCode2();
@@ -126,6 +126,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     function BindCode2() {
         vm.promise = AjaxService.ExecPlan("SnCodeReBind", 'bind', vm.NewBind).then(function (data) {
+            AjaxService.PlayVoice('success.mp3');
             var mss = ' SN码 [' + vm.NewBind.SNCode + ']与原内部码[' + vm.OldInCode + ']解绑，与现内部码[' + vm.NewBind.InternalCode + '] 绑定成功';
             var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };
             vm.MesList.splice(0, 0, Msg);

@@ -7,16 +7,18 @@
 <div class="wrapper-md">
     
     <table class="table" cg-busy="sys.promise">
-        <tr>
-            <td class="col-md-1">编辑</td>
-            <td class="col-md-1">系统编号</td>
-            <td class="col-md-2">系统名称</td>
-            <td class="col-md-1">使用状态</td>
-            <td class="col-md-2">备注</td>
-            <td class="col-md-1">排序</td>
-            <td class="col-md-1">所属组织</td>
-            <td class="col-md-1">创建人</td>
-        </tr>
+        <thead>
+            <tr>
+                <td class="col-md-1">编辑</td>
+                <td class="col-md-1">系统编号</td>
+                <td class="col-md-2">系统名称</td>
+                <td class="col-md-1">使用状态</td>
+                <td class="col-md-2">备注</td>
+                <td class="col-md-1">排序</td>
+                <td class="col-md-1">所属组织</td>
+                <td class="col-md-1">创建人</td>
+            </tr>
+        </thead>
         <tr ng-repeat="item in sys.List">
             <td>
                 <button class="btn btn-xs btn-primary" ng-click="sys.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>

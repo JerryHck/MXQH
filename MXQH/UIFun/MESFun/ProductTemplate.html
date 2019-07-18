@@ -6,12 +6,11 @@
                     <div class="h4 text-center">所有标签类型</div>
                 </div>
                 <div>
-                    <div class="list-group h5" >
-                        <a ng-repeat="item in pt.CodeList" class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.SendCode, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="pt.SendCode(item)">
+                    <div class="list-group-lg h5" >
+                        <a ng-repeat="item in pt.CodeList" class="list-group-item b-l-3x hover-anchor cl"
+                            ng-class="{'hover': item.SendCode, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1, 'select': pt.SelectId == item.ID}" ng-click="pt.SendCode(item)">
                             <span class="pull-left"><i class="glyphicon glyphicon-tree-conifer"></i></span>
-                            <small class="text-muted">
-                                <span >{{ item.TypeCode }}({{ item.TypeName }})</span>
-                            </small>
+                            <span class="text-info font-bold">{{ item.TypeCode }}({{ item.TypeName }})</span>
                         </a>
                     </div>
                 </div>
@@ -26,13 +25,8 @@
                         <div class="form-inline">
                             <button class="btn btn-sm btn-success " ng-click="pt.Insert() "><i class="glyphicon glyphicon-plus "></i>新增</button>
                             <div class="form-group">
-                                <!--<input type="text" class="form-control" ng-model="pt.Ser.c_TypeCode" placeholder="标签类型">-->
-                                <div basic-select="MaterialCode" ng-name="e_MaterialCode" placeholder="产品编码" clear="true" ng-model="pt.Ser.e_MaterialCode" width="100px"></div>
+                                <input type="text" class="form-control" ng-model="pt.Ser.e_MaterialCode" placeholder="产品编号">
                             </div>
-                            <div class="form-group">
-                                <div basic-select="BarcodeTypeSelect" ng-name="c_TypeCode" placeholder="标签类型" clear="true" ng-model="pt.Ser.c_TypeCode" width="100px"></div>
-                            </div>
-
                                 <button class="btn btn-sm btn-info " ng-click="pt.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
                             </div>
                         </div>
@@ -41,7 +35,6 @@
                                 <thead>
                                     <tr>
                                         <td style="width:60px">操作</td>
-                                        <td style="width:100px ">类型编码</td>
                                         <td style="width:100px ">类型名称</td>
                                         <td style="width:100px ">产品编码</td>
                                         <td style="width:100px ">产品名称</td>
@@ -57,19 +50,8 @@
                                         <button class="btn btn-xs btn-success" ng-disabled="pt.InsertForm.$invalid" ng-click="pt.add()"><i class="glyphicon glyphicon-save"></i></button>
                                         <button class="btn btn-xs btn-warning" ng-click="pt.IsInsert=false"><i class="fa fa-undo"></i></button>
                                     </td>
-                        
                                     <td>
-                                        <div ng-class="{ 'has-error': pt.InsertForm.TypeCode.$invalid }">
-                                            <!--<input type="text" name="TypeCode" class="form-control" placeholder="c_TypeCode" ng-model="pt.NewItem.TypeCode" required />-->
-                                            <div basic-select="CodeTypeID" ng-change="pt.CodeTypeSelect(pt.CodeTypeID.ID)" ng-name="CodeTypeID" placeholder="类型编码"
-                                                 ng-model="pt.CodeTypeID" required>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div ng-class="{ 'has-error': pt.InsertForm.TypeName.$invalid }">
-                                            <input type="text" name="TypeName" class="form-control" placeholder="c_TypeName" ng-model="pt.CodeTypeID.TypeName" disabled="disabled"  />
-                                        </div>
+                                        {{ pt.SelectedType.TypeName }}
                                     </td>
                                     <td>
                                         <div ng-class="{ 'has-error': pt.InsertForm.MaterialCode.$invalid }">
@@ -100,11 +82,10 @@
                                     </td>
                                     <td>
                                         <div ng-class="{ 'has-error': pt.InsertForm.Name.$invalid }">
-                                            <ui-select ng-model="pt.TemplateID" ng-change="ValueChange()" theme="bootstrap" ng-required="ngRequired">
+                                            <ui-select ng-model="pt.TemplateID" theme="bootstrap" ng-required="ngRequired">
                                                 <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>
-                                                <ui-select-choices repeat="item in pt.Template | filter: $select.search | limitTo:50" refresh="refresh($select.search)">
+                                                <ui-select-choices repeat="item.TemplateId as item in pt.Template | filter: $select.search">
                                                     <div ng-bind-html="item.Name | highlight: $select.search"></div>
-                                                    <small ng-bind-html="item.Code | highlight: $select.search"></small>
                                                 </ui-select-choices>
                                             </ui-select>
                                         </div>
@@ -127,7 +108,6 @@
                                             <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
                                         </span>
                                     </td>
-                                    <td title="{{ item.BarcodeTypeID.TypeCode }}">{{ item.BarcodeTypeID.TypeCode }}</td>
                                     <td title="{{ item.BarcodeTypeID.TypeName }}">{{ item.BarcodeTypeID.TypeName }}</td>
                                     <td title="{{ item.MaterialProductId.MaterialCode }}">{{ item.MaterialProductId.MaterialCode }}</td>
                                     <td title="{{ item.MaterialProductId.MaterialName }}">{{ item.MaterialProductId.MaterialName }}</td>
@@ -136,10 +116,9 @@
                                     <td>
                                         <span ng-if="!item.IsEdit">{{ item.BarcodeTemplateID.Name }}</span>
                                         <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_Name.$invalid }">
-                                            <!--<input type="text" name="item_Name" class="form-control" placeholder="b_Name" ng-model="pt.EditItem.Name" required />-->
-                                            <ui-select ng-model="pt.EditTemplateID" ng-change="ValueChange()" theme="bootstrap" ng-required="ngRequired">
+                                            <ui-select ng-model="pt.EditTemplateID" theme="bootstrap" ng-required="ngRequired">
                                                 <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>
-                                                <ui-select-choices style="font-size:6px" repeat="item in pt.Template | filter: $select.search | limitTo:50" refresh="refresh($select.search)">
+                                                <ui-select-choices style="font-size:6px" repeat="item.TemplateId as item in pt.Template | filter: $select.search">
                                                     <div ng-bind-html="item.Name | highlight: $select.search"></div>
                                                 </ui-select-choices>
                                             </ui-select>

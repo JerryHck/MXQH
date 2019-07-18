@@ -38,22 +38,23 @@
             <table class="table one-line ">
                 <thead>
                     <tr>
-                        <td style="width:100px ">编辑</td>
+                        <td style="width:90px ">编辑</td>
                         <td style="width:100px ">计划日期</td>
                         <td style="width:100px ">生产线</td>
                         <td style="width:100px ">计划序号</td>
-                        <td style="width:100px ">工单号</td>
-                        <td style="width:100px ">产品编号</td>
-                        <td style="width:150px ">产品名称</td>
+                        <td style="width:130px ">工单号</td>
+                        <td style="width:100px ">编码规则</td>
+                        <td style="width:130px ">产品编号</td>
+                        <td style="width:160px ">产品名称</td>
                         <td style="width:100px ">计划数量</td>
                         <td style="width:100px ">投入数量</td>
                         <td style="width:100px ">完工数量</td>
-                        <td style="width:120px ">客户订单号</td>
+                        <td style="width:130px ">客户订单号</td>
                         <td style="width:100px ">计划交货期</td>
                         <td style="width:100px ">客户编号</td>
-                        <td style="width:100px ">客户名称</td>
+                        <td style="width:140px ">客户名称</td>
                         <td style="width:100px ">到货的</td>
-                        <td style="width:120px ">ERP销售单号</td>
+                        <td style="width:130px ">ERP销售单号</td>
                         <td style="width:100px ">ERP订单数量</td>
 
                     </tr>
@@ -61,12 +62,15 @@
                 <tr ng-repeat="item in mesmo.List ">
                     <td>
                         <button class="btn btn-xs btn-primary" title="编辑" ng-click="mesmo.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
-                        <!--<button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除吗'}" ng-click="to.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>-->
+                        <button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除吗'}" ng-click="mesmo.Delete(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>
+                        <button class="btn btn-xs btn-success" title="完工" ng-confirm="{text:'确定要完工吗'}" ng-click="mesmo.Complete(item.ID)"><i class="glyphicon glyphicon-check"></i></button>
+
                     </td>
                     <td title="{{ item.AssemblyDate }}">{{ item.AssemblyDate }}</td>
                     <td title="{{ item.AssemblyLineName }}">{{ item.AssemblyLineName }}</td>
                     <td title="{{ item.ListNo }}">{{ item.ListNo }}</td>
                     <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td title="{{ item.ClName }}">{{ item.ClName }}</td>
                     <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
                     <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
                     <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
@@ -85,6 +89,94 @@
         <div class="col-md-12 text-center " ng-if="mesmo.page.total>mesmo.page.pageSize ">
             <div uib-pagination total-items="mesmo.page.total " ng-model="mesmo.page.pageIndex " items-per-page="mesmo.page.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
                  ng-change="mesmo.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="1">
+        <uib-tab-heading class="h5">完工工单</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mesmo.Ser2.DocNo" placeholder="工单号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mesmo.Ser2.DocNo = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" date-picker class="form-control" name="AssemblyDate" placeholder="计划日期" option="auctusSO.UnExist2"
+                                   ng-model="mesmo.Ser2.AssemblyDate" required>
+                            <span class="input-group-addon">
+                                <a><i ng-click="mesmo.Ser2.AssemblyDate = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div style="min-width:120px;" basic-select="AssemblyLine" ng-model="mesmo.Ser2.LineID" select-class="text-xs" ng-name="LineID" ng-required="true"></div>
+                    </div>
+                    <div class="form-group">
+                        <span class="input-group-addon">
+                            <a><i ng-click="mesmo.Ser2.LineID = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                        </span>
+                    </div>
+                    <button class="btn btn-sm btn-info " ng-click="mesmo.SearchCom() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                </div>
+            </div>
+        </div>
+        <div class="padder-md table-responsive">
+            <table class="table one-line ">
+                <thead>
+                    <tr>
+                        <td style="width:60px ">编辑</td>
+                        <td style="width:100px ">计划日期</td>
+                        <td style="width:100px ">生产线</td>
+                        <td style="width:100px ">计划序号</td>
+                        <td style="width:130px ">工单号</td>
+                        <td style="width:100px ">编码规则</td>
+                        <td style="width:130px ">产品编号</td>
+                        <td style="width:160px ">产品名称</td>
+                        <td style="width:100px ">计划数量</td>
+                        <td style="width:100px ">投入数量</td>
+                        <td style="width:100px ">完工数量</td>
+                        <td style="width:130px ">客户订单号</td>
+                        <td style="width:100px ">计划交货期</td>
+                        <td style="width:100px ">客户编号</td>
+                        <td style="width:140px ">客户名称</td>
+                        <td style="width:100px ">到货的</td>
+                        <td style="width:130px ">ERP销售单号</td>
+                        <td style="width:100px ">ERP订单数量</td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in mesmo.CompleteList ">
+                    <td>
+                        <button class="btn btn-xs btn-primary" title="编辑" ng-click="mesmo.EditCom(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                    </td>
+                    <td title="{{ item.AssemblyDate }}">{{ item.AssemblyDate }}</td>
+                    <td title="{{ item.AssemblyLineName }}">{{ item.AssemblyLineName }}</td>
+                    <td title="{{ item.ListNo }}">{{ item.ListNo }}</td>
+                    <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td title="{{ item.ClName }}">{{ item.ClName }}</td>
+                    <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                    <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
+                    <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
+                    <td title="{{ item.OnlineQty }}">{{ item.OnlineQty }}</td>
+                    <td title="{{ item.FinishQty }}">{{ item.FinishQty }}</td>
+                    <td title="{{ item.CustomerOrder }}">{{ item.CustomerOrder }}</td>
+                    <td title="{{ item.DeliveryDate }}">{{ item.DeliveryDate }}</td>
+                    <td title="{{ item.CustomerCode }}">{{ item.CustomerCode }}</td>
+                    <td title="{{ item.CustomerName }}">{{ item.CustomerName }}</td>
+                    <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
+                    <td title="{{ item.ERPSO }}">{{ item.ERPSO }}</td>
+                    <td title="{{ item.ERPQuantity }}">{{ item.ERPQuantity }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-12 text-center " ng-if="mesmo.pageCom.total>mesmo.pageCom.pageSize ">
+            <div uib-pagination total-items="mesmo.pageCom.total " ng-model="mesmo.pageCom.pageIndex " items-per-page="mesmo.pageCom.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                 ng-change="mesmo.DataBindCom() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
             </div>
         </div>
     </uib-tab>

@@ -28,7 +28,7 @@ function ($rootScope, $scope, $uibModalInstance, ItemData, $http, AjaxService, t
     function GetContition() {
         var list = [];
         if (ItemData.MaterialID) {
-            list.push({name:"ProductID",value:ItemData.MaterialID});
+            list.push({ name: "ProductID", value: '%'+ItemData.MaterialID + '%' });
         }
         return list;
     }

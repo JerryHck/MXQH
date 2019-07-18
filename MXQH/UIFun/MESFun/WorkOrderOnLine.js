@@ -32,6 +32,8 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     function KeyDonwInCode(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.Item.InCode) {
+            vm.InCodeSave = angular.copy(vm.Item.InCode);
+            vm.Item.InCode = undefined;
             InCodeToDb();
         }
     }
@@ -85,7 +87,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     function showError(mes)
     {
         vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: mes });
-        AjaxService.PlayVoice('3331142.mp3');
+        AjaxService.PlayVoice('error.mp3');
         toastr.error(mes);
     }
 
@@ -96,20 +98,22 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     function Save() {
         var en = {};
         en.WorkOrder = vm.Item.WorkOrder;
-        en.InternalCode = vm.Item.InCode;
+        en.InternalCode = vm.InCodeSave;
         en.RoutingId = vm.RoutingData.ID;
+        console.log(en);
         vm.promise = AjaxService.ExecPlan("MesMxWOrder", "save", en).then(function (data) {
             if (data.data[0].MsgType == 'Success') {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
                 vm.OrderCount = data.data1[0];
+                AjaxService.PlayVoice('success.mp3');
                 //打印
-                if (vm.RoutingData.IsPrint == 'True') {
+                if (vm.RoutingData.IsPrint || vm.IsPrint) {
                     var postData = {}, list = [];
 
                     list.push(en.InternalCode);
 
                     postData.ParaData = JSON.stringify({});
-                    postData.OutList = JSON.stringify(list);
+                    postData.OutList = list;
 
                     AjaxService.Print(vm.Template.TemplateId, vm.Template.TS, postData).then(function (data) {
                         console.log(data);
@@ -117,12 +121,12 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                         console.log(err);
                     })
                 }
-                vm.Item.InCode = undefined;
+                vm.InCodeSave = undefined;
 
             }
             else if (data.data[0].MsgType == 'Error') {
                 showError(data.data[0].Msg);
-                vm.Item.InCode = undefined;
+                vm.InCodeSave = undefined;
             }
         })
     }

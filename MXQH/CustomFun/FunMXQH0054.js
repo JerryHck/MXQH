@@ -28,7 +28,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
 
-AjaxService.GetPlans("FunSelect", []).then(function (data) {
+AjaxService.GetPlans("SysOrg", []).then(function (data) {
             vm.DataList = data;
         });
 

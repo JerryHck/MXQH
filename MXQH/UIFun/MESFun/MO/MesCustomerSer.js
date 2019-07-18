@@ -28,10 +28,10 @@ function ($rootScope, $scope, $http,$uibModalInstance, AjaxService, toastr, $win
     function GetContition() {
         var list = [];
         if (vm.Ser.a_Code) {
-            list.push({ name: "Code", value: vm.Ser.a_Code });
+            list.push({ name: "Code", value: '%'+vm.Ser.a_Code+'%' });
         }
         if (vm.Ser.a_Name) {
-            list.push({ name: "Name", value: vm.Ser.a_Name });
+            list.push({ name: "Name", value: '%' + vm.Ser.a_Name + '%' });
         }
         return list;
     }
