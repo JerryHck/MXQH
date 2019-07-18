@@ -1,0 +1,15 @@
+﻿<div class="py-xl-0 pt-xl-0" ng-class="{ 'input-group' : clear }">
+    <ui-select ng-model="$parent.ngModel" ng-change="ValueChange()" theme="bootstrap" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">
+        <ui-select-match placeholder="{{ placeholder }}">
+            <i>{{ $select.selected.TbName }}</i><i ng-if="$select.selected.TbName">/</i><i>{{ $select.selected.ClName }} </i>
+        </ui-select-match>
+        <ui-select-choices repeat="item in data | filter: $select.search" refresh="refresh($select.search)">
+            <span ng-bind-html="item.TbName | highlight: $select.search"></span>/<span ng-bind-html="item.ClName | highlight: $select.search"></span>
+        </ui-select-choices>
+    </ui-select>
+    <span class="input-group-btn" ng-if="clear">
+        <button ng-click="$parent.ngModel= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+            <span class="glyphicon glyphicon-trash text-danger"></span>
+        </button>
+    </span>
+</div>
