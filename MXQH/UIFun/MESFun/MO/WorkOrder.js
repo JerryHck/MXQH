@@ -94,9 +94,7 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
     //弹出框
     function Open(resolve) {   
         Dialog.open("MesMoDialog", resolve).then(function (data) {            
-            if (data=="1") {
                 DataBind();
-            }
         }).catch(function (reason) {
 
         });
@@ -105,9 +103,7 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
     //删除工单
     function Delete(id) {
         var en = { ID: id };
-        console.log(en);
         vm.promise = AjaxService.ExecPlan("MesPlanDetail", "Delete", en).then(function (data) {
-            conosole.log(data);
             if (data.data[0].MsgType == "1") {
                 DataBind();
                 toastr.success(data.data[0].Msg);
