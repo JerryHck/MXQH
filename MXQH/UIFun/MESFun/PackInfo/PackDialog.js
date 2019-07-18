@@ -7,14 +7,27 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     vm.Save = Save;
     vm.Cancel = Cancel;
     vm.Item.PackListNo = vm.Item.PackListNo == undefined ? GetListNo() : vm.Item.PackListNo;
-    if (vm.Item.MaterialID) {
+    if (vm.Item.MaterialID) {//新增操作才会有
+        vm.Item.CountryCode = 'CN';//默认CN
         vm.promise = AjaxService.GetPlan("MesMXMaterial", { name: "Id", value: vm.Item.MaterialID }).then(function (data) {
             vm.Item.PerBoxQuantity = data.PerBoxCount;
-            vm.Item.PerColorBoxQty = data.ColorBoxCount;
+            vm.Item.PerColorBoxQty = data.ColorBoxCount;            
+        });
+        //Tanapa会有多条，多条时，以出货地为条件
+        vm.promise = AjaxService.ExecPlan("MESbaTanapa", "Get", {MaterialID:vm.Item.MaterialID,MoID:vm.Item.MoID}).then(function (data) {
+            vm.Item.MaxWeight = parseFloat(data.data[0].MaxWeight);
+            vm.Item.MinWeight = parseFloat(data.data[0].MinWeight);
+            vm.Item.Ean = data.data[0].Ean;
+            vm.Item.Model = data.data[0].Model;
+            vm.Item.RadioKit = data.data[0].RadioKit;
+            vm.Item.PKGID = data.data[0].PKGID;
+            vm.Item.Tanapa = data.data[0].Tanapa;
         });
     }
+    //
     if (vm.Item.MoID) {
         vm.promise = AjaxService.ExecPlan("MESPackageMain", "GetPackListNo", { MoID: vm.Item.MoID }).then(function (data) {
+            vm.Item.TransID = data.data[0].CustomerOrder;
             //创建包装标签号
             if (data.data[0].PackListNo == '') {
                 GetListNo();
@@ -41,7 +54,6 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
         en.TempColumns = "Entity";
         if (vm.Item.ID) {//编辑操作
             //vm.Item.Order = undefined;
-            console.log(en);
             vm.promise = AjaxService.ExecPlan("MESPackageMain", "Update", en).then(function (data) {
                 if (data.data[0].MsgType == '1') {
                     toastr.success(data.data[0].Msg);

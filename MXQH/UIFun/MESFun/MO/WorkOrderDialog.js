@@ -85,9 +85,8 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
                 if (data.data[0].MsgType == "0") {
                     toastr.error(data.data[0].Msg);
                 } else {
-                    var returnData = "1";
                     toastr.success(data.data[0].Msg);
-                    $uibModalInstance.close(returnData);
+                    $uibModalInstance.close("1");
                 }
             }).catch(function (data) {
             });
@@ -101,7 +100,7 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
                 } else {
                     var returnData = "1";                    
                     toastr.success(data.data[0].Msg);
-                    $uibModalInstance.close(returnData);
+                    $uibModalInstance.close("1");
                 }
             }).catch(function (data) {
             });
@@ -118,7 +117,7 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
     }
     //关闭弹窗
     function Cancel() {
-        $uibModalInstance.dismiss('Cancel');
+        $uibModalInstance.close("1");
     }
     //产品选择框
     function SelectProduct() {
@@ -189,6 +188,7 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
                 if (data.length == 0) {
                     vm.CanAddPack = false;
                 } else {
+                    vm.Item.CustomerOrder = data[0].TransID
                     vm.CanAddPack = true;
                 }
             });
