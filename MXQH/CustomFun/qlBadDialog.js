@@ -55,25 +55,38 @@ function qlBadDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, toas
 
     function Alter() {
         var en = {};
+        console.log(en);
+        
         en.ID = vm.item.ID;
         en.BarCode = vm.item.BarCode;
-        en.WorOrder = vm.item.WorOrder;
-        en.CustomerOrder = vm.item.CustomerOrder;
+        en.WorOrder = vm.item.WorOrder2;
+        en.CustomerOrder = vm.item.CustomerOrder2;
         en.MaterialName = vm.item.MaterialName;
         en.CustomerName = vm.item.CustomerName;
         en.FirstPoorName = vm.item.FirstPoorName;
         en.SecondPoorName = vm.item.SecondPoorName;
         en.ProcedureName = vm.AName.Name;
-        en.FirstPoor = vm.AName.ID;
-        en.WorkPartName = vm.BName.Name;
+        en.FirstPoor = vm.AName.ID;       
         en.SecondPoor = vm.BName.ID;
+        en.ProcedureID = vm.item.ProcedureID;
+        if (vm.IsRepair == null) {
+            vm.IsRepair = 0;
+        }
+
+        en.ProcedureCode = vm.item.ProcedureCode;
+        en.ProcdureName = vm.AName.Name;
+        console.log(en.ProcdureName);
+        console.log(en.ProcedureID);
+        
+        en.WorkPartCode = vm.item.WorkPartCode;
+        en.WorkPartName = vm.BName.Name;
+        console.log(en.WorkPartName);
         en.IsRepair = vm.IsRepair;
         en.WorkPartID = vm.item.WorkPartID;
-        en.WorkPartCode = vm.item.WorkPartCode;
-        en.WorkPartName = vm.item.WorkPartName;
         en.ExtendOne = vm.item.ExtendOne;
         en.PoorReason = vm.PoorReason;
-      
+        en.CreateBy;
+        en.ModifyBy;    
         if (vm.IsRepair == true) {
             en.IsRepair = 1;
         } else if (vm.IsRepair == false) {
@@ -84,7 +97,7 @@ function qlBadDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, toas
         vm.promise = AjaxService.ExecPlan("MESvw_qlBadAcquisition", "update", en).then(function (data) {
             console.log(data);
             if (data.data[0].MsgType == 'Success') {
-                toastr.success('更新成功');
+                toastr.success('已记录');
                 $uibModalInstance.close(en);
             }
             else if (data.data[0].MsgType == 'Error') {

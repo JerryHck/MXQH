@@ -130,9 +130,9 @@
                                placeholder="IsRepair" ng-model="item.IsRepair" ng-if="item.IsRepair"></td>-->
                    
                     <td title="{{ item.IsRepair }}"><span ng-if="item.IsRepair==1">已修复</span><span ng-if="item.IsRepair==0">未修复</span></td>
-                    <td title="{{ item.RepairTime }}">{{ item.RepairTime }}</td>
+                    <td title="{{ item.RepairTime }}">{{ item.RepairTime |date : 'yyyy-MM-dd HH:mm:ss' }}</td>
                     <td title="{{ item.WorOrder }}">{{ item.WorOrder }}</td>
-                    <td title="{{ item.CustomerOrder }}">{{ item.CustomerOrder }}</td>
+                    <td title="{{ item.CustomerOrder2 }}">{{ item.CustomerOrder2 }}</td>
                     <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
                     <td title="{{ item.CustomerName }}">{{ item.CustomerName }}</td>
                     <td title="{{ item.BarCode }}">{{ item.BarCode }}</td>
