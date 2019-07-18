@@ -47,6 +47,8 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
     }
 
     function Open(item) {
+        
+        
         Dialog.OpenDialog("qlBadDialog", item).then(function (data) {
             PageChange();
         }).catch(function (reason) {

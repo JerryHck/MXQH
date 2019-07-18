@@ -7,6 +7,7 @@ function qlBadDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, toas
     var vm = this;
     vm.form = Form[ItemData.Id ? 1 : 0];
     vm.item = ItemData;
+    vm.IsRepair = true;//默认勾上修复
     vm.isExists = isExists;
     //vm.ChangeMonitor = ChangeMonitor;
     //vm.OpenMate = OpenMate;
