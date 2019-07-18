@@ -15,6 +15,7 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
     vm.ConfigMaterialUnit = { Table: 'MaterialUnit', Column: 'Unit' };
     
     if (vm.Item.TbName == null & vm.Item.ClName == null) {
+        vm.SerialNum = {};
     } else {
         vm.SerialNum = {};
         vm.SerialNum.TbName = vm.Item.TbName;

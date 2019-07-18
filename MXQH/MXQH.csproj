@@ -73,6 +73,9 @@
     <Content Include="css\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="css\font-awesome-4.7.0\HELP-US-OUT.txt" />
     <Content Include="css\font-awesome.min.css" />
+    <Content Include="CustomFun\qlBadDialog.html" />
+    <Content Include="CustomFun\qlBadDialog.js" />
+    <Content Include="CustomFun\UISelect\BarcodeANDTemplate.html" />
     <Content Include="Data\Handler\New.html" />
     <Content Include="Data\Handler\New.js" />
     <Content Include="index.html" />
