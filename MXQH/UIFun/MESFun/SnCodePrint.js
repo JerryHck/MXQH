@@ -42,18 +42,18 @@ function ( $scope, FileUrl, AjaxService, toastr, $window) {
 
     function PrintCode(data) {
         var postData = {}, list = [];
-
         list.push(data.SnCode);
-
         postData.ParaData = JSON.stringify({});
         postData.OutList =list;
-        console.log(postData);
-        AjaxService.Print(data.TemplateId, data.TS, postData, vm.PrinterName).then(function (data) {
-            console.log(data);
-        }, function (err) {
-            console.log(err);
-        })
-
+        //console.log(data)
+        var printNum = data.ColorBoxPrintNum || 1;
+        for (var i = 0; i < printNum; i++) {
+            AjaxService.Print(data.TemplateId, data.TS, postData, vm.PrinterName).then(function (data) {
+                console.log(data);
+            }, function (err) {
+                console.log(err);
+            })
+        }
     }
 }
 ]);
