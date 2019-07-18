@@ -24,9 +24,10 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     //料品列表数据
     function DataBindCode() {
         //[{ name: "MaterialCode", value: vm.Ser.MaterialCode }],
-        vm.promise = AjaxService.GetPlansPage("MesMXMaterial", [{ name: "State", value: 1}], vm.codePage.pageIndex, vm.codePage.pageSize).then(function (data) {
-            vm.CodeList = data.List;
-            vm.codePage.totalCode = data.Count;
+        vm.promise = AjaxService.GetPlans("MesMXMaterial", [{ name: "State", value: 1 }]).then(function (data) {
+            console.log(data);
+            vm.CodeList = data;
+            //vm.codePage.totalCode = data.Count;
         });
     }
     //选择料号Tanapa信息
