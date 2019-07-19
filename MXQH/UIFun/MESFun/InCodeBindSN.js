@@ -121,6 +121,8 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
                 GetSnCode(data.data1[0].InternalCode);
                 vm.NewBind.InternalCode = undefined;
             }
+        }, function (data) {
+            vm.isFinist = true;
         })
     }
 
@@ -131,6 +133,8 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
             var en = { TbName: vm.OrderData.TbName, ClName: vm.OrderData.ClName, CharName: vm.CharName };
             AjaxService.ExecPlan("SerialNumberSet", "preview", en).then(function (data) {
                 vm.NewBind.SNCode = data.data[0].SN;
+            }, function (data) {
+                vm.isFinist = true;
             })
         }
         else{
@@ -172,6 +176,8 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
                 }
             }
 
+        }, function (data) {
+            vm.isFinist = true;
         });
     }
 

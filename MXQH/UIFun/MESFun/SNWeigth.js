@@ -79,13 +79,15 @@ function ($scope, $http, AjaxService, toastr, $window) {
         }
         var en = { SNCode: vm.SNCode, Weigth: vm.Weigth };
         AjaxService.ExecPlan("MESSnCodeWeigth", "weigth", en).then(function (data) {
-            if (data.data[0].MsgType == "Error") {
-                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: data.data[0].MsgText });
+            vm.Range = data.data[0];
+            if (data.data1[0].MsgType == "Error") {
+                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: data.data1[0].MsgText });
                 AjaxService.PlayVoice('error.mp3');
             }
-            else if (data.data[0].MsgType == "Success") {
-                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].MsgText });
+            else if (data.data1[0].MsgType == "Success") {
+                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data1[0].MsgText });
                 vm.Weigth = undefined;
+                console.log(vm.Range)
                 AjaxService.PlayVoice('success.mp3');
             }
             vm.SNCode = undefined;

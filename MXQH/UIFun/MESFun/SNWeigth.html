@@ -31,6 +31,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-lg-3 control-label">重量范围</label>
+                                <div class="col-lg-8 form-control-static">
+                                    <span class="text-danger h4" ng-if="sn.Range.MinWeigth">{{ sn.Range.MinWeigth }}~{{ sn.Range.MaxWeigth }}</span>
+                                    
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="col-lg-offset-4 col-lg-8">
                                     <div class="checkbox col-md-5">
                                         <label class="i-checks">
