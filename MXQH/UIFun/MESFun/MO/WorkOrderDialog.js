@@ -14,6 +14,7 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
     vm.AddPack = AddPack;
     vm.EditPack = EditPack;
     vm.DeletePack = DeletePack;
+    console.log(vm.Item);
     if (!vm.Item.AssemblyDate) {
         vm.Item.AssemblyDate = GetCurrentDate();
         vm.Item.DeliveryDate = GetCurrentDate();
@@ -82,6 +83,7 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
         en.TempColumns = "EntityInfo";
         if (vm.Item.ID) {//编辑操作
             vm.promise = AjaxService.ExecPlan("MesPlanDetail", "Update", en).then(function (data) {
+                console.log(data);
                 if (data.data[0].MsgType == "0") {
                     toastr.error(data.data[0].Msg);
                 } else {

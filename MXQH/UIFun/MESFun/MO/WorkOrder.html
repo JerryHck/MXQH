@@ -70,7 +70,8 @@
                     <td title="{{ item.AssemblyLineName }}">{{ item.AssemblyLineName }}</td>
                     <td title="{{ item.ListNo }}">{{ item.ListNo }}</td>
                     <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
-                    <td title="{{ item.ClName }}">{{ item.ClName }}</td>
+                    <td class="bg-warning" ng-if="item.ClName!=''" title="{{ item.ClName }}">{{ item.ClName }}</td>
+                    <td ng-if="item.ClName==''">{{item.MaterialClName}}</td>
                     <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
                     <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
                     <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>

@@ -40,6 +40,10 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     function Save() {
         var en = {};
         var li = [];
+        if (parseFloat(vm.Item.MaxWeight) < parseFloat(vm.Item.MinWeight)) {
+            toastr.error('数据有误，“最大重量”小于“最小重量”！');
+            return;
+        }
         vm.Item.ShipForm = vm.Item.ShipForm == undefined ? '' : vm.Item.ShipForm;
         vm.Item.ShipInstruction = vm.Item.ShipInstruction == undefined ? '' : vm.Item.ShipInstruction;
         vm.Item.Tanapa = vm.Item.Tanapa == undefined ? '' : vm.Item.Tanapa;
