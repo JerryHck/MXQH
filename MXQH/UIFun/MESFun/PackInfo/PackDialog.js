@@ -27,7 +27,9 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     //
     if (vm.Item.MoID) {
         vm.promise = AjaxService.ExecPlan("MESPackageMain", "GetPackListNo", { MoID: vm.Item.MoID }).then(function (data) {
-            vm.Item.TransID = data.data[0].CustomerOrder;
+            if (!vm.Item.TransID) {
+                vm.Item.TransID = data.data[0].CustomerOrder;
+            }
             //创建包装标签号
             if (data.data[0].PackListNo == '') {
                 GetListNo();
