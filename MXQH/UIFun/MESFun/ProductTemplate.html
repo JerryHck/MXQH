@@ -23,11 +23,11 @@
                     <uib-tab-heading class="h5">产品模板关联</uib-tab-heading>
                     <div class="wrapper-md">
                         <div class="form-inline">
-                            <button class="btn btn-sm btn-success " ng-click="pt.Insert() "><i class="glyphicon glyphicon-plus "></i>新增</button>
+                            <button class="btn btn-sm btn-success " ng-click="pt.Insert() " ng-disabled="pt.SelectId==-1"><i class="glyphicon glyphicon-plus "></i>新增</button>
                             <div class="form-group">
                                 <input type="text" class="form-control" ng-model="pt.Ser.e_MaterialCode" placeholder="产品编号">
                             </div>
-                                <button class="btn btn-sm btn-info " ng-click="pt.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                                <button class="btn btn-sm btn-info " ng-click="pt.Search() " ng-disabled="pt.SelectId==-1"><i class="glyphicon glyphicon-search "></i>查询</button>
                             </div>
                         </div>
                         <div class="padder-md ">
@@ -41,7 +41,7 @@
                                         <td style="width:100px ">到货地编码</td>
                                         <td style="width:100px ">到货单名称</td>
                                         <td style="width:100px ">模板名称</td>
-                                        <td style="width:80px ">模板编码</td>
+                                        <!--<td style="width:80px ">模板编码</td>-->
                                         
                                     </tr>
                                 </thead>
@@ -90,11 +90,11 @@
                                             </ui-select>
                                         </div>
                                     </td>
-                                    <td>
+                                    <!--<td>
                                         <div ng-class="{ 'has-error': pt.InsertForm.Code.$invalid }">
                                             <input type="text" name="Code" class="form-control" placeholder="b_Code" ng-model="pt.TemplateID.Code" disabled="disabled" />
                                         </div>
-                                    </td>
+                                    </td>-->
                                  
                                 </tr>
                                 <tr ng-repeat="item in pt.List " ng-form="item.ItemForm">
@@ -125,7 +125,7 @@
                                         </div>
                                     </td>
 
-                                    <td title="{{ item.BarcodeTemplateID.Code }}">{{ item.BarcodeTemplateID.Code }}</td>
+                                    <!--<td title="{{ item.BarcodeTemplateID.Code }}">{{ item.BarcodeTemplateID.Code }}</td>-->
 
                                 </tr>
                             </table>

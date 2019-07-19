@@ -10,6 +10,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.page3 = { index: 1, size: 10 };
     vm.Ser = {};
 
+    vm.SelectId = -1;
     vm.Insert = Insert;
     vm.Edit = Edit;
     vm.Delete = Delete;
@@ -172,9 +173,11 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
     function GetContition2() {
         var list = [];
+       
         if (vm.Ser.e_MaterialCode) {
             list.push({ name: "MaterialCode", value: vm.Ser.e_MaterialCode });
         }
+        
         list.push({ name: "TypeID", value: vm.SelectId }, { name: "State", value: 1 });
         return list;
     }
