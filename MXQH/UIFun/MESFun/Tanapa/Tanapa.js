@@ -25,7 +25,6 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     function DataBindCode() {
         //[{ name: "MaterialCode", value: vm.Ser.MaterialCode }],
         vm.promise = AjaxService.GetPlans("MesMXMaterial", [{ name: "State", value: 1 }]).then(function (data) {
-            console.log(data);
             vm.CodeList = data;
             //vm.codePage.totalCode = data.Count;
         });
@@ -52,6 +51,11 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function SaveInsert() {
+
+        if (parseFloat(vm.NewItem.MaxWeight) < parseFloat(vm.NewItem.MinWeight)) {
+            toastr.error('数据有误，“最大重量”小于“最小重量”！');
+            return;
+        }
         vm.NewItem.MaterialID = vm.Material.MaterialID
         vm.NewItem.SendPlaceID = vm.SendPlace.ID
         if (!vm.NewItem.IsValid) {
@@ -66,7 +70,6 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     function Edit(item) {
         vm.SendPlace = item.SendPlace;
-        console.log(item.SendPlace);
         for (var i = 0, len = vm.List.length; i < len; i++) {
             vm.List[i].IsEdit = false;
         }
@@ -85,6 +88,11 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     function SaveEdit(index) {
         var en = {};
+        console.log(vm.EditItem);
+        if (parseFloat(vm.EditItem.MaxWeight) < parseFloat(vm.EditItem.MinWeight)) {
+            toastr.error('数据有误，“最大重量”小于“最小重量”！');
+            return;
+        }
         en.ID = vm.EditItem.ID;
         en.SendPlaceID = vm.SendPlace.ID;
         en.MaxWeight = vm.EditItem.MaxWeight;
@@ -99,7 +107,6 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         en.Battery = vm.EditItem.Battery;
         en.RadioKit = vm.EditItem.RadioKit;
         en.Description = vm.EditItem.Description;
-        console.log(en);
         vm.promise = AjaxService.PlanUpdate("MESbaTanapa", en).then(function (data) {
             PageChange();
             toastr.success('更新成功');
