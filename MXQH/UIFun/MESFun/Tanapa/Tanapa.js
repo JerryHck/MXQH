@@ -94,7 +94,9 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
             return;
         }
         en.ID = vm.EditItem.ID;
-        en.SendPlaceID = vm.SendPlace.ID;
+        if (vm.SendPlace) {
+            en.SendPlaceID = vm.SendPlace.ID;
+        }
         en.MaxWeight = vm.EditItem.MaxWeight;
         en.MinWeight = vm.EditItem.MinWeight;
         en.Tanapa = vm.EditItem.Tanapa;
