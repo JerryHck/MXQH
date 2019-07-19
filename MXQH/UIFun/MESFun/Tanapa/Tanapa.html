@@ -134,7 +134,7 @@
                                 <td title="{{ item.SendPlace.Name }}">
                                     <span ng-if="!item.IsEdit">{{ item.SendPlace.Name }}</span>
                                     <div ng-if="item.IsEdit">
-                                        <div ng-name="SendPlace" ng-required="true" basic-select="MesSendPlaceEntity" placeholder="到货地名称" ng-model="tanapa.SendPlace"></div>
+                                        <div ng-name="SendPlace" basic-select="MesSendPlaceEntity" placeholder="到货地名称" ng-model="tanapa.SendPlace"></div>
                                     </div>
                                 </td>
                                 <td title="{{ item.MaxWeight }}">
