@@ -1,7 +1,7 @@
 ﻿'use strict';
 angular.module('app')
-.controller('BarCodeListCtrl', ['$rootScope', '$scope', 'FileUrl', 'AjaxService', 'toastr', 'serviceUrl', '$window',
-function ($rootScope, $scope, FileUrl, AjaxService, toastr, serviceUrl, $window) {
+.controller('BarCodeListCtrl', ['$rootScope', '$scope', 'FileUrl', 'AjaxService', 'toastr', 'serviceUrl',
+function ($rootScope, $scope, FileUrl, AjaxService, toastr, serviceUrl) {
 
     var vm = this;
 
@@ -13,7 +13,6 @@ function ($rootScope, $scope, FileUrl, AjaxService, toastr, serviceUrl, $window)
     vm.SelectType = SelectType;
     vm.PageChange = PageChange;
     vm.Edit = Edit;
-    vm.DownExe = DownExe;
     vm.NewLabel = NewLabel;
 
     Search()
@@ -60,10 +59,6 @@ function ($rootScope, $scope, FileUrl, AjaxService, toastr, serviceUrl, $window)
         var str = 'BarCode:' + serviceUrl + '-0-' + (vm.SelectedType && vm.SelectedType.ID ? vm.SelectedType : "0");
         //console.log(str);
         $window.location.href = str;
-    }
-
-    function DownExe() {
-        $window.location.href = FileUrl + "DownLoad/MXQH标签设计.exe";
     }
 }
 ]);

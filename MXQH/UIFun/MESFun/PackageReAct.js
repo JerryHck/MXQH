@@ -1,11 +1,11 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('PackageReActCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
+.controller('PackageReActCtrl', ['$scope', '$http', 'AjaxService', 'toastr', '$window',
+function ($scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
-    vm.Item = { CreateBy: $rootScope.User.UserNo };
+    vm.Item = {};
     vm.MesList = [];
     vm.Focus = { SNCode: true, Order: false, SN: false };
     vm.page = { index: 1, size: 12 };
@@ -108,7 +108,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function SelectTab(index) {
-        vm.Focus = index;
+        vm.Focus.SNCode = index;
     }
 
     function Edit() {
@@ -120,7 +120,6 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         en.PackDetailID = vm.PackDetail.ID;
         en.PalletCode = vm.PackDetail.PalletCode;
         en.Packweight = vm.PackDetail.Packweight;
-        en.CreateBy = $rootScope.User.UserNo;
         en.ActType = t;
         vm.promise = AjaxService.ExecPlan("MESPackageDtl", "save", en).then(function (data) {
             toastr.success('操作成功');

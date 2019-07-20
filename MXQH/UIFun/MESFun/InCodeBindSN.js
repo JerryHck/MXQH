@@ -213,7 +213,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     function GetContition() {
         var list = [];
         if (vm.Ser.InternalCode) {
-            st.push({ name: "InternalCode", value: vm.Ser.InternalCode });
+            list.push({ name: "InternalCode", value: vm.Ser.InternalCode });
         }
         if (vm.Ser.SNCode) {
             list.push({ name: "SNCode", value: vm.Ser.SNCode });

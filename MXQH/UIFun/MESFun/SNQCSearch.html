@@ -33,9 +33,9 @@
                 <td>{{ item.WorkItemCode }}</td>
                 <td>{{ item.WorkMateName }}</td>
                 <td>{{ item.SNCode }}</td>
-                <td>{{ item.SNTime }}</td>
+                <td>{{ item.SNTime | date :'yyyy-MM-dd hh:mm:ss' }}</td>
                 <td>{{ item.Weight }}</td>
-                <td>{{ item.WeigthTime }}</td>
+                <td>{{ item.WeigthTime | date :'yyyy-MM-dd hh:mm:ss' }}</td>
                 <td>{{ item.PackMO }}</td>
                 <td>{{ item.PackItemCode }}</td>
                 <td>{{ item.PackMateName }}</td>
