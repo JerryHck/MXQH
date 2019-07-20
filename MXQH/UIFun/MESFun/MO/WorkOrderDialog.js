@@ -230,6 +230,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     function DeletePack(id) {
         vm.promise = AjaxService.ExecPlan("MESPackageMain", "Delete", { PackMainID:id }).then(function (data) {
             if (data.data[0].MsgType == '1') {
+                GetPackInfo('0');
                 toastr.success(data.data[0].Msg);
             } else {
                 toastr.error(data.data[0].Msg);
