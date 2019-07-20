@@ -1,7 +1,7 @@
 ﻿'use strict';
 angular.module('app')
-.controller('MesMoDialogCtrl', ['$rootScope', '$scope','ItemData', '$uibModalInstance', 'Dialog', 'toastr', 'AjaxService', 'Form',
-function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxService, Form) {
+.controller('MesMoDialogCtrl', ['$rootScope', '$scope', 'ItemData', '$uibModalInstance', 'Dialog', 'toastr', 'AjaxService', 'Form',
+function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxService, Form) {
     var vm = this;
     vm.Save = Save;
     vm.Cancel = Cancel;    
@@ -9,12 +9,11 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
     vm.SelectProduct = SelectProduct;
     vm.SelectCustomer = SelectCustomer;
     vm.SelectRouting = SelectRouting;
-    vm.Item.ListNo = ItemData.ListNo == undefined ? GetListNo() : ItemData.ListNo;
+    vm.Item.ListNo = vm.Item.ListNo == undefined ? GetListNo() : vm.Item.ListNo;
     vm.GetPackInfo = GetPackInfo;
     vm.AddPack = AddPack;
     vm.EditPack = EditPack;
     vm.DeletePack = DeletePack;
-    console.log(vm.Item);
     if (!vm.Item.AssemblyDate) {
         vm.Item.AssemblyDate = GetCurrentDate();
         vm.Item.DeliveryDate = GetCurrentDate();
@@ -83,7 +82,6 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
         en.TempColumns = "EntityInfo";
         if (vm.Item.ID) {//编辑操作
             vm.promise = AjaxService.ExecPlan("MesPlanDetail", "Update", en).then(function (data) {
-                console.log(data);
                 if (data.data[0].MsgType == "0") {
                     toastr.error(data.data[0].Msg);
                 } else {
@@ -182,7 +180,7 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
 
     // #region 包装信息
     //获取包装信息
-    function GetPackInfo() {
+    function GetPackInfo(IsEdit) {
         //弹窗为编辑操作时，获取包装信息
         if (vm.Item.ID) {
             vm.promise = AjaxService.GetPlans("MESPackageMain", { name: 'AssemblyPlanDetailID', value: vm.Item.ID }).then(function (data) {
@@ -190,7 +188,9 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
                 if (data.length == 0) {
                     vm.CanAddPack = false;
                 } else {
-                    vm.Item.CustomerOrder = data[0].TransID
+                    if (IsEdit=='1') {
+                        vm.Item.CustomerOrder = data[0].TransID
+                    }
                     vm.CanAddPack = true;
                 }
             });
@@ -210,7 +210,7 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
     function Open(resolve) {
         Dialog.open("PackDialog", resolve).then(function (data) {
             if (data == "1") {
-                GetPackInfo();
+                GetPackInfo('1');
             }
         }).catch(function (reason) {
 
