@@ -126,11 +126,12 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     }
 
     function ChangeBoxNum(boxNum) {
-        if (!boxNum || boxNum > vm.BoxList.length) return;
+        if (!boxNum) return;
         vm.Item.BoxNumber = boxNum;
         vm.ScTop = $("#sc")[0].scrollTop + $("#sc a:first").height() + 18;
         var en = { PackMainID: vm.ItemData.ID, BoxNumber: vm.Item.BoxNumber };
         vm.promise = AjaxService.ExecPlan("MESPackageDtl", 'getdtl', en).then(function (data) {
+            console.log(data)
             if (data.data[0].MsgType == "Error") {
                 showErr(data.data[0].MsgText);
                 vm.Item.BoxNumber = undefined;
@@ -141,7 +142,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 vm.PackDetail.ProductCount = vm.PackDetail.ProductCount || 0;
                 vm.PrintDtlId = vm.PackDetail.ID;
                 vm.NoList = [];
-                for (var i = 0; i < vm.PackDetail.ProductCount; i++) {
+                for (var i = 0, len2 = vm.PackDetail.ProductCount > 50 ? 50 : vm.PackDetail.ProductCount; i < vm.PackDetail.ProductCount; i++) {
                     vm.NoList.push(i + 1);
                 }
                 vm.SNList = data.data2;
