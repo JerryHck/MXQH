@@ -1,7 +1,7 @@
 ﻿'use strict';
 angular.module('app')
-.controller('BarCodeListCtrl', ['$rootScope', '$scope', 'FileUrl', 'AjaxService', 'toastr', 'serviceUrl',
-function ($rootScope, $scope, FileUrl, AjaxService, toastr, serviceUrl) {
+.controller('BarCodeListCtrl', ['$window', '$scope', 'FileUrl', 'AjaxService', 'toastr', 'serviceUrl',
+function ($window, $scope, FileUrl, AjaxService, toastr, serviceUrl) {
 
     var vm = this;
 

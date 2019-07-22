@@ -28,7 +28,6 @@ angular.module('appData')
     message: '',
     backdrop: true,
     templateUrl: './Loading/Loading.html',
-    //templateUrl: 'http://localhost:8080/MXQH/Loading/Loading.html', 
     message: '请稍等...',
     minDuration: 500,
     notBusyDisabled: true
