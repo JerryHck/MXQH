@@ -20,7 +20,9 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
     vm.Search2 = Search2;
     vm.ExportExcel = ExportExcel;
     vm.SelectTab = SelectTab;
-   
+
+    
+
     function SelectTab(index) {
         vm.Focus = index;
     }
@@ -93,6 +95,7 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
         en.FirstPoorName = vm.EditItem.FirstPoorName;
         en.SecondPoorName = vm.EditItem.SecondPoorName;
         en.CreateName = vm.EditItem.CreateName;
+    
         vm.promise = AjaxService.PlanUpdate("MESvw_qlBadAcquisition", en).then(function (data) {
             PageChange();
             toastr.success('更新成功');
@@ -110,6 +113,7 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
         vm.promise = AjaxService.GetPlansPage("MESvw_qlBadAcquisition", GetContition2(), vm.page2.index, vm.page2.size).then(function (data) {
             vm.List2 = data.List;
             vm.page2.total = data.Count;
+            
         });
 
     }
