@@ -5,13 +5,14 @@
             <div class="form-inline">
                 <button class= "btn btn-sm btn-success " ng-click= "pc.Insert() "><i class= "glyphicon glyphicon-plus "></i>新增</button>
                 <div class="form-group">
-                    <input type="text" class="form-control"  ng-model="pc.Ser.b_MaterialCode" placeholder="成品料号">
-                    <!--<div basic-select="PID" ng-name="a_PID" placeholder="成品" clear="true" ng-model="pc.Ser.a_PID" width="100px"></div>-->
+                    <!--<input type="text" class="form-control"  ng-model="pc.Ser.b_MaterialCode" placeholder="成品料号">-->
+                    <div basic-select="PID" ng-name="a_PID" placeholder="成品" clear="true" ng-model="pc.Ser.a_PID" width="100px"></div>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control"  ng-model="pc.Ser.b_MaterialName" placeholder="成品名称">
-                   <!-- <div basic-select="CID" ng-name="a_CID" placeholder="半成品" clear="true" ng-model="pc.Ser.a_CID" width="100px"></div>-->
+                    <!--<input type="text" class="form-control"  ng-model="pc.Ser.b_MaterialName" placeholder="成品名称">-->
+                    <div basic-select="CID" ng-name="a_CID" placeholder="半成品" clear="true" ng-model="pc.Ser.a_CID" width="100px"></div>
                 </div>
+             
                 <button class= "btn btn-sm btn-info " ng-click= "pc.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
                 <!--<button class= "btn btn-sm btn-success " ng-click= "pc.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>-->
             </div>
@@ -69,7 +70,7 @@
                             <div basic-select="CID" ng-name="item_CID" placeholder="半成品" ng-model="pc.EditItem.CID"  ng-required ="true"></div>
                         </div>
                     </td>
-                    <td title="{{ item.CreateBy }}">{{ item.UserName }}</td>
+                    <td title="{{ item.CreateBy }}">{{ item.UserName}}</td>
                     <td title="{{ item.CreateDate }}">{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                 </tr>
             </table>
