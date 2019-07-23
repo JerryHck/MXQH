@@ -26,6 +26,10 @@ function ( $scope, FileUrl, AjaxService, toastr, $window) {
     }
 
     function CheckPrint(en) {
+        if (en.Code.length == 9) {
+            vm.DeleteItem.InternalCode = undefined;
+            return;
+        }
         AjaxService.ExecPlan("MESSNCode", 'snprint', en).then(function (data) {
             if (data.data[0].MsgType == "Error") {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: data.data[0].MsgText });

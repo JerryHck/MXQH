@@ -50,7 +50,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
                 else {
                     vm.OrderData = data.data[0];
                     vm.OrderCount = data.data1[0];
-                    vm.Focus.InCode = true;
+                    $("input.SnFocus").focus();
                 }
             });
         }

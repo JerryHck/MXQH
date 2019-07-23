@@ -7,7 +7,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     var vm = this;
     vm.Item = { };
     vm.MesList = [];
-    vm.Focus = { SNCode: true, Order: false, SN: false };
+    vm.Focus = { SN: true };
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
     vm.IsAuto = true;
@@ -72,6 +72,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         en.SNColumns = JSON.stringify(SNList);
         AjaxService.PlanUpdate("MESPackageDtl", en).then(function (data) {
             ChangeBoxNum(vm.Item.BoxNumber);
+            $("input.SnFocus").focus();
         })
     }
 
@@ -109,6 +110,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                     vm.PackDetail = undefined;
                     vm.Item.BoxNumber = undefined;
                     getBoxList();
+                    $("input.SnFocus").focus();
                 }
             });
         }
@@ -131,7 +133,6 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         vm.ScTop = $("#sc")[0].scrollTop + $("#sc a:first").height() + 18;
         var en = { PackMainID: vm.ItemData.ID, BoxNumber: vm.Item.BoxNumber };
         vm.promise = AjaxService.ExecPlan("MESPackageDtl", 'getdtl', en).then(function (data) {
-            console.log(data)
             if (data.data[0].MsgType == "Error") {
                 showErr(data.data[0].MsgText);
                 vm.Item.BoxNumber = undefined;
@@ -145,6 +146,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 for (var i = 0, len2 = vm.PackDetail.ProductCount > 50 ? 50 : vm.PackDetail.ProductCount; i < vm.PackDetail.ProductCount; i++) {
                     vm.NoList.push(i + 1);
                 }
+                $("input.SnFocus").focus();
                 vm.SNList = data.data2;
             }
         });
@@ -167,6 +169,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 toastr.success('包装成功');
                 vm.IsEdit = false;
                 vm.PrintDtlId = vm.PackDetail.ID;
+                $("input.SnFocus").focus();
                 //打印询问
                 MyPop.ngConfirm({ text: "是否打印包装箱" }).then(function () {
                     Print("COTTONCODE");
@@ -212,6 +215,9 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 }, function (err) {
                     console.log(err);
                 })
+                if (type != "COTTONCODE") {
+                    getBoxList();
+                }
             }
         })
     }
