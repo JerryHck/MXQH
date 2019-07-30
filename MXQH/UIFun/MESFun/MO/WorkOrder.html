@@ -15,6 +15,14 @@
                     </div>
                     <div class="form-group">
                         <div class="input-group">
+                            <div basic-select="MaterialID" placeholder="料号" ng-model="mesmo.Ser.MaterialID" ng-name="MaterialID" ng-required="true" select-class="text-xs"></div>
+                            <span class="input-group-addon">
+                                <a><i ng-click="mesmo.Ser.MaterialID = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>                    
+                    <div class="form-group">
+                        <div class="input-group">
                             <input type="text" date-picker class="form-control" name="AssemblyDate" placeholder="计划日期" option="auctusSO.UnExist2"
                                    ng-model="mesmo.Ser.AssemblyDate" required>
                             <span class="input-group-addon">
@@ -35,7 +43,7 @@
             </div>
         </div>
         <div class="padder-md table-responsive">
-            <table class="table one-line ">
+            <table class="table one-line" >
                 <thead>
                     <tr>
                         <td style="width:90px ">编辑</td>
@@ -43,9 +51,10 @@
                         <td style="width:100px ">生产线</td>
                         <td style="width:100px ">计划序号</td>
                         <td style="width:130px ">工单号</td>
+                        <td style="width:100px ">到货地</td>
                         <td style="width:100px ">编码规则</td>
                         <td style="width:130px ">产品编号</td>
-                        <td style="width:160px ">产品名称</td>
+                        <td style="width:160px" >产品名称</td>
                         <td style="width:100px ">计划数量</td>
                         <td style="width:100px ">投入数量</td>
                         <td style="width:100px ">完工数量</td>
@@ -53,7 +62,6 @@
                         <td style="width:100px ">计划交货期</td>
                         <td style="width:100px ">客户编号</td>
                         <td style="width:140px ">客户名称</td>
-                        <td style="width:100px ">到货的</td>
                         <td style="width:130px ">ERP销售单号</td>
                         <td style="width:100px ">ERP订单数量</td>
 
@@ -67,13 +75,14 @@
 
                     </td>
                     <td title="{{ item.AssemblyDate }}">{{ item.AssemblyDate }}</td>
-                    <td title="{{ item.AssemblyLineName }}">{{ item.AssemblyLineName }}</td>
+                    <td title="{{ item.AssemblyLineName }}" style="white-space:normal;">{{ item.AssemblyLineName }}</td>
                     <td title="{{ item.ListNo }}">{{ item.ListNo }}</td>
                     <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
                     <td class="bg-warning" ng-if="item.ClName!=''" title="{{ item.ClName }}">{{ item.ClName }}</td>
                     <td ng-if="item.ClName==''">{{item.MaterialClName}}</td>
                     <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
-                    <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
+                    <td title="{{ item.MaterialName }}" style="white-space:normal;" >{{ item.MaterialName }}</td>
                     <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
                     <td title="{{ item.OnlineQty }}">{{ item.OnlineQty }}</td>
                     <td title="{{ item.FinishQty }}">{{ item.FinishQty }}</td>
@@ -81,7 +90,6 @@
                     <td title="{{ item.DeliveryDate }}">{{ item.DeliveryDate }}</td>
                     <td title="{{ item.CustomerCode }}">{{ item.CustomerCode }}</td>
                     <td title="{{ item.CustomerName }}">{{ item.CustomerName }}</td>
-                    <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
                     <td title="{{ item.ERPSO }}">{{ item.ERPSO }}</td>
                     <td title="{{ item.ERPQuantity }}">{{ item.ERPQuantity }}</td>
                 </tr>
@@ -106,6 +114,14 @@
                             </span>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div  basic-select="MaterialID" ng-model="mesmo.Ser2.MaterialID" select-class="text-xs" ></div>
+                            <span class="input-group-addon">
+                                <a><i ng-click="mesmo.Ser2.MaterialID = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div> 
                     <div class="form-group">
                         <div class="input-group">
                             <input type="text" date-picker class="form-control" name="AssemblyDate" placeholder="计划日期" option="auctusSO.UnExist2"
@@ -136,6 +152,7 @@
                         <td style="width:100px ">生产线</td>
                         <td style="width:100px ">计划序号</td>
                         <td style="width:130px ">工单号</td>
+                        <td style="width:100px ">到货地</td>
                         <td style="width:100px ">编码规则</td>
                         <td style="width:130px ">产品编号</td>
                         <td style="width:160px ">产品名称</td>
@@ -146,7 +163,6 @@
                         <td style="width:100px ">计划交货期</td>
                         <td style="width:100px ">客户编号</td>
                         <td style="width:140px ">客户名称</td>
-                        <td style="width:100px ">到货的</td>
                         <td style="width:130px ">ERP销售单号</td>
                         <td style="width:100px ">ERP订单数量</td>
                     </tr>
@@ -159,6 +175,7 @@
                     <td title="{{ item.AssemblyLineName }}">{{ item.AssemblyLineName }}</td>
                     <td title="{{ item.ListNo }}">{{ item.ListNo }}</td>
                     <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
                     <td title="{{ item.ClName }}">{{ item.ClName }}</td>
                     <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
                     <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
@@ -169,7 +186,6 @@
                     <td title="{{ item.DeliveryDate }}">{{ item.DeliveryDate }}</td>
                     <td title="{{ item.CustomerCode }}">{{ item.CustomerCode }}</td>
                     <td title="{{ item.CustomerName }}">{{ item.CustomerName }}</td>
-                    <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
                     <td title="{{ item.ERPSO }}">{{ item.ERPSO }}</td>
                     <td title="{{ item.ERPQuantity }}">{{ item.ERPQuantity }}</td>
                 </tr>
