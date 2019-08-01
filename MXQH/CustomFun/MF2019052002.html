@@ -5,7 +5,12 @@
             <div class="form-inline">
                 <div class="form-group">
                     <div class="col-md-2">
-                        <div auto-first="true" basic-select="AssemblyLine" placeholder="线别" ng-model="adr.Ser.LineType" select-class="text-xs" ng-name="adr.Ser.LineType"></div>
+                        <div class="input-group">
+                            <div auto-first="true" basic-select="AssemblyLine" placeholder="线别" ng-model="adr.Ser.LineType" select-class="text-xs" ng-name="adr.Ser.LineType"></div>
+                            <span class="input-group-addon">
+                                <a><i ng-click="adr.Ser.LineType = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
