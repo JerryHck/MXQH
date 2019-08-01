@@ -168,13 +168,18 @@
         <div class="wrapper-md">
             <div class="form-inline">
                 <div class="form-group">
-                    <input type="text" class="form-control" ui-focus="sn.Focus == -1" ng-model="sn.Ser.InternalCode" placeholder="生产条码">
+                    <input type="text" class="form-control" ui-focus="sn.Focus == -1" ng-model="sn.Ser.InCode" placeholder="内控码">
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control" ng-model="sn.Ser.SNCode" placeholder="SN码">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" ng-model="sn.Ser.IDCode1" placeholder="模块二维码">
+                    <input type="text" class="form-control" ng-model="sn.Ser.Mo" placeholder="组装工单"
+                           uib-typeahead="item.WorkOrder as item.WorkOrder for item in sn.AllOrderList | orderBy:'WorkOrder':true | filter:$viewValue | limitTo:8">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="sn.Ser.PackMo" placeholder="SN生成工单" 
+                           uib-typeahead="item.WorkOrder as item.WorkOrder for item in sn.AllOrderList | orderBy:'WorkOrder':true | filter:$viewValue | limitTo:8">
                 </div>
                 <button class="btn btn-sm btn-info" ng-click="sn.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
                 <button class="btn btn-sm btn-success" ng-click="sn.ExportExcel()"><i class="glyphicon glyphicon-export"></i> 导出</button>
@@ -186,25 +191,27 @@
                     <tr>
                         <td class="col-md-1">内控码</td>
                         <td class="col-md-1">SN码</td>
-                        <td class="col-md-1">包装料号</td>
-                        <td class="col-md-1">包装料名</td>
-                        <td class="col-md-1">包装工单</td>
-                        <td class="col-md-1">出货地</td>
-                        <td class="col-md-1">销售单</td>
-                        <td class="col-md-1">绑定人</td>
-                        <td class="col-md-1">绑定时间</td>
+                        <td class="col-md-1">组装工单</td>
+                        <td class="col-md-1">组装料号</td>
+                        <td class="col-md-1">组装料名</td>
+                        <td class="col-md-1">SN生成工单</td>
+                        <td class="col-md-1">SN生成料号</td>
+                        <td class="col-md-1">SN生成料名</td>
+                        <td class="col-md-1">操作人</td>
+                        <td class="col-md-1">操作时间</td>
                     </tr>
                 </thead>
                 <tr ng-repeat="item in sn.BindList">
-                    <td>{{ item.InternalCode }}</td>
-                    <td>{{ item.SNCode }}</td>
-                    <td>{{ item.MO.MaterialCode }}</td>
-                    <td>{{ item.MO.MaterialName }}</td>
-                    <td>{{ item.MO.WorkOrder }}</td>
-                    <td>{{ item.MO.SendPlaceName }}</td>
-                    <td>{{ item.MO.ERPSO }}</td>
-                    <td>{{ item.Emp.Name }}</td>
-                    <td>{{ item.CreateDate }}</td>
+                    <td title="{{ item.InternalCode }}">{{ item.InternalCode }}</td>
+                    <td title="{{ item.SNCode }}">{{ item.SNCode }}</td>
+                    <td title="{{ item.SNMo }}">{{ item.SNMo }}</td>
+                    <td title="{{ item.MateCode }}">{{ item.MateCode }}</td>
+                    <td title="{{ item.MateName }}">{{ item.MateName }}</td>
+                    <td title="{{ item.PackMo }}">{{ item.PackMo }}</td>
+                    <td title="{{ item.PackMateCode }}">{{ item.PackMateCode }}</td>
+                    <td title="{{ item.PackMateName }}">{{ item.PackMateName }}</td>
+                    <td title="{{ item.CreateBy }}">{{ item.CreateBy }}</td>
+                    <td title="{{ item.TS }}">{{ item.TS }}</td>
                 </tr>
             </table>
             <div class="col-md-12 text-center" ng-if="sn.page.total>sn.page.size">

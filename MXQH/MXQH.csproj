@@ -198,6 +198,8 @@
     <Content Include="SystemFun\SysOrg.js" />
     <Content Include="SystemFun\ToolManager.html" />
     <Content Include="SystemFun\ToolManager.js" />
+    <Content Include="UIFun\Board\WorkOrderBoard.html" />
+    <Content Include="UIFun\Board\WorkOrderBoard.js" />
     <Content Include="UIFun\MESFun\BarCodeList.html" />
     <Content Include="UIFun\MESFun\BarCodeList.js" />
     <Content Include="UIFun\MESFun\InCodeBindSN.html" />
@@ -779,7 +781,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Board\" />
     <Folder Include="js\controllers\uploads\" />
     <Folder Include="src\" />
   </ItemGroup>
