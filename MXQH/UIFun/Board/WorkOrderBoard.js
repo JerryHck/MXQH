@@ -38,7 +38,7 @@ function (Dialog, $scope, $http, AjaxService, toastr, $window) {
             en.Method = 'ExecPlan';
             en.PlanName = "MesMxWOrder";
             en.ShortName = "board"
-            en.Intervel = 60;
+            en.Interval = 60;
             //传送的参数字符串
             en.Json = JSON.stringify(enCon);
             AjaxService.GetServerSocket(en, "KeyBoard", function (data) {
