@@ -47,7 +47,7 @@ function ( $scope, FileUrl, AjaxService, toastr, $window) {
     function PrintCode(data) {
         var postData = {}, list = [];
         list.push(data.SnCode);
-        postData.ParaData = JSON.stringify({});
+        postData.ParaData = JSON.stringify(data);
         postData.OutList =list;
         //console.log(data)
         var printNum = data.ColorBoxPrintNum || 1;

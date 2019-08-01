@@ -98,13 +98,15 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
     function Do() {
 
         //GetPrintName('127.0.0.1');
+
+        var enCon = { WorkOrder: "AMO-30190506004", StartDate: "2019-07-25 8:30:00", EndDate: '2019-07-25 19:30:00' };
         var en = {};
-        en.Method = 'GetPlansPage';
-        en.PlanName = "CommonData"
+        en.Method = 'ExecPlan';
+        en.PlanName = "MesMxWOrder";
+        en.ShortName = "board"
         en.Intervel = 5;
         //传送的参数字符串
-        en.Json = "[]";
-
+        en.Json = JSON.stringify(enCon);
         AjaxService.GetServerSocket(en, function (data) {
             //console.log(data);
             $scope.$apply(function () {

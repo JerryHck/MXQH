@@ -106,6 +106,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                     ID: -1, boRoutingID: vm.SelectedRo.ID, ProcedureInfo: vm.ProcedureList[0],
                     Unit: 'PCS/H/人', Unit: 'PCS/H/人', Remark: "1", StandardCapacity: 3
                 };
+                vm.SelectedRo.Procedure = vm.SelectedRo.Procedure || [];
                 vm.ProIndex = vm.SelectedRo.Procedure.length;
                 vm.ProIndex = vm.ProIndex || 0;
                 vm.ProcWPList = angular.copy(vm.SelectedRo.Procedure);
@@ -196,10 +197,10 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             var p = {};
             p.ID = en.Procedure[j].ID;
             p.IsPrint = en.Procedure[j].IsPrint || false;
-            p.Item1 = en.Procedure[j].Item1 || "";
-            p.Item2 = en.Procedure[j].Item2 || "";
-            p.Item3 = en.Procedure[j].Item3 || "";
-            p.Item4 = en.Procedure[j].Item4 || "";
+            p.Item1 = en.Procedure[j].Item1 || "0";
+            p.Item2 = en.Procedure[j].Item2 || "0";
+            p.Item3 = en.Procedure[j].Item3 || "0";
+            p.Item4 = en.Procedure[j].Item4 || "0";
             p.boProcedureID = en.Procedure[j].ProcedureInfo.ID;
             p.Remark = en.Procedure[j].Remark || "";
             p.StandardCapacity = en.Procedure[j].StandardCapacity || 16;

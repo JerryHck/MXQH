@@ -29,6 +29,11 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
         vm.OrderList = data;
     })
 
+    //所有工单
+    AjaxService.GetPlans("MesMxWOrder", []).then(function (data) {
+        vm.AllOrderList = data;
+    })
+
     //工单确认
     function KeyDonwOrder(e) {
         var keycode = window.event ? e.keyCode : e.which;
@@ -68,9 +73,13 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     }
 
     function PageChange() {
-        vm.promise = AjaxService.GetPlansPage("MesInCodeBindSnCode", GetContition(), vm.page.index, vm.page.size).then(function (data) {
-            vm.BindList = data.List;
-            vm.page.total = data.Count;
+        var en = angular.copy(vm.Ser);
+        en.IsExcel = 'N';
+        en.Start = (vm.page.index - 1) * vm.page.size + 1;
+        en.End = vm.page.index * vm.page.size;
+        vm.promise = AjaxService.ExecPlan("MesInCodeBindSnCode", "getSn", en).then(function (data) {
+            vm.BindList = data.data;
+            vm.page.total = data.data1[0].Count;
         });
     }
 
@@ -195,6 +204,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
             return;
         }
         var postData = {}, list = [];
+        list.push(data.SNCode)
         postData.ParaData = JSON.stringify(data);
         postData.OutList = list;
         AjaxService.Print(teData.TemplateId, teData.TemplateTime, postData, vm.PrinterName).then(function (data) {
@@ -205,23 +215,10 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     }
 
     function ExportExcel() {
-        vm.promise = AjaxService.GetPlanOwnExcel("MesInCodeBindSnCode", GetContition()).then(function (data) {
+        vm.Ser.IsExcel = 'Y';
+        vm.promise = AjaxService.GetPlanExcel("MesInCodeBindSnCode", "getSn", vm.Ser).then(function (data) {
             $window.location.href = data.File;
         });
-    }
-
-    function GetContition() {
-        var list = [];
-        if (vm.Ser.InternalCode) {
-            list.push({ name: "InternalCode", value: vm.Ser.InternalCode });
-        }
-        if (vm.Ser.SNCode) {
-            list.push({ name: "SNCode", value: vm.Ser.SNCode });
-        }
-        if (vm.Ser.IDCode1) {
-            list.push({ name: "IDCode1", value: vm.Ser.IDCode1 });
-        }
-        return list;
     }
 }
 ]);

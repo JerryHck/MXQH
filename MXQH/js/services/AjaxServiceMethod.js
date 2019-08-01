@@ -523,14 +523,14 @@
         }
 
         function GetServerTime(Do) {
-            return CallServerSocket("Time", undefined, Do);
+            return CallServerSocket("Time", undefined, undefined,Do);
         }
 
-        function GetServerSocket(json, Do) {
-            return CallServerSocket("Request", JSON.stringify(json), Do);
+        function GetServerSocket(json, fun, Do) {
+            return CallServerSocket("Request", JSON.stringify(json), fun, Do);
         }
 
-        function CallServerSocket(MsgType, json, Do) {
+        function CallServerSocket(MsgType, json, fun, Do) {
             var g = $q.defer();
             try {
                 var en = {};
@@ -538,6 +538,8 @@
                 en.MsgType = MsgType;
                 en.LoginKey = $cookieStore.get('user-token');
                 en.RouteName = $state.current.name;
+                en.GUID = $cookieStore.get('GUID');
+                en.FunName = fun;
                 en.Data = json;
                 var Option = { Do: Do, data: en };
                 var socket = undefined;
