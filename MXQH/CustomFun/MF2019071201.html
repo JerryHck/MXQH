@@ -90,8 +90,11 @@
                 <button ng-click="baq.Ser.b_CreateDate2= undefined" class="btn btn-default" ng-disabled="ngDisabled">
                     <span class="glyphicon glyphicon-trash text-danger"></span>
                 </button>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="baq.Ser.BarCode" placeholder="内控码">
+                </div>
                 <button class="btn btn-sm btn-info " ng-click="baq.Search2() "><i class="glyphicon glyphicon-search "></i>查询</button>
-                <!--<button class= "btn btn-sm btn-success " ng-click= "baq.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>-->
+                <button class= "btn btn-sm btn-success " ng-click= "baq.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
             </div>
         </div>
         <div class="padder-md ">
