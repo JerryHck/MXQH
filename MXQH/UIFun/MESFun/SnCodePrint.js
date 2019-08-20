@@ -21,6 +21,7 @@ function ( $scope, FileUrl, AjaxService, toastr, $window) {
             var en = {};
             en.Code = vm.DeleteItem.InternalCode;
             en.Action = vm.IsReprint;
+            vm.DeleteItem = {};
             CheckPrint(en);
         }
     }

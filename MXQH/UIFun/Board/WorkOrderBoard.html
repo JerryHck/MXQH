@@ -1,6 +1,6 @@
-﻿<div class="hbox hbox-auto-xs hbox-auto-sm bg-black-opacity h-full" ng-init="vm.app.settings.asideFolded=true">
-    <div class="col h-full">
-        <div class="wrapper-xs">
+﻿<div class="bg-black-opacity h-full" ng-init="vm.app.settings.asideFolded=true">
+    <div class="panel panel-default h-full bg-black-opacity">
+        <div class="wrapper-xs padder-xs">
             <div class="form-inline">
                 <div class="form-group">
                     <input type="text" name="Order" ng-model="wo.Ser.WorkOrder" uib-typeahead="item.WorkOrder as item.WorkOrder for item in wo.OrderList | filter:$viewValue | limitTo:10"
@@ -19,7 +19,6 @@
                 <button class="btn" ng-class="{'btn-success':!wo.IsRun, 'btn-danger':wo.IsRun}" ng-click="wo.Begin()"><i class="glyphicon glyphicon-search"></i>{{ wo.BtnText }}</button>
             </div>
         </div>
-        
         <div class="padder-xs wrapper-xs" ng-if="wo.IsHave == 'Y'">
             <table class="table-purple-head" style="width:100%" >
                 <thead>
@@ -45,15 +44,13 @@
                 </tr>
             </table>
         </div>
-        <div class="padder-xs wrapper-xs" ng-if="wo.IsHave == 'N'">
+        <div class="padder-xs wrapper-md" ng-if="wo.IsHave == 'N'">
             <table class="table-purple" style="width:100%">
                 <tr style="height:100px;">
                     <td class="text-center" style="font-size:36px">没有生产数据</td>
                 </tr>
             </table>
         </div>
-        <!--<pre>{{ wo.MainData | json }}</pre>
-        <pre>{{ wo.ProductCount }}</pre>-->
     </div>
 </div>
 

@@ -10,7 +10,7 @@ function (Dialog, $scope, $http, AjaxService, toastr, $window) {
     vm.IsRun = false;
     vm.BtnText = "开始刷新";
     vm.Begin = Begin;
-
+    
     AjaxService.GetPlans("MesMxWOrder", [{ name: "Status", value: 4, type: "!=" }]).then(function (data) {
         vm.OrderList = data;
     })
@@ -41,14 +41,17 @@ function (Dialog, $scope, $http, AjaxService, toastr, $window) {
             en.Interval = 60;
             //传送的参数字符串
             en.Json = JSON.stringify(enCon);
-            AjaxService.GetServerSocket(en, "KeyBoard", function (data) {
-                console.log(vm.IsRun)
+            AjaxService.GetServerSocket(en, "KeyBoard", function (data, socket) {
+                vm.socket = socket;
                 if (vm.IsRun) {
                     CalPie(JSON.parse(data));
                 }
             })
         }
         else {
+            if (vm.socket) {
+                vm.socket.close();
+            }
             vm.IsRun = false;
             vm.BtnText = "开始刷新";
         }

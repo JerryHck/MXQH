@@ -6,6 +6,8 @@
     function AjaxService($rootScope, $http, $q, serviceUrl, appUrl, toastr, MyPop, $cookieStore, $window, FileUrl, SocketServiceUrl, $state) {
         var generic = 'Common.asmx/Do';
         var tableConfigList = new Array();
+        //重复呼叫socket服务
+        var interval = undefined;
         var obj = {
             //登录前服务
             DoBefore: DoBefore,
@@ -523,14 +525,16 @@
         }
 
         function GetServerTime(Do) {
+            var socket = undefined;
             return CallServerSocket("Time", undefined, undefined,Do);
         }
 
         function GetServerSocket(json, fun, Do) {
-            return CallServerSocket("Request", JSON.stringify(json), fun, Do);
+            var socket = undefined;
+            return CallServerSocket("Request", JSON.stringify(json), fun, Do, socket);
         }
 
-        function CallServerSocket(MsgType, json, fun, Do) {
+        function CallServerSocket(MsgType, json, fun, Do, socket) {
             var g = $q.defer();
             try {
                 var en = {};
@@ -542,9 +546,7 @@
                 en.FunName = fun;
                 en.Data = json;
                 var Option = { Do: Do, data: en };
-                var socket = undefined;
-                var interval = undefined;
-                CallSocket(g, en, socket, Do, interval);
+                CallSocket(g, en, socket, Do);
             }
             catch (e) {
                 toastr.error(e, '服务错误');
@@ -552,7 +554,7 @@
             return g.promise;
         }
 
-        function CallSocket(g, en, socket, Do, interval) {
+        function CallSocket(g, en, socket, Do) {
             socket = new WebSocket(SocketServiceUrl);
             socket.onerror = function (evt) {
                 //console.log(evt);
@@ -560,16 +562,6 @@
             };
             socket.onopen = function () {
                 socket.send(JSON.stringify(en));
-                
-                if (interval != undefined) {
-                    clearInterval(interval);
-                }
-                
-                interval = setInterval(function () {
-                    if (socket.readyState == 3) {
-                        CallSocket(g, en, socket, Do, interval);
-                    }
-                }, 15000);
             };
             socket.onclose = function (e) {
             };
@@ -593,7 +585,7 @@
                         g.reject(data.Data);
                     }
                     if (Do) {
-                        Do(data.Data);
+                        Do(data.Data, socket);
                     }
                 }
             };
