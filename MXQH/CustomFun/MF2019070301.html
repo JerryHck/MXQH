@@ -1,0 +1,144 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="sr.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">SN规则管理</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class= "btn btn-sm btn-success " ng-click= "sr.Insert() "><i class= "glyphicon glyphicon-plus "></i>新增</button>
+                <div class="form-group">
+                    <!--<input type="text" class="form-control"  ng-model="sr.Ser.a_MaterialID" placeholder="产品名称">-->
+                    <div basic-select="SrMaterialId" ng-name="sr.Ser.a_MaterialID" placeholder="产品名称" clear="true" ng-model="sr.Ser.a_MaterialID" ></div>
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "sr.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <!--<button class= "btn btn-sm btn-success " ng-click= "sr.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>-->
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <table class= "table pad-xs" >
+                <thead>
+                    <tr>
+                        <td style= "width:60px">操作</td>
+                        <td style= "width:100px ">产品名称</td>
+                        <td style= "width:100px ">产品编号</td>
+                        <td style= "width:100px ">条码段1</td>
+                        <td style= "width:100px ">条码段2</td>
+                        <td style= "width:100px ">条码段3</td>
+                        <td style= "width:100px ">条码段4</td>
+                        <td style= "width:100px ">SN序列起始编号</td>
+                        <td style= "width:100px ">是否生成ID</td>
+                    </tr>
+                </thead>
+                <tr ng-if="sr.IsInsert" ng-form="sr.InsertForm">
+                    <td>
+                        <button class="btn btn-xs btn-success" ng-disabled="sr.InsertForm.$invalid" ng-click="sr.Add()"><i class="glyphicon glyphicon-save"></i></button>
+                        <button class="btn btn-xs btn-warning" ng-click="sr.IsInsert=false" ><i class="fa fa-undo"></i></button>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': sr.InsertForm.MaterialName.$invalid }">
+                            <!--<input type="text" name="MaterialName" class="form-control" placeholder="b_MaterialName" ng-model="sr.NewItem.MaterialName" required />-->
+                            <div basic-select="SrMaterial" name="SrMaterial" placeholder="产品名称" clear="true" ng-model="sr.SrMaterial" width="100px"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': sr.InsertForm.MaterialCode.$invalid }">
+                            <input disabled="disabled" type="text" name="MaterialCode" class="form-control" placeholder="产品编号" ng-model="sr.SrMaterial.MaterialCode"  required />                       
+                        </div>
+                    </td>
+                    <td>
+                        <div >
+                            <input type="text" name="PartA" class="form-control" placeholder="条码段1" ng-model="sr.NewItem.PartA"  />
+                        </div>
+                    </td>
+                    <td>
+                        <div >
+                            <input type="text" name="PartB" class="form-control" placeholder="条码段2" ng-model="sr.NewItem.PartB"  />
+                        </div>
+                    </td>
+                    <td>
+                        <div >
+                            <input type="text" name="PartC" class="form-control" placeholder="条码段3" ng-model="sr.NewItem.PartC"  />
+                        </div>
+                    </td>
+                    <td>
+                        <div >
+                            <input type="text" name="PartD" class="form-control" placeholder="条码4" ng-model="sr.NewItem.PartD"  />
+                        </div>
+                    </td>
+                    <td>
+                        <div >
+                            <input type="text" name="SerialNoStart" class="form-control" placeholder="SN序列起始编号" ng-model="sr.NewItem.SerialNoStart"  />
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <!--<input type="text" name="IsCreateID" class="form-control" placeholder="a_IsCreateID" ng-model="sr.NewItem.IsCreateID" />-->
+                            <input type="checkbox" name="IsCreateID" class="form-control" placeholder="a_IsCreateID" ng-model="sr.NewItem.IsCreateID" />
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-repeat= "item in sr.List " ng-form="item.ItemForm">
+                    <td>
+                        <span ng-if="!item.IsEdit">
+                            <button class="btn btn-xs btn-primary" ng-click="sr.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                            <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="sr.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                        </span>
+                        <span ng-if="item.IsEdit">
+                            <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="sr.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                        </span>
+                    </td>
+                    <td title="{{ item.MID.MaterialName }}">{{ item.MID.MaterialName }}</td>
+                    <td title="{{ item.MID.MaterialCode }}">{{ item.MID.MaterialCode }}</td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.PartA }}</span>
+                        <div ng-if="item.IsEdit">
+                            <input type="text" name="item_PartA" class="form-control" placeholder="条码段1" ng-model="sr.EditItem.PartA"  />
+                        </div>
+                    </td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.PartB }}</span>
+                        <div ng-if="item.IsEdit">
+                            <input type="text" name="item_PartB" class="form-control" placeholder="条码段2" ng-model="sr.EditItem.PartB"  />
+                        </div>
+                    </td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.PartC }}</span>
+                        <div ng-if="item.IsEdit">
+                            <input type="text" name="item_PartC" class="form-control" placeholder="条码段3" ng-model="sr.EditItem.PartC"  />
+                        </div>
+                    </td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.PartD }}</span>
+                        <div ng-if="item.IsEdit">
+                            <input type="text" name="item_PartD" class="form-control" placeholder="条码段4" ng-model="sr.EditItem.PartD"  />
+                        </div>
+                    </td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.SerialNoStart }}</span>
+                        <div ng-if="item.IsEdit">
+                            <input type="text" name="item_SerialNoStart" class="form-control" placeholder="SN序列起始编号" ng-model="sr.EditItem.SerialNoStart"  />
+                        </div>
+                    </td>
+                    <td>
+                        <!--<span ng-if="!item.IsEdit">{{ item.IsCreateID }}</span>-->
+                        <input ng-if="!item.IsEdit" disabled="disabled" type="checkbox" name="IsCreateID" class="form-control" placeholder="IsCreateID" ng-model="item.IsCreateID" />
+                        <div ng-if="item.IsEdit">
+                            <!--<input type="text" name="item_IsCreateID" class="form-control" placeholder="a_IsCreateID" ng-model="sr.EditItem.IsCreateID"  />-->
+                            <input type="checkbox" name="item_IsCreateID" class="form-control" placeholder="a_IsCreateID" ng-model="sr.EditItem.IsCreateID" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div class= "col-md-12 text-center " ng-if= "sr.page.total>sr.page.size ">
+                <div uib-pagination total-items= "sr.page.total " ng-model= "sr.page.index " items-per-page= "sr.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "sr.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+            
+
+            <!--<pre>{{sr.NewItem | json}}</pre>
+            <pre>{{sr.EditItem | json}}</pre>
+            <pre>{{sr.SrMaterial | json}}</pre>-->
+        </div>
+       
+    </uib-tab>
+    
+</uib-tabset>
