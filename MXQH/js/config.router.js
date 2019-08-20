@@ -256,6 +256,13 @@ function Config($stateProvider, $urlRouterProvider, Version) {
                   }]
             }
         })
+        .state('appfull', {
+            abstract: true,
+            controllerAs: 'vm',
+            controller: 'AppCtrl',
+            url: '/appfull',
+            templateUrl: 'Basic/app_full.html' + "?v=" + Version
+        })
         .state('apps', {
             abstract: true,
             controllerAs: 'vm',

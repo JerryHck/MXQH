@@ -477,7 +477,7 @@
                     if (evt.currentTarget.readyState == 3) {
                         var en = {};
                         $window.location.href = "MxqhPrinter:" + serviceUrl;
-                        en.text = "打印服务正在启动，重新发送数据？";
+                        en.text = "打印服务还未启动或未安装，是否启动并重新发送数据？";
                         MyPop.Confirm(en, function () {
                             SocketSend(method, Id, TS, postData, printerName, hostIp);
                         });

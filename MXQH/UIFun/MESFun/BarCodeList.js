@@ -56,7 +56,7 @@ function ($window, $scope, FileUrl, AjaxService, toastr, serviceUrl) {
     }
 
     function NewLabel() {
-        var str = 'BarCode:' + serviceUrl + '-0-' + (vm.SelectedType && vm.SelectedType.ID ? vm.SelectedType : "0");
+        var str = 'BarCode:' + serviceUrl + '-0-' + (vm.SelectedType && vm.SelectedType.ID ? vm.SelectedType.ID : "0");
         console.log(str);
         $window.location.href = str;
     }
