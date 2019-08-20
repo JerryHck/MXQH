@@ -147,10 +147,10 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
         en.Method = 'GetOnline';
         //呼叫的实体参数
         en.PlanName = ""
-        en.Intervel = 1;
+        en.Intervel = 5;
         //传送的参数字符串
         en.Json = "[]";
-        AjaxService.GetServerSocket(en, function (data) {
+        AjaxService.GetServerSocket(en, "Online", function (data) {
             $scope.$apply(function () {
                 vm.OnList = JSON.parse(data);
                 vm.List = vm.List || [];
