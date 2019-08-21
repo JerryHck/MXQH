@@ -6,7 +6,7 @@ function (Dialog, $scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
-    vm.Ser = { WorkOrder: "AMO-30190719001", StartDate: new Date().Format('yyyy/MM/dd') + ' 00:00', EndDate: new Date().Format("yyyy/MM/dd" + ' 23:59') };
+    vm.Ser = { StartDate: new Date().Format('yyyy/MM/dd') + ' 00:00', EndDate: new Date().Format("yyyy/MM/dd" + ' 23:59') };
     vm.IsRun = false;
     vm.BtnText = "开始刷新";
     vm.Begin = Begin;

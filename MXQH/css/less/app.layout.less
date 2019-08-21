@@ -9,7 +9,7 @@ body{
 
 .app{
 	height: auto;
-	min-height: 100%;
+	min-height: 100%!important;
 	width: 100%;
 	position: relative;
 	&:before{
@@ -89,16 +89,18 @@ body{
 	top: @app-header-height;
 	bottom: @app-header-height;
 	height: auto;
-	width: auto !important;
 	padding: 0 !important;
 	overflow-y: auto;
 	-webkit-overflow-scrolling: touch;
 	&.h-full{
 		bottom: 0;
 		height: auto;
-	}	
+	}
+    &.w-full{
+		bottom: 0;
+		width: 100%;
+	}		
 }
-
 .app-content-body{
 	padding-bottom: @app-header-height;
 	float: left;
@@ -130,9 +132,6 @@ body{
 		height: 100%;
 		float: none;
 	}
-}
-.content-h-full{
-    height:@tab-full !important
 }
 .v-middle{vertical-align: middle !important;}
 .v-top{vertical-align: top !important;}
