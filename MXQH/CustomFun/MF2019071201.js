@@ -118,7 +118,7 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
 
     }
     function ExportExcel() {
-        vm.promise = AjaxService.GetPlanOwnExcel("MESvw_qlBadAcquisition", GetContition()).then(function (data) {
+        vm.promise = AjaxService.GetPlanOwnExcel("MESvw_qlBadAcquisition", GetContition2()).then(function (data) {
             $window.location.href = data.File;
         });
     }
@@ -144,13 +144,16 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
         var endTime2 = new Date(vm.Ser.b_CreateDate2);
         var start2 = $filter('date')(startTime2, "yyyy-MM-dd hh:mm:ss");
         var end2 = $filter('date')(endTime2, "yyyy-MM-dd hh:mm:ss");
-       
+        
 
         if (start2) {
             list.push({ name: "CreateDate", value: start2, type: '>=' });
         }
         if (end2) {
             list.push({ name: "CreateDate", value: end2, type: '<=' });
+        }
+        if (vm.Ser.BarCode) {
+            list.push({ name: "BarCode", value: '%'+vm.Ser.BarCode+'%' });
         }
        
         list.push({ name: "IsRepair", value: '1' });
