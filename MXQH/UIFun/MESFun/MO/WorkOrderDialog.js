@@ -35,6 +35,8 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
         GetPackInfo();//获取包装信息
     } else {
         vm.IsEdit = false;
+        vm.Item.MinWeight = 100;
+        vm.Item.MaxWeight = 200;
     }
     // #region 工单信息
 
@@ -74,6 +76,10 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
         }
         if (!vm.Item.Remark) {
             vm.Item.Remark = '';
+        }
+        if (vm.Item.MaxWeight<vm.Item.MinWeight) {
+            toastr.error('最大重量不能小于最小重量');
+            return;
         }
         var en = {};
         var li = [];
