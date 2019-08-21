@@ -274,6 +274,8 @@
     <Content Include="Scripts\TestAngular\textAngular.min.js" />
     <Content Include="Scripts\TestAngular\textAngular.umd.js" />
     <Content Include="Scripts\TestAngular\textAngularSetup.js" />
+    <Content Include="UIFun\MESFun\WorkOrderOnLineHH.html" />
+    <Content Include="UIFun\MESFun\WorkOrderOnLineHH.js" />
     <Content Include="UIFun\SDKFun\ATEQuery.html" />
     <Content Include="UIFun\SDKFun\ATEQuery.js" />
     <Content Include="UIFun\SDKFun\RegUserSignDialog.html" />
