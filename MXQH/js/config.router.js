@@ -10,6 +10,17 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
     $rootScope.$on('$stateChangeStart', onStateChangeStart);
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
     
+    //获取系统license
+    AjaxService.DoBefore("GetSysLic").then(function (data) {
+        if (data.Type == "will") {
+            toastr.warning(data.Msg);
+        }
+        else if (data.Type == "have") {
+            toastr.error(data.Msg);
+        }
+        $rootScope.SysLic = data;
+    });
+
     //console.log($state.current.name)
     //檢查是否登入
     function onStateChangeStart(e, toState, toParams, fromState, fromParams) {

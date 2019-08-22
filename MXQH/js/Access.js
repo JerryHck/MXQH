@@ -32,10 +32,20 @@ app.config(
 
 app.run(Run);
 
-Run.$inject = ['$rootScope', '$state', '$stateParams', 'AjaxService', 'appUrl', 'Version'];
-function Run($rootScope, $state, $stateParams, AjaxService, appUrl, Version) {
+Run.$inject = ['$rootScope', '$state', '$stateParams', 'AjaxService', 'appUrl', 'toastr', 'Version'];
+function Run($rootScope, $state, $stateParams, AjaxService, appUrl, toastr, Version) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
+    //获取系统license
+    AjaxService.DoBefore("GetSysLic").then(function (data) {
+        if (data.Type == "will") {
+            toastr.warning(data.Msg);
+        }
+        else if (data.Type == "have") {
+            toastr.error(data.Msg);
+        }
+        $rootScope.SysLic = data;
+    });
 }
 
 app.config(Config);

@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('access').controller('LoginCtrl', LoginCtrl);
-LoginCtrl.$inject = ['$scope', 'AjaxService', 'toastr', 'MyPop', 'appUrl', '$cookieStore', '$window', '$state'];
-function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $window, $state) {
+LoginCtrl.$inject = ['$rootScope', '$scope', 'AjaxService', 'toastr', 'MyPop', 'appUrl', '$cookieStore', '$window', '$state'];
+function LoginCtrl($rootScope, $scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $window, $state) {
     var vm = this;
     var storage = $window.localStorage;
     vm.UserName = storage["userName"];
@@ -23,11 +23,14 @@ function LoginCtrl($scope, AjaxService, toastr, MyPop, appUrl, $cookieStore, $wi
         return rnd;
     }
 
-
     reflashSecCode();
 
     //登录方法
     function Login() {
+        if ($rootScope.SysLic.Type == "have") {
+            toastr.error($rootScope.SysLic.Msg);
+            return;
+        }
         $cookieStore.remove('user-token');
         var en = {};
         en.User = vm.UserName;
