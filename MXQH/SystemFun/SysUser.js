@@ -35,8 +35,9 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
     GetLogin();
 
     function getList() {
-        var en = { name: "UserType", value: vm.UserType }
-        vm.promise = AjaxService.GetPlans("User", en).then(function (data) {
+        var list = [{ name: "UserType", value: vm.UserType },
+            { name: "UserNo", value: "SSAdmin", type:"!=" }]
+        vm.promise = AjaxService.GetPlans("User", list).then(function (data) {
             vm.List = data;
             vm.SelectedUser = undefined;
         });
@@ -62,6 +63,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
 
     function SaveEmp() {
         vm.EmpItem.OrgSn = vm.EmpItem.OrgSn || "1";
+        vm.EmpItem.ChiLastName = vm.EmpItem.ChiLastName || "-";
         vm.promise = AjaxService.PlanUpdate("Employee", vm.EmpItem).then(function (data) {
             toastr.success('保存成功');
             vm.isEditEmp = !vm.isEditEmp;
@@ -90,7 +92,9 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
     }
 
     function getListRole() {
-        vm.promise = AjaxService.GetPlans("Role").then(function (data) {
+        var list = [];
+        list.push({ name: "RoleSn", value: "SSAdmin", type: "!=" });
+        vm.promise = AjaxService.GetPlans("Role", list).then(function (data) {
             vm.ListRole = data;
         });
     }

@@ -162,9 +162,9 @@
                         </div>
                     </div>
                     <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">备注</label>
-                        <div class="input-group padder-xs col-sm-8">
-                            <textarea class="form-control" ng-disabled="moDialog.Item.IsComplete" rows="1" ng-model="moDialog.Item.SysDesc" placeholder="输入备注信息"></textarea>
+                        <label class="control-label col-sm-4 padder-xs">力同单号</label>
+                        <div class="input-group padder-xs col-sm-8" ng-class="{ 'has-error' : DialogForm.Remark.$invalid }">
+                            <textarea class="form-control" name="Remark" ng-disabled="moDialog.Item.IsComplete" rows="1" ng-model="moDialog.Item.Remark" placeholder="输入力同单号" required></textarea>
                         </div>
                     </div>
                 </div>
@@ -193,6 +193,7 @@
                 <button ng-disabled="moDialog.CanAddPack" class="btn btn-sm btn-success" ng-click="moDialog.AddPack()">
                     <i class="glyphicon glyphicon-plus"></i>新增包装
                 </button>
+                <span class="text-danger h5">注：组装工单不用进行包装登记！！！</span>
             </div>
             <div class="table-responsive">
                 <table class="table one-line">

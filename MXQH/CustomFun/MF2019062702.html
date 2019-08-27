@@ -18,7 +18,6 @@
                         <td style= "width:60px">操作</td>
                         <td style= "width:100px ">出货地编码</td>
                         <td style= "width:100px ">出货地名称</td>
-                        <td style= "width:100px ">是否默认</td>
                         <td style= "width:100px ">日期</td>
                         <td style= "width:100px ">备注</td>
                     </tr>
@@ -39,18 +38,10 @@
                         </div>
                     </td>
                     <td>
-                        <div ng-class="{ 'has-error': baSendPlace.InsertForm.IsDefault.$invalid }">
-                            <input type="text" name="IsDefault" class="form-control" placeholder="是否默认" ng-model="baSendPlace.NewItem.IsDefault" required />
-                        </div>
                     </td>
                     <td>
-                        <div ng-class="{ 'has-error': baSendPlace.InsertForm.TS.$invalid }">
-                            <input type="text" name="TS" class="form-control" placeholder="日期" ng-model="baSendPlace.NewItem.TS" required />
-                        </div>
-                    </td>
-                    <td>
-                        <div ng-class="{ 'has-error': baSendPlace.InsertForm.Remark.$invalid }">
-                            <input type="text" name="Remark" class="form-control" placeholder="备注" ng-model="baSendPlace.NewItem.Remark" required />
+                        <div >
+                            <input type="text" name="Remark" class="form-control" placeholder="备注" ng-model="baSendPlace.NewItem.Remark"  />
                         </div>
                     </td>
                 </tr>
@@ -65,16 +56,25 @@
                             <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
                         </span>
                     </td>
-                    <td title="{{ item.Code }}">{{ item.Code }}</td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.Code }}</span>
+                        <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_Code.$invalid }">
+                            <input type="text" name="item_Code" class="form-control" placeholder="出货地编码" ng-model="baSendPlace.EditItem.Code" required />
+                        </div>
+                    </td>
                     <td>
                         <span ng-if="!item.IsEdit">{{ item.Name }}</span>
                         <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_Name.$invalid }">
                             <input type="text" name="item_Name" class="form-control" placeholder="出货地名称" ng-model="baSendPlace.EditItem.Name" required />
                         </div>
                     </td>
-                    <td title="{{ item.IsDefault }}">{{ item.IsDefault }}</td>
                     <td title="{{ item.TS }}">{{ item.TS }}</td>
-                    <td title="{{ item.Remark }}">{{ item.Remark }}</td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.Remark }}</span>
+                        <div ng-if="item.IsEdit">
+                            <input type="text" name="item_Remark" class="form-control" placeholder="备注" ng-model="baSendPlace.EditItem.Remark"  />
+                        </div>
+                    </td>
                 </tr>
             </table>
             <div class= "col-md-12 text-center " ng-if= "baSendPlace.page.total>baSendPlace.page.size ">

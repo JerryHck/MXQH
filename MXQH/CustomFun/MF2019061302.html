@@ -42,11 +42,7 @@
                             <input type="text" name="Remark" class="form-control" placeholder="备注" ng-model="baCustom.NewItem.Remark"  />
                         </div>
                     </td>
-                    <td>
-                        <div ng-class="{ 'has-error': baCustom.InsertForm.TS.$invalid }">
-                            <input type="text" name="TS" class="form-control" placeholder="时间" ng-model="baCustom.NewItem.TS" required />
-                        </div>
-                    </td>
+                    <td> </td>
                 </tr>
                 <tr ng-repeat= "item in baCustom.List " ng-form="item.ItemForm">
                     <td>

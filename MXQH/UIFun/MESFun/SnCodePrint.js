@@ -39,13 +39,13 @@ function ( $scope, FileUrl, AjaxService, toastr, $window) {
             else if (data.data[0].MsgType == "Success") {
                 AjaxService.PlayVoice('success.mp3');
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].MsgText });
-                PrintCode(data.data1[0]);
+                PrintCode(data.data1[0], data.data2[0]);
             }
             vm.DeleteItem = {};
         });
     }
 
-    function PrintCode(data) {
+    function PrintCode(data, temData) {
         var postData = {}, list = [];
         list.push(data.SnCode);
         postData.ParaData = JSON.stringify(data);
@@ -53,7 +53,7 @@ function ( $scope, FileUrl, AjaxService, toastr, $window) {
         //console.log(data)
         var printNum = data.ColorBoxPrintNum || 1;
         for (var i = 0; i < printNum; i++) {
-            AjaxService.Print(data.TemplateId, data.TS, postData, vm.PrinterName).then(function (data) {
+            AjaxService.Print(temData.TemplateId, temData.TemplateTime, postData, vm.PrinterName).then(function (data) {
                 console.log(data);
             }, function (err) {
                 console.log(err);
