@@ -63,7 +63,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
 
     function SaveEmp() {
         vm.EmpItem.OrgSn = vm.EmpItem.OrgSn || "1";
-        vm.EmpItem.ChiLastName = vm.EmpItem.ChiLastName || "-";
+        vm.EmpItem.ChiLastName = undefined;
         vm.promise = AjaxService.PlanUpdate("Employee", vm.EmpItem).then(function (data) {
             toastr.success('保存成功');
             vm.isEditEmp = !vm.isEditEmp;
