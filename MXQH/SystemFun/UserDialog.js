@@ -9,6 +9,7 @@ function UserDialogCtrl($rootScope, $scope, $uibModalInstance, Form, ItemData, t
     vm.Item = ItemData;
     vm.isExists = isExists;
     vm.Item.State = vm.Item.State || "S";
+    vm.Item.ChiLastName = "";
     vm.Item.Action = ItemData.UserNo ? "U" : "I";
     //储存
     vm.Save = function () {

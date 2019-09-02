@@ -44,7 +44,7 @@
                                             </span>
                                             <btn class="pull-right text-success" title="重置账号密码" ng-click="use.Reset(item)"><i class="icon-key"></i></btn>
                                             <small class="text-muted">
-                                                <span>{{ item.ChiLastName }}{{ item.ChiFirstName }}</span>
+                                                <span>{{ item.ChiFirstName }}</span>
                                             </small><br />
                                             <small class="text-muted" ng-if="use.UserType!='E'">
                                                 {{ item.CompanyName }}
@@ -92,11 +92,11 @@
                                                         </div>
                                                         <div class="form-group pull-in clearfix  m-t-xs" title="姓名">
                                                             <label class="col-md-4 control-label font-bold">姓名:</label>
-                                                            <div class="col-md-3" ng-class="{ 'has-error' : use.EmpForm.ChLastName.$invalid }">
+                                                            <!--<div class="col-md-3" ng-class="{ 'has-error' : use.EmpForm.ChLastName.$invalid }">
                                                                 <input type="text" name="ChLastName" class="form-control" ng-maxlength="10" ng-disabled="!use.isEditEmp" placeholder="姓" ng-model="use.EmpItem.ChiLastName" required>
-                                                            </div>
-                                                            <div class="col-md-5" ng-class="{ 'has-error' : use.EmpForm.ChiFirstName.$invalid }">
-                                                                <input type="text" class="form-control" name="ChiFirstName" ng-maxlength="10" ng-disabled="!use.isEditEmp" placeholder="名" ng-model="use.EmpItem.ChiFirstName" required>
+                                                            </div>-->
+                                                            <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.ChiFirstName.$invalid }">
+                                                                <input type="text" class="form-control" name="ChiFirstName" ng-maxlength="50" ng-disabled="!use.isEditEmp" placeholder="姓名" ng-model="use.EmpItem.ChiFirstName" required>
                                                             </div>
                                                         </div>
                                                         <div class="form-group pull-in clearfix  m-t-xs" title="英文名">
