@@ -54,7 +54,7 @@ function ($rootScope, $scope, FileUrl, AjaxService, toastr, $window) {
                 list.push(angular.copy(vm.InternalCode));
                 postData.ParaData = JSON.stringify({});
                 postData.OutList = list;
-                AjaxService.Print("1", data.data[0].TemplateTime, postData, vm.PrinterName).then(function (data) {
+                AjaxService.Print(data.data[0].TemplateId, data.data[0].TemplateTime, postData, vm.PrinterName).then(function (data) {
                     vm.MsgList.push({ Id: vm.MsgList.length, IsOk: true, Msg: '[' + vm.SNCode + ']打印成功' });
                 }, function (err) {
                     vm.MsgList.push({ Id: vm.MsgList.length, IsOk: false, Msg: '[' + vm.SNCode + ']打印失败' });
