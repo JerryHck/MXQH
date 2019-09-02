@@ -77,14 +77,14 @@
 
                     </td>
                     <td title="{{ item.AssemblyDate }}">{{ item.AssemblyDate }}</td>
-                    <td title="{{ item.AssemblyLineName }}" style="white-space:normal;">{{ item.AssemblyLineName }}</td>
+                    <td title="{{ item.AssemblyLineName }}" style="white-space:normal;word-break:normal;">{{ item.AssemblyLineName }}</td>
                     <td title="{{ item.ListNo }}">{{ item.ListNo }}</td>
                     <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
                     <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
                     <td class="bg-warning" ng-if="item.ClName!=''" title="{{ item.ClName }}">{{ item.ClName }}</td>
                     <td ng-if="item.ClName==''">{{item.MaterialClName}}</td>
                     <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
-                    <td title="{{ item.MaterialName }}" style="white-space:normal;" >{{ item.MaterialName }}</td>
+                    <td title="{{ item.MaterialName }}" style="white-space:normal;word-break:normal;" >{{ item.MaterialName }}</td>
                     <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
                     <td title="{{ item.OnlineQty }}">{{ item.OnlineQty }}</td>
                     <td title="{{ item.FinishQty }}">{{ item.FinishQty }}</td>
