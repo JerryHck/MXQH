@@ -1,0 +1,100 @@
+﻿<uib-tabset ng-attr-active="mpRep.tabIndex" type="tabs" class="h-100" cg-busy="mpRep.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">模具使用情况列表</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mpRep.Ser.Code" placeholder="模具料号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mpRep.Ser.Code = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mpRep.Ser.Name" placeholder="模具名称">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mpRep.Ser.Name = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-info " ng-click="mpRep.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                </div>
+            </div>
+        </div>
+        <div class="padder-md table-responsive">
+            <table class="table one-line">
+                <thead>
+                    <tr>
+                        <td style="width:90px ">编辑</td>
+                        <td style="width:100px ">模具料号</td>
+                        <td style="width:140px ">模具名称</td>
+                        <td style="width:140px ">模具规格</td>
+                        <td style="width:120px ">穴数</td>
+                        <td style="width:80px ">总寿命次数</td>
+                        <td style="width:80px ">日模次</td>
+                        <td style="width:80px ">生产模次</td>
+                        <td style="width:80px ">剩余模次</td>
+                        <td style="width:140px ">使用单位</td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in mpRep.List ">
+                    <td>
+                        <button class="btn btn-xs btn-primary" title="查看" ng-click="mpRep.Edit(item.MouldID)"><i class="glyphicon glyphicon-edit"></i></button>
+                        <!--<button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除料号'+item.Code+'吗'}" ng-click="mpRep.Delete(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>-->
+                    </td>
+                    <td title="{{ item.Code }}">{{ item.Code }}</td>
+                    <td title="{{ item.Name }}" style="white-space:normal;word-break:break-all;">{{ item.Name }}</td>
+                    <td title="{{ item.SPECS }} style=" white-space:normal;word-break:break-all;"">{{ item.SPECS }}</td>
+                    <td title="{{ item.HoleNum }}">{{ item.HoleNum }}</td>
+                    <td title="{{ item.TotalNum }}">{{ item.TotalNum }}</td>
+                    <td title="{{ item.DailyNum }}">{{ item.DailyNum }}</td>
+                    <td title="{{ item.UsedNum }}">{{ item.UsedNum }}</td>
+                    <td title="{{ item.TotalNum-item.UsedNum }}">{{ item.TotalNum-item.UsedNum }}</td>
+                    <td title="{{ item.Holder }}">{{ item.Holder }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-12 text-center " ng-if="mpRep.page.total>mpRep.page.pageSize ">
+            <div uib-pagination total-items="mpRep.page.total " ng-model="mpRep.page.pageIndex " items-per-page="mpRep.page.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                 ng-change="mpRep.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="1">
+        <uib-tab-heading class="h5">模具使用明细</uib-tab-heading>
+        <div class="padder-md table-responsive">
+            <table class="table one-line">
+                <thead>
+                    <tr>
+                        <td style="width:100px ">模具料号</td>
+                        <td style="width:140px ">模具名称</td>
+                        <td style="width:140px ">模具规格</td>
+                        <td style="width:120px ">料号</td>
+                        <td style="width:80px ">品名</td>
+                        <td style="width:80px ">规格</td>
+                        <td style="width:80px ">数量</td>
+                        <td style="width:80px ">使用单位</td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in mpRep.DetailList ">
+                    <td title="{{ item.Code }}">{{ item.Code }}</td>
+                    <td title="{{ item.Name }}" style="white-space:normal;word-break:break-all;">{{ item.Name }}</td>
+                    <td title="{{ item.SPECS }} style=" white-space:normal;word-break:break-all;"">{{ item.SPECS }}</td>
+                    <td title="{{ item.ItemCode }}">{{ item.ItemCode }}</td>
+                    <td title="{{ item.ItemName }}" style="white-space:normal;word-break:break-all;">{{ item.ItemName }}</td>
+                    <td title="{{ item.ItemSPECS }} style=" white-space:normal;word-break:break-all;"">{{ item.ItemSPECS }}</td>
+                    <td title="{{ item.RcvQtySum }}">{{ item.RcvQtySum }}</td>
+                    <td title="{{ item.Holder }}">{{ item.Holder}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-12 text-center " ng-if="mpRep.pageDetail.total>mpRep.pageDetail.pageSize ">
+            <div uib-pagination total-items="mpRep.pageDetail.total " ng-model="mpRep.pageDetail.pageIndex " items-per-page="mpRep.pageDetail.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                 ng-change="mpRep.pageChangeDetail() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
