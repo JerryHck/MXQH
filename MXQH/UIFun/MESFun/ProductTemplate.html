@@ -6,15 +6,15 @@
                     <div class="h4 text-center">所有标签类型</div>
                 </div>
                 <div>
-                    <div class="list-group-lg h5" >
+                    <div class="list-group-lg h5">
                         <a ng-repeat="item in pt.CodeList" class="list-group-item b-l-3x hover-anchor cl"
-                            ng-class="{'hover': item.SendCode, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1, 'select': pt.SelectId == item.ID}" ng-click="pt.SendCode(item)">
+                           ng-class="{'hover': item.SendCode, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1, 'select': pt.SelectId == item.ID}" ng-click="pt.SendCode(item)">
                             <span class="pull-left"><i class="glyphicon glyphicon-tree-conifer"></i></span>
                             <span class="text-info font-bold">{{ item.TypeCode }}({{ item.TypeName }})</span>
                         </a>
                     </div>
                 </div>
- 
+
             </div>
         </div>
         <div class="col w-auto padder w-tab-full">
@@ -27,119 +27,123 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" ng-model="pt.Ser.e_MaterialCode" placeholder="产品编号">
                             </div>
-                                <button class="btn btn-sm btn-info " ng-click="pt.Search() " ng-disabled="pt.SelectId==-1"><i class="glyphicon glyphicon-search "></i>查询</button>
+                            <div class="form-group">
+                                <input type="text" class="form-control" ng-model="pt.Ser.TempName" placeholder="模板名称">
                             </div>
+                            <button class="btn btn-sm btn-info " ng-click="pt.Search() " ng-disabled="pt.SelectId==-1"><i class="glyphicon glyphicon-search "></i>查询</button>
                         </div>
-                        <div class="padder-md ">
-                            <table class="table pad-xs">
-                                <thead>
-                                    <tr>
-                                        <td style="width:60px">操作</td>
-                                        <td style="width:100px ">类型名称</td>
-                                        <td style="width:100px ">产品编码</td>
-                                        <td style="width:100px ">产品名称</td>
-                                        <td style="width:100px ">到货地编码</td>
-                                        <td style="width:100px ">到货单名称</td>
-                                        <td style="width:100px ">模板名称</td>
-                                        <!--<td style="width:80px ">模板编码</td>-->
-                                        
-                                    </tr>
-                                </thead>
-                                <tr ng-if="pt.IsInsert" ng-form="pt.InsertForm">
-                                    <td>
-                                        <button class="btn btn-xs btn-success" ng-disabled="pt.InsertForm.$invalid" ng-click="pt.add()"><i class="glyphicon glyphicon-save"></i></button>
-                                        <button class="btn btn-xs btn-warning" ng-click="pt.IsInsert=false"><i class="fa fa-undo"></i></button>
-                                    </td>
-                                    <td>
-                                        {{ pt.SelectedType.TypeName }}
-                                    </td>
-                                    <td>
-                                        <div ng-class="{ 'has-error': pt.InsertForm.MaterialCode.$invalid }">
-                                            <!--<input type="text" name="MaterialCode" class="form-control" placeholder="e_MaterialCode" ng-model="pt.NewItem.MaterialCode" required />-->
-                                            <div basic-select="ProductID"  ng-name="ProductID" placeholder="产品编码"
-                                                 ng-model="pt.ProductID" required>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div ng-class="{ 'has-error': pt.InsertForm.MaterialName.$invalid }">
-                                            <input type="text" name="MaterialName" class="form-control" placeholder="e_MaterialName" ng-model="pt.ProductID.MaterialName"  disabled="disabled" />
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div ng-class="{ 'has-error': pt.InsertForm.Code.$invalid }">
-                                            <!--<input type="text" name="Code" class="form-control" placeholder="d_Code" ng-model="pt.NewItem.Code" required />-->
-                                            <div basic-select="CustomAddrID" ng-name="CustomAddrID" placeholder="到货地编码"
-                                                 ng-model="pt.CustomAddrID" required>
-                                            </div>
-
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div ng-class="{ 'has-error': pt.InsertForm.Name.$invalid }">
-                                            <input type="text" name="Name" class="form-control" placeholder="到货地" ng-model="pt.CustomAddrID.Name" disabled="disabled" />
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div ng-class="{ 'has-error': pt.InsertForm.Name.$invalid }">
-                                            <ui-select ng-model="pt.TemplateID" theme="bootstrap" ng-required="ngRequired">
-                                                <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>
-                                                <ui-select-choices repeat="item.TemplateId as item in pt.Template | filter: $select.search">
-                                                    <div ng-bind-html="item.Name | highlight: $select.search"></div>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </td>
-                                    <!--<td>
-                                        <div ng-class="{ 'has-error': pt.InsertForm.Code.$invalid }">
-                                            <input type="text" name="Code" class="form-control" placeholder="b_Code" ng-model="pt.TemplateID.Code" disabled="disabled" />
-                                        </div>
-                                    </td>-->
-                                 
-                                </tr>
-                                <tr ng-repeat="item in pt.List " ng-form="item.ItemForm">
-                                    <td>
-                                        <span ng-if="!item.IsEdit">
-                                            <button class="btn btn-xs btn-primary" ng-click="pt.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
-                                            <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="pt.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
-                                        </span>
-                                        <span ng-if="item.IsEdit">
-                                            <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="pt.alter()"><i class="glyphicon glyphicon-save"></i></button>
-                                            <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
-                                        </span>
-                                    </td>
-                                    <td title="{{ item.BarcodeTypeID.TypeName }}">{{ item.BarcodeTypeID.TypeName }}</td>
-                                    <td title="{{ item.MaterialProductId.MaterialCode }}">{{ item.MaterialProductId.MaterialCode }}</td>
-                                    <td title="{{ item.MaterialProductId.MaterialName }}">{{ item.MaterialProductId.MaterialName }}</td>
-                                    <td title="{{ item.baSendPlaceCustomAddr.Code }}">{{ item.baSendPlaceCustomAddr.Code }}</td>
-                                    <td title="{{ item.baSendPlaceCustomAddr.Name }}">{{ item.baSendPlaceCustomAddr.Name }}</td>
-                                    <td>
-                                        <span ng-if="!item.IsEdit">{{ item.BarcodeTemplateID.Name }}</span>
-                                        <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_Name.$invalid }">
-                                            <ui-select ng-model="pt.EditTemplateID" theme="bootstrap" ng-required="ngRequired">
-                                                <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>
-                                                <ui-select-choices style="font-size:6px" repeat="item.TemplateId as item in pt.Template | filter: $select.search">
-                                                    <div ng-bind-html="item.Name | highlight: $select.search"></div>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </td>
-
-                                    <!--<td title="{{ item.BarcodeTemplateID.Code }}">{{ item.BarcodeTemplateID.Code }}</td>-->
+                    </div>
+                    <div class="padder-md ">
+                        <table class="table pad-xs">
+                            <thead>
+                                <tr>
+                                    <td style="width:60px">操作</td>
+                                    <td style="width:100px ">类型名称</td>
+                                    <td style="width:100px ">产品编码</td>
+                                    <td style="width:100px ">产品名称</td>
+                                    <td style="width:100px ">到货地编码</td>
+                                    <td style="width:100px ">到货单名称</td>
+                                    <td style="width:100px ">模板名称</td>
+                                    <!--<td style="width:80px ">模板编码</td>-->
 
                                 </tr>
-                            </table>
-                            <div class="col-md-12 text-center " ng-if="pt.page.total>pt.page.size ">
-                                <div uib-pagination total-items="pt.page.total " ng-model="pt.page.index " items-per-page="pt.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
-                                     ng-change="pt.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
-                            </div>
+                            </thead>
+                            <tr ng-if="pt.IsInsert" ng-form="pt.InsertForm">
+                                <td>
+                                    <button class="btn btn-xs btn-success" ng-disabled="pt.InsertForm.$invalid" ng-click="pt.add()"><i class="glyphicon glyphicon-save"></i></button>
+                                    <button class="btn btn-xs btn-warning" ng-click="pt.IsInsert=false"><i class="fa fa-undo"></i></button>
+                                </td>
+                                <td>
+                                    {{ pt.SelectedType.TypeName }}
+                                </td>
+                                <td>
+                                    <div ng-class="{ 'has-error': pt.InsertForm.MaterialCode.$invalid }">
+                                        <!--<input type="text" name="MaterialCode" class="form-control" placeholder="e_MaterialCode" ng-model="pt.NewItem.MaterialCode" required />-->
+                                        <div basic-select="ProductID" ng-name="ProductID" placeholder="产品编码"
+                                             ng-model="pt.ProductID" required>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-class="{ 'has-error': pt.InsertForm.MaterialName.$invalid }">
+                                        <input type="text" name="MaterialName" class="form-control" placeholder="e_MaterialName" ng-model="pt.ProductID.MaterialName" disabled="disabled" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-class="{ 'has-error': pt.InsertForm.Code.$invalid }">
+                                        <!--<input type="text" name="Code" class="form-control" placeholder="d_Code" ng-model="pt.NewItem.Code" required />-->
+                                        <div basic-select="CustomAddrID" ng-name="CustomAddrID" placeholder="到货地编码"
+                                             ng-model="pt.CustomAddrID" required>
+                                        </div>
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-class="{ 'has-error': pt.InsertForm.Name.$invalid }">
+                                        <input type="text" name="Name" class="form-control" placeholder="到货地" ng-model="pt.CustomAddrID.Name" disabled="disabled" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-class="{ 'has-error': pt.InsertForm.Name.$invalid }">
+                                        <ui-select ng-model="pt.TemplateID" theme="bootstrap" ng-required="ngRequired">
+                                            <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>
+                                            <ui-select-choices repeat="item.TemplateId as item in pt.Template | filter: $select.search">
+                                                <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </td>
+                                <!--<td>
+                                    <div ng-class="{ 'has-error': pt.InsertForm.Code.$invalid }">
+                                        <input type="text" name="Code" class="form-control" placeholder="b_Code" ng-model="pt.TemplateID.Code" disabled="disabled" />
+                                    </div>
+                                </td>-->
+
+                            </tr>
+                            <tr ng-repeat="item in pt.List " ng-form="item.ItemForm">
+                                <td>
+                                    <span ng-if="!item.IsEdit">
+                                        <button class="btn btn-xs btn-primary" ng-click="pt.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                        <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="pt.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                                    </span>
+                                    <span ng-if="item.IsEdit">
+                                        <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="pt.alter()"><i class="glyphicon glyphicon-save"></i></button>
+                                        <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                                    </span>
+                                </td>
+                                <td title="{{ item.BarcodeTypeID.TypeName }}">{{ item.BarcodeTypeID.TypeName }}</td>
+                                <td title="{{ item.MaterialProductId.MaterialCode }}">{{ item.MaterialProductId.MaterialCode }}</td>
+                                <td title="{{ item.MaterialProductId.MaterialName }}">{{ item.MaterialProductId.MaterialName }}</td>
+                                <td title="{{ item.baSendPlaceCustomAddr.Code }}">{{ item.baSendPlaceCustomAddr.Code }}</td>
+                                <td title="{{ item.baSendPlaceCustomAddr.Name }}">{{ item.baSendPlaceCustomAddr.Name }}</td>
+                                <td>
+                                    <span ng-if="!item.IsEdit">{{ item.BarcodeTemplateID.Name }}</span>
+                                    <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_Name.$invalid }">
+                                        <ui-select ng-model="pt.EditTemplateID" theme="bootstrap" ng-required="ngRequired">
+                                            <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>
+                                            <ui-select-choices style="font-size:6px" repeat="item.TemplateId as item in pt.Template | filter: $select.search">
+                                                <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </td>
+
+                                <!--<td title="{{ item.BarcodeTemplateID.Code }}">{{ item.BarcodeTemplateID.Code }}</td>-->
+
+                            </tr>
+                        </table>
+                        <div class="col-md-12 text-center " ng-if="pt.page.total>pt.page.size ">
+                            <div uib-pagination total-items="pt.page.total " ng-model="pt.page.index " items-per-page="pt.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                                 ng-change="pt.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
                         </div>
+                    </div>
                 </uib-tab>
             </uib-tabset>
+
             <!--<pre>{{pt.CodeTypeID | json}}</pre>
             <pre>{{pt.ProductID | json}}</pre>
             <pre>{{pt.CustomAddrID | json}}</pre>
-            <pre>{{pt.TemplateID | json}}</pre>-->          
+            <pre>{{pt.TemplateID | json}}</pre>-->
         </div>
     </div>
 </div>

@@ -161,10 +161,18 @@
                             <input type="number" name="MaxWeight" class="form-control" placeholder="最大重量" ng-model="moDialog.Item.MaxWeight" required>
                         </div>
                     </div>
-                    <div class="col-sm-4 padder-xs">
+                    <!--外协厂使用-->
+                    <!--<div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">力同单号</label>
                         <div class="input-group padder-xs col-sm-8" ng-class="{ 'has-error' : DialogForm.Remark.$invalid }">
                             <textarea class="form-control" name="Remark" ng-disabled="moDialog.Item.IsComplete" rows="1" ng-model="moDialog.Item.Remark" placeholder="输入力同单号" required></textarea>
+                        </div>
+                    </div>-->
+                    <!--内部工厂使用-->
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">备注</label>
+                        <div class="input-group padder-xs col-sm-8">
+                            <textarea class="form-control" ng-disabled="moDialog.Item.IsComplete" rows="1" ng-model="moDialog.Item.SysDesc" placeholder="输入备注信息"></textarea>
                         </div>
                     </div>
                 </div>

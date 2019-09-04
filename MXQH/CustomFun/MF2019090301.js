@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('TestCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
+.controller('OQCReportCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
 function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
@@ -18,20 +18,17 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function PageChange() {
-        vm.promise = AjaxService.GetPlansPage("MESDeleteCode", GetContition(), vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.ExecPlanPage("MESQlCkMain", "getOqc", vm.Ser, vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
 
     }
+
     function ExportExcel() {
-        vm.promise = AjaxService.GetPlanOwnExcel("MESDeleteCode", GetContition()).then(function (data) {
+        vm.promise = AjaxService.GetPlanExcel("MESQlCkMain", "getOqc", vm.Ser).then(function (data) {
             $window.location.href = data.File;
         });
-    }
-    function GetContition() {
-        var list = [];
-        return list;
     }
 
 }]);

@@ -13,20 +13,20 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.Save = Save;
 
     //获取包装信息
-    AjaxService.GetPlans("MESOrder", { name: "ExtendOne", type: 'not null' }).then(function (data) {
+    AjaxService.GetPlans("MESOrderReWork", { name: "Status", value: 4 }).then(function (data) {
         vm.OrderList = data;
     })
 
     function KeyDonwOrder(e) {
         var keycode = window.event ? e.keyCode : e.which;
-        if (keycode == 13 && vm.WorOrder) {
+        if (keycode == 13 && vm.WorkOrder) {
             var con = [];
-            con.push({ name: "ID", value: vm.WorOrder.ID || "-100" });
-            con.push({ name: "ExtendOne", type: 'not null' });
+            con.push({ name: "ID", value: vm.WorkOrder.ID || "-100" });
+            con.push({ name: "Status", value: 4 });
             AjaxService.GetPlan("MESOrderReWork", con).then(function (data) {
                 vm.ItemData = data;
                 if (data.ID) {
-                    var mss = "已扫描 工单 [" + vm.WorOrder.WorOrder + '] ';
+                    var mss = "已扫描 工单 [" + vm.WorkOrder.WorkOrder + '] ';
                     vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: mss });
                 }
                 else {
@@ -43,7 +43,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         en.CreateBy = $rootScope.User.UserNo;
         vm.promise = AjaxService.ExecPlan("MESOrderReWork", 'save', en).then(function (data) {
             toastr.success('操作成功');
-            var mss = "已反完工 工单 [" + vm.ItemData.WorOrder + '] ';
+            var mss = "已反完工 工单 [" + vm.ItemData.WorkOrder + '] ';
             vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: mss });
             vm.ItemData = {};
         })

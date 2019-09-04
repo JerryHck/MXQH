@@ -120,7 +120,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
             root.OrderBy = vm.List ? vm.List.Length : 0;
             root.FunType = 1;
             root.SysNo = vm.SystemItem.SysNo;
-            root.FunImge = 'glyphicon glyphicon-chevron-right';
+            root.FunImge = 'fa fa-hand-o-right text-danger-dk';
             root.editing = true;
             angular.forEach(vm.List, function (r) {
                 r.selected = false;
@@ -250,7 +250,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
             vm.SelectedFun.selected = true;
             vm.SelectedFun.FunNo = '-1';
             vm.SelectedFun.FunName = '新功能';
-            vm.SelectedFun.FunImge = 'glyphicon glyphicon-chevron-right';
+            vm.SelectedFun.FunImge = 'fa fa-hand-o-right text-primary';
             vm.SelectedFun.SysNo = vm.SelectedRoot.SysNo;
             vm.SelectedFun.ParFunNo = vm.SelectedRoot.FunNo;
             vm.SelectedFun.IsSystem = false;

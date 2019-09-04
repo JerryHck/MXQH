@@ -1,1 +1,49 @@
-﻿<pre>{{ t.DataList | json }}</pre>
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="t.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">测试查询</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class= "btn btn-sm btn-info " ng-click= "t.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "t.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table " >
+                    <thead>
+                        <tr>
+                            <td title="a_Id" style= "width:100px ">a_Id</td>
+                            <td title="现内控码" style= "width:100px ">现内控码</td>
+                            <td title="a_MaterialCode" style= "width:100px ">a_MaterialCode</td>
+                            <td title="产品名称" style= "width:100px ">产品名称</td>
+                            <td title="备注" style= "width:100px ">备注</td>
+                            <td title="a_WorkOrder" style= "width:100px ">a_WorkOrder</td>
+                            <td title="a_WorkOrderId" style= "width:100px ">a_WorkOrderId</td>
+                            <td title="a_DeleteBy" style= "width:100px ">a_DeleteBy</td>
+                            <td title="a_DeleteDate" style= "width:100px ">a_DeleteDate</td>
+                            <td title="b_ID" style= "width:100px ">b_ID</td>
+                            <td title="b_InternalCode" style= "width:100px ">b_InternalCode</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in t.List ">
+                        <td title="{{ item.Id }}">{{ item.Id }}</td>
+                        <td title="{{ item.InternalCode }}">{{ item.InternalCode }}</td>
+                        <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                        <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
+                        <td title="{{ item.Remark }}">{{ item.Remark }}</td>
+                        <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                        <td title="{{ item.WorkOrderId }}">{{ item.WorkOrderId }}</td>
+                        <td title="{{ item.DeleteBy }}">{{ item.DeleteBy }}</td>
+                        <td title="{{ item.DeleteDate }}">{{ item.DeleteDate }}</td>
+                        <td title="{{ item.Plan.ID }}">{{ item.Plan.ID }}</td>
+                        <td title="{{ item.Plan.InternalCode }}">{{ item.Plan.InternalCode }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "t.page.total>t.page.size ">
+                <div uib-pagination total-items= "t.page.total " ng-model= "t.page.index " items-per-page= "t.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "t.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

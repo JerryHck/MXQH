@@ -21,7 +21,7 @@ angular.module('app')
         vm.Reflash = Reflash;
         vm.ChangeSys = ChangeSys;
         vm.DownTool = DownTool;
-        
+
         // config
         vm.app = {
             name: '管理平台',
@@ -45,22 +45,25 @@ angular.module('app')
                 //Fixs:[{headerFixed: true}]
                 headerFixed: true,
                 asideFixed: false,
-                asideFolded: false,
+                asideFolded: true,
                 asideDock: false,
                 container: false
             }
         }
+
+        if (angular.isDefined($localStorage.settings)) {
+            vm.app.settings = $localStorage.settings;
+        } else {
+            $localStorage.settings = vm.app.settings;
+        }
+
         GetList();
 
         //显示系统时间
         ShowServerTime();
 
         // save settings to local storage
-        if (angular.isDefined($localStorage.settings)) {
-            vm.app.settings = $localStorage.settings;
-        } else {
-            $localStorage.settings = vm.app.settings;
-        }
+        
         $scope.$watch('vm.app.settings', function () {
             if (vm.app.settings.asideDock && vm.app.settings.asideFixed) {
                 // aside dock and fixed must set the header fixed.

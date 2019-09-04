@@ -7,12 +7,12 @@
                     <div class="form-group">
                         <label class="col-lg-3 control-label">工单号</label>
                         <div class="col-lg-8">
-                            <input type="text" ng-disabled="order.IsEdit"  ng-model="order.WorOrder" uib-typeahead="order as order.WorOrder for order in order.OrderList | filter:$viewValue | limitTo:8"
+                            <input type="text" ng-disabled="order.IsEdit"  ng-model="order.WorkOrder" uib-typeahead="order as order.WorkOrder for order in order.OrderList | filter:$viewValue | limitTo:8"
                                    class="form-control" placeholder="工单号" ng-keyup="order.KeyDonwOrder($event)">
                         </div>
                     </div>
                 </div>
-                <!--<pre>{{ order.WorOrder | json }}</pre>-->
+                <!--<pre>{{ order.WorkOrder | json }}</pre>-->
             </div>
         </div>
         <div class="panel panel-default scroll-y" style="max-height:350px">
@@ -36,7 +36,7 @@
     <div class="col-md-6">
         <div class="panel panel-default scroll-y" style="max-height:600px">
             <div class="panel-heading font-bold text-center">
-                工单{{ order.ItemData.WorOrder }}信息
+                工单{{ order.ItemData.WorkOrder }}信息
             </div>
             <div class="panel-body h5" ng-if="order.ItemData.ID">
                 <div class="form-horizontal col-md-6">
