@@ -344,8 +344,8 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
             //更新功能基本信息
             AjaxService.LoginAction("ReInit");
 
-            console.log(!en.IsSystem && data.data[0] && data.data[0].FunNo && Content);
-            console.log(data);
+            //console.log(!en.IsSystem && data.data[0] && data.data[0].FunNo && Content);
+            //console.log(data);
             //保存文件
             if (!en.IsSystem && data.data[0] && data.data[0].SN && Content) {
                 vm.FunCodeSetting.FunNo = data.data[0].SN;

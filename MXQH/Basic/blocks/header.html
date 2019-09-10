@@ -56,13 +56,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row bg-blue-light">
                     <div class="col-sm-2 b-l" ng-repeat="sys in vm.SysList">
                         <div class="text-center m-l-xs m-t-xs m-b-xs font-bold h4 text-primary">
                             <span class="font-bold ml-6">{{ sys.SysName }}</span>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12 scroll-y wrapper-xs" style="max-height:700px">
+                            <div class="col-xs-12 scroll-y wrapper-xs" style="max-height:500px">
                                 <ul class="nav">
                                     <li ng-repeat="root in sys.FunTree">
                                         <span class="auto text-primary-dker h5 text-success">

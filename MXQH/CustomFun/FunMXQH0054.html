@@ -3,8 +3,16 @@
         <uib-tab-heading class="h5">测试查询</uib-tab-heading>
         <div class="wrapper-md">
             <div class="form-inline">
+                <div class="form-group">
+                        <input type="text" class="form-control"  ng-model="t.Ser.a_FunNo" placeholder="功能名称">
+                </div>
                 <button class= "btn btn-sm btn-info " ng-click= "t.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
                 <button class= "btn btn-sm btn-success " ng-click= "t.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class="wrapper-md col-md-12">
+            <div class="col-md-12 h1">
+                <span class="font-x font-yellow-deep">lkjfskldgjlkjkl</span>
             </div>
         </div>
         <div class= "padder-md ">
@@ -12,31 +20,31 @@
                 <table class= "table " >
                     <thead>
                         <tr>
-                            <td title="a_Id" style= "width:100px ">a_Id</td>
-                            <td title="现内控码" style= "width:100px ">现内控码</td>
-                            <td title="a_MaterialCode" style= "width:100px ">a_MaterialCode</td>
-                            <td title="产品名称" style= "width:100px ">产品名称</td>
-                            <td title="备注" style= "width:100px ">备注</td>
-                            <td title="a_WorkOrder" style= "width:100px ">a_WorkOrder</td>
-                            <td title="a_WorkOrderId" style= "width:100px ">a_WorkOrderId</td>
-                            <td title="a_DeleteBy" style= "width:100px ">a_DeleteBy</td>
-                            <td title="a_DeleteDate" style= "width:100px ">a_DeleteDate</td>
-                            <td title="b_ID" style= "width:100px ">b_ID</td>
-                            <td title="b_InternalCode" style= "width:100px ">b_InternalCode</td>
+                            <td title="a_FunNo" style= "width:100px ">a_FunNo</td>
+                            <td title="a_FunType" style= "width:100px ">a_FunType</td>
+                            <td title="a_ModifyBy" style= "width:100px ">a_ModifyBy</td>
+                            <td title="a_ModifyDate" style= "width:100px ">a_ModifyDate</td>
+                            <td title="a_ParFunNo" style= "width:100px ">a_ParFunNo</td>
+                            <td title="a_RouteName" style= "width:100px ">a_RouteName</td>
+                            <td title="a_SysNo" style= "width:100px ">a_SysNo</td>
+                            <td title="a_CreateBy" style= "width:100px ">a_CreateBy</td>
+                            <td title="a_CreateDate" style= "width:100px ">a_CreateDate</td>
+                            <td title="a_FunHtml" style= "width:100px ">a_FunHtml</td>
+                            <td title="a_FunName" style= "width:100px ">a_FunName</td>
                         </tr>
                     </thead>
                     <tr ng-repeat= "item in t.List ">
-                        <td title="{{ item.Id }}">{{ item.Id }}</td>
-                        <td title="{{ item.InternalCode }}">{{ item.InternalCode }}</td>
-                        <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
-                        <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
-                        <td title="{{ item.Remark }}">{{ item.Remark }}</td>
-                        <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
-                        <td title="{{ item.WorkOrderId }}">{{ item.WorkOrderId }}</td>
-                        <td title="{{ item.DeleteBy }}">{{ item.DeleteBy }}</td>
-                        <td title="{{ item.DeleteDate }}">{{ item.DeleteDate }}</td>
-                        <td title="{{ item.Plan.ID }}">{{ item.Plan.ID }}</td>
-                        <td title="{{ item.Plan.InternalCode }}">{{ item.Plan.InternalCode }}</td>
+                        <td title="{{ item.FunNo }}">{{ item.FunNo }}</td>
+                        <td title="{{ item.FunType }}">{{ item.FunType }}</td>
+                        <td title="{{ item.ModifyBy }}">{{ item.ModifyBy }}</td>
+                        <td title="{{ item.ModifyDate }}">{{ item.ModifyDate }}</td>
+                        <td title="{{ item.ParFunNo }}">{{ item.ParFunNo }}</td>
+                        <td title="{{ item.RouteName }}">{{ item.RouteName }}</td>
+                        <td title="{{ item.SysNo }}">{{ item.SysNo }}</td>
+                        <td title="{{ item.CreateBy }}">{{ item.CreateBy }}</td>
+                        <td title="{{ item.CreateDate }}">{{ item.CreateDate }}</td>
+                        <td title="{{ item.FunHtml }}">{{ item.FunHtml }}</td>
+                        <td title="{{ item.FunName }}">{{ item.FunName }}</td>
                     </tr>
                 </table>
             </div>

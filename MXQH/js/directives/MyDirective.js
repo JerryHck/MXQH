@@ -187,7 +187,7 @@ angular.module('MyDirective')
                 scope.data = [];
                 ListData = ListData || [];
                 for (var j = 0, len = ListData.length; j < len; j++) {
-                    if ((ListData[j][enName.ShowColumn].toUpperCase().indexOf(ser.toUpperCase()) !== -1) ||
+                    if (( ListData[j][enName.ShowColumn] && ListData[j][enName.ShowColumn].toUpperCase().indexOf(ser.toUpperCase()) !== -1) ||
                         (ListData[j][enName.ShowSmallColumn] && ListData[j][enName.ShowSmallColumn].toUpperCase().indexOf(ser.toUpperCase()) !== -1)) {
                         scope.data.push(ListData[j]);
                     }
@@ -437,6 +437,8 @@ angular.module('MyDirective')
             ngDisabled: '=',
             searchEnabled: '=',
             configOption: '=',
+            tb: '@',
+            col:'@',
             placeholder: '@',
             selectClass: '@',
             ngRequired: '@',
@@ -458,9 +460,11 @@ angular.module('MyDirective')
         scope.data = undefined;
         scope.autoFirst = scope.autoFirst || "false";
         scope.placeholder = scope.placeholder || "请选择...";
-        if (scope.configOption) {
+        if (scope.configOption || (scope.tb && scope.col)) {
+            var tb = (scope.configOption && scope.configOption.Table) ? scope.configOption.Table : scope.tb;
+            var col = scope.configOption && scope.configOption.Column ? scope.configOption.Column : scope.col;
             //组织
-            AjaxService.GetTableConfig(scope.configOption.Table, scope.configOption.Column).then(function (data) {
+            AjaxService.GetTableConfig(tb, col).then(function (data) {
                 scope.data = data;
                 if (data.length > 0 && scope.autoFirst.toLowerCase() == 'true') {
                     scope.ngModel = scope.ngModel || data[0].ClInf;

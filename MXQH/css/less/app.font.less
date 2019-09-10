@@ -3,7 +3,14 @@ background: #EEE url(data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAA
 text-shadow: 5px -5px black, 4px -4px white;
 font-weight: bold;
 -webkit-text-fill-color: transparent;
--webkit-background-clip: text }
+-webkit-background-clip: text;
+ &.h-header{
+     text-shadow: 8px -5px #5868e9, 4px -4px #e1dada !important;
+     font-size:73px;
+     vertical-align:top;
+     margin-top:-15px!important;
+ }
+}
 .font-v2{
 color: transparent;
 -webkit-text-stroke: 1px red;
@@ -44,3 +51,130 @@ text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #
         background-position: -100%  0;
     }
 }
+
+/*特效字体*/
+.font-x {
+  --interval: 1s;
+  display: block;
+  text-shadow: 
+    0 0 10px var(--color1),
+    0 0 20px var(--color2),
+    0 0 40px var(--color3),
+    0 0 80px var(--color4);
+  will-change: filter, color;
+  filter: saturate(60%);
+  animation: flicker steps(100) var(--interval) 1s infinite;
+  &.font-yellow{
+      color: yellow;
+      --color1: goldenrod;
+      --color2: orangered;
+      --color3: mediumblue;
+      --color4: purple;
+      font-family: Gruppo;
+  }
+  &.font-red-light{
+      color: lightpink;
+      --color1: pink;
+      --color2: orangered;
+      --color3: red;
+      --color4: magenta;
+      font-family: Bad Script;
+  }
+  &.font-yellow-light {
+      color: lightyellow;
+      --color1: yellow;
+      --color2: lime;
+      --color3: green;
+      --color4: mediumblue;
+      font-family: Kumar One Outline;
+    }
+  &.font-yellow-gold {
+      color: lightyellow;
+      --color1: gold;
+      --color2: firebrick;
+      --color3: pink;
+      --color4: red;
+      font-family: Londrina Outline;
+    }
+  &.font-azure{
+      color: azure;
+      --color1: azure;
+      --color2: aqua;
+      --color3: dodgerblue;
+      --color4: blue;
+      font-family: Sriracha;
+  }
+  &.font-tomato {
+      color: tomato;
+      --color1: orangered;
+      --color2: firebrick;
+      --color3: maroon;
+      --color4: darkred;
+      font-family: Yellowtail;
+    }
+  &.font-yellow-orange {
+      color: lightyellow;
+      --color1: yellow;
+      --color2: orange;
+      --color3: brown;
+      --color4: purple;
+      font-family: Bad Script;
+    }
+    &.font-yellow-lime {
+      color: yellow;
+      --color1: yellow;
+      --color2: lime;
+      --color3: green;
+      --color4: darkgreen;
+      font-family: Monoton;
+    }
+    .font-yellow-deep {
+      color: lightyellow;
+      --color1: yellow;
+      --color2: gold;
+      --color3: orange;
+      --color4: darkred;
+      font-family: Sriracha;
+    }
+}
+
+
+@keyframes flicker {
+  50% {
+    color: white;
+    filter: saturate(200%) hue-rotate(20deg);
+  }
+}
+
+.font-bottom{font-weight:bold;color:#0b17f2;/*FF*/text-shadow:0 0 1px currentColor,
+2px  0   1px #083058,  0   2px  1px #98c0e8,  2px  1px  1px #083058,  1px  2px  1px #98c0e8,  2px  2px  1px #487098,
+3px  1px 1px #083058,  1px 3px  1px #98c0e8,  3px  2px  1px #083058,  2px  3px  1px #98c0e8,  3px  3px  1px #487098,
+/*4px  2px 1px #083058,  2px 4px  1px #98c0e8,  4px  3px  1px #083058,  3px  4px  1px #98c0e8,  4px  4px  1px #487098,*/
+/*5px  3px 1px #083058,  3px 5px  1px #98c0e8,  5px  4px  1px #083058,  4px  5px  1px #98c0e8,  5px  5px  1px #487098,*/
+/*6px  4px 1px #248ffb,  4px 6px  1px #98c0e8,  6px  5px  1px #083058,  5px  6px  1px #98c0e8,  6px  6px  1px #487098,*/
+/*7px  5px 1px #083058,  5px 7px  1px #98c0e8,  7px  6px  1px #083058,  6px  7px  1px #98c0e8,  7px  7px  1px #487098,
+8px  6px 1px #083058,  6px 8px  1px #98c0e8,  8px  7px  1px #083058,  7px  8px  1px #98c0e8,  8px  8px  1px #487098,
+9px  7px 1px #083058,  7px 9px  1px #98c0e8,  9px  8px  1px #083058,  8px  9px  1px #98c0e8,  9px  9px  1px #487098,
+10px 8px 1px #083058,  8px 10px 1px #98c0e8,  10px 9px  1px #083058,  9px  10px 1px #98c0e8,  10px 10px 1px #487098,
+11px 9px 1px #083058,  9px 11px 1px #98c0e8,  11px 10px 1px #083058,  10px 11px 1px #98c0e8,  11px 11px 1px #487098,*/
+/*11px 11px 1px #666,
+11px 12px 1px #666,
+10px 12px 1px #666,
+9px 12px 1px #666,
+8px 11px 1px #666,*/
+7px 10px 1px #666,
+6px 9px 1px #666,
+5px 8px 1px #666,
+4px 7px 1px #666,
+3px 6px 1px #666,
+2px 5px 1px #666,
+1px 4px 1px #666,
+0 3px 1px #666,
+-1px 2px 1px #666,
+20px 8px 8px rgba(0,0,0,.7);
+/*font: bold 100px/1 "Helvetica Neue", Helvetica, Arial,'宋体', sans-serif;*/
+/*font: font: bold 12px/1.5 Tahoma,Helvetica,Arial,'宋体',sans-serif;*/
+}
+/*.font-bottom:before,.font-bottom:after{content:'生产控制管理系统'}*/
+.font-bottom:before{color:rgb(40,80,120);text-shadow:0 0 1px currentColor,-1px -1px 1px #003,0 -1px 1px #003,1px -1px 1px #003,1px 0 1px #003,1px 1px 1px #003,0 1px 1px #003,-1px 1px 1px #003,-1px 0 1px #003}
+.font-bottom:after{color:rgba(40,80,120,.1);text-shadow:1px -1px 1px rgba(40,80,120,.8),-1px 1px 1px rgba(255,255,255,.8)}

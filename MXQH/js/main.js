@@ -201,5 +201,23 @@ angular.module('app')
         function DownTool(path) {
             $window.location.href = FileUrl + "DownLoad/" + path;
         }
-
     }]);
+
+
+var signs = document.querySelectorAll('.font-x');
+
+var randomIn = function randomIn(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+var mixupInterval = function mixupInterval(el) {
+    var ms = randomIn(2000, 4000);
+    el.style.setProperty('--interval', "".concat(ms, "ms"));
+};
+
+signs.forEach(function (el) {
+    mixupInterval(el);
+    el.addEventListener('webkitAnimationIteration', function () {
+        mixupInterval(el);
+    });
+});

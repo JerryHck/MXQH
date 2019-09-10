@@ -33,41 +33,41 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
         AjaxService.Custom("LogBrowse");
     }
 
-    //获取路由信息
-    AjaxService.LoginAction("GetFunRoute").then(function (data) {
-        angular.forEach(data, function (item) {
-            var route = {};
-            if (item.RouteName && item.RouteName != '') {
-                route.Name = item.RouteName;
-                route.Url = item.RouteUrl;
-                route.Controller = item.Controller;
-                route.ControllerAs = item.ControllerAs;
-                route.TempleteUrl = item.FunHtml + "?v=" + Version;
-                route.FunNo = item.FunNo;
-                if (item.FunLoad) {
-                    var loadJs = [];
-                    angular.forEach(item.FunLoad, function (l) {
-                        loadJs.push(l.LoadName + "?v=" + Version);
-                    });
-                    route.LazyLoad = loadJs;
-                }
-                router.setDataRouters(route);
-                if ($cookieStore.get('active-router') == item.RouteName) {
-                    $state.go(item.RouteName);
-                }
-            }
-        });
-    });
-
+    
     //获取用户信息
     AjaxService.LoginAction("GetLoginEmp").then(function (data) {
         $rootScope.User = data;
-    });
+        //获取路由信息
+        AjaxService.LoginAction("GetFunRoute").then(function (data) {
+            angular.forEach(data, function (item) {
+                var route = {};
+                if (item.RouteName && item.RouteName != '') {
+                    route.Name = item.RouteName;
+                    route.Url = item.RouteUrl;
+                    route.Controller = item.Controller;
+                    route.ControllerAs = item.ControllerAs;
+                    route.TempleteUrl = item.FunHtml + "?v=" + Version;
+                    route.FunNo = item.FunNo;
+                    if (item.FunLoad) {
+                        var loadJs = [];
+                        angular.forEach(item.FunLoad, function (l) {
+                            loadJs.push(l.LoadName + "?v=" + Version);
+                        });
+                        route.LazyLoad = loadJs;
+                    }
+                    router.setDataRouters(route);
+                    if ($cookieStore.get('active-router') == item.RouteName) {
+                        $state.go(item.RouteName);
+                    }
+                }
+            });
+        });
 
-    //获取dialog信息
-    AjaxService.GetPlans('Dialog').then(function (data) {
-        $rootScope.DialogData = data;
-    });
+        //获取dialog信息
+        AjaxService.GetPlans('Dialog').then(function (data) {
+            $rootScope.DialogData = data;
+        });
+    }); 
 
 
     // 对Date的扩展，将 Date 转化为指定格式的String
@@ -91,8 +91,6 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
             if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     }
-
-
 
     //去除字符串头尾空格或指定字符  
     String.prototype.Trim = function (c) {
@@ -266,13 +264,6 @@ function Config($stateProvider, $urlRouterProvider, Version) {
                       return $ocLazyLoad.load(['ui.select', 'ngGrid']);
                   }]
             }
-        })
-        .state('appfull', {
-            abstract: true,
-            controllerAs: 'vm',
-            controller: 'AppCtrl',
-            url: '/appfull',
-            templateUrl: 'Basic/app_full.html' + "?v=" + Version
         })
         .state('apps', {
             abstract: true,
