@@ -10,7 +10,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     vm.Insert = Insert;
     vm.SaveInsert = SaveInsert;
-    vm.Edit = Edit;  
+    vm.Edit = Edit;
     vm.Delete = Delete;
     vm.SaveEdit = SaveEdit;
     vm.PageChange = PageChange;
@@ -23,7 +23,6 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function Insert() {
-          toastr.success('李佳新增');
         vm.NewItem = {};
         vm.IsInsert = true;
     }

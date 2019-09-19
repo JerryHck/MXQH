@@ -1,7 +1,7 @@
 ﻿'use strict';
 angular.module('app')
-.controller('MesMoDialogCtrl', ['$rootScope', '$scope','ItemData', '$uibModalInstance', 'Dialog', 'toastr', 'AjaxService', 'Form',
-function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxService, Form) {
+.controller('MesMoDialogCtrl', ['$rootScope', '$scope', 'ItemData', '$uibModalInstance', 'Dialog', 'toastr', 'AjaxService', 'Form',
+function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxService, Form) {
     var vm = this;
     vm.Save = Save;
     vm.Cancel = Cancel;    
@@ -9,7 +9,7 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
     vm.SelectProduct = SelectProduct;
     vm.SelectCustomer = SelectCustomer;
     vm.SelectRouting = SelectRouting;
-    vm.Item.ListNo = ItemData.ListNo == undefined ? GetListNo() : ItemData.ListNo;
+    vm.Item.ListNo = vm.Item.ListNo == undefined ? GetListNo() : vm.Item.ListNo;
     vm.GetPackInfo = GetPackInfo;
     vm.AddPack = AddPack;
     vm.EditPack = EditPack;
@@ -35,6 +35,8 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
         GetPackInfo();//获取包装信息
     } else {
         vm.IsEdit = false;
+        vm.Item.MinWeight = 100;
+        vm.Item.MaxWeight = 200;
     }
     // #region 工单信息
 
@@ -74,6 +76,10 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
         }
         if (!vm.Item.Remark) {
             vm.Item.Remark = '';
+        }
+        if (vm.Item.MaxWeight<vm.Item.MinWeight) {
+            toastr.error('最大重量不能小于最小重量');
+            return;
         }
         var en = {};
         var li = [];
@@ -180,7 +186,7 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
 
     // #region 包装信息
     //获取包装信息
-    function GetPackInfo() {
+    function GetPackInfo(IsEdit) {
         //弹窗为编辑操作时，获取包装信息
         if (vm.Item.ID) {
             vm.promise = AjaxService.GetPlans("MESPackageMain", { name: 'AssemblyPlanDetailID', value: vm.Item.ID }).then(function (data) {
@@ -188,7 +194,9 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
                 if (data.length == 0) {
                     vm.CanAddPack = false;
                 } else {
-                    vm.Item.CustomerOrder = data[0].TransID
+                    if (IsEdit=='1') {
+                        vm.Item.CustomerOrder = data[0].TransID
+                    }
                     vm.CanAddPack = true;
                 }
             });
@@ -208,7 +216,7 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
     function Open(resolve) {
         Dialog.open("PackDialog", resolve).then(function (data) {
             if (data == "1") {
-                GetPackInfo();
+                GetPackInfo('1');
             }
         }).catch(function (reason) {
 
@@ -228,6 +236,7 @@ function ($rootScope, $scope,ItemData, $uibModalInstance, Dialog, toastr, AjaxSe
     function DeletePack(id) {
         vm.promise = AjaxService.ExecPlan("MESPackageMain", "Delete", { PackMainID:id }).then(function (data) {
             if (data.data[0].MsgType == '1') {
+                GetPackInfo('0');
                 toastr.success(data.data[0].Msg);
             } else {
                 toastr.error(data.data[0].Msg);

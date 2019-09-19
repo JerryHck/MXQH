@@ -4,6 +4,7 @@
         <div class="wrapper-md">
             <div class="input-group m-b-xxs">
                 <div class="form-inline">
+                    <button class="btn btn-sm btn-success " ng-click="mesmo.Add() "><i class="glyphicon glyphicon-plus "></i>新增</button>
                     <div class="form-group">
                         <div class="input-group">
                             <input type="text" class="form-control" ng-model="mesmo.Ser.DocNo" placeholder="工单号">
@@ -12,6 +13,14 @@
                             </span>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div basic-select="MaterialID" placeholder="料号" ng-model="mesmo.Ser.MaterialID" ng-name="MaterialID" ng-required="true" select-class="text-xs"></div>
+                            <span class="input-group-addon">
+                                <a><i ng-click="mesmo.Ser.MaterialID = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>                    
                     <div class="form-group">
                         <div class="input-group">
                             <input type="text" date-picker class="form-control" name="AssemblyDate" placeholder="计划日期" option="auctusSO.UnExist2"
@@ -29,13 +38,12 @@
                             <a><i ng-click="mesmo.Ser.LineID = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
                         </span>
                     </div>
-                    <button class="btn btn-sm btn-success " ng-click="mesmo.Add() "><i class="glyphicon glyphicon-plus "></i>新增</button>
                     <button class="btn btn-sm btn-info " ng-click="mesmo.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
                 </div>
             </div>
         </div>
         <div class="padder-md table-responsive">
-            <table class="table one-line ">
+            <table class="table one-line" >
                 <thead>
                     <tr>
                         <td style="width:90px ">编辑</td>
@@ -43,9 +51,10 @@
                         <td style="width:100px ">生产线</td>
                         <td style="width:100px ">计划序号</td>
                         <td style="width:130px ">工单号</td>
+                        <td style="width:100px ">到货地</td>
                         <td style="width:100px ">编码规则</td>
                         <td style="width:130px ">产品编号</td>
-                        <td style="width:160px ">产品名称</td>
+                        <td style="width:160px" >产品名称</td>
                         <td style="width:100px ">计划数量</td>
                         <td style="width:100px ">投入数量</td>
                         <td style="width:100px ">完工数量</td>
@@ -53,26 +62,29 @@
                         <td style="width:100px ">计划交货期</td>
                         <td style="width:100px ">客户编号</td>
                         <td style="width:140px ">客户名称</td>
-                        <td style="width:100px ">到货的</td>
                         <td style="width:130px ">ERP销售单号</td>
                         <td style="width:100px ">ERP订单数量</td>
+                        <td style="width:100px ">最小重量</td>
+                        <td style="width:100px ">最大重量</td>
 
                     </tr>
                 </thead>
                 <tr ng-repeat="item in mesmo.List ">
                     <td>
                         <button class="btn btn-xs btn-primary" title="编辑" ng-click="mesmo.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
-                        <button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除吗'}" ng-click="mesmo.Delete(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>
+                        <!--<button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除吗'}" ng-click="mesmo.Delete(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>-->
                         <button class="btn btn-xs btn-success" title="完工" ng-confirm="{text:'确定要完工吗'}" ng-click="mesmo.Complete(item.ID)"><i class="glyphicon glyphicon-check"></i></button>
 
                     </td>
                     <td title="{{ item.AssemblyDate }}">{{ item.AssemblyDate }}</td>
-                    <td title="{{ item.AssemblyLineName }}">{{ item.AssemblyLineName }}</td>
+                    <td title="{{ item.AssemblyLineName }}" style="white-space:normal;word-break:normal;">{{ item.AssemblyLineName }}</td>
                     <td title="{{ item.ListNo }}">{{ item.ListNo }}</td>
                     <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
-                    <td title="{{ item.ClName }}">{{ item.ClName }}</td>
+                    <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
+                    <td class="bg-warning" ng-if="item.ClName!=''" title="{{ item.ClName }}">{{ item.ClName }}</td>
+                    <td ng-if="item.ClName==''">{{item.MaterialClName}}</td>
                     <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
-                    <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
+                    <td title="{{ item.MaterialName }}" style="white-space:normal;word-break:normal;" >{{ item.MaterialName }}</td>
                     <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
                     <td title="{{ item.OnlineQty }}">{{ item.OnlineQty }}</td>
                     <td title="{{ item.FinishQty }}">{{ item.FinishQty }}</td>
@@ -80,9 +92,10 @@
                     <td title="{{ item.DeliveryDate }}">{{ item.DeliveryDate }}</td>
                     <td title="{{ item.CustomerCode }}">{{ item.CustomerCode }}</td>
                     <td title="{{ item.CustomerName }}">{{ item.CustomerName }}</td>
-                    <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
                     <td title="{{ item.ERPSO }}">{{ item.ERPSO }}</td>
                     <td title="{{ item.ERPQuantity }}">{{ item.ERPQuantity }}</td>
+                    <td title="{{ item.MinWeight }}">{{ item.MinWeight }}</td>
+                    <td title="{{ item.MaxWeight }}">{{ item.MaxWeight }}</td>
                 </tr>
             </table>
         </div>
@@ -105,6 +118,14 @@
                             </span>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div  basic-select="MaterialID" ng-model="mesmo.Ser2.MaterialID" select-class="text-xs" ></div>
+                            <span class="input-group-addon">
+                                <a><i ng-click="mesmo.Ser2.MaterialID = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div> 
                     <div class="form-group">
                         <div class="input-group">
                             <input type="text" date-picker class="form-control" name="AssemblyDate" placeholder="计划日期" option="auctusSO.UnExist2"
@@ -135,6 +156,7 @@
                         <td style="width:100px ">生产线</td>
                         <td style="width:100px ">计划序号</td>
                         <td style="width:130px ">工单号</td>
+                        <td style="width:100px ">到货地</td>
                         <td style="width:100px ">编码规则</td>
                         <td style="width:130px ">产品编号</td>
                         <td style="width:160px ">产品名称</td>
@@ -145,7 +167,6 @@
                         <td style="width:100px ">计划交货期</td>
                         <td style="width:100px ">客户编号</td>
                         <td style="width:140px ">客户名称</td>
-                        <td style="width:100px ">到货的</td>
                         <td style="width:130px ">ERP销售单号</td>
                         <td style="width:100px ">ERP订单数量</td>
                     </tr>
@@ -158,6 +179,7 @@
                     <td title="{{ item.AssemblyLineName }}">{{ item.AssemblyLineName }}</td>
                     <td title="{{ item.ListNo }}">{{ item.ListNo }}</td>
                     <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
                     <td title="{{ item.ClName }}">{{ item.ClName }}</td>
                     <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
                     <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
@@ -168,7 +190,6 @@
                     <td title="{{ item.DeliveryDate }}">{{ item.DeliveryDate }}</td>
                     <td title="{{ item.CustomerCode }}">{{ item.CustomerCode }}</td>
                     <td title="{{ item.CustomerName }}">{{ item.CustomerName }}</td>
-                    <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
                     <td title="{{ item.ERPSO }}">{{ item.ERPSO }}</td>
                     <td title="{{ item.ERPQuantity }}">{{ item.ERPQuantity }}</td>
                 </tr>

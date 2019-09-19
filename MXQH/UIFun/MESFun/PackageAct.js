@@ -7,7 +7,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     var vm = this;
     vm.Item = { };
     vm.MesList = [];
-    vm.Focus = { SNCode: true, Order: false, SN: false };
+    vm.Focus = { SN: true };
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
     vm.IsAuto = true;
@@ -72,6 +72,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         en.SNColumns = JSON.stringify(SNList);
         AjaxService.PlanUpdate("MESPackageDtl", en).then(function (data) {
             ChangeBoxNum(vm.Item.BoxNumber);
+            $("input.SnFocus").focus();
         })
     }
 
@@ -109,6 +110,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                     vm.PackDetail = undefined;
                     vm.Item.BoxNumber = undefined;
                     getBoxList();
+                    $("input.SnFocus").focus();
                 }
             });
         }
@@ -126,7 +128,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     }
 
     function ChangeBoxNum(boxNum) {
-        if (!boxNum || boxNum > vm.BoxList.length) return;
+        if (!boxNum) return;
         vm.Item.BoxNumber = boxNum;
         vm.ScTop = $("#sc")[0].scrollTop + $("#sc a:first").height() + 18;
         var en = { PackMainID: vm.ItemData.ID, BoxNumber: vm.Item.BoxNumber };
@@ -139,11 +141,13 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 vm.PackDetail = data.data1[0] || {};
                 vm.Weight = vm.PackDetail.Packweight && vm.PackDetail.Packweight > 0 ? vm.PackDetail.Packweight : vm.Weight;
                 vm.PackDetail.ProductCount = vm.PackDetail.ProductCount || 0;
+                vm.PrintSnNum = vm.PackDetail.ProductCount;
                 vm.PrintDtlId = vm.PackDetail.ID;
                 vm.NoList = [];
-                for (var i = 0; i < vm.PackDetail.ProductCount; i++) {
+                for (var i = 0, len2 = vm.PackDetail.ProductCount > 50 ? 50 : vm.PackDetail.ProductCount; i < vm.PackDetail.ProductCount; i++) {
                     vm.NoList.push(i + 1);
                 }
+                $("input.SnFocus").focus();
                 vm.SNList = data.data2;
             }
         });
@@ -163,16 +167,19 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 MyPop.Show(true, data.data[0].MsgText);
             }
             else if (data.data[0].MsgType == "Success") {
-                toastr.success('包装成功');
+                toastr.success('包装成功, 打印标签');
                 vm.IsEdit = false;
                 vm.PrintDtlId = vm.PackDetail.ID;
+                $("input.SnFocus").focus();
+                Print("COTTONCODE");
+                getBoxList();
                 //打印询问
-                MyPop.ngConfirm({ text: "是否打印包装箱" }).then(function () {
-                    Print("COTTONCODE");
-                    getBoxList();
-                }, function () {
-                    getBoxList();
-                });
+                //MyPop.ngConfirm({ text: "是否打印包装箱" }).then(function () {
+                //    Print("COTTONCODE");
+                //    getBoxList();
+                //}, function () {
+                //    getBoxList();
+                //});
             }
         })
     }
@@ -184,13 +191,6 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     }
 
     function Print(type) {
-
-        var ef = {
-            "Para": "\"{\"Box3S\":\"1/834\",\"TotalCt4S\":\"834\",\"Quantity\":6,\"BoxTotalQuantity\":5004,\"Packweight\":\"10.2KG\",\"Packweight_KG\":\"10.2KG\",\"Packweight_KGS\":\"10.2KGS\",\"Packweight_Ibs\":\"22.5Ibs\",\"Packweight_KG_Ibs\":\"10.2KG(22.5Ibs)\",\"AssemblyPlanDetailID\":3029,\"PerColorBoxQty\":6,\"PerBoxQuantity\":24,\"ShipForm\":\"\",\"MODELNUMBER\":\"B8P00811YDEMAQ\",\"Tanapa\":\"IXUE2113A\",\"Ean\":\"5031753007218\",\"TransID\":\"IT83027133\",\"COO\":\"CN\",\"BoxNumber\":1,\"ProductCount\":24,\"MODELNAME\":\"101010161\",\"ERPQuantity\":20000}\""
-        }
-
-        //console.log(JSON.stringify(ef));
-
         var en = {};
         en.PackDetailID = vm.PrintDtlId;
         en.TypeCode = type;
@@ -201,7 +201,8 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             else if (data.data3[0].MsgType == "Success") {
                 var postData = {}, list = [];
                 postData.ParaData = JSON.stringify(data.data[0]);
-                for (var i = 0, len = data.data2.length; i < len; i++) {
+                vm.PrintSnNum
+                for (var i = 0, len = vm.PrintSnNum || data.data2.length; i < len; i++) {
                     list.push(data.data2[i].SNCode);
                 }
                 postData.OutList = list;
@@ -211,6 +212,9 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 }, function (err) {
                     console.log(err);
                 })
+                if (type != "COTTONCODE") {
+                    getBoxList();
+                }
             }
         })
     }

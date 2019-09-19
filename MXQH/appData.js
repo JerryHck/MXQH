@@ -12,8 +12,8 @@ angular.module('appData')
 .constant('FileServiceUrl', 'http://192.168.30.6:9090/FileService/')
 //.constant('FileServiceUrl', 'http://192.168.11.75:8080/FileService/')
 //  .constant('FileServiceUrl', 'http://localhost:8080/FileService/')
- .constant('SocketServiceUrl', 'ws://192.168.1.226:2019')
-// .constant('SocketServiceUrl', 'ws://localhost:2019')
+ //.constant('SocketServiceUrl', 'ws://192.168.1.226:2019')
+.constant('SocketServiceUrl', 'ws://localhost:2019')
 //.constant('SocketServiceUrl', 'ws://support.auctus.cn:88')
  //表單設定
 .constant('Form', [
@@ -28,7 +28,6 @@ angular.module('appData')
     message: '',
     backdrop: true,
     templateUrl: './Loading/Loading.html',
-    //templateUrl: 'http://localhost:8080/MXQH/Loading/Loading.html', 
     message: '请稍等...',
     minDuration: 500,
     notBusyDisabled: true

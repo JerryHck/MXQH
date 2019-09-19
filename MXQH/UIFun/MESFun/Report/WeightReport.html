@@ -1,0 +1,59 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="weightReport.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">产品重量报表</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="text" date-picker class="form-control" ng-model="weightReport.Ser.SD" placeholder="开始时间" option="vm.DateTimeOption">
+                </div>
+                <div class="form-group">
+                    <input type="text" date-picker class="form-control" ng-model="weightReport.Ser.ED" placeholder="结束时间" option="vm.DateTimeOption">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="weightReport.Ser.SNCode" placeholder="SN编码">
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div basic-select="AssemblyLine" placeholder="线别" ng-model="weightReport.Ser.LineID" select-class="text-xs" ng-name="weightReport.Ser.LineID"></div>
+                        <span class="input-group-addon">
+                            <a><i ng-click="weightReport.Ser.LineID = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="weightReport.Ser.WorkOrder" placeholder="工单号">
+                </div>
+                <button class="btn btn-sm btn-info " ng-click="weightReport.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                <button class="btn btn-sm btn-success " ng-click="weightReport.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class="padder-md ">
+            <table class="table ">
+                <thead>
+                    <tr>
+                        <td style="width:100px ">绑定时间</td>
+                        <td style="width:100px ">重量</td>
+                        <td style="width:100px ">SN码</td>
+                        <td style="width:100px ">线别</td>
+                        <td style="width:100px ">工单号</td>
+                        <td style="width:100px ">产品编码</td>
+                        <td style="width:100px ">产品名称</td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in weightReport.List ">
+                    <td title="{{ item.CreateDate }}">{{ item.CreateDate }}</td>
+                    <td title="{{ item.Weight }}">{{ item.Weight }}</td>
+                    <td title="{{ item.SNCode }}">{{ item.SNCode }}</td>
+                    <td title="{{ item.AssemblyLineName }}">{{ item.AssemblyLineName }}</td>
+                    <td title="{{ item.WorOrder }}">{{ item.WorOrder }}</td>
+                    <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                    <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
+                </tr>
+            </table>
+            <div class="col-md-12 text-center " ng-if="weightReport.page.total>weightReport.page.size ">
+                <div uib-pagination total-items="weightReport.page.total " ng-model="weightReport.page.index " items-per-page="weightReport.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                     ng-change="weightReport.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

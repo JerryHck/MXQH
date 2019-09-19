@@ -34,8 +34,8 @@
                     <div class="form-group">
                         <label class="col-lg-3 control-label">内控码</label>
                         <div class="col-lg-8" ng-class="{ 'has-error' : wo.OrderForm.InCode.$invalid }">
-                            <input type="text" ng-disabled="wo.OrderForm.wo.$invalid|| wo.OrderForm.router.$invalid" class="form-control"
-                                   ui-focus="wo.Focus.SNCode" name="InCode" ng-model="wo.Item.InCode" placeholder="生产条码" ng-keyup="wo.KeyDonwInCode($event)" required>
+                            <input type="text" ng-disabled="wo.OrderForm.wo.$invalid|| wo.OrderForm.router.$invalid" class="form-control SnFocus"
+                                   name="InCode" ng-model="wo.Item.InCode" placeholder="生产条码" ng-keyup="wo.KeyDonwInCode($event)" required>
                             <div class="h6 text-danger">扫描内控码上线</div>
                         </div>
                     </div>

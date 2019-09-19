@@ -51,6 +51,7 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
     function GetCondition() {
         vm.page.DocNo = vm.Ser.DocNo == '' ? undefined : vm.Ser.DocNo;
         vm.page.LineID = vm.Ser.LineID == '' ? undefined : vm.Ser.LineID;
+        vm.page.MaterialID = vm.Ser.MaterialID == '' ? undefined : vm.Ser.MaterialID;
         vm.page.AssemblyDate = vm.Ser.AssemblyDate == '' ? undefined : vm.Ser.AssemblyDate;
     }
 
@@ -58,6 +59,7 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
     function GetConditionCom() {
         vm.pageCom.DocNo = vm.Ser2.DocNo == '' ? undefined : vm.Ser2.DocNo;
         vm.pageCom.LineID = vm.Ser2.LineID == '' ? undefined : vm.Ser2.LineID;
+        vm.pageCom.MaterialID = vm.Ser2.MaterialID == '' ? undefined : vm.Ser2.MaterialID;
         vm.pageCom.AssemblyDate = vm.Ser2.AssemblyDate == '' ? undefined : vm.Ser2.AssemblyDate;
         vm.pageCom.Status = 4;
     }

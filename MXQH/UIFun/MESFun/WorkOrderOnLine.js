@@ -55,6 +55,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                     vm.RoutingList = data.data1;
                     vm.RoutingData = data.data1[0];
                     vm.OrderCount = data.data2[0];
+                    $("input.SnFocus").focus();
                 }
             });
         }

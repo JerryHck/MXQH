@@ -52,13 +52,12 @@
                                     </div>
                                     <button class="btn btn-sm btn-info" ng-click="bar.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
                                     <button class="btn btn-sm btn-success" ng-click="bar.NewLabel()"><i class="glyphicon glyphicon-plus"></i>新增</button>
-                                    <button class="btn btn-default btn-success pull-right" ng-click="bar.DownExe()">下载标签设计插件</button>
                                 </div>
                             </div>
                             <div class="wrapper-xs">
 
                                 <div class="col-md-4" ng-repeat="item in bar.BarList">
-                                    <div class="panel" ng-class="{'panel-danger':item.Have==0, 'panel-success':item.Have==1}">
+                                    <div class="panel" ng-class="{'panel-danger':item.Have==0, 'panel-success':item.Have==1}" title="{{ item.Have==1 ? 'MES 标签':'旧系统标签' }}">
                                         <div class="panel-heading text-center">
                                             <a class="h5 pull-left thumb-sm text-success" ng-click="bar.Edit(item)" title="编辑"><i class="glyphicon glyphicon-edit"></i></a>
                                             <a class="h5">{{ item.Name }}</a>

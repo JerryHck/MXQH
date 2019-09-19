@@ -34,8 +34,9 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
 
     function getListRole() {
         var list = [];
+        list.push({ name: "RoleSn", value: "SSAdmin", type: "!=" });
         if (vm.UserRole) {
-            list.push({ name: "RoleName", value: "%"+ vm.UserRole+"%" });
+            list.push({ name: "RoleName", value: "%" + vm.UserRole + "%" });
         }
         vm.promise = AjaxService.GetPlansPage("Role", list, vm.page.index, vm.page.size).then(function (data) {
             //vm.ListRole = data;

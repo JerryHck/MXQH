@@ -1,4 +1,4 @@
-﻿<div class="wrapper-md col-md-12">
+﻿<div class="wrapper-md col-md-12" cg-busy="sn.promise">
     <div class="col-md-12">
         <div class="form-inline">
             <div class="form-group">
@@ -19,6 +19,7 @@
                     <td style="width:100px ">组装工单</td>
                     <td style="width:100px ">组装料号</td>
                     <td style="width:100px ">组装料名</td>
+                    <td style="width:100px ">内控码</td>
                     <td style="width:100px ">SN编码</td>
                     <td style="width:100px ">SN生成时间</td>
                     <td style="width:100px ">SN重量</td>
@@ -32,10 +33,11 @@
                 <td>{{ item.WorkMO }}</td>
                 <td>{{ item.WorkItemCode }}</td>
                 <td>{{ item.WorkMateName }}</td>
+                <td>{{ item.InternalCode }}</td>
                 <td>{{ item.SNCode }}</td>
-                <td>{{ item.SNTime }}</td>
+                <td>{{ item.SNTime | date :'yyyy-MM-dd HH:mm:ss' }}</td>
                 <td>{{ item.Weight }}</td>
-                <td>{{ item.WeigthTime }}</td>
+                <td>{{ item.WeigthTime | date :'yyyy-MM-dd HH:mm:ss' }}</td>
                 <td>{{ item.PackMO }}</td>
                 <td>{{ item.PackItemCode }}</td>
                 <td>{{ item.PackMateName }}</td>
@@ -71,7 +73,7 @@
                 <td>
                     <div is-disabled="true" toggle-switch ng-model="item.IsRepair" class="switch-bool" on-label="是" off-label="否"></div>
                 </td>
-                <td>{{ item.OperatorDate | date :'yyyy-MM-dd hh:mm:ss' }}</td>
+                <td>{{ item.OperatorDate | date :'yyyy-MM-dd HH:mm:ss' }}</td>
             </tr>
         </table>
     </div>
@@ -99,7 +101,7 @@
                 <td class="text-left">{{ item.SecondName }}</td>
                 <td>{{ item.WorkPartName }}</td>
                 <td>{{ item.CreateBy }}</td>
-                <td>{{ item.CreateDate | date :'yyyy-MM-dd hh:mm:ss' }}</td>
+                <td>{{ item.CreateDate | date :'yyyy-MM-dd HH:mm:ss' }}</td>
                 <td>{{ item.PoorReason }}</td>
             </tr>
         </table>
@@ -126,7 +128,7 @@
                 <td class="text-left">{{ item.SecondName }}</td>
                 <td>{{ item.WorkPartName }}</td>
                 <td>{{ item.CreateBy }}</td>
-                <td>{{ item.CreateDate | date :'yyyy-MM-dd hh:mm:ss' }}</td>
+                <td>{{ item.CreateDate | date :'yyyy-MM-dd HH:mm:ss' }}</td>
                 <td>{{ item.PoorReason }}</td>
             </tr>
         </table>
@@ -156,7 +158,7 @@
             <tr ng-repeat="item in sn.Data.data4">
                 <td>{{ item.BoxNumber }}</td>
                 <td>{{ item.PalletCode }}</td>
-                <td>{{ item.TS | date :'yyyy-MM-dd hh:mm:ss' }}</td>
+                <td>{{ item.TS | date :'yyyy-MM-dd HH:mm:ss' }}</td>
                 <td>{{ item.ProductCode }}</td>
                 <td>{{ item.ProductName }}</td>
                 <td>{{ item.CustomerName }}</td>

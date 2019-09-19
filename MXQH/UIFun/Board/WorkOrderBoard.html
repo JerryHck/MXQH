@@ -1,0 +1,67 @@
+﻿<div class="app-content-full w-full bg-black-opacity" ng-init="vm.app.settings.asideFolded=true">
+    <div class="panel panel-default h-full w-100 bg-black-opacity">
+        <div class="panel-body m-r-lg">
+            <div class="wrapper-xs padder-xs">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <!--<input type="text" name="Order" ng-model="wo.Ser.WorkOrder" uib-typeahead="item.WorkOrder as item.WorkOrder for item in wo.OrderList | filter:$viewValue | limitTo:10"
+                               class="form-control" ng-disabled="wo.IsRun" placeholder="工单号" ng-keyup="wo.KeyDonwOrder($event)" required>-->
+                        <ui-select ng-model="wo.Ser.WorkOrder" name="Order" theme="bootstrap" ng-disabled="wo.IsRun">
+                            <ui-select-match placeholder="请选择工单">{{ $select.selected.WorkOrder }}</ui-select-match>
+                            <ui-select-choices repeat="item.WorkOrder as item in wo.OrderList | filter: $select.search">
+                                <div ng-bind-html="item.WorkOrder | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" ng-disabled="wo.IsRun" date-time-picker class="form-control" placeholder="开始测试日" ng-model="wo.Ser.StartDate" option="inCode.StartOption" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" ng-disabled="wo.IsRun" date-time-picker class="form-control" placeholder="结束测试日" ng-model="wo.Ser.EndDate" option="inCode.EndOption" />
+                        </div>
+                    </div>
+                    <button class="btn" ng-class="{'btn-success':!wo.IsRun, 'btn-danger':wo.IsRun}" ng-click="wo.Begin()"><i class="glyphicon glyphicon-search"></i>{{ wo.BtnText }}</button>
+                </div>
+            </div>
+            <div class="padder-xs wrapper-xs" ng-if="wo.IsHave == 'Y'">
+                <table class="table-purple-head col-md-12">
+                    <thead>
+                        <tr>
+                            <th style="width:30px">工单: <span class="h3 text-danger">{{ wo.MainData.WorkOrder }}</span></th>
+                            <th style="width:40px">料号:<span class="h3 text-danger">{{ wo.MainData.MateCode }}</span></th>
+                            <th style="width:120px">料名:<span class="h4 text-danger">{{ wo.MainData.MateName }}</span></th>
+                            <th style="width:140px">线别:<span class="h4 text-danger">{{ wo.MainData.LineName }}</span></th>
+                            <th style="width:40px">SN产出:<span class="font-v3 h2">{{ wo.ProductCount }}</span></th>
+                            <th style="width:40px">直通率:<span class="font-v3 h2">{{ wo.OKRate }}</span></th>
+                        </tr>
+                    </thead>
+                </table>
+                <br />
+                <table class="table-purple col-md-12">
+                    <thead>
+                        <tr>
+                            <th class="text-center" ng-repeat="col in wo.ListTitle">{{ col }}</th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in wo.List" style="height:50px">
+                        <td class="text-center" ng-repeat="c in item"><span ng-class="{'text-danger': c.IsLow}">{{ c.Text }}</span></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="padder-xs wrapper-md" ng-if="wo.IsHave == 'N'">
+                <table class="table-purple col-md-12">
+                    <tr style="height:100px;">
+                        <td class="text-center" style="font-size:36px">没有生产数据</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
