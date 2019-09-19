@@ -112,6 +112,15 @@
                             <input type="number" name="Name" class="form-control" placeholder="维修类别" ng-model="qlBad.Name" required>
                         </div>-->
                     </div>
+                    <div class="col-md-6 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">维修类型：</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaintenanceTtype.$invalid }" ng-model="qlBad.MaintenanceTtype" ng-required="ture">
+                            <span class="btn-group">
+                                <label class="btn btn-default btn-success reset ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="qlBad.MaintenanceTtype" uib-btn-radio="'1'" >功能</label>
+                                <label class="btn btn-default btn-success reset ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="qlBad.MaintenanceTtype" uib-btn-radio="'2'" >外形</label>
+                            </span>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group-xs col-md-12">
                     <div class="col-md-6 padder-xs">
@@ -125,6 +134,17 @@
                             </ui-select>
                         </div>
 
+                    </div>
+                    <div class="col-md-6 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">处理方式：</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.ProcessingMode.$invalid }"  ng-name="ProcessingMode" placeholder="处理方式"
+                             ng-model="qlBad.ProcessingMode" ng-required="ture">
+                            <span class="btn-group">
+                                <label class="btn btn-default btn-success reset ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="qlBad.ProcessingMode" uib-btn-radio="'1'" >维修</label>
+                                <label class="btn btn-default btn-success reset ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="qlBad.ProcessingMode" uib-btn-radio="'2'">更换</label>
+                                <label class="btn btn-default btn-success reset ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="qlBad.ProcessingMode" uib-btn-radio="'3'" >报废</label>
+                            </span>
+                        </div>
                     </div>
                 </div>
 
@@ -149,6 +169,8 @@
         </div>
     </div>
 </div>
+<pre>{{qlBad.MaintenanceTtype}}</pre>
+<pre>{{qlBad.ProcessingMode}}</pre>
 <div class="modal-footer">
     <div class="text-center">
         <button class="btn btn-success" type="button" ng-disabled="DialogForm.$invalid" ng-click="qlBad.Alter()">保存</button>

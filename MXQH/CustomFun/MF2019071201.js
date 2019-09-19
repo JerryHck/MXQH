@@ -156,12 +156,13 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
         if (vm.Ser.BarCode) {
             list.push({ name: "BarCode", value: '%'+vm.Ser.BarCode+'%' });
         }
-         if (vm.Ser.BarCode) {
+        if (vm.Ser.BarCode) {
             list.push({ name: "BarCode", value: '%'+vm.Ser.BarCode+'%' });
         } 
-         if (vm.Ser.CreateName) {
-             list.push({ name: "CreateName", value: '%' + vm.Ser.CreateName + '%' });
+        if (vm.Ser.CreateName) {
+            list.push({ name: "CreateName", value: '%' + vm.Ser.CreateName + '%' });
         }
+        
         list.push({ name: "IsRepair", value: '1' });
         
         return list;

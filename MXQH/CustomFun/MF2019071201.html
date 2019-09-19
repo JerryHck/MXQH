@@ -96,6 +96,7 @@
                 <div class="form-group">
                     <input type="text" class="form-control" ng-model="baq.Ser.CreateName" placeholder="姓名">
                 </div>
+               
                 <button class="btn btn-sm btn-info " ng-click="baq.Search2() "><i class="glyphicon glyphicon-search "></i>查询</button>
                 <button class= "btn btn-sm btn-success " ng-click= "baq.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
             </div>
@@ -117,6 +118,8 @@
                         <td style="width:100px ">创建人</td>
                         <td style="width:100px ">创建时间</td>
                         <td style="width:100px ">问题原因</td>
+                        <td style="width:100px ">维修类别</td>
+                        <td style="width:100px ">处理方式</td>
                     </tr>
                 </thead>
 
@@ -147,11 +150,14 @@
                     <td title="{{ item.CreateName }}">{{ item.createname }} <span ng-if="item.createname==null">{{ item.CreateName }}</span></td>
                     <td title="{{ item.CreateDate }}">{{ item.CreateDate }}</td>
                     <td title="{{ item.PoorReason }}">{{ item.PoorReason }}</td>
+                    <td title="{{ item.MaintenanceTtype }}">{{ item.MaintenanceTtype }}</td>
+                    <td title="{{ item.ProcessingMode }}">{{ item.ProcessingMode }}</td>
                 </tr>
             </table>
             <div class="col-md-12 text-center " ng-if="baq.page2.total>baq.page2.size ">
                 <div uib-pagination total-items="baq.page2.total " ng-model="baq.page2.index " items-per-page="baq.page2.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
-                     ng-change="baq.PageChange2() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+                     ng-change="baq.PageChange2() " next-text="下一页 " last-text="最后页  " boundary-links="true " boundary-link-numbers="true "></div>
+                <!--共{{baq.page2.total}}条记录-->
             </div>
         </div>
     </uib-tab>
