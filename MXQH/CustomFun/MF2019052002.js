@@ -13,7 +13,11 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
 
-    function Search() {
+    function Search(validForm) {
+        if (validForm.$invalid) {
+            toastr.error('时间条件不能为空！');
+            return;
+        }
         vm.page.index = 1;
         PageChange();
     }
