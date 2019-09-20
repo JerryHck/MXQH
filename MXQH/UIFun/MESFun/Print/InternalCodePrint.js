@@ -31,17 +31,6 @@ function ($rootScope, $scope, FileUrl, AjaxService, toastr, $window) {
             vm.InternalCode = undefined;
         }
     }
-
-    function GetInternalCode(snCode) {
-        vm.promise = AjaxService.ExecPlan("MESSNCode", "printInternal", { SNCode: vm.SNCode }).then(function (data) {
-            console.log(data);
-            if (data.data.length > 0) {
-                vm.InternalCode = data.data[0].InternalCode;
-            } else {
-                toastr.error('找不到['+vm.SNCode+'])');
-            }
-        });
-    }
     
 
     //打印条码
@@ -56,12 +45,15 @@ function ($rootScope, $scope, FileUrl, AjaxService, toastr, $window) {
                 postData.OutList = list;
                 AjaxService.Print(data.data[0].TemplateId, data.data[0].TemplateTime, postData, vm.PrinterName).then(function (data) {
                     vm.MsgList.push({ Id: vm.MsgList.length, IsOk: true, Msg: '[' + vm.SNCode + ']打印成功' });
+                    vm.SNCode = '';
                 }, function (err) {
                     vm.MsgList.push({ Id: vm.MsgList.length, IsOk: false, Msg: '[' + vm.SNCode + ']打印失败' });
+                    vm.SNCode = '';
                 })
             } else {
                 toastr.error('[' + vm.SNCode + ']找不到');
                 vm.MsgList.push({ Id: vm.MsgList.length, IsOk: false, Msg: '[' + vm.SNCode + ']找不到' });
+                vm.SNCode = '';
             }
         });
     }
