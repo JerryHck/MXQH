@@ -6,15 +6,15 @@
                <!-- <button class= "btn btn-sm btn-success " ng-click= "qba.Insert() "><i class= "glyphicon glyphicon-plus "></i>新增</button>-->
                 维修时间:
                 <div class="form-group">
-                    <input type="text" date-time-picker class="form-control" ng-model="qba.Ser.RepairTime1" placeholder="开始时间" option="vm.DateTimeOption">
+                    <input type="text" date-time-picker class="form-control" ng-model="qba.Ser.start" placeholder="开始时间" option="vm.DateTimeOption">
                 </div>
-                <button ng-click="qba.Ser.RepairTime1= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+                <button ng-click="qba.Ser.start= undefined" class="btn btn-default" ng-disabled="ngDisabled">
                     <span class="glyphicon glyphicon-trash text-danger"></span>
                 </button>
                 <div class="form-group">
-                    <input type="text" date-time-picker class="form-control" ng-model="qba.Ser.RepairTime2" placeholder="结束时间" option="vm.DateTimeOption">
+                    <input type="text" date-time-picker class="form-control" ng-model="qba.Ser.end" placeholder="结束时间" option="vm.DateTimeOption">
                 </div>
-                <button ng-click="qba.Ser.RepairTime2= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+                <button ng-click="qba.Ser.end= undefined" class="btn btn-default" ng-disabled="ngDisabled">
                     <span class="glyphicon glyphicon-trash text-danger"></span>
                 </button>
                 内控码:

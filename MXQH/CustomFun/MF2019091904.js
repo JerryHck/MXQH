@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('qlBadAcquisitionCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
+.controller('qlBadAcquisitionCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window','$filter',
+function ($rootScope, $scope, $http, AjaxService, toastr, $window, $filter) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
@@ -88,17 +88,16 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     function GetContition() {
         var list = [];
        
-        var startTime2 = new Date(vm.Ser.RepairTime1);
-        var endTime2 = new Date(vm.Ser.RepairTime2);
-        //var start2 = $filter('date')(startTime2, "yyyy-MM-dd HH:mm:ss");
-        //var end2 = $filter('date')(endTime2, "yyyy-MM-dd HH:mm:ss");
+        var start1 = new Date(vm.Ser.start);
+        var end1 = new Date(vm.Ser.end);
+        var startTime = $filter('date')(start1, "yyyy-MM-dd HH:mm:ss");
+        var endTime = $filter('date')(end1, "yyyy-MM-dd HH:mm:ss");
 
-       // alert(start2 + "   " + end2);
-        if (startTime2) {
-            list.push({ name: "RepairTime", value: startTime2, type: '>=' });
+        if (vm.Ser.start) {
+            list.push({ name: "RepairTime", value: startTime, type: '>=' });
         }
-        if (endTime2) {
-            list.push({ name: "RepairTime", value: endTime2, type: '<=' });
+        if (vm.Ser.end) {
+            list.push({ name: "RepairTime", value: endTime, type: '<=' });
         }
         if (vm.Ser.BarCode) {
             list.push({ name: "BarCode", value: '%' + vm.Ser.BarCode + '%' });
