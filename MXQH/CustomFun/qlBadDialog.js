@@ -90,7 +90,7 @@ function qlBadDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, toas
 
         en.MaintenanceTtype = vm.MaintenanceTtype;//维修类型  1 功能  2 外观
         en.ProcessingMode = vm.ProcessingMode;//处理方式  1 维修 2 更换 3报废
-       // alert(en.MaintenanceTtype + ' ' + en.ProcessingMode);
+    
         en.CreateBy;
         en.ModifyBy;    
         if (vm.IsRepair == true) {

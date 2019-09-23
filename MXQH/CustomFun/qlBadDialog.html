@@ -108,9 +108,7 @@
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.AName.$invalid }" basic-select="syRPoorSelect" ng-change="qlBad.syRPoorSelect(qlBad.AName.ID)" ng-name="AName" placeholder="维修类别"
                              ng-model="qlBad.AName" ng-required="ture">
                         </div>
-                        <!--<div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Weight.$invalid }">
-                            <input type="number" name="Name" class="form-control" placeholder="维修类别" ng-model="qlBad.Name" required>
-                        </div>-->
+
                     </div>
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">维修类型：</label>
@@ -124,7 +122,7 @@
                 </div>
                 <div class="form-group-xs col-md-12">
                     <div class="col-md-6 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">维修信息：</label>
+                        <label class="control-label col-sm-4 padder-xs">不良原因：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error': DialogForm.BName.$invalid }" >
                             <ui-select name="BName" ng-model="qlBad.BName" ng-change="ValueChange()" theme="bootstrap" ng-required="true">
                                 <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>
@@ -169,8 +167,8 @@
         </div>
     </div>
 </div>
-<pre>{{qlBad.MaintenanceTtype}}</pre>
-<pre>{{qlBad.ProcessingMode}}</pre>
+<!--<pre>{{qlBad.MaintenanceTtype}}</pre>
+<pre>{{qlBad.ProcessingMode}}</pre>-->
 <div class="modal-footer">
     <div class="text-center">
         <button class="btn btn-success" type="button" ng-disabled="DialogForm.$invalid" ng-click="qlBad.Alter()">保存</button>

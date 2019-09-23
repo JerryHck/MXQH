@@ -148,17 +148,14 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
         
         //alert(start2 + "   " + end2);
         if (start2) {
-            list.push({ name: "CreateDate", value: start2, type: '>=' });
+            list.push({ name: "RepairTime", value: start2, type: '>=' });
         }
         if (end2) {
-            list.push({ name: "CreateDate", value: end2, type: '<=' });
+            list.push({ name: "RepairTime", value: end2, type: '<=' });
         }
         if (vm.Ser.BarCode) {
             list.push({ name: "BarCode", value: '%'+vm.Ser.BarCode+'%' });
         }
-        if (vm.Ser.BarCode) {
-            list.push({ name: "BarCode", value: '%'+vm.Ser.BarCode+'%' });
-        } 
         if (vm.Ser.CreateName) {
             list.push({ name: "CreateName", value: '%' + vm.Ser.CreateName + '%' });
         }
