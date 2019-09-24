@@ -29,15 +29,15 @@
                                     <input type="text" disabled="disabled" class="form-control" name="DocNo" placeholder="订单号"
                                            ng-model="auFc.Forecast.DocNo">
                                 </div>
-                                <label class="col-md-1 control-label text-lg text-left">客户：</label>
-                                <div class="col-md-3" ng-class="{ 'has-error' : auFc.form.Customer_Name.$invalid }">
-                                    <div basic-select="CBO_Customer" ng-model="auFc.Forecast.Customer_Name" select-class="text-xs" ng-name="Customer_Name" ng-required="true"></div>
-                                </div>
                                 <label class="col-md-2 control-label text-lg text-left">业务日期：</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : auFc.form.BusinessDate.$invalid }">
                                     <input type="text" date-time-picker class="form-control" name="BusinessDate" placeholder="业务日期" option="auFc.UnExist2"
                                            ng-model="auFc.Forecast.BusinessDate" required>
                                 </div>
+                                <label class="col-md-1 control-label text-lg text-left">客户：</label>
+                                <div class="col-md-3" >
+                                    <div basic-select="CBO_Customer" ng-model="auFc.Forecast.Customer_Name" select-class="text-xs" ng-name="Customer_Name"></div>
+                                </div>                              
                             </div>
                             <div class="form-group">
                                 <label class="col-md-1 control-label text-lg text-left">制单人：</label>
@@ -45,8 +45,15 @@
                                     <input type="text" disabled="disabled" class="form-control" name="Forecast" placeholder="制单人"
                                            ng-model="auFc.Forecast.CreatedBy" required>
                                 </div>
+                                <label class="col-md-2 control-label text-lg text-left">订单类型：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : auFc.form.DocType.$invalid }">
+                                    <select class="form-control" name="DocType" placeholder="订单类型" ng-model="auFc.Forecast.DocType" required>
+                                        <option value="销售">销售</option>
+                                        <option value="研发">研发</option>
+                                    </select>
+                                </div>
                                 <label class="col-md-1 control-label text-lg text-left">备注：</label>
-                                <div class="col-md-5">
+                                <div class="col-md-3">
                                     <textarea class="form-control" name="Remark" ng-model="auFc.Forecast.Remark"></textarea>
                                 </div>
                             </div>

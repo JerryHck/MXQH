@@ -3,7 +3,7 @@ angular.module('app')
 .controller('AuctusForecastCtrl', ['$rootScope', '$scope', '$http', 'toastr', 'AjaxService', 'Form', 'MyPop', '$window','Dialog',
 function ($rootScope, $scope, $http,  toastr, AjaxService, Form, MyPop, $window,Dialog) {
     var vm = this;
-    vm.page = { pageIndex: 1, pageSize: 12, maxSize: 10 };
+    vm.page = { pageIndex: 1, pageSize: 12, maxSize: 10,UserName:$rootScope.User.Name};
     vm.pageDetail = { pageIndex: 1, pageSize: 12, maxSize: 10 };
     vm.Forecast = { CreatedBy: $rootScope.User.Name };
     vm.ForecastLine = {};
@@ -25,7 +25,7 @@ function ($rootScope, $scope, $http,  toastr, AjaxService, Form, MyPop, $window,
     vm.OpenImport = OpenImport;
     vm.Export = Export;//导出
     vm.CloseImport = CloseImport;
-    vm.FileData = { header: { header: ["Customer_Name", "BusinessDate", "Remark", "Code", "Qty", "DemandDate", "DeliveryDate", "LineRemark"] }, sheetNum: 1, data: [] };
+    vm.FileData = { header: { header: ["DocType","Customer_Name", "BusinessDate", "Remark", "Code", "Qty", "DemandDate", "DeliveryDate", "LineRemark"] }, sheetNum: 1, data: [] };
     vm.Do = Do;//导入控件Do方法
     vm.Import = Import;//导入
     //日期控件参数
@@ -41,7 +41,6 @@ function ($rootScope, $scope, $http,  toastr, AjaxService, Form, MyPop, $window,
     //#region 导入导出功能
 
     function CloseImport() {
-        console.log(vm.nm);
         $(".pro-file").removeClass("active");
     }
     function OpenImport() {
@@ -54,6 +53,7 @@ function ($rootScope, $scope, $http,  toastr, AjaxService, Form, MyPop, $window,
         en.List = JSON.stringify(vm.ImportList);
         en.TempColumns = 'List';
         vm.promise = AjaxService.ExecPlan("AuctusForecast", "Import", en).then(function (data) {
+            console.log(data);
             if (data.data[0].Result == "0") {
                 toastr.error('供应商名称不对！');
             } else {
@@ -74,6 +74,14 @@ function ($rootScope, $scope, $http,  toastr, AjaxService, Form, MyPop, $window,
         if (!vm.ImportList[0].LineRemark) {
             vm.ImportList[0].LineRemark = '';
         }
+        if (!vm.ImportList[0].Customer_Name) {
+            vm.ImportList[0].Customer_Name = '';
+        }
+        if (!vm.ImportList[0].DocType) {
+            toastr.error('订单类型不能为空！');
+            vm.IsValid = false;
+            return;
+        }
     }
     //导出功能
     function Export() {
@@ -86,6 +94,7 @@ function ($rootScope, $scope, $http,  toastr, AjaxService, Form, MyPop, $window,
     //绑定数据
     function DataBind() {
         vm.promise = AjaxService.ExecPlan("AuctusForecast", "GetList", vm.page).then(function (data) {
+            console.log(vm.page);
             vm.List = data.data;
             vm.page.total = data.data1[0].TotalCount;
         });
@@ -121,6 +130,9 @@ function ($rootScope, $scope, $http,  toastr, AjaxService, Form, MyPop, $window,
         }
         if (!vm.Lines[0].Remark) {
             vm.Lines[0].Remark = '';
+        }
+        if (!vm.Forecast.Customer_Name) {
+            vm.Forecast.Customer_Name = '';
         }
         vm.Forecast.ModifiedBy = $rootScope.User.Name;
         forecast.push(vm.Forecast);//单头数据
