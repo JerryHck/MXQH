@@ -14,7 +14,8 @@ function qlBadDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, toas
     vm.SelectqlBad = SelectqlBad;
     vm.syRPoorSelect = syRPoorSelect;
     vm.Alter = Alter;
-
+    vm.MaintenanceTtype = '1';
+    vm.ProcessingMode = '1';
 
     function syRPoorSelect(ID) {
         vm.BName = null;
@@ -76,8 +77,8 @@ function qlBadDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, toas
 
         en.ProcedureCode = vm.item.ProcedureCode;
         en.ProcdureName = vm.AName.Name;
-        console.log(en.ProcdureName);
-        console.log(en.ProcedureID);
+        //console.log(en.ProcdureName);
+        //console.log(en.ProcedureID);
         
         en.WorkPartCode = vm.item.WorkPartCode;
         en.WorkPartName = vm.BName.Name;
@@ -86,6 +87,10 @@ function qlBadDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, toas
         en.WorkPartID = vm.item.WorkPartID;
         en.ExtendOne = vm.item.ExtendOne;
         en.PoorReason = vm.PoorReason;
+
+        en.MaintenanceTtype = vm.MaintenanceTtype;//维修类型  1 功能  2 外观
+        en.ProcessingMode = vm.ProcessingMode;//处理方式  1 维修 2 更换 3报废
+    
         en.CreateBy;
         en.ModifyBy;    
         if (vm.IsRepair == true) {

@@ -126,8 +126,9 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
         var list = [];
         var startTime = new Date(vm.Ser.a_CreateDate);
         var endTime = new Date(vm.Ser.b_CreateDate);
-        var start = $filter('date')(startTime, "yyyy-MM-dd hh:mm:ss");
-        var end = $filter('date')(endTime, "yyyy-MM-dd hh:mm:ss");
+        var start = $filter('date')(startTime, "yyyy-MM-dd HH:mm:ss");
+        var end = $filter('date')(endTime, "yyyy-MM-dd HH:mm:ss");
+       
     
         list.push({ name: "IsRepair", value: '0' });
         if (start) {
@@ -142,25 +143,23 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
         var list = [];
         var startTime2 = new Date(vm.Ser.a_CreateDate2);
         var endTime2 = new Date(vm.Ser.b_CreateDate2);
-        var start2 = $filter('date')(startTime2, "yyyy-MM-dd hh:mm:ss");
-        var end2 = $filter('date')(endTime2, "yyyy-MM-dd hh:mm:ss");
+        var start2 = $filter('date')(startTime2, "yyyy-MM-dd HH:mm:ss");
+        var end2 = $filter('date')(endTime2, "yyyy-MM-dd HH:mm:ss");
         
-
+        //alert(start2 + "   " + end2);
         if (start2) {
-            list.push({ name: "CreateDate", value: start2, type: '>=' });
+            list.push({ name: "RepairTime", value: start2, type: '>=' });
         }
         if (end2) {
-            list.push({ name: "CreateDate", value: end2, type: '<=' });
+            list.push({ name: "RepairTime", value: end2, type: '<=' });
         }
         if (vm.Ser.BarCode) {
             list.push({ name: "BarCode", value: '%'+vm.Ser.BarCode+'%' });
         }
-         if (vm.Ser.BarCode) {
-            list.push({ name: "BarCode", value: '%'+vm.Ser.BarCode+'%' });
-        } 
-         if (vm.Ser.CreateName) {
-             list.push({ name: "CreateName", value: '%' + vm.Ser.CreateName + '%' });
+        if (vm.Ser.CreateName) {
+            list.push({ name: "CreateName", value: '%' + vm.Ser.CreateName + '%' });
         }
+        
         list.push({ name: "IsRepair", value: '1' });
         
         return list;
