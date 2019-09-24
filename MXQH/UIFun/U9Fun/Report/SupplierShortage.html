@@ -1,0 +1,178 @@
+﻿<uib-tabset ng-attr-active="u9Sup.tabIndex" type="tabs" class="h-100" cg-busy="u9Sup.promise">
+    <!--交货计划推送-->
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">交货计划推送</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs" style="padding-bottom:10px;">
+                <div class="form-inline">
+                    <div class="input-group">
+                        <div basic-select="U9Supplier" ng-model="u9Sup.Ser.SupplierID" select-class="text-xs" ng-name="SupplierID"></div>
+                        <span class="input-group-addon">
+                            <a><i ng-click="u9Sup.Ser.SupplierID = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                        </span>
+                    </div>
+                    <button class="btn btn-sm btn-info" ng-click="u9Sup.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
+                    <button ng-disabled="u9Sup.page.total==0" class="btn btn-sm btn-info" ng-click="u9Sup.Export()"><i class="glyphicon glyphicon-export"></i>导出</button>
+                    <button ng-disabled="u9Sup.page.total==0" class="btn btn-sm btn-success" ng-click="u9Sup.SendMail()"><i class="glyphicon glyphicon-send"></i>发送邮件</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 table-responsive text-xs">
+                    <table class="table one-line ">
+                        <tr class="text-center bg-gd-dk h4">
+                            <td rowspan="2" style="width:100px;" class="">料号</td>
+                            <td rowspan="2" style="width:100px;" class="">品名</td>
+                            <td rowspan="2" style="width:240px;" class="">规格</td>
+                            <td rowspan="2" style="width:120px;" class="">紧急欠料</td>
+                            <td style="width:120px;" class="">第一周</td>
+                            <td style="width:120px;" class="">第二周</td>
+                            <td style="width:120px;" class="">第三周</td>
+                            <td style="width:120px;" class="">第四周</td>
+                            <td style="width:120px;" class="">第五周</td>
+                            <td style="width:120px;" class="">第六周</td>
+                            <td style="width:120px;" class="">第七周</td>
+                            <td style="width:120px;" class="">第八周</td>
+                            <td rowspan="2" style="width:100px;" class="">欠料汇总</td>
+                            <td rowspan="2" style="width:200px;" class="">供应商</td>
+                            <td rowspan="2" style="width:100px;" class="">执行采购</td>
+                            <td rowspan="2" style="width:100px;" class="">开发采购</td>
+                            <td rowspan="2" style="width:120px;" class="">供应商邮箱</td>                            
+                        </tr>
+                        <tr  class="text-center bg-gd-dk h4">
+                            <td ng-repeat="item in u9Sup.DateList">{{item.S}}~{{item.E}}</td>
+                        </tr>
+                        <!--filter: u9Sup.search-->
+                        <!---->
+                        <tr ng-repeat="item in u9Sup.List">
+                            <td>{{ item.Code }}</td>
+                            <td style="white-space:normal;word-break:normal;">{{ item.Name }}</td>
+                            <td style="white-space:normal;word-break:normal;">  {{ item.SPECS }}</td>
+                            <td>{{ item.w0 }}</td>
+                            <td>{{ item.w1 }}</td>
+                            <td>{{ item.w2 }}</td>
+                            <td>{{ item.w3 }}</td>
+                            <td>{{ item.w4 }}</td>
+                            <td>{{ item.w5 }}</td>
+                            <td>{{ item.w6 }}</td>
+                            <td>{{ item.w7 }}</td>
+                            <td>{{ item.w8 }}</td>
+                            <td>{{ item.Total }}</td>
+                            <td style="white-space:normal;word-break:normal;">{{ item.Supplier }}</td>
+                            <td>{{ item.Buyer }}</td>
+                            <td>{{ item.Purchaser }}</td>
+                            <td style="white-space:normal;word-break:break-all;">{{ item.Email }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12 text-center" ng-if="u9Sup.page.total>u9Sup.page.pageSize">
+                <div uib-pagination total-items="u9Sup.page.total" ng-model="u9Sup.page.pageIndex" items-per-page="u9Sup.page.pageSize" max-size="u9Sup.page.maxSize" first-text="第一页" previous-text="上一页"
+                     ng-change="u9Sup.DataBind()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
+            </div>
+        </div>
+        <!--销售订单列表 End-->
+    </uib-tab>
+
+
+    <!--供应商欠交订单-->
+    <uib-tab index="1">
+        <uib-tab-heading class="h5">供应商欠交订单</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs" style="padding-bottom:10px;">
+                <div class="form-inline">
+                    <div class="input-group">
+                        <div basic-select="U9Supplier" ng-model="u9Sup.SerDetail.SupplierIDs" select-class="text-xs" ng-name="SupplierIDs"></div>
+                        <span class="input-group-addon">
+                            <a><i ng-click="u9Sup.SerDetail.SupplierIDs = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                        </span>
+                    </div>
+                    <button class="btn btn-sm btn-info" ng-click="u9Sup.SearchDetail()"><i class="glyphicon glyphicon-search"></i>查询</button>
+                    <button ng-disabled="u9Sup.pageDetail.total==0" class="btn btn-sm btn-info" ng-click="u9Sup.ExportDetail()"><i class="glyphicon glyphicon-export"></i>导出</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 table-responsive text-xs">
+                    <table class="table one-line ">
+                        <tr class="text-center bg-gd-dk h4">
+                            <td style="width:120px;" class="">供应商名称</td>
+                            <td style="width:120px;" class="">MRP分类</td>
+                            <td style="width:120px;" class="">Buyer</td>
+                            <td style="width:120px;" class="">MC责任人</td>
+                            <td style="width:100px;" class="">料号</td>
+                            <td style="width:120px;" class="">品名</td>
+                            <td style="width:120px;" class="">规格</td>
+                            <td style="width:100px;" class="">订单号</td>
+                            <td style="width:80px;" class="">行号</td>
+                            <td style="width:120px;" class="">计划行号</td>
+                            <td style="width:140px;" class="">计划到货时间</td>
+                            <td style="width:100px;" class="">欠交数量</td>
+                        </tr>
+                        <!--filter: u9Sup.search-->
+                        <!---->
+                        <tr ng-repeat="item in u9Sup.DetailList">
+                            <td style="white-space:normal;word-break:normal;">{{ item.SupName }}</td>
+                            <td>{{ item.MRPCategory }}</td>
+                            <td>{{ item.Buyer }}</td>
+                            <td>{{ item.MCName }}</td>
+                            <td>{{ item.Code }}</td>
+                            <td style="white-space:normal;word-break:normal;">{{ item.Name }}</td>
+                            <td style="white-space:normal;word-break:normal;">{{ item.SPEC }}</td>
+                            <td>{{ item.DocNo }}</td>
+                            <td>{{ item.DocLineNo }}</td>
+                            <td>{{ item.SubLineNo }}</td>
+                            <td>{{ item.PlanArriveDate }}</td>
+                            <td>{{ item.DeficiencyQty }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12 text-center" ng-if="u9Sup.pageDetail.total>u9Sup.pageDetail.pageSize">
+                <div uib-pagination total-items="u9Sup.pageDetail.total" ng-model="u9Sup.pageDetail.pageIndex" items-per-page="u9Sup.pageDetail.pageSize" max-size="u9Sup.pageDetail.maxSize" first-text="第一页" previous-text="上一页"
+                     ng-change="u9Sup.DataBindDetail()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
+            </div>
+        </div>
+        <!--销售订单列表 End-->
+    </uib-tab>
+    <!--邮件发送结果-->
+    <uib-tab index="2">
+        <uib-tab-heading class="h5">邮件发送结果</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs" style="padding-bottom:10px;">
+                <div class="form-inline">
+                    <button class="btn btn-sm btn-info" ng-click="u9Sup.SearchMail()"><i class="glyphicon glyphicon-search"></i>查询</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 table-responsive text-xs">
+                    <table class="table one-line ">
+                        <tr class="text-center bg-gd-dk h4">
+                            <td style="width:120px;" class="">邮件标题</td>
+                            <td style="width:120px;" class="">收件人</td>
+                            <td style="width:120px;" class="">抄送人</td>
+                            <td style="width:120px;" class="">发送时间</td>
+                            <td style="width:120px;" class="">发送结果</td>
+                        </tr>
+                        <!--filter: u9Sup.search-->
+                        <!---->
+                        <tr ng-repeat="item in u9Sup.MailList">
+                            <td>{{ item.Subject }}</td>
+                            <td>{{ item.To }}</td>
+                            <td style="white-space:normal;word-break:normal;">{{ item.CC }}</td>
+                            <td>{{ item.Sent_Date }}</td>
+                            <td>{{ item.Sent_Status }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12 text-center" ng-if="u9Sup.pageMail.total>u9Sup.pageMail.pageSize">
+                <div uib-pagination total-items="u9Sup.pageMail.total" ng-model="u9Sup.pageMail.pageIndex" items-per-page="u9Sup.pageMail.pageSize" max-size="u9Sup.pageMail.maxSize" first-text="第一页" previous-text="上一页"
+                     ng-change="u9Sup.GetMailList()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
+            </div>
+        </div>
+        <!--销售订单列表 End-->
+    </uib-tab>
+</uib-tabset>
+
+
+
+
