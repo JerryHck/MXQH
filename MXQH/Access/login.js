@@ -23,6 +23,15 @@ function LoginCtrl($rootScope, $scope, AjaxService, toastr, MyPop, appUrl, $cook
         return rnd;
     }
 
+    AjaxService.DoBefore("GetSystemData").then(function (data) {
+        vm.SysData = data;
+        //版本有变更
+        if (storage["mxVer"] != data.SysData.Ver) {
+            $window.location.href = appUrl + '/Access.html?v=' + (new Date().getSeconds()).toString();
+            $window.localStorage["mxVer"] = data.SysData.Ver;
+        }
+    });
+
     reflashSecCode();
 
     //登录方法
@@ -79,6 +88,7 @@ function LoginCtrl($rootScope, $scope, AjaxService, toastr, MyPop, appUrl, $cook
         $window.localStorage["IsSave"] = vm.IsSave;
         $cookieStore.remove('user-token');
         $cookieStore.put('user-token', data.Session);
+        //$cookieStore.remove('active-router');
         $window.location.href = appUrl + '/index.html?v=' + (new Date().getSeconds()).toString();
         // 保存唯一标识符
         $cookieStore.remove("GUID")

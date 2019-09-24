@@ -19,7 +19,6 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.PageChangeCodeType = PageChangeCodeType;
     vm.Search = Search;
     vm.SearchCodeType = SearchCodeType;
-    vm.ExportExcel = ExportExcel;
     vm.SendCode = SendCode;
     vm.CodeTypeSelect = CodeTypeSelect;
     vm.add = add;
@@ -156,29 +155,17 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         return list;
     }
   
-    function ExportExcel() {
-        vm.promise = AjaxService.GetPlanOwnExcel("MesProductTemplate", GetContition()).then(function (data) {
-            $window.location.href = data.File;
-        });
-    }
-    function GetContition() {
-        var list = [];
-        if (vm.Ser.c_TypeCode) {
-            list.push({ name: "TypeCode", value: vm.Ser.c_TypeCode });
-        }  
-        if (vm.Ser.e_MaterialCode) {
-            list.push({ name: "MaterialCode", value: vm.Ser.e_MaterialCode });
-        }
-        return list;
-    }
     function GetContition2() {
         var list = [];
        
         if (vm.Ser.e_MaterialCode) {
             list.push({ name: "MaterialCode", value: vm.Ser.e_MaterialCode });
         }
-        
         list.push({ name: "TypeID", value: vm.SelectId }, { name: "State", value: 1 });
+        if (vm.Ser.TempName) {
+            list.push({ name: "Name", value: vm.Ser.TempName, tableAs: 'c' });
+        }
+
         return list;
     }
     function GetContition3() {

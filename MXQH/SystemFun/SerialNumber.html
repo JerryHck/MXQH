@@ -18,18 +18,20 @@
     </div>
     <div class="padder-md wrapper-sm">
         <table class="table ">
-            <tr>
-                <td style="width:80px ">操作</td>
-                <td style="width:100px ">规则名</td>
-                <td style="width:100px ">规则栏</td>
-                <td style="width:120px ">编号预览</td>
-                <td style="width:120px ">使用状态</td>
-                <td style="width:200px ">备注</td>
-                <td style="width:100px ">创建人</td>
-                <td style="width:150px ">创建时间</td>
-                <td style="width:100px ">修改人</td>
-                <td style="width:150px ">修改时间</td>
-            </tr>
+            <thead>
+                <tr>
+                    <td style="width:80px ">操作</td>
+                    <td style="width:100px ">规则名</td>
+                    <td style="width:100px ">规则栏</td>
+                    <td style="width:120px ">编号预览</td>
+                    <td style="width:120px ">使用状态</td>
+                    <td style="width:200px ">备注</td>
+                    <td style="width:100px ">创建人</td>
+                    <td style="width:150px ">创建时间</td>
+                    <td style="width:100px ">修改人</td>
+                    <td style="width:150px ">修改时间</td>
+                </tr>
+            </thead>
             <tr ng-repeat="item in pk.List ">
                 <td>
                     <button class="btn btn-xs btn-primary" title="编辑" ng-click="pk.Open(item)"><i class="glyphicon glyphicon-edit"></i></button>

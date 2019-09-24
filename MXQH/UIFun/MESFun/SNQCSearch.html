@@ -24,9 +24,9 @@
                     <td style="width:100px ">SN生成时间</td>
                     <td style="width:100px ">SN重量</td>
                     <td style="width:100px ">称重时间</td>
-                    <td style="width:100px ">包装工单</td>
-                    <td style="width:100px ">包装料号</td>
-                    <td style="width:100px ">包装料名</td>
+                    <td style="width:100px ">SN生成工单</td>
+                    <td style="width:100px ">SN生成料号</td>
+                    <td style="width:100px ">SN生成料名</td>
                 </tr>
             </thead>
             <tr ng-repeat="item in sn.Data.data3">
@@ -142,6 +142,7 @@
         <table class="table ">
             <thead>
                 <tr>
+                    <td style="width:100px ">包装工单</td>
                     <td style="width:100px ">箱号</td>
                     <td style="width:100px ">栈板号</td>
                     <td style="width:100px ">包装时间</td>
@@ -156,6 +157,7 @@
                 </tr>
             </thead>
             <tr ng-repeat="item in sn.Data.data4">
+                <td>{{ item.WorkOrder }}</td>
                 <td>{{ item.BoxNumber }}</td>
                 <td>{{ item.PalletCode }}</td>
                 <td>{{ item.TS | date :'yyyy-MM-dd HH:mm:ss' }}</td>

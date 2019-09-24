@@ -3,7 +3,7 @@
     <button class="pull-right visible-xs " ui-toggle-class="show" data-target=".navbar-collapse">
         <i class="glyphicon glyphicon-cog"></i>设置
     </button>
-    <button class="pull-right visible-xs" ui-toggle-class="off-screen" data-target=".vm.app-aside" ui-scroll="vm.app">
+    <button class="pull-right visible-xs" ui-toggle-class="off-screen" data-target=".app-aside" ui-scroll="app">
         <i class="glyphicon glyphicon-align-justify"></i>
     </button>
     <!-- brand -->
@@ -22,8 +22,9 @@
         <a href class="btn no-shadow navbar-btn" ng-click="vm.app.settings.asideFolded = !vm.app.settings.asideFolded">
             <i class="fa {{vm.app.settings.asideFolded ? 'fa-indent' : 'fa-dedent'}} fa-fw"></i>
         </a>
+        <!--<pre>{{ vm.app.settings | json }}</pre>-->
     </div>
-
+    
     <!-- / buttons -->
     <ul class="nav navbar-nav hidden-sm">
         <li class="dropdown" dropdown>
@@ -55,13 +56,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row bg-blue-light">
                     <div class="col-sm-2 b-l" ng-repeat="sys in vm.SysList">
                         <div class="text-center m-l-xs m-t-xs m-b-xs font-bold h4 text-primary">
                             <span class="font-bold ml-6">{{ sys.SysName }}</span>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12 scroll-y wrapper-xs" style="max-height:700px">
+                            <div class="col-xs-12 scroll-y wrapper-xs" style="max-height:500px">
                                 <ul class="nav">
                                     <li ng-repeat="root in sys.FunTree">
                                         <span class="auto text-primary-dker h5 text-success">

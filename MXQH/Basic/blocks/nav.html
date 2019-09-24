@@ -1,16 +1,16 @@
 <!-- list -->
 <ul class="nav">
     <li ng-repeat="root in vm.SelectedSys.FunTree">
-        <a href class="auto text-primary-dker h5" >
+        <a class="auto text-primary-dker h4" >
             <span class="pull-right text-muted">
                 <i class="fa fa-fw fa-angle-right text"></i>
                 <i class="fa fa-fw fa-angle-down text-active"></i>
             </span>
-            <span><i ng-class="root.FunImge"></i></span>
-            <span class="font-bold ml-1">{{ root.FunName }}</span>
+            <i ng-class="root.FunImge"></i>
+            <span class="font-bold ml-1 h5">{{ root.FunName }}</span>
         </a>
-        <ul ng-if="root.FunList" class="nav nav-sub dk" ng-repeat="fun in root.FunList">
-            <li ui-sref-active="active">
+        <ul ng-if="root.FunList" class="nav nav-sub dk">
+            <li ui-sref-active="active" ng-repeat="fun in root.FunList">
                 <a ui-sref="{{ fun.RouteName }}">
                     <span><i ng-class="fun.FunImge"></i></span>
                     <span class="text-xs">{{ fun.FunName }}</span>

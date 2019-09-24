@@ -21,7 +21,7 @@ angular.module('app')
         vm.Reflash = Reflash;
         vm.ChangeSys = ChangeSys;
         vm.DownTool = DownTool;
-        
+
         // config
         vm.app = {
             name: '管理平台',
@@ -45,22 +45,25 @@ angular.module('app')
                 //Fixs:[{headerFixed: true}]
                 headerFixed: true,
                 asideFixed: false,
-                asideFolded: false,
+                asideFolded: true,
                 asideDock: false,
                 container: false
             }
         }
+
+        if (angular.isDefined($localStorage.settings)) {
+            vm.app.settings = $localStorage.settings;
+        } else {
+            $localStorage.settings = vm.app.settings;
+        }
+
         GetList();
 
         //显示系统时间
         ShowServerTime();
 
         // save settings to local storage
-        if (angular.isDefined($localStorage.settings)) {
-            vm.app.settings = $localStorage.settings;
-        } else {
-            $localStorage.settings = vm.app.settings;
-        }
+        
         $scope.$watch('vm.app.settings', function () {
             if (vm.app.settings.asideDock && vm.app.settings.asideFixed) {
                 // aside dock and fixed must set the header fixed.
@@ -198,5 +201,23 @@ angular.module('app')
         function DownTool(path) {
             $window.location.href = FileUrl + "DownLoad/" + path;
         }
-
     }]);
+
+
+var signs = document.querySelectorAll('.font-x');
+
+var randomIn = function randomIn(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+var mixupInterval = function mixupInterval(el) {
+    var ms = randomIn(2000, 4000);
+    el.style.setProperty('--interval', "".concat(ms, "ms"));
+};
+
+signs.forEach(function (el) {
+    mixupInterval(el);
+    el.addEventListener('webkitAnimationIteration', function () {
+        mixupInterval(el);
+    });
+});

@@ -1,0 +1,143 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="Procedure.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">工序管理</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class= "btn btn-sm btn-success " ng-click= "Procedure.Insert() "><i class= "glyphicon glyphicon-plus "></i>新增</button>
+                <div class="form-group">
+                        <input type="text" class="form-control"  ng-model="Procedure.Ser.a_Name" placeholder="请输入工序名称">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "Procedure.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "Procedure.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table pad-xs" >
+                    <thead>
+                        <tr>
+                            <td style= "width:60px">操作</td>
+                            <td style= "width:100px ">工序编码</td>
+                            <td style= "width:100px ">工序名称</td>
+                            <td style= "width:100px ">工序耗时(S)</td>
+                            <td style= "width:100px ">最低直通率</td>
+                            <td style= "width:100px ">是否防呆</td>
+                            <td style= "width:100px ">是否监控</td>
+                            <td style= "width:100px ">工段</td>
+                            <td style= "width:100px ">创建时间</td>
+                        </tr>
+                    </thead>
+                    <tr ng-if="Procedure.IsInsert" ng-form="Procedure.InsertForm">
+                        <td>
+                            <button class="btn btn-xs btn-success" ng-disabled="Procedure.InsertForm.$invalid" ng-click="Procedure.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="Procedure.IsInsert=false" ><i class="fa fa-undo"></i></button>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': Procedure.InsertForm.Code.$invalid }">
+                                <input type="text" name="Code" class="form-control" placeholder="工序编码" ng-model="Procedure.NewItem.Code" required  ng-blur="Procedure.IsAddCodeExists()" />
+                                <div ng-messages="Procedure.InsertForm.Code.$error" class="help-block" role="alert">
+                                    <div ng-message="unique">工序编码重复</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': Procedure.InsertForm.Name.$invalid }">
+                                <input type="text" name="Name" class="form-control" placeholder="工序名称" ng-model="Procedure.NewItem.Name" required  ng-blur="Procedure.IsAddNameExists()" />
+                                <div ng-messages="Procedure.InsertForm.Name.$error" class="help-block" role="alert">
+                                    <div ng-message="unique">工序名称重复</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': Procedure.InsertForm.TimeConsume.$invalid }">
+                                <input type="text" name="TimeConsume" class="form-control" placeholder="工序耗时(S)" ng-model="Procedure.NewItem.TimeConsume" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': Procedure.InsertForm.LowerFPY.$invalid }">
+                                <input type="text" name="LowerFPY" class="form-control" placeholder="最低直通率" ng-model="Procedure.NewItem.LowerFPY" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': Procedure.InsertForm.IsOutput.$invalid }">
+                                <input type="text" name="IsOutput" class="form-control" placeholder="是否防呆" ng-model="Procedure.NewItem.IsOutput" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': Procedure.InsertForm.IsMonitor.$invalid }">
+                                <input type="text" name="IsMonitor" class="form-control" placeholder="是否监控" ng-model="Procedure.NewItem.IsMonitor" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div >
+                                <input type="text" name="WorkSection" class="form-control" placeholder="工段" ng-model="Procedure.NewItem.WorkSection"  />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': Procedure.InsertForm.TS.$invalid }">
+                                <input type="text" date-time-picker  name="TS" class="form-control" placeholder="创建时间" ng-model="Procedure.NewItem.TS" option="Procedure.DateOption"  required />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-repeat= "item in Procedure.List " ng-form="item.ItemForm">
+                        <td>
+                            <span ng-if="!item.IsEdit">
+                                <button class="btn btn-xs btn-primary" ng-click="Procedure.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="Procedure.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </span>
+                            <span ng-if="item.IsEdit">
+                                <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="Procedure.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                                <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                            </span>
+                        </td>
+                        <td title="{{ item.Code }}">{{ item.Code }}</td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.Name }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_Name.$invalid }">
+                                <input type="text" name="item_Name" class="form-control" placeholder="工序名称" ng-model="Procedure.EditItem.Name" required  ng-blur="Procedure.IsEditNameExists()" />
+                                <div ng-messages="item.ItemForm.item_Name.$error" class="help-block" role="alert">
+                                    <div ng-message="unique">工序名称重复</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.TimeConsume }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_TimeConsume.$invalid }">
+                                <input type="text" name="item_TimeConsume" class="form-control" placeholder="工序耗时(S)" ng-model="Procedure.EditItem.TimeConsume" required />
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.LowerFPY }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_LowerFPY.$invalid }">
+                                <input type="text" name="item_LowerFPY" class="form-control" placeholder="最低直通率" ng-model="Procedure.EditItem.LowerFPY" required />
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.IsOutput }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_IsOutput.$invalid }">
+                                <input type="text" name="item_IsOutput" class="form-control" placeholder="是否防呆" ng-model="Procedure.EditItem.IsOutput" required />
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.IsMonitor }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_IsMonitor.$invalid }">
+                                <input type="text" name="item_IsMonitor" class="form-control" placeholder="是否监控" ng-model="Procedure.EditItem.IsMonitor" required />
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.WorkSection }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_WorkSection.$invalid }">
+                                <input type="text" name="item_WorkSection" class="form-control" placeholder="工段" ng-model="Procedure.EditItem.WorkSection"  />
+                            </div>
+                        </td>
+                        <td title="{{ item.TS }}">{{ item.TS }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "Procedure.page.total>Procedure.page.size ">
+                <div uib-pagination total-items= "Procedure.page.total " ng-model= "Procedure.page.index " items-per-page= "Procedure.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "Procedure.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

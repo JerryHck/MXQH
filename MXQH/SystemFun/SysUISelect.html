@@ -12,17 +12,19 @@
     </div>
     <div class= "padder-md wrapper-sm">
         <table class= "table " >
-            <tr>
-                <td style="width:70px ">操作</td>
-                <td style= "width:100px ">UISelect名</td>
-                <td style= "width:100px ">实体名</td>
-                <td style= "width:100px ">下拉显示</td>
-                <td style= "width:120px ">下拉显示(small)</td>
-                <td style= "width:100px ">返回栏位</td>
-                <td style= "width:100px ">选中显示</td>
-                <td style= "width:120px ">Placeholder</td>
-                <td style= "width:150px ">备注</td>
-            </tr>
+            <thead>
+                <tr>
+                    <td style="width:70px ">操作</td>
+                    <td style="width:100px ">UISelect名</td>
+                    <td style="width:100px ">实体名</td>
+                    <td style="width:100px ">下拉显示</td>
+                    <td style="width:120px ">下拉显示(small)</td>
+                    <td style="width:100px ">返回栏位</td>
+                    <td style="width:100px ">选中显示</td>
+                    <td style="width:120px ">Placeholder</td>
+                    <td style="width:150px ">备注</td>
+                </tr>
+            </thead>
             <tr ng-repeat= "item in u.List ">
                 <td>
                     <button class="btn btn-xs btn-primary" ng-click="u.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>

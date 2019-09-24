@@ -13,14 +13,16 @@
     </div>
     <div>
         <table class="table b-2x" cg-busy="sys.promise">
-            <tr class="text-center bg-gd-dk h4">
-                <td class="col-md-1">编辑</td>
-                <td class="col-md-1">Dialog</td>
-                <td class="col-md-2">html文件</td>
-                <td class="col-md-2">依赖js文件</td>
-                <td class="col-md-2">Controller</td>
-                <td class="col-md-1">ControllerAs</td>
-            </tr>
+            <thead>
+                <tr class="text-center bg-gd-dk h4">
+                    <td class="col-md-1">编辑</td>
+                    <td class="col-md-1">Dialog</td>
+                    <td class="col-md-2">html文件</td>
+                    <td class="col-md-2">依赖js文件</td>
+                    <td class="col-md-2">Controller</td>
+                    <td class="col-md-1">ControllerAs</td>
+                </tr>
+            </thead>
             <tr ng-repeat="item in dailog.List | filter: dailog.search">
                 <td>
                     <button class="btn btn-xs btn-primary" ng-click="dailog.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>

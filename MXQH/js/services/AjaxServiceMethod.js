@@ -80,7 +80,8 @@
             //
             PrintMulti: PrintMulti,
             GetComPortList: GetComPortList,
-            GetComWeigth:GetComWeigth,
+            GetComWeigth: GetComWeigth,
+            LightPrint:LightPrint,
             //播放声音
             PlayVoice: PlayVoice,
 
@@ -444,6 +445,14 @@
         function PrintMulti(templateId, TS, postData, printerName, hostIp) {
             var d = $q.defer();
             SocketSend("PrintMulti", templateId, TS, postData, printerName, hostIp).then(function (data) {
+                d.resolve(data);
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+        function LightPrint(templateId, TS, postData, printerName, hostIp) {
+            var d = $q.defer();
+            SocketSend("LightPrint", templateId, TS, postData, printerName, hostIp).then(function (data) {
                 d.resolve(data);
             }, function (mes) { d.reject(mes); });
             return d.promise;
