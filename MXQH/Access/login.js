@@ -25,6 +25,11 @@ function LoginCtrl($rootScope, $scope, AjaxService, toastr, MyPop, appUrl, $cook
 
     AjaxService.DoBefore("GetSystemData").then(function (data) {
         vm.SysData = data;
+        //版本有变更
+        if (storage["mxVer"] != data.SysData.Ver) {
+            $window.location.href = appUrl + '/Access.html?v=' + (new Date().getSeconds()).toString();
+            $window.localStorage["mxVer"] = data.SysData.Ver;
+        }
     });
 
     reflashSecCode();

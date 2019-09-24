@@ -33,14 +33,15 @@
         <div class="row">
             <div class="col-md-2 no-padder"><img src="Content/images/logo2.jpg" /></div>
             <div class="col-md-10 no-padder">
-                <div class="font-bottom col-md-12 no-padder" style="margin-top:-12px"><span style="font-size:60px;">{{ Log.SysData.SysName }}</span><span class="text-info h4">({{ Log.SysData.SysVersion }})</span></div>
+                <div class="font-bottom col-md-12 no-padder" style="margin-top:-12px"><span style="font-size:60px;">{{ Log.SysData.SysName }}</span></div>
             </div>
         </div>
         <!--</h1>-->
     </div>
     <div class="banner">
         <div class="login-aside">
-            <div id="o-box-up"></div>
+            <div id="o-box-up">
+            </div>
             <div id="o-box-down" style="table-layout:fixed;">
                 <div class="registerform" ng-form="Log.AppForm" ng-keyup="Log.KeyDonw($event)">
                     <div class="fm-item" ng-class="{ 'has-error' : Log.AppForm.login.$invalid }">
@@ -79,8 +80,10 @@
                         </div>
                     </div>
                 </div>
-
             </div>
+            
+            
+
         </div>
         <div class="bd">
             <ul style="position: relative; width: 1918px; height: 478px">
@@ -91,6 +94,7 @@
         </div>
         <div class="hd"><ul><li class="">1</li><li class="on">2</li></ul></div>
     </div>
+    <div class="col-md-12"><span class="pull-right text-danger h5 font-v3">({{ Log.SysData.SysData.Ver }})</span></div>
 </div>
 <div class="container visible-xs visible-sm">
     <header>

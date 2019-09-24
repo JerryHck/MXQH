@@ -18,6 +18,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     vm.KeyDonwOrder = KeyDonwOrder;
     vm.KeyDonwInCode = KeyDonwInCode;
     vm.KeyDonwPrint = KeyDonwPrint;
+    vm.KeyDonwLightPrint = KeyDonwLightPrint;
     vm.BindCode = BindCode;
     vm.PageChange = PageChange;
     vm.Search = Search;
@@ -111,6 +112,19 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
         }
     }
 
+    //镭雕补打印 
+    function KeyDonwLightPrint(e) {
+        var keycode = window.event ? e.keyCode : e.which;
+        if (keycode == 13 && vm.PrintItem.InternalCode) {
+            //获取打印数据
+            var en = { SNCode: vm.PrintItem.InternalCode };
+            AjaxService.ExecPlan("MESSNCode", "printsn", en).then(function (data) {
+                LightPrintCode(data.data1[0], data.data[0]);
+                vm.PrintItem.InternalCode = undefined;
+            })
+        }
+    }
+
     function Action() {
         if (!vm.OrderData){
             showError('请先选择工单');
@@ -181,7 +195,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
                 }
                 //镭雕打印
                 else if (vm.PrintType == 'L') {
-
+                    LightPrintCode(teData, data);
                 }
             }
 
@@ -208,6 +222,29 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
         postData.ParaData = JSON.stringify(data);
         postData.OutList = list;
         AjaxService.Print(teData.TemplateId, teData.TemplateTime, postData, vm.PrinterName).then(function (data) {
+            console.log(data);
+        }, function (err) {
+            console.log(err);
+        })
+    }
+
+    //镭雕
+    function LightPrintCode(teData, data) {
+        if (!data || !data.SNCode || data.SNCode == null) {
+            toastr.error("SN不存在或还未生成");
+            AjaxService.PlayVoice('error.mp3');
+            return;
+        }
+        if (!teData || !teData.TemplateId || teData.TemplateId == null) {
+            toastr.error("打印模版获取失败");
+            AjaxService.PlayVoice('error.mp3');
+            return;
+        }
+        var postData = {}, list = [];
+        list.push(data.SNCode)
+        postData.ParaData = JSON.stringify(data);
+        postData.OutList = list;
+        AjaxService.LightPrint(teData.TemplateId, teData.TemplateTime, postData).then(function (data) {
             console.log(data);
         }, function (err) {
             console.log(err);

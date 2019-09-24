@@ -209,7 +209,7 @@
                                     <td class="multi-line"><input type="text" name="Width" class="form-control padder-xxs" placeholder="宽度" ng-model="show.Width" /></td>
                                     <td class="text-center multi-line" ng-if="fun.ThisFun.FunType=='B'">
                                         <div ng-class="{ 'has-error' : fun.ColForm.editCol.$invalid }">
-                                            <ui-select name="editCol" ng-model="show.EditCol" class="padder-xxs" ng-disabled="show.ColumnType == '3'|| show.TableAs != 'a'" search-enabled="true" ng-required="true">
+                                            <ui-select name="editCol" ng-model="show.EditCol" class="padder-xxs" search-enabled="true" ng-required="true">
                                                 <ui-select-match class="padder-xxs" placeholder="请选择.."><span>{{ $select.selected.ColumnName }}</span></ui-select-match>
                                                 <ui-select-choices repeat="item.ColumnName as item in fun.EnColList | filter: $select.search track by item.ColumnName">
                                                     <div><span ng-bind-html="item.ColumnName | highlight: $select.search"></span></div>
@@ -218,7 +218,7 @@
                                         </div>
                                     </td>
                                     <td class="text-center multi-line" ng-if="fun.ThisFun.FunType=='B'">
-                                        <div config-select ng-model="show.ColType" ng-name="ColType" ng-disabled="show.ColumnType == '3'|| show.TableAs != 'a'" config-option="fun.ColTypeConfig" ng-required="true"></div>
+                                        <div config-select ng-model="show.ColType" ng-name="ColType" config-option="fun.ColTypeConfig" ng-required="true"></div>
                                         <div ng-if="show.ColType=='Select'" class="m-t-xs" ng-class="{ 'has-error' : fun.ColForm.ColValue.$invalid }">
                                             <ui-select name="ColValue" ng-model="show.ColValue" theme="bootstrap" search-enabled="true" ng-required="true">
                                                 <ui-select-match placeholder="请选择.."><span>{{ $select.selected.SelectName }}</span></ui-select-match>
@@ -232,7 +232,7 @@
                                         </div>
                                     </td>
                                     <td class="text-center multi-line" ng-if="fun.ThisFun.FunType=='B'">
-                                        <div config-select ng-model="show.ABleNull" ng-name="ColType" ng-disabled="show.ColumnType == '3'|| show.TableAs != 'a'" config-option="fun.AbleNullConfig" ng-required="true"></div>
+                                        <div config-select ng-model="show.ABleNull" ng-name="ColType" config-option="fun.AbleNullConfig" ng-required="true"></div>
                                     </td>
                                     <td class="text-center multi-line" ng-if="fun.ThisFun.FunType=='B'">
                                         <label class="i-checks i-checks-sm">

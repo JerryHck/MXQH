@@ -98,10 +98,10 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 { name: "MaterialID", value: vm.SelectetMate.Id },
                 { name: "Status", value: 4, type: "!=" }];
         AjaxService.GetPlan("MESPlanExMain", en).then(function (data) {
-            if (data.ID) {
-                toastr.error("工艺正在生产，无法添加");
-            }
-            else {
+            //if (data.ID) {
+            //    toastr.error("工艺正在生产，无法添加");
+            //}
+            //else {
                 vm.ProcItem = {
                     ID: -1, boRoutingID: vm.SelectedRo.ID, ProcedureInfo: vm.ProcedureList[0],
                     Unit: 'PCS/H/人', Unit: 'PCS/H/人', Remark: "1", StandardCapacity: 3
@@ -114,7 +114,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 vm.ProcWPList.push(vm.ProcItem);
                 ChangeProc();
                 $(".procudure").addClass("active");
-            }
+            //}
         })
     }
     //返修工序选择

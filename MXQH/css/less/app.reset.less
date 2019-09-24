@@ -11,6 +11,10 @@ body {
   line-height: @line-height-base;
 }
 
+body > .ui-select-bootstrap.open {
+  z-index: 9999; /* Standard Bootstrap dropdown z-index */
+}
+
 *:focus {
   outline: 0 !important;
 }
@@ -466,6 +470,7 @@ blockquote{
 }
 
 .table{
+  z-index:10 !important;
   > tfoot,
   > tbody {
     > tr {
@@ -751,4 +756,10 @@ input[type="number"] {
             border-color: #4e624e!important;
         }
     }
+}
+.maxh-100{
+    max-height:100%;
+}
+.minh-100{
+    max-height:100%;
 }
