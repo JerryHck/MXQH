@@ -10,8 +10,12 @@ function (Dialog, $scope, $http, AjaxService, toastr, $window) {
     vm.IsRun = false;
     vm.BtnText = "开始刷新";
     vm.Begin = Begin;
-    
-    AjaxService.GetPlans("MesMxWOrder", [{ name: "Status", value: 4, type: "!=" }]).then(function (data) {
+    var conList = [
+        { name: "Status", value: 4, type: "!=" },
+        { name: "WorkOrder", value: "MO%", type: "not like" },
+        { name: "WorkOrder", value: "20%", type: "not like" },
+    ];
+    AjaxService.GetPlans("MesMxWOrder", conList).then(function (data) {
         vm.OrderList = data;
     })
 
