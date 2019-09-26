@@ -28,8 +28,10 @@
                     <thead>
                         <tr>
                             <td title="日期" style= "width:100px ">日期</td>
+                            <td title="工单" style="width:100px ">工单</td>
+                            <td title="线别" style="width:120px ">线别</td>
                             <td title="料号" style= "width:100px ">料号</td>
-                            <td title="料名" style= "width:100px ">料名</td>
+                            <td title="料名" style= "width:120px ">料名</td>
                             <td title="{{ col.Name }}" style= "width:100px " ng-repeat="col in qc.Columns">{{ col.Name }}</td>
                             <td title="维修数量" style="width:100px ">维修数量</td>
                             <td title="登记数量" style="width:100px ">登记数量</td>
@@ -38,6 +40,8 @@
                     </thead>
                     <tr ng-repeat= "item in qc.List ">
                         <td title="{{ item.MinCreateDate }}">{{ item.MinCreateDate }}</td>
+                        <td title="{{ item.WorOrder }}">{{ item.WorOrder }}</td>
+                        <td title="{{ item.AssemblyLineName }}">{{ item.AssemblyLineName }}</td>
                         <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
                         <td class="text-left" title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
                         <td title="item[col.Code]" style="width:100px " ng-repeat="col in qc.Columns">{{ item[col.Code] }}</td>
