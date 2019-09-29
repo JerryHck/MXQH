@@ -216,6 +216,8 @@
     <Content Include="UIFun\MESFun\MateRouter.js" />
     <Content Include="UIFun\MESFun\MesMaterialSer.html" />
     <Content Include="UIFun\MESFun\MesMaterialSer.js" />
+    <Content Include="UIFun\MESFun\MoLineArrange.html" />
+    <Content Include="UIFun\MESFun\MoLineArrange.js" />
     <Content Include="UIFun\MESFun\MO\MesCustomerSer.html" />
     <Content Include="UIFun\MESFun\MO\MesCustomerSer.js" />
     <Content Include="UIFun\MESFun\MO\MesRoutingSer.html" />
