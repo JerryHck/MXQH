@@ -222,7 +222,10 @@
                                         </div>
                                     </div>
                                     <div class="panel panel-danger m-t-xxs">
-                                        <div class="panel-heading text-center">排班信息</div>
+                                        <div class="panel-heading text-center">
+                                            <button class="btn btn-sm btn-success pull-right" ng-disabled="!line.SelectedMo.ID || line.SelectedMo.Status == 4 || line.editArrange" ng-click="line.AddArrange()"><i class="glyphicon glyphicon-plus"></i>排班</button>
+                                            排班信息
+                                        </div>
                                         <div class="panel-body padder-xxs padder-v-xs">
                                             <table class="table pad-xs no-padder">
                                                 <thead>
