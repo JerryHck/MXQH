@@ -15,12 +15,12 @@
                     </div>
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" ng-disabled="wo.IsRun" date-time-picker class="form-control" placeholder="开始测试日" ng-model="wo.Ser.StartDate" option="inCode.StartOption" />
+                            <input type="text" ng-disabled="wo.IsRun" date-time-picker class="form-control" placeholder="开始测试日" ng-model="wo.Ser.StartDate" option="inCode.TimeOp" />
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" ng-disabled="wo.IsRun" date-time-picker class="form-control" placeholder="结束测试日" ng-model="wo.Ser.EndDate" option="inCode.EndOption" />
+                            <input type="text" ng-disabled="wo.IsRun" date-time-picker class="form-control" placeholder="结束测试日" ng-model="wo.Ser.EndDate" option="inCode.TimeOp" />
                         </div>
                     </div>
                     <button class="btn" ng-class="{'btn-success':!wo.IsRun, 'btn-danger':wo.IsRun}" ng-click="wo.Begin()"><i class="glyphicon glyphicon-search"></i>{{ wo.BtnText }}</button>

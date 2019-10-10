@@ -1,6 +1,6 @@
 ﻿<div class="app-content-full" cg-busy="line.promise">
     <div class="hbox hbox-auto-xs hbox-auto-sm">
-        <div class="col w-md lt b-r text-xs">
+        <div class="col w lt b-r text-xs">
             <div class="vbox">
                 <div class="wrapper">
                     <div class="h4 text-center">工单列表</div>
@@ -22,14 +22,11 @@
                         <div class="cell-inner">
                             <div class="padder-xs">
                                 <div class="list-group pad-xss">
-                                    <a ng-repeat="item in line.MoList  | orderBy: 'Status'| filter:line.MoQuery | limitTo:200" class="list-group-item b-l-3x hover-anchor cl" ng-click="line.SelectMo(item)"
-                                       ng-class="{'bg-blue-light': item.ID == line.SelectedMo.ID, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}">
-                                        <span class="text-info text-lg" ng-class="{ 'text-success-dk font-bold' : item.Status == 4 }" ng-bind-html="item.WorkOrder | highlight: line.MoQuery"></span>
+                                    <a ng-repeat="item in line.MoList  | orderBy: 'Status'| filter:line.MoQuery | limitTo:200" class="list-group-item b-l-4x hover-anchor cl padder-xs" ng-click="line.SelectMo(item)"
+                                       ng-class="{'hover': item.ID == line.SelectedMo.ID, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}">
+                                        <span class="text-info hover text-lg" ng-class="{ 'text-success-dk font-bold' : item.Status == 4 }" ng-bind-html="item.WorkOrder | highlight: line.MoQuery"></span>
                                         <span ng-if="item.Status == 4" class="pull-right font-v5 h6">完</span>
                                         <span ng-if="item.Status != 4" class="pull-right font-v4 h6">待</span>
-                                        <!--<small class="text-muted">
-                                            <span>{{ item.MaterialCode }}({{ item.MaterialName }})</span>
-                                        </small>-->
                                     </a>
                                 </div>
                             </div>
@@ -66,45 +63,27 @@
                         <div class="cell-inner">
                             <div class="padder-xs">
                                 <div class="list-group padder-xxs">
-                                    <a ng-repeat="f in line.ArrangeList" title="{{ f.IsDefault ? '默认工艺':'' }}" class="list-group-item" ng-class="{'select': line.SelectedRo.ID == f.ID }" ng-click="line.SelectRoute(f)">
-                                        <span ng-if="!line.editArrange" ng-confirm="{text:'确定要删除该工艺吗'}" ng-click='line.Delete(f.ID)' class="pull-right text-danger">
+                                    <a ng-if="line.NewArrange.Id==-1" title="新排班" class="list-group-item" ng-class="{'select': line.SelectedArrange.Id == line.NewArrange.Id }">
+                                        <span ng-if="!line.editArrange" ng-confirm="{text:'确定要删除该排班吗'}" ng-click='line.NewArrange = {}' class="pull-right text-danger">
                                             <i class="fa fa-times"></i>
                                         </span>
-                                        <span class="block h5 text-info-dker" ng-class="{'m-n': line.SelectedRo.ID == f.ID }">
-                                            <span class="h3"><i class="fa fa-hand-o-right" ng-class="{'text-danger':f.IsDefault,'text-info':!f.IsDefault}"></i></span>
-                                            {{ f.RoutingName }}
-                                        </span>
-
-                                        <span class="pull-left h4 mr-1">
-                                            <i ng-class="{ 'icon-user text-success': item.Sex=='M', 'icon-user-female text-danger': item.Sex=='F' }"></i>
-                                        </span>
-                                        <div class="clear ml-3 text-info">
-                                            <span class="block" ng-click="use.SelectEn(item)">
-                                                <span class="text-lg" ng-bind-html="item.UserNo | highlight: use.EntityQuery"></span>
-                                                <span ng-if="item.IsOn" class="pull-right"><i class="text-color h7">在线</i></span>
-                                            </span>
-                                            <btn class="pull-right text-success" title="重置账号密码" ng-click="use.Reset(item)"><i class="icon-key"></i></btn>
-                                            <small class="text-muted">
-                                                <span>{{ item.ChiFirstName }}</span>
-                                            </small><br />
-                                            <small class="text-muted" ng-if="use.UserType!='E'">
-                                                {{ item.CompanyName }}
-                                            </small>
-                                        </div>
-
-
-                                    </a>
-                                    <a ng-if="line.NewArrange.Id==-1" title="新排班" class="list-group-item" ng-class="{'select': line.SelectedArrange.Id == line.NewArrange.Id }" ng-click="line.SelectRoute(line.NewRoute)">
-                                        <span ng-if="!line.editArrange" ng-confirm="{text:'确定要删除该工艺吗'}" ng-click='line.NewArrange = {}' class="pull-right text-danger">
-                                            <i class="fa fa-times"></i>
-                                        </span>
-                                        <span class="block h5 text-info-dker" ng-class="{'m-n': line.SelectedArrange.Id == line.NewArrange.Id }">
-                                            <!--<span><i class="fa fa-hand-o-right text-info" ng-class="{'text-danger':line.SelectedArrange.Id == line.NewArrange.Id}"></i></span>-->
+                                        <span class="block h4 text-info-dker" ng-class="{'m-n': line.SelectedArrange.Id == line.NewArrange.Id }">
                                             <span class="font-v3">{{ line.NewArrange.ArrangeDate }} </span>
-                                            <!--<span class="text-info h4 font-bold">{{ line.NewArrange.DocNo }} </span>-->
                                         </span>
                                         <small class="text-muted">
                                             <span class="font-v3">{{ line.NewArrange.Line.Name }}</span>
+                                        </small>
+                                    </a>
+                                    <a ng-repeat="l in line.ArrangeList" class="list-group-item" ng-class="{'select': line.SelectedArrange.Id == l.Id }" ng-click="line.SelectArr(l)">
+                                        <span ng-confirm="{text:'确定要删除该排班吗'}" ng-click='line.DeleteArr(l)' class="pull-right text-danger">
+                                            <i class="fa fa-times"></i>
+                                        </span>
+                                        <span class="block h5 text-info-dker" ng-class="{'m-n': line.SelectedArrange.Id == line.NewArrange.Id }">
+                                            <span class="font-v3">{{ l.ArrangeDate }} </span>
+                                        </span>
+                                        <small class="text-muted">
+                                            <span class="font-v3">{{ l.Line.Name }}</span>
+
                                         </small>
                                     </a>
                                 </div>
@@ -118,178 +97,249 @@
         <div class="col w-auto b-r">
             <div class="vbox" ng-if="line.SelectedArrange.Id">
                 <div class="wrapper">
-                    <div class="h4 text-center">
-                        <button class="btn btn-sm btn-info col-md-offset-1 pull-left" ng-if="!line.editArrange" ng-click="line.editArrange = !line.editArrange">
+                    <div class="h4 text-left">
+                        <button class="btn btn-sm btn-info pull-left" ng-if="!line.editArrange" ng-click="line.editArrange = !line.editArrange">
                             <i class="glyphicon glyphicon-edit"></i>编辑
                         </button>
-                        <button class="btn btn-sm btn-success col-md-offset-1 pull-left" ng-if="line.editArrange" ng-click="line.SaveRoute()"
-                                ng-disabled="line.MainForm.$invalid">
+                        <button class="btn btn-sm btn-success m-l-md pull-left" title="复制" ng-if="!line.editArrange"  ng-click="line.CopyArr()"><i class="glyphicon glyphicon-share-alt"></i>复制</button>
+                        <button class="btn btn-sm btn-success pull-left" ng-if="line.editArrange" ng-click="line.SaveArrange()"
+                                ng-disabled="line.MainForm.$invalid || line.ItemForm.$invalid">
                             <i class="glyphicon glyphicon-save"></i>储存
                         </button>
-                        <button class="btn btn-sm btn-warning col-md-offset-2 pull-left" type="button" ng-if="line.editArrange" ng-click="line.Cancel()">取消</button>
+                        <button class="btn btn-sm btn-warning m-l-md  pull-left" type="button" ng-if="line.editArrange" ng-click="line.Cancel()">取消</button>
                     </div>
                 </div>
                 <div class="row-row">
                     <div class="cell scrollable hover bar-xs">
                         <div class="panel panel-default m-t-xs">
-                            <div class="panel-body padder-xs bg-light h5">
-                                <div class="col-md-12 padder-xxs m-t-n-sm">
-                                    <div class="panel panel-danger m-t-xxs">
-                                        <div class="panel-heading text-center">基本信息</div>
+                            <div class="panel-body padder-xs bg-light h5 padder-v-xs">
+                                <div class="col-md-9 padder-xs">
+                                    <div class="panel panel-success m-t-xxs">
+                                        <div class="panel-heading text-center h4">基本信息</div>
                                         <div class="panel-body padder-xxs padder-v-xs">
                                             <div class="form-horizontal" ng-form="line.MainForm">
-                                                <div class="form-group col-md-12 padder-xs">
+                                                <div class="form-group-xs col-md-12 padder-xs">
                                                     <div class="col-md-4 padder-xxs">
-                                                        <label class="col-lg-5 padder-xxs control-label text-info">生产工单:</label>
-                                                        <div class="col-lg-7 padder-xxs form-control-static">
-                                                            {{ line.SelectedArrange.WorkOrder }}
+                                                        <label class="col-lg-5 padder-xxs control-label text-info">拉长:</label>
+                                                        <div class="col-lg-7 padder-xxs" ng-class="{ 'has-error' : line.MainForm.MesUserName.$invalid }">
+                                                            <input type="text" disabled class="form-control" name="=MesUserName" ng-model="line.SelectedArrange.MesUser.Name" required/>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4 padder-xxs">
-                                                        <label class="col-lg-5 padder-xxs control-label text-info">产品名称:</label>
-                                                        <div class="col-lg-7 padder-xxs form-control-static">
-                                                            {{ line.SelectedArrange.Order.MaterialName }}
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4 padder-xxs">
-                                                        <label class="col-lg-5 padder-xxs control-label text-info">生产数量:</label>
-                                                        <div class="col-lg-7  padder-xxs form-control-static font-v3">
-                                                            {{ line.SelectedArrange.Order.Quantity }}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-md-12 padder-xs">
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-lg-5 padder-xxs control-label text-info">排班单号:</label>
-                                                        <div class="col-lg-7 padder-xxs form-control-static">
-                                                            {{ line.SelectedArrange.DocNo }}
+                                                        <div class="col-lg-7 padder-xxs">
+                                                            <input type="text" disabled class="form-control" ng-model="line.SelectedArrange.DocNo" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-lg-5 padder-xxs control-label text-info">排班产线:</label>
-                                                        <div class="col-lg-7 padder-xxs form-control-static">
-                                                            {{ line.SelectedArrange.Line.Name }}
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4 padder-xxs">
-                                                        <label class="col-lg-5 padder-xxs control-label text-info">拉长:</label>
-                                                        <div class="col-lg-7  padder-xxs form-control-static">
-                                                            {{ line.SelectedArrange.MesUser.Name }}
+                                                        <div class="col-lg-7 padder-xxs" ng-class="{ 'has-error' : line.MainForm.LineName.$invalid }">
+                                                            <input type="text" disabled class="form-control" name="LineName" ng-model="line.SelectedArrange.Line.Name" required/>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-md-12 padder-xs">
-                                                    <div class="col-md-4 padder-xxs">
-                                                        <label class="col-lg-5 padder-xxs control-label text-info">开始时间:</label>
-                                                        <div class="col-lg-7 padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.StartTime.$invalid }">
-                                                            <input type="text" date-time-picker ng-disabled="!line.editArrange" class="form-control" name="StartTime" placeholder="开始时间" ng-model="line.SelectedArrange.StartTime" required />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4 padder-xxs">
-                                                        <label class="col-lg-5 padder-xxs control-label text-info">结束时间:</label>
-                                                        <div class="col-lg-7  padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.EndTime.$invalid }">
-                                                            <input type="text" date-time-picker ng-disabled="!line.editArrange" class="form-control" name="EndTime" placeholder="结束时间" ng-model="line.SelectedArrange.EndTime" required />
-                                                        </div>
-                                                    </div>
+                                                <div class="form-group-xs col-md-12 padder-xs">
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-lg-5 padder-xxs control-label text-info">到岗情况:</label>
-                                                        <div class="col-lg-7  padder-xxs form-control-static">
-                                                            {{ line.SelectedArrange.MesUser.Name }}
+                                                        <div class="col-lg-7 padder-xxs">
+                                                            <input type="text" disabled class="form-control" ng-model="line.SelectedArrange.DutyType" />
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group col-md-12 padder-xs">
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-lg-5 padder-xxs control-label text-info">标配人数:</label>
                                                         <div class="col-lg-7  padder-xxs">
-                                                            <input type="number" disabled class="form-control" ng-model="line.SelectedArrange.UPPH" />
+                                                            <input type="number" disabled class="form-control" ng-model="line.SelectedArrange.StandPerson" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-lg-5 padder-xxs control-label text-info">实到人数:</label>
                                                         <div class="col-lg-7 padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.ActPerson.$invalid }">
-                                                            <input type="number" ng-disabled="!line.editArrange" class="form-control" name="ActPerson" placeholder="实到人数" ng-model="line.SelectedArrange.ActPerson" required />
+                                                            <input type="number" disabled class="form-control" name="ActPerson" placeholder="实到人数" ng-model="line.SelectedArrange.ActPerson" required />
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="form-group-xs col-md-12 padder-xs">
+                                                    <div class="col-md-4 padder-xxs">
+                                                        <label class="col-lg-5 padder-xxs control-label text-info">排班日期:</label>
+                                                        <div class="col-lg-7 padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.SelectedArrange.$invalid }">
+                                                            <input type="text" date-picker ng-disabled="!line.editArrange" class="form-control" name="SelectedArrange" placeholder="排班日期" option="line.Option" ng-model="line.SelectedArrange.ArrangeDate" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 padder-xxs">
+                                                        <label class="col-lg-5 padder-xxs control-label text-info">开始时间:</label>
+                                                        <div class="col-lg-7 padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.StartTime.$invalid }">
+                                                            <input type="text" time-picker ng-disabled="!line.editArrange" class="form-control" name="StartTime" placeholder="开始时间" step="10" ng-model="line.SelectedArrange.StartTime" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 padder-xxs">
+                                                        <label class="col-lg-5 padder-xxs control-label text-info">结束时间:</label>
+                                                        <div class="col-lg-7  padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.EndTime.$invalid }">
+                                                            <input type="text" time-picker ng-disabled="!line.editArrange" class="form-control" name="EndTime" placeholder="结束时间" step="10" ng-model="line.SelectedArrange.EndTime" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group-xs col-md-12 padder-xs">
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-lg-5 padder-xxs control-label text-info">实际工时(人):</label>
                                                         <div class="col-lg-7  padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.ActUPPH.$invalid }">
                                                             <input type="text" ng-disabled="!line.editArrange" class="form-control" name="ActUPPH" placeholder="实际工时" ng-model="line.SelectedArrange.ActUPPH" required />
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-4 padder-xxs">
+                                                        <label class="col-lg-5 padder-xxs control-label text-info">计划排产量:</label>
+                                                        <div class="col-lg-7  padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.PlanCount.$invalid }">
+                                                            <input type="text" ng-disabled="!line.editArrange" class="form-control" name="PlanCount" placeholder="计划排产量" ng-model="line.SelectedArrange.PlanCount" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 padder-xxs">
+                                                        <label class="col-lg-5 padder-xxs control-label text-info">备注:</label>
+                                                        <div class="col-lg-7  padder-xxs text-xs">
+                                                            <input type="text" ng-disabled="!line.editArrange" class="form-control" name="Remark" placeholder="备注" ng-model="line.SelectedArrange.Remark" required />
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="panel panel-danger m-t-xxs">
-                                        <div class="panel-heading text-center">
-                                            <button class="btn btn-sm btn-success pull-right" ng-disabled="!line.SelectedMo.ID || line.SelectedMo.Status == 4 || line.editArrange" ng-click="line.AddArrange()"><i class="glyphicon glyphicon-plus"></i>排班</button>
+                                </div>
+                                <div class="col-md-3 padder-xs">
+                                    <div class="panel panel-success m-t-xxs">
+                                        <div class="panel-heading text-center h4">工单信息</div>
+                                        <div class="panel-body padder-xxs padder-v-xs">
+                                            <div class="form-horizontal" ng-form="line.OrderForm">
+                                                <div class="form-group-xs col-md-12 padder-xs">
+                                                    <label class="col-lg-3 control-label padder-xs text-info">工单:</label>
+                                                    <div class="col-lg-9 padder-xs">
+                                                        <ui-select name="MoOrder" ng-disabled="!line.IsCopy" ng-model="line.SelectedMo" ng-change="line.ChangeMo()" theme="bootstrap" search-enabled="true" ng-required="true">
+                                                            <ui-select-match placeholder="工单.."><span class="font-v3">{{ $select.selected.WorkOrder }}</span></ui-select-match>
+                                                            <ui-select-choices repeat="item in line.MoList | limitTo:200 | filter: $select.search track by item.ID">
+                                                                <div class="font-v3" ng-bind-html="item.WorkOrder | highlight: $select.search"></div>
+                                                            </ui-select-choices>
+                                                        </ui-select>
+                                                        <!--<input type="text" ng-disabled="!line.IsCopy" class="form-control" ng-model="line.SelectedArrange.WorkOrder" 
+                                                               uib-typeahead="item.WorkOrder as item.WorkOrder for item in line.MoList | filter:$viewValue | limitTo:8"/>-->
+                                                    </div>
+                                                </div>
+                                                <div class="form-group-xs col-md-12 padder-xs">
+                                                    <label class="col-lg-3 padder-xs control-label text-info">料号:</label>
+                                                    <div class="col-lg-9 padder-xs">
+                                                        <input type="text" disabled class="form-control" ng-model="line.SelectedArrange.Order.MaterialCode" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group-xs col-md-12 padder-xs">
+                                                    <label class="col-lg-3 padder-xs control-label text-info">名称:</label>
+                                                    <div class="col-lg-9 padder-xs">
+                                                        <input type="text" disabled class="form-control" ng-model="line.SelectedArrange.Order.MaterialName" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group-xs col-md-12 padder-xs">
+                                                    <label class="col-lg-3 padder-xs control-label text-info">数量:</label>
+                                                    <div class="col-lg-9 padder-xs">
+                                                        <input type="text" disabled class="form-control" ng-model="line.SelectedArrange.Order.Quantity" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 padder-xs">
+                                    <div class="panel panel-info m-t-n-sm">
+                                        <div class="panel-heading text-center h4">
+                                            <button class="btn btn-sm btn-success pull-left m-t-n-xs" ng-if="line.editArrange" ng-disabled="line.ItemForm.$invalid" ng-click="line.AddLinePerson()"><i class="glyphicon glyphicon-plus"></i>排班</button>
                                             排班信息
                                         </div>
                                         <div class="panel-body padder-xxs padder-v-xs">
-                                            <table class="table pad-xs no-padder">
+                                            <table class="table pad-xs" ng-form="line.ItemForm">
                                                 <thead>
                                                     <tr>
-                                                        <td style="width:30px">操作</td>
-                                                        <td style="width:100px">作业工序</td>
-                                                        <td style="width:80px">工号</td>
-                                                        <td style="width:110px">姓名</td>
-                                                        <td style="width:30px">备注</td>
+                                                        <td style="width:20px">操作</td>
+                                                        <td style="width:80px ">作业工序</td>
+                                                        <td style="width:30px ">工号</td>
+                                                        <td style="width:50px ">姓名</td>
+                                                        <td style="width:150px ">备注</td>
                                                     </tr>
                                                 </thead>
-                                                <tr class="text-left h6" ng-repeat="show in line.Thisline.ColList" ng-drop="true" ng-drop-success="line.Drop($data,$index)">
-                                                    <td class="text-center h4">
-                                                        <i class="glyphicon glyphicon-move text-info" ng-drag="true"
-                                                           ng-drag-data="show" ng-drag-success="line.Drag($data,$index)"></i>
+                                                <tr ng-repeat="item in line.SelectedArrange.Dtl ">
+                                                    <td>
+                                                        <button class="btn btn-xs btn-danger" ng-disabled="!line.editArrange" ng-click="line.DeletePer($index)"><i class="glyphicon glyphicon-remove"></i></button>
                                                     </td>
-                                                    <td class="one-line" ng-class="{'bg-warning':show.ColumnType == '3'}" title="{{ show.ColumnName }}">
-                                                        <div style="width:80px" class="width-fix">{{ show.ColumnName }}</div>
-                                                    </td>
-                                                    <td class="multi-line"><input type="text" name="ColumnText" class="form-control padder-xxs" placeholder="中文栏名" ng-model="show.ColumnText" /></td>
-                                                    <td class="multi-line"><input type="text" name="Width" class="form-control padder-xxs" placeholder="宽度" ng-model="show.Width" /></td>
-                                                    <td class="text-center multi-line" ng-if="line.Thisline.FunType=='B'">
-                                                        <div ng-class="{ 'has-error' : line.ColForm.editCol.$invalid }">
-                                                            <ui-select name="editCol" ng-model="show.EditCol" class="padder-xxs" search-enabled="true" ng-required="true">
-                                                                <ui-select-match class="padder-xxs" placeholder="请选择.."><span>{{ $select.selected.ColumnName }}</span></ui-select-match>
-                                                                <ui-select-choices repeat="item.ColumnName as item in line.EnColList | filter: $select.search track by item.ColumnName">
-                                                                    <div><span ng-bind-html="item.ColumnName | highlight: $select.search"></span></div>
+                                                    <td>
+                                                        <div ng-class="{ 'has-error': line.ItemForm.ProcedureId{{ $index }}.$invalid }">
+                                                            <ui-select name="ProcedureId{{ $index }}" ng-disabled="!line.editArrange" ng-model="item.ProcedureId" theme="bootstrap" search-enabled="true" ng-required="true">
+                                                                <ui-select-match placeholder="作业工序.."><span class="font-v3">{{ $select.selected.Name }}</span></ui-select-match>
+                                                                <ui-select-choices repeat="item.ID as item in line.ProcedureList | filter: $select.search track by item.ID">
+                                                                    <div class="font-v3" ng-bind-html="item.Name | highlight: $select.search"></div>
                                                                 </ui-select-choices>
                                                             </ui-select>
                                                         </div>
                                                     </td>
-                                                    <td class="text-center multi-line" ng-if="line.Thisline.FunType=='B'">
-                                                        <div config-select ng-model="show.ColType" ng-name="ColType" config-option="line.ColTypeConfig" ng-required="true"></div>
-                                                        <div ng-if="show.ColType=='Select'" class="m-t-xs" ng-class="{ 'has-error' : line.ColForm.ColValue.$invalid }">
-                                                            <ui-select name="ColValue" ng-model="show.ColValue" theme="bootstrap" search-enabled="true" ng-required="true">
-                                                                <ui-select-match placeholder="请选择.."><span>{{ $select.selected.SelectName }}</span></ui-select-match>
-                                                                <ui-select-choices repeat="item.SelectName as item in line.SelectList | filter: $select.search track by item.SelectName">
-                                                                    <div class="h5"><span ng-bind-html="item.SelectName | highlight: $select.search"></span></div>
+                                                    <td>
+                                                        <div ng-class="{ 'has-error': line.ItemForm.HrUserNo{{ $index }}.$invalid }">
+                                                            <ui-select name="HrUserNo{{ $index }}" ng-disabled="!line.editArrange" ng-model="item.User" theme="bootstrap" search-enabled="true" ng-required="true">
+                                                                <ui-select-match placeholder="工号.."><span class="font-v3">{{ $select.selected.UserNo }}</span></ui-select-match>
+                                                                <ui-select-choices repeat="item in line.UserList | filter: $select.search track by item.UserNo">
+                                                                    <div class="font-v3" ng-bind-html="item.Name | highlight: $select.search"></div>
+                                                                    <small ng-bind-html="item.UserNo | highlight: $select.search"></small>
                                                                 </ui-select-choices>
                                                             </ui-select>
                                                         </div>
-                                                        <div ng-if="show.ColType=='Config'" class="m-t-xs" ng-class="{ 'has-error' : line.ColForm.TableCofig.$invalid }">
-                                                            <div basic-select="TableCofig" ng-model="show.ColValue" ng-name="TableCofig" ng-required="true"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div ng-class="{ 'has-error': line.ItemForm.HrUserName{{ $index }}.$invalid }">
+                                                            <ui-select name="HrUserName{{ $index }}" ng-disabled="!line.editArrange" ng-model="item.User" theme="bootstrap" search-enabled="true" ng-required="true">
+                                                                <ui-select-match placeholder="姓名.."><span class="font-v3">{{ $select.selected.Name }}</span></ui-select-match>
+                                                                <ui-select-choices repeat="item in line.UserList | filter: $select.search track by item.UserNo">
+                                                                    <div class="font-v3" ng-bind-html="item.Name | highlight: $select.search"></div>
+                                                                    <small ng-bind-html="item.UserNo | highlight: $select.search"></small>
+                                                                </ui-select-choices>
+                                                            </ui-select>
                                                         </div>
                                                     </td>
-                                                    <td class="text-center multi-line" ng-if="line.Thisline.FunType=='B'">
-                                                        <div config-select ng-model="show.ABleNull" ng-name="ColType" config-option="line.AbleNullConfig" ng-required="true"></div>
-                                                    </td>
-                                                    <td class="text-center multi-line" ng-if="line.Thisline.FunType=='B'">
-                                                        <label class="i-checks i-checks-sm">
-                                                            <input type="checkbox" ng-model="show.CheckExists" ng-disabled="show.ColumnType == '3'|| show.TableAs != 'a' || show.ColType!='Text'"><i></i>
-                                                        </label>
-                                                    </td>
-                                                    <td class="text-center h4">
-                                                        <a class="text-danger" ng-click="line.DeleteFunCol(show, $index)"><i class="glyphicon glyphicon-remove"></i></a>
+                                                    <td>
+                                                        <div>
+                                                            <input type="text" name="Remark" ng-disabled="!line.editArrange" class="form-control" placeholder="备注" ng-model="item.Remark" />
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-3 padder-xs m-t-n-sm">
+                                    <div class="panel panel-danger">
+                                        <div class="panel-heading text-center h4">工号扫描区</div>
+                                        <div class="panel-body padder-xxs">
+                                            <div class="form form-horizontal">
+                                                <div class="form-group-xs col-md-12 padder-xs">
+                                                    <label class="control-label col-md-3 padder-xs text-info">工号:</label>
+                                                    <div class="col-md-9 padder-xs">
+                                                        <input type="text" name="HrUser" ng-disabled="!line.editArrange" ng-model="line.HrUserNo" class="form-control" placeholder="工号" ng-keyup="line.KeyDonwUserNo($event)" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default scroll-y" style="max-height:250px">
+                                        <div class="panel-heading font-bold text-center">扫描信息</div>
+                                        <div class="panel-body padder-xxs">
+                                            <div class="list-group">
+                                                <ul class="list-group bg-white">
+                                                    <li class="list-group-item" ng-repeat="item in line.MesList track by item.Id" ng-class="{ 'text-danger' : !item.IsOk, 'text-success':item.IsOk }">
+                                                        <span herf class="pull-left">
+                                                            <i class="glyphicon" ng-class="{ 'glyphicon-remove' : !item.IsOk, 'glyphicon-ok':item.IsOk }"></i>
+                                                        </span>
+                                                        <div class="clear">
+                                                            <div>{{ item.Msg }}</div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-12">
-                                    <pre>{{ line.SelectedMo |json }}</pre>
-                                    <pre>{{ line.SelectedArrange | json }}</pre>
+                                    <!--<pre>{{ line.PerList |json }}</pre>-->
+                                    <!--<pre>{{ line.ArrangeList | json }}</pre>-->
                                 </div>
                             </div>
                         </div>

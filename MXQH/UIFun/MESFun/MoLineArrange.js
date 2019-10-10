@@ -13,24 +13,22 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         formatDate: 'Y-m-d',
         timepicker: false
     };
+    vm.MesList = [];
 
     vm.SelectMo = SelectMo;
-    vm.SelectRoute = SelectRoute;
-    //vm.editArrange = editArrange;
-    vm.OpenProcedure = OpenProcedure;
-    vm.AddProcedure = AddProcedure;
-    vm.RepairCheck = RepairCheck;
+    vm.SelectArr = SelectArr;
+    vm.AddLinePerson = AddLinePerson;
     vm.ChangeProc = ChangeProc;
-    vm.RoProDelete = RoProDelete;
     vm.AddArrange = AddArrange;
-    //保存路由
-    vm.SaveRoute = SaveRoute;
-    vm.isExists = isExists;
+    vm.KeyDonwUserNo = KeyDonwUserNo;
+    vm.CopyArr = CopyArr;
+    vm.ChangeMo = ChangeMo;
+    //排班
+    vm.SaveArrange = SaveArrange;
 
-    //工艺流程确认
-    vm.ProcOk = ProcOk;
     vm.Cancel = Cancel;
-    vm.Delete = Delete;
+    vm.DeletePer = DeletePer;
+    vm.DeleteArr = DeleteArr;
 
     function Search() {
         vm.page.index = 1;
@@ -39,35 +37,74 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     var conList = [
         { name: "WorkOrder", value: "20%", type: "not like" },
     ];
+    //工单获取
     vm.promise = AjaxService.GetPlans("MesMxWOrder", conList).then(function (data) {
         vm.MoList = data;
     });
-
+    //工序获取
     vm.promise = AjaxService.GetPlans("MESBoProcedure").then(function (data) {
         vm.ProcedureList = data;
+    });
+    //MES用户获取 -非离职
+    vm.promise = AjaxService.GetPlans("MESUser", [{ name: "IsLeave", value: "0" }]).then(function (data) {
+        vm.UserList = [];
+        vm.HrData = data;
+        for (var i = 0, len = data.length; i < len; i++) {
+            vm.UserList.push({ UserNo: data[i].UserNo, Name: data[i].Name });
+        }
+        
     });
 
     function SelectMo(item) {
         if (!MyPop.Show(vm.editArrange, '功能信息还在编辑，请先保存！')) {
-            vm.SelectedMo = angular.copy(item);
+            vm.SelectedMo = item;
             GetMoArrange();
+            vm.MesLis = [];
         }
     }
 
-    function editArrange(route) {
-        route.editing = true;
+    //扫描人员
+    function KeyDonwUserNo(e) {
+        var keycode = window.event ? e.keyCode : e.which;
+        if (keycode == 13 && vm.HrUserNo) {
+            var have = false;
+            for (var i = 0, len = vm.HrData.length; i < len; i++) {
+                if (vm.HrData[i].UserNo == vm.HrUserNo) {
+                    have = true;
+                    vm.KeyUser = vm.HrData[i];
+                }
+            }
+            if (have) {
+                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: '已扫描并添加[' + vm.KeyUser.Name + ']' });
+                vm.NewPerItem = { User: { UserNo: vm.KeyUser.UserNo, Name: vm.KeyUser.Name } };
+                vm.SelectedArrange.Dtl.push(vm.NewPerItem);
+                CalPer();
+            }
+            else {
+                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: '该用户工号[' + vm.HrUserNo + ']不存在' });
+            }
+            vm.HrUserNo = undefined;
+        }
     }
 
-    function SelectRoute(route) {
+    function SelectArr(item) {
         if (!MyPop.Show(vm.editArrange, '功能信息还在编辑，请先保存！')) {
-            vm.SelectedRo = angular.copy(route);
+            vm.SelectedArrange = angular.copy(item);
+            vm.SelectedArrange.Order = { MaterialCode: vm.SelectedMo.MaterialCode, MaterialName: vm.SelectedMo.MaterialName, Quantity: vm.SelectedMo.Quantity };
+            for (var i = 0, len = vm.SelectedArrange.Dtl.length; i < len; i++) {
+                vm.SelectedArrange.Dtl[i].User = { UserNo: vm.SelectedArrange.Dtl[i].HrUserNo, Name: vm.SelectedArrange.Dtl[i].HrUserName };
+            }
+            vm.MesLis = [];
         }
     }
 
     function Cancel() {
         vm.editArrange = false;
-        vm.NewArrange = {};
-        vm.SelectedArrange = {};
+        vm.IsCopy = false;
+        if (vm.SelectedArrange.Id == -1) {
+            vm.NewArrange = {};
+            vm.SelectedArrange = {};
+        }
     }
 
     function ChangeProc() {
@@ -76,188 +113,128 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     }
 
     function GetMoArrange() {
-        AjaxService.GetPlans("MESMoLineArrange", [{ name: "WorkOrder", value: vm.SelectedMo.WorkOrder }]).then(function (data) {
+        vm.promise = AjaxService.GetPlans("MESMoLineArrange", [{ name: "WorkOrder", value: vm.SelectedMo.WorkOrder }]).then(function (data) {
             vm.ArrangeList = data;
+            vm.SelectedArrange = {};
         });
     }
 
-    function OpenProcedure(item, index) {
-        vm.ProcItem = angular.copy(item);
-        vm.ProcWPList = angular.copy(vm.SelectedRo.Procedure);
-        vm.ProIndex = index;
-        if (item.WorkPart && item.WorkPart.RepairTurnStation && vm.ProcWPList && vm.ProcWPList.length > 0) {
-            vm.RepairTurnList = item.WorkPart.RepairTurnStation.split(',');
-            for (var i = 0, len = vm.RepairTurnList.length; i < len; i++) {
-                for (var j = 0, len2 = vm.ProcWPList.length; j < len2; j++) {
-                    if (vm.RepairTurnList[i] == vm.ProcWPList[j].boProcedureID) {
-                        vm.ProcWPList[j].IsCheck = true;
-                    }
-                }
-            }
-        }
-
-        $(".procudure").addClass("active");
+    //添加工艺排程
+    function AddLinePerson() {
+        vm.NewPerItem = {};
+        vm.SelectedArrange.Dtl.push(vm.NewPerItem);
+        CalPer();
     }
 
-    //添加工艺流程
-    function AddProcedure() {
-
-        var en = [{ name: "RoutingID", value: vm.SelectedRo.ID },
-                { name: "MaterialID", value: vm.SelectetMate.Id },
-                { name: "Status", value: 4, type: "!=" }];
-        AjaxService.GetPlan("MESPlanExMain", en).then(function (data) {
-            //if (data.ID) {
-            //    toastr.error("工艺正在生产，无法添加");
-            //}
-            //else {
-                vm.ProcItem = {
-                    ID: -1, boRoutingID: vm.SelectedRo.ID, ProcedureInfo: vm.ProcedureList[0],
-                    Unit: 'PCS/H/人', Unit: 'PCS/H/人', Remark: "1", StandardCapacity: 3
-                };
-                vm.SelectedRo.Procedure = vm.SelectedRo.Procedure || [];
-                vm.ProIndex = vm.SelectedRo.Procedure.length;
-                vm.ProIndex = vm.ProIndex || 0;
-                vm.ProcWPList = angular.copy(vm.SelectedRo.Procedure);
-                vm.ProcWPList == vm.ProcWPList || [];
-                vm.ProcWPList.push(vm.ProcItem);
-                ChangeProc();
-                $(".procudure").addClass("active");
-            //}
-        })
-    }
-    //返修工序选择
-    function RepairCheck() {
-        vm.RepairTurnList = [];
-        for (var j = 0, len2 = vm.ProcWPList.length; j < len2; j++) {
-            if (vm.ProcWPList[j].IsCheck) {
-                vm.RepairTurnList.push(vm.ProcWPList[j].ProcedureInfo.ID);
-            }
-        }
-    }
-
-    //工艺流程确认
-    function ProcOk() {
-        //新增时
-        var RePair = '';
-        vm.RepairTurnList = vm.RepairTurnList || [];
-        for (var j = 0, len2 = vm.RepairTurnList.length; j < len2; j++) {
-            RePair += vm.RepairTurnList[j] + ','
-        }
-
-        if (vm.ProcItem.ID == -1) {
-            vm.ProcItem.WorkPart = {};
-            vm.ProcItem.WorkPart.RepairTurnStation = RePair;
-            var have = false;
-            for (var i = 0, len = vm.SelectedRo.Procedure.length; i < len; i++) {
-                if (vm.ProcItem.ProcedureInfo.ID == vm.SelectedRo.Procedure[i].ProcedureInfo.ID) {
-                    have = true;
-                    break;
-                }
-            }
-            if (!have) {
-                vm.SelectedRo.Procedure.push(vm.ProcItem);
-            }
-        }
-        else {
-            vm.ProcItem.WorkPart.RepairTurnStation = RePair;
-            vm.SelectedRo.Procedure[vm.ProIndex] = angular.copy(vm.ProcItem)
-        }
-        $(".procudure").removeClass("active");
+    function CalPer() {
+        vm.SelectedArrange.ActPerson = vm.SelectedArrange.Dtl.length;
+        vm.SelectedArrange.DutyType = vm.SelectedArrange.ActPerson == vm.SelectedArrange.StandPerson ? "满勤" :
+            (vm.SelectedArrange.ActPerson > vm.SelectedArrange.StandPerson ? "超员" : "缺勤");
     }
 
     function AddArrange() {
-
         var en = { TbName: "MesLineArrange", ClName: "DocNo", CharName: null };
         AjaxService.ExecPlan("SerialNumberSet", "preview", en).then(function (data) {
-            AjaxService.GetPlan("MESLineOrder", { name: "ID", value: vm.SelectedMo.ID }).then(function (data2) {
+            vm.promise = AjaxService.GetPlan("MESLineOrder", { name: "ID", value: vm.SelectedMo.ID }).then(function (data2) {
                 vm.OrderData = data2;
                 vm.NewArrange = {
-                    Id: -1, ArrangeDate: (new Date()).Format("yyyy-MM-dd"),
+                    Id: -1,
+                    ArrangeDate: (new Date()).Format("yyyy-MM-dd"),
                     WorkOrder: vm.SelectedMo.WorkOrder,
-                    Order: { MaterialName: vm.SelectedMo.MaterialName, Quantity: vm.SelectedMo.Quantity },
+                    Order: { MaterialCode: vm.SelectedMo.MaterialCode, Quantity: vm.SelectedMo.Quantity, MaterialName: vm.SelectedMo.MaterialName },
                     LineId: data2.Plan.Line.ID,
                     Line: { Name: data2.Plan.Line.Name },
                     LineLeader: data2.Plan.Line.UserName.Id,
                     MesUser: { Name: data2.Plan.Line.UserName.Name },
-                    UPPH: data2.Mate.UPPH,
-                    StandPerson: data2.Mate.PersonCount,
+                    StandPerson: data2.Plan.Line.LineNumber,
                     Dtl: []
                 };
                 vm.NewArrange.DocNo = data.data[0].SN;
-
                 vm.editArrange = true;
                 vm.SelectedArrange = vm.NewArrange;
             })
         })
     }
 
-    function RoProDelete(index, item) {
-        if (item.ID == -1) {
-            vm.SelectedRo.Procedure.splice(index, 1);
-        }
-        else {
-            var en = [{ name: "RoutingID", value: vm.SelectedRo.ID },
-                { name: "MaterialID", value: vm.SelectetMate.Id },
-                { name: "Status", value: 4, type: "!=" }];
-             AjaxService.GetPlan("MESPlanExMain", en).then(function (data) {
-                if (data.ID) {
-                    toastr.error("工艺正在生产，无法删除流程");
-                }
-                else {
-                    vm.SelectedRo.Procedure.splice(index, 1);
-                }
-            })
-        }
-    }
-
-    //保存工艺
-    function SaveRoute() {
-        if (vm.SelectedRo.Procedure.length == 0) {
-            toastr.error("工艺最少需要一条流程,请添加");
-            return;
-        }
-        var en = angular.copy(vm.SelectedRo);
+    //保存排班
+    function SaveArrange() {
+        var en = angular.copy(vm.SelectedArrange);
         var list = [];
-        for (var j = 0, len2 = en.Procedure.length; j < len2; j++) {
+        for (var j = 0, len2 = en.Dtl.length; j < len2; j++) {
             var p = {};
-            p.ID = en.Procedure[j].ID;
-            p.IsPrint = en.Procedure[j].IsPrint || false;
-            p.Item1 = en.Procedure[j].Item1 || "0";
-            p.Item2 = en.Procedure[j].Item2 || "0";
-            p.Item3 = en.Procedure[j].Item3 || "0";
-            p.Item4 = en.Procedure[j].Item4 || "0";
-            p.boProcedureID = en.Procedure[j].ProcedureInfo.ID;
-            p.Remark = en.Procedure[j].Remark || "";
-            p.StandardCapacity = en.Procedure[j].StandardCapacity || 16;
-            p.Unit = en.Procedure[j].Unit;
-            p.RepairTurnStation = en.Procedure[j].WorkPart.RepairTurnStation || "";
-            p.OrderNum = j + 1;
+            p.Id = en.Dtl[j].Id || -1;
+            p.Remark = en.Dtl[j].Remark || "";
+            p.HrUserNo = en.Dtl[j].User.UserNo;
+            p.HrUserName = en.Dtl[j].User.Name;
+            p.ProcedureId = en.Dtl[j].ProcedureId;
             list.push(p);
         }
-        en.Procedure = undefined;
-        en.ProList = JSON.stringify(list);
-        en.TempColumns = "ProList";
-        console.log(en);
-        vm.promise = AjaxService.ExecPlan("MesBoRouting", "save", en).then(function (data) {
-            toastr.success("工艺保存成功");
-            console.log(data);
-            GetMateRouter();
-            vm.editArrange = false;
-            vm.NewRoute = {};
+        en.Order = undefined;
+        en.Line = undefined;
+        en.MesUser = undefined;
+        en.Dtl = undefined;
+        en.PerList = JSON.stringify(list);
+        en.TempColumns = "PerList";
+        //console.log(en);
+        vm.promise = AjaxService.ExecPlan("MESMoLineArrange", "save", en).then(function (data) {
+            if (data.data[0].MsgType == "Seccuss") {
+                toastr.success("排班保存成功");
+                vm.editArrange = false;
+                vm.IsCopy = false;
+                vm.SelectedArrange = undefined;
+                vm.NewArrange = {};
+                GetMoArrange();
+            }
+            else {
+                toastr.error(data.data[0].MsgText);
+            }
         })
     }
 
-    //删除工艺
-    function Delete(Id) {
-        AjaxService.ExecPlan("MesBoRouting", "delete", { ID: Id }).then(function (data) {
-            if (data.data[0].MsgType == "Error") {
-                toastr.error(data.data[0].MsgText);
-            }
-            else if (data.data[0].MsgType == "Success") {
-                toastr.success("删除成功");
-                GetMateRouter();
-            }
+    //复制排班
+    function CopyArr() {
+        MyPop.ngConfirm({ text: "确定要复制该排班吗?" }).then(function (data) {
+            var en = { TbName: "MesLineArrange", ClName: "DocNo", CharName: null };
+            vm.promise = AjaxService.ExecPlan("SerialNumberSet", "preview", en).then(function (data) {
+                vm.NewArrange = vm.SelectedArrange;
+                vm.NewArrange.Id = -1;
+                vm.NewArrange.DocNo = data.data[0].SN;
+                vm.NewArrange.ArrangeDate = undefined;
+                vm.editArrange = true;
+                vm.IsCopy = true;
+            })
+        });
+    }
+
+    //改变工单
+    function ChangeMo() {
+        GetMoArrange();
+        vm.promise = AjaxService.GetPlan("MESLineOrder", { name: "ID", value: vm.SelectedMo.ID }).then(function (data2) {
+            vm.SelectedArrange.WorkOrder= vm.SelectedMo.WorkOrder;
+            vm.SelectedArrange.Order = { MaterialCode: vm.SelectedMo.MaterialCode, Quantity: vm.SelectedMo.Quantity, MaterialName: vm.SelectedMo.MaterialName };
+            vm.SelectedArrange.LineId= data2.Plan.Line.ID;
+            vm.SelectedArrange.Line= { Name: data2.Plan.Line.Name };
+            vm.SelectedArrange.LineLeader= data2.Plan.Line.UserName.Id;
+            vm.SelectedArrange.MesUser= { Name: data2.Plan.Line.UserName.Name };
+            vm.SelectedArrange.StandPerson= data2.Plan.Line.LineNumber
         })
+        vm.MesLis = [];
+    }
+
+    //删除排班
+    function DeleteArr(item) {
+        vm.promise = AjaxService.ExecPlan("MESMoLineArrange", "del", item).then(function (data) {
+            toastr.success("排班保存成功");
+            GetMoArrange();
+        })
+    }
+
+    //删除排班人员
+    function DeletePer(index) {
+        MyPop.ngConfirm({ text: "确定要删除吗?" }).then(function (data) {
+            vm.SelectedArrange.Dtl.splice(index, 1);
+            CalPer();
+        });
     }
 
     //验证是否存在

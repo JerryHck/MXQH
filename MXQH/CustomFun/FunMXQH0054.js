@@ -16,8 +16,6 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.PageChange = PageChange;
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
-    vm.IsAddOrgNameExists = IsAddOrgNameExists;
-    vm.IsEditOrgNameExists=IsEditOrgNameExists;
 
     function Search() {
         vm.page.index = 1;
@@ -30,7 +28,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function SaveInsert() {
-        vm.promise = AjaxService.PlanInsert("SystemOrg", vm.NewItem).then(function (data) {
+        vm.promise = AjaxService.PlanInsert("MESMoLineArrDtl", vm.NewItem).then(function (data) {
             PageChange();
             toastr.success('新增成功');
             vm.IsInsert = false;
@@ -49,7 +47,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     function Delete(item) {
         var en = angular.copy(item);
         en.ItemForm = undefined;
-        vm.promise = AjaxService.PlanDelete("SystemOrg", en).then(function (data) {
+        vm.promise = AjaxService.PlanDelete("MESMoLineArrDtl", en).then(function (data) {
             PageChange();
             toastr.success('删除成功');
         });
@@ -57,54 +55,32 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     function SaveEdit(index) {
         var en = {};
-        en.OrgSn = vm.EditItem.OrgSn;
-        en.OrgName = vm.EditItem.OrgName;
-        en.IsUsed = vm.EditItem.IsUsed;
-        en.OrgName = vm.EditItem.OrgName;
-        en.CompanyName = vm.EditItem.CompanyName;
-        en.OrgDesc = vm.EditItem.OrgDesc;
-        vm.promise = AjaxService.PlanUpdate("SystemOrg", en).then(function (data) {
+        en.Id = vm.EditItem.Id;
+        en.ArrangeId = vm.EditItem.ArrangeId;
+        en.ProcedureId = vm.EditItem.ProcedureId;
+        en.HrUserNo = vm.EditItem.HrUserNo;
+        en.HrUserName = vm.EditItem.HrUserName;
+        en.Remark = vm.EditItem.Remark;
+        vm.promise = AjaxService.PlanUpdate("MESMoLineArrDtl", en).then(function (data) {
             PageChange();
             toastr.success('更新成功');
         });
     }
 
     function PageChange() {
-        vm.promise = AjaxService.GetPlansPage("SystemOrg", GetContition(), vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("MESMoLineArrDtl", GetContition(), vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
 
     }
     function ExportExcel() {
-        vm.promise = AjaxService.GetPlanOwnExcel("SystemOrg", GetContition()).then(function (data) {
+        vm.promise = AjaxService.GetPlanOwnExcel("MESMoLineArrDtl", GetContition()).then(function (data) {
             $window.location.href = data.File;
         });
     }
-    function IsAddOrgNameExists() {
-        var list = [];
-        list.push({ name: "OrgName", value: vm.NewItem.OrgName });
-        vm.promise = AjaxService.GetPlan("SystemOrg", list).then(function (data) {
-            vm.InsertForm.OrgName.$setValidity('unique', !data.OrgName);
-        });
-    }
-    function IsEditOrgNameExists() {
-        if(vm.NowItem.OrgName != vm.EditItem.OrgName){
-            var list = [];
-            list.push({ name: "OrgName", value: vm.EditItem.OrgName });
-            vm.promise = AjaxService.GetPlan("SystemOrg", list).then(function (data) {
-                vm.NowItem.ItemForm.item_OrgName.$setValidity('unique', !data.OrgName);
-            });
-        }
-    }
     function GetContition() {
         var list = [];
-        if (vm.Ser.a_OrgName) {
-            list.push({ name: "OrgName", value: vm.Ser.a_OrgName, tableAs:"a" });
-        }
-        if (vm.Ser.a_OrgSn) {
-            list.push({ name: "OrgSn", value: vm.Ser.a_OrgSn, tableAs:"a" });
-        }
         return list;
     }
 
