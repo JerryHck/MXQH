@@ -79,6 +79,8 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         en.Name = vm.EditItem.Name;
         en.ListNo = vm.EditItem.ListNo;
         en.TS = vm.EditItem.TS;
+        en.UserID = vm.EditItem.UserID;//产线拉长
+        en.LineNumber = vm.EditItem.LineNumber;//产线人数
         vm.promise = AjaxService.PlanUpdate("AssemblyLine", en).then(function (data) {
             PageChange();
             toastr.success('更新成功');

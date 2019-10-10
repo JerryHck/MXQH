@@ -34,6 +34,8 @@
                                 <td style="width:100px ">部门名称</td>
                                 <td style="width:100px ">产线编码</td>
                                 <td style="width:100px ">产线名称</td>
+                                <td style="width:100px ">产线拉长</td>
+                                <td style="width:100px ">产线人数</td>
                                 <td style="width:100px ">序号</td>
                             </tr>
                         </thead>
@@ -55,6 +57,16 @@
                             <td>
                                 <div ng-class="{ 'has-error': line.InsertForm.Name.$invalid }">
                                     <input type="text" name="Name" class="form-control" placeholder="产线名称" ng-model="line.NewItem.Name" required />
+                                </div>
+                            </td>
+                            <td>
+                                <div  ng-class="{ 'has-error' : line.InsertForm.UserID.$invalid }">
+                                    <div basic-select="MESUser" name="UserID" placeholder="产线拉长" ng-model="line.NewItem.UserID" ng-required="true"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-class="{ 'has-error': line.InsertForm.LineNumber.$invalid }">
+                                    <input type="number" name="LineNumber" class="form-control" placeholder="产线人数" ng-model="line.NewItem.LineNumber" required />
                                 </div>
                             </td>
                             <td>
@@ -85,6 +97,19 @@
                                 <span ng-if="!item.IsEdit">{{ item.Name }}</span>
                                 <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_Name.$invalid }">
                                     <input type="text" name="item_Name" class="form-control" placeholder="产线名称" ng-model="line.EditItem.Name" required />
+                                </div>
+                            </td>
+                            <td>
+                                <span ng-if="!item.IsEdit">{{ item.UserName.Name }}</span>
+                                <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_UserID.$invalid }">
+                                    <div basic-select="MESUser" name="item_UserID" placeholder="产线拉长" ng-model="line.EditItem.UserID" ng-required="true"></div>
+                                </div>
+                                
+                            </td>
+                            <td>
+                                <span ng-if="!item.IsEdit">{{ item.LineNumber}}</span>
+                                <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_LineNumber.$invalid }">
+                                    <input type="number" name="item_Name" class="form-control" placeholder="产线人数" ng-model="line.EditItem.LineNumber" required />
                                 </div>
                             </td>
                             <td>
