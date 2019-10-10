@@ -21,9 +21,9 @@
                     <div class="cell scrollable hover">
                         <div class="cell-inner">
                             <div class="list-group no-radius no-border no-bg m-b-none">
-                                <a class="list-group-item bg-light b-b" ng-class="{'focus': fun.SelectedRoot.FunNo == ''}" ng-click="fun.SelectAllFun()">所有功能</a>
+                                <a class="list-group-item bg-light b-b" ng-class="{'select': fun.SelectedRoot.FunNo == ''}" ng-click="fun.SelectAllFun()">所有功能</a>
                                 <a ng-repeat="root in fun.List" ng-dblclick="fun.EditRoot(root, 'name')" class="list-group-item m-l hover-anchor b-a no-select"
-                                   ng-class="{'focus m-l-none': fun.SelectedRoot.FunNo == root.FunNo}" ng-click="fun.SelectRoot(root)"
+                                   ng-class="{'select m-l-none': fun.SelectedRoot.FunNo == root.FunNo}" ng-click="fun.SelectRoot(root)"
                                    ng-drop="!fun.editFun" ng-drop-success="fun.RootDrop($data,$index)">
                                     <span ng-if="(!root.FunList || root.FunList.length == 0)&&!fun.editFun" ng-confirm="{text:'确定要删除该目录吗'}" ng-click='fun.Delete(root.FunNo)' class="pull-right text-danger hover-action">
                                         <i class="fa fa-times"></i>

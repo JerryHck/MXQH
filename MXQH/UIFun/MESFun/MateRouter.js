@@ -70,6 +70,11 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     function GetMateRouter() {
         AjaxService.GetPlans("MesBoRouting", [{ name: "ProductID", value: vm.SelectetMate.Id }]).then(function (data) {
             vm.MateRouteList = data;
+            for (var i = 0, len = data.length; i < len; i++) {
+                if (data[i].IsDefault) {
+                    vm.SelectedRo = angular.copy(data[i]); break;
+                }
+            }
         });
     }
 

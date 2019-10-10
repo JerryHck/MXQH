@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('QPoorctrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
+.controller('Rpoorctrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
 function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
@@ -16,6 +16,8 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.PageChange = PageChange;
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
+    vm.IsAddCodeExists = IsAddCodeExists;
+    vm.IsEditCodeExists=IsEditCodeExists;
 
     function Search() {
         vm.page.index = 1;
@@ -28,7 +30,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function SaveInsert() {
-        vm.promise = AjaxService.PlanInsert("QPoor", vm.NewItem).then(function (data) {
+        vm.promise = AjaxService.PlanInsert("RPoor", vm.NewItem).then(function (data) {
             PageChange();
             toastr.success('新增成功');
             vm.IsInsert = false;
@@ -47,7 +49,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     function Delete(item) {
         var en = angular.copy(item);
         en.ItemForm = undefined;
-        vm.promise = AjaxService.PlanDelete("QPoor", en).then(function (data) {
+        vm.promise = AjaxService.PlanDelete("RPoor", en).then(function (data) {
             PageChange();
             toastr.success('删除成功');
         });
@@ -55,29 +57,45 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     function SaveEdit(index) {
         var en = {};
+        en.ID = vm.EditItem.ID;
         en.Code = vm.EditItem.Code;
+        en.PID = vm.EditItem.PID;
         en.Name = vm.EditItem.Name;
         en.Description = vm.EditItem.Description;
-        en.PID = vm.EditItem.PID;
-        en.ID = vm.EditItem.ID;
         en.Layer = vm.EditItem.Layer;
-        vm.promise = AjaxService.PlanUpdate("QPoor", en).then(function (data) {
+        vm.promise = AjaxService.PlanUpdate("RPoor", en).then(function (data) {
             PageChange();
             toastr.success('更新成功');
         });
     }
 
     function PageChange() {
-        vm.promise = AjaxService.GetPlansPage("QPoor", GetContition(), vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("RPoor", GetContition(), vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
 
     }
     function ExportExcel() {
-        vm.promise = AjaxService.GetPlanOwnExcel("QPoor", GetContition()).then(function (data) {
+        vm.promise = AjaxService.GetPlanOwnExcel("RPoor", GetContition()).then(function (data) {
             $window.location.href = data.File;
         });
+    }
+    function IsAddCodeExists() {
+        var list = [];
+        list.push({ name: "Code", value: vm.NewItem.Code });
+        vm.promise = AjaxService.GetPlan("RPoor", list).then(function (data) {
+            vm.InsertForm.Code.$setValidity('unique', !data.Code);
+        });
+    }
+    function IsEditCodeExists() {
+        if(vm.NowItem.Code != vm.EditItem.Code){
+            var list = [];
+            list.push({ name: "Code", value: vm.EditItem.Code });
+            vm.promise = AjaxService.GetPlan("RPoor", list).then(function (data) {
+                vm.NowItem.ItemForm.item_Code.$setValidity('unique', !data.Code);
+            });
+        }
     }
     function GetContition() {
         var list = [];

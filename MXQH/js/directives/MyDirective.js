@@ -86,6 +86,32 @@ angular.module('MyDirective')
         }
     }
 }])
+.directive("timePicker", ['$ocLazyLoad', function ($ocLazyLoad) {
+    return {
+        require: '?ngModel',
+        restrict: 'A',
+        scope: {
+            ngModel: '=',
+            step: '@'
+        },
+        link: function (scope, element, attr, ngModel) {
+            scope.option = scope.option ||
+                {
+                    datepicker: false,
+                    format: 'H:i:s',
+                    step: parseInt(scope.step || "5")
+                }
+            //scope.option.formatTime = scope.option.formatTime || 'H:i';
+            //scope.option.formatDate = scope.option.formatDate || 'Y.m.d';
+
+            $ocLazyLoad.load('datetimepicker').then(function () {
+                //console.log(scope.option);
+                $.datetimepicker.setLocale('zh');
+                element.datetimepicker(scope.option);
+            })
+        }
+    }
+}])
 .directive('basicSelect', ['AjaxService', 'appUrl', function (AjaxService, appUrl) {
     return {
         restrict: 'A',
