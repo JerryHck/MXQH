@@ -84,7 +84,7 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
         }
     }
 
-    function InCodeToDb() {
+    function InCodeToDb() {//后焊上线
         var IsOk = true;
         if (!vm.OrderData || !vm.RoutingData) {
             showError('不存在或已完工');
@@ -99,7 +99,7 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
             AjaxService.PlayVoice('5611.mp3');
             MyPop.ngConfirm({ text: "投入数量已达到生产量, 是否继续投入?" }).then(function (data) {
                 if (vm.IsAuto) {
-                    Save();
+                    Save();//上线
                 }
             });
         }
@@ -119,7 +119,7 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
         vm.Focus = index;
     }
 
-    function Save() {
+    function Save() {//上线认证
         var en = {};
         en.WorkOrder = vm.Item.WorkOrder;
         en.InternalCode = vm.InCodeSave;
@@ -148,8 +148,13 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
                 vm.InCodeSave = undefined;
 
             }
-            else if (data.data[0].MsgType == 'Error') {
+            else if (data.data[0].MsgType == 'Error') {//一般错误认证
                 showError(data.data[0].Msg);
+                vm.InCodeSave = undefined;
+            }
+            else if (data.data[0].MsgType == 'SSError') {
+                showError(data.data[0].Msg);
+                NgSave();//弹出不良录入         
                 vm.InCodeSave = undefined;
             }
         })
@@ -157,7 +162,37 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
 
     //不良
     function NgSave() {
+        var e = {};
+        e.RoutingName = vm.RoutingData.RoutingName;//工艺流程
+        e.ProcedureName = vm.RoutingData.ProcedureName;//当前工序
+        e.MaterialName = vm.OrderData.MaterialName;//产品名称
+        e.MaterialCode = vm.OrderData.MaterialCode;//产品编号
+        e.WorkOrder = vm.Item.WorkOrder;//工单
+        e.boProcedureID = vm.RoutingData.boProcedureID;//工序id
+        e.RoutingId = vm.RoutingData.ID;//当前工艺路由
+       
+        if (vm.Item.InCode == null) {
+            e.InCode = vm.InCodeSave;//内控码
+        }
+        if (vm.InCodeSave == null) {
+            e.InCode = vm.Item.InCode;//内控码
+        }
+        console.log(e);
+        Open(e);
+    }
+    //function Insert() {
+    //    Open({});
+    //}
 
+    //function Edit(e) {
+    //    Open(e);
+    //}
+
+    function Open(item) {
+        Dialog.OpenDialog("WorkOrderAssNgDialogHH", item).then(function (data) {
+            PageChange();
+        }).catch(function (reason) {
+        });
     }
     //取消
     vm.cancel = function () {

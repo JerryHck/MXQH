@@ -47,19 +47,22 @@
                         </div>
                         <div class="form-group">
                             <div class="col-lg-12">
-                                <div class="checkbox col-md-3">
+                                <div class="checkbox col-md-2 col-md-offset-1 padder-xxs ">
                                     <label class="i-checks">
                                         <input type="checkbox" ng-model="woHH.IsAuto"><i></i> 合格
                                     </label>
-                                </div>
-                                <div class="checkbox col-md-5">
+                                </div> 
+                                <div class="checkbox col-md-4  padder-xxs " >
                                     <label class="i-checks">
                                         <input type="checkbox" ng-model="woHH.IsPrint"><i></i> 打印内控码
                                     </label>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2 padder-xxs " >
                                     <span><button type="submit" class="btn btn-sm btn-success" ng-click="woHH.InCodeToDb()" ng-disabled="woHH.OrderForm.$invalid || woHH.IsAuto">合格</button></span>
                                     <!--<span class="pl-md-1"><button type="submit" class="btn btn-sm btn-success" ng-click="wo.NgSave()" ng-disabled="wo.OrderForm.$invalid || wo.IsAuto">不良</button></span>-->
+                                </div>
+                                <div class="col-md-2 padder-xxs " >
+                                    <span ><button type="submit" class="btn btn-sm btn-success" ng-click="woHH.NgSave()" ng-disabled="woHH.OrderForm.$invalid || woHH.IsAuto">不良</button></span>
                                 </div>
                             </div>
                         </div>
