@@ -21,34 +21,18 @@
       color: #777;
 }
 
-    @charset "gb2312";
-/* CSS Document */
-
-    @font-face {
-    font-family: hanyi; /*这里是说明调用来的字体名字*/
-    src: url('../fonts/hanyi.ttf'); /*这里是字体文件路径*/
-    }
-    .font-title{
-          font-family:hanyi;
-          font-size:70px;
-          padding: 90px;
-          color:#0042bc
-        }
-
 </style>
 
-
 <div class="visible-lg visible-md">
-    <div class="header">
-        <!--<h1 class="text-center">-->
+    <!--<div class="header">
         <div class="row">
             <div class="col-md-2 no-padder"><img src="Content/images/logo2.jpg" /></div>
             <div class="col-md-10 no-padder">
-                <div class="font-title col-md-12 no-padder" style="margin-top:-12px"><span>{{ Log.SysData.SysName }}</span></div>
+                <div class="col-md-12 no-padder"><img src="{{ Log.SysData.SysName }}" /></div>
             </div>
         </div>
-        <!--</h1>-->
-    </div>
+    </div>-->
+    <div class="col-md-12 m-t-md m-b-md no-padder text-center"><img src="Content/images/logo2.jpg" /><img src="{{ Log.SysData.SysName }}" /></div>
     <div class="banner">
         <div class="login-aside">
             <div id="o-box-up">
