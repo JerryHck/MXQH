@@ -294,6 +294,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
             SerList[i].SerAss = SerList[i].SerAss || '=';
             SerList[i].SerType = SerList[i].SerType || 'Text';
             SerList[i].IsHide = SerList[i].IsHide || false;
+            SerList[i].SortNo = i + 1;
         }
         vm.NewItem.FunSetting.SerList = JSON.stringify(SerList);
 

@@ -60,6 +60,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             vm.SelectedMo = item;
             GetMoArrange();
             vm.MesLis = [];
+            vm.SelectedArrange = {};
         }
     }
 
@@ -115,7 +116,6 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     function GetMoArrange() {
         vm.promise = AjaxService.GetPlans("MESMoLineArrange", [{ name: "WorkOrder", value: vm.SelectedMo.WorkOrder }]).then(function (data) {
             vm.ArrangeList = data;
-            vm.SelectedArrange = {};
         });
     }
 

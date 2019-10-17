@@ -234,8 +234,6 @@
     <Content Include="UIFun\MESFun\SNWeigth.js" />
     <Content Include="UIFun\MESFun\WorkOrderAssNgDialog.html" />
     <Content Include="UIFun\MESFun\WorkOrderAssNgDialog.js" />
-    <Content Include="UIFun\MESFun\WorkOrderOnLineHH.html" />
-    <Content Include="UIFun\MESFun\WorkOrderOnLineHH.js" />
     <Content Include="UIFun\MESFun\WorkOrderOnLine.html" />
     <Content Include="UIFun\MESFun\WorkOrderOnLine.js" />
     <Content Include="UIFun\MESFun\OrderReWork.html" />
@@ -452,6 +450,7 @@
     <Content Include="css\font-awesome-4.7.0\scss\_variables.scss" />
     <None Include="css\less\app.font.less" />
     <None Include="css\less\app.table.less" />
+    <Content Include="fonts\hanyi.ttf" />
     <None Include="Properties\PublishProfiles\2.pubxml" />
     <None Include="Properties\PublishProfiles\MXQH.pubxml" />
     <Content Include="Scripts\angular\angular-file-upload\angular-file-upload.js.map" />
