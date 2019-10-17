@@ -21,13 +21,16 @@ function qlBadDialogHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, to
         vm.BName = null;
         vm.promise = AjaxService.GetPlans("MESsyRPoor", GetContition4(ID)).then(function (data) {
             vm.syRPoorName = data;
-           
+        
         });
 
     }
     function GetContition4(ID) {
         var list = [];
         list.push({ name: "PID", value: ID });
+        //{ name: "Layer", value: 4 }, { name: "IsMonitor", value: 1 },
+        //list.push({ name: "Layer", value: 4 });
+        //list.push({ name: "IsMonitor", value: 1 });
         return list;
     }
    
