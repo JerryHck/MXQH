@@ -352,7 +352,7 @@
                     <div class="tl-content panel padder bg-light" ng-class="{'b-success text-success':item.IsOkRun, 'b-danger text-danger':!item.IsOkRun}">
                         <span class="arrow left pull-up hidden-left" ng-class="{'arrow-success':item.IsOkRun, 'arrow-danger':!item.IsOkRun}"></span>
                         <span class="arrow right pull-up visible-left" ng-class="{'arrow-success':item.IsOkRun, 'arrow-danger':!item.IsOkRun}"></span>
-                        <div class="text-lt">{{ item.LogMes }}</div>
+                        <div class="text-lt">{{ item.LogMes }}。 完成时间:{{ item.LogTS | date:'yyyy-MM-dd HH:mm:ss' }}</div>
                     </div>
                 </div>
             </li>

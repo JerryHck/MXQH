@@ -16,7 +16,3 @@
   font-weight: 700;
   src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url('../fonts/sourcesanspro/sourcesanspro-bold.woff') format('woff');
 }
-@font-face {
-  font-family: 'hanyi';
-  src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url('../fonts/hanyi.woff') format('woff');
-}
