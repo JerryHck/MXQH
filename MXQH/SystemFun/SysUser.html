@@ -9,26 +9,33 @@
                     </div>
                 </div>
                 <div class="wrapper-xs b-t">
-                    <div class="form-group text-center">
+                    <div class="form-group-xs text-center">
                         <span class="btn-group">
-                            <label class="btn btn-default" ng-model="use.UserType" uib-btn-radio="'E'" ng-click="use.getList()">员工</label>
-                            <label class="btn btn-default" ng-model="use.UserType" uib-btn-radio="'C'" ng-click="use.getList()">客户</label>
-                            <label class="btn btn-default" ng-model="use.UserType" uib-btn-radio="'S'" ng-click="use.getList()">供应商</label>
+                            <label class="btn btn-success" ng-model="use.UserType" uib-btn-radio="'E'" ng-click="use.getList()">员工</label>
+                            <label class="btn btn-success" ng-model="use.UserType" uib-btn-radio="'C'" ng-click="use.getList()">客户</label>
+                            <label class="btn btn-success" ng-model="use.UserType" uib-btn-radio="'S'" ng-click="use.getList()">供应商</label>
                         </span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group-xs m-t-sm">
                         <div class="input-group">
+                            <div class="input-group-btn dropdown" dropdown>
+                                <button type="button" class="btn btn-success" ng-class="{'btn-danger': use.State=='E'}" data-toggle="dropdown">{{ use.State=='S'?'启用':'停用' }}<span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a ng-click="use.State='S';use.getList()">启用</a></li>
+                                    <li><a ng-click="use.State='E';use.getList()">停用</a></li>
+                                </ul>
+                            </div><!-- /btn-group -->
                             <input type="text" class="form-control" placeholder="查询" ng-model="use.UserQuery">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" ng-click="use.Insert()">
-                                    <i class="glyphicon glyphicon-plus text-success">新增</i>
+                                    <i class="glyphicon glyphicon-plus text-success"></i>
                                 </button>
                             </span>
                         </div>
                     </div>
                 </div>
                 <div class="row-row">
-                    <div class="cell scrollable hover">
+                    <div class="cell scrollable hover bar-xs">
                         <div class="cell-inner">
                             <div class="wrapper-xs">
                                 <div class="list-group">
@@ -41,6 +48,7 @@
                                             <span class="block" ng-click="use.SelectEn(item)">
                                                 <span class="text-lg" ng-bind-html="item.UserNo | highlight: use.EntityQuery"></span>
                                                 <span ng-if="item.IsOn" class="pull-right"><i class="text-color h7">在线</i></span>
+                                                <span ng-if="item.State=='E'" class="pull-right"><i class="font-x font-yellow-gold h7">停用</i></span>
                                             </span>
                                             <btn class="pull-right text-success" title="重置账号密码" ng-click="use.Reset(item)"><i class="icon-key"></i></btn>
                                             <small class="text-muted">

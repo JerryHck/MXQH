@@ -135,6 +135,7 @@
                                                         <label class="col-lg-5 padder-xxs control-label text-info">排班产线:</label>
                                                         <div class="col-lg-7 padder-xxs" ng-class="{ 'has-error' : line.MainForm.LineName.$invalid }">
                                                             <input type="text" disabled class="form-control" name="LineName" ng-model="line.SelectedArrange.Line.Name" required/>
+                                                            <!--<div basic-select="AssemblyLine" ng-disabled="!line.editArrange" ng-name="LineName" placeholder="线别" ng-model="line.SelectedArrange.LineId" ng-required="true"></div>-->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -181,8 +182,8 @@
                                                 <div class="form-group-xs col-md-12 padder-xs">
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-lg-5 padder-xxs control-label text-info">实际工时(人):</label>
-                                                        <div class="col-lg-7  padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.ActUPPH.$invalid }">
-                                                            <input type="text" ng-disabled="!line.editArrange" class="form-control" name="ActUPPH" placeholder="实际工时" ng-model="line.SelectedArrange.ActUPPH" required />
+                                                        <div class="col-lg-7  padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.ActHour.$invalid }">
+                                                            <input type="text" ng-disabled="!line.editArrange" class="form-control" name="ActHour" placeholder="实际工时" ng-model="line.SelectedArrange.ActHour" required />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4 padder-xxs">
@@ -194,7 +195,7 @@
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-lg-5 padder-xxs control-label text-info">备注:</label>
                                                         <div class="col-lg-7  padder-xxs text-xs">
-                                                            <input type="text" ng-disabled="!line.editArrange" class="form-control" name="Remark" placeholder="备注" ng-model="line.SelectedArrange.Remark" required />
+                                                            <input type="text" ng-disabled="!line.editArrange" class="form-control" name="Remark" placeholder="备注" ng-model="line.SelectedArrange.Remark" />
                                                         </div>
                                                     </div>
                                                 </div>
