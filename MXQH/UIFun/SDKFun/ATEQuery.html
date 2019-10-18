@@ -1,0 +1,40 @@
+﻿<div class="bg-light lter b-b wrapper-md" cg-busy="ateQuery.promise">
+    <h3 class="m-n font-thin h3 text-center">
+        ATE查询
+    </h3>
+</div>
+<div class="wrapper-md">
+    <div class="input-group m-b-xxs">
+        <div class="form-inline">
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="ateQuery.S.CustomerCode" placeholder="客户编码">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="ateQuery.S.Wafer" placeholder="芯片ID">
+            </div>
+            <button class="btn btn-sm btn-info" ng-click="ateQuery.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
+        </div>
+    </div>
+    <div>
+        <table class="table b-2x" >
+            <tr class="text-left bg-gd-dk h4">
+                <td class="col-md-3">芯片ID</td>
+                <td class="col-md-3">软件版本</td>
+                <td class="col-md-1">授权功能</td>
+                <td class="col-md-3">客户编码</td>
+            </tr>
+            <!--filter: itemmaster.search-->
+            <tr ng-repeat="item in ateQuery.List">
+                <td>{{ item.Wafer }}</td>
+                <td>{{ item.Version }}</td>
+                <td>{{ item.Rights }}</td>
+                <td>{{ item.CustomerCode }}</td>
+            </tr>
+        </table>
+    </div>
+    <!--分页-->
+    <div class="col-md-12 text-center" ng-if="ateQuery.page.total>ateQuery.page.size">
+        <div uib-pagination total-items="ateQuery.page.total" ng-model="ateQuery.page.index" items-per-page="ateQuery.page.size" max-size="ateQuery.page.maxSize" first-text="第一页" previous-text="上一页"
+             ng-change="ateQuery.DataBind()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
+    </div>
+</div>

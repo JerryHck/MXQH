@@ -1,0 +1,223 @@
+﻿<div class="app-content-full" >
+    <div class="hbox bg-white">
+        <div class="col w-md padder b-r h-100">
+            <div class="vbox">
+                <div class="wrapper">
+                    <div class="h4 text-center">所有标签类型</div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="查询" ng-model="tanapa.Query">
+                </div>
+                <div class="row-row">
+                    <div class="cell scrollable hover">
+                        <div class="cell-inner">
+                            <div class="padder-xs">
+                                <div class="list-group h5 scrollable">
+                                    <a ng-repeat="item in tanapa.CodeList| filter:tanapa.Query" class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.MaterialCode==tanapa.SelectedCode, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="tanapa.SelectCode(item)">
+                                        <span class="pull-left"><i class="glyphicon glyphicon-tree-conifer"></i></span>
+                                        <small class="text-muted">
+                                            <span>{{ item.MaterialCode }}({{ item.MaterialName }})</span>
+                                        </small>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col w-auto padder w-tab-full">
+            <uib-tabset active="active" type="tabs" class="h-100" cg-busy="tanapa.promise">
+                <uib-tab index="0">
+                    <uib-tab-heading class="h5">Tanapa管理</uib-tab-heading>
+                    <div class="wrapper-md">
+                        <div class="form-inline">
+                            <button class="btn btn-sm btn-success " ng-click="tanapa.Insert() "><i class="glyphicon glyphicon-plus "></i>新增</button>
+                        </div>
+                    </div>
+                    <div class="padder-md table-responsive" style="padding-bottom:100px;">
+                        <table class="table" style="width:1500px;">
+                            <thead>
+                                <tr>
+                                    <td style="width:60px">操作</td>
+                                    <td style="width:100px ">产品编号</td>
+                                    <td style="width:100px ">产品名称</td>
+                                    <td style="width:100px ">到货地编码</td>
+                                    <td style="width:100px ">到货地名称</td>
+                                    <td style="width:100px ">最大重量</td>
+                                    <td style="width:100px ">最小重量</td>
+                                    <td style="width:100px ">Tanapa</td>
+                                    <td style="width:100px ">Model</td>
+                                    <td style="width:100px ">Ean</td>
+                                    <td style="width:100px ">UserGuide</td>
+                                    <td style="width:100px ">Charger</td>
+                                    <td style="width:100px ">Antenna</td>
+                                    <td style="width:100px ">BeltClip</td>
+                                    <td style="width:100px ">Battery</td>
+                                    <td style="width:100px ">RadioKit</td>
+                                    <td style="width:100px ">Description</td>
+                                </tr>
+                            </thead>
+                            <tr ng-if="tanapa.IsInsert" ng-form="tanapa.InsertForm">
+                                <td>
+                                    <button class="btn btn-xs btn-success" ng-disabled="tanapa.InsertForm.$invalid" ng-click="tanapa.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                                    <button class="btn btn-xs btn-warning" ng-click="tanapa.IsInsert=false"><i class="fa fa-undo"></i></button>
+                                </td>
+                                <td>
+                                    {{tanapa.Material.MaterialCode}}
+                                </td>
+                                <td>
+                                    {{tanapa.Material.MaterialName}}
+                                </td>
+                                <td>
+                                    {{tanapa.SendPlace.Code}}
+                                </td>
+                                <td>
+                                    <div ng-name="SendPlace" basic-select="MesSendPlaceEntity" placeholder="到货地名称" ng-model="tanapa.SendPlace"></div>
+                                </td>
+                                <td>
+                                    <input type="number" name="MaxWeight" class="form-control" placeholder="彩盒最大重量" ng-model="tanapa.NewItem.MaxWeight" />
+                                </td>
+                                <td>
+                                    <input type="number" name="MinWeight" class="form-control" placeholder="彩盒最小重量" ng-model="tanapa.NewItem.MinWeight" />
+                                </td>
+                                <td>
+                                    <input type="text" name="Tanapa" class="form-control" placeholder="Tanapa" ng-model="tanapa.NewItem.Tanapa" />
+                                </td>
+                                <td>
+                                    <input type="text" name="Model" class="form-control" placeholder="Model" ng-model="tanapa.NewItem.Model" />
+                                </td>
+                                <td>
+                                    <input type="text" name="Ean" class="form-control" placeholder="Ean" ng-model="tanapa.NewItem.Ean" />
+                                </td>
+                                <td>
+                                    <input type="text" name="UserGuide" class="form-control" placeholder="UserGuide" ng-model="tanapa.NewItem.UserGuide" />
+                                </td>
+                                <td>
+                                    <input type="text" name="Charger" class="form-control" placeholder="Charger" ng-model="tanapa.NewItem.Charger" />
+                                </td>
+                                <td>
+                                    <input type="text" name="Antenna" class="form-control" placeholder="Antenna" ng-model="tanapa.NewItem.Antenna" />
+                                </td>
+                                <td>
+                                    <input type="text" name="BeltClip" class="form-control" placeholder="BeltClip" ng-model="tanapa.NewItem.BeltClip" />
+                                </td>
+                                <td>
+                                    <input type="text" name="Battery" class="form-control" placeholder="Battery" ng-model="tanapa.NewItem.Battery" />
+                                </td>
+                                <td>
+                                    <input type="text" name="RadioKit" class="form-control" placeholder="RadioKit" ng-model="tanapa.NewItem.RadioKit" />
+                                </td>
+                                <td>
+                                    <input type="text" name="Description" class="form-control" placeholder="Description" ng-model="tanapa.NewItem.Description" />
+                                </td>
+                            </tr>
+                            <tr ng-repeat="item in tanapa.List " ng-form="item.ItemForm">
+                                <td>
+                                    <span ng-if="!item.IsEdit">
+                                        <button class="btn btn-xs btn-primary" ng-click="tanapa.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                        <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="tanapa.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                                    </span>
+                                    <span ng-if="item.IsEdit">
+                                        <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="tanapa.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                                        <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                                    </span>
+                                </td>
+                                <td title="{{ item.Material.MaterialCode }}">
+                                    {{ item.Material.MaterialCode }}
+                                </td>
+                                <td title="{{ item.Material.MaterialName }}">{{ item.Material.MaterialName }}</td>
+                                <td title="{{ item.SendPlace.Code }}">
+                                    <span ng-if="!item.IsEdit">{{ item.SendPlace.Code }}</span>
+                                    <span ng-if="item.IsEdit">{{ tanapa.SendPlace.Code }}</span>
+                                </td>
+                                <td title="{{ item.SendPlace.Name }}">
+                                    <span ng-if="!item.IsEdit">{{ item.SendPlace.Name }}</span>
+                                    <div ng-if="item.IsEdit">
+                                        <div ng-name="SendPlace" basic-select="MesSendPlaceEntity" placeholder="到货地名称" ng-model="tanapa.SendPlace"></div>
+                                    </div>
+                                </td>
+                                <td title="{{ item.MaxWeight }}">
+                                    <span ng-if="!item.IsEdit">{{ item.MaxWeight }}</span>
+                                    <div ng-if="item.IsEdit">
+                                        <input type="text" name="MaxWeight" class="form-control" placeholder="MaxWeight" ng-model="tanapa.EditItem.MaxWeight" />
+                                    </div>
+                                </td>
+                                <td title="{{ item.MinWeight }}">
+                                    <span ng-if="!item.IsEdit">{{ item.MinWeight }}</span>
+                                    <div ng-if="item.IsEdit">
+                                        <input type="text" name="MinWeight" class="form-control" placeholder="MinWeight" ng-model="tanapa.EditItem.MinWeight" />
+                                    </div>
+                                </td>
+                                <td title="{{ item.Tanapa }}">
+                                    <span ng-if="!item.IsEdit">{{ item.Tanapa }}</span>
+                                    <div ng-if="item.IsEdit">
+                                        <input type="text" name="Tanapa" class="form-control" placeholder="Tanapa" ng-model="tanapa.EditItem.Tanapa" />
+                                    </div>
+                                </td>
+                                <td title="{{ item.Model }}">
+                                    <span ng-if="!item.IsEdit">{{ item.Model }}</span>
+                                    <div ng-if="item.IsEdit">
+                                        <input type="text" name="Model" class="form-control" placeholder="Model" ng-model="tanapa.EditItem.Model" />
+                                    </div>
+                                </td>
+                                <td title="{{ item.Ean }}">
+                                    <span ng-if="!item.IsEdit">{{ item.Ean }}</span>
+                                    <div ng-if="item.IsEdit">
+                                        <input type="text" name="Ean" class="form-control" placeholder="Ean" ng-model="tanapa.EditItem.Ean" />
+                                    </div>
+                                </td>
+                                <td title="{{ item.UserGuide }}">
+                                    <span ng-if="!item.IsEdit">{{ item.UserGuide }}</span>
+                                    <div ng-if="item.IsEdit">
+                                        <input type="text" name="UserGuide" class="form-control" placeholder="UserGuide" ng-model="tanapa.EditItem.UserGuide" />
+                                    </div>
+                                </td>
+                                <td title="{{ item.Charger }}">
+                                    <span ng-if="!item.IsEdit">{{ item.Charger }}</span>
+                                    <div ng-if="item.IsEdit">
+                                        <input type="text" name="Charger" class="form-control" placeholder="Charger" ng-model="tanapa.EditItem.Charger" />
+                                    </div>
+                                </td>
+                                <td title="{{ item.Antenna }}">
+                                    <span ng-if="!item.IsEdit">{{ item.Antenna }}</span>
+                                    <div ng-if="item.IsEdit">
+                                        <input type="text" name="Antenna" class="form-control" placeholder="Antenna" ng-model="tanapa.EditItem.Antenna" />
+                                    </div>
+                                </td>
+                                <td title="{{ item.BeltClip }}">
+                                    <span ng-if="!item.IsEdit">{{ item.BeltClip }}</span>
+                                    <div ng-if="item.IsEdit">
+                                        <input type="text" name="BeltClip" class="form-control" placeholder="BeltClip" ng-model="tanapa.EditItem.BeltClip" />
+                                    </div>
+                                </td>
+                                <td title="{{ item.Battery }}">
+                                    <span ng-if="!item.IsEdit">{{ item.Battery }}</span>
+                                    <div ng-if="item.IsEdit">
+                                        <input type="text" name="Battery" class="form-control" placeholder="Battery" ng-model="tanapa.EditItem.Battery" />
+                                    </div>
+                                </td>
+                                <td title="{{ item.RadioKit }}">
+                                    <span ng-if="!item.IsEdit">{{ item.RadioKit }}</span>
+                                    <div ng-if="item.IsEdit">
+                                        <input type="text" name="RadioKit" class="form-control" placeholder="RadioKit" ng-model="tanapa.EditItem.RadioKit" />
+                                    </div>
+                                </td>
+                                <td title="{{ item.Description }}">
+                                    <span ng-if="!item.IsEdit">{{ item.Description }}</span>
+                                    <div ng-if="item.IsEdit">
+                                        <input type="text" name="Description" class="form-control" placeholder="Description" ng-model="tanapa.EditItem.Description" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="col-md-12 text-center " ng-if="tanapa.page.total>tanapa.page.size ">
+                            <div uib-pagination total-items="tanapa.page.total " ng-model="tanapa.page.index " items-per-page="tanapa.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                                 ng-change="tanapa.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+</div>

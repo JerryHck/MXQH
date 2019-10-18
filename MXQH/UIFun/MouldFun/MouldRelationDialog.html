@@ -1,0 +1,147 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">模具信息</h3>
+</div>
+<div class="modal-body wrapper-sm" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body wrapper-xs">
+            <div class="form-group">
+                <button class="btn btn-success" type="button" ng-disabled="DialogForm.$invalid" ng-click="mrDialog.Save()">储存</button>
+                <button class="btn btn-warning" type="button" ng-click="mrDialog.Cancel()">取消</button>
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">创建人</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.CreateBy.$invalid }">
+                            <input type="text" disabled="disabled" class="form-control" name="CreateBy" placeholder="创建人"
+                                   ng-model="mrDialog.Item.CreateBy" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">创建日期</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.CreateDate.$invalid }">
+                            <input disabled="disabled" type="text" date-picker class="form-control" name="CreateDate" placeholder="创建日期" option="mrDialog.UnExist2"
+                                   ng-model="mrDialog.Item.CreateDate|date:'yyyy-MM-dd'" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">穴数</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.HoleNum.$invalid }">
+                            <input ng-disabled="mrDialog.IsEdit" type="number" name="HoleNum" placeholder="穴数" class="form-control" ng-model="mrDialog.Item.HoleNum" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">模具料号</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Code.$invalid }">
+                            <input ng-disabled="mrDialog.IsEdit" type="text" name="Code" class="form-control" placeholder="模具料号" ng-model="mrDialog.Item.Code" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">模具名称</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Name.$invalid }">
+                            <input ng-disabled="mrDialog.IsEdit" type="text" name="Name" class="form-control" placeholder="模具名称" ng-model="mrDialog.Item.Name" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">总次数</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.TotalNum.$invalid }">
+                            <input ng-disabled="mrDialog.IsEdit" type="number" name="TotalNum" class="form-control" placeholder="总次数" ng-model="mrDialog.Item.TotalNum" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">日产能</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.DailyCapacity.$invalid }">
+                            <input ng-disabled="mrDialog.IsEdit" type="number" class="form-control" name="DailyCapacity" placeholder="日产能"
+                                   ng-model="mrDialog.Item.DailyCapacity" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">日模次</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.DailyNum.$invalid }">
+                            <input ng-disabled="mrDialog.IsEdit" type="number" class="form-control" name="DailyNum" placeholder="日模次"
+                                   ng-model="mrDialog.Item.DailyNum" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">剩余模次</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.RemainNum.$invalid }">
+                            <input ng-disabled="mrDialog.IsEdit" type="text" name="RemainNum" class="form-control" placeholder="剩余模次" ng-model="mrDialog.Item.RemainNum" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">使用委外商</label>
+                        <div class="col-sm-8  padder-xs" ng-class="{ 'has-error' : DialogForm.Holder.$invalid }">
+                            <input ng-disabled="mrDialog.IsEdit" type="text" class="form-control" name="Holder" placeholder="使用委外商"
+                                   ng-model="mrDialog.Item.Holder" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">制造厂商</label>
+                        <div class="col-sm-8  padder-xs" ng-class="{ 'has-error' : DialogForm.Manufacturer.$invalid }">
+                            <input ng-disabled="mrDialog.IsEdit" type="text" class="form-control" name="Manufacturer" placeholder="制造厂商"
+                                   ng-model="mrDialog.Item.Manufacturer" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">成型周期(s)</label>
+                        <div class="col-sm-8  padder-xs" ng-class="{ 'has-error' : DialogForm.CycleTime.$invalid }">
+                            <input ng-disabled="mrDialog.IsEdit" type="number" name="CycleTime" class="form-control" placeholder="成型周期(s)" ng-model="mrDialog.Item.CycleTime" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">购买日期</label>
+                        <div class="col-sm-8  padder-xs" ng-class="{ 'has-error' : DialogForm.DealDate.$invalid }">
+                            <input ng-disabled="mrDialog.IsEdit" type="text" date-picker class="form-control" name="DealDate" placeholder="购买日期" option="mrDialog.UnExist2"
+                                   ng-model="mrDialog.Item.DealDate" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">产品重量(g)</label>
+                        <div class="col-sm-8  padder-xs" ng-class="{ 'has-error' : DialogForm.ProductWeight.$invalid }">
+                            <input ng-disabled="mrDialog.IsEdit" type="number" class="form-control" name="ProductWeight" placeholder="产品重量(g)"
+                                   ng-model="mrDialog.Item.ProductWeight" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">水口重量(g)</label>
+                        <div class="col-sm-8  padder-xs" ng-class="{ 'has-error' : DialogForm.NozzleWeight.$invalid }">
+                            <input ng-disabled="mrDialog.IsEdit" type="number" class="form-control" name="NozzleWeight" placeholder="水口重量(g)"
+                                   ng-model="mrDialog.Item.NozzleWeight" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">启用日期</label>
+                        <div class="col-sm-8  padder-xs" ng-class="{ 'has-error' : DialogForm.EffectiveDate.$invalid }">
+                            <input ng-disabled="mrDialog.IsEdit" type="text" date-picker class="form-control" name="EffectiveDate" placeholder="启用日期" option="mrDialog.UnExist2"
+                                   ng-model="mrDialog.Item.EffectiveDate" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">模具规格</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.SPECS.$invalid }">
+                            <textarea ng-disabled="mrDialog.IsEdit" class="form-control" placeholder="模具规格" name="SPECS" ng-model="mrDialog.Item.SPECS" rows="4"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">备注</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Remark.$invalid }">
+                            <textarea ng-disabled="mrDialog.IsEdit" class="form-control" placeholder="备注" name="Remark" ng-model="mrDialog.Item.Remark" rows="4"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

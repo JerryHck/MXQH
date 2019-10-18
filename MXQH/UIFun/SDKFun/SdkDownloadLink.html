@@ -1,0 +1,21 @@
+﻿<div class="fade-in-right-big smooth">
+    <div class="container w-xll w-auto-xs">
+        <a class="navbar-brand block m-t">SDK文件下载</a>
+        <div class="m-b-lg">
+            <div ng-if="sdk.IsOk" class="col-md-12 text-center">
+                <br /><br /><br />
+                <button class="btn btn-success" ng-click="sdk.Download()">点击下载</button>
+                <!--<p class="h3 text-warning">对不起，链接已经失效</p>-->
+            </div>
+
+            <div ng-if="!sdk.IsOk" class="col-md-12 text-center">
+                <br /><br /><br />
+                <p class="b wrapper-md pos-rlt bg-light r r-2x">
+                    <span class="arrow top pull-left arrow-light"></span>
+                    对不起，链接已经失效!
+                </p>
+                <!--<p class="h3 text-warning">对不起，链接已经失效</p>-->
+            </div>
+        </div>
+    </div>
+</div>

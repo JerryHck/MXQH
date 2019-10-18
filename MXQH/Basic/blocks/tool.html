@@ -1,0 +1,17 @@
+<!-- settings -->
+<div class="blur-close" ui-remove-class="active" target=".tool"></div>
+<div class="panel-heading">
+    插件&工具
+    <button class="btn btn-xs btn-danger no-shadow pull-right" ui-toggle-class="active" target=".tool">
+        <i class="glyphicon glyphicon-remove"></i>
+    </button>
+</div>
+<div class="panel-body scroll-y" style="max-height:100%">
+    <div class="list-group" ng-repeat="type in vm.DownList">
+        <div class="h4 text-info wrapper-sm">{{ type.TName }}</div>
+        <div class="list-group-item" ng-repeat="item in type.Tool">
+            <button class="btn-group-vertical btn-lg w-full btn-primary" ng-click="vm.DownTool(item.PathLink)" ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1}">{{ item.Name }}</button>
+        </div>
+    </div>
+</div>
+<!-- /settings -->

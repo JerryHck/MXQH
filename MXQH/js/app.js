@@ -11,14 +11,17 @@ angular.module('app', [
     'ngTouch',
     'ngStorage',
     'ui.router',
-    //'ui.select2',
+    'FileService',
     'toggle-switch',
     'ui.bootstrap',
     'ui.load',
     'ui.jq',
     'ui.validate',
     'oc.lazyLoad',
+    //'oitozero.ngSweetAlert',
     'pascalprecht.translate',
     'AjaxServiceModule',
-    'ui.router.requirePolyfill'
+    'ui.router.requirePolyfill',
+    'MyDirective',
+    'FileLoad'
 ]);

@@ -1,0 +1,42 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="wpReport.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">工单包装报表</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="wpReport.Ser.WorkOrder" placeholder="工单号">
+                </div>
+                <button class="btn btn-sm btn-info " ng-click="wpReport.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                <button class="btn btn-sm btn-success " ng-click="wpReport.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class="padder-md ">
+            <table class="table ">
+                <thead>
+                    <tr>
+                        <td style="width:100px ">工单号</td>
+                        <td style="width:100px ">内控码</td>
+                        <td style="width:100px ">SN码</td>
+                        <td style="width:100px ">箱号</td>
+                        <td style="width:100px ">栈板号</td>
+                        <td style="width:100px ">包装人员</td>
+                        <td style="width:100px ">包装时间</td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in wpReport.List ">
+                    <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td title="{{ item.InternalCode }}">{{ item.InternalCode }}</td>
+                    <td title="{{ item.SNCode }}">{{ item.SNCode }}</td>
+                    <td title="{{ item.BoxNumber }}">{{ item.BoxNumber }}</td>
+                    <td title="{{ item.PalletCode }}">{{ item.PalletCode }}</td>
+                    <td title="{{ item.UserName }}">{{ item.UserName }}</td>
+                    <td title="{{ item.CreateDate }}">{{ item.CreateDate }}</td>
+                </tr>
+            </table>
+            <div class="col-md-12 text-center " ng-if="wpReport.page.total>wpReport.page.size ">
+                <div uib-pagination total-items="wpReport.page.total " ng-model="wpReport.page.index " items-per-page="wpReport.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                     ng-change="wpReport.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

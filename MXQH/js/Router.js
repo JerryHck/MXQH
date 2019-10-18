@@ -28,18 +28,37 @@ angular.module('app')
                       }
                       if (route.LazyLoad && route.LazyLoad.length > 0)
                       {
-                          var len = route.LazyLoad.length;
-                          item.resolve = {
-                              deps: ['$ocLazyLoad',
-                              function ($ocLazyLoad) {
-                                  return $ocLazyLoad.load(route.LazyLoad);
-                              }]
+                          if (route.LazyLoad.length == 1) {
+                              var len = route.LazyLoad.length;
+                              item.resolve = {
+                                  deps: ['$ocLazyLoad',
+                                  function ($ocLazyLoad) {
+                                      return $ocLazyLoad.load(route.LazyLoad);
+                                  }]
+                              }
+                          }
+                          else {
+                              var len = route.LazyLoad.length;
+                              var js = route.LazyLoad[len - 1];
+                              var arr = angular.copy(route.LazyLoad);
+                              arr.splice(len - 1, 1);
+                              item.resolve = {
+                                  deps: ['$ocLazyLoad',
+                                        function ($ocLazyLoad) {
+                                            return $ocLazyLoad.load(arr).then(
+                                                function () {
+                                                    return $ocLazyLoad.load(js);
+                                                }
+                                            );
+                                        }]
+                              }
                           }
                       }
 
                       item.resolve = angular.extend(item.resolve || {}, {
                           Fun: ['$cookieStore', function ($cookieStore) {
                               $cookieStore.put('active-function', route.FunNo);
+                              $cookieStore.put('active-router', route.Name)
                               return route.FunNo;
                           }]
                       });

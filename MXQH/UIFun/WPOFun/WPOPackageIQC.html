@@ -1,0 +1,201 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="w.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">IQC抽检</uib-tab-heading>
+        <div class="wrapper-xs">
+            <div class="col-sm-5">
+                <div class="panel panel-default" ng-form="w.OrderForm">
+                    <div class="panel-heading font-bold  text-center">IQC抽检</div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">包装箱号</label>
+                                <div class="col-lg-8" ng-class="{ 'has-error' : w.OrderForm.PackageSN.$invalid }">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="PackageSN" ng-model="w.Item.PackageSN" placeholder="包装箱号" ng-keypress="w.KeyDonwPackage($event)" required>
+                                        <span class="input-group-addon" title="清空本输入框"><a class="text-danger" ng-click="w.ClearInput()"><i class="glyphicon glyphicon-trash"></i></a></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">SN码</label>
+                                <div class="col-lg-8" ng-class="{ 'has-error' : w.OrderForm.BSN.$invalid }">
+                                    <input type="text" class="form-control" name="BSN" ng-model="w.Item.BSN" placeholder="SNCode"
+                                           ng-disabled="!w.PackageData.PackageSN || w.OrderForm.PackageSN.$invalid" ng-keypress="w.KeyDonwSnCode($event)" required>
+                                    <div class="h6 text-danger">注:如果手动输入则需按回车进行抽检。</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label 5">抽检数量</label>
+                                <div class="col-lg-1">
+                                    <p class="form-control-static font-bold h5 text-success">{{ w.IQCFormData.CheckNum }}</p>
+                                </div>
+                                <label class="col-lg-2 control-label">抽检比率</label>
+                                <div class="col-lg-1">
+                                    <p class="form-control-static font-bold h5 text-success" ng-if="w.IQCFormData.CheckNum">{{ w.IQCFormData.CheckRate }}%</p>
+                                </div>
+                                <label class="col-lg-2 control-label">合格率</label>
+                                <div class="col-lg-1">
+                                    <p class="form-control-static font-bold h5 text-danger" ng-if="w.IQCFormData.CheckNum">{{ w.IQCFormData.PassRate }}%</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">备注</label>
+                                <div class="col-lg-8">
+                                    <textarea class="form-control" rows="1" placeholder="备注" ng-model="w.IQCFormData.Remark"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">判定结果</label>
+                                <div class="col-lg-4">
+                                    <div toggle-switch ng-model="w.IQCFormData.CheckResult" class="w-xs switch-bool" on-label="合格" off-label="不合格"
+                                         on-value="1" off-value="0"></div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="col-md-3">
+                                        <button type="submit" class="btn btn-sm btn-success" ng-click="w.Done()" ng-confirm="{text:'确定抽检完成，并生成抽检记录'}" ng-disabled="!w.SNList||w.SNList.length == 0">完成抽检</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default scroll-y" style="max-height:750px">
+                    <div class="panel-heading font-bold text-center">
+                        包装箱 <span class="font-bold text-info">{{ w.PackageData.PackageSN }}</span>信息
+                    </div>
+                    <div class="panel-body no-padder">
+                        <div class="form-horizontal" ng-if="w.PackageData.PackageSN">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">包装日期:</label>
+                                <div class="col-sm-3 no-padder">
+                                    <p class="form-control-static font-bold text-success font-weight-light h5">{{ w.PackageData.PackDate|date:'yyyy-MM-dd' }}</p>
+                                </div>
+                                <label class="control-label col-sm-3">包装数量:</label>
+                                <div class="col-sm-3 no-padder">
+                                    <p class="form-control-static font-bold text-success font-weight-light h5">{{w.PackageData.PackNum}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">产品编号:</label>
+                                <div class="col-sm-3 no-padder">
+                                    <p class="form-control-static font-bold">{{ w.PackageData.EnMO.Mate.AucMateCode }}</p>
+                                </div>
+                                <label class="control-label col-sm-3">产品名称:</label>
+                                <div class="col-sm-3 no-padder">
+                                    <p class="form-control-static font-bold">{{w.PackageData.EnMO.Mate.AucMateName}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">力同委外单:</label>
+                                <div class="col-sm-3 no-padder">
+                                    <p class="form-control-static font-bold">{{w.PackageData.EnMO.AucWPO}}</p>
+                                </div>
+                                <label class="control-label col-sm-3">供应商:</label>
+                                <div class="col-sm-3 no-padder">
+                                    <p class="form-control-static font-bold">{{ w.PackageData.VenderName }}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">型号:</label>
+                                <div class="col-sm-3 no-padder">
+                                    <p class="form-control-static font-bold">{{w.PackageData.EnMO.Mate.AucModelName}}</p>
+                                </div>
+                                <label class="control-label col-sm-3">规格:</label>
+                                <div class="col-sm-3 no-padder">
+                                    <p class="form-control-static font-bold">{{w.PackageData.EnMO.Mate.AucMateSpes}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<pre>{{ w.PackageData | json }}</pre>-->
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <div class="panel panel-default">
+                    <div class="panel-heading font-bold text-center">
+                        抽检SN列表
+                        <span title="清空所有SN"><a class="text-danger" ng-click="w.ClearAll()"><i class="glyphicon glyphicon-remove"></i></a></span>
+                    </div>
+                    <div class="panel-body padder-xs" style="min-height:400px">
+                        <div class="scroll-y m-t-xs" style="max-height:530px">
+                            <table class="table-striped">
+                                <tr>
+                                    <td class="col-md-1">操作</td>
+                                    <td class="col-md-1">序号</td>
+                                    <td class="col-md-1">BSN</td>
+                                    <td class="col-md-2">结果</td>
+                                    <td class="col-md-8">备注</td>
+                                </tr>
+                                <tr ng-repeat="item in w.SNList">
+                                    <td>
+                                        <button class="btn btn-xs btn-danger" title="删除SN" ng-click="w.RemoveBSN($index)"><i class="glyphicon glyphicon-remove"></i></button>
+                                    </td>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ item.BSN }}</td>
+                                    <td>
+                                        <div toggle-switch ng-model="item.CheckResult" class="w-xxs switch-small switch-success" on-label="合格" off-label="不合格"
+                                             on-value="1" off-value="0"></div>
+                                    </td>
+                                    <td>
+                                        <textarea class="form-control" rows="1" placeholder="备注" ng-model="item.Remark"></textarea>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--<pre>{{ w.SNList |json }}</pre>-->
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="1">
+        <uib-tab-heading class="h5">IQC抽检列表</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="w.Ser.a_IQCFormNo" placeholder="IQC单号">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="w.Ser.b_AuctusWPO" placeholder="力同委外单">
+                </div>
+                <button class="btn btn-sm btn-info " ng-click="w.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                <button class="btn btn-sm btn-success " ng-click="w.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class="padder-md ">
+            <table class="table ">
+                <tr>
+                    <td style="width:100px ">IQC单号</td>
+                    <td style="width:80px ">抽检数量</td>
+                    <td style="width:80px ">抽检比例</td>
+                    <td style="width:80px ">合格率</td>
+                    <td style="width:80px ">抽检结果</td>
+                    <td style="width:100px ">抽检时间</td>
+                    <td style="width:120px ">力同委外单</td>
+                    <td style="width:100px ">包装箱号</td>
+                    <td style="width:80px ">包装数量</td>
+                    <td style="width:120px ">备注</td>
+                </tr>
+                <tr ng-repeat="item in w.List ">
+                    <td>
+                        <a title="点击查询详细信息" ng-click="w.OpenDtl(item)">{{ item.IQCFormNo }}</a>
+                    </td>
+                    <td>{{ item.CheckNum }}</td>
+                    <td>{{ item.CheckRate }}</td>
+                    <td>{{ item.PassRate }}</td>
+                    <td>{{ item.CheckResult }}</td>
+                    <td>{{ item.CheckTime | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td>{{ item.Pack.AuctusWPO }}</td>
+                    <td>{{ item.Pack.PackageSN }}</td>
+                    <td>{{ item.Pack.PackNum }}</td>
+                    <td>{{ item.Remark }}</td>
+                </tr>
+            </table>
+            <div class="col-md-12 text-center " ng-if="w.page.total>t.page.size ">
+                <div uib-pagination total-items="w.page.total " ng-model="w.page.index " items-per-page="w.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                     ng-change="w.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

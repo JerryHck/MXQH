@@ -9,7 +9,8 @@ body{
 
 .app{
 	height: auto;
-	min-height: 100%;
+    //overflow-y:auto;
+	min-height: 100%!important;
 	width: 100%;
 	position: relative;
 	&:before{
@@ -23,11 +24,15 @@ body{
 		border: inherit;
 		display: block;
 	}
+    &:full-height{
+		height: 100%!important;
+	}
 }
 
 .app-header-fixed{
 	padding-top: @app-header-height;
 	.app-header{
+        z-index: 1025;
 		position: fixed;
 		top: 0;
 		width: 100%;
@@ -42,6 +47,7 @@ body{
 // menu
 .app-aside{
 	float: left;
+    z-index: 1025;
 	&:before{
 		content: "";
 		position: absolute;
@@ -63,7 +69,7 @@ body{
 	.app-aside-folded & {
 		max-width: @app-aside-folded-width;
 	}
-	~ div{
+	div{
 		padding-bottom: 50px;
 	}
 }
@@ -74,7 +80,8 @@ body{
 
 // content
 .app-content{
-	height: 100%;
+    z-index:100;
+    bottom: @app-footer-height;
 	.clearfix();
 }
 
@@ -83,29 +90,35 @@ body{
 	top: @app-header-height;
 	bottom: @app-header-height;
 	height: auto;
-	width: auto !important;
 	padding: 0 !important;
 	overflow-y: auto;
 	-webkit-overflow-scrolling: touch;
 	&.h-full{
 		bottom: 0;
 		height: auto;
-	}	
+	}
+    &.w-full{
+		bottom: 0;
+		width: 100%;
+	}		
 }
-
 .app-content-body{
-	padding-bottom: @app-header-height;
+	//padding-top: @app-header-height;
+    padding-bottom:@app-footer-height;
+    bottom: @app-header-height;
+    //min-height:80%;
 	float: left;
 	width: 100%;
 }
 
 // footer
 .app-footer{
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	z-index: 1005;
+    vertical-align:central !important;
 	&.app-footer-fixed{
 		position: fixed;
 	}
@@ -123,9 +136,6 @@ body{
 		height: 100%;
 		float: none;
 	}
-}
-.content-h-full{
-    height:@tab-full !important
 }
 .v-middle{vertical-align: middle !important;}
 .v-top{vertical-align: top !important;}

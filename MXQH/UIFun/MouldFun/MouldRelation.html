@@ -1,0 +1,222 @@
+﻿<uib-tabset ng-attr-active="mouldRelation.tabIndex"type="tabs" class="h-100" cg-busy="mouldRelation.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">列表</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs">
+                <div class="form-inline">
+                    <button class="btn btn-sm btn-success " ng-click="mouldRelation.Add() "><i class="glyphicon glyphicon-plus "></i>新增</button>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mouldRelation.Ser.Code" placeholder="模具料号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mouldRelation.Ser.Code = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mouldRelation.Ser.Name" placeholder="模具名称">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mouldRelation.Ser.Name = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-info " ng-click="mouldRelation.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                    <button class="btn btn-sm btn-success " ng-click="mouldRelation.Export() "><i class="glyphicon glyphicon-export "></i>导出</button>
+                </div>
+            </div>
+        </div>
+        <div class="padder-md table-responsive">
+            <table class="table one-line">
+                <thead>
+                    <tr>
+                        <td style="width:90px ">编辑</td>
+                        <td style="width:100px ">模具料号</td>
+                        <td style="width:140px ">模具名称</td>
+                        <td style="width:140px ">模具规格</td>
+                        <td style="width:120px ">料号</td>
+                        <td style="width:80px ">品名</td>
+                        <td style="width:80px ">规格</td>
+                        <td style="width:80px ">单位产出</td>
+                        <td style="width:140px ">不良率</td>
+                        <td style="width:140px ">生效时间</td>
+                        <td style="width:140px ">失效时间</td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in mouldRelation.List ">
+                    <td>
+                        <button class="btn btn-xs btn-primary" title="查看" ng-click="mouldRelation.Edit(item.MouldCode)"><i class="glyphicon glyphicon-edit"></i></button>
+                        <!--<button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除料号'+item.Code+'吗'}" ng-click="mouldRelation.Delete(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>-->
+                    </td>
+                    <td title="{{ item.MouldCode }}">{{ item.MouldCode }}</td>
+                    <td title="{{ item.MouldName }}" style="white-space:normal;">{{ item.MouldName }}</td>
+                    <td title="{{ item.MouldSPECS }}">{{ item.MouldSPECS }}</td>
+                    <td title="{{ item.ItemCode }}">{{ item.ItemCode }}</td>
+                    <td title="{{ item.ItemName }}">{{ item.ItemName }}</td>
+                    <td title="{{ item.ItemSPECS }}">{{ item.ItemSPECS }}</td>
+                    <td title="{{ item.DailyNum }}">{{ item.UnitOutput }}</td>
+                    <td title="{{ item.RemainNum }}">{{ item.PoorRate }}</td>
+                    <td title="{{ item.EffectiveDate|date:'yyyy-MM-dd HH:mm:ss' }}">{{ item.EffectiveDate|date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td title="{{ item.DisableDate|date:'yyyy-MM-dd HH:mm:ss' }}" style="white-space:normal;">{{ item.DisableDate |date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-12 text-center " ng-if="mouldRelation.page.total>mouldRelation.page.pageSize ">
+            <div uib-pagination total-items="mouldRelation.page.total " ng-model="mouldRelation.page.pageIndex " items-per-page="mouldRelation.page.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                 ng-change="mouldRelation.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="1">
+        <uib-tab-heading class="h5">模具料品关系</uib-tab-heading>
+        <div class="wrapper-md">
+            <!--订单头表单-->
+            <form name="form">
+                <div class="form-group">
+                    <button class="btn btn-sm btn-success" style="margin-left:5px;" type="submit" ng-click="mouldRelation.Save()"><i class="glyphicon glyphicon-save"></i>保存</button>
+                    <button class="btn btn-sm btn-warning" style="margin-left:5px;" type="button" ng-click="mouldRelation.Cancel()"><i class="glyphicon glyphicon-remove"></i>放弃</button>
+                    <button class="btn btn-sm btn-success" style="margin-left:5px;" ng-click="mouldRelation.Insert()"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+                    <button class="btn btn-sm btn-danger" style="margin-left:5px;" ng-confirm="{text:'确定要删除吗'}" ng-click="mouldRelation.Delete()"><i class="glyphicon glyphicon-remove"></i> 删除</button>
+                </div>
+                <div class="panel panel-default" ng-form="mouldRelation.form">
+                    <div class="panel-heading font-bold h4">模具信息</div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-md-1 control-label text-lg text-left">模具料号</label>
+                                <div class="col-md-3" >
+                                    <div basic-select="MouldInfo" ng-change="mouldRelation.GetLines(mouldRelation.MouldInfo.ID)" placeholder="模具料号" ng-model="mouldRelation.MouldInfo" select-class="text-xs" ng-name="MouldInfo" ng-required="true" ng-class="{ 'has-error' : mouldRelation.form.Code.$invalid }"> </div>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">模具名称</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : mouldRelation.form.Name.$invalid }">
+                                    <input type="text" class="form-control" name="Name" placeholder="料号"
+                                           ng-model="mouldRelation.MouldInfo.Name" required>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">模具规格</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : mouldRelation.form.SPECS.$invalid }">
+                                    <input type="text" class="form-control" name="SPECS" placeholder="模具规格"
+                                           ng-model="mouldRelation.MouldInfo.SPECS" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!--订单行列表-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-sm btn-success" ng-click="mouldRelation.AddLine()" value="新增行" />
+                    </div>
+                    <table class="table b-2x table-responsive" style="word-break:break-all; word-wrap:break-word;">
+                        <tr class="text-center bg-gd-dk h4">
+                            <td style="width:7%;">编辑</td>
+                            <td style="width:7%;" class="">料号</td>
+                            <td style="width:13%;" class="">品名</td>
+                            <td style="width:10%;" class="">规格</td>
+                            <td style="width:10%;" class="">单位产出</td>
+                            <td style="width:10%;" class="">不良率</td>
+                            <td style="width:10%;" class="">生效时间</td>
+                            <td style="width:10%;" class="">失效时间</td>
+                        </tr>
+                        <tr ng-if="mouldRelation.Lines.length>0" ng-repeat="item in mouldRelation.Lines">
+                            <td>
+                                <button class="btn btn-xs btn-primary" ng-click="mouldRelation.EditLine(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="mouldRelation.DeleteLine(item.ItemCode)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </td>
+                            <td>{{ item.ItemCode }}</td>
+                            <td>{{ item.ItemName }}</td>
+                            <td>{{ item.ItemSPECS }}</td>
+                            <td>{{ item.UnitOutput }}</td>
+                            <td>{{ item.PoorRate }}</td>
+                            <td>{{ item.EffectiveDate|date:'yyyy/M/d' }}</td>
+                            <td>{{ item.DisableDate|date:'yyyy/M/d' }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <!--订单行分页-->
+                <div class="col-md-12 text-center" ng-if="mouldRelation.pageDetail.total>mouldRelation.pageDetail.pageSize">
+                    <div uib-pagination total-items="mouldRelation.pageDetail.total" ng-model="mouldRelation.pageDetail.pageIndex" items-per-page="mouldRelation.pageDetail.pageSize" max-size="mouldRelation.pageDetail.maxSize" first-text="第一页" previous-text="上一页"
+                         ng-change="mouldRelation.DataBindDetail()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
+                </div>
+            </div>
+            <!--订单行表单-->
+            <form name="formLine">
+                <div ng-if="mouldRelation.IsShow" class="panel panel-default" ng-form="mouldRelation.formLine">
+                    <div class="panel-heading font-bold h4">
+                        新增料品信息
+                        <button class="btn btn-xs btn-danger pull-right" ng-click="mouldRelation.CancelLine()"><i class="glyphicon glyphicon-remove"></i></button>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-sm btn-success" style="margin-left:15px;" ng-click="mouldRelation.SaveLine(formLine)" value="保存" />
+                                <input type="button" class="btn btn-sm btn-warning" style="margin-left:5px;" ng-click="mouldRelation.CancelLine()" value="放弃" />
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label text-lg text-left">料号：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : mouldRelation.formLine.ItemCode.$invalid }">
+                                    <div class="input-group">
+                                        <input disabled="disabled" type="text" class="form-control" name="ItemCode" placeholder="料号"
+                                               ng-model="mouldRelation.Line.ItemCode" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn" ng-click="mouldRelation.SelectItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">品名：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : mouldRelation.formLine.ItemName.$invalid }">
+                                    <div class="input-group">
+                                        <input type="text" disabled="disabled" class="form-control" name="ItemName" placeholder="品名"
+                                               ng-model="mouldRelation.Line.ItemName" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn" ng-click="mouldRelation.SelectItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">规格：</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : mouldRelation.formLine.ItemSPECS.$invalid }">
+                                    <div class="input-group">
+                                        <input type="text" disabled="disabled" class="form-control" name="ItemSPECS" placeholder="规格"
+                                               ng-model="mouldRelation.Line.ItemSPECS" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn" ng-click="mouldRelation.SelectItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label text-lg text-left">单位产出</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : mouldRelation.formLine.UnitOutput.$invalid }">
+                                    <input type="number" class="form-control" name="UnitOutput" placeholder="单位产出"
+                                           ng-model="mouldRelation.Line.UnitOutput" required>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">不良率：</label>
+                                <div class="col-md-3" >
+                                    <input type="number" class="form-control" name="PoorRate" placeholder="不良率"
+                                           ng-model="mouldRelation.Line.PoorRate" >
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">生效时间</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : mouldRelation.formLine.EffectiveDate.$invalid }">
+                                    <input type="text" date-picker class="form-control" name="EffectiveDate" placeholder="生效时间" option="mouldRelation.dt"
+                                           ng-model="mouldRelation.Line.EffectiveDate" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label text-lg text-left">失效时间</label>
+                                <div class="col-md-3" ng-class="{ 'has-error' : mouldRelation.formLine.DisableDate.$invalid }">
+                                    <input type="text" date-picker class="form-control" name="DisableDate" placeholder="生效时间" option="mouldRelation.dt"
+                                           ng-model="mouldRelation.Line.DisableDate" required>
+                                </div>
+                                <label class="col-md-1 control-label text-lg text-left">备注</label>
+                                <div class="col-md-3">
+                                    <textarea class="form-control" ng-model="mouldRelation.Line.Remark" rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </uib-tab>
+</uib-tabset>

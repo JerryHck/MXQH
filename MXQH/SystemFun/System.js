@@ -41,14 +41,16 @@ function ($scope, $http, Dialog, AjaxService) {
         var en = {};
         en.SysNo = item.SysNo;
         en.CompanyNo = item.Company.CompanyNo;
-        vm.promise = AjaxService.Action('Sys_System', en, "Delete").then(function (data) {
+        vm.promise = AjaxService.ExecPlan('System', "delete", en).then(function (data) {
             GetList();
+            //更新功能基本信息
+            AjaxService.LoginAction("ReInit");
             toastr.success('删除');
         });
     }
 
     function GetList() {
-        vm.promise = AjaxService.GetEntities("SystemList").then(function (data) {
+        vm.promise = AjaxService.GetPlans("System").then(function (data) {
             vm.List = data;
         }).catch(function (mes) { console.log(mes); });
     }

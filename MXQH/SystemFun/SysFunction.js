@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('FunctionCtrl', ['$scope', '$http', 'Dialog', 'toastr', 'AjaxService', 'MyPop',
-function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
+.controller('FunctionCtrl', ['$rootScope', '$scope', '$window', 'Dialog', 'toastr', 'AjaxService', 'MyPop',
+function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
 
     var vm = this;
     //查询所有功能
@@ -17,6 +17,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
     vm.OpenIcon = OpenIcon;
     //编辑根目录
     vm.DoneRootEdit = DoneRootEdit;
+    vm.DoneRootSysEdit = DoneRootSysEdit;
     //rootDrop
     vm.RootDrop = RootDrop;
     //调整根目录顺序
@@ -39,24 +40,42 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
     vm.FunLoadDelete = FunLoadDelete;
     vm.FunLoadAdd = FunLoadAdd;
     vm.SaveFunInfo = SaveFunInfo;
+
+    vm.FunctionFile = FunctionFile;
+    vm.OpenHtmlJs = OpenHtmlJs;
+
+    //选择系统
+    vm.ChangeSys = ChangeSys;
+
     vm.Cancel = Cancel;
     vm.SelectedRoot = { FunNo: '' };
     vm.editFun = false;
 
-    var en = {};
-    en.name = 'FunType';
-    en.value = 1
-    vm.promise = AjaxService.GetEntities("FunRoot", en).then(function (data) {
-        vm.List = data;
-    });
+
+    vm.promise = AjaxService.GetPlans("System").then(function (data) {
+        vm.SystemList = data;
+        vm.SystemItem = data[0];
+        ChangeSys();
+    })
+
+    function ChangeSys() {
+        var en = [{ name: 'FunType', value: 1 }, { name: 'SysNo', value: vm.SystemItem ? vm.SystemItem.SysNo : undefined }];
+        AjaxService.GetEntities("FunRoot", en).then(function (data) {
+            vm.List = data;
+        });
+    }
+
+    vm.AllSys = function () {
+        vm.SystemItem = undefined;
+        ChangeSys();
+    }
 
     //查询所有功能
     function SelectAllFun() {
         if (!showPop(vm.editFun)) {
             vm.SelectedRoot = { FunNo: '' };
-            var en = {};
-            en.name = 'FunType';
-            en.value = 2
+            var en = [{ name: 'FunType', value: 2 }];
+            console.log(en)
             vm.promise = AjaxService.GetEntities("FunRoot", en).then(function (data) {
                 vm.FunList = data;
             });
@@ -100,8 +119,8 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
             root.FunName = "新根目录";
             root.OrderBy = vm.List ? vm.List.Length : 0;
             root.FunType = 1;
-            root.SysNo = 'MXQH';
-            root.FunImge = 'glyphicon glyphicon-chevron-right';
+            root.SysNo = vm.SystemItem.SysNo;
+            root.FunImge = 'fa fa-hand-o-right text-danger-dk';
             root.editing = true;
             angular.forEach(vm.List, function (r) {
                 r.selected = false;
@@ -113,13 +132,15 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
         }
     }
 
-    function EditRoot(root) {
+    function EditRoot(root, t) {
         if (!showPop(vm.editFun)) {
             if (vm.IsEditing = true) {
                 DoneRootEdit();
             }
             root.selected = true;
             root.editing = true;
+            root.editName = t == 'name';
+            root.editSys = t == 'sys';
             vm.editRootItem = root;
             vm.IsEditing = true;
         }
@@ -145,6 +166,25 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
                 vm.editRootItem.editing = false;
                 vm.editRootItem.selected = false;
                 vm.IsEditing = false;
+            }
+        }
+    }
+
+    function DoneRootSysEdit() {
+        if (!showPop(vm.editFun)) {
+            if (vm.editRootItem) {
+                vm.editRootItem.editing = false;
+                vm.editRootItem.selected = false;
+                vm.IsEditing = false;
+
+                var en = {};
+                en.FunNo = vm.editRootItem.FunNo;
+                en.SysNo = vm.editRootItem.SysNo;
+                //保存到数据库
+                AjaxService.PlanUpdate('Function', en).then(function (data) {
+                    toastr.success('保存成功');
+                    ChangeSys();
+                })
             }
         }
     }
@@ -177,7 +217,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
                 toastr.success('删除成功');
                 reflashData();
                 //更新功能基本信息
-                AjaxService.LoginAction("ReflashRoot");
+                AjaxService.LoginAction("ReInit")
             })
         }
     }
@@ -210,11 +250,13 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
             vm.SelectedFun.selected = true;
             vm.SelectedFun.FunNo = '-1';
             vm.SelectedFun.FunName = '新功能';
-            vm.SelectedFun.FunImge = 'glyphicon glyphicon-chevron-right';
+            vm.SelectedFun.FunImge = 'fa fa-hand-o-right text-primary';
             vm.SelectedFun.SysNo = vm.SelectedRoot.SysNo;
             vm.SelectedFun.ParFunNo = vm.SelectedRoot.FunNo;
+            vm.SelectedFun.IsSystem = false;
             vm.SelectedFun.FunLoad = [];
             vm.FunList.push(vm.SelectedFun);
+            FunctionFile();
         }
     }
 
@@ -273,7 +315,6 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
     function Cancel() {
         //vm.SelectedFun = undefined;
         vm.editFun = false;
-        console.log($scope.FormFun);
     }
 
     function SaveFunInfo() {
@@ -284,28 +325,52 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
             l.SortNo = i;
         });
         var en = angular.copy(vm.SelectedFun);
+        en.Content = undefined;
         en.FunLoad = undefined;
         en.ListLoad = JSON.stringify(vm.SelectedFun.FunLoad);
         en.FunHtml = vm.SelectedFun.FunHtml || '';
         en.Controller = vm.SelectedFun.Controller || '';
         en.ControllerAs = vm.SelectedFun.ControllerAs || '';
         en.FunDesc = vm.SelectedFun.FunDesc || '';
+        en.IsUsed = vm.SelectedFun.IsUsed;
         en.OrderBy = vm.FunList.Length || 1;
-        en.CreateBy = "Sys";
+        en.IsSystem = vm.SelectedFun.IsSystem || 0;
+        en.CreateBy = $rootScope.User.UserNo;
         en.TempColumns = 'ListLoad';
         vm.promise = AjaxService.ExecPlan('FunRoot', "save", en).then(function (data) {
+            var Content = vm.SelectedFun.Content;
             //更新数据
             reflashData();
             //更新功能基本信息
-            AjaxService.LoginAction("ReflashRoot");
+            AjaxService.LoginAction("ReInit");
+
+            //console.log(!en.IsSystem && data.data[0] && data.data[0].FunNo && Content);
+            //console.log(data);
+            //保存文件
+            if (!en.IsSystem && data.data[0] && data.data[0].SN && Content) {
+                vm.FunCodeSetting.FunNo = data.data[0].SN;
+                var htmlEn = {};
+                htmlEn.FileName = data.data[0].SN + ".html";
+                htmlEn.Text = $window.btoa($window.encodeURIComponent(Content.Html));
+                //保存html
+                AjaxService.AjaxHandle("WriteFile", JSON.stringify(htmlEn));
+
+                var JsEn = {};
+                JsEn.FileName = data.data[0].SN + ".js";
+                JsEn.Text = $window.btoa($window.encodeURIComponent(Content.Js));
+                //保存html
+                AjaxService.AjaxHandle("WriteFile", JSON.stringify(JsEn));
+
+                //保存代码设定
+                AjaxService.ExecPlan('FunCodeSet', "save", vm.FunCodeSetting);
+
+            }
             toastr.success('储存成功');
         })
     }
 
     function reflashData() {
-        var en = {};
-        en.name = 'FunType';
-        en.value = 1
+        var en = [{ name: 'FunType', value: 1 }, { name: 'SysNo', value: vm.SystemItem ? vm.SystemItem.SysNo : undefined }];
         vm.promise = AjaxService.GetEntities("FunRoot", en).then(function (data) {
             vm.List = data;
             angular.forEach(data, function (r) {
@@ -338,15 +403,87 @@ function ($scope, $http, Dialog, toastr, AjaxService, MyPop) {
             });
             var json = {};
             json.FunType = type;
-            json.SysNo = "MXQH";
+            json.SysNo = vm.SystemItem ? vm.SystemItem.SysNo : "";
             json.RootList = JSON.stringify(List);
             json.TempColumns = 'RootList';
             vm.promise = AjaxService.ExecPlan("FunRoot", "saveRoot", json).then(function (data) {
                 toastr.success('储存成功');
                 //更新功能基本信息
-                AjaxService.LoginAction("ReflashRoot");
+                AjaxService.LoginAction("ReInit");
             })
         }
+    }
+
+    //切换文件方式
+    function FunctionFile(f) {
+        //添加文件
+        if (vm.SelectedFun.IsSystem) {
+            var have = false, index = -1;
+            vm.SelectedFun.FunHtml = vm.OriHtml;
+            var js = "CustomFun\\" + vm.SelectedFun.FunNo + '.js';
+            angular.forEach(vm.SelectedFun.FunLoad, function (f, i) {
+                if (f.LoadName == js) {
+                    have = true;
+                    index = i; return;
+                }
+            });
+            if (have) {
+                vm.SelectedFun.FunLoad.splice(index, 1);
+            }
+        }
+        else {
+            var have = false;
+            vm.OriHtml = vm.SelectedFun.FunHtml;
+            vm.SelectedFun.FunHtml = "CustomFun\\" + vm.SelectedFun.FunNo + '.html';
+            var js = "CustomFun\\" + vm.SelectedFun.FunNo + '.js';
+            angular.forEach(vm.SelectedFun.FunLoad, function (f) {
+                if (f.LoadName == js) {
+                    have = true; return;
+                }
+            });
+            if (!have) {
+                var en = {};
+                en.FunNo = vm.SelectedFun.FunNo;
+                en.LoadName = js;
+                vm.SelectedFun.FunLoad = vm.SelectedFun.FunLoad || [];
+                vm.SelectedFun.FunLoad.push(en);
+            }
+        }
+    }
+
+    //打开html 编辑窗口
+    function OpenHtmlJs() {
+        //if (!vm.SelectedFun.Content) {
+        //    //获取js， html文件
+        //    AjaxService.AjaxHandle("GetFileText", vm.SelectedFun.FunNo).then(function (data) {
+        //        vm.SelectedFun.Content = {};
+        //        vm.SelectedFun.Content.Html = (data.Html || "").replace(/ControlNew/g, vm.SelectedFun.ControllerAs);
+        //        vm.SelectedFun.Content.Js = (data.Js || "").replace(/NewJsCtrl/g, vm.SelectedFun.Controller);
+        //        OpenConten();
+        //    })
+        //}
+        //else {
+        //    OpenConten();
+        //}
+
+        OpenConten();
+    }
+    
+    function OpenConten() {
+        var resolve = {
+            ItemData: function () {
+                return vm.SelectedFun;
+            }
+        };
+        Dialog.open("FunFileContenDialog", resolve).then(function (data) {
+            vm.SelectedFun.Content = data.Content;
+            vm.FunCodeSetting = data.FunSetting;
+        }).catch(function (reason) {
+        });
+    }
+
+    function GetNewJs() {
+        var js = ""
     }
 }
 ]);

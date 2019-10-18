@@ -16,6 +16,7 @@
                 }
                 config.headers['x-function'] = $cookieStore.get('active-function') || '';
                 return config;
+
             }
         };
         return obj;

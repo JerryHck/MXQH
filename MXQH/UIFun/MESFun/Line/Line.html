@@ -1,0 +1,133 @@
+﻿<div class="hbox bg-white">
+    <div class="col w-md padder b-r h-100">
+        <div class="vbox">
+            <div class="wrapper">
+                <div class="h4 text-center">所有车间</div>
+            </div>
+            <div>
+                <div class="list-group h5">
+                    <a ng-repeat="item in line.DeptList| filter:line.Query" class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.DepartCode==line.SelectedDeptCode, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="line.SelectDept(item)">
+                        <span class="pull-left"><i class="glyphicon glyphicon-tree-conifer"></i></span>
+                        <small class="text-muted">
+                            <span>{{ item.DepartCode }}({{ item.DepartName }})</span>
+                        </small>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col w-auto padder w-tab-full">
+        <uib-tabset active="active" type="tabs" class="h-100" cg-busy="line.promise">
+            <uib-tab index="0">
+                <uib-tab-heading class="h5">产线定义</uib-tab-heading>
+                <div class="wrapper-md">
+                    <div class="form-inline">
+                        <button class="btn btn-sm btn-success " ng-click="line.Insert() "><i class="glyphicon glyphicon-plus "></i>新增</button>
+                    </div>
+                </div>
+                <div class="padder-md ">
+                    <table class="table pad-xs">
+                        <thead>
+                            <tr>
+                                <td style="width:60px">操作</td>
+                                <td style="width:100px ">部门名称</td>
+                                <td style="width:100px ">产线编码</td>
+                                <td style="width:100px ">产线名称</td>
+                                <td style="width:100px ">产线拉长</td>
+                                <td style="width:100px ">产线人数</td>
+                                <td style="width:100px ">序号</td>
+                            </tr>
+                        </thead>
+                        <tr ng-if="line.IsInsert" ng-form="line.InsertForm">
+                            <td>
+                                <button class="btn btn-xs btn-success" ng-disabled="line.InsertForm.$invalid" ng-click="line.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                                <button class="btn btn-xs btn-warning" ng-click="line.IsInsert=false"><i class="fa fa-undo"></i></button>
+                            </td>
+                            <td>
+                                <div>
+                                    <span >{{line.DeptName}}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-class="{ 'has-error': line.InsertForm.Code.$invalid }">
+                                    <input type="text" name="Code" class="form-control" placeholder="产线编码" ng-model="line.NewItem.Code" required />
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-class="{ 'has-error': line.InsertForm.Name.$invalid }">
+                                    <input type="text" name="Name" class="form-control" placeholder="产线名称" ng-model="line.NewItem.Name" required />
+                                </div>
+                            </td>
+                            <td>
+                                <div  ng-class="{ 'has-error' : line.InsertForm.UserID.$invalid }">
+                                    <div basic-select="MESUser" name="UserID" placeholder="产线拉长" ng-model="line.NewItem.UserID" ng-required="true"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-class="{ 'has-error': line.InsertForm.LineNumber.$invalid }">
+                                    <input type="number" name="LineNumber" class="form-control" placeholder="产线人数" ng-model="line.NewItem.LineNumber" required />
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-class="{ 'has-error': line.InsertForm.ListNo.$invalid }">
+                                    <input type="text" name="ListNo" class="form-control" placeholder="序号" ng-model="line.NewItem.ListNo" required />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-repeat="item in line.List |orderBy:'ListNo'" ng-form="item.ItemForm">
+                            <td>
+                                <span ng-if="!item.IsEdit">
+                                    <button class="btn btn-xs btn-primary" ng-click="line.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                    <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="line.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                                </span>
+                                <span ng-if="item.IsEdit">
+                                    <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="line.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                                    <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                                </span>
+                            </td>
+                            <td title="{{ line.DeptName }}">{{ line.DeptName }}</td>
+                            <td>
+                                <span ng-if="!item.IsEdit">{{ item.Code }}</span>
+                                <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_Code.$invalid }">
+                                    <input type="text" name="item_Code" class="form-control" placeholder="产线编码" ng-model="line.EditItem.Code" required />
+                                </div>
+                            </td>
+                            <td>
+                                <span ng-if="!item.IsEdit">{{ item.Name }}</span>
+                                <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_Name.$invalid }">
+                                    <input type="text" name="item_Name" class="form-control" placeholder="产线名称" ng-model="line.EditItem.Name" required />
+                                </div>
+                            </td>
+                            <td>
+                                <span ng-if="!item.IsEdit">{{ item.UserName.Name }}</span>
+                                <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_UserID.$invalid }">
+                                    <div basic-select="MESUser" name="item_UserID" placeholder="产线拉长" ng-model="line.EditItem.UserID" ng-required="true"></div>
+                                </div>
+                                
+                            </td>
+                            <td>
+                                <span ng-if="!item.IsEdit">{{ item.LineNumber}}</span>
+                                <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_LineNumber.$invalid }">
+                                    <input type="number" name="item_Name" class="form-control" placeholder="产线人数" ng-model="line.EditItem.LineNumber" required />
+                                </div>
+                            </td>
+                            <td>
+                                <span ng-if="!item.IsEdit">{{ item.ListNo }}</span>
+                                <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_ListNo.$invalid }">
+                                    <input type="text" name="item_ListNo" class="form-control" placeholder="序号" ng-model="line.EditItem.ListNo" required />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="col-md-12 text-center " ng-if="line.page.total>line.page.size ">
+                        <div uib-pagination total-items="line.page.total " ng-model="line.page.index " items-per-page="line.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                             ng-change="line.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+
+
+</div>

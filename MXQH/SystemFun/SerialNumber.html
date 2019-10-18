@@ -1,0 +1,58 @@
+﻿<div cg-busy="pk.promise">
+    <div class="wrapper-md m-n font-bold h3 text-center">编码规则设定</div>
+    <div class="padder-md">
+        <div class="form-inline">
+            <button class="btn btn-sm btn-success " ng-click="pk.Open({}) "><i class="glyphicon glyphicon-plus "></i>新增</button>
+            <div class="form-group">
+                <div toggle-switch ng-model="pk.Ser.StsInfo" class="w-xxs switch-bool" on-label="启用" off-label="停用" on-value="S" off-value="E"></div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="pk.Ser.TbName" placeholder="规则名">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="pk.Ser.ClName" placeholder="规则栏">
+            </div>
+            <button class="btn btn-sm btn-info " ng-click="pk.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+            <button class="btn btn-sm btn-success " ng-click="pk.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>
+        </div>
+    </div>
+    <div class="padder-md wrapper-sm">
+        <table class="table ">
+            <thead>
+                <tr>
+                    <td style="width:80px ">操作</td>
+                    <td style="width:100px ">规则名</td>
+                    <td style="width:100px ">规则栏</td>
+                    <td style="width:120px ">编号预览</td>
+                    <td style="width:120px ">使用状态</td>
+                    <td style="width:200px ">备注</td>
+                    <td style="width:100px ">创建人</td>
+                    <td style="width:150px ">创建时间</td>
+                    <td style="width:100px ">修改人</td>
+                    <td style="width:150px ">修改时间</td>
+                </tr>
+            </thead>
+            <tr ng-repeat="item in pk.List ">
+                <td>
+                    <button class="btn btn-xs btn-primary" title="编辑" ng-click="pk.Open(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                    <button class="btn btn-xs btn-success" title="复制" ng-click="pk.Copy(item)"><i class="glyphicon glyphicon-share-alt"></i></button>
+                    <!--<button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="pk.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>-->
+                </td>
+                <td class="text-left">{{ item.TbName }}</td>
+                <td class="text-left">{{ item.ClName }}</td>
+                <td class="text-left h4 text-danger">{{ item.PrevSN }}</td>
+                <td><div toggle-switch ng-model="item.StsInfo" class="w-xxs switch-bool" on-label="启用" is-disabled="true" off-label="停用" on-value="S" off-value="E"></div></td>
+                <td class="text-left">{{ item.Remark }}</td>
+                <td>{{ item.CreateName }}</td>
+                <td>{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                <td>{{ item.ModifyName }}</td>
+                <td>{{ item.ModifyDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+            </tr>
+        </table>
+        <div class="col-md-12 text-center " ng-if="pk.page.total>pk.page.size ">
+            <div uib-pagination total-items="pk.page.total " ng-model="pk.page.index " items-per-page="pk.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                 ng-change="pk.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+        </div>
+    </div>
+</div>
+

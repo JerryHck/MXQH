@@ -5,11 +5,12 @@ UserDialogCtrl.$inject = ['$rootScope', '$scope', '$uibModalInstance', 'Form', '
 
 function UserDialogCtrl($rootScope, $scope, $uibModalInstance, Form, ItemData, toastr, AjaxService) {
     var vm = this;
-    vm.form = Form[ItemData.SysNo ? 1 : 0];
+    vm.form = Form[ItemData.UserNo ? 1 : 0];
     vm.Item = ItemData;
     vm.isExists = isExists;
     vm.Item.State = vm.Item.State || "S";
-    vm.Item.Action = ItemData.SysNo ? "U" : "I";
+    vm.Item.ChiLastName = "";
+    vm.Item.Action = ItemData.UserNo ? "U" : "I";
     //储存
     vm.Save = function () {
         AjaxService.AddUser(vm.Item).then(function (data) {

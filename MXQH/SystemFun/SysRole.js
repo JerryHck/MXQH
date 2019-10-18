@@ -5,6 +5,10 @@ angular.module('app')
 function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
 
     var vm = this;
+
+    vm.page = { index: 1, size: 7 };
+
+    vm.getListRole = getListRole;
     //选择角色
     vm.SelectRole = SelectRole;
     //新增角色
@@ -29,8 +33,15 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
     getListRole();
 
     function getListRole() {
-        vm.promise = AjaxService.GetPlans("Role").then(function (data) {
-            vm.ListRole = data;
+        var list = [];
+        list.push({ name: "RoleSn", value: "SSAdmin", type: "!=" });
+        if (vm.UserRole) {
+            list.push({ name: "RoleName", value: "%" + vm.UserRole + "%" });
+        }
+        vm.promise = AjaxService.GetPlansPage("Role", list, vm.page.index, vm.page.size).then(function (data) {
+            //vm.ListRole = data;
+            vm.ListRole = data.List;
+            vm.page.total = data.Count;
         });
     }
 
@@ -59,7 +70,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
     }
 
     function DeleteRole(role) {
-        MyPop.Confirm({ text: "确定要删除该角色吗" }, function () {
+        MyPop.ngConfirm({ text: "确定要删除该角色吗" }).then(function () {
             var en = {};
             en.RoleSn = role.RoleSn;
             vm.promise = AjaxService.PlanDelete("Role", en).then(function (data) {

@@ -196,3 +196,11 @@
   color: #000;
   background: #eeeeee;
 }
+.ats-switch.switch-bool span.switch-left {
+  color: #fff;
+  background: #5cb85c;
+}
+.ats-switch.switch-bool span.switch-right {
+  color: #fff;
+  background: #d9534f;
+}

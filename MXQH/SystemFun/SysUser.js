@@ -1,10 +1,11 @@
 ﻿'use strict';
 
-angular.module('app', ['ui.grid', 'ui.grid.autoResize'])
+angular.module('app')
 .controller('UserCtrl', ['$scope', '$http', 'Dialog', 'AjaxService', 'toastr', 'MyPop', '$rootScope',
 function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
 
     var vm = this;
+    vm.getList = getList;
     //新增用户
     vm.Insert = Insert;
     //选择用户
@@ -23,15 +24,24 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
     vm.SelectUserRole = SelectUserRole;
     //删除用户角色
     vm.DeleteUserRole = DeleteUserRole;
+    vm.GetData = GetData;
+    vm.Reset = Reset;
 
     vm.ConfigSex = { Table: "BasicData", Column: "Sex" };
+    vm.UserType = 'E';
+    vm.State = 'S';
 
     getList();
     getListRole();
+    GetLogin();
 
     function getList() {
-        vm.promise = AjaxService.GetPlans("User").then(function (data) {
+        var list = [{ name: "UserType", value: vm.UserType },
+            { name: "State", value: vm.State },
+            { name: "UserNo", value: "SSAdmin", type:"!=" }]
+        AjaxService.GetPlans("User", list).then(function (data) {
             vm.List = data;
+            vm.SelectedUser = undefined;
         });
     }
 
@@ -49,7 +59,13 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
         vm.isEditEmp = !vm.isEditEmp;
     }
 
+    function Reset(item) {
+        Dialog.OpenDialog("ResetUserPwdDialog", item);
+    }
+
     function SaveEmp() {
+        vm.EmpItem.OrgSn = vm.EmpItem.OrgSn || "1";
+        vm.EmpItem.ChiLastName = undefined;
         vm.promise = AjaxService.PlanUpdate("Employee", vm.EmpItem).then(function (data) {
             toastr.success('保存成功');
             vm.isEditEmp = !vm.isEditEmp;
@@ -62,12 +78,10 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
     }
 
     function Insert() {
-        var resolve = {
-            ItemData: function () {
-                return {};
-            }
-        };
-        Open("I", resolve);
+        Dialog.OpenDialog("UserDialog", { UserType: vm.UserType }).then(function (data) {
+            getList();
+        }).catch(function (reason) {
+        });
     }
 
     function change() {
@@ -79,16 +93,10 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
         });
     }
 
-    function Open(type, resolve) {
-        Dialog.open("UserDialog", resolve).then(function (data) {
-            getList();
-        }).catch(function (reason) {
-        });
-    }
-
-
     function getListRole() {
-        vm.promise = AjaxService.GetPlans("Role").then(function (data) {
+        var list = [];
+        list.push({ name: "RoleSn", value: "SSAdmin", type: "!=" });
+        vm.promise = AjaxService.GetPlans("Role", list).then(function (data) {
             vm.ListRole = data;
         });
     }
@@ -127,6 +135,48 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
             toastr.success('移除成功');
             getListUserRole();
         });
+    }
+
+    function GetData() {
+        var s = '';
+        switch (vm.UserType) {
+            case 'E': s = '员工'; break;
+            case 'C': s = '客户'; break;
+            case 'S': s = '供应商'; break;
+        }
+        return s;
+    }
+
+    function GetLogin() {
+        var en = {};
+        //呼叫的方法
+        en.Method = 'GetOnline';
+        //呼叫的实体参数
+        en.PlanName = ""
+        en.Intervel = 5;
+        //传送的参数字符串
+        en.Json = "[]";
+        AjaxService.GetServerSocket(en, "Online", function (data) {
+            $scope.$apply(function () {
+                vm.OnList = JSON.parse(data);
+                vm.List = vm.List || [];
+                for (var i = 0, len = vm.List.length; i < len; i++) {
+                    checkOnlien(vm.List[i]);
+                }
+            });
+        })
+    }
+
+    function checkOnlien(user) {
+        user.IsOn = false;
+        if (vm.OnList) {
+            for (var i = 0, len = vm.OnList.length; i < len; i++) {
+                if (user.UserNo.toUpperCase() == vm.OnList[i].UserNo.toUpperCase()) {
+                    user.IsOn = true;
+                    return;
+                }
+            }
+        }
     }
 }
 ]);

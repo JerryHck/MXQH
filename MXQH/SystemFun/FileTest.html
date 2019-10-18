@@ -5,18 +5,86 @@
             <div id="file1" import-sheet-js file-type=".xls,.xlsx" opts="file.FileData" ng-model="name" ng-complete="file.Do()"></div>
         </div>
     </div>
-    <!--<div class="row">
+    <div class="row wrapper-sm">
+        <div class="col-md-6">
+            <div file-upload-multi file-data="file.UploadFile"></div>
+        </div>
+    </div>
+    <div class="row wrapper-sm">
+        <div class="col-md-8">
+            <div file-upload file-data="file.UploadFile2" file-type=".xls,.xlsx"></div>
+        </div>
+    </div>
+
+    <div class="row wrapper-sm">
+        <div class="col-md-8">
+            <input type="text" ng-model="file.PrintData" uib-typeahead="order as order.EntityName for order in file.List | filter:$viewValue | limitTo:8"/>
+        </div>
+    </div>
+
+    <div class="row wrapper-sm">
         <div class="col-md-4">
-            <div id="file1" import-sheet-js opts="file.FileData2" ng-model="name2" ng-complete="file.Do2()"></div>
+            <div basic-select="CompanySelect" ng-model="file.Select.Com" auto-first="true"></div>
+        </div>
+        <div class="col-md-4">
+            <input ser-data="FunSelect" list="file.SerData" class="form-control" ng-model="file.Select.Fun" type="text"
+                   uib-typeahead="item.FunNo as item.FunName for item in file.SerData | filter:$viewValue | limitTo:8"/>
+        </div>
+        <div class="col-md-4">
+            <div basic-select="PlanSelect" ng-model="file.Select.Plan" auto-first="true"></div>
+        </div>
+    </div>
+
+    <audio autoplay="autoplay" id="auto" src=""></audio>
+    <button class="btn btn-success" ng-click="file.save()">保存</button>
+    <button class="btn btn-success" ng-click="file.Vioce()">声音</button>
+    <button class="btn btn-success" ng-click="file.Do()">Do</button>
+    
+    <div>
+        <pre>{{ file.Select | json }}</pre>
+        <!--<pre>{{ file.UploadFile2 | json }}</pre>
+        <pre>{{ file.List | json }}</pre>-->
+    </div>
+    <a href="BarCode:hello">调用exe</a>
+    
+    <pre>{{ file.SocketData | json }}</pre>
+
+    <pre class="h3">{{ file.Test2 }}</pre>
+
+    <!--<div text-angular ng-model="file.richtext"></div>-->
+    <!--<div class="wrapper-md">
+        <div text-angular ng-model="file.htmlVariable"></div>
+    </div>-->
+    <!--<div class="row wrapper-sm">
+        <div class="col-md-12">
+            <textarea class="form-control" rows="15" ng-model="file.htmlVariable "></textarea>
         </div>
     </div>-->
-    <div>
+    
+    <!--<div text-angular="text-angular" name="htmlcontent" ng-model="file.htmlVariable"></div>-->
 
+    <pre>{{ file.htmlVariable }}</pre>
+
+    <div class="form-horizontal">
+        <div class="form-group col-md-6">
+            <!--<div class="col-md-6">-->
+            <label class="control-label col-md-4 wrapper-xs">不良种类:</label>
+            <div class="col-md-8">
+                <ui-select name="ngType" ng-model="file.ComName" theme="bootstrap" required ng-change="file.ChangeMonitor()">
+                    <ui-select-match placeholder="选择不良种类...">{{ $select.selected }}</ui-select-match>
+                    <ui-select-choices repeat="item in file.ComList | filter: $select.search">
+                        <div ng-bind-html="item | highlight: $select.search"></div>
+                        <!--<small ng-bind-html="item.Name | highlight: $select.search"></small>-->
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
     </div>
+
+
+    <pre><span class="h2">{{ file.Weigth }}</span></pre>
 
     <!--<div id="file2" import-sheet-js opts="file.FileData2" ng-complete="file.Do2()"></div>-->
     <!--<div import-sheet-js opts="file.FileData3" ng-complete="file.Do()"></div>-->
     <!--<input type="file" import-sheet-js="" opts="file.FileData" ng-complete="file.Do()" />-->
-
-    <pre>{{ file.List | json }}</pre>
 </div>

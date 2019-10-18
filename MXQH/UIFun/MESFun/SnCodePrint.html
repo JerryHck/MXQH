@@ -1,0 +1,50 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="sn.promise">
+    <uib-tab index="0" select="sn.SelectTab(0)" deselect="sn.SelectTab(-1)">
+        <uib-tab-heading class="h5">彩盒码打印</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="col-sm-6">
+                <div class="panel panel-default" ng-form="sn.DeleteForm">
+                    <div class="panel-heading font-bold">
+                        彩盒码打印
+                        <!--<button class="btn btn-sm btn-success pull-right" ng-click="sn.DownExe()">下载打印插件</button>-->
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">是否补打印</label>
+                                <div class="col-lg-8">
+                                    <div toggle-switch ng-model="sn.IsReprint" class="w-md i-switch-lg switch-bool" on-label="是" off-label="否" on-value="U" off-value="I"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">内部码/SN码</label>
+                                <div class="col-lg-8" ng-class="{ 'has-error' : sn.DeleteForm.sn.$invalid }">
+                                    <input type="text" class="form-control" ui-focus="sn.Focus == 0" name="InCode" ng-model="sn.DeleteItem.InternalCode" placeholder="内部码/SN码" ng-keyup="sn.KeyDonwInCode($event)" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default scroll-y" style="max-height:600px">
+                    <div class="panel-heading font-bold text-center">打印记录</div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            <ul class="list-group bg-white">
+                                <li class="list-group-item" ng-repeat="item in sn.MesList track by item.Id" ng-class="{ 'text-danger' : !item.IsOk, 'text-success':item.IsOk }">
+                                    <span herf class="pull-left">
+                                        <i class="glyphicon" ng-class="{ 'glyphicon-remove' : !item.IsOk, 'glyphicon-ok':item.IsOk }"></i>
+                                    </span>
+                                    <div class="clear">
+                                        <div>{{ item.Msg }}</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

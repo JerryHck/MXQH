@@ -11,6 +11,10 @@ body {
   line-height: @line-height-base;
 }
 
+body > .ui-select-bootstrap.open {
+  z-index: 9999; /* Standard Bootstrap dropdown z-index */
+}
+
 *:focus {
   outline: 0 !important;
 }
@@ -161,6 +165,15 @@ blockquote{
    .control-label.text-left{
       text-align: left;
    }
+}
+.form-group-xxs{
+   margin-bottom: 0.1rem;
+}
+.form-group-xs{
+   margin-bottom: 0.2rem;
+}
+.form-group-md{
+   margin-bottom: 0.4rem;
 }
 
 .form-control-spin{
@@ -457,19 +470,108 @@ blockquote{
 }
 
 .table{
-  > tbody,
-  > tfoot {
+  z-index:10 !important;
+  > tfoot,
+  > tbody {
     > tr {
       > td {
-        padding:8px 15px;
         border-top: 1px solid @table-border-color;
       }
     }
   }
-  > thead > tr > th{
-    padding:8px 15px;
-    border-bottom: 1px solid @table-border-color;
+  > thead > tr{
+      > th,
+      > td
+      {
+        background-color:#adcde3;
+        border-bottom: 1px solid @table-border-color;
+      }
+  } 
+  &.pad-md{
+        > tbody,
+        > tfoot {
+        > tr {
+          > td {
+            padding:8px 15px !important;
+          }
+        }
+      }
+      > thead > tr > th{
+        padding:8px 15px !important;
+      }
+    }
+  &.pad-xm{
+        > tbody,
+        > tfoot {
+        > tr {
+          > td {
+            padding:5px 8px !important;
+          }
+        }
+      }
+      > thead > tr > th{
+        padding:5px 8px !important;
+      }
+    }
+  &.pad-xs{
+        > tbody,
+        > tfoot {
+        > tr {
+          > td {
+            padding:5px 3px !important;
+          }
+        }
+      }
+      > thead > tr > th{
+        padding:5px 3px !important;
+      }
   }
+  &.pad-xss{
+        > tbody,
+        > tfoot {
+        > tr {
+          > td {
+            padding:2px 1px !important;
+          }
+        }
+      }
+      > thead > tr > th{
+        padding:2px 1px!important;
+      }
+  }
+  &.pad-none{
+        > tbody,
+        > tfoot {
+        > tr {
+          > td {
+            padding:0px !important;
+          }
+        }
+      }
+      > thead > tr > th{
+        padding:0px !important;
+      }
+  }
+  &.one-line{
+     table-layout:fixed;/* 只有定义了表格的布局算法为fixed，下面td的定义才能起作用。 */
+       > tbody,
+       > thead,
+       > tfoot {
+       > tr {
+         > td {
+           word-break:keep-all;/* 不换行 */
+           white-space:nowrap;/* 不换行 */
+           overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+           text-overflow:ellipsis;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+         }
+         .multi-line {
+           word-break:break-all !important;/* 允许换行 */
+           white-space:normal !important;/* 一般 */
+           overflow:auto !important;/* 内容超出宽度时隐藏超出部分的内容 */
+         }
+       }
+     }
+   }
 }
 .table-bordered{
   border-color: @table-border-color;
@@ -628,4 +730,36 @@ blockquote{
   position: absolute;
   left:50%;
   top:50%;
+}
+
+//隐藏input的上下滑按钮
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.modal-class{
+    .modal-lg   {
+        width: 80%;  
+        max-width: 1400px;
+    }
+}
+.btn-success{
+    &.reset{
+        &.active{
+            color: #fff!important;
+            background-color: #2c7e3a!important;
+            border-color: #4e624e!important;
+        }
+    }
+}
+.maxh-100{
+    max-height:100%;
+}
+.minh-100{
+    max-height:100%;
 }

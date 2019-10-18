@@ -1,0 +1,166 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="mo.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">工具及插件</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class="btn btn-sm btn-success " ng-click="to.InsertTool() "><i class="glyphicon glyphicon-plus "></i>新增</button>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="to.Ser.ToolName" placeholder="工具名称">
+                </div>
+                <button class="btn btn-sm btn-info " ng-click="to.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+            </div>
+        </div>
+        <div class="padder-md ">
+            <table class="table pad-xs" cg-busy="to.promise">
+                <thead>
+                    <tr>
+                        <td style="width:100px ">编辑</td>
+                        <td style="width:130px ">工具名称</td>
+                        <td style="width:150px ">工具类型</td>
+                        <td style="width:300px ">链接</td>
+                        <td>备注</td>
+                        <td style="width:100px ">建档人</td>
+                        <td style="width:150px ">建档时间</td>
+                        <td style="width:100px ">修改人</td>
+                        <td style="width:150px ">修改时间</td>
+                    </tr>
+                </thead>
+                <tr ng-if="to.ToolIn" ng-form="to.InToolForm">
+                    <td>
+                        <button class="btn btn-xs btn-success" ng-disabled="to.InToolForm.$invalid" ng-click="to.SaveInTool()"><i class="glyphicon glyphicon-save"></i></button>
+                        <button class="btn btn-xs btn-warning" ng-click="to.ToolIn=false"><i class="fa fa-undo"></i></button>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error' : to.InToolForm.toolName.$invalid }">
+                            <input type="text" name="toolName" class="form-control" ng-model="to.NewTool.Name" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error' : to.InToolForm.toolType.$invalid }">
+                            <div basic-select="ToolType" ng-name="toolType" ng-model="to.NewTool.TCode" ng-required="true"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error' : to.InToolForm.Pathlink.$invalid }">
+                            <input type="text" name="Pathlink" class="form-control" ng-model="to.NewTool.PathLink" required />
+                        </div>
+                    </td>
+                    <td><input type="text" class="form-control" ng-model="to.NewTool.Remark" /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr ng-repeat="item in to.List">
+                    <td>
+                        <span ng-if="!item.IsEdit">
+                            <button class="btn btn-xs btn-primary" ng-click="to.EditTool(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                            <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="to.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                        </span>
+                        <span ng-if="item.IsEdit">
+                            <button class="btn btn-xs btn-success" ng-click="to.Save($index)"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="to.Cancel(item)"><i class="fa fa-undo"></i></button>
+                        </span>
+                    </td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.Name }}</span>
+                        <input ng-if="item.IsEdit" type="text" class="form-control" ng-model="to.EditItem.Name" />
+                    </td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.ToolType.TName }}</span>
+                        <div ng-if="item.IsEdit" basic-select="ToolType" ng-name="TCode" ng-model="to.EditItem.TCode"></div>
+                    </td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.PathLink }}</span>
+                        <input ng-if="item.IsEdit" type="text" class="form-control" ng-model="to.EditItem.PathLink" />
+                    </td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.Remark }}</span>
+                        <input ng-if="item.IsEdit" type="text" class="form-control" ng-model="to.EditItem.Remark" />
+                    </td>
+                    <td>{{ item.CreateBy }}</td>
+                    <td>{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td>{{ item.ModifyBy }}</td>
+                    <td>{{ item.ModifyDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                </tr>
+            </table>
+            <div class="col-md-12 text-center " ng-if="to.page.total>to.page.size ">
+                <div uib-pagination total-items="mo.page.total " ng-model="to.page.index " items-per-page="to.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                     ng-change="to.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="1">
+        <uib-tab-heading class="h5">工具类型</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class="btn btn-sm btn-success " ng-disabled="to.InType" ng-click="to.InsertType() "><i class="glyphicon glyphicon-plus "></i>新增</button>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="to.SerType.TCode" placeholder="工具名称">
+                </div>
+            </div>
+        </div>
+        <div class="padder-md ">
+            <table class="table pad-xss" cg-busy="to.promise">
+                <thead>
+                    <tr>
+                        <td style="width:100px ">编辑</td>
+                        <td style="width:100px ">编号</td>
+                        <td style="width:200px ">名称</td>
+                        <td>备注</td>
+                        <td style="width:100px ">建档人</td>
+                        <td style="width:150px ">建档时间</td>
+                        <td style="width:100px ">修改人</td>
+                        <td style="width:150px ">修改时间</td>
+                    </tr>
+                </thead>
+                <tr ng-if="to.InType" ng-form="to.InTypeForm">
+                    <td>
+                        <button class="btn btn-xs btn-success" ng-disabled="to.InTypeForm.$invalid" ng-click="to.SaveInType()"><i class="glyphicon glyphicon-save"></i></button>
+                        <button class="btn btn-xs btn-warning" ng-click="to.InType=false"><i class="fa fa-undo"></i></button>
+                    </td>
+                    <td>{{ to.NewType.TCode  }}</td>
+                    <td>
+                        <div ng-class="{ 'has-error' : to.InTypeForm.TName.$invalid }">
+                            <input type="text" name="TName" class="form-control" ng-model="to.NewType.TName" required />
+                        </div>
+                    </td>
+                    <td><input type="text" class="form-control" ng-model="to.NewType.Remark" /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr ng-repeat="item in to.TypeList | filter:to.SerType.TCode" ng-form="item.ItemForm">
+                    <td>
+                        <span ng-if="!item.IsEdit">
+                            <button class="btn btn-xs btn-primary" ng-disabled="to.InType" ng-click="to.EditType(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                            <button class="btn btn-xs btn-danger" ng-disabled="to.InType" ng-confirm="{text:'确定要删除吗'}" ng-click="to.DeleteType(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                        </span>
+                        <span ng-if="item.IsEdit">
+                            <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="to.SaveType($index)"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="to.Cancel(item)"><i class="fa fa-undo"></i></button>
+                        </span>
+                    </td>
+                    <td>{{ item.TCode }}</td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.TName }}</span>
+                        <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.ITName.$invalid }">
+                            <input type="text" name="ITName" class="form-control" ng-model="to.EditTypeItem.TName" required />
+                        </div>
+                    </td>
+                    <td>
+                        <span ng-if="!item.IsEdit">{{ item.Remark }}</span>
+                        <input ng-if="item.IsEdit" type="text" class="form-control" ng-model="to.EditTypeItem.Remark" />
+                    </td>
+                    <td>{{ item.CreateBy }}</td>
+                    <td>{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td>{{ item.ModifyBy }}</td>
+                    <td>{{ item.ModifyDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                </tr>
+            </table>
+        </div>
+    </uib-tab>
+</uib-tabset>
+
+

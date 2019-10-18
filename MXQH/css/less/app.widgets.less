@@ -1,3 +1,51 @@
+
+.d-r{
+	z-index: 200;
+	position: fixed;
+    top:@app-header-height;
+    right: -480px;
+	width: 480px;
+    height:auto;
+	.transition(right 0.4s);
+	bottom: @app-footer-height;
+	padding: 0 !important;
+	&.h-full{
+		bottom: 0;
+		height: auto;
+	}
+    &.sm{
+        right: -240px;
+	    width: 240px;
+    }   
+
+    &.md{
+        right: -540px;
+	    width: 540px;
+    }
+    &.xl{
+        right: -720px;
+	    width: 720px;
+    }
+    &.lg{
+        right: -800px;
+	    width: 800px;
+    }
+}
+.d-r.active{
+	right: -1px;
+}
+.d-r.active > .blur-close{
+    z-index:200 !important;
+    position:absolute;
+    background: none;
+    /*background-color:#808080;*/
+	border-right-width: 0;
+    height:100%;
+    width:  1600px;
+	left:  -1600px;
+}
+/*.d-r::-webkit-scrollbar{width: 0px;height: 0px;}*/
+
 // icon list
 .list-icon i{font-size: 14px;width:40px;vertical-align:middle;margin:0;display: inline-block;text-align: center;.transition(font-size .2s);}
 .list-icon div{line-height: 40px;white-space: nowrap;}
@@ -6,14 +54,22 @@
 // settings
 .settings{
 	z-index: 1050;
+    top:@app-header-height;
 	position: fixed;
-	top: 120px;
 	right: -240px;
 	width: 240px;
 	.transition(right 0.2s);
 }
 .settings.active{
 	right: -1px;
+    > .blur-close{
+        background: none;
+	    border-right-width: 0;
+        height:100%;
+        width:1600px;
+        position: absolute;
+	    left:  -1600px;
+    }
 }
 
 .settings > .btn{
@@ -120,6 +176,10 @@
 	display: block;
 	width: 4.5em;
 	text-align: right;
+    &.tl-date-md{
+        margin-left: -12em!important;
+        width: 8em!important;
+    }
 }
 
 .tl-content{
@@ -184,3 +244,4 @@
 		}
 	}
 }
+.width-fix{ overflow:hidden; white-space: nowrap;text-overflow:ellipsis;}

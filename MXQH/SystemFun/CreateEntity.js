@@ -18,6 +18,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
     vm.TbChecked = TbChecked;
     vm.CheckChange = CheckChange;
     vm.setClass = setClass;
+    vm.TbAllChecked = TbAllChecked;
 
     vm.SaveProClass = SaveProClass;
     vm.SaveProBasic = SaveProBasic;
@@ -38,6 +39,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
     vm.DownLoadPlan = DownLoadPlan;
     vm.planBak = planBak;
     vm.OpenProc = OpenProc;
+    vm.OpenEntityExcel = OpenEntityExcel;
     
     vm.ConfigOrderWay = { Table: "EntityProperty", Column: "OrderWay" };
     vm.ConfigColumnType = { Table: "EntityProperty", Column: "ColumnType" };
@@ -48,7 +50,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
     vm.ActionType = { Table: "BasicData", Column: "ActionType" };
     vm.UserEmp = { Table: "BasicData", Column: "UserEmp" };
     vm.ProItem = { };
-    vm.newRelCon = { ParenType: '0', ChildType: '0' };
+    vm.newRelCon = { ParenType: '0', ChildType: '0', Associate: "" };
 
     $scope.$watch(function () { return vm.EnTable; }, getTableList);
     $scope.$watch(function () { return vm.ProItem.RelateEntity; }, getChildTableList);
@@ -68,13 +70,13 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
         vm.EnTable = { Name: vm.SelectedEn.TableName, DbSchema: vm.SelectedEn.TableSchema };
         getEntityProList();
         vm.isEditing = false;
+        vm.IsTbAll = false;
     }
 
     //保存实体
     function SaveEntity() {
         var en = angular.copy(vm.SelectedEn), haveRel = false, haveProc = false;
         en.ConnectName = vm.ConnectName;
-        en.CreateBy = $rootScope.User.UserNo;
         var ProList = [], RelList = [], ProcList = [];
         for (var i = 0, len = vm.PropertyList.length; i < len; i++) {
             var pro = {};
@@ -158,6 +160,8 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
     function EnAdd() {
         Cancel();
         vm.SelectedEn.ActionType = "I";
+        vm.SelectedEn.AutoDelLog = false;
+        vm.SelectedEn.IsPrint = false;
         vm.isAddOpen = true;
         vm.isEditing = true;
         vm.isAdd = true;
@@ -183,8 +187,14 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
         if (vm.EnTable) {
             vm.SelectedEn.TableSchema = vm.EnTable.DbSchema;
             vm.SelectedEn.TableName = vm.EnTable.Name;
-            AjaxService.GetTbColumns(vm.EnTable.DbSchema, vm.EnTable.Name, vm.ConnectName).then(function (data) {
-                vm.TbColunms = data;
+
+            var en = {};
+            en.Schema = vm.EnTable.DbSchema;
+            en.TableName = vm.EnTable.Name;
+            en.ConnectName = vm.ConnectName;
+
+            AjaxService.BasicCustom("GetTbColumns", en).then(function (data) {
+                vm.TbColunms = data.data;
                 if (vm.newRelCon) {
                     vm.newRelCon.ParentKey = undefined;
                 }
@@ -196,8 +206,11 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
         vm.ProItem.RelateList = [];
         vm.TbChildColunms = [];
         if (vm.ProItem.RelateEntity) {
-            AjaxService.GetColumns(vm.ProItem.RelateEntity).then(function (data) {
-                vm.TbChildColunms = data;
+
+            var en = {};
+            en.planName = vm.ProItem.RelateEntity;
+            AjaxService.BasicCustom("GetTbViewColumns", en).then(function (data) {
+                vm.TbChildColunms = data.data;
                 if (vm.newRelCon) {
                     vm.newRelCon.ChildKey = undefined;
                 }
@@ -255,6 +268,14 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
             });
         }
     }
+
+    function TbAllChecked() {
+        for (var i = 0, len = vm.TbColunms.length; i < len; i++) {
+            vm.TbColunms[i].isCheck = vm.IsTbAll;
+            CheckChange(vm.TbColunms[i]);
+        }
+    }
+
     function TbChecked(item) {
         var check = false;
         for (var i = 0, len = vm.PropertyList.length; i < len; i++) {
@@ -485,6 +506,24 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
             };
             FileLoad.Load(option);
         })
+    }
+
+    function OpenEntityExcel(EntityName) {
+        var item = {};
+        item.EntityName = EntityName;
+        item.ShortName = "--";
+        item.ProcName = "--";
+        item.ProcSchema = "--";
+        item.ConnectName = vm.ConnectName;
+        var resolve = {
+            ItemData: function () {
+                return item;
+            }
+        };
+        Dialog.open("EnProcSetDialog", resolve).then(function (data) {
+
+        }).catch(function (reason) {
+        });
     }
 
     function OpenProc(proc) {

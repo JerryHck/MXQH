@@ -15,6 +15,34 @@
     margin: 0;
 }
 
+body {
+        background: rgba(244, 248, 200, 0.10) no-repeat center top;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+        font-family: 'Ubuntu', 'Lato', sans-serif;
+    }
+
+.form-c {
+    font-family: 'Ubuntu', 'Lato', sans-serif;
+    font-weight: 400;
+    position: relative; /*绝对定位*/
+    /*width: 340px;*/
+    /*height: 200px;*/
+    text-align: center; /*(让div中的内容居中)*/
+    top: 50%;
+    /*left: 50%;*/
+    margin: 60px auto 30px;
+    padding: 10px;
+
+    /*background: #7f7181;*/ 
+    border-radius: 0.4em;
+    /*border: 1px solid #191919;*/
+    box-shadow: 
+        inset 0 0 2px 1px rgba(255,255,255,0.08), 
+        0 16px 10px -8px rgba(0, 0, 0, 0.6);
+}
+
 .form-3 {
     font-family: 'Ubuntu', 'Lato', sans-serif;
     font-weight: 400;
@@ -24,28 +52,28 @@
     margin: 60px auto 30px;
     padding: 10px;
     overflow: hidden;
-
+    filter:alpha(Opacity=40);-moz-opacity:0.7;opacity: 0.7;
+    /* 修改登陆窗口透明度 */
     /* Styles */
-    background: #111; 
+    background: #7f7181; 
     border-radius: 0.4em;
     border: 1px solid #191919;
     box-shadow: 
         inset 0 0 2px 1px rgba(255,255,255,0.08), 
         0 16px 10px -8px rgba(0, 0, 0, 0.6);
 }
-
 .form-3 label {
     /* Size and position */
     width: 40%;
     float: left;
-    padding-top: 9px;
+    padding-top: 5px;
 
     /* Styles */
     color: #ddd;
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    text-shadow: 0 1px 0 #000;
+    text-shadow: 0 1px 0 #444;
     text-indent: 30px;
     font-weight: 700;
     cursor: pointer;
@@ -57,20 +85,20 @@
     width: 60%;
     float: left;
     padding: 8px 5px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     font-size: 12px;
     
     /* Styles */
-    background: #1f2124; /* Fallback */
-    background: -moz-linear-gradient(#1f2124, #27292c);
-    background: -ms-linear-gradient(#1f2124, #27292c);
-    background: -o-linear-gradient(#1f2124, #27292c);
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(#1f2124), to(#27292c));
-    background: -webkit-linear-gradient(#1f2124, #27292c);
-    background: linear-gradient(#1f2124, #27292c);    
-    border: 1px solid #000;
+    background: #7f7181; /* Fallback */
+    background: -moz-linear-gradient(#7f7181, #c4b1c7);
+    background: -ms-linear-gradient(#7f7181, #c4b1c7);
+    background: -o-linear-gradient(#7f7181, #c4b1c7);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#2a3447), to(#3b3e4e));
+    background: -webkit-linear-gradient((#7f7181, #c4b1c7));
+    background: linear-gradient((#7f7181, #c4b1c7));    
+    border: 1px solid #674848;
     box-shadow:
-        0 1px 0 rgba(255,255,255,0.1);
+        0 1px 0 rgba(255,255,255,0.6);
     border-radius: 3px;
 
     /* Font styles */
@@ -83,21 +111,21 @@
 .form-3 input[type=password]:hover,
 .form-3 label:hover ~ input[type=text],
 .form-3 label:hover ~ input[type=password] {
-    background: #27292c;
+    background: #b6b6b8;
 }
 
 .form-3 input[type=text]:focus, 
 .form-3 input[type=password]:focus {
-    box-shadow: inset 0 0 2px #000;
-    background: #494d54;
+    box-shadow: inset 0 0 2px #c4b1c7;
+    background: #8b8e92;
     border-color: #51cbee;
     outline: none; /* Remove Chrome outline */
 }
 
-.form-3 p:nth-child(3),
-.form-3 p:nth-child(4) {
+.form-3 p:nth-child(4),
+.form-3 p:nth-child(5) {
     float: left;
-    width: 50%;
+    width: 49.8%;
 }
 
 .form-3 label[for=remember] {
@@ -119,16 +147,16 @@
 .form-3 input[type=submit] {
     /* Width and position */
     width:80%;
-    padding: 8px 5px;
+    padding: 8px 4px;
   
     /* Styles */
     border: 1px solid #0273dd; /* Fallback */
     border: 1px solid rgba(0,0,0,0.4);
     box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.3),
-        inset 0 10px 10px rgba(255,255,255,0.1);
+        inset 0 1px 0 #409141,
+        inset 0 10px 10px #4ab74b;
     border-radius: 3px;
-    background: #38a6f0;
+    background: #488249;
     cursor:pointer;
   
     /* Font styles */
@@ -212,3 +240,150 @@
 .no-pointerevents .form-3 p:nth-child(1):before {
     display: none;
 }
+
+
+/*---------------------reset----------------------*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { margin:0; padding:0; border:0; outline:0;}
+ol, ul, li { list-style:none } 
+:focus { outline:0 }
+table { border-collapse:collapse; border-spacing:0 }
+table,table td,table th{border:1px solid #edeada;border-collapse:collapse;}
+address, cite, code, dfn, em, var, i { font-style:normal }
+input[type=button], input[type=submit], button { cursor:pointer; outline:none;}
+.input, select { vertical-align:middle }
+* html .clearfix { zoom:1 }
+*+html .clearfix { zoom:1 }
+textarea{resize:none;}
+a { text-decoration:none; color:#009bd8 }
+.clearfix:after {clear: both;content: ".";display: block;height: 0;overflow: hidden;visibility: hidden;}
+.pos-r{ position:relative;}
+.hide{ display:none;}
+/*---------------------header----------------------*/
+
+.header{ height: 84px;margin:26px auto; overflow: hidden; position: relative; width: 800px; z-index: 2;}
+.headerNav { right: 0;text-align: right;top: 52px; width: 300px; position:absolute;}
+.headerNav a{ color:#515151; font-size:12px; padding:0 2px;}
+.headerNav a:hover{ text-decoration:underline; color:#658b98;}
+
+/*---------------------banner----------------------*/
+.banner{ min-width:1000px;  position:relative;  height:485px; overflow:hidden;  }
+.banner .bd{ position:relative; z-index:0;  }
+.banner .bd ul{ width:100% !important; }
+.banner .bd li{ width:100% !important;  height:485px; }
+.banner .bd li .siteWidth{ width:1000px; position:relative;  margin:0 auto;  height:299px;  }
+.banner .bd li a{ height:299px; display:block;  }
+.banner .bd .txt{ position:absolute; width:415px; top:100px; left:22px;   font:normal 18px/30px "Microsoft YaHei";    }
+.banner-shadow{ height:50px; line-height:50px; background:url(../images/banner-shdow.png) repeat-x;}
+.footer{text-align:center; font-size:12px; color:#999999;}
+.login-aside{position:absolute; width:320px; height:420px; z-index:9999999; border-radius:5px; left:58%; top:40px;}
+
+
+.error-box{
+color:#fff;
+font-size:12px;
+margin-bottom:10px;
+}
+
+
+label.form-label {
+    display: block;
+    float: none;
+    height: auto;
+    line-height: 12px;
+    text-align: left;
+    width: auto;
+	font-size:18px;
+	color:#0000ff;
+	font-weight:bold;
+	/*text-shadow:1px 1px 1px #4e6877;
+	-o-text-shadow:1px 1px 1px #4e6877;
+	-o-moz-shadow:1px 1px 1px #4e6877;
+	-o-mis-shadow:1px 1px 1px #4e6877;
+	-o-webkit-shadow:1px 1px 1px #4e6877;*/
+	margin-top:16px;
+	margin-bottom:16px;
+}
+
+#o-box-up,#o-box-down {
+    width:320px;
+    height:400px;
+    position:absolute;
+	border-radius:5px;
+
+}
+#o-box-up {
+    background-color:#fff;
+    filter:alpha(opacity:40);
+    opacity:0.6;
+}
+ 
+#o-box-down{ padding:30px 0 0 40px;}
+
+.i-text{ 
+  width:240px;
+  height:40px;
+  line-height:40px;
+  border:1px solid #858585;
+  background:#eef3f8;
+  color:#000;
+  font-size:18px; 
+  font:bold;
+  text-indent:20px; 
+  border-radius: 5px;
+  /*box-shadow:1px 1px 1px #dfe4e8 inset;
+  -moz-box-shadow:1px 1px 1px #dfe4e8 inset;
+  -webkit-box-shadow:1px 1px 1px #dfe4e8 inset;
+  -o-box-shadow:1px 1px 1px #dfe4e8 inset;
+  -mis-box-shadow:1px 1px 1px #dfe4e8 inset;*/
+ }
+ 
+.yzm{ width:112px;}
+.yzm-img{ position:absolute; left:130px; top:30px; cursor:pointer;}
+
+.h-light{
+  border:1px solid #80acd9;
+  background:#fff;
+  color:#403c37;
+  font:bold;
+  font-size:18px; 
+  text-indent:20px; 
+  border-color: #0787be;
+  box-shadow: 0 1px 4px rgba(11, 122, 179, 0.65) inset, 0 0 14px rgba(11, 122, 179, 0.45);
+}
+.btn-login { 
+    width: 242px; 
+    height: 40px;
+    border: 0; 
+    border-radius: 5px; 
+    font-size: 18px; 
+    font-weight:bold;
+    outline: none; 
+    cursor: pointer; 
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

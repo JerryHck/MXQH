@@ -1,0 +1,176 @@
+﻿<div class="wrapper-md col-md-12" cg-busy="sn.promise">
+    <div class="col-md-12">
+        <div class="form-inline">
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="sn.Ser.SN" placeholder="SN/内控码">
+            </div>
+            <button class="btn btn-sm btn-info " ng-click="sn.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 padder-xs">
+    <div class="h4 text-center">
+        <strong class="text-info">工单信息</strong>
+    </div>
+    <div class="padder-xs  m-t-xxs">
+        <table class="table ">
+            <thead>
+                <tr>
+                    <td style="width:100px ">组装工单</td>
+                    <td style="width:100px ">组装料号</td>
+                    <td style="width:100px ">组装料名</td>
+                    <td style="width:100px ">内控码</td>
+                    <td style="width:100px ">SN编码</td>
+                    <td style="width:100px ">SN生成时间</td>
+                    <td style="width:100px ">SN重量</td>
+                    <td style="width:100px ">称重时间</td>
+                    <td style="width:100px ">SN生成工单</td>
+                    <td style="width:100px ">SN生成料号</td>
+                    <td style="width:100px ">SN生成料名</td>
+                </tr>
+            </thead>
+            <tr ng-repeat="item in sn.Data.data3">
+                <td>{{ item.WorkMO }}</td>
+                <td>{{ item.WorkItemCode }}</td>
+                <td>{{ item.WorkMateName }}</td>
+                <td>{{ item.InternalCode }}</td>
+                <td>{{ item.SNCode }}</td>
+                <td>{{ item.SNTime | date :'yyyy-MM-dd HH:mm:ss' }}</td>
+                <td>{{ item.Weight }}</td>
+                <td>{{ item.WeigthTime | date :'yyyy-MM-dd HH:mm:ss' }}</td>
+                <td>{{ item.PackMO }}</td>
+                <td>{{ item.PackItemCode }}</td>
+                <td>{{ item.PackMateName }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="col-md-12 padder-xs">
+    <div class="h4 text-center">
+        <strong class="text-info">组装信息</strong>
+    </div>
+    <div class="padder-xs m-t-xxs">
+        <table class="table pad-xs">
+            <thead>
+                <tr>
+                    <td style="width:70px ">序号</td>
+                    <td style="width:100px ">组装线</td>
+                    <td style="width:100px ">工位名称</td>
+                    <td style="width:100px ">是否合格</td>
+                    <td style="width:100px ">操作员</td>
+                    <td style="width:100px ">是否维修</td>
+                    <td style="width:100px ">操作时间</td>
+                </tr>
+            </thead>
+            <tr ng-repeat="item in sn.Data.data">
+                <td>{{ $index + 1 }}</td>
+                <td>{{ item.AssemblyLineName }}</td>
+                <td class="text-left">{{ item.WorkPartName }}</td>
+                <td>
+                    <div is-disabled="true" toggle-switch ng-model="item.IsPass" class="switch-bool" on-label="是" off-label="否"></div>
+                </td>
+                <td>{{ item.CreateBy }}</td>
+                <td>
+                    <div is-disabled="true" toggle-switch ng-model="item.IsRepair" class="switch-bool" on-label="是" off-label="否"></div>
+                </td>
+                <td>{{ item.OperatorDate | date :'yyyy-MM-dd HH:mm:ss' }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="col-md-12  padder-xs">
+    <div class="h4 text-center">
+        <strong class="text-info">不良信息</strong>
+    </div>
+    <div class="padder-xs m-t-xxs">
+        <table class="table pad-xs">
+            <thead>
+                <tr>
+                    <td style="width:70px ">序号</td>
+                    <td style="width:100px ">不良种类</td>
+                    <td style="width:100px ">不良原因</td>
+                    <td style="width:100px ">工位名称</td>
+                    <td style="width:100px ">操作员</td>
+                    <td style="width:100px ">录入时间</td>
+                    <td style="width:100px ">备注</td>
+                </tr>
+            </thead>
+            <tr ng-repeat="item in sn.Data.data1">
+                <td>{{ $index + 1 }}</td>
+                <td>{{ item.FirstName }}</td>
+                <td class="text-left">{{ item.SecondName }}</td>
+                <td>{{ item.WorkPartName }}</td>
+                <td>{{ item.CreateBy }}</td>
+                <td>{{ item.CreateDate | date :'yyyy-MM-dd HH:mm:ss' }}</td>
+                <td>{{ item.PoorReason }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="h4 text-center">
+        <strong class="text-info">维修信息</strong>
+    </div>
+    <div class="padder-xs m-t-xxs">
+        <table class="table pad-xs">
+            <thead>
+                <tr>
+                    <td style="width:70px ">序号</td>
+                    <td style="width:100px ">维修种类</td>
+                    <td style="width:100px ">维修项</td>
+                    <td style="width:100px ">工位名称</td>
+                    <td style="width:100px ">操作员</td>
+                    <td style="width:100px ">录入时间</td>
+                    <td style="width:100px ">备注</td>
+                </tr>
+            </thead>
+            <tr ng-repeat="item in sn.Data.data2">
+                <td>{{ $index + 1 }}</td>
+                <td>{{ item.FirstName }}</td>
+                <td class="text-left">{{ item.SecondName }}</td>
+                <td>{{ item.WorkPartName }}</td>
+                <td>{{ item.CreateBy }}</td>
+                <td>{{ item.CreateDate | date :'yyyy-MM-dd HH:mm:ss' }}</td>
+                <td>{{ item.PoorReason }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="col-md-12 padder-xs">
+    <div class="h4 text-center">
+        <strong class="text-info">包装信息</strong>
+    </div>
+    <div class="padder-xs  m-t-xxs">
+        <table class="table ">
+            <thead>
+                <tr>
+                    <td style="width:100px ">包装工单</td>
+                    <td style="width:100px ">箱号</td>
+                    <td style="width:100px ">栈板号</td>
+                    <td style="width:100px ">包装时间</td>
+                    <td style="width:100px ">产品编码</td>
+                    <td style="width:100px ">产品名称</td>
+                    <td style="width:100px ">客户名称</td>
+                    <td style="width:100px ">到货地</td>
+                    <td style="width:100px ">计划数量</td>
+                    <td style="width:100px ">ERP数量</td>
+                    <td style="width:100px ">客户订单号</td>
+                    <td style="width:100px ">生产线</td>
+                </tr>
+            </thead>
+            <tr ng-repeat="item in sn.Data.data4">
+                <td>{{ item.WorkOrder }}</td>
+                <td>{{ item.BoxNumber }}</td>
+                <td>{{ item.PalletCode }}</td>
+                <td>{{ item.TS | date :'yyyy-MM-dd HH:mm:ss' }}</td>
+                <td>{{ item.ProductCode }}</td>
+                <td>{{ item.ProductName }}</td>
+                <td>{{ item.CustomerName }}</td>
+                <td>{{ item.SendPlaceName }}</td>
+                <td>{{ item.Quantity }}</td>
+                <td>{{ item.ERPQuantity }}</td>
+                <td>{{ item.CustomerOrder }}</td>
+                <td>{{ item.AssemblyLineName }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!--<pre>{{ sn.Data.data3|json }}</pre>-->

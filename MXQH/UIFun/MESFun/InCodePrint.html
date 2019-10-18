@@ -1,0 +1,67 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="inCode.promise">
+    <uib-tab index="0" select="inCode.SelectTab(0)" deselect="inCode.SelectTab(-1)">
+        <uib-tab-heading class="h5">内部码扫码打印</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="col-sm-6">
+                <div class="panel panel-default" ng-form="inCode.DeleteForm">
+                    <div class="panel-heading font-bold">
+                        内控码打印
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">打印机</label>
+                                <div class="col-lg-8">
+                                    <ui-select name="remark" ng-model="inCode.PrinterName" theme="bootstrap" search-enabled="true">
+                                        <ui-select-match placeholder="选择打印机..." class="h6">{{ $select.selected }}</ui-select-match>
+                                        <ui-select-choices repeat="item in inCode.PrintList | filter: $select.search track by item">
+                                            <div ng-bind-html="item | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <!--{{ inCode.PrintList|json }}-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">内部码</label>
+                            <div class="col-lg-8" ng-class="{ 'has-error' : inCode.DeleteForm.InCode.$invalid }">
+                                <input type="text" class="form-control" ui-focus="inCode.Focus == 0" name="InCode" ng-model="inCode.DeleteItem.InternalCode" placeholder="生产条码" ng-keyup="inCode.KeyDonwInCode($event)" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-offset-4 col-lg-8">
+                                <div class="checkbox col-md-5">
+                                    <label class="i-checks">
+                                        <input type="checkbox" ng-model="inCode.IsAuto"><i></i> 自动打印
+                                    </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn btn-sm btn-success" ng-click="inCode.PrintCode()" ng-disabled="inCode.DeleteForm.$invalid || inCode.IsAuto">打印</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default scroll-y" style="max-height:600px">
+                    <div class="panel-heading font-bold text-center">打印记录</div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            <ul class="list-group bg-white">
+                                <li class="list-group-item" ng-repeat="item in inCode.MesList track by item.Id" ng-class="{ 'text-danger' : !item.IsOk, 'text-success':item.IsOk }">
+                                    <span herf class="pull-left">
+                                        <i class="glyphicon" ng-class="{ 'glyphicon-remove' : !item.IsOk, 'glyphicon-ok':item.IsOk }"></i>
+                                    </span>
+                                    <div class="clear">
+                                        <div>{{ item.Msg }}</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

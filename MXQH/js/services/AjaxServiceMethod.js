@@ -1,25 +1,35 @@
 ﻿(function () {
     angular.module('AjaxServiceModule').factory('AjaxService', AjaxService);
 
-    AjaxService.$inject = ['$rootScope', '$http', '$q', 'serviceUrl', 'appUrl', 'toastr', '$cookieStore', '$window'];
+    AjaxService.$inject = ['$rootScope', '$http', '$q', 'serviceUrl', 'appUrl', 'toastr', 'MyPop', '$cookieStore', '$window', 'FileUrl', 'SocketServiceUrl', '$state'];
 
-    function AjaxService($rootScope, $http, $q, serviceUrl, appUrl, toastr, $cookieStore, $window) {
+    function AjaxService($rootScope, $http, $q, serviceUrl, appUrl, toastr, MyPop, $cookieStore, $window, FileUrl, SocketServiceUrl, $state) {
         var generic = 'Common.asmx/Do';
-        var tableConfigList = [];
-
+        var tableConfigList = new Array();
+        //重复呼叫socket服务
+        var interval = undefined;
         var obj = {
+            //登录前服务
+            DoBefore: DoBefore,
+            //自定义服务方法
+            Custom: Custom,
+            //
+            BasicCustom:BasicCustom,
+
             //获得实体资料-单个
             GetPlan: GetPlan,
             //获得实体资料-列表
             GetPlans: GetPlans,
+            GetPlansTop:GetPlansTop,
             //分页获取实体资料
             GetPlansPage: GetPlansPage,
             //实体计划excel导出
-            GetPlanExcel:GetPlanExcel,
+            GetPlanExcel: GetPlanExcel,
+            GetPlanOwnExcel:GetPlanOwnExcel,
             //保存计划实体
             SavePlan: SavePlan,
             //刷新计划实体
-            ReflashPlan:ReflashPlan,
+            ReflashPlan: ReflashPlan,
             //删除计划实体
             DeletePlan: DeletePlan,
             //计划对应表新增
@@ -27,13 +37,15 @@
             //计划对应表更新
             PlanUpdate: PlanUpdate,
             //计划对应表删除
-            PlanDelete:PlanDelete,
+            PlanDelete: PlanDelete,
             //计划备份
             PlanBak: PlanBak,
             //执行计划实体
             ExecPlan: ExecPlan,
+            //执行存储过程， 获取分页数据
+            ExecPlanPage:ExecPlanPage,
             //执行实体关联的存储过程,获取Excel文件
-            ExecPlanToExcel:ExecPlanToExcel,
+            ExecPlanToExcel: ExecPlanToExcel,
             //获得实体资料-单个
             GetEntity: GetEntity,
             //获得实体资料-列表
@@ -42,30 +54,50 @@
             GetJson: GetJson,
             //简单单表新增
             Action: Action,
-            //存储过程执行
-            EditBack: EditBack,
             //文件
             HandleFile: HandleFile,
+            //AjaxHandle
+            AjaxHandle:AjaxHandle,
             //
-            AddDialog:AddDialog,
-            //链接对象列表
-            GetConnect: GetConnect,
-            //数据对象
-            GetDbObject: GetDbObject,
-            //获取表栏位
-            GetColumns: GetColumns,
-            GetTbColumns: GetTbColumns,
-            GetProcColumns:GetProcColumns,
+            AddDialog: AddDialog,
             GetTableConfig: GetTableConfig,
             //User
             AddUser: AddUser,
-            Login: Login,
             LoginAction: LoginAction,
             //file
-            FileImport: FileImport
-        };
+            FileImport: FileImport,
+            //文件上传保存
+            ExecPlanUpload: ExecPlanUpload,
+            //发送邮件
+            ExecPlanMail: ExecPlanMail,
 
+            //获取本地默认打印机
+            GetDefaultPrinter: GetDefaultPrinter,
+            //获取本地打印机列表
+            GetLocalPrinters: GetLocalPrinters,
+            //
+            Print: Print,
+            //
+            PrintMulti: PrintMulti,
+            GetComPortList: GetComPortList,
+            GetComWeigth: GetComWeigth,
+            LightPrint:LightPrint,
+            //播放声音
+            PlayVoice: PlayVoice,
+
+            //Server Socket
+            GetServerTime: GetServerTime,
+            GetServerSocket: GetServerSocket
+
+
+        };
+        var conect = 0;
         return obj;
+
+        function PlayVoice(name) {
+            var auto = $("#autoVoice");
+            auto.attr("src", FileUrl + '/Voice/' + name);
+        }
 
         //JSON Data取得
         function GetJson(data) {
@@ -75,19 +107,33 @@
         }
 
         //获得计划资料
-        function GetPlan(name, json) {
-            return plan(name, json, "GetPlan");
+        function GetPlan(name, json, limitCol) {
+            return plan(name, json, "GetPlan", undefined, undefined, limitCol);
         }
 
         //获得计划资料-列表
-        function GetPlans(name, json) {
-            return plan(name, json, "GetPlans");
+        function GetPlans(name, json, limitCol) {
+            return plan(name, json, "GetPlans", undefined, undefined, limitCol);
+        }
+
+        function GetPlansTop(name, json, top, limitCol) {
+            return plan(name, json, "GetPlansTop", undefined, undefined, limitCol, top);
         }
 
         //获得计划资料-分页
-        function GetPlansPage(name, json, index, size) {
+        function GetPlansPage(name, json, index, size, limitCol) {
             var s = index <= 1 ? 1 : (index - 1) * size + 1;
-            return plan(name, json, "GetPlansPage", s, s + size);
+            return plan(name, json, "GetPlansPage", s, s + size - 1, limitCol);
+        }
+
+        //执行存储过程， 获取分页数据
+        function ExecPlanPage(name, shortName, json, index, size) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var s = index <= 1 ? 1 : (index - 1) * size + 1;
+            var en = getEn(name, shortName, json);
+            en.start = s;
+            en.end = s + size;
+            return Ajax(d, url, en, "ExecPlanPage");
         }
 
         //获得计划资料-新增
@@ -116,22 +162,11 @@
         //获得单实体资料
         function GetEntity(name, json) {
             return entity(name, json, "GetEntity");
-        }  
+        }
 
         //获得表资料
         function GetEntities(name, json) {
             return entity(name, json, "GetEntities");
-        }
-
-        //获得表资料
-        function EditBack(name, json) {
-            var d = $q.defer(),
-                 url = serviceUrl + generic;
-            var en = {};
-            en.strProc = name;
-            en.strJson = JSON.stringify(json) || '{}';
-
-            return TbAjax(d, url, en, "EditBack");
         }
 
         //获得表资料
@@ -145,71 +180,19 @@
         }
 
         function HandleFile(type) {
-            var d = $q.defer();
-            return AjaxHandle(d, "GetFileList", type);
+            return AjaxHandle("GetFileList", type);
         }
 
         function AddDialog(data) {
-            var d = $q.defer();
-            return AjaxHandle(d, "AddDialog", data);
+            return AjaxHandle("AddDialog", data);
         }
 
         //HTTP AJAX
-        function AjaxHandle(q, method, data) {
-           
+        function AjaxHandle(method, data) {
+            var q = $q.defer();
             var en = { "method": method, "data": data };
             httpFun(q, appUrl + 'Data/Handler/FileData.ashx', en);
             return q.promise;
-        }
-
-        function GetConnect() {
-            var d = $q.defer(), url = serviceUrl + generic;
-            return Ajax(d, url, {}, "GetConnectList");
-        }
-
-        function GetDbObject(con, type, ser) {
-            var d = $q.defer(),
-                 url = serviceUrl + generic;
-            var en = {};
-            en.strCon = con;
-            en.strType = type;
-            en.strSearch = ser;
-            return Ajax(d, url, en, "GetDbObject");
-        }
-
-        function GetColumns(con) {
-            var d = $q.defer(), g = $q.defer(),
-                 url = serviceUrl + generic;
-            var en = {};
-            en.planName = con;
-            Ajax(d, url, en, "GetTbViewColumns").then(
-                function (data) { g.resolve(data.data); },
-                function () { g.reject(); }
-            );
-            return g.promise;
-        }
-
-        function GetProcColumns(conn, proc){
-            var d = $q.defer(),
-                 url = serviceUrl + generic;
-            var en = {};
-            en.connName = conn;
-            en.strProc = proc;
-            return Ajax(d, url, en, "GetProcColumns");
-        }
-
-        function GetTbColumns(schema, table, con) {
-            var d = $q.defer(), g = $q.defer(),
-                 url = serviceUrl + generic;
-            var en = {};
-            en.Schema = schema;
-            en.TableName = table;
-            en.ConnectName = con;
-            Ajax(d, url, en, "GetTbColumns").then(
-                function (data) { g.resolve(data.data); },
-                function () { g.reject(); }
-            );
-            return g.promise;
         }
 
         function entity(name, json, funName) {
@@ -221,29 +204,29 @@
             return Ajax(d, url, en, funName);
         }
 
-        function plan(name, json, funName, start, end) {
+        function plan(name, json, funName, start, end, limitCol, top) {
             var enJson = JSON.stringify(convertArray(json)) || '[]';
-            return planAjax(name, enJson, funName, start, end);
+            return planAjax(name, enJson, funName, start, end, limitCol, top);
         }
 
-        function planAjax(name, json, funName, start, end) {
+        function planAjax(name, json, funName, start, end, limitCol, top) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = {};
             en.planName = name;
             en.strJson = json;
             en.start = start;
             en.end = end;
+            en.top = top;
+            en.limitUserCol = limitCol;
             return Ajax(d, url, en, funName)
         }
 
         function SavePlan(name, json) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, undefined, json);
             return Ajax(d, url, en, "SavePlan");
         }
-        
+
         function ReflashPlan(name) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = {};
@@ -252,39 +235,49 @@
         }
         function DeletePlan(name, json) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, undefined, json);
             return Ajax(d, url, en, "DeletePlan");
         }
 
         function ExecPlan(name, shortName, json) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.shortName = shortName;
-            en.strJson = JSON.stringify(json);
-            return Ajax(d, url, en, "ExecPlan")
+            var en = getEn(name, shortName, json);
+            return Ajax(d, url, en, "ExecPlan");
         }
 
-        function ExecPlanToExcel(name, shortName, json, sheetTable)
-        {
+        function ExecPlanMail(name, shortName, json) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.shortName = shortName;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, shortName, json);
+            return Ajax(d, url, en, "ExecPlanMail");
+        }
+
+        function ExecPlanUpload(name, shortName, json, fileJson, dir) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = getEn(name, shortName, json);
+            en.fileJson = JSON.stringify(fileJson);
+            en.dir = dir;
+            return Ajax(d, url, en, "ExecPlanUpload")
+        }
+
+        function ExecPlanToExcel(name, shortName, json, sheetTable) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = getEn(name, shortName, json);
             en.sheetTable = JSON.stringify(convertArray(sheetTable));
             return Ajax(d, url, en, "ExecPlanToExcel")
         }
 
         function GetPlanExcel(name, shortName, json) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.shortName = shortName;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, shortName, json);
             return Ajax(d, url, en, "GetPlanExcel")
+        }
+
+        function GetPlanOwnExcel(name, json)
+        {
+            var d = $q.defer(), url = serviceUrl + generic;
+            json = json || [];
+            var en = getEn(name, "--", json);
+            return Ajax(d, url, en, "GetPlanOwnExcel")
         }
 
         function AddUser(json) {
@@ -294,14 +287,10 @@
             return Ajax(d, url, en, "AddUser", undefined, 'Authorization')
         }
 
-        function Login(user, psw, kicking) {
-            var d = $q.defer(), url = serviceUrl + "Common.asmx/Login";
-            var en = {};
-            en.User = user;
-            en.Psw = psw;
-            en.Kicking = kicking;
-            $cookieStore.put('user-token', 'Login');
-            return httpFun(d, url, en)
+        function DoBefore(method, en) {
+            var d = $q.defer(), url = serviceUrl + "Common.asmx/DoBefore";
+            var json = { method: method, Json: JSON.stringify(en) };
+            return httpFun(d, url, json);
         }
 
         function LoginAction(method, en) {
@@ -310,16 +299,25 @@
             return Ajax(d, url, en, method, undefined, 'Authorization');
         }
 
+        //基础呼叫方法
+        function BasicCustom(method, en) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            en = en || {};
+            return Ajax(d, url, en, method);
+        }
+
+        function Custom(method, en) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            en = en || {};
+            return Ajax(d, url, en, method, undefined, 'Custom');
+        }
+
         function GetTableConfig(tbName, clName) {
             var d = $q.defer(), listHave = [];
-            //从缓存中获取数据
-            for (var j = 0, len = tableConfigList.length; j < len; j++) {
-                if (tableConfigList[j].TbName == tbName && tableConfigList[j].ClName == clName) {
-                    listHave.push(tableConfigList[j])
-                }
-            }
-            if (listHave.length > 0) {
-                d.resolve(listHave);
+            var name = tbName + '-' + clName;
+            if (tableConfigList[tbName + '-' + clName] && tableConfigList[tbName + '-' + clName].length > 0) {
+                d.resolve(tableConfigList[tbName + '-' + clName]);
+                //console.log('have')
             }
             else {
                 var list = [
@@ -327,18 +325,7 @@
                     { name: "ClName", value: clName }
                 ];
                 GetPlans("TableConfig", list).then(function (data) {
-                    for (var j = 0, len = data.length; j < len; j++) {
-                        var have = false;
-                        for (var h = 0, len = tableConfigList.length; h < len; h++) {
-                            if (tableConfigList[h].TbName == data[j].TbName && tableConfigList[h].ClName == data[j].ClName &&
-                                tableConfigList[h].ClInf == data[j].ClInf) {
-                                have = true;
-                            }
-                        }
-                        if (have) {
-                            tableConfigList.push(data[j]);
-                        }
-                    }
+                    tableConfigList[tbName + '-' + clName] = data;
                     d.resolve(data);
                 });
             }
@@ -347,10 +334,7 @@
 
         function FileImport(name, shortName, json, file, inData, sheetTable) {
             var d = $q.defer(), url = serviceUrl + generic;
-            var en = {};
-            en.planName = name;
-            en.shortName = shortName;
-            en.strJson = JSON.stringify(json);
+            var en = getEn(name, shortName, json);
             en.filaName = file;
             en.bt = inData;
             en.sheetTable = JSON.stringify(convertArray(sheetTable));
@@ -364,7 +348,7 @@
         }
 
         function TbAjax(q, url, parameter, Method, type, service) {
-            var en = { method: Method, Json: JSON.stringify(parameter), service: service||'' };
+            var en = { method: Method, Json: JSON.stringify(parameter), service: service || '' };
             return httpTbFun(q, url, en, type);
         }
 
@@ -378,29 +362,40 @@
         }
 
         function httpFun(q, url, postData, type) {
+            //if (postData.method == 'GetPlansPage') { console.log(postData) }
             $http({
                 method: type || 'POST',
-                url: url,
+                url: url + '?v=' + Math.random(),
                 dataType: 'json',
                 data: postData
             })
             .then(
-                function (data) { q.resolve(data.data); },
+                function (data) {
+                    q.resolve(data.data);
+                },
                 function (data) {
                     q.reject();
                     if (data.status == 401) {
                         $cookieStore.remove('user-token');
-                        if($window.location.href != appUrl + 'Login.html')
-                        {
-                            $window.location.href = appUrl + 'Login.html';
+                        if ($window.location.href != appUrl + 'Access.html#!/login') {
+                            $window.location.href = appUrl + 'Access.html#!/login';
                         }
                     } else {
                         console.log(data);
                         var m = data.data ? data.data.split("。")[0].replace(/System.Exception:/, '') : "错误";
-                        toastr.error(m, '服务错误')
+                        toastr.error(m, '服务错误');
                     }
                 });
             return q.promise;
+        }
+
+        function getEn(name, shortName, json)
+        {
+            var en = {};
+            en.planName = name;
+            en.shortName = shortName;
+            en.strJson = JSON.stringify(json);
+            return en;
         }
 
         //转换字符串
@@ -416,8 +411,193 @@
             else {
                 var enNew = [];
                 enNew.push(en);
-                return enNew
+                return enNew;
             }
+        }
+
+        //socket 编程
+        //---------------------------------------------------------------------------------------------------
+        function GetDefaultPrinter(hostIp) {
+            return SocketSend("GetDefaultPrinter", undefined, undefined, undefined, undefined, hostIp);
+        }
+        //获取打印机列表
+        function GetLocalPrinters(hostIp) {
+            var d = $q.defer();
+            SocketSend("GetLocalPrinters", undefined, undefined, undefined, undefined, hostIp).then(function (data) {
+                d.resolve(JSON.parse(data));
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+        //单笔打印
+        function Print(templateId, TS, postData, printerName, hostIp) {
+            var d = $q.defer();
+            //var postData = {};
+            //postData.ParaData = JSON.stringify(paraData || {});
+            //postData.OutList = JSON.stringify(outList||[]);
+            SocketSend("Print", templateId, TS, postData, printerName, hostIp).then(function (data) {
+                d.resolve(data);
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+        //多笔打印
+        function PrintMulti(templateId, TS, postData, printerName, hostIp) {
+            var d = $q.defer();
+            SocketSend("PrintMulti", templateId, TS, postData, printerName, hostIp).then(function (data) {
+                d.resolve(data);
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+        function LightPrint(templateId, TS, postData, printerName, hostIp) {
+            var d = $q.defer();
+            SocketSend("LightPrint", templateId, TS, postData, printerName, hostIp).then(function (data) {
+                d.resolve(data);
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+        //获取com口列表
+        function GetComPortList(hostIp) {
+            var d = $q.defer();
+            SocketSend("GetComPortList", undefined, undefined, undefined, undefined, hostIp).then(function (data) {
+                d.resolve(data);
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+        //获取com口重量数据
+        function GetComWeigth(com, Do) {
+            var d = $q.defer();
+            SocketSend("GetComWeigth", undefined, undefined, undefined, com, undefined, Do).then(function (data) {
+                d.resolve(data);
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+        function SocketSend(method, Id, TS, postData, printerName, hostIp, Do) {
+            var g = $q.defer();
+            try {
+                var strAddress = "ws://" + (hostIp || "127.0.0.1") + ":2018";
+                var socket = new WebSocket(strAddress);
+                socket.onerror = function (evt) {
+                    console.log(evt.currentTarget);
+                    if (evt.currentTarget.readyState == 3) {
+                        var en = {};
+                        $window.location.href = "MxqhPrinter:" + serviceUrl;
+                        en.text = "打印服务还未启动或未安装，是否启动并重新发送数据？";
+                        MyPop.Confirm(en, function () {
+                            SocketSend(method, Id, TS, postData, printerName, hostIp);
+                        });
+                    }
+                };
+                socket.onopen = function () {
+                    var en = {};
+                    en.Method = method;
+                    en.TemplateId = Id;
+                    en.TS = TS;
+                    en.Data = JSON.stringify(postData);
+                    en.ServiceUrl = serviceUrl;
+                    en.PrinterName = printerName;
+                    socket.send(JSON.stringify(en));
+                };
+                socket.onclose = function (e) {
+                    //toastr.error("打印服务已经停止", '服务错误');
+                    //g.reject("打印服务已经停止", '服务错误');
+                };
+                socket.onmessage = function (evt) {
+                    var reData = JSON.parse(evt.data);
+                    if (reData.MesType == "Success") {
+                        g.resolve(reData.Data);
+                    }
+                    else if (reData.MesType == "Error") {
+                        toastr.error(reData.Data, '服务错误');
+                        g.reject(reData.Data);
+                    }
+                    else if (reData.MesType == "Update") {
+                        toastr.warning('服务器已有新版本的打印插件，请下载更新');
+                        $window.location.href = reData.Data;
+                    }
+
+                    if (Do) {
+                        Do(reData);
+                    }
+
+                };
+            }
+            catch (e) {
+                console.log("服务错误");
+                toastr.error(e, '服务错误');
+            }
+            return g.promise;
+        }
+
+        function GetServerTime(Do) {
+            var socket = undefined;
+            return CallServerSocket("Time", undefined, undefined,Do);
+        }
+
+        function GetServerSocket(json, fun, Do) {
+            var socket = undefined;
+            return CallServerSocket("Request", JSON.stringify(json), fun, Do, socket);
+        }
+
+        function CallServerSocket(MsgType, json, fun, Do, socket) {
+            var g = $q.defer();
+            try {
+                var en = {};
+                en.Header = "MXQHServer";
+                en.MsgType = MsgType;
+                en.LoginKey = $cookieStore.get('user-token');
+                en.RouteName = $state.current.name;
+                en.GUID = $cookieStore.get('GUID');
+                en.FunName = fun;
+                en.Data = json;
+                var Option = { Do: Do, data: en };
+                CallSocket(g, en, socket, Do);
+            }
+            catch (e) {
+                toastr.error(e, '服务错误');
+            }
+            return g.promise;
+        }
+
+        function CallSocket(g, en, socket, Do) {
+            socket = new WebSocket(SocketServiceUrl);
+            socket.onerror = function (evt) {
+                //console.log(evt);
+                //toastr.error(evt, '服务错误');
+            };
+            socket.onopen = function () {
+                socket.send(JSON.stringify(en));
+            };
+            socket.onclose = function (e) {
+            };
+            socket.onmessage = function (evt) {
+                var data = JSON.parse(evt.data);
+                if (data.MsgType == "Heartbeat") {
+                    if (data.RouteName == $state.current.name || en.MsgType == "Time") {
+                        socket.send(evt.data);
+                    }
+                    else {
+                        console.log(evt.data);
+                    }
+
+                }
+                else {
+                    if (data.Response == "Success") {
+                        g.resolve(data.Data);
+                    }
+                    else if (data.Response == "Error") {
+                        toastr.error(data.Data, '服务错误');
+                        g.reject(data.Data);
+                    }
+                    if (Do) {
+                        Do(data.Data, socket);
+                    }
+                }
+            };
         }
     }
 })();
