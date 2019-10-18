@@ -19,8 +19,11 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
     vm.KeyDonwInCode = KeyDonwInCode;
     vm.KeyDonwOrder = KeyDonwOrder;
     vm.InCodeToDb = InCodeToDb;
+    vm.InCodeToDbcClick = InCodeToDbcClick;
+
     vm.NgSave = NgSave;
     vm.SelectTab = SelectTab;
+  
 
     var en = {};
     //en.WorkOrder = vm.Item.WorkOrder;
@@ -83,8 +86,11 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
             });
         }
     }
-
+ 
+   
     function InCodeToDb() {//后焊上线
+        
+        
         var IsOk = true;
         if (!vm.OrderData || !vm.RoutingData) {
             showError('不存在或已完工');
@@ -106,7 +112,35 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
         else if (vm.IsAuto) {
             Save();
         }
+        
     }
+    function InCodeToDbcClick() {//手动后焊上线
+      
+        vm.InCodeSave = angular.copy(vm.Item.InCode);
+        vm.Item.InCode = undefined;
+        var IsOk = true;
+        if (!vm.OrderData || !vm.RoutingData) {
+            showError('不存在或已完工');
+            return false;
+        }
+        if (vm.OrderData.MaxOverCount - vm.OrderCount.ToTalCount <= 0) {
+            showError('工单投入量已达最大允许值，不可再投入');
+            vm.Item.InCode = undefined;
+            return false;
+        }
+        if (vm.OrderData.Quantity - vm.OrderCount.ToTalCount == 0) {
+            AjaxService.PlayVoice('5611.mp3');
+            MyPop.ngConfirm({ text: "投入数量已达到生产量, 是否继续投入?" }).then(function (data) {
+                    alert(4);
+                    Save();//上线
+            });
+        }
+        else {
+            Save();
+        }
+    }
+
+
 
     function showError(mes)
     {
