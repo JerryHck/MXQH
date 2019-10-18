@@ -14,6 +14,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     vm.AddPack = AddPack;
     vm.EditPack = EditPack;
     vm.DeletePack = DeletePack;
+    vm.SyncMO = SyncMO;
     if (!vm.Item.AssemblyDate) {
         vm.Item.AssemblyDate = GetCurrentDate();
         vm.Item.DeliveryDate = GetCurrentDate();
@@ -245,6 +246,34 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     }
 
     // #endregion
+
+    //从U9同步工单
+    function SyncMO() {
+        console.log(1);
+        var resolve = {
+            ItemData: function () {
+                return {DocNo:vm.Item.WorkOrder};
+            }
+        }
+        Dialog.open("U9MODialog", resolve).then(function (data) {
+            if (data != "0") {
+                if (!vm.Item.ID || vm.Item.WorkOrder == data.DocNo) {
+                    vm.Item.WorkOrder = data.DocNo;
+                    vm.Item.MaterialID = data.MaterialID;
+                    vm.Item.MaterialCode = data.MaterialCode;
+                    vm.Item.MaterialName = data.MaterialName;
+                    vm.Item.Quantity = data.ProductQty;
+                    vm.Item.CustomerOrder = data.CustomerOrder;
+                    vm.Item.ERPSO = data.ERPSO;
+                    vm.Item.ERPQuantity = data.ERPQuantity
+                } else if(vm.Item.WorkOrder!=data.DocNo) {
+                    toastr.error('同步的不是当前工单！');
+                }
+            }
+        }).catch(function (reason) {
+
+        });
+    }
 
 }
 ])
