@@ -24,7 +24,10 @@
                     <small class="media-left pull-left">上次执行:</small>
                     <small class="media-right pull-right m-t-n-xs" title="查看执行日志"><a class="h4 text-info" ng-click="job.SerLog(item)"><i class="glyphicon glyphicon-search"></i></a></small>
                     <div class="media-body">
-                        <small class="block">{{ item.LastRunTime | date:'yyyy-MM-dd HH:mm:ss' }}</small>
+                        <small class="block" ng-if="item.LastRunTime">
+                            {{ item.LastRunTime | date:'yyyy-MM-dd HH:mm:ss' }}(<span class="font-v2" ng-if="item.IsOkRun">成功</span>
+                            <span class="font-v4" ng-if="!item.IsOkRun">失败</span>)
+                        </small>
                     </div>
                 </article>
 
@@ -352,7 +355,7 @@
                     <div class="tl-content panel padder bg-light" ng-class="{'b-success text-success':item.IsOkRun, 'b-danger text-danger':!item.IsOkRun}">
                         <span class="arrow left pull-up hidden-left" ng-class="{'arrow-success':item.IsOkRun, 'arrow-danger':!item.IsOkRun}"></span>
                         <span class="arrow right pull-up visible-left" ng-class="{'arrow-success':item.IsOkRun, 'arrow-danger':!item.IsOkRun}"></span>
-                        <div class="text-lt">{{ item.LogMes }}。 完成时间:{{ item.LogTS | date:'yyyy-MM-dd HH:mm:ss' }}</div>
+                        <div class="text-lt">{{ item.LogMes }}。<br /> LogTS:{{ item.LogTS | date:'yyyy-MM-dd HH:mm:ss.sss' }}</div>
                     </div>
                 </div>
             </li>
