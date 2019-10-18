@@ -50,7 +50,7 @@
                         <td style="width:100px ">计划日期</td>
                         <td style="width:100px ">生产线</td>
                         <td style="width:100px ">计划序号</td>
-                        <td style="width:130px ">工单号</td>
+                        <td style="width:135px ">工单号</td>
                         <td style="width:100px ">到货地</td>
                         <td style="width:100px ">编码规则</td>
                         <td style="width:130px ">产品编号</td>
@@ -72,14 +72,15 @@
                 <tr ng-repeat="item in mesmo.List ">
                     <td>
                         <button class="btn btn-xs btn-primary" title="编辑" ng-click="mesmo.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
-                        <button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除吗'}" ng-click="mesmo.Delete(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>
+                        <!--<button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除吗'}" ng-click="mesmo.Delete(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>-->
                         <button class="btn btn-xs btn-success" title="完工" ng-confirm="{text:'确定要完工吗'}" ng-click="mesmo.Complete(item.ID)"><i class="glyphicon glyphicon-check"></i></button>
 
                     </td>
                     <td title="{{ item.AssemblyDate }}">{{ item.AssemblyDate }}</td>
                     <td title="{{ item.AssemblyLineName }}" style="white-space:normal;word-break:normal;">{{ item.AssemblyLineName }}</td>
                     <td title="{{ item.ListNo }}">{{ item.ListNo }}</td>
-                    <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td ng-if="item.IsPack==1" title="{{ item.WorkOrder }}"><span class="text-success"><i class="glyphicon glyphicon-ok"></i></span>{{ item.WorkOrder }}</td>
+                    <td ng-if="item.IsPack!=1" title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
                     <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
                     <td class="bg-warning" ng-if="item.ClName!=''" title="{{ item.ClName }}">{{ item.ClName }}</td>
                     <td ng-if="item.ClName==''">{{item.MaterialClName}}</td>
