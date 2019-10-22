@@ -16,8 +16,6 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     vm.AddNewTopType = AddNewTopType;//新增顶级分类
     vm.SaveTopType = SaveTopType;//保存顶级分类
     vm.IsAddTop = false;
-
-    //vm.Cancel = Cancel;
     GetTreeData();
 
     //绑定数据
@@ -25,8 +23,6 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
         var condition = [{ name: "PID", value: "-1" }];
         vm.promise = AjaxService.GetPlans("RPoorType", []).then(function (poorType) {
             vm.promise = AjaxService.GetPlans("RPoorTreeView", condition).then(function (data) {
-                console.log(data);
-                console.log(poorType);
                 //增加nodes属性
                 for (var i = 0; i < poorType.length; i++) {
                     poorType[i].nodes = [];
@@ -83,8 +79,6 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     function Add() {
         $(".pro-file").addClass("active");
         vm.IsEdit = false;
-        //vm.ItemData = { PID: vm.PID,TopType:vm.TopType,ParentType:vm.ParentType, };
-        console.log(vm.ItemData);
     }
 
     ////弹出框--放弃按钮
@@ -102,7 +96,6 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
         vm.ItemData.text = item.text;
         vm.ItemData.TopType = item.TopType;
         vm.ItemData.Layer = item.Layer;
-        console.log(vm.ItemData);
     }
 
     //保存 物料分类
@@ -114,7 +107,6 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
             li.push(vm.ItemData);
             en.List = JSON.stringify(li);
             vm.promise = AjaxService.ExecPlan("RPoorTreeView", "Update", en).then(function (data) {
-                console.log(data);
                 if (data.data[0].MsgType == "1") {
                     toastr.success(data.data[0].Msg);
                     $(".pro-file").removeClass("active");
@@ -130,9 +122,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
             en.TempColumns = "List";
             li.push(vm.ItemData);
             en.List = JSON.stringify(li);
-            console.log(en);
             vm.promise = AjaxService.ExecPlan("RPoorTreeView", "Add", en).then(function (data) {
-                console.log(data);
                 if (data.data[0].MsgType == "1") {
                     toastr.success(data.data[0].Msg);
                     $(".pro-file").removeClass("active");

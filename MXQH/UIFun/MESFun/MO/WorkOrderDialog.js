@@ -15,6 +15,8 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     vm.EditPack = EditPack;
     vm.DeletePack = DeletePack;
     vm.SyncMO = SyncMO;
+    vm.Places = [];
+    GetPlaces();
     if (!vm.Item.AssemblyDate) {
         vm.Item.AssemblyDate = GetCurrentDate();
         vm.Item.DeliveryDate = GetCurrentDate();
@@ -249,29 +251,43 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
 
     //从U9同步工单
     function SyncMO() {
-        console.log(1);
+        var en = {};
+        en.JobName = '同步U9工单';
         var resolve = {
             ItemData: function () {
-                return {DocNo:vm.Item.WorkOrder};
+                return { DocNo: vm.Item.WorkOrder };
             }
         }
-        Dialog.open("U9MODialog", resolve).then(function (data) {
-            if (data != "0") {
-                if (!vm.Item.ID || vm.Item.WorkOrder == data.DocNo) {
-                    vm.Item.WorkOrder = data.DocNo;
-                    vm.Item.MaterialID = data.MaterialID;
-                    vm.Item.MaterialCode = data.MaterialCode;
-                    vm.Item.MaterialName = data.MaterialName;
-                    vm.Item.Quantity = data.ProductQty;
-                    vm.Item.CustomerOrder = data.CustomerOrder;
-                    vm.Item.ERPSO = data.ERPSO;
-                    vm.Item.ERPQuantity = data.ERPQuantity
-                } else if(vm.Item.WorkOrder!=data.DocNo) {
-                    toastr.error('同步的不是当前工单！');
+        vm.promise = AjaxService.Custom('RunJob',en).then(function (data) {//同步工单成功
+            Dialog.open("U9MODialog", resolve).then(function (data) {
+                if (data != "0") {
+                    if (!vm.Item.ID || vm.Item.WorkOrder == data.DocNo) {                        
+                        //刷新线别数据
+                        vm.promise = AjaxService.GetPlans("baSendPlace", [{ name: "IsDefault", value: 1 }]).then(function (ps) {
+                            vm.Places = ps;
+                            //同步的U9数据赋值给MES工单
+                            vm.Item.WorkOrder = data.DocNo;
+                            vm.Item.MaterialID = data.MaterialID;
+                            vm.Item.MaterialCode = data.MaterialCode;
+                            vm.Item.MaterialName = data.MaterialName;
+                            vm.Item.Quantity = data.ProductQty;
+                            vm.Item.CustomerOrder = data.CustomerOrder;
+                            vm.Item.ERPSO = data.ERPSO;
+                            vm.Item.ERPQuantity = data.ERPQuantity
+                            vm.Item.SendPlaceID = data.SendPlaceID;
+                            vm.Item.AssemblyLineID = data.AssemblyLineID;
+                        });
+                    } else if (vm.Item.WorkOrder != data.DocNo) {
+                        toastr.error('同步的不是当前工单！');
+                    }
                 }
-            }
-        }).catch(function (reason) {
-
+            });
+        });
+    }
+    //获取线别数据
+    function GetPlaces() {
+        vm.promise = AjaxService.GetPlans("baSendPlace", [{name:"IsDefault",value:1}]).then(function (data) {
+            vm.Places = data;
         });
     }
 
