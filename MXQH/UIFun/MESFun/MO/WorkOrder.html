@@ -82,7 +82,7 @@
                     <td ng-if="item.IsPack==1" title="{{ item.WorkOrder }}"><span class="text-success"><i class="glyphicon glyphicon-ok"></i></span>{{ item.WorkOrder }}</td>
                     <td ng-if="item.IsPack!=1" title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
                     <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
-                    <td class="bg-warning" ng-if="item.ClName!=''" title="{{ item.ClName }}">{{ item.ClName }}</td>
+                    <td ng-if="item.ClName!=''" class="bg-warning"  title="{{ item.ClName }}">{{ item.ClName }}</td>
                     <td ng-if="item.ClName==''">{{item.MaterialClName}}</td>
                     <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
                     <td title="{{ item.MaterialName }}" style="white-space:normal;word-break:normal;" >{{ item.MaterialName }}</td>
@@ -104,6 +104,16 @@
             <div uib-pagination total-items="mesmo.page.total " ng-model="mesmo.page.pageIndex " items-per-page="mesmo.page.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
                  ng-change="mesmo.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
             </div>
+        </div>
+
+        <div class="col-md-12">
+            <span class="font-bold">注：</span>
+            <ol>
+                <li>“工单号”列中的<span class="text-success"><i class="glyphicon glyphicon-ok"></i></span>代表此工单已经创建了“包装登记”</li>
+                <li>“编码规则”列的背景色为<div class="bg-warning inline" style="width:20px;">&nbsp;</div>时，代表此工单使用的是工单的“编码规则”，否则使用的是料号的“编码规则”</li>
+                <li>“到货地”列的背景色为<div class="bg-warning inline" style="width:20px;">&nbsp;</div>时，代表此料号、到货地没有SN标签模板</li>
+
+            </ol>
         </div>
     </uib-tab>
     <uib-tab index="1">
@@ -200,6 +210,6 @@
             <div uib-pagination total-items="mesmo.pageCom.total " ng-model="mesmo.pageCom.pageIndex " items-per-page="mesmo.pageCom.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
                  ng-change="mesmo.DataBindCom() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
             </div>
-        </div>
+        </div>       
     </uib-tab>
 </uib-tabset>

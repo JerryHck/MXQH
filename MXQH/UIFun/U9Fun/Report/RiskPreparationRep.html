@@ -13,17 +13,22 @@
                     <div class="form-inline" ng-form="SForm">
                         <div class="form-group" ng-class="{ 'has-error': riskPre.SForm.DocNo.$invalid }">
                             <input type="text" class="form-control" ng-model="riskPre.page.DocNo" name="DocNo" placeholder="订单号" required>
+                            <!--<div class="input-group">
+                                <input type="text" class="form-control" ng-model="riskPre.page.DocNo" name="DocNo" placeholder="订单号" required>
+                                <span ng-click="riskPre.SelectDocNo()" class="btn input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                            </div>-->
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" ng-model="riskPre.page.Code" placeholder="整机料号">
+
                         </div>
                         <div class="form-group">
                             <input type="text" date-picker class="form-control" name="SD" placeholder="开始日期" option="riskPre.UnExist2"
-                                   ng-model="riskPre.page.SD" >
+                                   ng-model="riskPre.page.SD">
                         </div>
                         <div class="form-group">
                             <input type="text" date-picker class="form-control" name="ED" placeholder="结束日期" option="riskPre.UnExist2"
-                                   ng-model="riskPre.page.ED" >
+                                   ng-model="riskPre.page.ED">
                         </div>
                         <button class="btn btn-sm btn-info" ng-click="riskPre.Search(SForm)"><i class="glyphicon glyphicon-search"></i>查询</button>
                         <button class="btn btn-sm btn-success" ng-click="riskPre.Export()"><i class="glyphicon glyphicon-export"></i>导出</button>

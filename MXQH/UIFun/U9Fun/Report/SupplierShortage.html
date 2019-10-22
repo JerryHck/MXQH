@@ -23,6 +23,7 @@
                             <td rowspan="2" style="width:100px;" class="">料号</td>
                             <td rowspan="2" style="width:100px;" class="">品名</td>
                             <td rowspan="2" style="width:240px;" class="">规格</td>
+                            <td rowspan="2" style="width:120px;" class="">在检数量</td>
                             <td rowspan="2" style="width:120px;" class="">紧急欠料</td>
                             <td style="width:120px;" class="">第一周</td>
                             <td style="width:120px;" class="">第二周</td>
@@ -36,9 +37,9 @@
                             <td rowspan="2" style="width:200px;" class="">供应商</td>
                             <td rowspan="2" style="width:100px;" class="">执行采购</td>
                             <td rowspan="2" style="width:100px;" class="">开发采购</td>
-                            <td rowspan="2" style="width:120px;" class="">供应商邮箱</td>                            
+                            <td rowspan="2" style="width:120px;" class="">供应商邮箱</td>
                         </tr>
-                        <tr  class="text-center bg-gd-dk h4">
+                        <tr class="text-center bg-gd-dk h4">
                             <td ng-repeat="item in u9Sup.DateList">{{item.S}}~{{item.E}}</td>
                         </tr>
                         <!--filter: u9Sup.search-->
@@ -47,6 +48,7 @@
                             <td>{{ item.Code }}</td>
                             <td style="white-space:normal;word-break:normal;">{{ item.Name }}</td>
                             <td style="white-space:normal;word-break:normal;">  {{ item.SPECS }}</td>
+                            <td>{{ item.RcvQty }}</td>
                             <td>{{ item.w0 }}</td>
                             <td>{{ item.w1 }}</td>
                             <td>{{ item.w2 }}</td>
@@ -96,32 +98,37 @@
                         <tr class="text-center bg-gd-dk h4">
                             <td style="width:120px;" class="">供应商名称</td>
                             <td style="width:120px;" class="">MRP分类</td>
-                            <td style="width:120px;" class="">Buyer</td>
-                            <td style="width:120px;" class="">MC责任人</td>
                             <td style="width:100px;" class="">料号</td>
                             <td style="width:120px;" class="">品名</td>
                             <td style="width:120px;" class="">规格</td>
                             <td style="width:100px;" class="">订单号</td>
-                            <td style="width:80px;" class="">行号</td>
-                            <td style="width:120px;" class="">计划行号</td>
-                            <td style="width:140px;" class="">计划到货时间</td>
+                            <td style="width:60px;" class="">行号</td>
+                            <td style="width:100px;" class="">计划行号</td>
                             <td style="width:100px;" class="">欠交数量</td>
+                            <td style="width:100px;" class="">在检数量</td>
+                            <td style="width:100px;" class="">在检订单</td>
+                            <td style="width:140px;" class="">计划到货时间</td>
+                            <td style="width:80px;" class="">Buyer</td>
+                            <td style="width:100px;" class="">MC责任人</td>
                         </tr>
                         <!--filter: u9Sup.search-->
                         <!---->
                         <tr ng-repeat="item in u9Sup.DetailList">
                             <td style="white-space:normal;word-break:normal;">{{ item.SupName }}</td>
                             <td>{{ item.MRPCategory }}</td>
-                            <td>{{ item.Buyer }}</td>
-                            <td>{{ item.MCName }}</td>
+
                             <td>{{ item.Code }}</td>
                             <td style="white-space:normal;word-break:normal;">{{ item.Name }}</td>
                             <td style="white-space:normal;word-break:normal;">{{ item.SPEC }}</td>
-                            <td>{{ item.DocNo }}</td>
+                            <td style="white-space:normal;word-break:break-all;">{{ item.DocNo }}</td>
                             <td>{{ item.DocLineNo }}</td>
                             <td>{{ item.SubLineNo }}</td>
-                            <td>{{ item.PlanArriveDate }}</td>
                             <td>{{ item.DeficiencyQty }}</td>
+                            <td>{{ item.RcvQty }}</td>
+                            <td style="white-space:normal;word-break:break-all;">{{ item.RCVList }}</td>
+                            <td>{{ item.PlanArriveDate }}</td>
+                            <td>{{ item.Buyer }}</td>
+                            <td>{{ item.MCName }}</td>
                         </tr>
                     </table>
                 </div>

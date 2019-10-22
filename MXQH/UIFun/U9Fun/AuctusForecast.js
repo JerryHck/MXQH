@@ -162,6 +162,7 @@ function ($rootScope, $scope, $http,  toastr, AjaxService, Form, MyPop, $window,
     //获取单据详情
     function GetDetail() {
         vm.promise = AjaxService.ExecPlan("AuctusForecast", "Select", vm.pageDetail).then(function (data) {
+            console.log(data);
             vm.pageDetail.total = data.data2[0].TotalCount;
             vm.Forecast = data.data[0];
             vm.Lines = data.data1;            
