@@ -25,7 +25,6 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     function DataBind() {
         GetCondition();
         vm.promise = AjaxService.ExecPlan("MesPlanDetail", "GetU9MO", vm.page).then(function (data) {
-            console.log(data);
             vm.List = data.data;
             vm.page.total = data.data1[0].Count;
         })
@@ -36,7 +35,15 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     }
     //选择工单
     function Select(item) {
-        $uibModalInstance.close(item);
+        var en = {SendPlace:item.SendPlace,SendPlaceCode:item.SendPlaceCode,Line:item.Department};
+        //var en = { SendPlace: 'TTT3', SendPlaceCode: 'TTT3', Line: '3线' };
+        vm.promise = AjaxService.ExecPlan("MesPlanDetail", "CheckData", en).then(function (data) {
+            item.SendPlaceID = data.data[0].SendPlaceID;
+            if (data.data1[0].MsgType == '1') {
+                item.AssemblyLineID = data.data2[0].AssemblyLineID;
+            }
+            $uibModalInstance.close(item);
+        })
     }
     //关闭弹窗
     function Cancel() {

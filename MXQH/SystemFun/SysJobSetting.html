@@ -33,6 +33,7 @@
 
                 <article class="media">
                     <small class="media-left pull-left">下次执行:</small>
+                    <small class="media-right pull-right m-t-n-xs" title="立即执行一次"><a class="h4 text-success" ng-click="job.RunJob(item.JobName)"><i class="icon icon-control-play"></i></a></small>
                     <div class="media-body">
                         <small class="h4 text-info font-bold block">{{ item.NextTime | date:'yyyy-MM-dd HH:mm:ss' }} &nbsp;</small>
                         <span></span>

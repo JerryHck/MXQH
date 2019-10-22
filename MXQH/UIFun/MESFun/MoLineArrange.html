@@ -246,10 +246,10 @@
                                 <div class="col-md-9 padder-xs">
                                     <div class="panel panel-info m-t-n-sm">
                                         <div class="panel-heading text-center h4">
-                                            <button class="btn btn-sm btn-success pull-left m-t-n-xs" ng-if="line.editArrange" ng-disabled="line.ItemForm.$invalid" ng-click="line.AddLinePerson()"><i class="glyphicon glyphicon-plus"></i>排班</button>
+                                            <!--<button class="btn btn-sm btn-success pull-left m-t-n-xs" ng-if="line.editArrange" ng-disabled="line.ItemForm.$invalid" ng-click="line.AddLinePerson()"><i class="glyphicon glyphicon-plus"></i>排班</button>-->
                                             排班信息
                                         </div>
-                                        <div class="panel-body padder-xxs padder-v-xs">
+                                        <div class="panel-body padder-xxs padder-v-xs scroll-y bar-xs" style="max-height:500px; min-height:400px">
                                             <table class="table pad-xs" ng-form="line.ItemForm">
                                                 <thead>
                                                     <tr>
@@ -266,34 +266,38 @@
                                                     </td>
                                                     <td>
                                                         <div ng-class="{ 'has-error': line.ItemForm.ProcedureId{{ $index }}.$invalid }">
-                                                            <ui-select name="ProcedureId{{ $index }}" ng-disabled="!line.editArrange" ng-model="item.ProcedureId" theme="bootstrap" search-enabled="true" ng-required="true">
+                                                            <div basic-select="MESBoProcedure" ng-disabled="!line.editArrange" src-data="line.ProcedureList" ng-name="ProcedureId{{ $index }}" ng-model="item.ProcedureId" ng-required="true"></div>
+
+                                                            <!--<ui-select name="ProcedureId{{ $index }}" ng-disabled="!line.editArrange" ng-model="item.ProcedureId" theme="bootstrap" search-enabled="true" ng-required="true">
                                                                 <ui-select-match placeholder="作业工序.."><span class="font-v3">{{ $select.selected.Name }}</span></ui-select-match>
                                                                 <ui-select-choices repeat="item.ID as item in line.ProcedureList | filter: $select.search track by item.ID">
                                                                     <div class="font-v3" ng-bind-html="item.Name | highlight: $select.search"></div>
                                                                 </ui-select-choices>
-                                                            </ui-select>
+                                                            </ui-select>-->
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div ng-class="{ 'has-error': line.ItemForm.HrUserNo{{ $index }}.$invalid }">
-                                                            <ui-select name="HrUserNo{{ $index }}" ng-disabled="!line.editArrange" ng-model="item.User" theme="bootstrap" search-enabled="true" ng-required="true">
+                                                            <!--<ui-select name="HrUserNo{{ $index }}" ng-disabled="!line.editArrange" ng-model="item.User" theme="bootstrap" search-enabled="true" ng-required="true">
                                                                 <ui-select-match placeholder="工号.."><span class="font-v3">{{ $select.selected.UserNo }}</span></ui-select-match>
                                                                 <ui-select-choices repeat="item in line.UserList | filter: $select.search track by item.UserNo">
                                                                     <div class="font-v3" ng-bind-html="item.Name | highlight: $select.search"></div>
                                                                     <small ng-bind-html="item.UserNo | highlight: $select.search"></small>
                                                                 </ui-select-choices>
-                                                            </ui-select>
+                                                            </ui-select>-->
+                                                            {{ item.User.UserNo }}
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div ng-class="{ 'has-error': line.ItemForm.HrUserName{{ $index }}.$invalid }">
-                                                            <ui-select name="HrUserName{{ $index }}" ng-disabled="!line.editArrange" ng-model="item.User" theme="bootstrap" search-enabled="true" ng-required="true">
+                                                            {{ item.User.Name }}
+                                                            <!--<ui-select name="HrUserName{{ $index }}" ng-disabled="!line.editArrange" ng-model="item.User" theme="bootstrap" search-enabled="true" ng-required="true">
                                                                 <ui-select-match placeholder="姓名.."><span class="font-v3">{{ $select.selected.Name }}</span></ui-select-match>
                                                                 <ui-select-choices repeat="item in line.UserList | filter: $select.search track by item.UserNo">
                                                                     <div class="font-v3" ng-bind-html="item.Name | highlight: $select.search"></div>
                                                                     <small ng-bind-html="item.UserNo | highlight: $select.search"></small>
                                                                 </ui-select-choices>
-                                                            </ui-select>
+                                                            </ui-select>-->
                                                         </div>
                                                     </td>
                                                     <td>

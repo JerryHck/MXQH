@@ -131,7 +131,7 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
         if (vm.OrderData.Quantity - vm.OrderCount.ToTalCount == 0) {
             AjaxService.PlayVoice('5611.mp3');
             MyPop.ngConfirm({ text: "投入数量已达到生产量, 是否继续投入?" }).then(function (data) {
-                    alert(4);
+                  
                     Save();//上线
             });
         }

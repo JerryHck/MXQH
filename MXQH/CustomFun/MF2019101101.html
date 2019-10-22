@@ -39,8 +39,8 @@
                         <td title="{{ item.MesUser.Name }}">{{ item.MesUser.Name }}</td>
                         <td title="{{ item.StandPerson }}">{{ item.StandPerson }}</td>
                         <td title="{{ item.ActPerson }}">{{ item.ActPerson }}</td>
-                        <td title="{{ item.DutyType }}">{{ item.DutyType }}</td>
-                        <td title="{{ item.ActUPPH }}">{{ item.ActUPPH }}</td>
+                        <td title="{{ item.DutyType }}" ng-class="{'bg-success':item.StandPerson==item.ActPerson, 'bg-danger':item.StandPerson>item.ActPerson, 'bg-warning':item.StandPerson < item.ActPerson }">{{ item.DutyType }}</td>
+                        <td title="{{ item.ActHour }}">{{ item.ActHour }}</td>
                         <td title="{{ item.StartTime }}">{{ item.StartTime }}</td>
                         <td title="{{ item.EndTime }}">{{ item.EndTime }}</td>
                     </tr>
