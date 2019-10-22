@@ -6,6 +6,7 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, MyPop, $window) {
     vm.page = { pageIndex: 1, pageSize:10, maxSize: 10 };
     vm.Search = Search;
     vm.DataBind = DataBind;
+    vm.SelectDocNo = SelectDocNo;//打开单据选择列表
     vm.Export = Export;
     Init();
     //DataBind();
@@ -40,6 +41,19 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, MyPop, $window) {
             $window.location.href = data.File;
         });
         vm.page.pageSize = 10;
+    }
+    //打开单据选择列表
+    function SelectDocNo() {
+        var resolve = {
+            ItemData: function () {
+                return {};
+            }
+        }
+        Dialog.open("RiskPreDialog", resolve).then(function (data) {
+            console.log(data);
+        }).catch(function (reason) {
+
+        });
     }
 }
 ])
