@@ -42,7 +42,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         vm.MoList = data;
     });
     //工序获取
-    vm.promise = AjaxService.GetPlans("MESBoProcedure", { name: "IsUse", value: true }).then(function (data) {
+    vm.promise = AjaxService.GetPlans("MESBoProcedure", { name: "IsUse", value: 1 }).then(function (data) {
         vm.ProcedureList = data;
     });
     //MES用户获取 -非离职
@@ -107,6 +107,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             for (var i = 0, len = vm.SelectedArrange.Dtl.length; i < len; i++) {
                 vm.SelectedArrange.Dtl[i].User = { UserNo: vm.SelectedArrange.Dtl[i].HrUserNo, Name: vm.SelectedArrange.Dtl[i].HrUserName };
             }
+            CalPer();
             vm.MesLis = [];
         }
     }
@@ -140,6 +141,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
 
     function CalPer() {
         vm.SelectedArrange.ActPerson = vm.SelectedArrange.Dtl.length;
+        vm.SelectedArrange.StandPerson = parseInt(vm.SelectedArrange.StandPerson);
         vm.SelectedArrange.DutyType = vm.SelectedArrange.ActPerson == vm.SelectedArrange.StandPerson ? "满勤" :
             (vm.SelectedArrange.ActPerson > vm.SelectedArrange.StandPerson ? "超员" : "缺勤");
     }
@@ -170,6 +172,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
 
     //保存排班
     function SaveArrange() {
+        CalPer();
         var en = angular.copy(vm.SelectedArrange);
         var list = [];
         for (var j = 0, len2 = en.Dtl.length; j < len2; j++) {
@@ -191,7 +194,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         if (en.Id == -1) {
             en.SNColumns = JSON.stringify(SNList);
         }
-        //console.log(en);
+        console.log(en);
         vm.promise = AjaxService.ExecPlan("MESMoLineArrange", "save", en).then(function (data) {
             if (data.data[0].MsgType == "Seccuss") {
                 toastr.success("排班保存成功");
