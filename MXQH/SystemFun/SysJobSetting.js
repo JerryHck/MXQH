@@ -47,6 +47,7 @@ function ($scope, $rootScope, toastr, AjaxService) {
     vm.JobDelete = JobDelete;
     vm.SerLog = SerLog;
     vm.checkToday = checkToday;
+    vm.RunJob = RunJob;
 
     AjaxService.GetPlans("PlanEntity").then(function (data) {
         vm.EnList = data;
@@ -130,6 +131,16 @@ function ($scope, $rootScope, toastr, AjaxService) {
         vm.isEdit = true;
         vm.isCopy = false;
         $(".insert-job").addClass("active");
+    }
+
+    //执行job
+    function RunJob(name) {
+        var en = {};
+        en.JobName = name;
+        vm.promise = AjaxService.Custom("RunJob", en).then(function (data) {
+            toastr.success('执行成功');
+            PageChange();
+        })
     }
 
     //查看日志
