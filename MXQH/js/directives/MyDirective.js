@@ -120,6 +120,7 @@ angular.module('MyDirective')
             ngModel: '=',
             ngDisabled: '=',
             searchEnabled: '=',
+            srcData:'=',
             clear: '=',
             selectClass: '@',
             autoFirst: '@',
@@ -166,17 +167,30 @@ angular.module('MyDirective')
 
         function IntiData(index) {
             var list2 = angular.copy(list);
-            AjaxService.GetPlans(enName.EntityName, list2).then(function (data2) {
-                ListData = angular.copy(data2);
-                if (data2.length > 0 && scope.autoFirst.toLowerCase() == 'true' && !scope.ngModel) {
-                    scope.ngModel = enName.ReturnColumn == undefined || enName.ReturnColumn == '' ? data2[0] : data2[0][enName.ReturnColumn];
+            if (scope.srcData && scope.srcData.length > 0) {
+                ListData = angular.copy(scope.srcData);
+                if (scope.autoFirst.toLowerCase() == 'true' && !scope.ngModel) {
+                    scope.ngModel = enName.ReturnColumn == undefined || enName.ReturnColumn == '' ? ListData[0] : ListData[0][enName.ReturnColumn];
                 }
                 scope.limit = scope.limit || ListData.length;
                 scope.limit = scope.limit == 0 ? 1 : scope.limit;
                 //超过100时限定
                 scope.limit = scope.limit > 100 ? 100 : scope.limit;
                 InitSerData(1, ListData.length);
-            });
+            }
+            else {
+                AjaxService.GetPlans(enName.EntityName, list2).then(function (data2) {
+                    ListData = angular.copy(data2);
+                    if (data2.length > 0 && scope.autoFirst.toLowerCase() == 'true' && !scope.ngModel) {
+                        scope.ngModel = enName.ReturnColumn == undefined || enName.ReturnColumn == '' ? data2[0] : data2[0][enName.ReturnColumn];
+                    }
+                    scope.limit = scope.limit || ListData.length;
+                    scope.limit = scope.limit == 0 ? 1 : scope.limit;
+                    //超过100时限定
+                    scope.limit = scope.limit > 100 ? 100 : scope.limit;
+                    InitSerData(1, ListData.length);
+                });
+            }
         }
 
         function InitSerData(index, total) {

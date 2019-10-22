@@ -42,7 +42,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         vm.MoList = data;
     });
     //工序获取
-    vm.promise = AjaxService.GetPlans("MESBoProcedure").then(function (data) {
+    vm.promise = AjaxService.GetPlans("MESBoProcedure", { name: "IsUse", value: true }).then(function (data) {
         vm.ProcedureList = data;
     });
     //MES用户获取 -非离职
@@ -76,10 +76,22 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 }
             }
             if (have) {
-                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: '已扫描并添加[' + vm.KeyUser.Name + ']' });
-                vm.NewPerItem = { User: { UserNo: vm.KeyUser.UserNo, Name: vm.KeyUser.Name } };
-                vm.SelectedArrange.Dtl.push(vm.NewPerItem);
-                CalPer();
+                var DtlHave = false;
+                for (var j = 0, len1 = vm.SelectedArrange.Dtl.length; j < len1; j++) {
+                    if (vm.HrUserNo == vm.SelectedArrange.Dtl[j].User.UserNo) {
+                        DtlHave = true; break;
+                    }
+                }
+                if (DtlHave) {
+                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: '人员[' + vm.KeyUser.Name + ']已经扫描， 不可以再添加' });
+
+                }
+                else {
+                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: '已成功扫描并添加[' + vm.KeyUser.Name + ']' });
+                    vm.NewPerItem = { User: { UserNo: vm.KeyUser.UserNo, Name: vm.KeyUser.Name } };
+                    vm.SelectedArrange.Dtl.push(vm.NewPerItem);
+                    CalPer();
+                }
             }
             else {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: '该用户工号[' + vm.HrUserNo + ']不存在' });
@@ -175,13 +187,17 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         en.Dtl = undefined;
         en.PerList = JSON.stringify(list);
         en.TempColumns = "PerList";
+        var SNList = [{ name: "MesLineArrange", col: "DocNo", parm: "DocNo" }];
+        if (en.Id == -1) {
+            en.SNColumns = JSON.stringify(SNList);
+        }
         //console.log(en);
         vm.promise = AjaxService.ExecPlan("MESMoLineArrange", "save", en).then(function (data) {
             if (data.data[0].MsgType == "Seccuss") {
                 toastr.success("排班保存成功");
                 vm.editArrange = false;
                 vm.IsCopy = false;
-                vm.SelectedArrange = undefined;
+                //vm.SelectedArrange = undefined;
                 vm.NewArrange = {};
                 GetMoArrange();
             }
