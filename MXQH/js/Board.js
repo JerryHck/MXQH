@@ -11,7 +11,7 @@ angular.module('Board', [
     'ui.bootstrap',
     'oc.lazyLoad',
     'AjaxServiceModule',
-    'MyDirective',
+    'AppSet',
     'FileService'
 ]);
 

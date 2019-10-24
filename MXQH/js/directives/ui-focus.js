@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('AppSet')
   .directive('uiFocus', function($timeout, $parse) {
     return {
       link: function(scope, element, attr) {

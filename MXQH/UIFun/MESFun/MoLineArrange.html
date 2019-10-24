@@ -141,15 +141,15 @@
                                                 </div>
                                                 <div class="form-group-xs col-md-12 padder-xs">
                                                     <div class="col-md-4 padder-xxs">
-                                                        <label class="col-lg-5 padder-xxs control-label text-info">到岗情况:</label>
-                                                        <div class="col-lg-7 padder-xxs">
-                                                            <input type="text" disabled class="form-control" ng-model="line.SelectedArrange.DutyType" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4 padder-xxs">
                                                         <label class="col-lg-5 padder-xxs control-label text-info">标配人数:</label>
                                                         <div class="col-lg-7  padder-xxs">
                                                             <input type="number" disabled class="form-control" ng-model="line.SelectedArrange.StandPerson" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 padder-xxs">
+                                                        <label class="col-lg-5 padder-xxs control-label text-info">需求人数:</label>
+                                                        <div class="col-lg-7 padder-xxs">
+                                                            <input type="number" ng-disabled="!line.editArrange" class="form-control" ng-model="line.SelectedArrange.NeedPerson" required/>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4 padder-xxs">
@@ -183,13 +183,13 @@
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-lg-5 padder-xxs control-label text-info">实际工时(人):</label>
                                                         <div class="col-lg-7  padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.ActHour.$invalid }">
-                                                            <input type="text" ng-disabled="!line.editArrange" class="form-control" name="ActHour" placeholder="实际工时" ng-model="line.SelectedArrange.ActHour" required />
+                                                            <input type="number" ng-disabled="!line.editArrange" class="form-control" name="ActHour" placeholder="实际工时" ng-model="line.SelectedArrange.ActHour" required />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-lg-5 padder-xxs control-label text-info">计划排产量:</label>
                                                         <div class="col-lg-7  padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.PlanCount.$invalid }">
-                                                            <input type="text" ng-disabled="!line.editArrange" class="form-control" name="PlanCount" placeholder="计划排产量" ng-model="line.SelectedArrange.PlanCount" required />
+                                                            <input type="number" ng-disabled="!line.editArrange" class="form-control" name="PlanCount" placeholder="计划排产量" ng-model="line.SelectedArrange.PlanCount" required />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4 padder-xxs">

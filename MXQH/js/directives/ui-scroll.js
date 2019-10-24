@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('AppSet')
   .directive('uiScroll', ['$location', '$anchorScroll', function($location, $anchorScroll) {
     return {
       restrict: 'AC',

@@ -1,7 +1,7 @@
 ﻿'use strict'
-angular.module('MyDirective', [])
+angular.module('AppSet', [])
 
-angular.module('MyDirective')
+angular.module('AppSet')
 .directive('ngConfirm', function () {
     return {
         restrict: 'A',
@@ -12,7 +12,6 @@ angular.module('MyDirective')
         link: link
     };
     function link(scope, element, attr) {
-
         scope.$watchCollection(attr.ngConfirm, function (options) {
             var en = options || {};
             en.title = en.title || "确认";

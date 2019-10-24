@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('AppSet')
 .directive('uiToggleClass', ['$timeout', '$document', function($timeout, $document) {
     return {
       restrict: 'AC',

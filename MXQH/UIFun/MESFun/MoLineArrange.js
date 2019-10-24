@@ -141,9 +141,9 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
 
     function CalPer() {
         vm.SelectedArrange.ActPerson = vm.SelectedArrange.Dtl.length;
-        vm.SelectedArrange.StandPerson = parseInt(vm.SelectedArrange.StandPerson);
-        vm.SelectedArrange.DutyType = vm.SelectedArrange.ActPerson == vm.SelectedArrange.StandPerson ? "满勤" :
-            (vm.SelectedArrange.ActPerson > vm.SelectedArrange.StandPerson ? "超员" : "缺勤");
+        vm.SelectedArrange.NeedPerson = parseInt(vm.SelectedArrange.NeedPerson);
+        vm.SelectedArrange.DutyType = vm.SelectedArrange.ActPerson == vm.SelectedArrange.NeedPerson ? "满勤" :
+            (vm.SelectedArrange.ActPerson > vm.SelectedArrange.NeedPerson ? "超员" : "缺勤");
     }
 
     function AddArrange() {

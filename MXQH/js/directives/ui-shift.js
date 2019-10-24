@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('AppSet')
   .directive('uiShift', ['$timeout', function($timeout) {
     return {
       restrict: 'A',

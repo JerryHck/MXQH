@@ -9,10 +9,11 @@ angular.module('access', [
     'ngStorage',
     'ui.router',
     'ui.bootstrap',
+    //'ui.load',
     'oc.lazyLoad',
     'AjaxServiceModule',
-    'MyDirective',
-    'FileService'
+    'AppSet',
+    'FileService',
 ]);
 
 var app = angular.module('access');
@@ -115,6 +116,34 @@ function Config($stateProvider, $urlRouterProvider, Version) {
                   function ($ocLazyLoad) {
                       return $ocLazyLoad.load(['UIFun/SDKFun/SdkDownloadLink.js' + "?v=" + Version]);
                   }]
+            }
+        })
+        //---------------------------------------------MES组装看板
+        .state('AssProBoard', {
+            url: '/AssProBoard',
+            controllerAs: 'wo',
+            controller: 'WorkOrderBoardCtrl',
+            templateUrl: 'UIFun/Board/WorkOrderBoard.html' + "?v=" + Version,
+            //resolve: {
+            //    deps: ['$ocLazyLoad',
+            //      function ($ocLazyLoad) {
+            //          return $ocLazyLoad.load([
+            //              'UIFun/Board/WorkOrderBoard.js' + "?v=" + Version,
+            //              'UIFun/Board/WorkOrderBoardAss.js' + "?v=" + Version]);
+            //      }]
+            //},
+            resolve: {
+                deps: ['$ocLazyLoad',
+                        function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'ui.select',
+                                'UIFun/Board/WorkOrderBoard.js' + "?v=" + Version,
+                            ]).then(
+                                function () {
+                                    return $ocLazyLoad.load('UIFun/Board/WorkOrderBoardAss.js' + "?v=" + Version);
+                                }
+                            );
+                        }]
             }
         })
 }

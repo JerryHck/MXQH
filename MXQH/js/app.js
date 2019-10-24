@@ -22,6 +22,6 @@ angular.module('app', [
     'pascalprecht.translate',
     'AjaxServiceModule',
     'ui.router.requirePolyfill',
-    'MyDirective',
+    'AppSet',
     'FileLoad'
 ]);

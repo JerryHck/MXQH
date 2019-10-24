@@ -48,7 +48,7 @@
                                             <span class="block" ng-click="use.SelectEn(item)">
                                                 <span class="text-lg" ng-bind-html="item.UserNo | highlight: use.EntityQuery"></span>
                                                 <span ng-if="item.IsOn" class="pull-right"><i class="text-color h7">在线</i></span>
-                                                <span ng-if="item.State=='E'" class="pull-right"><i class="font-x font-yellow-gold h7">停用</i></span>
+                                                <span ng-if="item.State=='E'" class="pull-right"><i class="text-danger h7">停用</i></span>
                                             </span>
                                             <btn class="pull-right text-success" title="重置账号密码" ng-click="use.Reset(item)"><i class="icon-key"></i></btn>
                                             <small class="text-muted">

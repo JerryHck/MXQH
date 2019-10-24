@@ -24,6 +24,7 @@
                             <td title="线别" style= "width:100px ">线别</td>
                             <td title="拉长" style= "width:100px ">拉长</td>
                             <td title="标配人数" style= "width:100px ">标配人数</td>
+                            <td title="需求人数" style="width:100px ">需求人数</td>
                             <td title="实到人数" style= "width:100px ">实到人数</td>
                             <td title="到岗情况" style= "width:100px ">到岗情况</td>
                             <td title="实际工时(人)" style= "width:100px ">实际工时(人)</td>
@@ -38,8 +39,9 @@
                         <td title="{{ item.Line.Name }}">{{ item.Line.Name }}</td>
                         <td title="{{ item.MesUser.Name }}">{{ item.MesUser.Name }}</td>
                         <td title="{{ item.StandPerson }}">{{ item.StandPerson }}</td>
+                        <td title="{{ item.NeedPerson }}">{{ item.NeedPerson }}</td>
                         <td title="{{ item.ActPerson }}">{{ item.ActPerson }}</td>
-                        <td title="{{ item.DutyType }}" ng-class="{'bg-success':item.StandPerson==item.ActPerson, 'bg-danger':item.StandPerson>item.ActPerson, 'bg-warning':item.StandPerson < item.ActPerson }">{{ item.DutyType }}</td>
+                        <td title="{{ item.DutyType }}" ng-class="{'bg-success':item.NeedPerson==item.ActPerson, 'bg-danger':item.NeedPerson>item.ActPerson, 'bg-warning':item.NeedPerson < item.ActPerson }">{{ item.DutyType }}</td>
                         <td title="{{ item.ActHour }}">{{ item.ActHour }}</td>
                         <td title="{{ item.StartTime }}">{{ item.StartTime }}</td>
                         <td title="{{ item.EndTime }}">{{ item.EndTime }}</td>
