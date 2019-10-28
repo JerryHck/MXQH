@@ -127,10 +127,14 @@
                                         </div>
                                         <div class="panel panel-default panel-body col-md-12 m-t-xs">
                                             <div class="list-group no-radius no-border no-bg m-b-none">
-                                                <div ng-repeat="pro in pr.SelectedRo.Procedure | orderBy:'pro.OrderNum'" class="list-group-item col-md-12">
+                                                <div ng-repeat="pro in pr.SelectedRo.Procedure | orderBy:'pro.OrderNum'" class="list-group-item col-md-12"
+                                                     ng-drop="true" ng-drop-success="pr.Drop($data,$index)">
                                                     <div class="col-md-8">
                                                         <a class="text-success" ng-if="!pr.editRoute" ng-click="pr.OpenProcedure(pro, $index)"><i class="glyphicon glyphicon-search"></i></a>
+
+                                                        <i class="glyphicon glyphicon-move text-danger" ng-if="pr.editRoute" ng-drag="true" ng-drag-data="pro" ng-drag-success="pr.Drag($data,$index)"></i>
                                                         <a class="text-success" ng-if="pr.editRoute" ng-click="pr.OpenProcedure(pro, $index)"><i class="glyphicon glyphicon-edit"></i></a>
+
                                                         {{ pro.ProcedureInfo.Name }}
                                                     </div>
                                                     <a ng-if="pr.editRoute" ng-click='pr.RoProDelete($index, pro)' class="pull-right text-danger">
