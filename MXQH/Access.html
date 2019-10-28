@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-ng-app="access">
 <head>
     <meta charset="utf-8" />
@@ -6,24 +6,17 @@
     <meta name="description" content="Auctus | 系统管理平台" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link href="css/plugin.css?v=f572311efd" rel="stylesheet" />
-    <link href="css/app.css?v=efcafc823a" rel="stylesheet" />
+    <link href="css/app.css?v=327868723b" rel="stylesheet" />
 
 </head>
 <body>
     <div class="app" style="min-height: 100%;">
-        <div class="row no-padder">
-            <!--<div class="col-md-1">
-                <div><img style="margin-top:22px;width:150px" src="Content/images/logo.png" /></div>
-            </div>-->
-            <div class="col-md-12 no-padder">
-                <div ui-view></div>
-            </div>
-        </div>
+        <div ui-view class="content-full"></div>
     </div>
     <div style="height: 50px; margin-top: -60px; text-align:center" ng-include="'Basic/blocks/page_footer.html?v=0a5d3da834'"></div>
     <script src="js/plugin.min.js?v=9cbe0a8233"></script>
     <script src="appData.js?v=f6228fe982"></script>
-    <script src="js/dobefore.min.js?v=b89a429cf2"></script>
+    <script src="js/dobefore.min.js?v=db4fd0a771"></script>
     <script>
         check();
         function check() {

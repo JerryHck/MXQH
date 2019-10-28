@@ -25,6 +25,9 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     vm.ProcOk = ProcOk;
     vm.Cancel = Cancel;
 
+    vm.Drop = Drop;
+    vm.Drag = Drag;
+
     vm.Delete = Delete;
 
     function Search() {
@@ -238,6 +241,18 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 GetMateRouter();
             }
         })
+    }
+
+    // drop
+    function Drop(rol, index) {
+        var en = angular.copy(rol);
+        vm.SelectedRo.Procedure.splice(vm.DragIndex, 1);
+        vm.SelectedRo.Procedure.splice(index, 0, en);
+    }
+
+    //
+    function Drag(rol, index) {
+        vm.DragIndex = index;
     }
 
     //验证是否存在
