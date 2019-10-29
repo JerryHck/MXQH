@@ -20,6 +20,8 @@
             GetPlan: GetPlan,
             //获得实体资料-列表
             GetPlans: GetPlans,
+            //同步获取数据
+            GetPlansWait:GetPlansWait,
             GetPlansTop:GetPlansTop,
             //分页获取实体资料
             GetPlansPage: GetPlansPage,
@@ -81,7 +83,9 @@
             PrintMulti: PrintMulti,
             GetComPortList: GetComPortList,
             GetComWeigth: GetComWeigth,
-            LightPrint:LightPrint,
+            LightPrint: LightPrint,
+            //打印PDF
+            PrintPdf:PrintPdf,
             //播放声音
             PlayVoice: PlayVoice,
 
@@ -114,6 +118,16 @@
         //获得计划资料-列表
         function GetPlans(name, json, limitCol) {
             return plan(name, json, "GetPlans", undefined, undefined, limitCol);
+        }
+
+        //获得计划资料-同步
+        function GetPlansWait(name, json, limitCol) {
+            var url = serviceUrl + generic;
+            var en = {};
+            en.planName = name;
+            en.strJson = JSON.stringify(convertArray(json)) || '[]';
+            en.limitUserCol = limitCol;
+            return AjaxWait(url, en, "GetPlans")
         }
 
         function GetPlansTop(name, json, top, limitCol) {
@@ -347,6 +361,12 @@
             return httpFun(q, url, en, type);
         }
 
+        //同步 AJAX
+        function AjaxWait(url, parameter, Method, type, service) {
+            var en = { method: Method, Json: JSON.stringify(parameter), service: service || '' };
+            return HTTPWait(url, en, type);
+        }
+
         function TbAjax(q, url, parameter, Method, type, service) {
             var en = { method: Method, Json: JSON.stringify(parameter), service: service || '' };
             return httpTbFun(q, url, en, type);
@@ -387,6 +407,40 @@
                     }
                 });
             return q.promise;
+        }
+
+        function HTTPWait(url, postData, type) {
+            var TbData;
+            $.ajax({
+                type: type || 'post',
+                url: url + '?v=' + Math.random(),
+                async: false,  //使用同步的方式,true为异步方式
+                data: postData,
+                dataType: "json",
+                beforeSend: function (request) {
+                    if ($cookieStore.get('user-token')) {
+                        request.setRequestHeader('x-session-token', $cookieStore.get('user-token'));
+                    }
+                    request.setRequestHeader('x-function', $cookieStore.get('active-function') || '');
+                },
+                success: function (data) {
+                    //console.info(data);
+                    TbData = data;
+                },
+                error: function (data) {
+                    if (data.status == 401) {
+                        $cookieStore.remove('user-token');
+                        if ($window.location.href != appUrl + 'Access.html#!/login') {
+                            $window.location.href = appUrl + 'Access.html#!/login';
+                        }
+                    } else {
+                        console.log(data);
+                        var m = data.data ? data.data.split("。")[0].replace(/System.Exception:/, '') : "错误";
+                        toastr.error(m, '服务错误');
+                    }
+                }
+            });
+            return TbData;
         }
 
         function getEn(name, shortName, json)
@@ -445,6 +499,15 @@
         function PrintMulti(templateId, TS, postData, printerName, hostIp) {
             var d = $q.defer();
             SocketSend("PrintMulti", templateId, TS, postData, printerName, hostIp).then(function (data) {
+                d.resolve(data);
+            }, function (mes) { d.reject(mes); });
+            return d.promise;
+        }
+
+        //打印PDF
+        function PrintPdf(path, printerName, hostIp) {
+            var d = $q.defer();
+            SocketSend("PrintPdf", undefined, path, undefined, printerName, hostIp).then(function (data) {
                 d.resolve(data);
             }, function (mes) { d.reject(mes); });
             return d.promise;

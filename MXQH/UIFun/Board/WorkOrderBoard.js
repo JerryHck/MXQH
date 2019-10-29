@@ -44,7 +44,8 @@ function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window
 
 
     function Offline() {
-        $window.location.href = appUrl + 'Access.html#!/AssProBoard';
+        //$window.location.href = appUrl + 'Access.html#!/AssProBoard?v=' + new Date();
+        $window.open(appUrl + 'Access.html#!/AssProBoard?v=' + new Date());
     }
 
     function Begin() {
