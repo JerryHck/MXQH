@@ -75,7 +75,6 @@
     <Content Include="css\font-awesome.min.css" />
     <Content Include="CustomFun\qlBadDialog.html" />
     <Content Include="CustomFun\qlBadDialog.js" />
-    <Content Include="CustomFun\UISelect\BarcodeANDTemplate.html" />
     <Content Include="Data\Handler\New.html" />
     <Content Include="Data\Handler\New.js" />
     <Content Include="index.html" />
