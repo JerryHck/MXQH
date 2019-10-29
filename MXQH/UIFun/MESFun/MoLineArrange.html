@@ -148,8 +148,8 @@
                                                     </div>
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-lg-5 padder-xxs control-label text-info">需求人数:</label>
-                                                        <div class="col-lg-7 padder-xxs">
-                                                            <input type="number" ng-disabled="!line.editArrange" class="form-control" ng-model="line.SelectedArrange.NeedPerson" required/>
+                                                        <div class="col-lg-7 padder-xxs" ng-class="{ 'has-error' : line.MainForm.NeedPerson.$invalid }">
+                                                            <input type="number" name="NeedPerson" ng-disabled="!line.editArrange" class="form-control" ng-model="line.SelectedArrange.NeedPerson" required/>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4 padder-xxs">
