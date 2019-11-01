@@ -1,0 +1,28 @@
+﻿<div class="py-xl-0 pt-xl-0" ng-class="{ 'input-group' : clear }">
+    <ui-select ng-model="$parent.ngModel" ng-change="ValueChange()" theme="bootstrap" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">
+        <ui-select-match placeholder="{{ placeholder }}">
+            <span ng-if="$parent.funType==2">
+                {{ $select.selected.Parent.Sys.SysName }}/{{ $select.selected.Parent.FunName }}/{{ $select.selected.FunName }}
+            </span>
+            <span ng-if="$parent.funType==1">
+                {{ $select.selected.Sys.SysName }}/ {{ $select.selected.FunName }}
+            </span>
+        </ui-select-match>
+        <ui-select-choices repeat="item.FunNo as item in data | filter: $select.search" refresh="refresh($select.search)">
+            <div class="h6" ng-if="$parent.funType==2">
+                <span ng-bind-html="item.Parent.Sys.SysName | highlight: $select.search"></span>/
+                <span ng-bind-html="item.Parent.FunName | highlight: $select.search"></span>/
+                <span class="h5" ng-bind-html="item.FunName | highlight: $select.search"></span>
+            </div>
+            <div class="h6" ng-if="$parent.funType==1">
+                <span ng-bind-html="item.Sys.SysName | highlight: $select.search"></span>/
+                <span ng-bind-html="item.FunName | highlight: $select.search"></span>
+            </div>
+        </ui-select-choices>
+    </ui-select>
+    <span class="input-group-btn" ng-if="clear">
+        <button ng-click="$parent.ngModel= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+            <span class="glyphicon glyphicon-trash text-danger"></span>
+        </button>
+    </span>
+</div>
