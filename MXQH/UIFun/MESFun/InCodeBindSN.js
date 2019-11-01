@@ -244,6 +244,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
         list.push(data.SNCode)
         postData.ParaData = JSON.stringify(data);
         postData.OutList = list;
+        console.log(postData.ParaData);
         AjaxService.LightPrint(teData.TemplateId, teData.TemplateTime, postData).then(function (data) {
             console.log(data);
         }, function (err) {

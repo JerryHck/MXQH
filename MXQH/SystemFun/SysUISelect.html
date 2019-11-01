@@ -23,6 +23,7 @@
                     <td style="width:100px ">选中显示</td>
                     <td style="width:120px ">Placeholder</td>
                     <td style="width:150px ">备注</td>
+                    <td style="width:100px">创建人</td>
                 </tr>
             </thead>
             <tr ng-repeat= "item in u.List ">
@@ -38,6 +39,8 @@
                 <td>{{ item.SelectedColumn }}</td>
                 <td>{{ item.Placeholder }}</td>
                 <td>{{ item.Remark }}</td>
+                <td>{{ item.CreateUser }}</td>
+                
             </tr>
         </table>
         <div class= "col-md-12 text-center " ng-if= "u.page.total>u.page.size ">

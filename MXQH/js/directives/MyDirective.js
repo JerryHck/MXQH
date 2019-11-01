@@ -294,7 +294,7 @@ angular.module('AppSet')
         }
     }
 }])
-.directive('functionSelect', ['AjaxService', 'appUrl', function (AjaxService, appUrl) {
+.directive('functionSelect', ['AjaxService', 'appUrl', 'Version', function (AjaxService, appUrl, Version) {
     return {
         restrict: 'A',
         require: 'ngModel',
@@ -308,10 +308,7 @@ angular.module('AppSet')
             ngName: '@',
             ngChange:'&'
         },
-        templateUrl: function (element, attrs) {
-            var url = appUrl + "CustomFun/UISelect/FunSelect.html?date=" + (new Date()).toString();
-            return url;
-        },
+        templateUrl:  appUrl + "js/directives/FunSelect.html?v=" + Version,
         link: link
     };
 
@@ -652,8 +649,8 @@ angular.module('AppSet')
     }
 }])
 //文件导入
-.directive('importSheetJs', ['$q', 'AjaxService', 'toastr', 'FileLoad', 'ToJsonWorker', 'Version',
-    function ($q, AjaxService, toastr, FileLoad, ToJsonWorker, Version) {
+.directive('importSheetJs', ['$q', 'AjaxService', 'toastr', 'FileLoad', 'ToJsonWorker', 'Version', 'appUrl',
+    function ($q, AjaxService, toastr, FileLoad, ToJsonWorker, Version, appUrl) {
         return {
             restrict: 'A',
             //require:'ngModel',
@@ -664,7 +661,7 @@ angular.module('AppSet')
                 ngComplete: '&'
             },
             //templateUrl: 'js/directives/ImportSheetJs.html',
-            templateUrl: 'js/directives/ImportSheetJs.html?v=' + Version,
+            templateUrl: appUrl + 'js/directives/ImportSheetJs.html?v=' + Version,
             link: function ($scope, elm) {
                 $scope.opts = $scope.opts || {};
                 $scope.fileType = $scope.fileType || "*";
@@ -813,8 +810,8 @@ angular.module('AppSet')
             }
         }
     }])
-.directive('fileUpload', ['$window', 'Version', 'toastr', 'FileService',
-    function ($window, Version, toastr, FileService) {
+.directive('fileUpload', ['$window', 'Version', 'toastr', 'FileService', 'appUrl',
+    function ($window, Version, toastr, FileService, appUrl) {
         return {
             restrict: 'A',
             scope: {
@@ -826,7 +823,7 @@ angular.module('AppSet')
                 fileData: '=',
                 ngComplete: '&'
             },
-            templateUrl: 'js/directives/UploadFile.html?v=' + Version,
+            templateUrl: appUrl + 'js/directives/UploadFile.html?v=' + Version,
             controller: ['$scope', function ($scope) {
                 var option = {};
                 $scope.fileData = $scope.fileData || {};
