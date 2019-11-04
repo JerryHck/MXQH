@@ -11,13 +11,9 @@ function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
-    vm.Ser = { Now: new Date().Format('yyyy-MM-dd'), StartDate: '08:00', EndDate: '23:00' };
+    //vm.Ser = { Now: new Date().Format('yyyy-MM-dd'), StartDate: '08:00', EndDate: '23:00' };
 
-    //vm.Ser = { WorkOrder: 'AMO-30190805004', Now: '2019-09-16', StartDate: '08:00', EndDate: '23:00' };
-
-    vm.IsBefore = $state.current.name == "AssProBoard";
-
-    console.log($state)
+    vm.Ser = { WorkOrder: 'AMO-30190805004', Now: '2019-09-16', StartDate: '08:00', EndDate: '23:00' };
 
     vm.DateOp = {
         //formatTime: 'H:i',
