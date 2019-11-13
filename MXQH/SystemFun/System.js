@@ -27,7 +27,7 @@ function ($scope, $http, Dialog, AjaxService) {
 
     function SystemInit() {
         //系统数据初始化
-        AjaxService.LoginAction("ReInit");
+       vm.promise = AjaxService.LoginAction("ReInit");
     }
 
     //編輯

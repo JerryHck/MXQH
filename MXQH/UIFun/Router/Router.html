@@ -1,0 +1,175 @@
+﻿<style>
+    .min-height {
+        height: 2000px;
+    }
+
+    .btn {
+        z-index: 2;
+    }
+
+    .pa {
+        position: absolute;
+    }
+
+    .fixed-node {
+        position: absolute;
+        top: 80px;
+        left: 150px;
+    }
+
+    #end-node {
+        left: 150px;
+        top: 700px;
+    }
+
+    .panel-node {
+        width: 150px;
+        display: inline-block;
+        margin: auto 25px;
+    }
+
+    .panel-node-list {
+        padding: 10px 10px;
+    }
+</style>
+
+<div id="RouterApp">
+    <div class="container-fluid">
+        <div class="row">
+            <div id="side-buttons" class="col-md-1 bg-light min-height">
+                <div>
+                    <h5>节点类型列表</h5>
+                    <a class="btn btn-success btn-controler" href="#" data-template="tpl-audio" role="button">
+                        <i class="fa fa-play-circle-o" aria-hidden="true"></i>
+                        语音播报
+                    </a>
+                    <a class="btn btn-success btn-controler" href="#" data-template="tpl-menu" role="button">
+                        <i class="fa fa-navicon" aria-hidden="true"></i>
+                        菜单
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-11 bg-green-light min-height" id="drop-bg">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script id="tpl-audio" type="text/html">
+    <div class='pa' id='{{id}}' style='top:{{top}}px;left:{{left}}px'>
+        <a class='btn btn-default' href='#' role='button'>
+            放音
+            <span class="pull-right m-l-xs text-danger delete-node" data-type="deleteNode" data-id="{{id}}">X<i class="glyphicon glyphicon-remove-circle"></i></span>
+        </a>
+    </div>
+</script>
+
+<script id="tpl-demo" type="text/html">
+    <div class='pa' id='{{id}}' style='top:{{top}}px;left:{{left}}px'>
+        <a class='btn btn-default' href='#' role='button'>
+            {{name}}
+            <span class="pull-right m-l-xs text-danger"><i data-type="deleteNode" data-id="{{id}}" class="glyphicon glyphicon-remove-circle"></i></span>
+        </a>
+    </div>
+</script>
+
+<script id="tpl-Announce" type="text/html">
+    <div class='pa' id='{{id}}' style='top:{{top}}px;left:{{left}}px'>
+        <a class='btn btn-default' href='#' role='button'>
+            <i class="fa fa-play-circle-o" aria-hidden="true"></i>
+            {{name}}
+            <i data-type="deleteNode" data-id="{{id}}" class="pull-right m-l-xs text-danger glyphicon glyphicon-remove-circle"></i>
+        </a>
+    </div>
+</script>
+
+<script id="tpl-menu" type="text/html">
+    <div class="pa" id='{{id}}' style='top:{{top}}px;left:{{left}}px'>
+        <div class="panel panel-default panel-node panel-info">
+            <div id='{{id}}-heading' data-id="{{id}}" class="panel-heading">
+                菜单
+                <span class="pull-right m-l-xs text-danger" data-type="deleteNode" data-id="{{id}}"><i class="glyphicon glyphicon-remove-circle"></i></span>
+            </div>
+            <ul class="list-group">
+                <li id="{{generateId}}" data-pid="{{id}}" class="list-group-item panel-node-list">
+                    PASS
+                </li>
+                <li id="{{generateId}}" data-pid="{{id}}" class="list-group-item panel-node-list">
+                    NG
+                </li>
+            </ul>
+        </div>
+    </div>
+</script>
+
+<div id="tpl-Root">
+    <div class='pa' id='{{id}}' style='top:{{top}}px;left:{{left}}px'>
+        <a class='btn btn-success' href='#' role='button'>
+            {{name}}
+            <span class="pull-right m-l-xs text-danger"><i data-type="deleteNode" data-id="{{id}}" class="glyphicon glyphicon-remove-circle"></i></span>
+        </a>
+    </div>
+</div>
+
+
+<script type="text/html">
+    <div class='pa' id='{{id}}' style='top:{{top}}px;left:{{left}}px'>
+        <a class='btn btn-success' href='#' role='button'>
+            {{name}}
+            <span class="pull-right m-l-xs text-danger"><i data-type="deleteNode" data-id="{{id}}" class="glyphicon glyphicon-remove-circle"></i></span>
+        </a>
+    </div>
+</script>
+
+<script id="tpl-Exit" type="text/html">
+    <div class='pa' id='{{id}}' style='top:{{top}}px;left:{{left}}px'>
+        <a class='btn btn-danger' href='#' role='button'>
+            {{name}}
+            <span class="delete-node pull-right" data-type="deleteNode" data-id="{{id}}">X</span>
+        </a>
+    </div>
+</script>
+
+<script id="tpl-WorkTime" type="text/html">
+    <div class="pa" id='{{id}}' style='top:{{top}}px;left:{{left}}px'>
+        <div class="panel panel-default panel-node panel-info">
+            <div id='{{id}}-heading' data-id="{{id}}" class="panel-heading">
+                <i class="fa fa-calendar-times-o" aria-hidden="true"></i> {{name}}
+                <span class="delete-node pull-right" data-type="deleteNode" data-id="{{id}}">X</span>
+            </div>
+            <ul class="list-group">
+                <li id="{{id}}-onWorkTime" data-pid="{{id}}" class="list-group-item panel-node-list">
+                    工作时间
+                </li>
+                <li id="{{id}}-offWorkTime" data-pid="{{id}}" class="list-group-item panel-node-list">
+                    非工作时间
+                </li>
+            </ul>
+        </div>
+    </div>
+</script>
+
+<script id="tpl-Menu" type="text/html">
+    <div class="pa" id='{{id}}' style='top:{{top}}px;left:{{left}}px'>
+        <div class="panel panel-default panel-node panel-info">
+            <div id='{{id}}-heading' data-id="{{id}}" class="panel-heading">
+                <i class="fa fa-navicon" aria-hidden="true"></i> {{name}}
+                <span class="delete-node pull-right" data-type="deleteNode" data-id="{{id}}">X</span>
+            </div>
+            <ul class="list-group">
+                <li id="{{id}}-noinput" data-pid="{{id}}" class="list-group-item panel-node-list">
+                    输入超时
+                </li>
+                <li id="{{id}}-nomatch" data-pid="{{id}}" class="list-group-item panel-node-list">
+                    输入错误
+                </li>
+                {{#choices}}
+                <li id="{{id}}-key-{{key}}" data-pid="{{id}}" class="list-group-item panel-node-list">
+                    按{{key}}
+                </li>{{/choices}}
+            </ul>
+        </div>
+    </div>
+</script>

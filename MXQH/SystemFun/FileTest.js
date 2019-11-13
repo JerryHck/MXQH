@@ -28,18 +28,18 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
 
     function save() {
 
-        //var en = {};
-        //en.conn = "SKTcon";
-        //en.proc = "sp_GetIqcData";
-        //en.strJson = JSON.stringify({ InspectionId: 10144 });
-        //en.XmlName = "IQCFormReportFile.xml";
+        var en = {};
+        en.conn = "SKTcon";
+        en.proc = "sp_GetIqcData";
+        en.strJson = JSON.stringify({ InspectionId: 10144 });
+        en.XmlName = "IQCFormReportFile.xml";
 
-        //AjaxService.BasicCustom("ExecProcPDF", en).then(function (data) {
-        //    //$window.location.href = data.File;
-        //    $window.open(data.File);
-        //    //打印PDF
-        //    AjaxService.PrintPdf(data.File);
-        //});
+        AjaxService.BasicCustom("ExecProcPDF", en).then(function (data) {
+            //$window.location.href = data.File;
+            $window.open(data.File);
+            //打印PDF
+            AjaxService.PrintPdf(data.File);
+        });
 
        var data = AjaxService.GetPlansWait("AucWPOIQCCheck")
 

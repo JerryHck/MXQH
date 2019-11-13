@@ -1,26 +1,29 @@
-﻿<div class="bg-light lter b-b wrapper-md" cg-busy="dailog.promise">
-    <h3 class="m-n font-thin h3 ">
-        系统弹跳窗路由设定
-        <button class="btn btn-sm btn-success pull-left" ng-click="dailog.Insert()" ng-if="!dailog.isAdd"><i class="glyphicon glyphicon-plus"></i> 新增</button>
-        <button class="btn btn-sm btn-success pull-right m-l-md" ng-click="dailog.SaveToJson()"><i class="glyphicon glyphicon-save"></i> 保存到Json文件</button>
-        <button class="btn btn-sm btn-success pull-right m-l-md" ng-click="dailog.JsonToDb()"><i class="glyphicon glyphicon-save"></i> 从Json文件导入数据库</button>
-    </h3>
-</div>
-<div class="wrapper-md" uib-collapse="dailog.isAdd">
-    <div class="input-group m-b-xxs">
-        <input type="text" class="form-control input-sm no-border no-bg text-xs" placeholder="查询" ng-model="dailog.Ser.name" ng-keyup="dailog.KeyDonwSer($event)">
-        <span class="input-group-addon input-sm no-border no-bg" ng-click="dailog.Search()"><i class="icon-magnifier text-md m-t-xxs"></i></span>
+﻿<div class="wrapper-md" uib-collapse="dailog.isAdd" cg-busy="dailog.promise">
+    <div class="wrapper-xs">
+        <div class="form-inline">
+            <button class="btn btn-sm btn-success pull-left" ng-click="dailog.Insert()" ng-if="!dailog.isAdd"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="查询" ng-model="dailog.Ser.name" ng-keyup="dailog.KeyDonwSer($event)">
+            </div>
+            <!--<div class="form-group">
+                <input type="text" class="form-control" ng-model="mo.Ser.a_MO" placeholder="生产工单(外协)">
+            </div>-->
+            <button class="btn btn-sm btn-info " ng-click="dailog.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+        </div>
     </div>
-    <div>
-        <table class="table b-2x" cg-busy="sys.promise">
+    <div class="wrapper-xs">
+        <table class="table b-2x pad-xs" cg-busy="sys.promise">
             <thead>
                 <tr class="text-center bg-gd-dk h4">
-                    <td class="col-md-1">编辑</td>
-                    <td class="col-md-1">Dialog</td>
-                    <td class="col-md-2">html文件</td>
-                    <td class="col-md-2">依赖js文件</td>
-                    <td class="col-md-2">Controller</td>
-                    <td class="col-md-1">ControllerAs</td>
+                    <td style="width:60px">编辑</td>
+                    <td style="width:90px">弹窗名称</td>
+                    <!--<td style="width:130px">html文件</td>-->
+                    <!--<td style="width:60px">依赖js文件</td>-->
+                    <td style="width:80px">Controller</td>
+                    <td style="width:70px">创建人</td>
+                    <td style="width:90px">创建时间</td>
+                    <td style="width:70px">修改人</td>
+                    <td style="width:90px">修改时间</td>
                 </tr>
             </thead>
             <tr ng-repeat="item in dailog.List | filter: dailog.search">
@@ -28,16 +31,25 @@
                     <button class="btn btn-xs btn-primary" ng-click="dailog.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
                     <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="dailog.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
                 </td>
-                <td>{{ item.name }}</td>
-                <td>{{ item.templateUrl }}</td>
-                <td>
+                <td class="text-left">{{ item.name }}</td>
+                <!--<td class="text-left">{{ item.templateUrl }}</td>-->
+                <!--<td>
                     <div class="list-group">
                         <p class="list-group" href="" ng-repeat="js in item.LoadFiles">{{ js.LoadName }}</p>
                     </div>
-                </td>
-                <td>{{ item.controller }}</td>
+                </td>-->
+                <td class="text-left">{{ item.controller }}</td>
                 <td>
-                    {{ item.controllerAs }}
+                    {{ item.Creator }}
+                </td>
+                <td>
+                    {{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}
+                </td>
+                <td>
+                    {{ item.Modify }}
+                </td>
+                <td>
+                    {{ item.ModifyDate | date:'yyyy-MM-dd HH:mm:ss' }}
                 </td>
             </tr>
         </table>
@@ -46,8 +58,5 @@
         <div uib-pagination total-items="dailog.page.total " ng-model="dailog.page.index " items-per-page="dailog.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
              ng-change="dailog.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
     </div>
-</div>
-<div class="wrapper-xs" uib-collapse="!dailog.isAdd">
-    
 </div>
 
