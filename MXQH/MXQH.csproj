@@ -278,6 +278,8 @@
     <Content Include="Scripts\TestAngular\textAngularSetup.js" />
     <Content Include="UIFun\MESFun\WorkOrderOnLineHH.html" />
     <Content Include="UIFun\MESFun\WorkOrderOnLineHH.js" />
+    <Content Include="UIFun\PLMFun\BomList.html" />
+    <Content Include="UIFun\PLMFun\BomList.js" />
     <Content Include="UIFun\SDKFun\ATEQuery.html" />
     <Content Include="UIFun\SDKFun\ATEQuery.js" />
     <Content Include="UIFun\SDKFun\RegUserSignDialog.html" />
@@ -788,6 +790,7 @@
   <ItemGroup>
     <Folder Include="js\controllers\uploads\" />
     <Folder Include="src\" />
+    <Folder Include="UIFun\PLMFun\Report\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
