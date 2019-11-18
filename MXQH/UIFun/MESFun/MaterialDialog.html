@@ -133,6 +133,21 @@
                 </div>
                 <div class="form-group-xs col-md-12">
                     <div class="col-md-6 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">箱/层：</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Box_Layer.$invalid }">
+                            <input ng-pattern="/^[1-9]\d*$/" type="number" class="form-control" name="Box_Layer" placeholder="箱/层（必须输入整数）"
+                                   ng-model="ma.Item.Box_Layer">
+                        </div>
+                    </div>
+                    <div class="col-md-6 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">层/卡板：</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Layer_card.$invalid }">
+                            <input ng-pattern="/^[1-9]\d*$/" type="number" name="Layer_card" class="form-control" placeholder="层/卡板（必须输入整数）" ng-model="ma.Item.Layer_card">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group-xs col-md-12">
+                    <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">彩盒数量：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.ColorBoxCount.$invalid }">
                             <input ng-pattern="/^[1-9]\d*$/" type="number" class="form-control" name="ColorBoxCount" placeholder="彩盒数量（必须输入整数）"

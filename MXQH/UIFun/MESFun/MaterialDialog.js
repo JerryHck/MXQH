@@ -74,6 +74,8 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
         en.Remark = vm.Item.Remark;//备注
         en.Brand = vm.Item.Brand;//品牌
         en.CreateBy = vm.Item.CreateBy;
+        en.Box_Layer = vm.Item.Box_Layer;
+        en.Layer_card = vm.Item.Layer_card;
         en.ModifyBy;
         en.ModifyDate;
 
@@ -94,7 +96,7 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
         }
         en.State = vm.Item.State;//是否有效
 
-        console.log(en);
+        //console.log(en);
         if (en.Id != null) {
             vm.promise = AjaxService.ExecPlan("MesMXMaterial", "alter", en).then(function (data) {
                 console.log(data);
@@ -108,7 +110,7 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
             })
         } else if (en.Id == null) {
             vm.promise = AjaxService.ExecPlan("MesMXMaterial", "add", en).then(function (data) {
-                console.log(data);
+                //console.log(data);
                 if (data.data[0].MsgType == 'Success') {
                     toastr.success('新增成功');
                     $uibModalInstance.close(en);
