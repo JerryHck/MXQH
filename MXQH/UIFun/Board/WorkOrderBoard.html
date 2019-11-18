@@ -70,7 +70,7 @@
                         </tr>
                     </thead>
                     <tr ng-repeat="item in wo.List" style="height:50px">
-                        <td class="text-center" ng-class="{'bg-danger-light': c.IsLow}" ng-repeat="c in item"><span>{{ c.Text }}</span></td>
+                        <td class="text-center bg-danger" ng-class="{'bg-danger-light': c.IsLow}" ng-repeat="c in item"><span>{{ c.Text }}</span></td>
                     </tr>
                 </table>
             </div>

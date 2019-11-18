@@ -1,0 +1,266 @@
+﻿<uib-tabset active="active" ng-attr-active="mo.tabIndex" type="tabs" class="h-100" cg-busy="mo.promise">
+    <uib-tab index="0" select="mo.ChangeTab(0)">
+        <uib-tab-heading class="h5">工单列表</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="mo.Ser.a_WorkOrder" placeholder="工单号">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="mo.Ser.a_MaterialCode" placeholder="料号">
+                </div>
+                <button class="btn btn-sm btn-info " ng-click="mo.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+            </div>
+        </div>
+        <div class="padder-md ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <td style="width:50px">查看</td>
+                            <td title="工单号" style="width:100px ">工单号</td>
+                            <td title="料品" style="width:100px ">料品</td>
+                            <td title="料名" style="width:100px ">料名</td>
+                            <td title="工单数量" style="width:100px ">工单数量</td>
+                            <td title="销售单号" style="width:100px ">销售单号</td>
+                            <td title="ERP数量" style="width:100px ">ERP数量</td>
+                            <td title="出货地" style="width:100px ">出货地</td>
+                            <td title="创建日期" style="width:100px ">创建日期</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in mo.List ">
+                        <td>
+                            <span>
+                                <button class="btn btn-xs btn-primary" ng-click="mo.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                            </span>
+                        </td>
+                        <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                        <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                        <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
+                        <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
+                        <td title="{{ item.ERPSO }}">{{ item.ERPSO }}</td>
+                        <td title="{{ item.ERPQuantity }}">{{ item.ERPQuantity }}</td>
+                        <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
+                        <td title="{{ item.CreateDate }}">{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-12 text-center " ng-if="mo.page.total>mo.page.size ">
+                <div uib-pagination total-items="mo.page.total " ng-model="mo.page.index " items-per-page="mo.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                     ng-change="mo.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="1" select="mo.ChangeTab(1)">
+        <uib-tab-heading class="h5">工单释放</uib-tab-heading>
+        <div class="wrapper-xs padder-xs">
+            <div class="col-sm-8 no-padder">
+                <div class="panel panel-info">
+                    <div class="panel-heading font-bold">工单信息</div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-3 padder-xs">
+                                    <label class="control-label col-sm-4 padder-xs">工单号</label>
+                                    <div class="col-sm-8 padder-xs">
+                                        <input type="text" disabled class="form-control" ng-model="mo.MoData.WorkOrder" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 padder-xs">
+                                    <label class="control-label col-sm-4 padder-xs">料号</label>
+                                    <div class="col-sm-8 padder-xs">
+                                        <input type="text" disabled class="form-control" ng-model="mo.MoData.MaterialCode" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 padder-xs">
+                                    <label class="control-label col-sm-3 padder-xs">料名</label>
+                                    <div class="col-sm-9 padder-xs">
+                                        <input type="text" disabled class="form-control" ng-model="mo.MoData.MaterialName" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3 padder-xs">
+                                    <label class="control-label col-sm-4 padder-xs">销售单</label>
+                                    <div class="col-sm-8 padder-xs">
+                                        <input type="text" disabled class="form-control" ng-model="mo.MoData.ERPSO" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 padder-xs">
+                                    <label class="control-label col-sm-4 padder-xs">出货地</label>
+                                    <div class="col-sm-8 padder-xs">
+                                        <input type="text" disabled class="form-control" ng-model="mo.MoData.SendPlaceName" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 padder-xs">
+                                    <label class="control-label col-sm-3 padder-xs">客户</label>
+                                    <div class="col-sm-9 padder-xs">
+                                        <input type="text" disabled class="form-control" ng-model="mo.MoData.CustomerName" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3 padder-xs">
+                                    <label class="control-label col-sm-4 padder-xs">编码规则</label>
+                                    <div class="col-sm-8 padder-xs form-control-static">
+                                        <span class="h4 text-danger">{{ mo.MoData.TbName }}/{{mo.MoData.ClName}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 padder-xs">
+                                    <label class="control-label col-sm-4 padder-xs">工单数量</label>
+                                    <div class="col-sm-8 padder-xs form-control-static">
+                                        <span class="font-bold text-success h4">{{ mo.MoData.Quantity }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 padder-xs">
+                                    <label class="control-label col-sm-3 padder-xs">最大释放量</label>
+                                    <div class="col-sm-6 padder-xs form-control-static">
+                                        <span class="font-bold text-success h4">{{ mo.MoData.MaxOverCount }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3 padder-xs">
+                                    <label class="control-label col-sm-4 padder-xs">打印张数</label>
+                                    <div class="col-sm-8 padder-xs">
+                                        <span class="btn-group">
+                                            <label class="btn btn-sm btn-default btn-success reset" ng-model="mo.PrintNum" uib-btn-radio="1">1</label>
+                                            <label class="btn btn-sm btn-default btn-success reset" ng-model="mo.PrintNum" uib-btn-radio="2">2</label>
+                                            <label class="btn btn-sm btn-default btn-success reset" ng-model="mo.PrintNum" uib-btn-radio="3">3</label>
+                                            <label class="btn btn-sm btn-default btn-success reset" ng-model="mo.PrintNum" uib-btn-radio="4">4</label>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 padder-xs">
+
+                                </div>
+                                <div class="col-sm-6 padder-xs">
+                                    <label class="control-label col-sm-3 padder-xs">可再释放量</label>
+                                    <div class="col-sm-9 padder-xs form-control-static">
+                                        <span class="font-bold text-danger h4">{{ mo.MoData.MaxOverCount - mo.SNCount }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-success m-t-n-xs" ng-form="mo.BasicForm">
+                    <div class="panel-heading font-bold">释放工单</div>
+                    <div class="panel-body padder-v-xs">
+                        <div class="form-horizontal m-t-xs">
+                            <div class="form-group">
+                                <div class="col-sm-1 padder-xxs">
+                                    <button class="btn pull-right btn-success " ng-disabled="mo.BasicForm.$invalid" ng-click="mo.Release() "><i class="glyphicon glyphicon-save "></i>释放</button>
+                                </div>
+                                <div class="col-sm-2 padder-xxs">
+                                    <div class="col-sm-12 padder-xxs" ng-class="{ 'has-error' : mo.BasicForm.ReleaseNum.$invalid }">
+                                        <input type="number" class="form-control" placeholder="释放数量" name="ReleaseNum" ng-model="mo.ReleaseItem.ReleaseNum" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-9 padder-xxs">
+                                    <div class="col-sm-12 padder-xs">
+                                        <input type="text" class="form-control" placeholder="备注" ng-model="mo.ReleaseItem.Remark">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default m-t-n-sm">
+                    <div class="panel-heading font-bold">
+                        释放记录
+                        <button class="btn btn-dark btn-sm m-t-n-xs pull-right" type="button" ng-click="mo.ExportExcel('A')" title="导出execl">
+                            <i class="glyphicon glyphicon-export"></i>导出工单SN
+                        </button>
+                    </div>
+                    <div class="panel-body padder-xxs scroll-y" style="max-height:250px;">
+                        <table class="table pad-xs">
+                            <thead>
+                                <tr>
+                                    <td style="width:60px">操作</td>
+                                    <td style="width:100px">工单</td>
+                                    <td style="width:100px">释放数量</td>
+                                    <td style="width:100px">操作人</td>
+                                    <td style="width:100px">操作时间</td>
+                                    <td style="width:100px">备注</td>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in mo.ReList " ng-class="{ 'bg-danger-light' : item.Id == mo.SelectId }" ng-click="mo.Select(item)">
+                                <td>
+                                    <!--<button class="btn btn-success btn-xs" type="button" ng-click="mo.Select(item)" title="查看">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>-->
+                                    <button class="btn btn-info btn-xs" type="button" ng-click="mo.Print(item.Id, 'M', false)" title="打印">
+                                        <i class="glyphicon glyphicon-print"></i>
+                                    </button>
+                                    <button class="btn btn-dark btn-xs" type="button" ng-click="mo.ExportExcel('O',item)" title="导出execl">
+                                        <i class="glyphicon glyphicon-export"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-xs" ng-confirm="{text:'确定要进行补打印'}" type="button" ng-click="mo.Print(item.Id, 'M', true)" title="补打印">
+                                        <i class="icon icon-print"></i>补
+                                    </button>
+                                </td>
+                                <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                                <td title="{{ item.ReleaseNum }}">{{ item.ReleaseNum }}</td>
+                                <td title="{{ item.Creator }}">{{ item.Creator }}</td>
+                                <td>{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                                <td title="{{ item.Remark }}">{{ item.Remark }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <span class="font-bold">注：</span>
+                    <ol>
+                        <li class="text-danger">使用<span class="text-success btn btn-info btn-xs"><i class="glyphicon glyphicon-print"></i></span>进行打印时只会打印出还未打印过的SN。</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading font-bold">SN列表</div>
+                    <div class="panel-body padder-xs padder-v-xs">
+                        <div class="input-group no-padder">
+                            <input type="text" class="form-control" placeholder="查询SN" ng-model="mo.SerBSN" />
+                            <span class="input-group-btn" >
+                                <button class="btn btn-info btn-success" ng-click="mo.SearchSN()">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="scroll-y m-t-xs">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td style="width:50px">打印</td>
+                                        <td title="SNCode" style="width:150px ">SNCode</td>
+                                        <td title="是否已打印" style="width:100px ">是否打印</td>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in mo.SNList">
+                                    <td>
+                                        <button class="btn btn-info btn-xs" ng-if="!item.IsPrint" type="button" ng-click="mo.Print(mo.SelectId, 'O', false, item.SNCode)" title="打印">
+                                            <i class="glyphicon glyphicon-print"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-xs" ng-if="item.IsPrint"  ng-confirm="{text:'确定要进行补打吗'}" type="button" ng-click="mo.Print(mo.SelectId, 'O', true, item.SNCode)" title="补打印">
+                                            <i class="icon icon-print"></i>补
+                                        </button>
+                                    </td>
+                                    <td title="{{ item.SNCode }}">{{ item.SNCode }}</td>
+                                    <td title="是否打印" ng-class="{'bg-success-light': item.IsPrint }">
+                                        <span ng-if="item.IsPrint">√</span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="col-md-12 text-center no-padder" ng-if="mo.page1.total>mo.page1.size">
+                                <div uib-pagination total-items="mo.page1.total " ng-model="mo.page1.index " items-per-page="mo.page1.size " max-size="5" previous-text="<<"
+                                     ng-change="mo.PageChange1() " next-text=">>" boundary-links="true" boundary-link-numbers="true "></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

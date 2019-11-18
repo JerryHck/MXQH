@@ -11,9 +11,9 @@ function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
-    //vm.Ser = { Now: new Date().Format('yyyy-MM-dd'), StartDate: '08:00', EndDate: '23:00' };
+    vm.Ser = { Now: new Date().Format('yyyy-MM-dd'), StartDate: '08:00', EndDate: '23:00' };
 
-    vm.Ser = { WorkOrder: 'AMO-30190805004', Now: '2019-09-16', StartDate: '08:00', EndDate: '23:00' };
+    //vm.Ser = { WorkOrder: 'AMO-30190805004', Now: '2019-09-16', StartDate: '08:00', EndDate: '23:00' };
 
     vm.DateOp = {
         //formatTime: 'H:i',
@@ -111,7 +111,7 @@ function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window
             //不良数量/合格率
             var okRate = (100.0 * item.WorkOkSum / (item.WorkOkSum + item.WorkNgSum == 0 ? 1 : item.WorkOkSum + item.WorkNgSum)).toFixed(2);
             List4.push({
-                Val: i + 1, Text: item.WorkNgSum + '/' + okRate + "%", IsLow: okRate < 96
+                Val: i + 1, Text: item.WorkNgSum + '/' + okRate + "%", IsLow: okRate<96
             });
             //标准工时(秒)
             List5.push({ Val: i + 1, Text: item.StandTime });

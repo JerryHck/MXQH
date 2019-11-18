@@ -219,10 +219,12 @@
     <Content Include="UIFun\MESFun\MesMaterialSer.js" />
     <Content Include="UIFun\MESFun\MoLineArrange.html" />
     <Content Include="UIFun\MESFun\MoLineArrange.js" />
+    <Content Include="UIFun\MESFun\MO\MORelease.html" />
     <Content Include="UIFun\MESFun\MO\MesCustomerSer.html" />
     <Content Include="UIFun\MESFun\MO\MesCustomerSer.js" />
     <Content Include="UIFun\MESFun\MO\MesRoutingSer.html" />
     <Content Include="UIFun\MESFun\MO\MesRoutingSer.js" />
+    <Content Include="UIFun\MESFun\MO\MORelease.js" />
     <Content Include="UIFun\MESFun\MO\WorkOrder.html" />
     <Content Include="UIFun\MESFun\MO\WorkOrder.js" />
     <Content Include="UIFun\MESFun\MO\WorkOrderDialog.html" />
