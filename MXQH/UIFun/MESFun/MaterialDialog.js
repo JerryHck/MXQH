@@ -76,6 +76,13 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
         en.CreateBy = vm.Item.CreateBy;
         en.ModifyBy;
         en.ModifyDate;
+
+        if (vm.Item.AgeingTime == null || vm.Item.AgeingTime == "") {
+            en.AgeingTime = 0;
+        } else { 
+            en.AgeingTime = vm.Item.AgeingTime;//老化时间
+        }
+       
         
         en.TbName = vm.SerialNum.TbName;
         en.ClName = vm.SerialNum.ClName;
@@ -87,7 +94,7 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
         }
         en.State = vm.Item.State;//是否有效
 
-        //console.log(en);
+        console.log(en);
         if (en.Id != null) {
             vm.promise = AjaxService.ExecPlan("MesMXMaterial", "alter", en).then(function (data) {
                 console.log(data);
