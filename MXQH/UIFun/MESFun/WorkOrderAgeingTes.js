@@ -19,6 +19,11 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
     //vm.ChangePro = ChangePro;
     vm.IsFisnish = true;
 
+    vm.PageChange = PageChange;
+    vm.Search = Search;
+    vm.ExportExcel = ExportExcel;
+    vm.IsPass = { Table: 'AgingTestIsPass', Column: 'IsPass' };
+
     //内部码验证
     function KeyDonwInCode(e) {
         var keycode = window.event ? e.keyCode : e.which;
@@ -107,6 +112,40 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
         })
     }
 
+    function Search() {
+        vm.page.index = 1;
+        PageChange();
+    }
+
+    function PageChange() {
+        vm.promise = AjaxService.GetPlansPage("MesAgingTest", GetContition(), vm.page.index, vm.page.size).then(function (data) {
+            vm.List = data.List;
+            vm.page.total = data.Count;
+        });
+
+    }
+    function ExportExcel() {
+        vm.promise = AjaxService.GetPlanOwnExcel("MesAgingTest", GetContition()).then(function (data) {
+            $window.location.href = data.File;
+        });
+    }
+    function GetContition() {
+        var list = [];
+        if (vm.Ser.InternalCode) {
+            list.push({ name: "InternalCode", value: '%' + vm.Ser.InternalCode + '%' });
+        }
+        if (vm.Ser.MaterialCode) {
+            list.push({ name: "MaterialCode", value: '%' + vm.Ser.MaterialCode + '%' });
+        }
+        if (vm.Ser.WorkOrder) {
+            list.push({ name: "WorkOrder", value: '%' + vm.Ser.WorkOrder + '%' });
+        }
+        if (vm.Ser.IsPass) {
+            list.push({ name: "IsPass", value:vm.Ser.IsPass });
+        }
+
+        return list;
+    }
   
 }
 ]);

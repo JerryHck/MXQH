@@ -1,6 +1,7 @@
 ﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="wo.promise">
 
-
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">老化测试</uib-tab-heading>
         <div class="wrapper-xs">
             <div class="col-sm-5">
                 <div class="panel panel-default" ng-form="wo.OrderForm">
@@ -38,12 +39,12 @@
                                 <div class="col-lg-offset-3 col-lg-9">
                                     <div class="checkbox col-md-5">
                                         <label class="i-checks">
-                                            <input type="radio"ng-model ="wo.Ageing" name="Ageing" value="0"><i></i> 老化上线
+                                            <input type="radio" ng-model="wo.Ageing" name="Ageing" value="0"><i></i> 老化上线
                                         </label>
                                     </div>
                                     <div class="checkbox col-md-5">
                                         <label class="i-checks">
-                                            <input type="radio" ng-model="wo.Ageing" name="Ageing" value="1" ><i></i> 老化下线
+                                            <input type="radio" ng-model="wo.Ageing" name="Ageing" value="1"><i></i> 老化下线
                                         </label>
                                     </div>
                                     <!--<div class="col-md-7">
@@ -142,6 +143,74 @@
                 </div>
             </div>
         </div>
+    </uib-tab>
 
  
+
+    <uib-tab index="1">
+        <uib-tab-heading class="h5">老化工艺查询表</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <!--<button class="btn btn-sm btn-success " ng-click="wo.Insert() "><i class="glyphicon glyphicon-plus "></i>新增</button>-->
+                <div class="form-group">
+                    <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Unit.$invalid }">
+                        <div config-select ng-model="wo.Ser.IsPass" config-option="wo.IsPass"  auto-first="true" ng-name="IsPass" placeholder="是否完成"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="wo.Ser.WorkOrder" placeholder="工单">
+                    <!--<div basic-select="PID" name="WorkOrder" placeholder="工单" clear="true" ng-model="wo.Ser.WorkOrder" width="100px"></div>-->
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="wo.Ser.MaterialCode" placeholder="料号">
+                    <!--<div basic-select="CID" ng-name="" placeholder="半成品" clear="true" ng-model="wo.Ser." width="100px"></div>-->
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="wo.Ser.InternalCode" placeholder="内控码">
+                    <!--<div basic-select="CID" ng-name="" placeholder="半成品" clear="true" ng-model="wo.Ser." width="100px"></div>-->
+                </div>
+
+                <button class="btn btn-sm btn-info " ng-click="wo.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                <!--<button class= "btn btn-sm btn-success " ng-click= "wo.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>-->
+            </div>
+        </div>
+        <div class="padder-md ">
+            <table class="table pad-xs">
+                <thead>
+                    <tr>
+                        <td style="width:100px ">是否完成</td>
+                        <td style="width:100px ">内控码</td>
+                        <td style="width:100px ">工单 </td>
+                        <td style="width:100px ">料号</td>
+                        <td style="width:100px ">料名</td>
+                        <td style="width:100px ">老化时间（分钟）</td>
+                        <td style="width:100px ">上线时间</td>
+                        <td style="width:100px ">下线时间</td>
+                        <td style="width:100px ">上线人</td>
+                        <td style="width:100px ">下线人</td>
+
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in wo.List " ng-form="item.ItemForm">
+                    <td ng-if="item.IsPass" title="{{ item.IsPass }}">是</td>
+                    <td ng-if="!item.IsPass" title="{{ item.IsPass }}">否</td>
+                    <td title="{{ item.InternalCode }}">{{ item.InternalCode}}</td>
+                    <td title="{{ item.WorkOrder }}">{{ item.WorkOrder}}</td>
+                    <td title="{{ item.MaterialCode }}">{{ item.MaterialCode}}</td>
+                    <td title="{{ item.MaterialName }}">{{ item.MaterialName}}</td>
+                    <td title="{{ item.AgeingTime }}">{{ item.AgeingTime}}</td>
+                    <td title="{{ item.StartTS }}">{{ item.StartTS | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td title="{{ item.EndTs }}">{{ item.EndTs | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td title="{{ item.StartUserName }}">{{ item.StartUserName}}</td>
+                    <td title="{{ item.EndUserName }}">{{ item.EndUserName }}</td>
+                </tr>
+            </table>
+            <div class="col-md-12 text-center " ng-if="wo.page.total>wo.page.size ">
+                <div uib-pagination total-items="wo.page.total " ng-model="wo.page.index " items-per-page="wo.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                     ng-change="pc.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+            </div>
+        </div>
+    </uib-tab>
+
 </uib-tabset>
