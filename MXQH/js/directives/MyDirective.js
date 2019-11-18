@@ -308,7 +308,7 @@ angular.module('AppSet')
             ngName: '@',
             ngChange:'&'
         },
-        templateUrl:  appUrl + "js/directives/FunSelect.html?v=" + Version,
+        templateUrl:  "js/directives/FunSelect.html?v=" + Version,
         link: link
     };
 
@@ -661,7 +661,7 @@ angular.module('AppSet')
                 ngComplete: '&'
             },
             //templateUrl: 'js/directives/ImportSheetJs.html',
-            templateUrl: appUrl + 'js/directives/ImportSheetJs.html?v=' + Version,
+            templateUrl: 'js/directives/ImportSheetJs.html?v=' + Version,
             link: function ($scope, elm) {
                 $scope.opts = $scope.opts || {};
                 $scope.fileType = $scope.fileType || "*";
@@ -811,7 +811,7 @@ angular.module('AppSet')
         }
     }])
 .directive('fileUpload', ['$window', 'Version', 'toastr', 'FileService', 'appUrl',
-    function ($window, Version, toastr, FileService, appUrl) {
+    function ($window, Version, toastr, FileService) {
         return {
             restrict: 'A',
             scope: {
@@ -823,7 +823,7 @@ angular.module('AppSet')
                 fileData: '=',
                 ngComplete: '&'
             },
-            templateUrl: appUrl + 'js/directives/UploadFile.html?v=' + Version,
+            templateUrl: 'js/directives/UploadFile.html?v=' + Version,
             controller: ['$scope', function ($scope) {
                 var option = {};
                 $scope.fileData = $scope.fileData || {};

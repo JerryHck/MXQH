@@ -205,6 +205,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             var p = {};
             p.ID = en.Procedure[j].ID;
             p.IsPrint = en.Procedure[j].IsPrint || false;
+            p.IsAging = en.Procedure[j].IsAging || false;
             p.Item1 = en.Procedure[j].Item1 || "0";
             p.Item2 = en.Procedure[j].Item2 || "0";
             p.Item3 = en.Procedure[j].Item3 || "0";

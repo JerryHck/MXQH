@@ -11,7 +11,7 @@ function ($scope, $http, Dialog, AjaxService) {
     vm.Delete = Delete;
     //Dialog
     vm.Insert = Insert;
-
+    vm.SystemInit = SystemInit;
 
     GetList();
 
@@ -23,6 +23,11 @@ function ($scope, $http, Dialog, AjaxService) {
             }
         };
         Open("I", resolve);
+    }
+
+    function SystemInit() {
+        //系统数据初始化
+       vm.promise = AjaxService.LoginAction("ReInit");
     }
 
     //編輯

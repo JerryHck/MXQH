@@ -2,7 +2,7 @@
 angular.module('appData', []);
 angular.module('appData')
 //APP URL
-.constant('appUrl', '../MXQH/')
+.constant('appUrl', '../')
 //.constant('FileUrl', 'http://192.168.30.6:9090/File/')
 .constant('FileUrl', 'http://192.168.11.75:8080/File/')
 //Service URL
@@ -13,8 +13,8 @@ angular.module('appData')
 //.constant('FileServiceUrl', 'http://192.168.30.6:9090/FileService/')
 //.constant('FileServiceUrl', 'http://192.168.11.75:8080/FileService/')
   .constant('FileServiceUrl', 'http://localhost:8080/FileService/')
- //.constant('SocketServiceUrl', 'ws://192.168.1.226:2019')
-.constant('SocketServiceUrl', 'ws://localhost:2019')
+.constant('SocketServiceUrl', 'ws://192.168.30.8:2019')
+//.constant('SocketServiceUrl', 'ws://localhost:2019')
 //.constant('SocketServiceUrl', 'ws://support.auctus.cn:88')
  //表單設定
 .constant('Form', [

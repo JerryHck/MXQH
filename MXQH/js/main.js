@@ -62,6 +62,10 @@ angular.module('app')
         //显示系统时间
         ShowServerTime();
 
+        AjaxService.DoBefore("GetSystemData").then(function (data) {
+            vm.SysData = data;
+        });
+
         // save settings to local storage
         
         $scope.$watch('vm.app.settings', function () {

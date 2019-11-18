@@ -219,10 +219,12 @@
     <Content Include="UIFun\MESFun\MesMaterialSer.js" />
     <Content Include="UIFun\MESFun\MoLineArrange.html" />
     <Content Include="UIFun\MESFun\MoLineArrange.js" />
+    <Content Include="UIFun\MESFun\MO\MORelease.html" />
     <Content Include="UIFun\MESFun\MO\MesCustomerSer.html" />
     <Content Include="UIFun\MESFun\MO\MesCustomerSer.js" />
     <Content Include="UIFun\MESFun\MO\MesRoutingSer.html" />
     <Content Include="UIFun\MESFun\MO\MesRoutingSer.js" />
+    <Content Include="UIFun\MESFun\MO\MORelease.js" />
     <Content Include="UIFun\MESFun\MO\WorkOrder.html" />
     <Content Include="UIFun\MESFun\MO\WorkOrder.js" />
     <Content Include="UIFun\MESFun\MO\WorkOrderDialog.html" />
@@ -279,6 +281,14 @@
     <Content Include="Scripts\TestAngular\textAngularSetup.js" />
     <Content Include="UIFun\MESFun\WorkOrderOnLineHH.html" />
     <Content Include="UIFun\MESFun\WorkOrderOnLineHH.js" />
+    <Content Include="UIFun\Router\data.js" />
+    <Content Include="UIFun\Router\graphlib.min.js" />
+    <Content Include="UIFun\Router\jquery.jsPlumb.min.js" />
+    <Content Include="UIFun\Router\mustache.min.js" />
+    <Content Include="UIFun\Router\Router.html" />
+    <Content Include="UIFun\Router\Router.js" />
+    <Content Include="UIFun\Router\jquery-ui.min.css" />
+    <Content Include="UIFun\Router\uuid.js" />
     <Content Include="UIFun\SDKFun\ATEQuery.html" />
     <Content Include="UIFun\SDKFun\ATEQuery.js" />
     <Content Include="UIFun\SDKFun\RegUserSignDialog.html" />
@@ -617,6 +627,7 @@
     <Content Include="Scripts\SheetJs\xlsx.core.min.map" />
     <Content Include="Scripts\SheetJs\xlsx.full.min.map" />
     <Content Include="Scripts\SheetJs\xlsx.min.map" />
+    <Content Include="UIFun\Router\jquery-ui.min.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

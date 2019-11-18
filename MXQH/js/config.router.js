@@ -55,6 +55,7 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
                         });
                         route.LazyLoad = loadJs;
                     }
+                    //if (item.FunNo == 'MF2019110401') { console.log(route); }
                     router.setDataRouters(route);
                     if ($cookieStore.get('active-router') == item.RouteName) {
                         $state.go(item.RouteName);
