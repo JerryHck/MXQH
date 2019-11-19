@@ -4,6 +4,7 @@ angular.module('app').controller('qlBadDialogCtrl', qlBadDialogCtrl);
 qlBadDialogCtrl.$inject = ['$scope', '$uibModalInstance', 'Dialog', 'Form', 'ItemData', 'toastr', 'AjaxService'];
 
 function qlBadDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, toastr, AjaxService) {
+
     var vm = this;
     vm.form = Form[ItemData.Id ? 1 : 0];
     vm.item = ItemData;
@@ -16,6 +17,19 @@ function qlBadDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, toas
     vm.Alter = Alter;
     vm.MaintenanceTtype = '1';
     vm.ProcessingMode = '1';
+    vm.IsMaterialType = true;//默认是普通工单
+   
+
+    //从列表点击修改按钮时进行 功放类型判断
+    if (vm.item.MaterialTypeID != 5) {
+        vm.IsMaterialType = true;
+        vm.AName = null;
+        vm.BName = null;
+    } else if (vm.item.MaterialTypeID == 5) {//工单功放类型
+        vm.IsMaterialType = false;
+        vm.AName = null;
+        vm.BName = null;
+    }
 
     function syRPoorSelect(ID) {
         vm.BName = null;
@@ -43,6 +57,19 @@ function qlBadDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, toas
             } else if (bc.BarCode != undefined) {
                 AjaxService.GetPlan("MESvw_qlBadAcquisition", [{ name: "BarCode", value: bc.BarCode }]).then(function (data) {
                     vm.item = data;
+
+                    if (vm.item.MaterialTypeID !=5) {
+                        vm.IsMaterialType = true;
+                        vm.AName = null;
+                        vm.BName = null;
+                    } else if (vm.item.MaterialTypeID == 5) {//工单功放类型
+                        vm.IsMaterialType = false;
+                        vm.AName = null;
+                        vm.BName = null;
+                    }
+
+                    //$scope.$apply();
+                    console.log(vm.item.MaterialTypeID + "： " + vm.IsMaterialType);
                     if (vm.item.BarCode == null) {
                         toastr.error('内控码无效，请重新输入！');
                     } else {
