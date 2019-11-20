@@ -103,9 +103,16 @@
                     </div>
                 </div>-->
                 <div class="form-group-xs col-md-12">
-                    <div class="col-md-6 padder-xs">
+                    <div class="col-md-6 padder-xs"  ng-if="qlBad.IsMaterialType">
                         <label class="control-label col-sm-4 padder-xs">维修类别：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.AName.$invalid }" basic-select="syRPoorSelect" ng-change="qlBad.syRPoorSelect(qlBad.AName.ID)" ng-name="AName" placeholder="维修类别"
+                             ng-model="qlBad.AName" ng-required="ture">
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 padder-xs" ng-if="!qlBad.IsMaterialType">
+                        <label class="control-label col-sm-4 padder-xs">维修类别：</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.AName.$invalid }" basic-select="syRPoorSelectPA" ng-change="qlBad.syRPoorSelect(qlBad.AName.ID)" ng-name="AName" placeholder="维修类别"
                              ng-model="qlBad.AName" ng-required="ture">
                         </div>
 
