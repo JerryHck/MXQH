@@ -28,7 +28,7 @@
                                 </div>
                             </div>-->
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">内控码</label>
+                                <label class="col-lg-3 control-label">条码</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : wo.OrderForm.InCode.$invalid }">
                                     <input type="text" class="form-control"
                                            ui-focus="wo.Focus.InCode" name="InCode" ng-model="wo.Item.InCode" placeholder="生产条码" ng-keyup="wo.KeyDonwInCode($event)" required>
@@ -167,7 +167,7 @@
                     <!--<div basic-select="CID" ng-name="" placeholder="半成品" clear="true" ng-model="wo.Ser." width="100px"></div>-->
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" ng-model="wo.Ser.InternalCode" placeholder="内控码">
+                    <input type="text" class="form-control" ng-model="wo.Ser.InternalCode" placeholder="条码">
                     <!--<div basic-select="CID" ng-name="" placeholder="半成品" clear="true" ng-model="wo.Ser." width="100px"></div>-->
                 </div>
 
@@ -180,7 +180,7 @@
                 <thead>
                     <tr>
                         <td style="width:100px ">是否完成</td>
-                        <td style="width:100px ">内控码</td>
+                        <td style="width:100px ">条码</td>
                         <td style="width:100px ">工单 </td>
                         <td style="width:100px ">料号</td>
                         <td style="width:100px ">料名</td>
