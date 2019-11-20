@@ -30,6 +30,7 @@ function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window
         { name: "Status", value: 4, type: "!=" },
         { name: "WorkOrder", value: "MO%", type: "not like" },
         { name: "WorkOrder", value: "20%", type: "not like" },
+        { name: "WorkOrder", value: "HMO%", type: "not like" },
     ];
     var Con = {};
     Con.planName = "MesMxWOrder";

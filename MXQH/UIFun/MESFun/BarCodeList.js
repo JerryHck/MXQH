@@ -14,6 +14,7 @@ function ($window, $scope, FileUrl, AjaxService, toastr, serviceUrl) {
     vm.PageChange = PageChange;
     vm.Edit = Edit;
     vm.NewLabel = NewLabel;
+    vm.Delete = Delete;
 
     Search()
     function Search() {
@@ -53,6 +54,15 @@ function ($window, $scope, FileUrl, AjaxService, toastr, serviceUrl) {
         var str = 'BarCode:' + serviceUrl + '-' + item.TemplateId + "-" + item.TypeID;
         console.log(str);
         $window.location.href = str;
+    }
+
+    function Delete(item) {
+        var en = {};
+        en.Id = item.TemplateId;
+        vm.promise = AjaxService.PlanDelete("MESMXBarcodeTemplate", en).then(function (data) {
+            toastr.success("删除成功");
+            PageChange();
+        })
     }
 
     function NewLabel() {

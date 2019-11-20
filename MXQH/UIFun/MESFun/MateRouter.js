@@ -9,6 +9,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     vm.Ser = {};
 
     vm.SelectMate = SelectMate;
+    vm.ChangeMateType = ChangeMateType;
     vm.SelectRoute = SelectRoute;
     vm.EditRoute = EditRoute;
     vm.OpenProcedure = OpenProcedure;
@@ -35,9 +36,18 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         PageChange();
     }
 
-    vm.promise = AjaxService.GetPlans("MESMate", [{ name: "State", value: 1 }]).then(function (data) {
-        vm.MateList = data;
-    });
+    ChangeMateType();
+
+    function ChangeMateType() {
+        var list = [{ name: "State", value: 1 }, { name: "MaterialTypeID", value: vm.MateType }];
+        vm.promise = AjaxService.GetPlans("MESMate", list).then(function (data) {
+            vm.MateList = data;
+        });
+    }
+
+    //vm.promise = AjaxService.GetPlans("MESMate", [{ name: "State", value: 1 }]).then(function (data) {
+    //    vm.MateList = data;
+    //});
 
     vm.promise = AjaxService.GetPlans("MESBoProcedure").then(function (data) {
         vm.ProcedureList = data;
@@ -206,6 +216,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             p.ID = en.Procedure[j].ID;
             p.IsPrint = en.Procedure[j].IsPrint || false;
             p.IsAging = en.Procedure[j].IsAging || false;
+            p.IsGfTest = en.Procedure[j].IsGfTest || false;
             p.Item1 = en.Procedure[j].Item1 || "0";
             p.Item2 = en.Procedure[j].Item2 || "0";
             p.Item3 = en.Procedure[j].Item3 || "0";
