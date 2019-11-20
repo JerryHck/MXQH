@@ -3,7 +3,7 @@
         <div class="col w-xl padder b-r h-100">
             <div class="vbox">
                 <div class="wrapper">
-                    <div class="h4 text-center">物料分类</div>
+                    <div class="h4 text-center">不良信息</div>
                 </div>
                 <div class="row-row">                
                     <div class="cell scrollable hover">
@@ -49,6 +49,7 @@
                                             <td style="width:10%;" class="">上阶类型</td>
                                             <td style="width:10%;" class="">编码</td>
                                             <td style="width:7%;" class="">名称</td>
+                                            <td style="width:7%;" class="">层级编码</td>
                                         </tr>
                                         <!--filter: auctusSO.search-->
                                         <!---->
@@ -60,6 +61,7 @@
                                             <td>{{ item.ParentType }}</td>
                                             <td>{{ item.Code }}</td>
                                             <td>{{ item.text }}</td>
+                                            <td>{{ item.Layer }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -79,7 +81,7 @@
 <div class="pro-file d-r lg bg-light dk wrapper-md padder-md scroll-y">
     <div class="b-b wrapper-md text-center">
         <a href class="text-danger pull-left" ui-remove-class="active" target=".pro-file"><i class="glyphicon glyphicon-remove"></i></a>
-        <h3>物料分类详情</h3>
+        <h3>不良信息详情</h3>
     </div>
     <div class="padder-md wrapper">
         <div class="panel panel-default">
@@ -115,6 +117,12 @@
                         <label class="control-label col-md-2">名称</label>
                         <div class="col-md-4">
                             <input type="text" ng-model="qp.ItemData.text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">层级编码</label>
+                        <div class="col-md-4">
+                            <input type="text" ng-model="qp.ItemData.Layer" class="form-control" />
                         </div>
                     </div>
                 </div>
