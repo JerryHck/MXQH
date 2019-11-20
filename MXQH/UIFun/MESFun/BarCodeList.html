@@ -61,7 +61,7 @@
                                         <div class="panel-heading text-center">
                                             <a class="h5 pull-left thumb-sm text-success" ng-click="bar.Edit(item)" title="编辑"><i class="glyphicon glyphicon-edit"></i></a>
                                             <a class="h5">{{ item.Name }}</a>
-                                            <a class="h5 pull-right thumb-sm text-danger" ng-click="bar.ProFile(item)" title="删除"><i class="glyphicon glyphicon-remove"></i></a>
+                                            <a class="h5 pull-right thumb-sm text-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="bar.Delete(item)" title="删除"><i class="glyphicon glyphicon-remove"></i></a>
                                         </div>
                                         <div class="panel-body">
                                             <article class="media">
