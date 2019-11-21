@@ -111,16 +111,22 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             if (list.length == 0 && !IsRprint) {
                 MyPop.Show(true, '请使用补打印功能');
             }
-            var InList = [];
+            var InList = [], ParaList = [];
             for (var i = 0, len = list.length; i < len; i++) {
                 if (!list[i].IsPrint) {
                     InList.push({ SNCode: list[i].SNCode });
                 }
                 //打印
+                var postData = {}, OutList = [];
+                OutList.push(list[i].SNCode)
+                postData.ParaData = JSON.stringify(list[i]);
+                postData.OutList = OutList;
                 for (var j = 0; j < vm.PrintNum; j++) {
-                    PrintOne(vm.teData, list[i]);
+                    ParaList.push(postData);
                 }
             }
+            PrintOne(vm.teData, ParaList);
+
             //更新打印状态
             AjaxService.ExecPlan("MESMOReleaseDtl", "update", { SNList: JSON.stringify(InList), TempColumns: 'SNList' }).then(function (data) {
                 SearchSN();
@@ -140,7 +146,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             vm.teData = data.data2[0];
         });
 
-        vm.promise = AjaxService.GetPlans("MESMORelease", { name: "WorkOrder", value: vm.SelectItem.WorkOrder }).then(function (data) {
+        vm.promise = AjaxService.GetPlans("MESMoReleaseMainVw", { name: "WorkOrder", value: vm.SelectItem.WorkOrder }).then(function (data) {
             vm.ReList = data;
         });
 
@@ -150,16 +156,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
 
     //打印1个
     function PrintOne(teData, data) {
-        if (!data || !data.SNCode || data.SNCode == null) {
-            toastr.error("SN不存在或还未生成");
-            AjaxService.PlayVoice('error.mp3');
-            return;
-        }
-        var postData = {}, list = [];
-        list.push(data.SNCode)
-        postData.ParaData = JSON.stringify(data);
-        postData.OutList = list;
-        AjaxService.Print(teData.TemplateId, teData.TemplateTime, postData, vm.PrinterName).then(function (data) {
+        AjaxService.PrintMulti(teData.TemplateId, teData.TemplateTime, data, vm.PrinterName).then(function (data) {
             console.log(data);
         }, function (err) {
             console.log(err);

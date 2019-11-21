@@ -179,11 +179,12 @@
                             <thead>
                                 <tr>
                                     <td style="width:60px">操作</td>
-                                    <td style="width:100px">工单</td>
-                                    <td style="width:100px">释放数量</td>
-                                    <td style="width:100px">操作人</td>
+                                    <td style="width:120px">工单</td>
+                                    <td style="width:80px">释放数量</td>
+                                    <td style="width:250px">SN范围</td>
+                                    <td style="width:70px">操作人</td>
                                     <td style="width:100px">操作时间</td>
-                                    <td style="width:100px">备注</td>
+                                    <td style="width:80px">备注</td>
                                 </tr>
                             </thead>
                             <tr ng-repeat="item in mo.ReList " ng-class="{ 'bg-danger-light' : item.Id == mo.SelectId }" ng-click="mo.Select(item)">
@@ -203,6 +204,7 @@
                                 </td>
                                 <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
                                 <td title="{{ item.ReleaseNum }}">{{ item.ReleaseNum }}</td>
+                                <td>{{ item.MinSnCode }} ~ {{ item.MaxSnCode }}</td>
                                 <td title="{{ item.Creator }}">{{ item.Creator }}</td>
                                 <td>{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                 <td title="{{ item.Remark }}">{{ item.Remark }}</td>
