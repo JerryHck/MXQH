@@ -38,26 +38,6 @@
                         </div>
                     </div>
                     <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">单个彩盒最小重量(g)</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MinWeight.$invalid }">
-                            <input type="number" name="MinWeight" class="form-control" placeholder="单个彩盒最小重量" ng-model="packDialog.Item.MinWeight" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">单个彩盒最大重量(g)</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaxWeight.$invalid }">
-                            <input type="number" name="MaxWeight" class="form-control" placeholder="单个彩盒最大重量" ng-model="packDialog.Item.MaxWeight" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <!--<div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">机身SN零件号</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.CustomPartNo.$invalid }">
-                            <input type="text" name="CustomPartNo" class="form-control" placeholder="机身SN零件号" ng-model="packDialog.Item.CustomPartNo" required>
-                        </div>
-                    </div>-->
-                    <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">PKGID</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.PKGID.$invalid }">
                             <input type="text" name="PKGID" class="form-control" placeholder="PKGID" ng-model="packDialog.Item.PKGID" required>
@@ -69,6 +49,8 @@
                             <input type="text" name="CountryCode" class="form-control" placeholder="国家代码" ng-model="packDialog.Item.CountryCode" required>
                         </div>
                     </div>
+                </div>
+                <div class="form-group">                 
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">卡通箱3S4S零件号</label>
                         <div class="col-sm-8 padder-xs">
@@ -76,8 +58,6 @@
                                    ng-model="packDialog.Item.Tanapa">
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
 
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">Model Number</label>
@@ -92,6 +72,8 @@
                             <input type="text" name="RadioKit" class="form-control" placeholder="RadioKit" ng-model="packDialog.Item.RadioKit">
                         </div>
                     </div>
+                </div>
+                <div class="form-group">
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">Ean</label>
                         <div class="col-sm-8  padder-xs" ng-class="{ 'has-error' : DialogForm.Ean.$invalid }">
@@ -100,15 +82,6 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="form-group">
-
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">PKGID</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.PKGID.$invalid }">
-                            <input type="text" name="PKGID" class="form-control" placeholder="PKGID" ng-model="packDialog.Item.PKGID" required>
-                        </div>
-                    </div>
-                </div>-->
             </div>
         </div>
     </div>
