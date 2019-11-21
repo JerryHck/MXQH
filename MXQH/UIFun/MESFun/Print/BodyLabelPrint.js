@@ -49,7 +49,7 @@ function ($scope, FileUrl, AjaxService, toastr, $window, $rootScope) {
         postData.OutList = list;
         var printNum = data.ColorBoxPrintNum || 1;
         for (var i = 0; i < printNum; i++) {
-            AjaxService.Print(temData.TemplateId, temData.TemplateTime, postData, 'Foxit Reader PDF Printer').then(function (rData) {
+            AjaxService.Print(temData.TemplateId, temData.TemplateTime, postData, vm.PrinterName).then(function (rData) {
                 if (vm.IsReprint == 'I') {//第一次打印
                     AjaxService.ExecPlan("MESBLLog", "Add", { SNCode: data.SNCode, CreateBy: $rootScope.User.Name }).then(function (returnData) {
 
