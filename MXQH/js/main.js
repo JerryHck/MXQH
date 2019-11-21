@@ -208,7 +208,7 @@ angular.module('app')
     }]);
 
 
-var signs = document.querySelectorAll('.font-x');
+var signs =$('.font-x');
 
 var randomIn = function randomIn(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -218,10 +218,11 @@ var mixupInterval = function mixupInterval(el) {
     var ms = randomIn(2000, 4000);
     el.style.setProperty('--interval', "".concat(ms, "ms"));
 };
-
-signs.forEach(function (el) {
-    mixupInterval(el);
-    el.addEventListener('webkitAnimationIteration', function () {
+if (signs && signs.length > 0) {
+    signs.forEach(function (el) {
         mixupInterval(el);
+        el.addEventListener('webkitAnimationIteration', function () {
+            mixupInterval(el);
+        });
     });
-});
+}
