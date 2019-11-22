@@ -53,11 +53,20 @@
         <div class="wrapper-md">
             <div class="input-group m-b-xxs">
                 <div class="form-inline">
+
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" class="form-control" ng-model="blp.page.CreateBy" placeholder="创建人">
+                            <input type="text" class="form-control" ng-model="blp.page.DocNo" placeholder="工单号">
                             <span class="input-group-addon">
-                                <a><i ng-click="blp.page.CreateBy = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                                <a><i ng-click="blp.page.DocNo = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="blp.page.CreatedBy" placeholder="创建人">
+                            <span class="input-group-addon">
+                                <a><i ng-click="blp.page.CreatedBy = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
                             </span>
                         </div>
                     </div>
@@ -77,15 +86,21 @@
             <table class="table one-line">
                 <thead>
                     <tr>
+                        <td style="width:100px ">工单号</td>
                         <td style="width:90px ">创建人</td>
                         <td style="width:100px ">创建时间</td>
                         <td style="width:100px ">SN码</td>
+                        <td style="width:100px ">料号编码</td>
+                        <td style="width:100px ">料号名称</td>
                     </tr>
                 </thead>
                 <tr ng-repeat="item in blp.SerList ">
+                    <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
                     <td title="{{ item.CreateBy }}">{{ item.CreateBy }}</td>
                     <td title="{{ item.CreateDate|date:'yyyy-MM-dd HH:mm:ss' }}">{{ item.CreateDate|date:'yyyy-MM-dd HH:mm:ss' }}</td>
                     <td title="{{ item.SNCode }}">{{ item.SNCode }}</td>
+                    <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                    <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
                 </tr>
             </table>
         </div>
