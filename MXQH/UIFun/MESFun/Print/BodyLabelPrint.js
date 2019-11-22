@@ -13,7 +13,29 @@ function ($scope, FileUrl, AjaxService, toastr, $window, $rootScope) {
     vm.IsReprint = "I";
     vm.KeyDonwInCode = KeyDonwInCode;
     vm.PrintCode = PrintCode;
+    vm.Search = Search;
 
+    function Search() {
+        vm.page.index = 1;
+        DataBind();
+    }
+    function DataBind() {
+        vm.promise = AjaxService.GetPlansPage("MESBLLog", GetCondition(), vm.page.index, vm.page.size).then(function (data) {
+            vm.SerList = data.List;
+            vm.page.total = data.Count;
+        });
+    }
+    function GetCondition() {
+        var list = [];
+        if (vm.page.CreateBy) {
+            list.push({ name: "CreateBy", value:vm.page.CreateBy });
+        }
+        if (vm.page.SNCode) {
+            list.push({ name: "SNCode", value: vm.page.SNCode });
+        }
+        console.log(list);
+        return list;
+    }
     //内部码验证
     function KeyDonwInCode(e) {
         var keycode = window.event ? e.keyCode : e.which;

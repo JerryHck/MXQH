@@ -47,4 +47,53 @@
             </div>
         </div>
     </uib-tab>
+
+    <uib-tab index="1" select="blp.SelectTab(0)" deselect="blp.SelectTab(-1)">
+        <uib-tab-heading class="h5">机身标签打印记录</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="blp.page.CreateBy" placeholder="创建人">
+                            <span class="input-group-addon">
+                                <a><i ng-click="blp.page.CreateBy = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="blp.page.SNCode" placeholder="SN码">
+                            <span class="input-group-addon">
+                                <a><i ng-click="blp.page.SNCode = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-info " ng-click="blp.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                </div>
+            </div>
+        </div>
+        <div class="padder-md table-responsive">
+            <table class="table one-line">
+                <thead>
+                    <tr>
+                        <td style="width:90px ">创建人</td>
+                        <td style="width:100px ">创建时间</td>
+                        <td style="width:100px ">SN码</td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in blp.SerList ">
+                    <td title="{{ item.CreateBy }}">{{ item.CreateBy }}</td>
+                    <td title="{{ item.CreateDate|date:'yyyy-MM-dd HH:mm:ss' }}">{{ item.CreateDate|date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td title="{{ item.SNCode }}">{{ item.SNCode }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-12 text-center " ng-if="blp.page.total>blp.page.size ">
+            <div uib-pagination total-items="blp.page.total " ng-model="blp.page.index " items-per-page="blp.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                 ng-change="blp.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
+            </div>
+        </div>
+
+    </uib-tab>
 </uib-tabset>
