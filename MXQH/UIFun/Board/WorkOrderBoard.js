@@ -28,7 +28,7 @@ function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window
     vm.Offline = Offline;
     var conList = [
         { name: "Status", value: 4, type: "!=" },
-        { name: "WorkOrder", value: "MO%", type: "not like" },
+        //{ name: "WorkOrder", value: "MO%", type: "not like" },
         { name: "WorkOrder", value: "20%", type: "not like" },
         { name: "WorkOrder", value: "HMO%", type: "not like" },
     ];
