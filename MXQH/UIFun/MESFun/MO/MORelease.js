@@ -152,15 +152,38 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
 
     }
 
-
+    //休眠方法
+    function sleep(d) {
+        for (var t = Date.now() ; Date.now() - t <= d;);
+    }
 
     //打印1个
     function PrintOne(teData, data) {
-        AjaxService.PrintMulti(teData.TemplateId, teData.TemplateTime, data, vm.PrinterName).then(function (data) {
+        //console.log(data);
+        vm.promise = AjaxService.PrintMulti(teData.TemplateId, teData.TemplateTime, data, vm.PrinterName).then(function (data) {
+            toastr.success("打印成功");
             console.log(data);
         }, function (err) {
             console.log(err);
-        })
+        });
+
+        //var list = [];
+        ////console.log(data);
+        //for (var i = 0, len = data.length; i < len; i++) {
+        //    //每20个打印一下
+        //    list.push(data[i]);
+        //    if (list.length == 10 || i == len - 1) {
+        //        sleep(100);//休眠1秒钟
+        //        console.log(i);
+        //        AjaxService.PrintMulti(teData.TemplateId, teData.TemplateTime, list, vm.PrinterName).then(function (data) {
+        //            console.log(data);
+        //        }, function (err) {
+        //            console.log(err);
+        //        });
+        //        list = [];
+        //        //sleep(1000);//休眠1秒钟
+        //    }
+        //}
     }
 
     function ChangeTab(index) {
