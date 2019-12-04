@@ -15,6 +15,8 @@ function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window
 
     //vm.Ser = { WorkOrder: 'AMO-30190805004', Now: '2019-09-16', StartDate: '08:00', EndDate: '23:00' };
 
+    vm.IsAss = $state.current.name == 'AssProBoard';
+
     vm.DateOp = {
         //formatTime: 'H:i',
         format: 'Y-m-d',
@@ -42,7 +44,9 @@ function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window
 
     function Offline() {
         //$window.location.href = appUrl + 'Access.html#!/AssProBoard?v=' + new Date();
-        $window.open(appUrl + 'Access.html#!/AssProBoard?v=' + new Date());
+        if ($state.current.name != 'AssProBoard') {
+            $window.open(appUrl + 'Access.html#!/AssProBoard?v=' + new Date());
+        }
     }
 
     function Begin() {

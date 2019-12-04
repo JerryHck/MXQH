@@ -24,6 +24,7 @@
                             <td title="工单数量" style="width:100px ">工单数量</td>
                             <td title="销售单号" style="width:100px ">销售单号</td>
                             <td title="ERP数量" style="width:100px ">ERP数量</td>
+                            <td title="已释放数量" style="width:100px ">已释放数量</td>
                             <td title="出货地" style="width:100px ">出货地</td>
                             <td title="创建日期" style="width:100px ">创建日期</td>
                         </tr>
@@ -40,6 +41,7 @@
                         <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
                         <td title="{{ item.ERPSO }}">{{ item.ERPSO }}</td>
                         <td title="{{ item.ERPQuantity }}">{{ item.ERPQuantity }}</td>
+                        <td title="{{ item.ReleaseNum }}">{{ item.ReleaseNum }}</td>
                         <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
                         <td title="{{ item.CreateDate }}">{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                     </tr>

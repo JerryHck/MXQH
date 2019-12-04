@@ -506,6 +506,7 @@
             var list = [];
             var MainList = convertArray(postData) || [];
             var key = uuid();
+            var index = 0;
             //执行
             SocketDo(hostIp, function (socket) {
                 var en = {};
@@ -523,15 +524,24 @@
                     dat.IsEnd = i == len - 1;
                     en.Data = JSON.stringify(dat);
                     socket.send(JSON.stringify(en));
+                    index = i;
                 }
             }, function (reData) {
                 if (reData.MesType == "Success") {
                     d.resolve(reData.Data);
                 }
                 else if (reData.MesType == "Error") {
-                    toastr.error(reData.Data, '服务错误');
+                    //toastr.error(reData.Data, '服务错误');
                     d.reject(reData.Data);
                 }
+            }).then(function (s) {
+                if (index == MainList.length - 1) {
+                    d.resolve(s);
+                    console.log('打印最后');
+                }
+            }, function (err) {
+                d.reject(err);
+                console.log('打印最后错误');
             })
             return d.promise;
         }
@@ -582,62 +592,6 @@
                 socket.send(JSON.stringify(en));
             }, Do)
         }
-        //function SocketSend(method, Id, TS, postData, printerName, hostIp, Do) {
-        //    var g = $q.defer();
-        //    try {
-        //        var strAddress = "ws://" + (hostIp || "127.0.0.1") + ":2018";
-        //        var socket = new WebSocket(strAddress);
-        //        socket.onerror = function (evt) {
-        //            console.log(evt.currentTarget);
-        //            if (evt.currentTarget.readyState == 3) {
-        //                var en = {};
-        //                $window.location.href = "MxqhPrinter:" + serviceUrl;
-        //                en.text = "打印服务还未启动或未安装，是否启动并重新发送数据？";
-        //                MyPop.Confirm(en, function () {
-        //                    SocketSend(method, Id, TS, postData, printerName, hostIp);
-        //                });
-        //            }
-        //        };
-        //        socket.onopen = function () {
-        //            var en = {};
-        //            en.Method = method;
-        //            en.TemplateId = Id;
-        //            en.TS = TS;
-        //            en.Data = JSON.stringify(postData);
-        //            en.ServiceUrl = serviceUrl;
-        //            en.PrinterName = printerName;
-        //            socket.send(JSON.stringify(en));
-        //        };
-        //        socket.onclose = function (e) {
-        //            //toastr.error("打印服务已经停止", '服务错误');
-        //            //g.reject("打印服务已经停止", '服务错误');
-        //        };
-        //        socket.onmessage = function (evt) {
-        //            var reData = JSON.parse(evt.data);
-        //            if (reData.MesType == "Success") {
-        //                g.resolve(reData.Data);
-        //            }
-        //            else if (reData.MesType == "Error") {
-        //                toastr.error(reData.Data, '服务错误');
-        //                g.reject(reData.Data);
-        //            }
-        //            else if (reData.MesType == "Update") {
-        //                toastr.warning('服务器已有新版本的打印插件，请下载更新');
-        //                $window.location.href = reData.Data;
-        //            }
-
-        //            if (Do) {
-        //                Do(reData);
-        //            }
-
-        //        };
-        //    }
-        //    catch (e) {
-        //        console.log("服务错误");
-        //        toastr.error(e, '服务错误');
-        //    }
-        //    return g.promise;
-        //}
 
         function SocketDo(hostIp, openDo, Do) {
             var g = $q.defer();
@@ -670,8 +624,10 @@
                         g.resolve(reData.Data);
                     }
                     else if (reData.MesType == "Error") {
-                        toastr.error(reData.Data, '服务错误');
-                        g.reject(reData.Data);
+                        var m = reData.Data ? reData.Data.split("。")[0].replace(/System.Exception:/, '') : "错误";
+                        toastr.error(m, '服务错误');
+                        console.log(reData.Data)
+                        g.reject(m);
                     }
                     else if (reData.MesType == "Update") {
                         toastr.warning('服务器已有新版本的打印插件，请下载更新');
