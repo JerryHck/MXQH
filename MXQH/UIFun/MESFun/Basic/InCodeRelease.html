@@ -1,0 +1,123 @@
+﻿<uib-tabset active="active" ng-attr-active="In.tabIndex" type="tabs" class="h-100" cg-busy="In.promise">    
+    <uib-tab index="0" select="In.ChangeTab(0)">
+        <uib-tab-heading class="h5">内控码释放</uib-tab-heading>
+        <div class="wrapper-xs padder-xs">
+            <div class="col-sm-8 no-padder">
+                <div class="panel panel-success" ng-form="In.BasicForm">
+                    <div class="panel-heading font-bold">内控码生成</div>
+                    <div class="panel-body padder-v-xs">
+                        <div class="form-horizontal m-t-xs">
+                            <div class="form-group">
+                                <div class="col-sm-1 padder-xxs">
+                                    <button class="btn pull-right btn-success " ng-disabled="In.BasicForm.$invalid" ng-click="In.Release() "><i class="glyphicon glyphicon-save "></i>释放</button>
+                                </div>
+                                <div class="col-sm-2 padder-xxs">
+                                    <div class="col-sm-12 padder-xxs" ng-class="{ 'has-error' : In.BasicForm.ReleaseNum.$invalid }">
+                                        <input type="number" class="form-control" placeholder="释放数量" name="ReleaseNum" ng-model="In.ReleaseItem.ReleaseNum" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-9 padder-xxs">
+                                    <div class="col-sm-12 padder-xs">
+                                        <input type="text" class="form-control" placeholder="备注" ng-model="In.ReleaseItem.Remark">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default m-t-n-sm">
+                    <div class="panel-heading font-bold">
+                        释放记录
+                        <button class="btn btn-dark btn-sm m-t-n-xs pull-right" type="button" ng-click="In.ExportExcel('A')" title="导出execl">
+                            <i class="glyphicon glyphicon-export"></i>导出工单SN
+                        </button>
+                    </div>
+                    <div class="panel-body padder-xxs scroll-y" style="max-height:250px;">
+                        <table class="table pad-xs">
+                            <thead>
+                                <tr>
+                                    <td style="width:60px">操作</td>
+                                    <td style="width:80px">释放数量</td>
+                                    <td style="width:250px">SN范围</td>
+                                    <td style="width:70px">操作人</td>
+                                    <td style="width:100px">操作时间</td>
+                                    <td style="width:80px">备注</td>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in In.ReList " ng-class="{ 'bg-danger-light' : item.Id == In.SelectId }" ng-click="In.Select(item)">
+                                <td>
+                                    <!--<button class="btn btn-success btn-xs" type="button" ng-click="In.Select(item)" title="查看">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>-->
+                                    <button class="btn btn-info btn-xs" type="button" ng-click="In.Print(item.Id, 'M', false)" title="打印">
+                                        <i class="glyphicon glyphicon-print"></i>
+                                    </button>
+                                    <button class="btn btn-dark btn-xs" type="button" ng-click="In.ExportExcel('O',item)" title="导出execl">
+                                        <i class="glyphicon glyphicon-export"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-xs" ng-confirm="{text:'确定要进行补打印'}" type="button" ng-click="In.Print(item.Id, 'M', true)" title="补打印">
+                                        <i class="icon icon-print"></i>补
+                                    </button>
+                                </td>
+                                <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                                <td title="{{ item.ReleaseNum }}">{{ item.ReleaseNum }}</td>
+                                <td>{{ item.MinSnCode }} ~ {{ item.MaxSnCode }}</td>
+                                <td title="{{ item.Creator }}">{{ item.Creator }}</td>
+                                <td>{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                                <td title="{{ item.Remark }}">{{ item.Remark }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <span class="text-danger">注：使用<span class="text-success btn btn-info btn-xs"><i class="glyphicon glyphicon-print"></i></span>进行打印时只会打印出还未打印过的SN。</span>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading font-bold">SN列表</div>
+                    <div class="panel-body padder-xs padder-v-xs">
+                        <div class="input-group no-padder">
+                            <input type="text" class="form-control" placeholder="查询SN" ng-model="In.SerBSN" />
+                            <span class="input-group-btn" >
+                                <button class="btn btn-info btn-success" ng-click="In.SearchSN()">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="scroll-y m-t-xs">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td style="width:50px">打印</td>
+                                        <td title="SNCode" style="width:150px ">SNCode</td>
+                                        <td title="是否已打印" style="width:100px ">是否打印</td>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in In.SNList">
+                                    <td>
+                                        <button class="btn btn-info btn-xs" ng-if="!item.IsPrint" type="button" ng-click="In.Print(In.SelectId, 'O', false, item.SNCode)" title="打印">
+                                            <i class="glyphicon glyphicon-print"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-xs" ng-if="item.IsPrint"  ng-confirm="{text:'确定要进行补打吗'}" type="button" ng-click="In.Print(In.SelectId, 'O', true, item.SNCode)" title="补打印">
+                                            <i class="icon icon-print"></i>补
+                                        </button>
+                                    </td>
+                                    <td title="{{ item.SNCode }}">{{ item.SNCode }}</td>
+                                    <td title="是否打印" ng-class="{'bg-success-light': item.IsPrint }">
+                                        <span ng-if="item.IsPrint">√</span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="col-md-12 text-center no-padder" ng-if="In.page1.total>In.page1.size">
+                                <div uib-pagination total-items="In.page1.total " ng-model="In.page1.index " items-per-page="In.page1.size " max-size="5" previous-text="<<"
+                                     ng-change="In.PageChange1() " next-text=">>" boundary-links="true" boundary-link-numbers="true "></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

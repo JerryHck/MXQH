@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('MOReleaseCtrl', ['$rootScope', '$scope', 'MyPop', 'AjaxService', 'toastr', '$window',
+.controller('InCodeReleaseCtrl', ['$rootScope', '$scope', 'MyPop', 'AjaxService', 'toastr', '$window',
 function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
 
     var vm = this;
@@ -12,8 +12,6 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     vm.Ser.a_MaterialCode = "";
     vm.PrintNum = 1;
 
-    vm.Edit = Edit;
-    vm.PageChange = PageChange;
     vm.PageChange1 = PageChange1;
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
@@ -26,19 +24,11 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     Search();
     function Search() {
         vm.page.index = 1;
-        PageChange();
     }
 
     function SearchSN() {
         vm.page1.index = 1;
-        PageChange1();1
-    }
-
-    function PageChange() {
-        vm.promise = AjaxService.GetPlansPage("MESMOForRelease", GetContition(), vm.page.index, vm.page.size).then(function (data) {
-            vm.List = data.List;
-            vm.page.total = data.Count;
-        });
+        PageChange1();
     }
 
     function PageChange1() {
@@ -48,30 +38,15 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         });
     }
 
-    //工单释放
+    //内控码释放
     function Release() {
-        if (vm.SNCount + vm.Release.Num > vm.MoData.MaxOverCount) {
-            toastr.error("工单释放总量超过最大允许释放量[" + vm.MoData.MaxOverCount + "],最多可再释放[" +
-                (vm.MoData.MaxOverCount - vm.SNCount).toString() + ']');
-            return;
-        }
-        if (vm.MoData.TbName == "" || vm.MoData.TbName == undefined || vm.MoData.TbName == null
-                    || vm.MoData.ClName == "" || vm.MoData.ClName == undefined || vm.MoData.ClName == null) {
-            toastr.error('工单未设定编码规则，请联系管理员设定');
-            return;
-        }
-        if (vm.SNCount + vm.ReleaseItem.ReleaseNum > vm.MoData.MaxOverCount) {
-            toastr.error('可释放量超出，最多可再释放【' + (vm.MoData.MaxOverCount - vm.SNCount).toString() + '】');
-            return;
-        }
+        
+        MyPop.ngConfirm({ text: "确定要释放内控码吗" }).then(function () {
 
-        MyPop.ngConfirm({ text: "确定要释放工单SN码吗" }).then(function () {
-
-            var enfrom = { TbName: vm.MoData.TbName, ClName: vm.MoData.ClName, CharName: vm.CharName, Count: vm.ReleaseItem.ReleaseNum };
-            vm.ReleaseItem.WorkOrder = vm.MoData.WorkOrder;
+            var enfrom = { TbName: "MesSnCode", ClName: "InCode", CharName: "", Count: vm.ReleaseItem.ReleaseNum };
             var en = {};
             en.toConn = "MEScon";
-            en.toProc = "dbo.sp_SaveReleaseOrder";
+            en.toProc = "dbo.sp_SaveReleaseInCode";
             en.toJson = JSON.stringify(vm.ReleaseItem);
             en.fromConn = "MXQHCon";
             en.fromProc = "dbo.sp_SerialNumberMulti";
@@ -169,14 +144,6 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
 
     function ChangeTab(index) {
         vm.tabIndex = index;
-    }
-
-    //工单编辑
-    function Edit(item) {
-        vm.tabIndex = 1;
-        vm.SelectItem = item;
-        vm.SNList = [];
-        GetOrderData();
     }
 
     function Select(item) {
