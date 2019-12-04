@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('AppSet')
   .directive('uiButterbar', ['$rootScope', '$anchorScroll', function($rootScope, $anchorScroll) {
      return {
       restrict: 'AC',

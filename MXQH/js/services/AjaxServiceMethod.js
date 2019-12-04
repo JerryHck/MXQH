@@ -20,6 +20,8 @@
             GetPlan: GetPlan,
             //获得实体资料-列表
             GetPlans: GetPlans,
+            //同步获取数据
+            GetPlansWait:GetPlansWait,
             GetPlansTop:GetPlansTop,
             //分页获取实体资料
             GetPlansPage: GetPlansPage,
@@ -81,7 +83,9 @@
             PrintMulti: PrintMulti,
             GetComPortList: GetComPortList,
             GetComWeigth: GetComWeigth,
-            LightPrint:LightPrint,
+            LightPrint: LightPrint,
+            //打印PDF
+            PrintPdf:PrintPdf,
             //播放声音
             PlayVoice: PlayVoice,
 
@@ -114,6 +118,16 @@
         //获得计划资料-列表
         function GetPlans(name, json, limitCol) {
             return plan(name, json, "GetPlans", undefined, undefined, limitCol);
+        }
+
+        //获得计划资料-同步
+        function GetPlansWait(name, json, limitCol) {
+            var url = serviceUrl + generic;
+            var en = {};
+            en.planName = name;
+            en.strJson = JSON.stringify(convertArray(json)) || '[]';
+            en.limitUserCol = limitCol;
+            return AjaxWait(url, en, "GetPlans")
         }
 
         function GetPlansTop(name, json, top, limitCol) {
@@ -347,6 +361,12 @@
             return httpFun(q, url, en, type);
         }
 
+        //同步 AJAX
+        function AjaxWait(url, parameter, Method, type, service) {
+            var en = { method: Method, Json: JSON.stringify(parameter), service: service || '' };
+            return HTTPWait(url, en, type);
+        }
+
         function TbAjax(q, url, parameter, Method, type, service) {
             var en = { method: Method, Json: JSON.stringify(parameter), service: service || '' };
             return httpTbFun(q, url, en, type);
@@ -387,6 +407,40 @@
                     }
                 });
             return q.promise;
+        }
+
+        function HTTPWait(url, postData, type) {
+            var TbData;
+            $.ajax({
+                type: type || 'post',
+                url: url + '?v=' + Math.random(),
+                async: false,  //使用同步的方式,true为异步方式
+                data: postData,
+                dataType: "json",
+                beforeSend: function (request) {
+                    if ($cookieStore.get('user-token')) {
+                        request.setRequestHeader('x-session-token', $cookieStore.get('user-token'));
+                    }
+                    request.setRequestHeader('x-function', $cookieStore.get('active-function') || '');
+                },
+                success: function (data) {
+                    //console.info(data);
+                    TbData = data;
+                },
+                error: function (data) {
+                    if (data.status == 401) {
+                        $cookieStore.remove('user-token');
+                        if ($window.location.href != appUrl + 'Access.html#!/login') {
+                            $window.location.href = appUrl + 'Access.html#!/login';
+                        }
+                    } else {
+                        console.log(data);
+                        var m = data.data ? data.data.split("。")[0].replace(/System.Exception:/, '') : "错误";
+                        toastr.error(m, '服务错误');
+                    }
+                }
+            });
+            return TbData;
         }
 
         function getEn(name, shortName, json)
@@ -441,10 +495,61 @@
             return d.promise;
         }
 
+        //休眠方法
+        function sleep(d) {
+            for (var t = Date.now() ; Date.now() - t <= d;);
+        }
+
         //多笔打印
         function PrintMulti(templateId, TS, postData, printerName, hostIp) {
             var d = $q.defer();
-            SocketSend("PrintMulti", templateId, TS, postData, printerName, hostIp).then(function (data) {
+            var list = [];
+            var MainList = convertArray(postData) || [];
+            var key = uuid();
+            var index = 0;
+            //执行
+            SocketDo(hostIp, function (socket) {
+                var en = {};
+                en.Method = "PrintMulti";
+                en.TemplateId = templateId;
+                en.TS = TS;
+                en.ServiceUrl = serviceUrl;
+                en.PrinterName = printerName;
+                //console.log(data);
+                for (var i = 0, len = MainList.length; i < len; i++) {
+                    var dat = MainList[i];
+                    dat.MultiKey = key;
+                    dat.Index = i;
+                    dat.Total = len;
+                    dat.IsEnd = i == len - 1;
+                    en.Data = JSON.stringify(dat);
+                    socket.send(JSON.stringify(en));
+                    index = i;
+                }
+            }, function (reData) {
+                if (reData.MesType == "Success") {
+                    d.resolve(reData.Data);
+                }
+                else if (reData.MesType == "Error") {
+                    //toastr.error(reData.Data, '服务错误');
+                    d.reject(reData.Data);
+                }
+            }).then(function (s) {
+                if (index == MainList.length - 1) {
+                    d.resolve(s);
+                    console.log('打印最后');
+                }
+            }, function (err) {
+                d.reject(err);
+                console.log('打印最后错误');
+            })
+            return d.promise;
+        }
+
+        //打印PDF
+        function PrintPdf(path, printerName, hostIp) {
+            var d = $q.defer();
+            SocketSend("PrintPdf", undefined, path, undefined, printerName, hostIp).then(function (data) {
                 d.resolve(data);
             }, function (mes) { d.reject(mes); });
             return d.promise;
@@ -475,8 +580,20 @@
             }, function (mes) { d.reject(mes); });
             return d.promise;
         }
-
         function SocketSend(method, Id, TS, postData, printerName, hostIp, Do) {
+            return SocketDo(hostIp, function(socket){
+                var en = {};
+                en.Method = method;
+                en.TemplateId = Id;
+                en.TS = TS;
+                en.Data = JSON.stringify(postData);
+                en.ServiceUrl = serviceUrl;
+                en.PrinterName = printerName;
+                socket.send(JSON.stringify(en));
+            }, Do)
+        }
+
+        function SocketDo(hostIp, openDo, Do) {
             var g = $q.defer();
             try {
                 var strAddress = "ws://" + (hostIp || "127.0.0.1") + ":2018";
@@ -488,19 +605,14 @@
                         $window.location.href = "MxqhPrinter:" + serviceUrl;
                         en.text = "打印服务还未启动或未安装，是否启动并重新发送数据？";
                         MyPop.Confirm(en, function () {
-                            SocketSend(method, Id, TS, postData, printerName, hostIp);
+                            SocketDo(hostIp, openDo, Do);
                         });
                     }
                 };
                 socket.onopen = function () {
-                    var en = {};
-                    en.Method = method;
-                    en.TemplateId = Id;
-                    en.TS = TS;
-                    en.Data = JSON.stringify(postData);
-                    en.ServiceUrl = serviceUrl;
-                    en.PrinterName = printerName;
-                    socket.send(JSON.stringify(en));
+                    if (openDo) {
+                        openDo(socket);
+                    }
                 };
                 socket.onclose = function (e) {
                     //toastr.error("打印服务已经停止", '服务错误');
@@ -512,8 +624,10 @@
                         g.resolve(reData.Data);
                     }
                     else if (reData.MesType == "Error") {
-                        toastr.error(reData.Data, '服务错误');
-                        g.reject(reData.Data);
+                        var m = reData.Data ? reData.Data.split("。")[0].replace(/System.Exception:/, '') : "错误";
+                        toastr.error(m, '服务错误');
+                        console.log(reData.Data)
+                        g.reject(m);
                     }
                     else if (reData.MesType == "Update") {
                         toastr.warning('服务器已有新版本的打印插件，请下载更新');
@@ -598,6 +712,21 @@
                     }
                 }
             };
+        }
+
+        //唯一标识信息 登陆时生成与保存
+        function uuid() {
+            var s = [];
+            var hexDigits = "0123456789abcdef";
+            for (var i = 0; i < 36; i++) {
+                s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+            }
+            s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010  
+            s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01  
+            s[8] = s[13] = s[18] = s[23] = "-";
+
+            var uuid = s.join("");
+            return uuid;
         }
     }
 })();

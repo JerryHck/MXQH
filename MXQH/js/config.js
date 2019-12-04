@@ -1,7 +1,7 @@
 ﻿// config
 
 var app =  
-angular.module('app')
+angular.module('AppSet')
   .config(
     [        '$controllerProvider', '$compileProvider', '$filterProvider', '$provide',
     function ($controllerProvider,   $compileProvider,   $filterProvider,   $provide) {
@@ -24,17 +24,6 @@ angular.module('app')
       prefix: 'l10n/',
       suffix: '.js'
     });
-
-    //$translateProvider.translations('en', {
-    //    'TITLE': 'Hello',
-    //    'FOO': 'This is a paragraph'
-    //});
-     
-    //$translateProvider.translations('zh',{
-    //    'TITLE':'你好',
-    //    'FOO':'这是一幅图'
-    //});
-     
 
         $translateProvider.preferredLanguage('zh');
 

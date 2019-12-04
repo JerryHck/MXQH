@@ -1,0 +1,154 @@
+﻿<uib-tabset ng-attr-active="pmc.tabIndex" type="tabs" class="h-100" cg-busy="pmc.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">物料库</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="pmc.page.Code" placeholder="物料编码">
+                            <span class="input-group-addon">
+                                <a><i ng-click="pmc.page.Code = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="pmc.page.Name" placeholder="物料名称">
+                            <span class="input-group-addon">
+                                <a><i ng-click="pmc.page.Name = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-sm btn-info " ng-click="pmc.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                </div>
+            </div>
+        </div>
+        <div class="padder-md table-responsive">
+            <table class="table one-line">
+                <thead>
+                    <tr>
+                        <td style="width:60px ">查看</td>
+                        <td style="width:80px ">物料编码</td>
+                        <td style="width:120px ">物料名称</td>
+                        <td style="width:160px ">规格</td>
+                        <td style="width:120px ">客户物料编码</td>
+                        <td style="width:60px ">版本号</td>
+                        <td style="width:60px ">品牌</td>
+                        <td style="width:80px ">是否独家</td>
+                        <td style="width:80px ">生产方式</td>
+                        <td style="width:80px ">创建人</td>
+                        <td style="width:140px">创建时间</td>
+                        <td style="width:80px ">组件数量</td>
+                        <td style="width:100px ">业务类型</td>
+                        <td style="width:80px ">设计虚件</td>
+                        <td style="width:80px ">通用类别</td>
+                        <td style="width:100px ">是否导入ERP</td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in pmc.List " ng-style="item.IsFrozen&&pmc.GrayBg">
+                    <td>
+                        <button class="btn btn-xs btn-info" title="查看" ng-click="pmc.GetBomDetail(item.MaterialVerId)"><i class="glyphicon glyphicon-cog"></i></button>
+                        <!--<button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除吗'}" ng-click="pmc.Delete(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>-->
+                    </td>
+                    <td title="{{ item.Code }}">{{ item.Code }}</td>
+                    <td title="{{ item.Name }}" style="white-space:normal;word-break:break-all;">{{ item.Name }}</td>
+                    <td title="{{ item.Spec }}" style="white-space:normal;word-break:break-all;">{{ item.Spec }}</td>
+                    <td title="{{ item.Patent }}" style="white-space:normal;word-break:break-all;">{{ item.Patent }}</td>
+                    <td title="{{ item.VerCode }}">{{ item.VerCode }}</td>
+                    <td title="{{ item.PropertyValue }}" style="white-space:normal;word-break:break-all;">{{ item.PropertyValue }}</td>
+                    <td title="{{ item.IsOnlyOne }}">{{ item.IsOnlyOne }}</td>
+                    <td title="{{ item.IntProductMode }}" style="white-space:normal;word-break:break-all;">{{ item.IntProductMode }}</td>
+                    <td title="{{ item.Creator }}">{{ item.Creator }}</td>
+                    <td title="{{ item.CreateDate }}">{{ item.CreateDate }}</td>
+                    <td title="{{ item.Count }}">{{ item.Count }}</td>
+                    <td title="{{ item.CategoryName }}" style="white-space:normal;word-break:break-all;">{{ item.CategoryName }}</td>
+                    <td title="{{ item.IsVirtualDesign }}">{{ item.IsVirtualDesign }}</td>
+                    <td title="{{ item.TypeName }}">{{ item.TypeName }}</td>
+                    <td title="{{ item.IsImportERP }}">{{ item.IsImportERP }}</td>
+
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-12 text-center " ng-if="pmc.page.total>pmc.page.pageSize ">
+            <div uib-pagination total-items="pmc.page.total " ng-model="pmc.page.pageIndex " items-per-page="pmc.page.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                 ng-change="pmc.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <span class="font-bold">注：</span>
+            <ol>
+                <li>背景色为<div class="inline" style="width:20px;background-color:gray;">&nbsp;</div>时，代表此料号被冻结</li>
+                <li>点击编辑列<button class="btn btn-xs btn-info" title="编辑"><i class="glyphicon glyphicon-cog"></i></button>时，可查看BOM明细</li>
+            </ol>
+        </div>
+    </uib-tab>
+    <uib-tab index="1">
+        <uib-tab-heading class="h5">BOM明细</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-group">
+                <button class="btn btn-sm btn-success " ng-click="pmc.Export() "><i class="glyphicon glyphicon-search "></i>导出</button>
+            </div>
+            <!--<div class="input-group m-b-xxs">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="pmc.page.Code" placeholder="物料编码">
+                            <span class="input-group-addon">
+                                <a><i ng-click="pmc.page.Code = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="pmc.page.Name" placeholder="物料名称">
+                            <span class="input-group-addon">
+                                <a><i ng-click="pmc.page.Name = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-sm btn-info " ng-click="pmc.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                </div>
+            </div>-->
+        </div>
+        <div class="padder-md table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td style="width:60px ">层次号</td>
+                        <td style="width:80px ">物料编码</td>
+                        <td style="width:100px ">物料名称</td>
+                        <td style="width:120px ">规格</td>
+                        <td style="width:40px ">数量</td>
+                        <td style="width:80px ">版本号</td>
+                        <td style="width:40px ">成本</td>
+                        <td style="width:40px ">重量</td>
+                        <td style="width:80px">BOM单位</td>
+                        <td style="width:40px ">基数</td>
+                        <td style="width:60px ">耗损率</td>
+                        <td style="width:100px ">装配位置</td>
+                        <td style="width:120px ">BOM备注</td>
+                        <td style="width:80px ">品牌</td>
+                        <td style="width:80px ">是否独家</td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in pmc.BOMDetail " ng-style="item.IsFrozen&&pmc.GrayBg">
+                    <td title="{{ item.RN }}">{{ item.RN }}</td>
+                    <td title="{{ item.Code }}">{{ item.Code }}</td>
+                    <td title="{{ item.Name }}" style="white-space:normal;word-break:break-all;">{{ item.Name }}</td>
+                    <td title="{{ item.Spec }}" style="white-space:normal;word-break:break-all;">{{ item.Spec }}</td>
+                    <td title="{{ item.ChildCount }}">{{ item.ChildCount }}</td>
+                    <td title="{{ item.VerCode }}">{{ item.VerCode }}</td>
+                    <td title="{{ item.ArtificialCost }}">{{ item.ArtificialCost }}</td>
+                    <td title="{{ item.Weight }}">{{ item.Weight }}</td>
+                    <td title="{{ item.Content }}">{{ item.Content }}</td>
+                    <td title="{{ item.Radix }}">{{ item.Radix }}</td>
+                    <td title="{{ item.Waste }}">{{ item.Waste }}</td>
+                    <td title="{{ item.AssemblyPlace  }}" style="white-space:normal;word-break:break-all;">{{ item.AssemblyPlace }}</td>
+                    <td title="{{ item.Remark  }}" style="white-space:normal;word-break:break-all;">{{ item.Remark }}</td>
+                    <td title="{{ item.PropertyValue  }}" style="white-space:normal;word-break:break-all;">{{ item.PropertyValue }}</td>
+                    <td title="{{ item.IsOnlyOne }}">{{ item.IsOnlyOne }}</td>
+                </tr>
+            </table>
+        </div>
+    </uib-tab>
+</uib-tabset>

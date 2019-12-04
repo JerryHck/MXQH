@@ -1,6 +1,6 @@
 ﻿'use strict'
 //angular.module('Routing', ['ui.router', 'oc.lazyLoad'])
-angular.module('app')
+angular.module('AppSet')
 .filter('propsFilter', function () {
     return function (items, props) {
         var out = [];

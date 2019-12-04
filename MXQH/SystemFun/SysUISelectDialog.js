@@ -19,16 +19,14 @@ function SysUISelectDialogCtrl($rootScope, $scope, $uibModalInstance, Form, Item
 
     vm.EntityRelationExp = { Table: "EntityRelation", Column: "Expression" };
     vm.EntityRelationAss = { Table: "EntityRelation", Column: "Associate" };
-
+    
 
     //$scope.$watch(function () { return vm.Item.EntityName; }, ChangeEntity);
     GetTbColumns(vm.Item.EntityName);
     //获取组织信息
     if (vm.form.index == 1) {
-        //html文件
-        AjaxService.AjaxHandle("GetSelectText", vm.Item.SelectName).then(function (data) {
-            vm.tempHtml = data.Html;
-        })
+        //解码
+        vm.tempHtml = $window.decodeURIComponent($window.atob(vm.Item.HTMLCode));
     }
 
     function ChangeEntity() {
@@ -76,14 +74,10 @@ function SysUISelectDialogCtrl($rootScope, $scope, $uibModalInstance, Form, Item
         vm.Item.SerList = JSON.stringify(vm.SerList);
         vm.Item.Action = vm.form.index;
         vm.Item.TempColumns = "SerList";
+        if (!vm.tempHtml) { ToHtml(); }
+        vm.Item.HtmlCode = $window.btoa($window.encodeURIComponent(vm.tempHtml));
         AjaxService.ExecPlan("SysUISelect", "save", vm.Item).then(function (data) {
             toastr.success('储存成功');
-            var JsEn = {};
-            JsEn.FileName = vm.Item.SelectName + ".html";
-            if (!vm.tempHtml) { ToHtml(); }
-            JsEn.Text = $window.btoa($window.encodeURIComponent(vm.tempHtml));
-            //保存html
-            AjaxService.AjaxHandle("AddUISelect", JSON.stringify(JsEn));
             $uibModalInstance.close(vm.SerList);
         });
 

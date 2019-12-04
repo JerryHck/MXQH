@@ -74,7 +74,9 @@ function (Dialog, $scope, $http, AjaxService, toastr, $window) {
         if (vm.Ser.a_MaterialState) {
             list.push({ name: "State", value: vm.Ser.a_MaterialState });
         }
-   
+        if (vm.Ser.MaterialTypeID) {
+            list.push({ name: "MaterialTypeID", value: vm.Ser.MaterialTypeID });
+        }
         return list;
     }
 

@@ -38,6 +38,22 @@
                             <a><i ng-click="mesmo.Ser.LineID = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
                         </span>
                     </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mesmo.Ser.CustomerOrder" placeholder="客户订单号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mesmo.Ser.CustomerOrder = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mesmo.Ser.ERPSo" placeholder="ERP销售单号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mesmo.Ser.ERPSo = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
                     <button class="btn btn-sm btn-info " ng-click="mesmo.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
                 </div>
             </div>
@@ -81,7 +97,8 @@
                     <td title="{{ item.ListNo }}">{{ item.ListNo }}</td>
                     <td ng-if="item.IsPack==1" title="{{ item.WorkOrder }}"><span class="text-success"><i class="glyphicon glyphicon-ok"></i></span>{{ item.WorkOrder }}</td>
                     <td ng-if="item.IsPack!=1" title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
-                    <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
+                    <td ng-if="item.TemplateCount!=0" title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
+                    <td ng-if="item.TemplateCount==0" class="bg-warning" title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
                     <td ng-if="item.ClName!=''" class="bg-warning"  title="{{ item.ClName }}">{{ item.ClName }}</td>
                     <td ng-if="item.ClName==''">{{item.MaterialClName}}</td>
                     <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
@@ -153,6 +170,22 @@
                         <span class="input-group-addon">
                             <a><i ng-click="mesmo.Ser2.LineID = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
                         </span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mesmo.Ser2.CustomerOrder" placeholder="客户订单号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mesmo.Ser2.CustomerOrder = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mesmo.Ser2.ERPSo" placeholder="ERP销售单号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mesmo.Ser2.ERPSo = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
                     </div>
                     <button class="btn btn-sm btn-info " ng-click="mesmo.SearchCom() "><i class="glyphicon glyphicon-search "></i>查询</button>
                 </div>

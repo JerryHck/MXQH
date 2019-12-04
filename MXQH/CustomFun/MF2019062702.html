@@ -19,7 +19,7 @@
                             <td style= "width:60px">操作</td>
                             <td style= "width:100px ">出货地编码</td>
                             <td style= "width:100px ">出货地名称</td>
-                            <td style= "width:100px ">是否默认</td>
+                            <td style= "width:100px ">是否有效</td>
                             <td style= "width:100px ">日期</td>
                             <td style= "width:100px ">备注</td>
                         </tr>
@@ -73,15 +73,16 @@
                                  <input type="text" name="item_Name" class="form-control" placeholder="出货地名称" ng-model="se.EditItem.Name" required />
                             </div>
                         </td>
-                        <td title="{{ item.IsDefault }}">{{ item.IsDefault }}</td>
+                        <td ng-if="item.IsDefault" title="{{ item.IsDefault }}">是</td>
+                        <td ng-if="!item.IsDefault" title="{{ item.IsDefault }}">否</td>
                         <td title="{{ item.TS }}">{{ item.TS }}</td>
                         <td title="{{ item.Remark }}">{{ item.Remark }}</td>
                     </tr>
                 </table>
             </div>
-            <div class= "col-md-12 text-center " ng-if= "se.page.total>se.page.size ">
-                <div uib-pagination total-items= "se.page.total " ng-model= "se.page.index " items-per-page= "se.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
-                     ng-change= "se.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            <div class= "col-md-12 text-center" ng-if= "se.page.total>se.page.size ">
+                <div uib-pagination total-items= "se.page.total" ng-model= "se.page.index " items-per-page= "se.page.size" max-size= "10" first-text= "第一页" previous-text= "上一页"
+                     ng-change= "se.PageChange() " next-text= "下一页 " last-text= "最后页" boundary-links= "true" boundary-link-numbers= "true"></div>
             </div>
         </div>
     </uib-tab>

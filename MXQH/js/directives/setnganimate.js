@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('AppSet')
   .directive('setNgAnimate', ['$animate', function ($animate) {
     return {
         link: function ($scope, $element, $attrs) {

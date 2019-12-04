@@ -56,6 +56,8 @@
                             <td style="width:100px;" class="">厂商价表</td>
                             <td style="width:80px;" class="">货源表</td>
                             <td style="width:100px;" class="">是否承认</td>
+                            <td style="width:100px;" class="">内部价表</td>
+                            <td style="width:100px;" class="">内部货源</td>
                         </tr>
                         <tr ng-repeat="item in riskPre.List">
                             <td>{{ item.RN }}</td>
@@ -73,6 +75,8 @@
                             <td>{{ item.IsExistsPrice }}</td>
                             <td>{{ item.IsSupplySource }}</td>
                             <td>{{ item.IsRecognize }}</td>
+                            <td>{{ item.IsInnerExistsPrice }}</td>
+                            <td>{{ item.IsInnerSupplySource }}</td>
                         </tr>
                     </table>
                 </div>

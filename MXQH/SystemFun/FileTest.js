@@ -27,27 +27,45 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
     
 
     function save() {
-        AjaxService.GetComWeigth(vm.ComName, function (data) {
-            vm.Weigth = data;
+
+        var en = {};
+        en.conn = "SKTcon";
+        en.proc = "sp_GetIqcData";
+        en.strJson = JSON.stringify({ InspectionId: 10144 });
+        en.XmlName = "IQCFormReportFile.xml";
+
+        AjaxService.BasicCustom("ExecProcPDF", en).then(function (data) {
+            //$window.location.href = data.File;
+            $window.open(data.File);
+            //打印PDF
+            AjaxService.PrintPdf(data.File);
         });
 
-        //PK生成设定
-        var snList = [{ col: "IQCFormNo", parm: "IQCFormNo" },
-            //{ col: "IQCFormNo", count: 10, multi: true }
-        ];
+       var data = AjaxService.GetPlansWait("AucWPOIQCCheck")
 
-        var ent = {};
-        ent.PackId = 2;
-        ent.CheckNum = 3;
-        ent.CheckResult = 0;
-        ent.CheckRate = 3;
-        ent.PassRate = 9;
-        ent.Remark = "测试使用";
-        ent.SNColumns = JSON.stringify(snList);
-        AjaxService.ExecPlan("AucWPOIQCCheck", "iqc", ent).then(function (data) {
-            console.log(data);
+        console.log(123465465)
 
-        })
+        //AjaxService.GetComWeigth(vm.ComName, function (data) {
+        //    vm.Weigth = data;
+        //});
+
+        ////PK生成设定
+        //var snList = [{ col: "IQCFormNo", parm: "IQCFormNo" },
+        //    //{ col: "IQCFormNo", count: 10, multi: true }
+        //];
+
+        //var ent = {};
+        //ent.PackId = 2;
+        //ent.CheckNum = 3;
+        //ent.CheckResult = 0;
+        //ent.CheckRate = 3;
+        //ent.PassRate = 9;
+        //ent.Remark = "测试使用";
+        //ent.SNColumns = JSON.stringify(snList);
+        //AjaxService.ExecPlan("AucWPOIQCCheck", "iqc", ent).then(function (data) {
+        //    console.log(data);
+
+        //})
 
         //en.List = JSON.stringify(vm.UploadFile);
         //en.TempColumns = 'List';

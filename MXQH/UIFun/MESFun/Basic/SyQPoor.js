@@ -24,6 +24,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     function GetTreeData() {
         var condition = [{ name: "PID", value: "-1" }];
         vm.promise = AjaxService.GetPlans("QPoorType", []).then(function (poorType) {
+            console.log(poorType);
             vm.promise = AjaxService.GetPlans("QPoorTreeView", condition).then(function (data) {
                 console.log(poorType);
                 //增加nodes属性
@@ -44,7 +45,8 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
                     onNodeSelected: function (event, data) {//节点选中时间
                         vm.selectedNode = data.nodeId;                        
                         $(this).treeview("expandNode", [data.nodeId]);
-                        vm.ItemData = { PID: data.ID, TopType: data.TopType, ParentType: data.text, Layer: data.Layer };
+                        console.log(data);
+                        vm.ItemData = { PID: data.ID, TopType: data.TopType, ParentType: data.text, Layer: data.ID==-1?data.Layer:data.Layer+1 };
                         vm.PID = data.ID;
                         vm.TopType = data.TopType;
                         //vm.ParentType = data.text;//data.ParentType == undefined ? data.TopType : data.ParentType;
@@ -166,6 +168,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
         console.log(vm.ItemData);
         console.log(vm.NewTopType);
         vm.ItemData.TopType = vm.NewTopType.TopType;
+        vm.ItemData.Layer = undefined;
     }
     
 }

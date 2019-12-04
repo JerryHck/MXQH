@@ -5,7 +5,7 @@ angular.module('app')
 function ($scope, $http, Dialog, AjaxService, toastr, $rootScope) {
     var vm = this;
     vm.NewItem = { LoadFiles: [] };
-    vm.page = { index: 1, size: 6 };
+    vm.page = { index: 1, size: 10 };
     vm.Ser = {};
 
     vm.Insert = Insert;

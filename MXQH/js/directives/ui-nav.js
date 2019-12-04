@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('AppSet')
   .directive('uiNav', ['$timeout', function($timeout) {
     return {
       restrict: 'AC',

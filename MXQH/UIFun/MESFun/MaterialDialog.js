@@ -74,8 +74,17 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
         en.Remark = vm.Item.Remark;//备注
         en.Brand = vm.Item.Brand;//品牌
         en.CreateBy = vm.Item.CreateBy;
+        en.Box_Layer = vm.Item.Box_Layer;
+        en.Layer_card = vm.Item.Layer_card;
         en.ModifyBy;
         en.ModifyDate;
+
+        if (vm.Item.AgeingTime == null || vm.Item.AgeingTime == "") {
+            en.AgeingTime = 0;
+        } else { 
+            en.AgeingTime = vm.Item.AgeingTime;//老化时间
+        }
+       
         
         en.TbName = vm.SerialNum.TbName;
         en.ClName = vm.SerialNum.ClName;
@@ -101,7 +110,7 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
             })
         } else if (en.Id == null) {
             vm.promise = AjaxService.ExecPlan("MesMXMaterial", "add", en).then(function (data) {
-                console.log(data);
+                //console.log(data);
                 if (data.data[0].MsgType == 'Success') {
                     toastr.success('新增成功');
                     $uibModalInstance.close(en);

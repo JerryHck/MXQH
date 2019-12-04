@@ -1,12 +1,12 @@
 ﻿<div class="app-content-full" cg-busy="pr.promise">
     <div class="hbox hbox-auto-xs hbox-auto-sm bg-light">
-        <div class="col w lt b-r text-xs">
+        <div class="col w-md lt b-r text-xs">
             <div class="vbox">
                 <div class="wrapper">
                     <div class="h4 text-center">产品列表</div>
                 </div>
                 <div class="wrapper-xs b-t m-b-xxs">
-                    <div class="form-group">
+                    <div class="form-group-xs">
                         <div class="input-group">
                             <input type="text" class="form-control input-sm" placeholder="查询" ng-model="pr.MateQuery">
                             <span class="input-group-btn">
@@ -15,6 +15,9 @@
                                 </button>
                             </span>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <div basic-select="MaterialType" ng-model="pr.MateType" clear="true" ng-change="pr.ChangeMateType()"></div>
                     </div>
                 </div>
                 <div class="row-row">
@@ -127,10 +130,14 @@
                                         </div>
                                         <div class="panel panel-default panel-body col-md-12 m-t-xs">
                                             <div class="list-group no-radius no-border no-bg m-b-none">
-                                                <div ng-repeat="pro in pr.SelectedRo.Procedure | orderBy:'pro.OrderNum'" class="list-group-item col-md-12">
+                                                <div ng-repeat="pro in pr.SelectedRo.Procedure | orderBy:'pro.OrderNum'" class="list-group-item col-md-12"
+                                                     ng-drop="true" ng-drop-success="pr.Drop($data,$index)">
                                                     <div class="col-md-8">
                                                         <a class="text-success" ng-if="!pr.editRoute" ng-click="pr.OpenProcedure(pro, $index)"><i class="glyphicon glyphicon-search"></i></a>
+
+                                                        <i class="glyphicon glyphicon-move text-danger" ng-if="pr.editRoute" ng-drag="true" ng-drag-data="pro" ng-drag-success="pr.Drag($data,$index)"></i>
                                                         <a class="text-success" ng-if="pr.editRoute" ng-click="pr.OpenProcedure(pro, $index)"><i class="glyphicon glyphicon-edit"></i></a>
+
                                                         {{ pro.ProcedureInfo.Name }}
                                                     </div>
                                                     <a ng-if="pr.editRoute" ng-click='pr.RoProDelete($index, pro)' class="pull-right text-danger">
@@ -245,6 +252,24 @@
                                                     <div class="col-lg-8 text-xs form-control-static">
                                                         <label class="i-checks i-checks m-l-md">
                                                             <input type="checkbox" ng-disabled="!pr.editRoute" ng-model="pr.ProcItem.IsPrint"><i></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12 padder-xs">
+                                                <div class="col-md-6 no-padder">
+                                                    <label class="col-lg-4  padder-xs  control-label text-info">老化工艺:</label>
+                                                    <div class="col-lg-8 text-xs form-control-static">
+                                                        <label class="i-checks i-checks m-l-md">
+                                                            <input type="checkbox" ng-disabled="!pr.editRoute" ng-model="pr.ProcItem.IsAging"><i></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 no-padder">
+                                                    <label class="col-lg-4  padder-xs  control-label text-info">功放测试:</label>
+                                                    <div class="col-lg-8 text-xs form-control-static">
+                                                        <label class="i-checks i-checks m-l-md">
+                                                            <input type="checkbox" ng-disabled="!pr.editRoute" ng-model="pr.ProcItem.IsGfTest"><i></i>
                                                         </label>
                                                     </div>
                                                 </div>

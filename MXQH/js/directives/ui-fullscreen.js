@@ -1,4 +1,4 @@
- angular.module('app')
+angular.module('AppSet')
   .directive('uiFullscreen', ['uiLoad', '$document', '$window', function(uiLoad, $document, $window) {
     return {
       restrict: 'AC',

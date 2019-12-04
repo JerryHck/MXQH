@@ -1,7 +1,7 @@
 ﻿'use strict'
-angular.module('MyDirective', [])
+angular.module('AppSet', [])
 
-angular.module('MyDirective')
+angular.module('AppSet')
 .directive('ngConfirm', function () {
     return {
         restrict: 'A',
@@ -12,7 +12,6 @@ angular.module('MyDirective')
         link: link
     };
     function link(scope, element, attr) {
-
         scope.$watchCollection(attr.ngConfirm, function (options) {
             var en = options || {};
             en.title = en.title || "确认";
@@ -112,7 +111,7 @@ angular.module('MyDirective')
         }
     }
 }])
-.directive('basicSelect', ['AjaxService', 'appUrl', function (AjaxService, appUrl) {
+.directive('basicSelect', ['AjaxService', 'appUrl', '$window', function (AjaxService, appUrl, $window) {
     return {
         restrict: 'A',
         require: 'ngModel',
@@ -130,9 +129,19 @@ angular.module('MyDirective')
             limit: '@',
             ngChange: '&'
         },
-        templateUrl: function (element, attrs) {
-            var url = appUrl + "CustomFun/UISelect/" + attrs.basicSelect + ".html?date="+(new Date()).toString();
-            return url;
+        //templateUrl: function (element, attrs) {
+        //    var url = appUrl + "CustomFun/UISelect/" + attrs.basicSelect + ".html?date=" + (new Date()).toString();
+        //    return url;
+        //},
+        //从数据库中取得值
+        template: function (element, attrs) {
+            if (attrs.basicSelect) {
+                var data = AjaxService.GetPlansWait("SysUISelect", { name: "SelectName", value: attrs.basicSelect })
+                attrs.SyData = data[0];
+                if (attrs.SyData && attrs.SyData.HTMLCode && attrs.SyData.HTMLCode != "") {
+                    return $window.decodeURIComponent($window.atob(attrs.SyData.HTMLCode));
+                }
+            }
         },
         link: link,
     };
@@ -140,29 +149,23 @@ angular.module('MyDirective')
         scope.data = undefined;
         scope.autoFirst = scope.autoFirst || "false";
         var list = [], enName = undefined, ListData = [], NowList = [];
-        if (attrs.basicSelect) {
-            var en = [{ name: "SelectName", value: attrs.basicSelect }];
-            //组织
-            var promise = AjaxService.GetPlan("SysUISelect", en).then(function (data) {
-                if (data.SelectName == attrs.basicSelect) {
-                    enName = data;
-                    //获取数据
-                    var holder = data.Placeholder || "请选择...";
-                    scope.placeholder = scope.placeholder || holder;
-                    if (data.SerList && data.SerList.length > 0) {
-                        for (var i = 0, len = data.SerList.length; i < len; i++) {
-                            var en = {};
-                            en.name = data.SerList[i].ColName;
-                            en.value = data.SerList[i].SerValue;
-                            en.type = data.SerList[i].SerExp;
-                            en.action = data.SerList[i].SerAss;
-                            en.level = data.SerList[i].SerLevel;
-                            list.push(en);
-                        }
-                    }
-                    IntiData(1);
+        if (attrs.SyData && attrs.SyData.SelectName == attrs.basicSelect) {
+            enName = attrs.SyData;
+            //获取数据
+            var holder = attrs.SyData.Placeholder || "请选择...";
+            scope.placeholder = scope.placeholder || holder;
+            if (attrs.SyData.SerList && attrs.SyData.SerList.length > 0) {
+                for (var i = 0, len = attrs.SyData.SerList.length; i < len; i++) {
+                    var en = {};
+                    en.name = attrs.SyData.SerList[i].ColName;
+                    en.value = attrs.SyData.SerList[i].SerValue;
+                    en.type = attrs.SyData.SerList[i].SerExp;
+                    en.action = attrs.SyData.SerList[i].SerAss;
+                    en.level = attrs.SyData.SerList[i].SerLevel;
+                    list.push(en);
                 }
-            });
+            }
+            IntiData(1);
         }
 
         function IntiData(index) {
@@ -291,7 +294,7 @@ angular.module('MyDirective')
         }
     }
 }])
-.directive('functionSelect', ['AjaxService', 'appUrl', function (AjaxService, appUrl) {
+.directive('functionSelect', ['AjaxService', 'appUrl', 'Version', function (AjaxService, appUrl, Version) {
     return {
         restrict: 'A',
         require: 'ngModel',
@@ -305,10 +308,7 @@ angular.module('MyDirective')
             ngName: '@',
             ngChange:'&'
         },
-        templateUrl: function (element, attrs) {
-            var url = appUrl + "CustomFun/UISelect/FunSelect.html?date=" + (new Date()).toString();
-            return url;
-        },
+        templateUrl:  "js/directives/FunSelect.html?v=" + Version,
         link: link
     };
 
@@ -649,8 +649,8 @@ angular.module('MyDirective')
     }
 }])
 //文件导入
-.directive('importSheetJs', ['$q', 'AjaxService', 'toastr', 'FileLoad', 'ToJsonWorker', 'Version',
-    function ($q, AjaxService, toastr, FileLoad, ToJsonWorker, Version) {
+.directive('importSheetJs', ['$q', 'AjaxService', 'toastr', 'FileLoad', 'ToJsonWorker', 'Version', 'appUrl',
+    function ($q, AjaxService, toastr, FileLoad, ToJsonWorker, Version, appUrl) {
         return {
             restrict: 'A',
             //require:'ngModel',
@@ -810,7 +810,7 @@ angular.module('MyDirective')
             }
         }
     }])
-.directive('fileUpload', ['$window', 'Version', 'toastr', 'FileService',
+.directive('fileUpload', ['$window', 'Version', 'toastr', 'FileService', 'appUrl',
     function ($window, Version, toastr, FileService) {
         return {
             restrict: 'A',
