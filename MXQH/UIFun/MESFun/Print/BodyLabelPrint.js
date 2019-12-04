@@ -14,6 +14,7 @@ function ($scope, FileUrl, AjaxService, toastr, $window, $rootScope) {
     vm.KeyDonwInCode = KeyDonwInCode;
     vm.PrintCode = PrintCode;
     vm.Search = Search;
+    vm.DataBind = DataBind;
 
     function Search() {
         vm.page.pageIndex = 1;

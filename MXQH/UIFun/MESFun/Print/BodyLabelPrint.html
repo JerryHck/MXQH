@@ -104,8 +104,8 @@
                 </tr>
             </table>
         </div>
-        <div class="col-md-12 text-center " ng-if="blp.page.total>blp.page.size ">
-            <div uib-pagination total-items="blp.page.total " ng-model="blp.page.index " items-per-page="blp.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+        <div class="col-md-12 text-center " ng-if="blp.page.total>blp.page.pageSize ">
+            <div uib-pagination total-items="blp.page.total " ng-model="blp.page.pageIndex " items-per-page="blp.page.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
                  ng-change="blp.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
             </div>
         </div>
