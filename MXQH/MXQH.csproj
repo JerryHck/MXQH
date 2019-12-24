@@ -203,6 +203,8 @@
     <Content Include="UIFun\Board\WorkOrderBoardAss.js" />
     <Content Include="UIFun\MESFun\BarCodeList.html" />
     <Content Include="UIFun\MESFun\BarCodeList.js" />
+    <Content Include="UIFun\MESFun\Basic\InCodeRelease.html" />
+    <Content Include="UIFun\MESFun\Basic\InCodeRelease.js" />
     <Content Include="UIFun\MESFun\InCodeBindSN.html" />
     <Content Include="UIFun\MESFun\InCodeBindSN.js" />
     <Content Include="UIFun\MESFun\InCodePrint.html" />

@@ -1,8 +1,17 @@
 ﻿<div class="w-full bg-black-opacity h-full" ng-init="vm.app.settings.asideFolded=true" ng-class="{'app-content-full': !wo.IsAss, 'content-full':wo.IsAss}">
     <div class="panel panel-default h-full w-100 bg-black-opacity">
-        <div class="panel-body m-r-lg">
+        <div class="panel-body m-r-lg padder-xs">
             <div class="wrapper-xs padder-xs">
-                <div class="col-md-6 no-padder">
+                <div class="col-md-7 no-padder">
+                    <div class="col-md-3 padder-xs">
+                        <div basic-select="AssemblyLine" ng-model="wo.LineId" placeholder="请选择线别" ng-disabled="wo.IsRun" ng-change="wo.ChangeLine()"></div>
+                        <!--<ui-select ng-model="wo.Ser.WorkOrder" name="Order" theme="bootstrap" ng-disabled="wo.IsRun">
+                            <ui-select-match placeholder="请选择工单">{{ $select.selected.WorkOrder }}</ui-select-match>
+                            <ui-select-choices repeat="item.WorkOrder as item in wo.OrderList | filter: $select.search">
+                                <div ng-bind-html="item.WorkOrder | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>-->
+                    </div>
                     <div class="col-md-3 padder-xs">
                         <ui-select ng-model="wo.Ser.WorkOrder" name="Order" theme="bootstrap" ng-disabled="wo.IsRun">
                             <ui-select-match placeholder="请选择工单">{{ $select.selected.WorkOrder }}</ui-select-match>
@@ -12,29 +21,26 @@
                         </ui-select>
                     </div>
                     <div class="col-md-2 padder-xs">
-                            <input type="text" ng-disabled="wo.IsRun" date-picker class="form-control" placeholder="日期" ng-model="wo.Ser.Now" option="wo.DateOp" />
+                        <input type="text" ng-disabled="wo.IsRun" date-picker class="form-control" placeholder="日期" ng-model="wo.Ser.Now" option="wo.DateOp" />
                     </div>
-                    <div class="col-md-2 padder-xs">
-                            <input type="text" ng-disabled="wo.IsRun" time-picker class="form-control" placeholder="开始" ng-model="wo.Ser.StartDate" option="wo.TimeOp" />
+                    <div class="col-md-1 padder-xs">
+                        <input type="text" ng-disabled="wo.IsRun" time-picker class="form-control" placeholder="开始" ng-model="wo.Ser.StartDate" option="wo.TimeOp" />
                     </div>
-                    <div class="col-md-2 padder-xs">
-                            <input type="text" ng-disabled="wo.IsRun" time-picker class="form-control" placeholder="结束" ng-model="wo.Ser.EndDate" option="wo.TimeOp" />
+                    <div class="col-md-1 padder-xs">
+                        <input type="text" ng-disabled="wo.IsRun" time-picker class="form-control" placeholder="结束" ng-model="wo.Ser.EndDate" option="wo.TimeOp" />
                     </div>
-                    <button class="btn" ng-class="{'btn-success':!wo.IsRun, 'btn-danger':wo.IsRun}" ng-click="wo.Begin()"><i class="glyphicon glyphicon-search"></i>{{ wo.BtnText }}</button>
+                    <button class="btn m-l-xs" ng-class="{'btn-success':!wo.IsRun, 'btn-danger':wo.IsRun}" ng-click="wo.Begin()"><i class="glyphicon glyphicon-search"></i>{{ wo.BtnText }}</button>
 
-                    <button class="btn btn-info m-l-xs" ng-click="wo.Offline()" ng-if="!wo.IsBefore"><i class="glyphicon glyphicon-fullscreen"></i>全屏</button>
+                    <button class="btn btn-info m-l-xs" ng-click="wo.Offline()" ng-if="!wo.IsBefore"><i class="glyphicon glyphicon-fullscreen"></i></button>
                 </div>
-                <div class="col-md-6 no-padder text-danger" ng-if="wo.IsHave == 'Y'">
+                <div class="col-md-5 no-padder text-danger" ng-if="wo.IsHave == 'Y'">
                     <div class="form-group no-padder">
-                        <div class="form-control-static padder-xs col-md-3 h3 font-x font-yellow-gold">
+                        <!--<div class="form-control-static padder-xs col-md-5 h3 font-x font-yellow-gold">
                             排产:{{ wo.ProData.PlanCount }}
                         </div>
-                        <div class="form-control-static padder-xs col-md-4 h3 font-x font-yellow-gold">
+                        <div class="form-control-static padder-xs col-md-6 h3 font-x font-yellow-gold">
                             达成率:{{ wo.ProData.ArrRate }}
-                        </div>
-                        <div class="form-control-static padder-xs col-md-3 h3 font-x font-yellow-gold">
-                            SN产出:{{ wo.ProData.ProductCount }}
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
@@ -52,18 +58,29 @@
                         </tr>
                     </thead>
                 </table>-->
-                <div class="form-group no-padder">
-                    <div class="form-control-static padder-xs col-md-2 h3 font-x font-yellow-gold">{{ wo.MainData.WorkOrder }}</div>
-                    <div class="form-control-static padder-xs col-md-2 h3 font-x font-yellow-gold">{{ wo.MainData.MateCode }}</div>
-                    <div class="form-control-static padder-xs h3 col-md-3 font-x font-yellow-gold">{{ wo.MainData.MateName }}</div>
-                    <div class="form-control-static padder-md h3 col-md-3 font-x font-yellow-gold">{{ wo.MainData.LineName }}</div>
-                    <div class="form-control-static padder-md col-md-2 h3 font-x font-yellow-gold">
+                <div class="form-group-xs col-md-12 no-padder">
+                    <div class="form-control-static padder-xs col-md-3 h2 font-bold text-white">{{ wo.MainData.WorkOrder }}</div>
+                    <div class="form-control-static padder-xs col-md-2 h2 font-bold text-white">{{ wo.MainData.MateCode }}</div>
+                    <div class="form-control-static padder-xs h2 col-md-4 font-bold text-white">{{ wo.MainData.MateName }}</div>
+                    <div class="form-control-static padder-xs h2 col-md-3 font-bold text-white">{{ wo.MainData.LineName }}</div>
+                </div>
+
+                <div class="form-group-xs col-md-12 m-t-n-sm no-padder">
+                    <div class="form-control-static padder-xs col-md-3 h2 font-bold text-white">
+                        排产:{{ wo.ProData.PlanCount }}
+                    </div>
+                    <div class="form-control-static padder-xs col-md-2 h2 font-bold text-white">
+                        SN产出:{{ wo.ProData.ProductCount }}
+                    </div>
+                    <div class="form-control-static padder-xs col-md-4 h2 font-bold text-white">
+                        达成率:{{ wo.ProData.ArrRate }}
+                    </div>
+                    <div class="form-control-static padder-xs col-md-3 h2 font-bold text-white">
                         直通率:{{ wo.ProData.OKRate }}
                     </div>
                 </div>
 
-                <br />
-                <table class="table-purple col-md-12">
+                <table class="table-purple col-md-12 m-t-xs">
                     <thead>
                         <tr>
                             <th class="text-center" ng-repeat="col in wo.ListTitle">{{ col }}</th>

@@ -1,0 +1,108 @@
+﻿<uib-tabset active="active" type="tabs" ng-attr-active="In.tabIndex" class="h-100" cg-busy="In.promise">
+    <uib-tab index="0" >
+        <uib-tab-heading class="h5" select="In.changeTap(0)">内控码发行列表</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="In.Ser.a_ItemCode" placeholder="料号">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="In.Ser.a_BatchNo" placeholder="批次号">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="In.Ser.a_RangNo" placeholder="内控码范围">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="In.Ser.a_ReleaseDate" placeholder="依据日">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "In.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "In.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table " >
+                    <thead>
+                        <tr>
+                            <td title="操作" style="width:60px ">操作</td>
+                            <td title="序号" style= "width:60px ">序号</td>
+                            <td title="料号" style= "width:100px ">料号</td>
+                            <td title="批次号" style= "width:100px ">批次号</td>
+                            <td title="料名" style= "width:150px ">料名</td>
+                            <td title="依据日" style= "width:100px ">依据日</td>
+                            <td title="释放数量" style= "width:100px ">释放数量</td>
+                            <td title="需求数量" style= "width:100px ">需求数量</td>
+                            <td title="内码码范围" style= "width:200px ">内码码范围</td>
+                            <td title="备注" style= "width:100px ">备注</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in In.List ">
+                        <td title="操作">
+                            <!--<button class="btn btn-sm btn-success" ng-click="In.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 使用</button>-->
+                            <button class="btn btn-sm btn-info " ng-click="In.ExportBSN(item.Id) "><i class="glyphicon glyphicon-search "></i>查看</button>
+                        </td>
+                        <td title="{{ item.Id }}">{{ item.Id }}</td>
+                        <td title="{{ item.ItemCode }}">{{ item.ItemCode }}</td>
+                        <td title="{{ item.BatchNo }}">{{ item.BatchNo }}</td>
+                        <td title="{{ item.ItemName }}">{{ item.ItemName }}</td>
+                        <td title="{{ item.ReleaseDate }}">{{ item.ReleaseDate }}</td>
+                        <td title="{{ item.ReleaseNum }}">{{ item.ReleaseNum }}</td>
+                        <td title="{{ item.NeedCount }}">{{ item.NeedCount }}</td>
+                        <td title="{{ item.RangNo }}">{{ item.RangNo }}</td>
+                        <td title="{{ item.Remark }}">{{ item.Remark }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "In.page.total>In.page.size ">
+                <div uib-pagination total-items= "In.page.total " ng-model= "In.page.index " items-per-page= "In.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "In.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="1" select="In.changeTap(1)" disable="true">
+        <uib-tab-heading class="h5">内控码详细列表</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="In.Ser1.a_InternalCode" placeholder="内控码">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="In.Ser1.b_ItemCode" placeholder="料号">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="In.Ser1.b_BatchNo" placeholder="批次号">
+                </div>
+                <button class="btn btn-sm btn-info " ng-click="In.SearchBSN() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                <button class="btn btn-sm btn-success " ng-click="In.ExportExcelBSN() "><i class="glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class="padder-md ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <td title="料号" style="width:100px ">料号</td>
+                            <td title="料名" style="width:100px ">料名</td>
+                            <td title="批次号" style="width:100px ">批次号</td>
+                            <td title="需求数量" style="width:100px ">需求数量</td>
+                            <td title="BSN范围" style="width:100px ">BSN范围</td>
+                            <td title="BSN码" style="width:100px ">BSN码</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in In.ListBSN ">
+                        <td title="{{ item.Main.ItemCode }}">{{ item.Main.ItemCode }}</td>
+                        <td title="{{ item.Main.ItemName }}">{{ item.Main.ItemName }}</td>
+                        <td title="{{ item.Main.BatchNo }}">{{ item.Main.BatchNo }}</td>
+                        <td title="{{ item.Main.NeedCount }}">{{ item.Main.NeedCount }}</td>
+                        <td title="{{ item.Main.RangNo }}">{{ item.Main.RangNo }}</td>
+                        <td title="{{ item.InternalCode }}">{{ item.InternalCode }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-12 text-center " ng-if="In.page1.total>In.page1.size ">
+                <div uib-pagination total-items="In.page1.total " ng-model="In.page1.index " items-per-page="In.page1.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                     ng-change="In.PageChangeBSN() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

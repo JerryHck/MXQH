@@ -10,16 +10,18 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     vm.Ser = {};
     vm.Ser.a_WorkOrder = "";
     vm.Ser.a_MaterialCode = "";
+    //vm.ReleaseItem = { ToDay: new Date().Format('yyyy/MM/dd') };
+    vm.ReleaseItem = {};
     vm.PrintNum = 1;
 
+    vm.PageChange = PageChange;
+    vm.SerThisDate = SerThisDate;
     vm.PageChange1 = PageChange1;
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
-    vm.ChangeTab = ChangeTab;
+
     vm.Release = Release;
-    vm.Select = Select;
-    vm.Print = Print;
-    vm.SearchSN = SearchSN;
+    vm.ReleaseDown = ReleaseDown;
 
     Search();
     function Search() {
@@ -40,91 +42,49 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
 
     //内控码释放
     function Release() {
-        
+        if (vm.ReleaseItem.ReleaseNum > vm.PKData.CanCount) {
+            toastr.error("生成量已经超出允许范围");
+            vm.ReleaseItem.ReleaseNum = undefined;
+            return;
+        }
         MyPop.ngConfirm({ text: "确定要释放内控码吗" }).then(function () {
-
-            var enfrom = { TbName: "MesSnCode", ClName: "InCode", CharName: "", Count: vm.ReleaseItem.ReleaseNum };
+            vm.ReleaseItem.ItemCode = vm.MateItem.MaterialCode;
+            vm.ReleaseItem.ItemName = vm.MateItem.MaterialName;
+            vm.ReleaseItem.ReleaseDate = vm.ReleaseItem.ToDay;
+            //以天数重置
+            var enfrom = { TbName: "MesSnCode", ClName: "InCode", CharName: vm.ReleaseItem.ToDay, Count: vm.ReleaseItem.ReleaseNum, Today: vm.ReleaseItem.ToDay };
+            //var enfrom = { TbName: "MesSnCode", ClName: "InCode", CharName: "", Count: vm.ReleaseItem.ReleaseNum };
             var en = {};
-            en.toConn = "MEScon";
+            en.toConn = "HeadCon";
             en.toProc = "dbo.sp_SaveReleaseInCode";
             en.toJson = JSON.stringify(vm.ReleaseItem);
             en.fromConn = "MXQHCon";
             en.fromProc = "dbo.sp_SerialNumberMulti";
             en.fromJson = JSON.stringify(enfrom);
             //获取工单验证信息
-           vm.promise = AjaxService.BasicCustom("ExecProcCross", en).then(function (data) {
-                vm.SelectId = data.data1[0].Id;
-                SearchSN();
-                vm.ReleaseItem = undefined;
+            vm.promise = AjaxService.BasicCustom("ExecProcCross", en).then(function (data) {
                 toastr.success("生成成功");
-                GetOrderData();
+                //vm.SelectId = data.data1[0].Id;
+                //SearchSN();
+                vm.ReleaseItem.ReleaseNum = undefined;
+                SerThisDate();
+                
             })
         })
     }
 
-    //打印
-    function Print(id, type, IsRprint, SNCode) {
-        vm.SelectId = id;
-        
-        //判断模板
-        if (!vm.teData || !vm.teData.TemplateId || vm.teData.TemplateId == null) {
-            toastr.error("打印模版获取失败");
-            AjaxService.PlayVoice('error.mp3');
-            return;
-        }
-
-        var en = {};
-        en.MainId = id;
-        en.WorkOrder = vm.MoData.WorkOrder;
-        en.SNCode = SNCode;
-        en.Type = type;
-        en.Rprint = IsRprint;
-        console.log(en);
-        //获取打印值
-        vm.promise = AjaxService.ExecPlan("MESSNCode", "releasesn", en).then(function (data) {
-            var list = data.data;
-            if (list.length == 0 && !IsRprint) {
-                MyPop.Show(true, '请使用补打印功能');
-            }
-            var InList = [], ParaList = [];
-            for (var i = 0, len = list.length; i < len; i++) {
-                if (!list[i].IsPrint) {
-                    InList.push({ SNCode: list[i].SNCode });
-                }
-                //打印
-                var postData = {}, OutList = [];
-                OutList.push(list[i].SNCode)
-                postData.ParaData = JSON.stringify(list[i]);
-                postData.OutList = OutList;
-                for (var j = 0; j < vm.PrintNum; j++) {
-                    ParaList.push(postData);
-                }
-            }
-            PrintOne(vm.teData, ParaList);
-
-            //更新打印状态
-            AjaxService.ExecPlan("MESMOReleaseDtl", "update", { SNList: JSON.stringify(InList), TempColumns: 'SNList' }).then(function (data) {
-                SearchSN();
-            })
-        })
-    }
-
-    function GetOrderData() {
-        var en = {
-            WorkOrder: vm.SelectItem.WorkOrder
-        }
-        vm.promise = AjaxService.ExecPlan("MESMORelease", "getOrder", en).then(function (data) {
-            vm.MoData = data.data[0];
-            vm.SNCount = data.data1[0].SNCount;
-            vm.CharName = data.data1[0] && data.data1[0].CharName ? data.data1[0].CharName : "";
-            //模版信息
-            vm.teData = data.data2[0];
+    //下发给供应商
+    function ReleaseDown(item) {
+        MyPop.ngConfirm({ text: "发后结果将不可撤回, 确定要下发吗" }).then(function () {
+            var en = {};
+            en.Id = item.Id;
+            en.IsPublish = true;
+            en.PublishBy = $rootScope.User.UserNo;
+            vm.promise = AjaxService.PlanUpdate("WPOInCodePublish", en).then(function (data) {
+                toastr.success("下发成功");
+                Search();
+            });
         });
-
-        vm.promise = AjaxService.GetPlans("MESMoReleaseMainVw", { name: "WorkOrder", value: vm.SelectItem.WorkOrder }).then(function (data) {
-            vm.ReList = data;
-        });
-
     }
 
     //休眠方法
@@ -132,36 +92,6 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         for (var t = Date.now() ; Date.now() - t <= d;);
     }
 
-    //打印1个
-    function PrintOne(teData, data) {
-        //console.log(data);
-        vm.promise = AjaxService.PrintMulti(teData.TemplateId, teData.TemplateTime, data, vm.PrinterName).then(function (data) {
-            toastr.success(data);
-        }, function (err) {
-            console.log(err);
-        });
-    }
-
-    function ChangeTab(index) {
-        vm.tabIndex = index;
-    }
-
-    function Select(item) {
-        vm.SelectId = item.Id;
-        SearchSN();
-    }
-
-    //导出excel
-    function ExportExcel(type, item) {
-        var list = [];
-        list.push({ name: "WorkOrder", value: vm.MoData.WorkOrder, tableAs: "a" });
-        if (type=='O') {
-            list.push({ name: "Id", value: item.Id, tableAs: "a" });
-        }
-        vm.promise = AjaxService.GetPlanOwnExcel("MESMOReleaseExecl", list).then(function (data) {
-            $window.location.href = data.File;
-        });
-    }
     function GetContition() {
         var list = [];
         if (vm.Ser.a_WorkOrder) {
@@ -179,6 +109,58 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             
         if (vm.SerBSN) {
             list.push({ name: "SNCode", value: "%" + vm.SerBSN + "%", tableAs: "a" });
+        }
+        return list;
+    }
+
+    function SerThisDate() {
+        vm.Ser.ReleaseDate = vm.ReleaseItem.ToDay;
+        var enfrom = { TbName: "MesSnCode", ClName: "InCode", CharName: vm.ReleaseItem.ToDay, ToDay: vm.ReleaseItem.ToDay };
+        AjaxService.ExecPlan("SerialNumberSet", "preview", enfrom).then(function (data) {
+            vm.PKData = data.data[0];
+            vm.PKData.HaveCount = parseInt(vm.PKData.SerialSN) - 1;
+            vm.PKData.CanCount = parseInt(('100000000000').substr(0, vm.PKData.SerialLenth + 1)) - vm.PKData.HaveCount;
+        })
+        Search();
+    }
+
+    function Search() {
+        vm.page.index = 1;
+        PageChange();
+    }
+
+    function PageChange() {
+        vm.promise = AjaxService.GetPlansPage("WPOInCodePublish", GetContition(), vm.page.index, vm.page.size).then(function (data) {
+            vm.List = data.List;
+            vm.page.total = data.Count;
+        });
+
+    }
+    function ExportExcel() {
+        vm.promise = AjaxService.GetPlanOwnExcel("WPOInCodePublish", GetContition()).then(function (data) {
+            $window.location.href = data.File;
+        });
+    }
+
+    function GetContition() {
+        var list = [];
+        if (vm.Ser.a_VenderNo) {
+            list.push({ name: "VenderNo", value: vm.Ser.a_VenderNo, tableAs: "a" });
+        }
+        if (vm.Ser.a_ItemCode) {
+            list.push({ name: "ItemCode", value: vm.Ser.a_ItemCode, tableAs: "a" });
+        }
+        if (vm.Ser.ReleaseDate) {
+            list.push({ name: "ReleaseDate", value: vm.Ser.ReleaseDate, tableAs: "a" });
+        }
+        if (vm.Ser.a_BatchNo) {
+            list.push({ name: "BatchNo", value: vm.Ser.a_BatchNo, tableAs: "a" });
+        }
+        if (vm.Ser.a_CreateDate) {
+            list.push({ name: "CreateDate", value: vm.Ser.a_CreateDate, tableAs: "a", type: ">=" });
+        }
+        if (vm.Ser.a_CreateDate1) {
+            list.push({ name: "CreateDate", value: vm.Ser.a_CreateDate1, tableAs: "a", type: "<=" });
         }
         return list;
     }
