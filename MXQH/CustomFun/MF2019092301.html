@@ -36,6 +36,7 @@
                             <td title="维修数量" style="width:100px ">维修数量</td>
                             <td title="登记数量" style="width:100px ">登记数量</td>
                             <td title="完成维修数量" style="width:100px ">完成维修数量</td>
+                            <td title="维修人" style="width:100px ">维修人</td>
                         </tr>
                     </thead>
                     <tr ng-repeat= "item in qc.List ">
@@ -48,6 +49,7 @@
                         <td title="{{ item.RNum }}">{{ item.RNum }}</td>
                         <td title="{{ item.QNum }}">{{ item.QNum }}</td>
                         <td title="{{ item.IsFinish }}">{{ item.IsFinish }}</td>
+                        <td title="{{ item.CreateBy }}">{{ item.CreateBy }}</td>
                     </tr>
                 </table>
             </div>

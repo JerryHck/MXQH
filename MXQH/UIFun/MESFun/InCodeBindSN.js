@@ -90,7 +90,6 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     function KeyDonwInCode(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.NewBind.InternalCode) {
-            if (vm.isFinist)
             vm.KeyInCode = angular.copy(vm.NewBind.InternalCode);
             if (vm.isFinist) {
                 vm.isFinist = false;
@@ -126,7 +125,8 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     }
 
     function Action() {
-        if (!vm.OrderData){
+        if (!vm.OrderData) {
+            vm.isFinist = true;
             showError('请先选择工单');
             return;
         }
@@ -244,6 +244,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
         list.push(data.SNCode)
         postData.ParaData = JSON.stringify(data);
         postData.OutList = list;
+        console.log(postData.ParaData);
         AjaxService.LightPrint(teData.TemplateId, teData.TemplateTime, postData).then(function (data) {
             console.log(data);
         }, function (err) {

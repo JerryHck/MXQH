@@ -53,6 +53,8 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
         vm.page.LineID = vm.Ser.LineID == '' ? undefined : vm.Ser.LineID;
         vm.page.MaterialID = vm.Ser.MaterialID == '' ? undefined : vm.Ser.MaterialID;
         vm.page.AssemblyDate = vm.Ser.AssemblyDate == '' ? undefined : vm.Ser.AssemblyDate;
+        vm.page.CustomerOrder = vm.Ser.CustomerOrder == '' ? undefined : vm.Ser.CustomerOrder;
+        vm.page.ERPSo = vm.Ser.ERPSo == '' ? undefined : vm.Ser.ERPSo;
     }
 
     //查询完工工单条件
@@ -62,6 +64,8 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
         vm.pageCom.MaterialID = vm.Ser2.MaterialID == '' ? undefined : vm.Ser2.MaterialID;
         vm.pageCom.AssemblyDate = vm.Ser2.AssemblyDate == '' ? undefined : vm.Ser2.AssemblyDate;
         vm.pageCom.Status = 4;
+        vm.pageCom.CustomerOrder = vm.Ser2.CustomerOrder == '' ? undefined : vm.Ser2.CustomerOrder;
+        vm.pageCom.ERPSo = vm.Ser2.ERPSo == '' ? undefined : vm.Ser2.ERPSo;
     }
     //编辑
     function Edit(item) {

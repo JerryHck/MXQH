@@ -60,6 +60,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         en.Description = vm.EditItem.Description;
         en.PID = vm.EditItem.PID;
         en.ID = vm.EditItem.ID;
+        en.Layer = vm.EditItem.Layer;
         vm.promise = AjaxService.PlanUpdate("QPoor", en).then(function (data) {
             PageChange();
             toastr.success('更新成功');

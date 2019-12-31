@@ -1,0 +1,83 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">U9工单列表</h3>
+</div>
+<div class="modal-body wrapper-sm" ng-form="DialogForm" cg-busy="U9MO.promise">
+    <div class="panel panel-default">
+        <div class="panel-body wrapper-xs">
+            <div class="padder-xs table-responsive">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <!--<button ng-if="!U9MO.Item.IsComplete" class="btn btn-success" type="button" ng-disabled="DialogForm.$invalid" ng-click="U9MO.Save()">储存</button>-->
+                        <button class="btn btn-warning" type="button" ng-click="U9MO.Cancel()">取消</button>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="U9MO.page.DocNo" placeholder="工单号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="U9MO.page.DocNo = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="U9MO.page.ERPSo" placeholder="销售订单号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="U9MO.page.ERPSo = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-info " ng-click="U9MO.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                </div>
+                <table class="table one-line">
+                    <thead>
+                        <tr>
+                            <td style="width:80px">编辑</td>
+                            <td style="width:140px ">工单号</td>
+                            <td style="width:80px ">出货地</td>
+                            <td style="width:100px ">线别</td>
+                            <td style="width:80px ">产品编码</td>
+                            <td style="width:160px ">产品名称</td>
+                            <td style="width:80px ">工单数量</td>
+                            <td style="width:100px ">客户订单</td>
+                            <td style="width:100px ">ERP销售订单</td>
+                            <td style="width:80px ">ERP数量</td>
+                            <td style="width:120px ">国家</td>
+                            <td style="width:240px ">收货地址</td>
+
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in U9MO.List ">
+                        <td>
+                            <button class="btn btn-sm btn-success " ng-click="U9MO.Select(item) "><i class="glyphicon glyphicon-copyright-mark "></i>同步</button>
+                        </td>                        
+                        <td ng-class="{'bg-success':item.IsWorkOrder}" title="{{ item.DocNo }}">{{ item.DocNo }}</td>
+                        <td title="{{ item.SendPlace }}">{{ item.SendPlace }}</td>
+                        <td title="{{ item.Department }}" style="white-space:normal;word-break:break-all;">{{ item.Department }}</td>
+
+                        <td ng-class="{'bg-warning':item.IsCode}" title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                        <td title="{{ item.MaterialName }}" style="white-space:normal;word-break:break-all;">{{ item.MaterialName }}</td>
+                        <td ng-class="{'bg-warning':item.IsQuantity}" title="{{ item.ProductQty }}">{{ item.ProductQty }}</td>
+                        <td ng-class="{'bg-warning':item.IsCustomerOrder}" title="{{ item.CustomerOrder }}">{{ item.CustomerOrder }}</td>
+                        <td ng-class="{'bg-warning':item.IsERPSO}"  title="{{ item.ERPSO }}" style="white-space:normal;word-break:break-all;">{{ item.ERPSO }}</td>
+                        <td ng-class="{'bg-warning':item.IsERPQuantity}" title="{{ item.ERPQuantity }}">{{ item.ERPQuantity }}</td>
+                        <td title="{{ item.Country }}" style="white-space:normal;word-break:break-all;">{{ item.Country }}</td>
+                        <td title="{{ item.Address1 }}" style="white-space:normal;word-break:break-all;">{{ item.Address1 }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-12 text-center " ng-if="U9MO.page.total>U9MO.page.pageSize ">
+                <div uib-pagination total-items="U9MO.page.total " ng-model="U9MO.page.pageIndex " items-per-page="U9MO.page.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                     ng-change="U9MO.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <span class="font-bold">注：</span>
+                <ol>
+                    <li>“工单号”列中背景色为<div class="bg-success inline" style="width:20px;">&nbsp;</div>时，代表U9和MES都有此工单</li>
+                    <li>背景色为<div class="bg-warning inline" style="width:20px;">&nbsp;</div>时，代表此U9工单和MES工单的内容不一样</li>
+
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>

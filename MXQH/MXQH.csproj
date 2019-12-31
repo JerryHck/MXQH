@@ -75,7 +75,6 @@
     <Content Include="css\font-awesome.min.css" />
     <Content Include="CustomFun\qlBadDialog.html" />
     <Content Include="CustomFun\qlBadDialog.js" />
-    <Content Include="CustomFun\UISelect\BarcodeANDTemplate.html" />
     <Content Include="Data\Handler\New.html" />
     <Content Include="Data\Handler\New.js" />
     <Content Include="index.html" />
@@ -200,6 +199,8 @@
     <Content Include="SystemFun\ToolManager.js" />
     <Content Include="UIFun\Board\WorkOrderBoard.html" />
     <Content Include="UIFun\Board\WorkOrderBoard.js" />
+    <Content Include="UIFun\Board\WorkOrderBoardApp.js" />
+    <Content Include="UIFun\Board\WorkOrderBoardAss.js" />
     <Content Include="UIFun\MESFun\BarCodeList.html" />
     <Content Include="UIFun\MESFun\BarCodeList.js" />
     <Content Include="UIFun\MESFun\InCodeBindSN.html" />
@@ -216,10 +217,14 @@
     <Content Include="UIFun\MESFun\MateRouter.js" />
     <Content Include="UIFun\MESFun\MesMaterialSer.html" />
     <Content Include="UIFun\MESFun\MesMaterialSer.js" />
+    <Content Include="UIFun\MESFun\MoLineArrange.html" />
+    <Content Include="UIFun\MESFun\MoLineArrange.js" />
+    <Content Include="UIFun\MESFun\MO\MORelease.html" />
     <Content Include="UIFun\MESFun\MO\MesCustomerSer.html" />
     <Content Include="UIFun\MESFun\MO\MesCustomerSer.js" />
     <Content Include="UIFun\MESFun\MO\MesRoutingSer.html" />
     <Content Include="UIFun\MESFun\MO\MesRoutingSer.js" />
+    <Content Include="UIFun\MESFun\MO\MORelease.js" />
     <Content Include="UIFun\MESFun\MO\WorkOrder.html" />
     <Content Include="UIFun\MESFun\MO\WorkOrder.js" />
     <Content Include="UIFun\MESFun\MO\WorkOrderDialog.html" />
@@ -232,8 +237,6 @@
     <Content Include="UIFun\MESFun\SNWeigth.js" />
     <Content Include="UIFun\MESFun\WorkOrderAssNgDialog.html" />
     <Content Include="UIFun\MESFun\WorkOrderAssNgDialog.js" />
-    <Content Include="UIFun\MESFun\WorkOrderOnLineHH.html" />
-    <Content Include="UIFun\MESFun\WorkOrderOnLineHH.js" />
     <Content Include="UIFun\MESFun\WorkOrderOnLine.html" />
     <Content Include="UIFun\MESFun\WorkOrderOnLine.js" />
     <Content Include="UIFun\MESFun\OrderReWork.html" />
@@ -278,6 +281,14 @@
     <Content Include="Scripts\TestAngular\textAngularSetup.js" />
     <Content Include="UIFun\MESFun\WorkOrderOnLineHH.html" />
     <Content Include="UIFun\MESFun\WorkOrderOnLineHH.js" />
+    <Content Include="UIFun\Router\data.js" />
+    <Content Include="UIFun\Router\graphlib.min.js" />
+    <Content Include="UIFun\Router\jquery.jsPlumb.min.js" />
+    <Content Include="UIFun\Router\mustache.min.js" />
+    <Content Include="UIFun\Router\Router.html" />
+    <Content Include="UIFun\Router\Router.js" />
+    <Content Include="UIFun\Router\jquery-ui.min.css" />
+    <Content Include="UIFun\Router\uuid.js" />
     <Content Include="UIFun\SDKFun\ATEQuery.html" />
     <Content Include="UIFun\SDKFun\ATEQuery.js" />
     <Content Include="UIFun\SDKFun\RegUserSignDialog.html" />
@@ -382,14 +393,6 @@
     <Content Include="Scripts\bootstrap\DateTimePicker\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap\DateTimePicker\bootstrap-datetimepicker.zh-CN.js" />
     <Content Include="Scripts\circleChart\circleChart.es5.min.js" />
-    <Content Include="Scripts\esm\popper-utils.js" />
-    <Content Include="Scripts\esm\popper-utils.min.js" />
-    <Content Include="Scripts\esm\popper.js" />
-    <Content Include="Scripts\esm\popper.min.js" />
-    <Content Include="Scripts\esm\popper.min.js.map" />
-    <Content Include="Scripts\esm\popper.js.map" />
-    <Content Include="Scripts\esm\popper-utils.min.js.map" />
-    <Content Include="Scripts\esm\popper-utils.js.map" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js.map" />
     <Content Include="Scripts\bootstrap\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap\bootstrap.bundle.min.js.map" />
@@ -450,16 +453,12 @@
     <Content Include="css\font-awesome-4.7.0\scss\_variables.scss" />
     <None Include="css\less\app.font.less" />
     <None Include="css\less\app.table.less" />
+    <Content Include="fonts\hanyi.ttf" />
     <None Include="Properties\PublishProfiles\2.pubxml" />
     <None Include="Properties\PublishProfiles\MXQH.pubxml" />
     <Content Include="Scripts\angular\angular-file-upload\angular-file-upload.js.map" />
     <Content Include="Scripts\angular\angular-file-upload\angular-file-upload.min.js.map" />
     <Content Include="Scripts\assets\less\unlock.less" />
-    <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
-    <Content Include="Scripts\jquery-3.0.0.js" />
-    <Content Include="Scripts\jquery-3.0.0.min.js" />
-    <Content Include="Scripts\jquery-3.0.0.slim.js" />
-    <Content Include="Scripts\jquery-3.0.0.slim.min.js" />
     <Content Include="Scripts\jquery\charts\easypiechart\jquery.easy-pie-chart.js" />
     <Content Include="Scripts\jquery\charts\flot\jquery.flot.min.js" />
     <Content Include="Scripts\jquery\charts\flot\jquery.flot.orderBars.js" />
@@ -552,10 +551,6 @@
     <Content Include="Scripts\ui-grid.min.js" />
     <Content Include="Scripts\ui-select2-angular.js" />
     <Content Include="Scripts\ui-select2-jquery.js" />
-    <Content Include="Scripts\umd\popper-utils.js" />
-    <Content Include="Scripts\umd\popper-utils.min.js" />
-    <Content Include="Scripts\umd\popper.js" />
-    <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="UIFun\SDKFun\CustomerManage.html" />
     <Content Include="UIFun\SDKFun\CustomerManage.js" />
     <Content Include="UIFun\SDKFun\RegistrationAudit.html" />
@@ -625,12 +620,6 @@
     <Content Include="Data\Dialog.json" />
     <Content Include="Scripts\select.min.js.map" />
     <Content Include="Content\select.min.css.map" />
-    <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
-    <Content Include="Scripts\jquery-3.0.0.min.map" />
-    <Content Include="Scripts\umd\popper.min.js.map" />
-    <Content Include="Scripts\umd\popper.js.map" />
-    <Content Include="Scripts\umd\popper-utils.min.js.map" />
-    <Content Include="Scripts\umd\popper-utils.js.map" />
     <Content Include="Scripts\jquery\datatables\datatable.json" />
     <Content Include="Scripts\jquery\footable\fonts\footable.eot" />
     <Content Include="Scripts\jquery\footable\fonts\footable.ttf" />
@@ -638,6 +627,7 @@
     <Content Include="Scripts\SheetJs\xlsx.core.min.map" />
     <Content Include="Scripts\SheetJs\xlsx.full.min.map" />
     <Content Include="Scripts\SheetJs\xlsx.min.map" />
+    <Content Include="UIFun\Router\jquery-ui.min.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -803,11 +793,13 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>32241</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:31974/</IISUrl>
+          <IISUrl>http://localhost:32241/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:32241/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

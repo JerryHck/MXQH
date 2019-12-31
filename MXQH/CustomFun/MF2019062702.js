@@ -40,6 +40,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
             vm.List[i].IsEdit = false;
         }
         vm.EditItem = angular.copy(item);
+        vm.NowItem = item;
         item.IsEdit = true;
     }
 
@@ -68,6 +69,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     function PageChange() {
         vm.promise = AjaxService.GetPlansPage("baSendPlace", GetContition(), vm.page.index, vm.page.size).then(function (data) {
+            console.log(data);
             vm.List = data.List;
             vm.page.total = data.Count;
         });
@@ -81,7 +83,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     function GetContition() {
         var list = [];
         if (vm.Ser.a_Name) {
-            list.push({ name: "Name", value: vm.Ser.a_Name });
+            list.push({ name: "Name", value: vm.Ser.a_Name, tableAs:"a" });
         }
         return list;
     }

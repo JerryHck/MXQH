@@ -35,22 +35,27 @@ function ($scope, $rootScope, toastr, AjaxService) {
         format: 'H:i',
         step: 1
     };
+    vm.NowDate = new Date().Format("yyyy-MM-dd");
 
     vm.EnChange = EnChange;
-
+    vm.ToEnChange = ToEnChange;
     vm.JobSave = JobSave;
     vm.Search = Search;
     vm.JobEdit = JobEdit;
     vm.Insert = Insert;
     vm.isJobExists = isJobExists;
     vm.JobDelete = JobDelete;
+    vm.SerLog = SerLog;
+    vm.checkToday = checkToday;
+    vm.RunJob = RunJob;
 
     AjaxService.GetPlans("PlanEntity").then(function (data) {
         vm.EnList = data;
+        vm.ToEnList = data;
     });
-
+    //监控值变化
+    $scope.$watch(function () { return vm.Item.MethodType; }, function () { EnChange(true) });
     
-
     Search()
     function Search() {
         vm.page.index = 1;
@@ -61,7 +66,7 @@ function ($scope, $rootScope, toastr, AjaxService) {
         vm.isEdit = false;
         vm.isCopy = false;
         vm.Item = {
-            IsStart: true, JobType: 'R', RepeatType: 'D', FrequencyUnit: 'D', MethodType: 'PlanExec',
+            IsStart: true, JobType: 'R', RepeatType: 'D', FrequencyUnit: 'D', MethodType: 'SrcExePlan',
             NextRunTime: new Date().Format("yyyy-MM-dd hh:mm:ss"),
             StartDate: new Date().Format("yyyy-MM-dd"),
             DayFreUnit:'F'
@@ -79,18 +84,39 @@ function ($scope, $rootScope, toastr, AjaxService) {
         });
     }
 
-    function EnChange() {
+    function EnChange(cha) {
         var en = { name: "EntityName", value: vm.Item.JobExecMethod || "-1" };
+        if (!cha) { vm.Item.EnProShortName = undefined; }
         AjaxService.GetPlans("EntityProcedure", en).then(function (data) {
             vm.ShortList = data;
+        });
+        vm.ToEnList = [];
+        //计算迁移数据库来源
+        if (vm.Item.MethodType && vm.Item.MethodType.indexOf("To") != -1) {
+            var conn = "";
+            for (var i = 0, len = vm.EnList.length; i < len; i++) {
+                if (vm.EnList[i].EntityName == vm.Item.JobExecMethod) {
+                    conn = vm.EnList[i].ConnectName; break;
+                }
+            }
+            for (var j = 0, len = vm.EnList.length; j < len; j++) {
+                if (vm.EnList[j].ConnectName != conn) {
+                    vm.ToEnList.push(vm.EnList[j]);
+                }
+            }
+        }
+    }
+
+    function ToEnChange(cha) {
+        var en = { name: "EntityName", value: vm.Item.ToPlanName || "-1" };
+        if (!cha) { vm.Item.ToPlanShort = undefined; }
+        AjaxService.GetPlans("EntityProcedure", en).then(function (data) {
+            vm.ToShortList = data;
             console.log(data);
         });
-
     }
 
     function JobEdit(item) {
-        
-
         vm.Item = item;
         vm.Item.IntervalWeekList = [];
 
@@ -98,10 +124,32 @@ function ($scope, $rootScope, toastr, AjaxService) {
         for (var i = 0, len = list.length; i < len; i++) {
             vm.Item.IntervalWeekList.push(list[i]);
         }
-
+        EnChange(true);
+        if (vm.Item.MethodType.indexOf("To") != -1) {
+            ToEnChange(true);
+        }
         vm.isEdit = true;
         vm.isCopy = false;
         $(".insert-job").addClass("active");
+    }
+
+    //执行job
+    function RunJob(name) {
+        var en = {};
+        en.JobName = name;
+        vm.promise = AjaxService.Custom("RunJob", en).then(function (data) {
+            toastr.success('执行成功');
+            PageChange();
+        })
+    }
+
+    //查看日志
+    function SerLog(item) {
+        vm.promise = AjaxService.GetPlansTop("JobRunLog", { name: "JobName", value: item.JobName }, 300).then(function (data) {
+            vm.SerItem = item;
+            vm.SerList = data;
+            $(".ser-job-log").addClass("active");
+        })
     }
 
     function JobSave() {
@@ -137,8 +185,6 @@ function ($scope, $rootScope, toastr, AjaxService) {
         }
 
         if (vm.isEdit) {
-            vm.Item.ModifyBy = $rootScope.User.UserNo;
-            vm.Item.ModifyDate = new Date();
             AjaxService.PlanUpdate("JobSetting", vm.Item).then(function (data) {
                 toastr.success("储存成功");
                 Reflash(vm.Item.JobName);
@@ -202,6 +248,12 @@ function ($scope, $rootScope, toastr, AjaxService) {
             Reflash(item.JobName);
             PageChange();
         })
+    }
+
+    //验证是否今天
+    function checkToday(ts) {
+        var d = new Date(ts);
+        return vm.NowDate == d.Format("yyyy-MM-dd");
     }
 
     function Reflash(name) {

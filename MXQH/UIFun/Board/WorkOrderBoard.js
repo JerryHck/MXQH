@@ -1,23 +1,53 @@
 ﻿'use strict';
 
-angular.module('app')
-.controller('WorkOrderBoardCtrl', ['Dialog', '$scope', '$http', 'AjaxService', 'toastr', '$window',
-function (Dialog, $scope, $http, AjaxService, toastr, $window) {
+//if (angular.module('app')) {
+//    angular.module('app').controller('WorkOrderBoardCtrl', WorkOrderBoardCtrl);
+//}
+//if (angular.module('access')) {
+//    angular.module('access').controller('WorkOrderBoardCtrl', WorkOrderBoardCtrl);
+//}
+WorkOrderBoardCtrl.$inject = ['$scope', '$state', 'AjaxService', 'toastr', 'appUrl', '$window'];
+function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
-    vm.Ser = { StartDate: new Date().Format('yyyy/MM/dd') + ' 00:00', EndDate: new Date().Format("yyyy/MM/dd" + ' 23:59') };
+    vm.Ser = { Now: new Date().Format('yyyy-MM-dd'), StartDate: '08:00', EndDate: '23:00' };
+
+    //vm.Ser = { WorkOrder: 'AMO-30190805004', Now: '2019-09-16', StartDate: '08:00', EndDate: '23:00' };
+
+    vm.IsAss = $state.current.name == 'AssProBoard';
+
+    vm.DateOp = {
+        //formatTime: 'H:i',
+        format: 'Y-m-d',
+        formatDate: 'Y-m-d',
+        timepicker: false,
+    }
+
     vm.IsRun = false;
-    vm.BtnText = "开始刷新";
+    vm.BtnText = "开始";
     vm.Begin = Begin;
+    vm.Offline = Offline;
     var conList = [
         { name: "Status", value: 4, type: "!=" },
-        { name: "WorkOrder", value: "MO%", type: "not like" },
+        //{ name: "WorkOrder", value: "MO%", type: "not like" },
         { name: "WorkOrder", value: "20%", type: "not like" },
+        { name: "WorkOrder", value: "HMO%", type: "not like" },
     ];
-    AjaxService.GetPlans("MesMxWOrder", conList).then(function (data) {
+    var Con = {};
+    Con.planName = "MesMxWOrder";
+    Con.strJson = JSON.stringify(conList);
+    AjaxService.DoBefore("GetPlans", Con).then(function (data) {
         vm.OrderList = data;
     })
+
+
+    function Offline() {
+        //$window.location.href = appUrl + 'Access.html#!/AssProBoard?v=' + new Date();
+        if ($state.current.name != 'AssProBoard') {
+            $window.open(appUrl + 'Access.html#!/AssProBoard?v=' + new Date());
+        }
+    }
 
     function Begin() {
         vm.IsHave = '';
@@ -36,7 +66,7 @@ function (Dialog, $scope, $http, AjaxService, toastr, $window) {
             }
 
             vm.IsRun = true;
-            vm.BtnText = "停止刷新";
+            vm.BtnText = "停止";
             var enCon = vm.Ser;
             var en = {};
             en.Method = 'ExecPlan';
@@ -57,7 +87,7 @@ function (Dialog, $scope, $http, AjaxService, toastr, $window) {
                 vm.socket.close();
             }
             vm.IsRun = false;
-            vm.BtnText = "开始刷新";
+            vm.BtnText = "开始";
         }
     }
 
@@ -86,7 +116,7 @@ function (Dialog, $scope, $http, AjaxService, toastr, $window) {
             //不良数量/合格率
             var okRate = (100.0 * item.WorkOkSum / (item.WorkOkSum + item.WorkNgSum == 0 ? 1 : item.WorkOkSum + item.WorkNgSum)).toFixed(2);
             List4.push({
-                Val: i + 1, Text: item.WorkNgSum + '/' + okRate + "%", IsLow: okRate < 96
+                Val: i + 1, Text: item.WorkNgSum + '/' + okRate + "%", IsLow: okRate<96
             });
             //标准工时(秒)
             List5.push({ Val: i + 1, Text: item.StandTime });
@@ -106,9 +136,10 @@ function (Dialog, $scope, $http, AjaxService, toastr, $window) {
             vm.List = List;
             vm.ListTitle = ListTitle;
             vm.MainData = MainData;
-            vm.ProductCount = ProductCount;
-            vm.OKRate = data.data2[0].OKRate;
+            vm.ProData = data.data2[0];
+            //vm.ProductCount = ProductCount;
+            //vm.OKRate = data.data2[0].OKRate;
         });
     }
 
-}]);
+};

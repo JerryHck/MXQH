@@ -1,134 +1,83 @@
-﻿<div class="wrapper-md">
-    <div class="form-inline">
-        <button class="btn btn-sm btn-success " ng-click="t.Insert() "><i class="glyphicon glyphicon-plus "></i>新增</button>
-        <div class="form-group">
-            <input type="text" class="form-control" ng-model="t.Ser.a_OrgName" placeholder="部门名称">
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="t.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">测试查询</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class= "btn btn-sm btn-success " ng-click= "t.Insert() "><i class= "glyphicon glyphicon-plus "></i>新增</button>
+                <button class= "btn btn-sm btn-info " ng-click= "t.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "t.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
         </div>
-        <div class="form-group">
-            <input type="text" class="form-control" ng-model="t.Ser.a_OrgSn" placeholder="部门编号">
+        <div class= "padder-md ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table pad-xs" >
+                    <thead>
+                        <tr>
+                            <td style= "width:60px">操作</td>
+                            <td style= "width:80px ">作业工序</td>
+                            <td style= "width:40px ">工号</td>
+                            <td style= "width:60px ">姓名</td>
+                            <td style= "width:150px ">备注</td>
+                        </tr>
+                    </thead>
+                    <tr ng-if="t.IsInsert" ng-form="t.InsertForm">
+                        <td>
+                            <button class="btn btn-xs btn-success" ng-disabled="t.InsertForm.$invalid" ng-click="t.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="t.IsInsert=false" ><i class="fa fa-undo"></i></button>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': t.InsertForm.ProcedureId.$invalid }">
+                                <input type="text" name="ProcedureId" class="form-control" placeholder="作业工序" ng-model="t.NewItem.ProcedureId" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': t.InsertForm.HrUserNo.$invalid }">
+                                <input type="text" name="HrUserNo" class="form-control" placeholder="工号" ng-model="t.NewItem.HrUserNo" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': t.InsertForm.HrUserName.$invalid }">
+                                <input type="text" name="HrUserName" class="form-control" placeholder="姓名" ng-model="t.NewItem.HrUserName" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div >
+                                <input type="text" name="Remark" class="form-control" placeholder="备注" ng-model="t.NewItem.Remark"  />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-repeat= "item in t.List " ng-form="item.ItemForm">
+                        <td>
+                            <span ng-if="!item.IsEdit">
+                                <button class="btn btn-xs btn-primary" ng-click="t.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="t.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </span>
+                            <span ng-if="item.IsEdit">
+                                <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="t.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                                <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                            </span>
+                        </td>
+                        <td title="{{ item.ProcedureId }}">{{ item.ProcedureId }}</td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.HrUserNo }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_HrUserNo.$invalid }">
+                                 <input type="text" name="item_HrUserNo" class="form-control" placeholder="工号" ng-model="t.EditItem.HrUserNo" required />
+                            </div>
+                        </td>
+                        <td title="{{ item.HrUserName }}">{{ item.HrUserName }}</td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.Remark }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_Remark.$invalid }">
+                                 <input type="text" name="item_Remark" class="form-control" placeholder="备注" ng-model="t.EditItem.Remark"  />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "t.page.total>t.page.size ">
+                <div uib-pagination total-items= "t.page.total " ng-model= "t.page.index " items-per-page= "t.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "t.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
         </div>
-        <button class="btn btn-sm btn-info " ng-click="t.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
-        <button class="btn btn-sm btn-success " ng-click="t.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>
-    </div>
-</div>
-<div class="padder-md bg-black h-100 m-b-lg">
-    <div class="col-md-12 scroll-x no-padder">
-        <table class="table table-responsive pad-xs">
-            <thead>
-                <tr>
-                    <td style="width:60px">操作</td>
-                    <td style="width:100px ">部门编号</td>
-                    <td style="width:100px ">部门名称</td>
-                    <td style="width:100px ">是否启用</td>
-                    <td style="width:100px ">上级部门</td>
-                    <td style="width:100px ">所属公司</td>
-                    <td style="width:100px ">描述</td>
-                    <td style="width:100px ">创建人</td>
-                    <td style="width:100px ">创建时间</td>
-                    <td style="width:100px ">更新人</td>
-                    <td style="width:100px ">更新时间</td>
-                </tr>
-            </thead>
-            <tr ng-if="t.IsInsert" ng-form="t.InsertForm">
-                <td>
-                    <button class="btn btn-xs btn-success" ng-disabled="t.InsertForm.$invalid" ng-click="t.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
-                    <button class="btn btn-xs btn-warning" ng-click="t.IsInsert=false"><i class="fa fa-undo"></i></button>
-                </td>
-                <td>
-                    <div ng-class="{ 'has-error': t.InsertForm.OrgSn.$invalid }">
-                        <input type="text" name="OrgSn" class="form-control" placeholder="部门编号" ng-model="t.NewItem.OrgSn" required />
-                    </div>
-                </td>
-                <td>
-                    <div ng-class="{ 'has-error': t.InsertForm.OrgName.$invalid }">
-                        <input type="text" name="OrgName" class="form-control" placeholder="部门名称" ng-model="t.NewItem.OrgName" required ng-blur="t.IsAddOrgNameExists()" />
-                        <div ng-messages="t.InsertForm.OrgName.$error" class="help-block" role="alert">
-                            <div ng-message="unique">部门名称重复</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div ng-class="{ 'has-error': t.InsertForm.IsUsed.$invalid }">
-                        <div toggle-switch ng-model="t.NewItem.IsUsed" class="w-xxs switch-success" on-label="是" off-label="否" on-value="1" off-value="0"></div>
-                    </div>
-                </td>
-                <td class="multi-line">
-                    <div ng-class="{ 'has-error': t.InsertForm.ParOrgSn.$invalid }">
-                        <div basic-select="SysOrg" ng-name="ParOrgSn" placeholder="上级部门" ng-model="t.NewItem.ParOrgSn" ng-required="true"></div>
-                    </div>
-                </td>
-                <td>
-                    <div ng-class="{ 'has-error': t.InsertForm.CompanyNo.$invalid }">
-                        <div basic-select="Company" ng-name="CompanyNo" placeholder="所属公司" ng-model="t.NewItem.CompanyNo" ng-required="true"></div>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <input type="text" name="OrgDesc" class="form-control" placeholder="描述" ng-model="t.NewItem.OrgDesc" />
-                    </div>
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr ng-repeat="item in t.List " ng-form="item.ItemForm">
-                <td>
-                    <span ng-if="!item.IsEdit">
-                        <button class="btn btn-xs btn-primary" ng-click="t.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
-                        <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="t.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
-                    </span>
-                    <span ng-if="item.IsEdit">
-                        <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="t.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
-                        <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
-                    </span>
-                </td>
-                <td title="{{ item.OrgSn }}">{{ item.OrgSn }}</td>
-                <td>
-                    <span ng-if="!item.IsEdit">{{ item.OrgName }}</span>
-                    <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_OrgName.$invalid }">
-                        <input type="text" name="item_OrgName" class="form-control" placeholder="部门名称" ng-model="t.EditItem.OrgName" required ng-blur="t.IsEditOrgNameExists()" />
-                        <div ng-messages="item.ItemForm.item_OrgName.$error" class="help-block" role="alert">
-                            <div ng-message="unique">部门名称重复</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div ng-if="!item.IsEdit">
-                        <div toggle-switch ng-model="item.IsUsed" class="w-xxs switch-success" on-label="是" off-label="否" on-value="1" off-value="0" ng-disabled="!item.IsEdit"></div>
-                    </div>
-                    <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_IsUsed.$invalid }">
-                        <div toggle-switch ng-model="t.EditItem.IsUsed" class="w-xxs switch-success" on-label="是" off-label="否" on-value="1" off-value="0" ng-disabled="!item.IsEdit"></div>
-                    </div>
-                </td>
-                <td>
-                    <span ng-if="!item.IsEdit">{{ item.ParentOrg.OrgName }}</span>
-                    <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_OrgName.$invalid }">
-                        <div basic-select="SysOrg" ng-name="item_ParOrgSn" placeholder="上级部门" ng-model="t.EditItem.ParOrgSn" ng-required="true"></div>
-                    </div>
-                </td>
-                <td>
-                    <!--<span ng-if="!item.IsEdit">{{ item.Company.CompanyName }}</span>-->
-                    <div ng-class="{ 'has-error' : item.ItemForm.item_CompanyName.$invalid }">
-                        <div basic-select="Company" ng-name="item_CompanyNo" placeholder="所属公司" ng-model="t.EditItem.CompanyNo" ng-required="true"></div>
-                    </div>
-                </td>
-                <td>
-                    <span ng-if="!item.IsEdit">{{ item.OrgDesc }}</span>
-                    <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_OrgDesc.$invalid }">
-                        <input type="text" name="item_OrgDesc" class="form-control" placeholder="描述" ng-model="t.EditItem.OrgDesc" />
-                    </div>
-                </td>
-                <td title="{{ item.CreateBy }}">{{ item.CreateBy }}</td>
-                <td title="{{ item.CreateDate }}">{{ item.CreateDate }}</td>
-                <td title="{{ item.ModifyBy }}">{{ item.ModifyBy }}</td>
-                <td title="{{ item.ModifyDate }}">{{ item.ModifyDate }}</td>
-            </tr>
-        </table>
-        <!--<pre>{{ vm.app.settings.asideFolded | json }}</pre>-->
-    </div>
-    <div class="col-md-12 text-center " ng-if="t.page.total>t.page.size ">
-        <div uib-pagination total-items="t.page.total " ng-model="t.page.index " items-per-page="t.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
-             ng-change="t.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
-    </div>
-</div>
+    </uib-tab>
+</uib-tabset>

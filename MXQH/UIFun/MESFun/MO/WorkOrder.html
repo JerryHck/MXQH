@@ -38,6 +38,22 @@
                             <a><i ng-click="mesmo.Ser.LineID = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
                         </span>
                     </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mesmo.Ser.CustomerOrder" placeholder="客户订单号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mesmo.Ser.CustomerOrder = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mesmo.Ser.ERPSo" placeholder="ERP销售单号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mesmo.Ser.ERPSo = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
                     <button class="btn btn-sm btn-info " ng-click="mesmo.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
                 </div>
             </div>
@@ -50,7 +66,7 @@
                         <td style="width:100px ">计划日期</td>
                         <td style="width:100px ">生产线</td>
                         <td style="width:100px ">计划序号</td>
-                        <td style="width:130px ">工单号</td>
+                        <td style="width:135px ">工单号</td>
                         <td style="width:100px ">到货地</td>
                         <td style="width:100px ">编码规则</td>
                         <td style="width:130px ">产品编号</td>
@@ -79,9 +95,11 @@
                     <td title="{{ item.AssemblyDate }}">{{ item.AssemblyDate }}</td>
                     <td title="{{ item.AssemblyLineName }}" style="white-space:normal;word-break:normal;">{{ item.AssemblyLineName }}</td>
                     <td title="{{ item.ListNo }}">{{ item.ListNo }}</td>
-                    <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
-                    <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
-                    <td class="bg-warning" ng-if="item.ClName!=''" title="{{ item.ClName }}">{{ item.ClName }}</td>
+                    <td ng-if="item.IsPack==1" title="{{ item.WorkOrder }}"><span class="text-success"><i class="glyphicon glyphicon-ok"></i></span>{{ item.WorkOrder }}</td>
+                    <td ng-if="item.IsPack!=1" title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td ng-if="item.TemplateCount!=0" title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
+                    <td ng-if="item.TemplateCount==0" class="bg-warning" title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
+                    <td ng-if="item.ClName!=''" class="bg-warning"  title="{{ item.ClName }}">{{ item.ClName }}</td>
                     <td ng-if="item.ClName==''">{{item.MaterialClName}}</td>
                     <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
                     <td title="{{ item.MaterialName }}" style="white-space:normal;word-break:normal;" >{{ item.MaterialName }}</td>
@@ -103,6 +121,16 @@
             <div uib-pagination total-items="mesmo.page.total " ng-model="mesmo.page.pageIndex " items-per-page="mesmo.page.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
                  ng-change="mesmo.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
             </div>
+        </div>
+
+        <div class="col-md-12">
+            <span class="font-bold">注：</span>
+            <ol>
+                <li>“工单号”列中的<span class="text-success"><i class="glyphicon glyphicon-ok"></i></span>代表此工单已经创建了“包装登记”</li>
+                <li>“编码规则”列的背景色为<div class="bg-warning inline" style="width:20px;">&nbsp;</div>时，代表此工单使用的是工单的“编码规则”，否则使用的是料号的“编码规则”</li>
+                <li>“到货地”列的背景色为<div class="bg-warning inline" style="width:20px;">&nbsp;</div>时，代表此料号、到货地没有SN标签模板</li>
+
+            </ol>
         </div>
     </uib-tab>
     <uib-tab index="1">
@@ -142,6 +170,22 @@
                         <span class="input-group-addon">
                             <a><i ng-click="mesmo.Ser2.LineID = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
                         </span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mesmo.Ser2.CustomerOrder" placeholder="客户订单号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mesmo.Ser2.CustomerOrder = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mesmo.Ser2.ERPSo" placeholder="ERP销售单号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mesmo.Ser2.ERPSo = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
                     </div>
                     <button class="btn btn-sm btn-info " ng-click="mesmo.SearchCom() "><i class="glyphicon glyphicon-search "></i>查询</button>
                 </div>
@@ -199,6 +243,6 @@
             <div uib-pagination total-items="mesmo.pageCom.total " ng-model="mesmo.pageCom.pageIndex " items-per-page="mesmo.pageCom.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
                  ng-change="mesmo.DataBindCom() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
             </div>
-        </div>
+        </div>       
     </uib-tab>
 </uib-tabset>

@@ -1,0 +1,114 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="blp.promise">
+    <uib-tab index="0" select="blp.SelectTab(0)" deselect="blp.SelectTab(-1)">
+        <uib-tab-heading class="h5">机身标签打印</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="col-sm-6">
+                <div class="panel panel-default" ng-form="blp.DeleteForm">
+                    <div class="panel-heading font-bold">
+                        机身标签打印
+                        <!--<button class="btn btn-sm btn-success pull-right" ng-click="blp.DownExe()">下载打印插件</button>-->
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">是否补打印</label>
+                                <div class="col-lg-8">
+                                    <div toggle-switch ng-model="blp.IsReprint" class="w-md i-switch-lg switch-bool" on-label="是" off-label="否" on-value="U" off-value="I"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">SN码</label>
+                                <div class="col-lg-8" ng-class="{ 'has-error' : blp.DeleteForm.blp.$invalid }">
+                                    <input type="text" class="form-control" ui-focus="blp.Focus == 0" name="InCode" ng-model="blp.DeleteItem.InternalCode" placeholder="内部码/SN码" ng-keyup="blp.KeyDonwInCode($event)" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default scroll-y" style="max-height:600px">
+                    <div class="panel-heading font-bold text-center">打印记录</div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            <ul class="list-group bg-white">
+                                <li class="list-group-item" ng-repeat="item in blp.MesList track by item.Id" ng-class="{ 'text-danger' : !item.IsOk, 'text-success':item.IsOk }">
+                                    <span herf class="pull-left">
+                                        <i class="glyphicon" ng-class="{ 'glyphicon-remove' : !item.IsOk, 'glyphicon-ok':item.IsOk }"></i>
+                                    </span>
+                                    <div class="clear">
+                                        <div>{{ item.Msg }}</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+
+    <uib-tab index="1" select="blp.SelectTab(0)" deselect="blp.SelectTab(-1)">
+        <uib-tab-heading class="h5">机身标签打印记录</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs">
+                <div class="form-inline">
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="blp.page.DocNo" placeholder="工单号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="blp.page.DocNo = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="blp.page.CreatedBy" placeholder="创建人">
+                            <span class="input-group-addon">
+                                <a><i ng-click="blp.page.CreatedBy = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="blp.page.SNCode" placeholder="SN码">
+                            <span class="input-group-addon">
+                                <a><i ng-click="blp.page.SNCode = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-info " ng-click="blp.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                </div>
+            </div>
+        </div>
+        <div class="padder-md table-responsive">
+            <table class="table one-line">
+                <thead>
+                    <tr>
+                        <td style="width:100px ">工单号</td>
+                        <td style="width:90px ">创建人</td>
+                        <td style="width:100px ">创建时间</td>
+                        <td style="width:100px ">SN码</td>
+                        <td style="width:100px ">料号编码</td>
+                        <td style="width:100px ">料号名称</td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in blp.SerList ">
+                    <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td title="{{ item.CreateBy }}">{{ item.CreateBy }}</td>
+                    <td title="{{ item.CreateDate|date:'yyyy-MM-dd HH:mm:ss' }}">{{ item.CreateDate|date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td title="{{ item.SNCode }}">{{ item.SNCode }}</td>
+                    <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                    <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-12 text-center " ng-if="blp.page.total>blp.page.pageSize ">
+            <div uib-pagination total-items="blp.page.total " ng-model="blp.page.pageIndex " items-per-page="blp.page.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                 ng-change="blp.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
+            </div>
+        </div>
+
+    </uib-tab>
+</uib-tabset>

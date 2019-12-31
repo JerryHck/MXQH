@@ -12,23 +12,28 @@
     </div>
 </div>
 <div class="wrapper-md">
-    <div class="col-md-4" ng-repeat="item in job.List">
+    <div class="col-md-4 padder-xs" ng-repeat="item in job.List">
         <div class="panel" ng-class="{'panel-success': item.IsStart, 'panel-danger': !item.IsStart}">
-            <div class="panel-heading text-center">
-                <a class="h3 pull-left thumb-sm text-success" ng-click="job.JobEdit(item)" title="编辑产品"><i class="glyphicon glyphicon-edit"></i></a>
-                <a class="h3">{{ item.JobName }}</a>
-                <a class="h3 pull-right thumb-sm text-danger" ng-confirm="{text:'确定要删除任务吗'}" ng-click="job.JobDelete(item)" title="删除计划"><i class="glyphicon glyphicon-remove"></i></a>
+            <div class="panel-heading text-center padder-xs">
+                <a class="h4 pull-left thumb-xs text-success" ng-click="job.JobEdit(item)" title="编辑产品"><i class="glyphicon glyphicon-edit"></i></a>
+                <a class="h4">{{ item.JobName }}</a>
+                <a class="h4 pull-right thumb-xs text-danger" ng-confirm="{text:'确定要删除任务吗'}" ng-click="job.JobDelete(item)" title="删除计划"><i class="glyphicon glyphicon-remove"></i></a>
             </div>
             <div class="panel-body">
                 <article class="media">
                     <small class="media-left pull-left">上次执行:</small>
+                    <small class="media-right pull-right m-t-n-xs" title="查看执行日志"><a class="h4 text-info" ng-click="job.SerLog(item)"><i class="glyphicon glyphicon-search"></i></a></small>
                     <div class="media-body">
-                        <small class="block">{{ item.LastRunTime | date:'yyyy-MM-dd HH:mm:ss' }}</small>
-                        <span></span>
+                        <small class="block" ng-if="item.LastRunTime">
+                            {{ item.LastRunTime | date:'yyyy-MM-dd HH:mm:ss' }}(<span class="font-v2" ng-if="item.IsOkRun">成功</span>
+                            <span class="font-v4" ng-if="!item.IsOkRun">失败</span>)
+                        </small>
                     </div>
                 </article>
+
                 <article class="media">
                     <small class="media-left pull-left">下次执行:</small>
+                    <small class="media-right pull-right m-t-n-xs" title="立即执行一次"><a class="h4 text-success" ng-click="job.RunJob(item.JobName)"><i class="icon icon-control-play"></i></a></small>
                     <div class="media-body">
                         <small class="h4 text-info font-bold block">{{ item.NextTime | date:'yyyy-MM-dd HH:mm:ss' }} &nbsp;</small>
                         <span></span>
@@ -47,66 +52,68 @@
         <div uib-pagination total-items="job.page.total" ng-model="job.page.index" items-per-page="job.page.size" max-size="10" first-text="第一页" previous-text="上一页"
              ng-change="job.PageChange()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
     </div>
-    <!--<pre>{{ job.Item | json }}</pre>-->
+    <!--<pre>{{ job.List | json }}</pre>-->
 </div>
 <div class="insert-job lg d-r bg-light dk">
     <div class="blur-close" ui-remove-class="active" target=".insert-job"></div>
-    <div class="b-b wrapper-sm text-center">
-        <a class="text-danger pull-left" ui-remove-class="active" target=".insert-job"><i class="glyphicon glyphicon-remove"></i></a>
+    <div class="b-b wrapper text-center">
+        <button class="btn btn-success pull-left" type="button" ng-disabled="job.JobForm.$invalid" ng-click="job.JobSave()">储存</button>
+        <!--<button class="btn btn-warning m-l-md" type="button" ui-remove-class="active" target=".insert-job">取消</button>-->
+        <a class="text-danger pull-right" ui-remove-class="active" target=".insert-job"><i class="glyphicon glyphicon-remove"></i></a>
         <span class="m-n font-thin h3" ng-if="!job.isEdit">计划新增</span>
         <span class="m-n font-thin h3" ng-if="job.isEdit"> 计划[ <strong>{{ job.Item.JobName }}</strong> ]编辑</span>
     </div>
-    <div class="padder-md wrapper" ng-form="job.JobForm">
-        <div class="panel panel-default">
+    <div class="padder-xs scroll-y bar-xs" ng-form="job.JobForm">
+        <div class="panel panel-info" style="max-height:650px; min-height:500px">
             <div class="panel-body">
                 <div class="form-horizontal">
-                    <div class="form-group pull-in clearfix">
-                        <div class="col-sm-6">
-                            <label class="control-label col-md-4">计划名</label>
-                            <div class="col-md-8" ng-class="{ 'has-error' : job.JobForm.JobName.$invalid }">
+                    <div class="form-group-xs pull-in clearfix">
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label col-md-3 padder-xs">计划名</label>
+                            <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : job.JobForm.JobName.$invalid }">
                                 <input type="text" class="form-control" name="JobName" placeholder="计划名" ng-model="job.Item.JobName" ng-disabled="job.isEdit || job.isCopy" ng-blur="job.isJobExists()" required>
                                 <div ng-messages="job.JobForm.JobName.$error" class="help-block" role="alert">
                                     <div ng-message="unique">任务名已经存在</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <label class="control-label col-md-4">计划类型</label>
-                            <div class="col-md-8" ng-class="{ 'has-error' : job.JobForm.JobType.$invalid }">
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label col-md-3 padder-xs">计划类型</label>
+                            <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : job.JobForm.JobType.$invalid }">
                                 <div config-select ng-name="JobType" ng-model="job.Item.JobType" auto-first="true" placeholder="请选择执行类型" select-class="text-xs" config-option="job.JobType" ng-required="true"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group pull-in clearfix">
-                        <div class="col-sm-6" ng-if="job.Item.JobType=='O'">
-                            <label class="control-label col-md-4">执行一次</label>
-                            <div class="col-md-8" ng-class="{ 'has-error' : job.JobForm.NextRunTime.$invalid }">
+                    <div class="form-group-xs pull-in clearfix">
+                        <div class="col-sm-6 no-padder" ng-if="job.Item.JobType=='O'">
+                            <label class="control-label col-md-3 padder-xs">执行一次</label>
+                            <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : job.JobForm.NextRunTime.$invalid }">
                                 <div class="input-group">
                                     <input type="text" date-time-picker class="form-control" name="NextRunTime" placeholder="选择执行时间" ng-model="job.Item.NextRunTime" option="job.NextOption" required>
                                     <span class="input-group-addon"><a class="text-success"><i class="glyphicon glyphicon-calendar"></i></a></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6" ng-if="job.Item.JobType=='R'">
-                            <label class="control-label col-md-4">执行方式</label>
-                            <div class="col-md-8" ng-class="{ 'has-error' : job.JobForm.RepeatType.$invalid }">
+                        <div class="col-sm-6 no-padder" ng-if="job.Item.JobType=='R'">
+                            <label class="control-label col-md-3 padder-xs">执行方式</label>
+                            <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : job.JobForm.RepeatType.$invalid }">
                                 <div config-select ng-model="job.Item.RepeatType" auto-first="true" placeholder="请选择执行方式" select-class="text-xs" config-option="job.RepeatType" ng-required="true"></div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <label class="control-label col-md-4">使用情况</label>
-                            <div class="col-md-8">
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label col-md-3 padder-xs">使用情况</label>
+                            <div class="col-md-9 padder-xs">
                                 <span toggle-switch class="switch-success pull-down" ng-model="job.Item.IsStart" on-label="启用" off-label="停止"></span>
                             </div>
                         </div>
                     </div>
                     <div class="line-dashed b-b"></div>
                 </div>
-                <div class="form-horizontal wrapper-xs" ng-if="job.Item.JobType=='R'">
-                    <div class="form-group pull-in clearfix">
-                        <div class="col-sm-6">
-                            <label class="control-label col-md-4">执行间隔</label>
-                            <div class="col-md-8" ng-class="{ 'has-error' : job.JobForm.Interval.$invalid }">
+                <div class="form-horizontal m-t-sm" ng-if="job.Item.JobType=='R'">
+                    <div class="form-group-xs pull-in clearfix">
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label col-md-3 padder-xs">执行间隔</label>
+                            <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : job.JobForm.Interval.$invalid }">
                                 <div class="input-group">
                                     <span class="input-group-addon">每</span>
                                     <input type="number" name="Interval" min="1" max="100" class="form-control" ng-model="job.Item.Interval" required />
@@ -116,15 +123,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6" ng-if="job.Item.RepeatType =='W'">
-                            <label class="control-label col-md-4">在</label>
-                            <div class="col-md-8" ng-class="{ 'has-error' : job.JobForm.IntervalWeek.$invalid }">
+                        <div class="col-sm-6 no-padder" ng-if="job.Item.RepeatType =='W'">
+                            <label class="control-label col-md-3 padder-xs">在</label>
+                            <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : job.JobForm.IntervalWeek.$invalid }">
                                 <div config-select-multi ng-name="IntervalWeek" ng-model="job.Item.IntervalWeekList" auto-first="true" placeholder="请选择执行日" select-class="text-xs" config-option="job.Week" ng-required="true"></div>
                             </div>
                         </div>
-                        <div class="col-sm-6" ng-if="job.Item.RepeatType =='M'">
-                            <label class="control-label col-md-4">在第</label>
-                            <div class="col-md-8" ng-class="{ 'has-error' : job.JobForm.IntervalMonth.$invalid }">
+                        <div class="col-sm-6 no-padder" ng-if="job.Item.RepeatType =='M'">
+                            <label class="control-label col-md-3 padder-xs">在第</label>
+                            <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : job.JobForm.IntervalMonth.$invalid }">
                                 <div class="input-group">
                                     <input type="number" name="IntervalMonth" min="1" max="31" class="form-control" ng-model="job.Item.IntervalMonth" required />
                                     <span class="input-group-addon">天</span>
@@ -133,23 +140,23 @@
                         </div>
                     </div>
                     <div class="line-dashed b-b"></div>
-                    <div class="form-group pull-in clearfix wrapper-xs">
-                        <div class="col-sm-6">
-                            <label class="control-label col-md-4">一天频率</label>
-                            <div class="col-md-8" ng-class="{ 'has-error' : job.JobForm.DayType.$invalid }">
+                    <div class="form-group-xs pull-in clearfix m-t-sm">
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label col-md-3 padder-xs">一天频率</label>
+                            <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : job.JobForm.DayType.$invalid }">
                                 <div config-select ng-name="DayType" ng-model="job.Item.DayType" auto-first="true" placeholder="请选择执行类型" select-class="text-xs" config-option="job.JobType" ng-required="true"></div>
                             </div>
                         </div>
-                        <div class="col-sm-6" ng-if="job.Item.DayType=='O'">
-                            <label class="control-label col-md-4">执行时间</label>
-                            <div class="col-md-8">
+                        <div class="col-sm-6 no-padder" ng-if="job.Item.DayType=='O'">
+                            <label class="control-label col-md-3 padder-xs">执行时间</label>
+                            <div class="col-md-9 padder-xs">
                                 <input type="text" date-time-picker class="form-control" placeholder="执行时间" ng-model="job.Item.DayOneTime" option="job.TimeOption" />
                             </div>
                         </div>
-                        <div class="col-sm-6" ng-if="job.Item.DayType=='R'">
-                            <label class="control-label col-md-4">每</label>
-                            <div class="col-md-8">
-                                <div class="col-md-6" ng-class="{ 'has-error' : job.JobForm.DayInterval.$invalid }">
+                        <div class="col-sm-6 no-padder" ng-if="job.Item.DayType=='R'">
+                            <label class="control-label col-md-3 padder-xs">每</label>
+                            <div class="col-md-9 padder-xs">
+                                <div class="col-md-6 no-padder" ng-class="{ 'has-error' : job.JobForm.DayInterval.$invalid }">
                                     <input type="number" name="DayInterval" min="1" max="100" class="form-control" ng-model="job.Item.DayInterval" required />
                                 </div>
                                 <div class="col-md-6" ng-class="{ 'has-error' : job.JobForm.DayFreUnit.$invalid }">
@@ -158,21 +165,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group pull-in clearfix">
-                        <div class="col-sm-6">
-                            <label class="control-label col-md-4">开始时间</label>
-                            <div class="col-md-8" ng-class="{ 'has-error' : job.JobForm.StartDate.$invalid }">
+                    <div class="form-group-xs pull-in clearfix">
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label col-md-3 padder-xs">开始时间</label>
+                            <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : job.JobForm.StartDate.$invalid }">
                                 <input type="text" name="StartDate" date-time-picker class="form-control" placeholder="开始时间" ng-model="job.Item.StartDate" option="job.StartOption" required />
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <label class="control-label col-md-4">结束时间</label>
-                            <div class="col-md-8">
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label col-md-3  padder-xs">结束时间</label>
+                            <div class="col-md-9  padder-xs">
                                 <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <label class="i-checks">
-                                            <input type="checkbox" ng-model="job.Item.NoEndDate"><i></i>无
-                                        </label>
+                                    <span class="input-group-addon" title="是否无结束日期">
+                                        <input type="checkbox" ng-model="job.Item.NoEndDate">
                                     </span>
                                     <input type="text" ng-disabled="job.Item.NoEndDate" name="EndDate" date-time-picker class="form-control" placeholder="结束时间" ng-model="job.Item.EndDate" option="job.StartOption" />
                                 </div>
@@ -182,46 +187,180 @@
                     <div class="line-dashed b-b"></div>
                 </div>
                 <div class="form-horizontal wrapper-xs">
-                    <div class="form-group pull-in clearfix">
-                        <div class="col-sm-6">
-                            <label class="control-label col-md-4">方法类型</label>
-                            <div class="col-md-8" ng-class="{ 'has-error' : job.JobForm.MethodType.$invalid }">
-                                <div config-select ng-name="MethodType" ng-model="job.Item.MethodType" auto-first="true" placeholder="请选择执行类型" select-class="text-xs" config-option="job.MethodType" ng-required="true"></div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <label class="control-label col-md-4">方法名</label>
-                            <div class="col-md-8" ng-if="job.Item.MethodType=='Custom'" ng-class="{ 'has-error' : job.JobForm.JobExecMethod.$invalid }">
-                                <input type="text" class="form-control" name="JobExecMethod" placeholder="方法名" ng-model="job.Item.JobExecMethod">
-                            </div>
-                            <div class="col-md-8" ng-if="job.Item.MethodType!='Custom'">
-                                <div ng-class="{ 'has-error' : job.JobForm.JobExecMethod.$invalid }">
-                                    <input type="text" uib-typeahead="en.EntityName as en.EntityName for en in job.EnList | filter:$viewValue | limitTo:8"
-                                           class="form-control" name="JobExecMethod" placeholder="实体计划名" ng-model="job.Item.JobExecMethod" ng-change="job.Item.EnProShortName = undefined" ng-blur="job.EnChange()" required>
-                                </div>
-                                <div ng-class="{ 'has-error' : job.JobForm.EnProShortName.$invalid }">
-                                    <input type="text" ng-if="job.Item.MethodType!='Custom'" class="form-control" name="EnProShortName" placeholder="存储过程简称"
-                                           uib-typeahead="short.ShortName as short.ShortName for short in job.ShortList | filter:$viewValue | limitTo:8" ng-model="job.Item.EnProShortName" required>
-                                </div>
-                            </div>
+                    <div class="form-group-xs m-b-xs pull-in clearfix">
+                        <label class="control-label m-l-n-lg padder-xs col-md-2">方法类型</label>
+                        <div class="col-md-10 padder-xs" ng-class="{ 'has-error' : job.JobForm.MethodType.$invalid }" title="方法类型">
+                            <div config-select ng-name="MethodType" ng-model="job.Item.MethodType" auto-first="true" placeholder="请选择执行类型" select-class="text-xs" config-option="job.MethodType" ng-required="true"></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <label class="control-label col-md-2">方法参数</label>
-                            <div class="col-md-10">
+                    <!--执行自定义后端方法时-->
+                    <div class="form-group-xs pull-in clearfix" ng-if="job.Item.MethodType=='Custom'">
+                        <div class="col-sm-12 no-padder">
+                            <label class="control-label m-l-n-lg padder-xs col-md-2">方法名</label>
+                            <div class="col-md-10 padder-xs" ng-class="{ 'has-error' : job.JobForm.JobExecMethod.$invalid }" title="方法名">
+                                <input type="text" class="form-control" name="JobExecMethod" placeholder="方法名" ng-model="job.Item.JobExecMethod" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 no-padder m-t-xs">
+                            <label class="control-label m-l-n-lg padder-xs col-md-2">方法参数</label>
+                            <div class="col-md-10 padder-xs" title="方法参数">
                                 <textarea class="form-control" rows="2" ng-model="job.Item.JobParameter" placeholder="输入方法参数, Json 格式 如:{A:1,B:2}"></textarea>
                             </div>
                         </div>
                     </div>
+                    <!--执行实体计划时-->
+                    <div class="form-group-xs pull-in clearfix" ng-if="job.Item.MethodType.indexOf('SrcExePlan') != -1">
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label col-md-3 padder-xs">{{ job.Item.MethodType.indexOf('To') == -1?"实体简称":"来源实体" }}</label>
+                            <div class="col-md-9 padder-xs">
+                                <div ng-class="{ 'has-error' : job.JobForm.JobExecMethod.$invalid }" title="实体计划名">
+                                    <ui-select name="JobExecMethod" ng-model="job.Item.JobExecMethod" ng-change="job.EnChange()" theme="bootstrap" search-enabled="true" ng-required="true">
+                                        <ui-select-match placeholder="实体.."><span class="font-v3">{{ $select.selected.EntityName }}</span></ui-select-match>
+                                        <ui-select-choices repeat="item.EntityName as item in job.EnList | limitTo:200 | filter: $select.search track by item.EntityName">
+                                            <div>
+                                                <span class="h6 text-muted pull-right" ng-bind-html="item.ConnectName | highlight: $select.search"></span>
+                                                <span class="font-v3" ng-bind-html="item.EntityName | highlight: $select.search"></span>
+                                            </div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div class="m-t-xs" ng-class="{ 'has-error' : job.JobForm.EnProShortName.$invalid }" title="存储过程">
+                                    <ui-select name="EnProShortName" ng-model="job.Item.EnProShortName" ng-change="line.ChangeMo()" theme="bootstrap" search-enabled="true" ng-required="true">
+                                        <ui-select-match placeholder="存储过程.."><span class="font-v3">{{ $select.selected.ProcSchema }}{{ $select.selected.ProcSchema?".":"" }}{{ $select.selected.ProcName }}</span></ui-select-match>
+                                        <ui-select-choices repeat="item.ShortName as item in job.ShortList | limitTo:200 | filter: $select.search track by item.ShortName">
+                                            <div><span class="font-v3" ng-bind-html="item.ProcSchema | highlight: $select.search"></span>.<span class="font-v3" ng-bind-html="item.ProcName | highlight: $select.search"></span></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label col-md-3  padder-xs">参数</label>
+                            <div class="col-md-9 padder-xs">
+                                <textarea class="form-control" rows="2" ng-model="job.Item.JobParameter" placeholder="输入方法参数, Json 格式 如:{A:1,B:2}"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!--查询实体计划时-->
+                    <div class="form-group-xs pull-in clearfix padder-xxs" ng-if="job.Item.MethodType.indexOf('SrcSerPlan') != -1">
+                        <div class="col-sm-12 no-padder">
+                            <label class="control-label m-l-n-lg padder-xs col-md-2">来源实体</label>
+                            <div class="col-md-10 padder-xs" ng-class="{ 'has-error' : job.JobForm.JobExecMethod.$invalid }" title="实体计划名称">
+                                <ui-select name="JobExecMethod" ng-model="job.Item.JobExecMethod" ng-change="job.EnChange()" theme="bootstrap" search-enabled="true" ng-required="true">
+                                    <ui-select-match placeholder="实体.."><span class="font-v3">{{ $select.selected.EntityName }}</span></ui-select-match>
+                                    <ui-select-choices repeat="item.EntityName as item in job.EnList | limitTo:200 | filter: $select.search track by item.EntityName">
+                                        <div>
+                                            <span class="h6 text-muted pull-right" ng-bind-html="item.ConnectName | highlight: $select.search"></span>
+                                            <span class="font-v3" ng-bind-html="item.EntityName | highlight: $select.search"></span>
+                                        </div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 no-padder m-t-xs">
+                            <label class="control-label m-l-n-lg padder-xs col-md-2">参数</label>
+                            <div class="col-md-10 padder-xs" title="方法参数">
+                                <textarea class="form-control" rows="2" ng-model="job.Item.JobParameter" placeholder="输入方法参数, Json 格式 如:[{name:'ColName',value:2}]"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!--执行SQL脚本时-->
+                    <div class="form-group pull-in clearfix padder-xxs" ng-if="job.Item.MethodType.indexOf('SrcExeSql') != -1">
+                        <div class="col-sm-12 no-padder">
+                            <label class="control-label m-l-n-lg padder-xs col-md-2">{{ job.Item.MethodType.indexOf('To') == -1?"链接对象":"来源链接" }}</label>
+                            <div class="col-md-10 padder-xs" ng-class="{ 'has-error' : job.JobForm.JobExecMethod.$invalid }" title="链接对象">
+                                <div connect-select ng-model="job.Item.JobExecMethod" ng-name="JobExecMethod"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 no-padder m-t-xs">
+                            <label class="control-label m-l-n-lg padder-xs col-md-2">{{ job.Item.MethodType.indexOf('To') == -1?"SQL脚本":"来源SQL" }}</label>
+                            <div class="col-md-10 padder-xs" ng-class="{ 'has-error' : job.JobForm.EnProShortName.$invalid }" title="SQL脚本">
+                                <textarea class="form-control" name="EnProShortName" rows="4" ng-model="job.Item.EnProShortName" placeholder="输入要执行的sql脚本" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line-dashed col-sm-12 no-padder m-t-xs" ng-if="job.Item.MethodType.indexOf('To')!= -1"><div class="line-dashed b-b col-md-11 col-md-offset-1"></div></div>
+                    <!--执行目标实体计划时-->
+                    <div class="form-group-xs pull-in clearfix padder-xxs" ng-if="job.Item.MethodType.indexOf('ToPlanExe') != -1">
+                        <div class="col-sm-6 no-padder m-t-xs">
+                            <label class="control-label col-md-3 padder-xs">数据目标</label>
+                            <div class="col-md-9 padder-xs">
+                                <div class="m-t-xs" ng-class="{ 'has-error' : job.JobForm.ToDataPlan.$invalid }" title="实体计划名">
+                                    <ui-select name="ToDataPlan" ng-model="job.Item.ToPlanName" ng-change="job.ToEnChange()" theme="bootstrap" search-enabled="true" ng-required="true">
+                                        <ui-select-match placeholder="实体.."><span class="font-v3">{{ $select.selected.EntityName }}</span></ui-select-match>
+                                        <ui-select-choices repeat="item.EntityName as item in job.ToEnList |filter:{} | limitTo:200 | filter: $select.search track by item.EntityName">
+                                            <div>
+                                                <span class="h6 text-muted pull-right" ng-bind-html="item.ConnectName | highlight: $select.search"></span>
+                                                <span class="font-v3" ng-bind-html="item.EntityName | highlight: $select.search"></span>
+                                            </div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div class="m-t-xs" ng-class="{ 'has-error' : job.JobForm.ToDataPlanShort.$invalid }" title="存储过程简称">
+                                    <ui-select name="ToDataPlanShort" ng-model="job.Item.ToPlanShort" ng-change="line.ChangeMo()" theme="bootstrap" search-enabled="true" ng-required="true">
+                                        <ui-select-match placeholder="存储过程.."><span class="font-v3">{{ $select.selected.ProcSchema }}{{ $select.selected.ProcSchema?".":"" }}{{ $select.selected.ProcName }}</span></ui-select-match>
+                                        <ui-select-choices repeat="item.ShortName as item in job.ToShortList | limitTo:200 | filter: $select.search track by item.ShortName">
+                                            <div><span class="font-v3" ng-bind-html="item.ProcSchema | highlight: $select.search"></span>.<span class="font-v3" ng-bind-html="item.ProcName | highlight: $select.search"></span></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 no-padder m-t-xs">
+                            <label class="control-label col-md-3 padder-xs">参数</label>
+                            <div class="col-md-9 padder-xs">
+                                <textarea class="form-control" rows="3" ng-model="job.Item.ToJobParameter" placeholder="输入方法参数, Json 格式 如:{A:1,B:2}"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!--执行目标SQL脚本时-->
+                    <div class="form-group pull-in clearfix padder-xxs" ng-if="job.Item.MethodType.indexOf('ToSqlExe') != -1">
+                        <div class="col-sm-12 no-padder">
+                            <label class="control-label m-l-n-lg padder-xs col-md-2">目标链接</label>
+                            <div class="col-md-10 padder-xs" ng-class="{ 'has-error' : job.JobForm.ToPlanName.$invalid }" title="链接对象">
+                                <div connect-select ng-model="job.Item.ToPlanName" ng-name="ToPlanName"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 no-padder m-t-xs">
+                            <label class="control-label m-l-n-lg padder-xs col-md-2">目标SQL</label>
+                            <div class="col-md-10 padder-xs" ng-class="{ 'has-error' : job.JobForm.ToPlanShort.$invalid }" title="SQL脚本">
+                                <textarea class="form-control" name="ToPlanShort" rows="4" ng-model="job.Item.ToPlanShort" placeholder="输入要执行的sql脚本" required></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <!--<pre> {{ job.Item.MethodType }} {{ job.Item.MethodType.indexOf('SrcExePlan') }}</pre>-->
             </div>
         </div>
-        <div class="col text-center">
-            <button class="btn btn-success" type="button" ng-disabled="job.JobForm.$invalid" ng-click="job.JobSave()">储存</button>
-            <button class="btn btn-warning" type="button" ui-remove-class="active" target=".insert-job">取消</button>
-        </div>
+    </div>
+</div>
 
 
+<div class="ser-job-log lg d-r bg-light dk">
+    <div class="blur-close" ui-remove-class="active" target=".ser-job-log"></div>
+    <div class="b-b wrapper-sm text-center">
+        <a class="text-danger pull-left" ui-remove-class="active" target=".ser-job-log"><i class="glyphicon glyphicon-remove"></i></a>
+        <span class="m-n font-thin h3">[{{ job.SerItem.JobName }}]运行日志</span>
+    </div>
+    <div class="padder-md wrapper scroll-y bar-xs" style="max-height:650px">
+        <ul class="timeline">
+            <li class="tl-header">
+                <div class="btn btn-info">Now</div>
+            </li>
+            <li class="tl-item" ng-repeat="item in job.SerList">
+                <div class="tl-wrap b-primary" ng-class="{'b-info':$index%2==0, 'b-success':$index%3==0}">
+                    <span class="tl-date">
+                        <span class="text-primary" ng-class="{'text-info':$index%2==0, 'text-success':$index%3==0}">{{ item.RunTS | date:'H:mm:ss ' }}</span>
+                        <span class="text-muted" ng-if="!job.checkToday(item.RunTS)">{{ item.RunTS | date:'yyyy.M.d' }}</span>
+                    </span>
+                    <div class="tl-content panel padder bg-light" ng-class="{'b-success text-success':item.IsOkRun, 'b-danger text-danger':!item.IsOkRun}">
+                        <span class="arrow left pull-up hidden-left" ng-class="{'arrow-success':item.IsOkRun, 'arrow-danger':!item.IsOkRun}"></span>
+                        <span class="arrow right pull-up visible-left" ng-class="{'arrow-success':item.IsOkRun, 'arrow-danger':!item.IsOkRun}"></span>
+                        <div class="text-lt">{{ item.LogMes }}。<br /> LogTS:{{ item.LogTS | date:'yyyy-MM-dd HH:mm:ss.sss' }}</div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <!--<pre>{{ job.SerList | json }}</pre>-->
     </div>
 </div>

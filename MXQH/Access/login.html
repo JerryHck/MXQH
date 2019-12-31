@@ -19,25 +19,20 @@
       font: .8em Arial, Tahoma, Verdana;
       background: #fff url(../images/bg.gif) repeat-x; 
       color: #777;
-
-
-
- 
 }
+
 </style>
 
-
-<div class="visible-lg visible-md">
-    <div class="header">
-        <!--<h1 class="text-center">-->
+<div class="visible-lg visible-md padder-xs">
+    <!--<div class="header">
         <div class="row">
             <div class="col-md-2 no-padder"><img src="Content/images/logo2.jpg" /></div>
             <div class="col-md-10 no-padder">
-                <div class="font-bottom col-md-12 no-padder" style="margin-top:-12px"><span style="font-size:60px;">{{ Log.SysData.SysName }}</span></div>
+                <div class="col-md-12 no-padder"><img src="{{ Log.SysData.SysName }}" /></div>
             </div>
         </div>
-        <!--</h1>-->
-    </div>
+    </div>-->
+    <div class="col-md-12 m-t-md m-b-md no-padder text-center"><img src="Content/images/logo2.jpg" /><img src="{{ Log.SysData.SysName }}" /></div>
     <div class="banner">
         <div class="login-aside">
             <div id="o-box-up">
@@ -135,4 +130,6 @@
         </div>
     </section>
 </div>
-
+<!--<div class="app-footer text-center">
+    力同科技&copy;Copyright(C)2018-2019
+</div>-->

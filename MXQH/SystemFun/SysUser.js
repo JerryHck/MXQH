@@ -29,6 +29,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
 
     vm.ConfigSex = { Table: "BasicData", Column: "Sex" };
     vm.UserType = 'E';
+    vm.State = 'S';
 
     getList();
     getListRole();
@@ -36,8 +37,9 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
 
     function getList() {
         var list = [{ name: "UserType", value: vm.UserType },
+            { name: "State", value: vm.State },
             { name: "UserNo", value: "SSAdmin", type:"!=" }]
-        vm.promise = AjaxService.GetPlans("User", list).then(function (data) {
+        AjaxService.GetPlans("User", list).then(function (data) {
             vm.List = data;
             vm.SelectedUser = undefined;
         });

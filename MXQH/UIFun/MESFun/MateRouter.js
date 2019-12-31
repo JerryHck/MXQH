@@ -9,6 +9,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     vm.Ser = {};
 
     vm.SelectMate = SelectMate;
+    vm.ChangeMateType = ChangeMateType;
     vm.SelectRoute = SelectRoute;
     vm.EditRoute = EditRoute;
     vm.OpenProcedure = OpenProcedure;
@@ -25,6 +26,9 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     vm.ProcOk = ProcOk;
     vm.Cancel = Cancel;
 
+    vm.Drop = Drop;
+    vm.Drag = Drag;
+
     vm.Delete = Delete;
 
     function Search() {
@@ -32,9 +36,18 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         PageChange();
     }
 
-    vm.promise = AjaxService.GetPlans("MESMate", [{ name: "State", value: 1 }]).then(function (data) {
-        vm.MateList = data;
-    });
+    ChangeMateType();
+
+    function ChangeMateType() {
+        var list = [{ name: "State", value: 1 }, { name: "MaterialTypeID", value: vm.MateType }];
+        vm.promise = AjaxService.GetPlans("MESMate", list).then(function (data) {
+            vm.MateList = data;
+        });
+    }
+
+    //vm.promise = AjaxService.GetPlans("MESMate", [{ name: "State", value: 1 }]).then(function (data) {
+    //    vm.MateList = data;
+    //});
 
     vm.promise = AjaxService.GetPlans("MESBoProcedure").then(function (data) {
         vm.ProcedureList = data;
@@ -70,6 +83,11 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     function GetMateRouter() {
         AjaxService.GetPlans("MesBoRouting", [{ name: "ProductID", value: vm.SelectetMate.Id }]).then(function (data) {
             vm.MateRouteList = data;
+            for (var i = 0, len = data.length; i < len; i++) {
+                if (data[i].IsDefault) {
+                    vm.SelectedRo = angular.copy(data[i]); break;
+                }
+            }
         });
     }
 
@@ -197,6 +215,8 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             var p = {};
             p.ID = en.Procedure[j].ID;
             p.IsPrint = en.Procedure[j].IsPrint || false;
+            p.IsAging = en.Procedure[j].IsAging || false;
+            p.IsGfTest = en.Procedure[j].IsGfTest || false;
             p.Item1 = en.Procedure[j].Item1 || "0";
             p.Item2 = en.Procedure[j].Item2 || "0";
             p.Item3 = en.Procedure[j].Item3 || "0";
@@ -233,6 +253,18 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 GetMateRouter();
             }
         })
+    }
+
+    // drop
+    function Drop(rol, index) {
+        var en = angular.copy(rol);
+        vm.SelectedRo.Procedure.splice(vm.DragIndex, 1);
+        vm.SelectedRo.Procedure.splice(index, 0, en);
+    }
+
+    //
+    function Drag(rol, index) {
+        vm.DragIndex = index;
     }
 
     //验证是否存在

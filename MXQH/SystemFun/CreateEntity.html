@@ -53,7 +53,7 @@
                                 </div>
                                 <div ng-if="!en.isAddOpen">
                                     <div class="list-group">
-                                        <a ng-repeat="item in en.List | filter:en.EntityQuery " class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.selected, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}">
+                                        <a ng-repeat="item in en.List | filter:en.EntityQuery " class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.EntityName == en.SelectedEn.EntityName, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}">
                                             <span ng-click='en.DeleteEn(item)' ng-confirm="{text:'确定要删除实体吗'}" class="pull-right text-muted hover-action"><i class="fa fa-times"></i></span>
                                             <span class="pull-left"><i class="glyphicon glyphicon-tree-conifer"></i></span><span class="block text-info text-lg" ng-bind-html="item.EntityName | highlight: en.EntityQuery" ng-click="en.SelectEn(item)"></span>
                                             <small class="text-muted" ng-click="en.SelectEn(item)">
@@ -311,9 +311,9 @@
                                                     <div class="form-group" ng-if="en.isEditing">
                                                         <div class="col-sm-12">
                                                             <div class="row">
-                                                                <div class="col-sm-2 m-l-none pl-md-0 pr-md-0" ng-class="{ 'has-error' : en.ProcedureForm.ShortName.$invalid }">
-                                                                    <input class="form-control" name="ShortName" placeholder="存储过程简称" type="text" ng-blur="en.isProcExists(en.NewProc.ShortName)" ng-model="en.NewProc.ShortName" required />
-                                                                    <div ng-messages="en.ProcedureForm.ShortName.$error" class="help-block" role="alert">
+                                                                <div class="col-sm-2 m-l-none pl-md-0 pr-md-0" ng-class="{ 'has-error' : en.ProcedureForm.ShortName1.$invalid }">
+                                                                    <input class="form-control" name="ShortName1" placeholder="存储过程简称" type="text" ng-blur="en.isProcExists(en.NewProc.ShortName)" ng-model="en.NewProc.ShortName" required />
+                                                                    <div ng-messages="en.ProcedureForm.ShortName1.$error" class="help-block" role="alert">
                                                                         <div ng-message="unique">简称重复</div>
                                                                     </div>
                                                                 </div>
@@ -323,8 +323,8 @@
                                                                 <div class="col-sm-2" ng-class="{ 'has-error' : en.ProcedureForm.ActionType.$invalid }">
                                                                     <div config-select ng-model="en.NewProc.ActionType" ng-name="ActionType" ng-required="true" config-option="en.ActionType"></div>
                                                                 </div>
-                                                                <div class="col-sm-2" ng-class="{ 'has-error' : en.ProcedureForm.ShortName.$invalid }">
-                                                                    <ui-select ng-model="en.NewProc.RoleSn" class="h6" theme="bootstrap" search-enabled="true" required>
+                                                                <div class="col-sm-2" ng-class="{ 'has-error' : en.ProcedureForm.RoleItem.$invalid }">
+                                                                    <ui-select ng-model="en.NewProc.RoleSn" name="RoleItem" class="h6" theme="bootstrap" search-enabled="true" required>
                                                                         <ui-select-match class="h5" placeholder="选择角色...">{{ $select.selected.RoleName }}</ui-select-match>
                                                                         <ui-select-choices class="h5" repeat="item.RoleSn as item in en.ListRole | filter: $select.search track by item.RoleSn">
                                                                             <div ng-bind-html="item.RoleSn | highlight: $select.search"></div>
@@ -380,8 +380,8 @@
                                     </uib-tab>
                                     <uib-tab index="3">
                                         <uib-tab-heading class="h5">备份导入</uib-tab-heading>
-                                        <div>
-                                            <div class="panel panel-default col-md-8">
+                                        <div class="col-md-8 no-padder">
+                                            <div class="panel panel-default">
                                                 <div class="panel-heading font-bold">实体备份与导入</div>
                                                 <div class="panel-body">
                                                     <div class="bs-example form-horizontal">
@@ -434,23 +434,23 @@
                 </div>
                 <div class="row-row">
                     <div class="cell scrollable hover">
-                        <div class="cell-inner">
-                            <div class="padder bg-white">
-                                <div class="panel-body">
+                        <div class="cell-inner wrapper-xs">
+                            <div class="panel panel-info">
+                                <div class="panel-body padder-xs">
                                     <article class="media" ng-repeat="item in en.TbColunms | filter:en.TbColunmName ">
                                         <div class="pull-left">
                                             <label class="i-checks">
                                                 <input type="checkbox" ng-checked="en.TbChecked(item)" ng-disabled="!en.isEditing" ng-model="item.isCheck" ng-change="en.CheckChange(item)"><i></i>
                                             </label>
                                         </div>
-                                        <div class="media-body form-group">
-                                            <div class="list-group-item-sm col-lg-12">
-                                                <span class="h-3 text-success">{{ item.ColumnName }}</span>
+                                        <div class="media-body form-group padder-xxs" title="{{ item.ColumnName }}">
+                                            <div class="col-lg-12 padder-xxs">
+                                                <span class="h5 text-success">{{ item.ColumnName }}</span>
                                                 <span class="pull-right" ng-if="item.IsKey == 1">
-                                                    <i class="badge badge-success text-danger">Key</i>
+                                                    <i class="font-v5 text-danger">Key</i>
                                                 </span>
                                             </div>
-                                            <div class="list-group-item-sm col-lg-12">
+                                            <div class="col-lg-12 padder-xxs">
                                                 <small class="block m-t-xs">{{ item.ColumnDes }}</small>
                                                 <em class="text-xs"><span class="text-info">{{ item.DataType }}</span></em>
                                             </div>
