@@ -3,20 +3,20 @@ angular.module('appData', []);
 angular.module('appData')
 //APP URL
 .constant('appUrl', '../')
-.constant('FileUrl', 'http://192.168.30.6:9090/File/')
+.constant('FileUrl', 'http://192.168.30.9:9090/File/')
 //    .constant('FileUrl', 'http://192.168.1.226:9090/File/')
 //    .constant('FileUrl', 'http://192.168.11.75:8080/File/')
 //Service URL
 //.constant('serviceUrl', 'http://localhost:13439/')
-.constant('serviceUrl', 'http://192.168.30.6:9090/MXQHService/')
+.constant('serviceUrl', 'http://192.168.30.9:9090/MXQHService/')
 //    .constant('serviceUrl', 'http://192.168.1.226:9090/MXQHService/')
 //.constant('serviceUrl', 'http://192.168.11.75:8080/MXQHService/')
-.constant('FileServiceUrl', 'http://192.168.30.6:9090/FileService/')
+.constant('FileServiceUrl', 'http://192.168.30.9:9090/FileService/')
 //    .constant('FileServiceUrl', 'http://192.168.1.226:9090/FileService/')
 //.constant('FileServiceUrl', 'http://192.168.11.75:8080/FileService/')
 //  .constant('FileServiceUrl', 'http://localhost:8080/FileService/')
  //.constant('SocketServiceUrl', 'ws://192.168.1.226:2019')
-.constant('SocketServiceUrl', 'ws://localhost:2019')
+.constant('SocketServiceUrl', 'ws://192.168.30.9:2019')
 //.constant('SocketServiceUrl', 'ws://support.auctus.cn:88')
  //表單設定
 .constant('Form', [
