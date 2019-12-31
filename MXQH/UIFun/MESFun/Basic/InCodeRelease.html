@@ -1,123 +1,152 @@
-﻿<uib-tabset active="active" ng-attr-active="In.tabIndex" type="tabs" class="h-100" cg-busy="In.promise">    
-    <uib-tab index="0" select="In.ChangeTab(0)">
-        <uib-tab-heading class="h5">内控码释放</uib-tab-heading>
-        <div class="wrapper-xs padder-xs">
-            <div class="col-sm-8 no-padder">
-                <div class="panel panel-success" ng-form="In.BasicForm">
-                    <div class="panel-heading font-bold">内控码生成</div>
-                    <div class="panel-body padder-v-xs">
-                        <div class="form-horizontal m-t-xs">
-                            <div class="form-group">
-                                <div class="col-sm-1 padder-xxs">
-                                    <button class="btn pull-right btn-success " ng-disabled="In.BasicForm.$invalid" ng-click="In.Release() "><i class="glyphicon glyphicon-save "></i>释放</button>
-                                </div>
-                                <div class="col-sm-2 padder-xxs">
-                                    <div class="col-sm-12 padder-xxs" ng-class="{ 'has-error' : In.BasicForm.ReleaseNum.$invalid }">
-                                        <input type="number" class="form-control" placeholder="释放数量" name="ReleaseNum" ng-model="In.ReleaseItem.ReleaseNum" required>
-                                    </div>
-                                </div>
-                                <div class="col-sm-9 padder-xxs">
-                                    <div class="col-sm-12 padder-xs">
-                                        <input type="text" class="form-control" placeholder="备注" ng-model="In.ReleaseItem.Remark">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel panel-default m-t-n-sm">
-                    <div class="panel-heading font-bold">
-                        释放记录
-                        <button class="btn btn-dark btn-sm m-t-n-xs pull-right" type="button" ng-click="In.ExportExcel('A')" title="导出execl">
-                            <i class="glyphicon glyphicon-export"></i>导出工单SN
-                        </button>
-                    </div>
-                    <div class="panel-body padder-xxs scroll-y" style="max-height:250px;">
-                        <table class="table pad-xs">
-                            <thead>
-                                <tr>
-                                    <td style="width:60px">操作</td>
-                                    <td style="width:80px">释放数量</td>
-                                    <td style="width:250px">SN范围</td>
-                                    <td style="width:70px">操作人</td>
-                                    <td style="width:100px">操作时间</td>
-                                    <td style="width:80px">备注</td>
-                                </tr>
-                            </thead>
-                            <tr ng-repeat="item in In.ReList " ng-class="{ 'bg-danger-light' : item.Id == In.SelectId }" ng-click="In.Select(item)">
-                                <td>
-                                    <!--<button class="btn btn-success btn-xs" type="button" ng-click="In.Select(item)" title="查看">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </button>-->
-                                    <button class="btn btn-info btn-xs" type="button" ng-click="In.Print(item.Id, 'M', false)" title="打印">
-                                        <i class="glyphicon glyphicon-print"></i>
-                                    </button>
-                                    <button class="btn btn-dark btn-xs" type="button" ng-click="In.ExportExcel('O',item)" title="导出execl">
-                                        <i class="glyphicon glyphicon-export"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-xs" ng-confirm="{text:'确定要进行补打印'}" type="button" ng-click="In.Print(item.Id, 'M', true)" title="补打印">
-                                        <i class="icon icon-print"></i>补
-                                    </button>
-                                </td>
-                                <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
-                                <td title="{{ item.ReleaseNum }}">{{ item.ReleaseNum }}</td>
-                                <td>{{ item.MinSnCode }} ~ {{ item.MaxSnCode }}</td>
-                                <td title="{{ item.Creator }}">{{ item.Creator }}</td>
-                                <td>{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
-                                <td title="{{ item.Remark }}">{{ item.Remark }}</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <span class="text-danger">注：使用<span class="text-success btn btn-info btn-xs"><i class="glyphicon glyphicon-print"></i></span>进行打印时只会打印出还未打印过的SN。</span>
-                </div>
+﻿<div class="wrapper-xs padder-xxs col-md-12" cg-busy="In.promise">
+    <div class="col-sm-3 padder-xs">
+        <div class="panel panel-success">
+            <div class="panel-heading font-bold">
+                内控码生成
             </div>
-            <div class="col-sm-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading font-bold">SN列表</div>
-                    <div class="panel-body padder-xs padder-v-xs">
-                        <div class="input-group no-padder">
-                            <input type="text" class="form-control" placeholder="查询SN" ng-model="In.SerBSN" />
-                            <span class="input-group-btn" >
-                                <button class="btn btn-info btn-success" ng-click="In.SearchSN()">
-                                    <i class="glyphicon glyphicon-search"></i>
-                                </button>
-                            </span>
+            <div class="panel-body padder-v-xs padder-xs" ng-form="In.BasicForm">
+                <div class="form-horizontal">
+                    <div class="form-group-md col-md-12 no-padder">
+                        <label class="control-label col-md-3 padder-xs">根据日期:</label>
+                        <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : In.BasicForm.ToDay.$invalid }">
+                            <input date-picker class="form-control" placeholder="根据日期" ng-change="In.SerThisDate() " autocomplete="off" name="ToDay" ng-model="In.ReleaseItem.ToDay" required option="In.Op">
+                            <span class="pull-left text-danger" ng-if="In.PKData.SN">预计编号: {{ In.PKData.SN }}  可再生成:{{ In.PKData.CanCount }}个</span>
                         </div>
-                        <div class="scroll-y m-t-xs">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <td style="width:50px">打印</td>
-                                        <td title="SNCode" style="width:150px ">SNCode</td>
-                                        <td title="是否已打印" style="width:100px ">是否打印</td>
-                                    </tr>
-                                </thead>
-                                <tr ng-repeat="item in In.SNList">
-                                    <td>
-                                        <button class="btn btn-info btn-xs" ng-if="!item.IsPrint" type="button" ng-click="In.Print(In.SelectId, 'O', false, item.SNCode)" title="打印">
-                                            <i class="glyphicon glyphicon-print"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-xs" ng-if="item.IsPrint"  ng-confirm="{text:'确定要进行补打吗'}" type="button" ng-click="In.Print(In.SelectId, 'O', true, item.SNCode)" title="补打印">
-                                            <i class="icon icon-print"></i>补
-                                        </button>
-                                    </td>
-                                    <td title="{{ item.SNCode }}">{{ item.SNCode }}</td>
-                                    <td title="是否打印" ng-class="{'bg-success-light': item.IsPrint }">
-                                        <span ng-if="item.IsPrint">√</span>
-                                    </td>
-                                </tr>
-                            </table>
-                            <div class="col-md-12 text-center no-padder" ng-if="In.page1.total>In.page1.size">
-                                <div uib-pagination total-items="In.page1.total " ng-model="In.page1.index " items-per-page="In.page1.size " max-size="5" previous-text="<<"
-                                     ng-change="In.PageChange1() " next-text=">>" boundary-links="true" boundary-link-numbers="true "></div>
-                            </div>
+                    </div>
+                    <div class="form-group-md col-md-12 no-padder">
+                        <label class="control-label col-md-3 padder-xs">物料:</label>
+                        <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : In.BasicForm.Item.$invalid }">
+                            <div basic-select="InCodeMate" placeholder="物料" ng-name="Item" ng-model="In.MateItem" ng-required="true"></div>
+                        </div>
+                    </div>
+                    <div class="form-group-md col-md-12 no-padder">
+                        <label class="control-label col-sm-3 padder-xs">批次号:</label>
+                        <div class="col-sm-9 padder-xs" ng-class="{ 'has-error' : In.BasicForm.BatchNo.$invalid }">
+                            <input type="text" class="form-control" placeholder="功率管批次号" name="BatchNo" ng-model="In.ReleaseItem.BatchNo" required />
+                        </div>
+                    </div>
+                    <div class="form-group-md col-md-12 no-padder">
+                        <label class="control-label col-md-3 padder-xs">供应商:</label>
+                        <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : In.BasicForm.VenderNo.$invalid }">
+                            <div basic-select="VenderSelect" placeholder="供应商" ng-name="VenderNo" ng-model="In.ReleaseItem.VenderNo" ng-required="true"></div>
+                        </div>
+                    </div>
+                    <div class="form-group-md col-md-12 no-padder">
+                        <label class="control-label col-md-3 padder-xs">需求数量:</label>
+                        <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : In.BasicForm.NeedCount.$invalid }">
+                            <input type="number" class="form-control" min="1" placeholder="需求数量" name="NeedCount" ng-model="In.ReleaseItem.NeedCount" required>
+                        </div>
+                    </div>
+                    <div class="form-group-md col-md-12 no-padder">
+                        <label class="control-label col-md-3 padder-xs">释放数量:</label>
+                        <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : In.BasicForm.ReleaseNum.$invalid }">
+                            <input type="number" class="form-control" min="1" max="9999" placeholder="释放数量" name="ReleaseNum" ng-model="In.ReleaseItem.ReleaseNum" required>
+                        </div>
+                    </div>
+                    <div class="form-group-md col-md-12 no-padder">
+                        <label class="control-label col-md-3 padder-xs">备注:</label>
+                        <div class="col-md-9 padder-xs">
+                            <textarea class="form-control" placeholder="备注" ng-model="In.ReleaseItem.Remark" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group-md col-md-12 no-padder">
+                        <label class="control-label col-md-3 padder-xs"></label>
+                        <div class="col-md-9 padder-xs">
+                            <button class="btn btn-success " ng-disabled="In.BasicForm.$invalid" ng-click="In.Release() "><i class="glyphicon glyphicon-save "></i>释放</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </uib-tab>
-</uib-tabset>
+    </div>
+    <div class="col-sm-9 no-padder">
+        <div class="panel panel-default">
+            <div class="panel-heading font-bold">
+                释放列表
+            </div>
+            <div class="panel-body padder-xs">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <input type="text" date-picker class="form-control" ng-model="In.Ser.ReleaseDate" placeholder="根据日期" option="In.Op">
+                    </div>
+                    <div class="form-group">
+                        <div basic-select="VenderSelect" ng-model="In.Ser.a_VenderNo" placeholder="供应商"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="In.Ser.a_ItemCode" placeholder="料号">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="In.Ser.a_BatchNo" placeholder="批次号">
+                    </div>
+                    <!--<div class="form-group">
+                        <input type="text" date-picker class="form-control" ng-model="In.Ser.a_CreateDate" placeholder="开始时间" option="In.DateOption">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" date-picker class="form-control" ng-model="In.Ser.a_CreateDate1" placeholder="结束时间" option="In.DateOption">
+                    </div>-->
+                    <button class="btn btn-sm btn-info " ng-click="In.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                    <button class="btn btn-sm btn-success " ng-click="In.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>
+                </div>
+                <div class="col-md-12 scroll-x no-padder m-t-xs">
+                    <table class="table pad-xs">
+                        <thead>
+                            <tr>
+                                <td style="width:60px">操作</td>
+                                <td style="width:80px ">根据日期</td>
+                                <td style="width:90px ">供应商编号</td>
+                                <td style="width:100px ">供应商名称</td>
+                                <td style="width:80px ">料号</td>
+                                <td style="width:100px ">料名</td>
+                                <td style="width:80px ">批次号</td>
+                                <td style="width:100px ">需求数量</td>
+                                <td style="width:80px ">释放数量</td>
+                                <td style="width:100px ">BSN范围</td>
+                                <td style="width:70px ">操作者</td>
+                                <td style="width:100px ">生成时间</td>
+                                <td style="width:100px ">备注</td>
+                                <!--<td style="width:100px ">是否下发</td>
+                                <td style="width:100px ">已经下发</td>-->
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in In.List">
+                            <td>
+                                <button class="btn btn-xs btn-primary" ng-if="!item.IsPublish" ng-click="In.ReleaseDown(item)"><i class="glyphicon glyphicon-send"></i>下发</button>
+                                <button class="btn btn-xs btn-success" ng-if="item.IsPublish && item.HaveDown" ng-click="In.SendMail(item)"><i class="fa fa-mail-reply"></i>补邮件</button>
+                            </td>
+                            <td title="{{ item.ReleaseDate }}">{{ item.ReleaseDate }}</td>
+                            <td title="{{ item.VenderNo }}">{{ item.VenderNo }}</td>
+                            <td title="{{ item.VenderName }}" ng-class="{ 'bg-info' : item.HaveDown }">{{ item.VenderName }}</td>
+                            <td title="{{ item.ItemCode }}">{{ item.ItemCode }}</td>
+                            <td title="{{ item.ItemName }}">{{ item.ItemName }}</td>
+                            <td title="{{ item.BatchNo }}">{{ item.BatchNo }}</td>
+                            <td title="{{ item.NeedCount }}">{{ item.NeedCount }}</td>
+                            <td title="{{ item.ReleaseNum }}">{{ item.ReleaseNum }}</td>
+                            <td title="{{ item.RangNo }}">{{ item.RangNo }}</td>
+                            <td title="{{ item.Creator }}">{{ item.Creator }}</td>
+                            <td title="{{ item.CreateDate }}">{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                            <td title="{{ item.Remark }}">{{ item.Remark }}</td>
+
+                            <!--<td title="{{ item.IsPublish }}">{{ item.IsPublish }}</td>
+                            <td title="{{ item.HaveDown }}">{{ item.HaveDown }}</td>-->
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-12 text-center " ng-if="In.page.total>In.page.size ">
+                    <div uib-pagination total-items="In.page.total " ng-model="In.page.index " items-per-page="In.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                         ng-change="In.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 text-danger">
+            <span herf class="pull-left thumb-sm avatar m-r">
+                注：
+            </span>
+            <div class="clear">
+                列表操作中显示有<button class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-send"></i>下发</button>按钮，则表示内控码还没有下发给供应商。
+                 点击后系统会开始下发数据到供应商，完成后自动发送邮件给供应商。
+                <br />
+                供应商栏位背景变为<div class="bg-info inline" style="width:20px;">&nbsp;</div>时表示系统已经把内控码下发到对应供应商。
+            </div>
+        </div>
+    </div>
+</div>

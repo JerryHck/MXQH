@@ -12,7 +12,7 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
     vm.AddCom = AddCom;
     vm.Item.Compose = vm.Item.Compose == undefined || vm.Item.Compose == null ? [] : vm.Item.Compose;
     vm.Item.StsInfo = "S";
-    vm.Item.IsByPara = vm.Item.IsByPara || 0;
+    vm.Item.IsByPara = vm.Item.IsByPara ? '1' : '0';
 
     vm.RSOption = { Table: "SerialNumber", Column: "ResetSerial" };
     vm.CTOption = { Table: "SerialNumber", Column: "CharType" };
@@ -35,6 +35,11 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
             vm.Item.Compose[i].MCMonth = vm.Item.Compose[i].CValue.substr(0, 2);
             vm.Item.Compose[i].CTo = vm.Item.Compose[i].CValue.substr(2, 1)
             vm.Item.Compose[i].CEx = vm.Item.Compose[i].CValue.length > 5 ? vm.Item.Compose[i].CValue.substr(5) : undefined;
+        }
+        else if (vm.Item.Compose[i].CharType == "DC") {
+            vm.Item.Compose[i].MCMonth = vm.Item.Compose[i].CValue.substr(0, 2);
+            vm.Item.Compose[i].CTo = vm.Item.Compose[i].CValue.substr(0, 1)
+            vm.Item.Compose[i].CEx = vm.Item.Compose[i].CValue.length > 3 ? vm.Item.Compose[i].CValue.substr(3) : undefined;
         }
         else if (vm.Item.Compose[i].CharType == "SER" && vm.Item.Compose[i].CValue.length > 1) {
             vm.Item.Compose[i].CTo = vm.Item.Compose[i].CValue.substr(0, 1)
@@ -122,6 +127,7 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
     function GetSaveData() {
         var en = angular.copy(vm.Item);
         en.CreateBy = undefined;
+        en.ModifyDate = undefined;
         en.Action = vm.form.index > 0 ? "U" : "I";
         var listCom = [];
         for (var i = 0, len = vm.Item.Compose.length; i < len; i++) {
@@ -132,7 +138,7 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
             else if (com.CharType == "MC") {
                 com.CValue = com.MCMonth + com.CTo + (com.CEx ? "Ex" : "") + (com.CEx || "");
             }
-            else if (com.CharType == "SER") {
+            else if (com.CharType == "SER" || com.CharType == "DC") {
                 com.CValue = (com.CTo || "") + (com.CEx ? "Ex" : "") + (com.CEx || "");
             }
             com.CValue = com.CValue || "";
@@ -140,6 +146,8 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
             com.CharOrder = i;
             listCom.push(com);
         }
+        en.IsByPara = en.IsByPara||'0';
+        en.StsInfo = en.StsInfo || 'S';
         en.Compose = JSON.stringify(listCom);
         en.Info = JSON.stringify(vm.Item.Info || []);
         en.TempColumns = "Compose,Info";

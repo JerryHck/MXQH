@@ -216,7 +216,7 @@
                                 <div ng-class="{ 'has-error' : job.JobForm.JobExecMethod.$invalid }" title="实体计划名">
                                     <ui-select name="JobExecMethod" ng-model="job.Item.JobExecMethod" ng-change="job.EnChange()" theme="bootstrap" search-enabled="true" ng-required="true">
                                         <ui-select-match placeholder="实体.."><span class="font-v3">{{ $select.selected.EntityName }}</span></ui-select-match>
-                                        <ui-select-choices repeat="item.EntityName as item in job.EnList | limitTo:200 | filter: $select.search track by item.EntityName">
+                                        <ui-select-choices repeat="item.EntityName as item in job.EnList | filter: $select.search track by item.EntityName">
                                             <div>
                                                 <span class="h6 text-muted pull-right" ng-bind-html="item.ConnectName | highlight: $select.search"></span>
                                                 <span class="font-v3" ng-bind-html="item.EntityName | highlight: $select.search"></span>
@@ -248,7 +248,7 @@
                             <div class="col-md-10 padder-xs" ng-class="{ 'has-error' : job.JobForm.JobExecMethod.$invalid }" title="实体计划名称">
                                 <ui-select name="JobExecMethod" ng-model="job.Item.JobExecMethod" ng-change="job.EnChange()" theme="bootstrap" search-enabled="true" ng-required="true">
                                     <ui-select-match placeholder="实体.."><span class="font-v3">{{ $select.selected.EntityName }}</span></ui-select-match>
-                                    <ui-select-choices repeat="item.EntityName as item in job.EnList | limitTo:200 | filter: $select.search track by item.EntityName">
+                                    <ui-select-choices repeat="item.EntityName as item in job.EnList | filter: $select.search track by item.EntityName">
                                         <div>
                                             <span class="h6 text-muted pull-right" ng-bind-html="item.ConnectName | highlight: $select.search"></span>
                                             <span class="font-v3" ng-bind-html="item.EntityName | highlight: $select.search"></span>
@@ -288,7 +288,7 @@
                                 <div class="m-t-xs" ng-class="{ 'has-error' : job.JobForm.ToDataPlan.$invalid }" title="实体计划名">
                                     <ui-select name="ToDataPlan" ng-model="job.Item.ToPlanName" ng-change="job.ToEnChange()" theme="bootstrap" search-enabled="true" ng-required="true">
                                         <ui-select-match placeholder="实体.."><span class="font-v3">{{ $select.selected.EntityName }}</span></ui-select-match>
-                                        <ui-select-choices repeat="item.EntityName as item in job.ToEnList |filter:{} | limitTo:200 | filter: $select.search track by item.EntityName">
+                                        <ui-select-choices repeat="item.EntityName as item in job.ToEnList |filter:{}| filter: $select.search track by item.EntityName">
                                             <div>
                                                 <span class="h6 text-muted pull-right" ng-bind-html="item.ConnectName | highlight: $select.search"></span>
                                                 <span class="font-v3" ng-bind-html="item.EntityName | highlight: $select.search"></span>
@@ -299,7 +299,7 @@
                                 <div class="m-t-xs" ng-class="{ 'has-error' : job.JobForm.ToDataPlanShort.$invalid }" title="存储过程简称">
                                     <ui-select name="ToDataPlanShort" ng-model="job.Item.ToPlanShort" ng-change="line.ChangeMo()" theme="bootstrap" search-enabled="true" ng-required="true">
                                         <ui-select-match placeholder="存储过程.."><span class="font-v3">{{ $select.selected.ProcSchema }}{{ $select.selected.ProcSchema?".":"" }}{{ $select.selected.ProcName }}</span></ui-select-match>
-                                        <ui-select-choices repeat="item.ShortName as item in job.ToShortList | limitTo:200 | filter: $select.search track by item.ShortName">
+                                        <ui-select-choices repeat="item.ShortName as item in job.ToShortList | filter: $select.search track by item.ShortName">
                                             <div><span class="font-v3" ng-bind-html="item.ProcSchema | highlight: $select.search"></span>.<span class="font-v3" ng-bind-html="item.ProcName | highlight: $select.search"></span></div>
                                         </ui-select-choices>
                                     </ui-select>
