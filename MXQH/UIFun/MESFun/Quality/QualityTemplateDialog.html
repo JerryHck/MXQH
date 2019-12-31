@@ -1,0 +1,37 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">检验维修模板</h3>
+</div>
+<div class="modal-body wrapper-sm" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body wrapper-xs">
+            <div class="form-group">
+                <button class="btn btn-success" type="button" ng-disabled="DialogForm.$invalid" ng-click="qtdc.Save()">保存</button>
+                <button class="btn btn-warning" type="button" ng-click="qtdc.Cancel()">取消</button>
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">编码</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Code.$invalid }">
+                            <input type="text" class="form-control" name="Code" placeholder="编码"
+                                   ng-model="qtdc.Item.Code" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">名称</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Name.$invalid }">
+                            <input type="text" name="Name" class="form-control" placeholder="名称" ng-model="qtdc.Item.Name" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">排序</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.OrderNo.$invalid }">
+                            <input type="number" name="OrderNo" class="form-control" placeholder="排序" ng-model="qtdc.Item.OrderNo" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

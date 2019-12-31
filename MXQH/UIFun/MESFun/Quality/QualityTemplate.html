@@ -1,0 +1,141 @@
+﻿<div class="app-content-full" cg-busy="qtsc.promise">
+    <div class="hbox hbox-auto-xs hbox-auto-sm bg-light">
+        <div class="col w-xl padder b-r h-100">
+            <div class="vbox">
+                <div class="wrapper">
+                    <div class="h4 text-center">检验维护模板</div>
+                </div>
+                <div class="row-row">
+                    <div class="cell scrollable hover">
+                        <div class="cell-inner">
+                            <div class="wrapper-xs">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid ng-empty" placeholder="查询" ng-model="qtsc.KeyWord">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-sm btn-default" ng-click="qtsc.AddTemplate()">
+                                                <i class="glyphicon glyphicon-plus text-success">新增</i>
+                                            </button>
+                                        </span>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-sm btn-default" ng-click="qtsc.SearchTemplate()">
+                                                <i class="glyphicon glyphicon-search text-success">查询</i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="list-group">
+                                    <!--<a ng-repeat="item in qtsc.List| filter:qtsc.Query" class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover': item.DepartCode==line.SelectedDeptCode, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="line.SelectDept(item)">-->
+                                    <a ng-repeat="item in qtsc.List| filter:qtsc.KeyWord" class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover':item.ID==qtsc.SelectedTemplate.ID,'b-l-info':$index%2==0,'b-l-primary':$index%2==1}" ng-click="qtsc.SelectTemplate(item)">
+                                        <span class="pull-left"><i class="glyphicon glyphicon-tree-conifer"></i></span>
+                                        <small class="text-muted">
+                                            <span>{{ item.Code }}({{ item.Name }})</span>
+                                        </small>
+                                        <div class="clear ml-3 text-info">
+                                            <btn class="pull-right text-danger"  ng-confirm="{text:'确定要删除此模板？'}"  title="删除模板" ng-click="qtsc.Delete(item.ID)"><i class="fa fa-remove"></i></btn>
+                                            <btn class="pull-right text-primary" title="编辑" ng-click="qtsc.Edit(item)"><i class="fa fa-edit"></i></btn>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-12 text-center" ng-if="qtsc.templagePage.total>qtsc.templagePage.pageSize">
+                                    <div uib-pagination total-items="qtsc.templagePage.total" ng-model="qtsc.templagePage.pageIndex" items-per-page="qtsc.templagePage.pageSize" max-size="qtsc.templagePage.maxSize" first-text="第一页" previous-text="上一页"
+                                         ng-change="qtsc.DataBind()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col w-auto w-lg lt b-r text-xs">
+            <div class="row-row">
+                <div class="cell scrollable hover">
+                    <div class="cell-inner">
+                        <div class="wrapper-md">
+                            <div class="input-group m-b-xxs" style="padding-bottom:10px;">
+                                <div class="form-inline">
+                                    <button class="btn btn-sm btn-success" ng-click="qtsc.AddDetail()"><i class="glyphicon glyphicon-plus"></i>新增检测项</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-striped b-2x table-responsive" style="word-break:break-all; word-wrap:break-word;">
+                                        <tr class="text-center bg-gd-dk h4">
+                                            <td style="width:7%;">编辑</td>
+                                            <td style="width:10%;" class="">编码</td>
+                                            <td style="width:7%;" class="">名称</td>
+                                            <td style="width:7%;" class="">排序</td>
+                                        </tr>
+                                        <!--filter: auctusSO.search-->
+                                        <!---->
+                                        <tr ng-repeat="item in qtsc.DetailList">
+                                            <td>
+                                                <button class="btn btn-xs btn-primary" ng-click="qtsc.EditDetail(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                                <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除此分类以及下阶所有数据吗'}" ng-click="qtsc.DeleteDetail(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>
+                                            </td>
+                                            <td>{{ item.Code }}</td>
+                                            <td>{{ item.text }}</td>
+                                            <td>{{ item.Layer }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-12 text-center" ng-if="qtsc.page.total>qtsc.page.pageSize">
+                                <div uib-pagination total-items="qtsc.page.total" ng-model="qtsc.page.pageIndex" items-per-page="qtsc.page.pageSize" max-size="qtsc.page.maxSize" first-text="第一页" previous-text="上一页"
+                                     ng-change="qtsc.DataBind()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--右侧弹出框-->
+<div class="pro-file d-r lg bg-light dk wrapper-md padder-md scroll-y" ng-form="DialogForm">
+    <div class="b-b wrapper-md text-center">
+        <a href class="text-danger pull-left" ui-remove-class="active" target=".pro-file"><i class="glyphicon glyphicon-remove"></i></a>
+        <h3>检验维修项</h3>
+    </div>
+    <div class="padder-md wrapper">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="input-group m-b-xxs" style="padding-bottom:10px;">
+                        <div class="form-inline">
+                            <button class="btn btn-sm btn-success" ng-click="qtsc.Save()" ng-disabled="DialogForm.$invalid"><i class="glyphicon glyphicon-save"></i>保存</button>
+                            <button class="btn btn-sm btn-warning" ui-remove-class="active" target=".pro-file"><i class="glyphicon glyphicon-remove"></i>放弃</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">模板编码</label>
+                        <div class="col-md-4" >
+                            <input type="text" name="Code" disabled="disabled" ng-model="qtsc.SelectedTemplate.Code" class="form-control" />
+                        </div>
+                        <label class="control-label col-md-2">模板名称</label>
+                        <div class="col-md-4" >
+                            <input type="text" name="text" disabled="disabled" ng-model="qtsc.SelectedTemplate.Name" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">编码</label>
+                        <div class="col-md-4" ng-class="{ 'has-error' : DialogForm.Code.$invalid }">
+                            <input type="text" name="Code" ng-model="qtsc.ItemData.Code" class="form-control" required />
+                        </div>
+                        <label class="control-label col-md-2">名称</label>
+                        <div class="col-md-4" ng-class="{ 'has-error' : DialogForm.text.$invalid }">
+                            <input type="text" name="text" ng-model="qtsc.ItemData.text" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">排序</label>
+                        <div class="col-md-4" ng-class="{ 'has-error' : DialogForm.OrderNo.$invalid }">
+                            <input type="number" name="OrderNo" ng-model="qtsc.ItemData.OrderNo" class="form-control" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

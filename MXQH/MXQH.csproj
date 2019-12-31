@@ -233,6 +233,16 @@
     <Content Include="UIFun\MESFun\MO\WorkOrderDialog.js" />
     <Content Include="UIFun\MESFun\PackageAct.html" />
     <Content Include="UIFun\MESFun\PackageAct.js" />
+    <Content Include="UIFun\MESFun\PackageActPower.html" />
+    <Content Include="UIFun\MESFun\PackageActPower.js" />
+    <Content Include="UIFun\MESFun\Print\BodyLabelPrint.html" />
+    <Content Include="UIFun\MESFun\Print\BodyLabelPrint.js" />
+    <Content Include="UIFun\MESFun\Quality\QualityTemplate.html" />
+    <Content Include="UIFun\MESFun\Quality\QualityTemplate.js" />
+    <Content Include="UIFun\MESFun\Quality\QualityTemplateDialog.html" />
+    <Content Include="UIFun\MESFun\Quality\QualityTemplateDialog.js" />
+    <Content Include="UIFun\MESFun\Quality\QualityTestItem.html" />
+    <Content Include="UIFun\MESFun\Quality\QualityTestItem.js" />
     <Content Include="UIFun\MESFun\SnCodePrint.html" />
     <Content Include="UIFun\MESFun\SnCodePrint.js" />
     <Content Include="UIFun\MESFun\SNWeigth.html" />
