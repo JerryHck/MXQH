@@ -5,51 +5,39 @@
     <div class="panel panel-default">
         <div class="panel-body wrapper-xs">
             <div class="form-horizontal">
-                <!--<div class="form-group col-md-6">
-                    <label class="control-label col-md-4 wrapper-xs">内控码:</label>
-                    <div class="col-md-8 wrapper-xs">
-                        <span class="h4 font-bold text-info form-control-static">{{ pro.Item.SNCode }}</span>
-                    </div>
-                </div>-->
-                <div class="col-md-6 padder-xs">
-                    <label class="control-label col-md-4 wrapper-xs">SN码:</label>
-                    <div class="col-md-8 wrapper-xs" ng-class="{ 'has-error' : DialogForm.SNCode.$invalid }" >
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4">SN码:</label>
+                    <div class="col-md-8">
                         <input ng-keyup="pro.KeyDonwOrder($event)" type="text" class="form-control" name="SNCode" placeholder="SN码（必填）"
                                ng-model="pro.Item.SNCode" ng-blur="pro.isExists()">
-                        <!--<div ng-messages="DialogForm.SNCode.$error" class="help-block" role="alert">
-                            <div ng-message="required" style="font-size:0.1px;">内控码（必填）</div>
-                            <div ng-message="unique">已经修复成功，无需维修</div>
-                        </div>-->
                     </div>
                 </div>
-
+     
                 <div class="form-group col-md-6">
-                    <label class="control-label col-md-4 wrapper-xs">产品编号:</label>
-                    <div class="col-md-8 wrapper-xs">
-                        <span class="h4 font-bold text-info  form-control-static">{{ pro.Item.MaterialCode }}</span>
+                    <label class="control-label col-md-4">产品编号:</label>
+                    <div class="col-md-8">
+                        <input  type="text" class="form-control" name="MaterialCode" ng-model="pro.Item.MaterialCode" disabled >
                     </div>
                 </div>
                 <div class="form-group col-md-6">
                     <label class="control-label col-md-4 wrapper-xs">返工工单:</label>
-                    <div class="col-md-8 wrapper-xs">
-                        <span class="form-control-static">{{ pro.Item.WorkOrder }}</span>
-                    </div>
-                </div>
-                <div class="col-md-6 form-group">
-                    <label class="control-label col-md-4 wrapper-xs">产品名称:</label>
-                    <div class="col-md-8 wrapper-xs">
-                        <span class="form-control-static">{{ pro.Item.MaterialName }}</span>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" name="WorkOrder" ng-model="pro.Item.WorkOrder" disabled >
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <!--<div class="col-md-6">-->
+                    <label class="control-label col-md-4 wrapper-xs">产品名称:</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" name="MaterialName" ng-model="pro.Item.MaterialName" disabled >
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
                     <label class="control-label col-md-4 wrapper-xs">不良种类:</label>
                     <div class="col-md-8" ng-class="{ 'has-error' : QcForm.ngType.$invalid }">
                         <ui-select name="ngType" ng-model="pro.DialogItem.NgType" theme="bootstrap" required ng-change="pro.ChangeMonitor()">
                             <ui-select-match placeholder="选择不良种类...">{{ $select.selected.Name }}</ui-select-match>
                             <ui-select-choices repeat="item.ID as item in pro.TypeList | filter: $select.search">
                                 <div ng-bind-html="item.Name | highlight: $select.search"></div>
-                                <!--<small ng-bind-html="item.Name | highlight: $select.search"></small>-->
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -61,15 +49,14 @@
                             <ui-select-match placeholder="选择不良原因...">{{ $select.selected.Name }}</ui-select-match>
                             <ui-select-choices repeat="item.ID as item in pro.QpoorList | filter: $select.search">
                                 <div ng-bind-html="item.Name | highlight: $select.search"></div>
-                                <!--<small ng-bind-html="item.Name | highlight: $select.search"></small>-->
                             </ui-select-choices>
                         </ui-select>
                     </div>
                 </div>
-                <div class="form-group col-md-12">
-                    <label class="control-label col-md-2 wrapper-xs">备注:</label>
-                    <div class="col-md-10" ng-class="{ 'has-error' : QcForm.Reason.$invalid }">
-                        <textarea class="form-control" rows="3" name="Reason" maxlength="255" ng-model="pro.DialogItem.Reason" placeholder="输入不良原因"></textarea>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4 wrapper-xs">备注:</label>
+                    <div class="col-md-8" ng-class="{ 'has-error' : QcForm.Reason.$invalid }">
+                        <textarea class="form-control" rows="2" name="Reason" maxlength="255" ng-model="pro.DialogItem.Reason" placeholder="输入不良原因"></textarea>
                     </div>
                 </div>
             </div>
