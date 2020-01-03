@@ -33,6 +33,7 @@
                         <td style="width:90px ">编辑</td>
                         <td style="width:100px ">单号</td>
                         <td style="width:100px ">工单号</td>
+                        <td style="width:100px ">工单数量</td>
                         <td style="width:100px ">料号</td>
                         <td style="width:100px ">品名</td>
                         <td style="width:100px ">完工时间</td>
@@ -48,6 +49,7 @@
                     </td>
                     <td title="{{ item.DocNo }}">{{ item.DocNo }}</td>
                     <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td title="{{ item.Quantity.Quantity }}">{{ item.Quantity.Quantity }}</td>
                     <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
                     <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
                     <td title="{{ item.CompleteDate }}">{{ item.CompleteDate|date:'yyyy-MM-dd HH:mm:ss' }}</td>

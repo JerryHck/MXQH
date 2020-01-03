@@ -221,6 +221,10 @@
     <Content Include="UIFun\MESFun\MesMaterialSer.js" />
     <Content Include="UIFun\MESFun\MoLineArrange.html" />
     <Content Include="UIFun\MESFun\MoLineArrange.js" />
+    <Content Include="UIFun\MESFun\MO\CompleteRpt.html" />
+    <Content Include="UIFun\MESFun\MO\CompleteRpt.js" />
+    <Content Include="UIFun\MESFun\MO\CompleteRptDialog.html" />
+    <Content Include="UIFun\MESFun\MO\CompleteRptDialog.js" />
     <Content Include="UIFun\MESFun\MO\MORelease.html" />
     <Content Include="UIFun\MESFun\MO\MesCustomerSer.html" />
     <Content Include="UIFun\MESFun\MO\MesCustomerSer.js" />
@@ -231,6 +235,8 @@
     <Content Include="UIFun\MESFun\MO\WorkOrder.js" />
     <Content Include="UIFun\MESFun\MO\WorkOrderDialog.html" />
     <Content Include="UIFun\MESFun\MO\WorkOrderDialog.js" />
+    <Content Include="UIFun\MESFun\MO\WorkOrderSer.html" />
+    <Content Include="UIFun\MESFun\MO\WorkOrderSer.js" />
     <Content Include="UIFun\MESFun\PackageAct.html" />
     <Content Include="UIFun\MESFun\PackageAct.js" />
     <Content Include="UIFun\MESFun\PackageActPower.html" />
@@ -243,6 +249,8 @@
     <Content Include="UIFun\MESFun\Quality\QualityTemplateDialog.js" />
     <Content Include="UIFun\MESFun\Quality\QualityTestItem.html" />
     <Content Include="UIFun\MESFun\Quality\QualityTestItem.js" />
+    <Content Include="UIFun\MESFun\Report\CompleteReport.html" />
+    <Content Include="UIFun\MESFun\Report\CompleteReport.js" />
     <Content Include="UIFun\MESFun\SnCodePrint.html" />
     <Content Include="UIFun\MESFun\SnCodePrint.js" />
     <Content Include="UIFun\MESFun\SNWeigth.html" />

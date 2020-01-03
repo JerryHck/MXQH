@@ -22,6 +22,10 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     function Save() {
         var en = {};
         var li = [];
+        if (vm.Item.CompleteQty<vm.Item.ActualRcvQty) {
+            toastr.error('完工数量不能小于实际入库数量');
+            return;
+        }
         li.push(vm.Item);
         en.EntityInfo = JSON.stringify(li);
         en.TempColumns = "EntityInfo";
