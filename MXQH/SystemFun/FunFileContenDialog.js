@@ -33,11 +33,14 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
     vm.IsColAll = IsColAll;
     vm.GenCode = GenCode;
 
+    //中间文件夹
+    var dir = ItemData.FunNo == '-1' ? (new Date()).Format("yyyyMM") : new Date(ItemData.CreateDate).Format("yyyyMM");
+
     InitSer();
     //获取数据设定
     AjaxService.GetPlan("FunCodeSet", [{ name: "FunNo", value: ItemData.FunNo }]).then(function (data) {
         if (data.FunNo) {
-            console.log(data);
+            //console.log(data);
             vm.ThisFun = data;
             vm.ThisFun.FunNo = ItemData.FunNo;
             vm.ThisFun.Controller = vm.NewItem.Controller;
@@ -57,7 +60,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
 
     if (!vm.NewItem.Content) {
         //获取js， html文件
-        AjaxService.AjaxHandle("GetFileText", vm.NewItem.FunNo).then(function (data) {
+        AjaxService.AjaxHandle("GetFileText", dir + "\\" + ItemData.FunNo).then(function (data) {
             vm.NewItem.Content = {};
             vm.NewItem.Content.Html = (data.Html || "").replace(/ControlNew/g, vm.NewItem.ControllerAs);
             vm.NewItem.Content.Js = (data.Js || "").replace(/NewJsCtrl/g, vm.NewItem.Controller);

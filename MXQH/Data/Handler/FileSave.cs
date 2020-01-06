@@ -8,6 +8,11 @@
         public string FileName { get; set; }
 
         /// <summary>
+        /// 文件夹
+        /// </summary>
+        public string Dir { get; set; }
+
+        /// <summary>
         /// 文件内容
         /// </summary>
         public string Text { get; set; }
