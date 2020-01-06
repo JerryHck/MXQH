@@ -9,7 +9,11 @@
                     <label class="control-label col-md-4">SN码:</label>
                     <div class="col-md-8">
                         <input ng-keyup="pro.KeyDonwOrder($event)" type="text" class="form-control" name="SNCode" placeholder="SN码（必填）"
-                               ng-model="pro.Item.SNCode" ng-blur="pro.isExists()">
+                               ng-model="pro.Item.SNCode" required>
+                        <!--<div ng-messages="DialogForm.SNCode.$error" class="help-block" role="alert">
+                            <div ng-message="required" style="font-size:0.1px;">SN码：</div>
+                            <div ng-message="unique">已经登记，不能重复登记</div>
+                        </div> ng-blur="pro.isExists()-->
                     </div>
                 </div>
      

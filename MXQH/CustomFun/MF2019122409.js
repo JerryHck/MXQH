@@ -8,7 +8,6 @@ function ($rootScope, Dialog, $scope, $http, AjaxService, toastr, $window, $filt
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
     vm.Focus = 0;
-    vm.SaveInsert = SaveInsert;
     vm.Edit = Edit;
     vm.Delete = Delete;
     vm.SaveEdit = SaveEdit;
@@ -46,13 +45,6 @@ function ($rootScope, Dialog, $scope, $http, AjaxService, toastr, $window, $filt
         });
     }
 
-    function SaveInsert() {
-        vm.promise = AjaxService.PlanInsert("", vm.NewItem).then(function (data) {
-            PageChange();
-            toastr.success('新增成功');
-            vm.IsInsert = false;
-        });
-    }
 
 
     function Delete(item) {
@@ -96,13 +88,13 @@ function ($rootScope, Dialog, $scope, $http, AjaxService, toastr, $window, $filt
 
     function GetContition() {
         var list = [];
-        if (vm.Ser.InternalCode) {
-            list.push({ name: "InternalCode", value: '%' + vm.Ser.InternalCode + '%' });
-        }
+        //if (vm.Ser.InternalCode) {
+        //    list.push({ name: "InternalCode", value: '%' + vm.Ser.InternalCode + '%' });
+        //}
 
-        if (vm.Ser.SNCode) {
-            list.push({ name: "SNCode", value: '%' + vm.Ser.SNCode + '%' });
-        }
+        //if (vm.Ser.SNCode) {
+        //    list.push({ name: "SNCode", value: '%' + vm.Ser.SNCode + '%' });
+        //}
 
         if (vm.Ser.WorkOrder) {
             list.push({ name: "WorkOrder", value: '%' + vm.Ser.WorkOrder + '%' });
