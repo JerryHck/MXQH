@@ -73,8 +73,8 @@
     <Content Include="css\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="css\font-awesome-4.7.0\HELP-US-OUT.txt" />
     <Content Include="css\font-awesome.min.css" />
-    <Content Include="CustomFun\qlBadDialog.html" />
-    <Content Include="CustomFun\qlBadDialog.js" />
+    <Content Include="CustomFun\201912\qlBadDialog.html" />
+    <Content Include="CustomFun\201912\qlBadDialog.js" />
     <Content Include="Data\Handler\New.html" />
     <Content Include="Data\Handler\New.js" />
     <Content Include="index.html" />
@@ -215,10 +215,12 @@
     <Content Include="UIFun\MESFun\Material.js" />
     <Content Include="UIFun\MESFun\MaterialDialog.html" />
     <Content Include="UIFun\MESFun\MaterialDialog.js" />
-    <Content Include="UIFun\MESFun\MateRouter.html" />
-    <Content Include="UIFun\MESFun\MateRouter.js" />
+    <Content Include="UIFun\MESFun\MesRoute\MateRouter.html" />
+    <Content Include="UIFun\MESFun\MesRoute\MateRouter.js" />
     <Content Include="UIFun\MESFun\MesMaterialSer.html" />
     <Content Include="UIFun\MESFun\MesMaterialSer.js" />
+    <Content Include="UIFun\MESFun\MesRoute\MesRoute.html" />
+    <Content Include="UIFun\MESFun\MesRoute\MesRoute.js" />
     <Content Include="UIFun\MESFun\MoLineArrange.html" />
     <Content Include="UIFun\MESFun\MoLineArrange.js" />
     <Content Include="UIFun\MESFun\MO\MORelease.html" />
