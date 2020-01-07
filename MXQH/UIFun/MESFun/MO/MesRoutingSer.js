@@ -19,7 +19,7 @@ function ($rootScope, $scope, $uibModalInstance, ItemData, $http, AjaxService, t
     }
 
     function PageChange() {
-        vm.promise = AjaxService.GetPlansPage("BoRouting", GetContition(), vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("RouteSer", GetContition(), vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });

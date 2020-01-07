@@ -178,7 +178,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
             Dialog.open("MesRoutingSer", resolve).then(function (data) {
                 if (data.ID) {
                     vm.Routing.ID = data.ID;
-                    vm.Routing.RoutingName = data.RoutingName;
+                    vm.Routing.RoutingName = data.RouteInfo.RouteName;
                 }
             }).catch(function (reason) {
 
