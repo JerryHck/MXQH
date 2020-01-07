@@ -7,9 +7,6 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     var vm = this;
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
-    vm.Ser.a_Code = "";
-    vm.Ser.a_Name = "";
-    vm.Ser.a_InBom = "";
 
     vm.PageChange = PageChange;
     vm.Search = Search;

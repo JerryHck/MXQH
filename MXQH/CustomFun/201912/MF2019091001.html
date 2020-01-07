@@ -4,13 +4,13 @@
         <div class="wrapper-md">
             <div class="form-inline">
                 <div class="form-group">
-                        <input type="text" class="form-control"  ng-model="bom.Ser.a_Code" placeholder="料号">
+                    <input type="text" class="form-control"  ng-model="bom.Ser.a_Code" placeholder="料号">
                 </div>
                 <div class="form-group">
-                        <input type="text" class="form-control"  ng-model="bom.Ser.a_Name" placeholder="物料名称">
+                    <input type="text" class="form-control"  ng-model="bom.Ser.a_Name" placeholder="物料名称">
                 </div>
                 <div class="form-group">
-                        <input type="text" class="form-control"  ng-model="bom.Ser.a_InBom" placeholder="所在BOM">
+                    <input type="text" class="form-control"  ng-model="bom.Ser.a_InBom" placeholder="所在BOM">
                 </div>
                 <button class= "btn btn-sm btn-info " ng-click= "bom.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
                 <button class= "btn btn-sm btn-success " ng-click= "bom.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
@@ -24,6 +24,7 @@
                             <td title="料号" style= "width:100px ">料号</td>
                             <td title="物料名称" style= "width:150px ">物料名称</td>
                             <td title="规格描述" style= "width:200px ">规格描述</td>
+                            <td title="规格/型号" style= "width:200px ">规格/型号</td>
                             <td title="是否冻结" style= "width:100px ">是否冻结</td>
                             <td title="申请时间" style= "width:100px ">申请时间</td>
                             <td title="出现次数" style= "width:100px ">出现次数</td>
@@ -34,6 +35,7 @@
                         <td title="{{ item.Code }}">{{ item.Code }}</td>
                         <td title="{{ item.Name }}">{{ item.Name }}</td>
                         <td title="{{ item.Spec }}">{{ item.Spec }}</td>
+                        <td title="{{ item.Spec2 }}">{{ item.Spec2 }}</td>
                         <td title="{{ item.IsFrozen }}">{{ item.IsFrozen }}</td>
                         <td title="{{ item.CreateDate }}">{{ item.CreateDate }}</td>
                         <td title="{{ item.BomTime }}">{{ item.BomTime }}</td>
