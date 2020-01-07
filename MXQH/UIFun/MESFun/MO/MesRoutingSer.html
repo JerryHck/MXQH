@@ -20,7 +20,7 @@
                         </tr>
                     </thead>
                     <tr ng-repeat="item in mrSer.List " ng-click="mrSer.Cancel(item)">
-                        <td title="{{ item.RoutingName }}">{{ item.RoutingName }}</td>
+                        <td title="{{ item.RouteInfo.RouteName }}">{{ item.RouteInfo.RouteName }}</td>
                         <td ng-if="item.IsDefault==true" title="{{ item.IsDefault }}">√</td>
                         <td ng-if="item.IsDefault==false" title="{{ item.IsDefault }}"></td>
                         <td ng-if="item.IsControl==false" title="{{ item.IsControl }}"></td>

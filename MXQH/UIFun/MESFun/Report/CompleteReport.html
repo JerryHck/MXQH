@@ -15,10 +15,10 @@
                     </div>
                 </div>-->
                 <button ng-disabled="DialogForm.$invalid" class="btn btn-sm btn-info " ng-click="crc.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
-                <button class="btn btn-sm btn-success " ng-click="crc.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>
+                <!--<button class="btn btn-sm btn-success " ng-click="crc.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>-->
             </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-8">
             <div class="panel panel-default scroll-y" style="max-height:600px">
                 <div class="panel-heading font-bold text-center">
                     工单 <span class="h4 font-bold text-info">{{ crc.Detail.WorkOrder }}</span>完工信息
@@ -61,7 +61,7 @@
                 <!--<pre>{{ crc.Detail | json }}</pre>-->
             </div>
         </div>
-        <div class="padder-md col-sm-6">
+        <div class="padder-md col-sm-2">
             <div class="panel panel-default scroll-y" style="max-height:600px">
                 <div class="panel-heading font-bold text-center">
                     未完工明细

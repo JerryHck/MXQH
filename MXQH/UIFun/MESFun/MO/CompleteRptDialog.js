@@ -26,19 +26,24 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
             toastr.error('完工数量不能小于实际入库数量');
             return;
         }
+        vm.Item.Quantity = undefined;
         li.push(vm.Item);
         en.EntityInfo = JSON.stringify(li);
         en.TempColumns = "EntityInfo";
         if (vm.Item.ID) {//编辑操作
-            vm.promise = AjaxService.ExecPlan("CompleteRpt", "Update", en).then(function (data) {
-                if (data.data[0].MsgType == "0") {
-                    toastr.error(data.data[0].Msg);
-                } else {
-                    toastr.success(data.data[0].Msg);
-                    $uibModalInstance.close("1");
-                }
-            }).catch(function (data) {
+            vm.promise = AjaxService.ExecPlan("U9MoCompleteRpt", "GetQty", { WorkOrder: vm.Item.WorkOrder }).then(function (data) {
+                en.CompleteQty = data.data[0].CompleteQty;
+                vm.promise = AjaxService.ExecPlan("CompleteRpt", "Update", en).then(function (data) {
+                    if (data.data[0].MsgType == "0") {
+                        toastr.error(data.data[0].Msg);
+                    } else {
+                        toastr.success(data.data[0].Msg);
+                        $uibModalInstance.close("1");
+                    }
+                }).catch(function (data) {
+                });
             });
+         
         } else {//新增操作
             var SNList = [{ name: "CompleteRpt", col: "DocNo", parm: "ListNo", charName: null }]
             en.SNColumns = JSON.stringify(SNList);

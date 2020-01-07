@@ -25,9 +25,9 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
     }
     //查询条件
     function GetCondition() {
-        var li=[]
+        var li = []
         if (vm.Ser.DocNo) {
-            li.push({name:"WorkOrder",value:'%'+vm.Ser.DocNo+'%'});
+            li.push({ name: "WorkOrder", value: '%' + vm.Ser.DocNo + '%' });
         }
         return li;
     }
@@ -39,7 +39,7 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
     }
 
 
-    
+
     //编辑
     function Edit(item) {
         var resolve = {
@@ -70,16 +70,18 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
     }
 
     //删除工单
-    function Delete(id) {
-        var en = { ID: id };
-        vm.promise = AjaxService.ExecPlan("CompleteRpt", "Delete", en).then(function (data) {
-            if (data.data[0].MsgType == "1") {
-                DataBind();
-                toastr.success(data.data[0].Msg);
-            } else {
-                toastr.error('删除失败！');
-            }
+    function Delete(item) {
+        vm.promise = AjaxService.ExecPlan("U9MoCompleteRpt", "GetQty", { WorkOrder: item.WorkOrder }).then(function (data) {
+            var en = { ID: item.ID,CompleteQty:data.data[0].CompleteQty };
+            vm.promise = AjaxService.ExecPlan("CompleteRpt", "Delete", en).then(function (data) {
+                if (data.data[0].MsgType == "1") {
+                    DataBind();
+                    toastr.success(data.data[0].Msg);
+                } else {
+                    toastr.error(data.data[0].Msg);
+                }
 
+            });
         });
     }
 
