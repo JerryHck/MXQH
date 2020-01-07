@@ -215,12 +215,14 @@
     <Content Include="UIFun\MESFun\Material.js" />
     <Content Include="UIFun\MESFun\MaterialDialog.html" />
     <Content Include="UIFun\MESFun\MaterialDialog.js" />
-    <Content Include="UIFun\MESFun\MesRoute\MateRouter.html" />
-    <Content Include="UIFun\MESFun\MesRoute\MateRouter.js" />
+    <Content Include="UIFun\MESFun\MesRoute\MateRouter_old.html" />
+    <Content Include="UIFun\MESFun\MesRoute\MateRouter_old.js" />
     <Content Include="UIFun\MESFun\MesMaterialSer.html" />
     <Content Include="UIFun\MESFun\MesMaterialSer.js" />
     <Content Include="UIFun\MESFun\MesRoute\MesRoute.html" />
     <Content Include="UIFun\MESFun\MesRoute\MesRoute.js" />
+    <Content Include="UIFun\MESFun\MesRoute\MateRoute.html" />
+    <Content Include="UIFun\MESFun\MesRoute\MateRoute.js" />
     <Content Include="UIFun\MESFun\MoLineArrange.html" />
     <Content Include="UIFun\MESFun\MoLineArrange.js" />
     <Content Include="UIFun\MESFun\MO\MORelease.html" />
