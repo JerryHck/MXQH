@@ -70,11 +70,12 @@ function ProRegisterDialogCtrl($rootScope, $scope, $uibModalInstance, Form, Item
         e.SNCode = vm.Item.SNCode;
         AjaxService.ExecPlan("RMOSelect", "GetSN", e).then(function (data) {
             if (data.data[0].MsgType == 'Error') {
-                vm.Item.SNCode = undefined;
+              
                 toastr.error(data.data[0].Msg);
-                vm.Item.InternalCode = undefined;
+                vm.Item.SNCode = undefined;
                 vm.DialogItem.NgType = undefined;
                 vm.DialogItem.Ng = undefined;
+                vm.DialogItem.Reason = undefined;
                 return;
             } else {
                 //vm.Item.InternalCode = data.data[0].InternalCode;
@@ -95,15 +96,19 @@ function ProRegisterDialogCtrl($rootScope, $scope, $uibModalInstance, Form, Item
                     if (data.data[0].MsgType == 'Success') {
                         toastr.success('储存成功');
                         //$uibModalInstance.close(en);
+                        vm.Item.SNCode = undefined;
                         vm.Item.InternalCode = undefined;
                         vm.DialogItem.NgType = undefined;
                         vm.DialogItem.Ng = undefined;
+                        vm.DialogItem.Reason = undefined;
                     }
                     else if (data.data[0].MsgType == 'Error') {
                         toastr.error(data.data[0].Msg);
+                        vm.Item.SNCode = undefined;
                         vm.Item.InternalCode = undefined;
                         vm.DialogItem.NgType = undefined;
                         vm.DialogItem.Ng = undefined;
+                        vm.DialogItem.Reason = undefined;
                     }
                 })
             }
