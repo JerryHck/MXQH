@@ -6,26 +6,33 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     vm.Item = {};
     vm.Save = Save;
     vm.Cancel = Cancel;
-    vm.SelectProduct = SelectProduct;//选择料号
+    // vm.SelectProduct = SelectProduct;//选择料号
     vm.SelectWorkOrder = SelectWorkOrder;
     Init();
     //初始化
     function Init() {
         if (ItemData.ID) {//编辑
             vm.Item = ItemData;
+            GetTotalCompleteQty(vm.Item.WorkOrderID);
         } else {//新增
             vm.Item.CompleteDate = GetCurrentDate();
         }
     }
-
+    //累计完工数量
+    function GetTotalCompleteQty(workorderid)
+    {
+        vm.promise = AjaxService.ExecPlan("CompleteRpt", "GetTotalQty", { WorkOrderID: workorderid }).then(function (data) {
+            vm.TotalCompleteQty = data.data[0].CompleteQty;
+        });
+    }
     //保存
     function Save() {
         var en = {};
         var li = [];
-        if (vm.Item.CompleteQty<vm.Item.ActualRcvQty) {
-            toastr.error('完工数量不能小于实际入库数量');
-            return;
-        }
+        //if (vm.Item.CompleteQty<vm.Item.ActualRcvQty) {
+        //    toastr.error('完工数量不能小于实际入库数量');
+        //    return;
+        //}
         vm.Item.Quantity = undefined;
         li.push(vm.Item);
         en.EntityInfo = JSON.stringify(li);
@@ -66,23 +73,23 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
         $uibModalInstance.close("1");
     }
 
-    //选择料号
-    function SelectProduct() {
-        var resolve = {
-            ItemData: function () {
-                return {};
-            }
-        }
-        Dialog.open("MesMaterialSer", resolve).then(function (data) {
-            if (data.Id) {
-                vm.Item.MaterialID = data.Id;
-                vm.Item.MaterialCode = data.MaterialCode;
-                vm.Item.MaterialName = data.MaterialName;
-            }
-        }).catch(function (reason) {
+    ////选择料号
+    //function SelectProduct() {
+    //    var resolve = {
+    //        ItemData: function () {
+    //            return {};
+    //        }
+    //    }
+    //    Dialog.open("MesMaterialSer", resolve).then(function (data) {
+    //        if (data.Id) {
+    //            vm.Item.MaterialID = data.Id;
+    //            vm.Item.MaterialCode = data.MaterialCode;
+    //            vm.Item.MaterialName = data.MaterialName;
+    //        }
+    //    }).catch(function (reason) {
 
-        });
-    }
+    //    });
+    //}
     //选择工单
     function SelectWorkOrder() {
         var resolve = {
@@ -97,6 +104,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
                 vm.Item.MaterialID = data.MaterialID;
                 vm.Item.MaterialCode = data.MaterialCode;
                 vm.Item.MaterialName = data.MaterialName;
+                GetTotalCompleteQty(data.ID);
             }
         }).catch(function (reason) {
 

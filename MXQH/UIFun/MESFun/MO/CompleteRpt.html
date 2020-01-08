@@ -38,7 +38,7 @@
                         <td style="width:100px ">品名</td>
                         <td style="width:100px ">完工时间</td>
                         <td style="width:100px ">完工数量</td>
-                        <td style="width:100px ">实际入库数量</td>
+                        <!--<td style="width:100px ">累计完工数量</td>-->
 
                     </tr>
                 </thead>
@@ -54,7 +54,7 @@
                     <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
                     <td title="{{ item.CompleteDate }}">{{ item.CompleteDate|date:'yyyy-MM-dd HH:mm:ss' }}</td>
                     <td title="{{ item.CompleteQty }}">{{ item.CompleteQty }}</td>
-                    <td title="{{ item.ActualRcvQty }}">{{ item.ActualRcvQty }}</td>
+                    <!--<td title="{{ item.ActualRcvQty }}">{{ item.ActualRcvQty }}</td>-->
                 </tr>
             </table>
         </div>
