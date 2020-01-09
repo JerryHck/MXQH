@@ -1,29 +1,29 @@
-﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="pro.promise">
-    <uib-tab index="1" >
-        <uib-tab-heading class="h5">客退登记</uib-tab-heading>
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="gf.promise">
+    <uib-tab index="1">
+        <uib-tab-heading class="h5">客退登记（功放）</uib-tab-heading>
         <div class="wrapper-md">
             <div class="form-inline">
-              <!--  <button class="btn btn-sm btn-success " ng-click="pro.NgSave()"><i class="glyphicon glyphicon-plus "></i>客退登记</button>-->
+                <!--  <button class="btn btn-sm btn-success " ng-click="gf.NgSave()"><i class="glyphicon glyphicon-plus "></i>客退登记</button>-->
                 <!--<div class="form-group">
-                    SN码: <input type="text"  class="form-control" ng-model="pro.Ser.SNCode" placeholder="SN码" >
+                    SN码: <input type="text"  class="form-control" ng-model="gf.Ser.SNCode" placeholder="SN码" >
                 </div>
-                <button ng-click="pro.Ser.SNCode= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+                <button ng-click="gf.Ser.SNCode= undefined" class="btn btn-default" ng-disabled="ngDisabled">
                     <span class="glyphicon glyphicon-trash text-danger"></span>
                 </button>
                 <div class="form-group">
-                    内控码: <input type="text"  class="form-control" ng-model="pro.Ser.InternalCode" placeholder="内控码">
+                    内控码: <input type="text"  class="form-control" ng-model="gf.Ser.InternalCode" placeholder="内控码">
                 </div>
-                <button ng-click="pro.Ser.InternalCode= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+                <button ng-click="gf.Ser.InternalCode= undefined" class="btn btn-default" ng-disabled="ngDisabled">
                     <span class="glyphicon glyphicon-trash text-danger"></span>
                 </button>-->
                 <div class="form-group">
-                    工单：<input type="text"  class="form-control" ng-model="pro.Ser.WorkOrder" placeholder="工单" >
+                    工单：<input type="text" class="form-control" ng-model="gf.Ser.WorkOrder" placeholder="工单">
                 </div>
-                <button ng-click="pro.Ser.WorkOrder= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+                <button ng-click="gf.Ser.WorkOrder= undefined" class="btn btn-default" ng-disabled="ngDisabled">
                     <span class="glyphicon glyphicon-trash text-danger"></span>
                 </button>
-                <button class="btn btn-sm btn-info " ng-click="pro.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
-                <!--<button class= "btn btn-sm btn-success " ng-click= "pro.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>-->
+                <button class="btn btn-sm btn-info " ng-click="gf.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                <!--<button class= "btn btn-sm btn-success " ng-click= "gf.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>-->
             </div>
         </div>
         <div class="padder-md ">
@@ -42,14 +42,14 @@
                     </tr>
                 </thead>
 
-                <tr ng-repeat="item in pro.List " ng-form="item.ItemForm">
+                <tr ng-repeat="item in gf.List " ng-form="item.ItemForm">
                     <td>
                         <span ng-if="!item.IsEdit">
-                            <button class="btn btn-xs btn-primary" ng-click="pro.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
-                            <!--<button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="pro.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>-->
+                            <button class="btn btn-xs btn-primary" ng-click="gf.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                            <!--<button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="gf.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>-->
                         </span>
                         <!--<span ng-if="item.IsEdit">
-                            <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="pro.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="gf.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
                             <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
                         </span>-->
                     </td>
@@ -63,11 +63,11 @@
                     <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
                 </tr>
             </table>
-            <div class="col-md-12 text-center " ng-if="pro.page.total>pro.page.size ">
-                <div uib-pagination total-items="pro.page.total " ng-model="pro.page.index " items-per-page="pro.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
-                     ng-change="pro.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+            <div class="col-md-12 text-center " ng-if="gf.page.total>gf.page.size ">
+                <div uib-pagination total-items="gf.page.total " ng-model="gf.page.index " items-per-page="gf.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                     ng-change="gf.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
             </div>
         </div>
     </uib-tab>
-  
+
 </uib-tabset>

@@ -1,0 +1,76 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">客退录入(功放)</h3>
+</div>
+<div class="modal-body wrapper-xs" ng-form="QcForm">
+    <div class="panel panel-default">
+        <div class="panel-body wrapper-xs">
+            <div class="form-horizontal">
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4">SN码:</label>
+                    <div class="col-md-8">
+                        <input ng-keyup="gf.KeyDonwOrder($event)" type="text" class="form-control" name="SNCode" placeholder="SN码（必填）"
+                               ng-model="gf.Item.SNCode" required>
+                        <!--<div ng-messages="DialogForm.SNCode.$error" class="help-block" role="alert">
+                            <div ng-message="required" style="font-size:0.1px;">SN码：</div>
+                            <div ng-message="unique">已经登记，不能重复登记</div>
+                        </div> ng-blur="gf.isExists()-->
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4">产品编号:</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" name="MaterialCode" ng-model="gf.Item.MaterialCode" disabled>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4 wrapper-xs">返工工单:</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" name="WorkOrder" ng-model="gf.Item.WorkOrder" disabled>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4 wrapper-xs">产品名称:</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" name="MaterialName" ng-model="gf.Item.MaterialName" disabled>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4 wrapper-xs">不良种类:</label>
+                    <div class="col-md-8" ng-class="{ 'has-error' : QcForm.ngType.$invalid }">
+                        <ui-select name="ngType" ng-model="gf.DialogItem.NgType" theme="bootstrap" required ng-change="gf.ChangeMonitor()">
+                            <ui-select-match placeholder="选择不良种类...">{{ $select.selected.Name }}</ui-select-match>
+                            <ui-select-choices repeat="item.ID as item in gf.TypeList | filter: $select.search">
+                                <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4 wrapper-xs">不良原因:</label>
+                    <div class="col-md-8" ng-class="{ 'has-error' : QcForm.syQpoor.$invalid }">
+                        <ui-select name="syQpoor" ng-model="gf.DialogItem.Ng" theme="bootstrap" required>
+                            <ui-select-match placeholder="选择不良原因...">{{ $select.selected.Name }}</ui-select-match>
+                            <ui-select-choices repeat="item.ID as item in gf.QpoorList | filter: $select.search">
+                                <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4 wrapper-xs">备注:</label>
+                    <div class="col-md-8" ng-class="{ 'has-error' : QcForm.Reason.$invalid }">
+                        <textarea class="form-control" rows="2" name="Reason" maxlength="255" ng-model="gf.DialogItem.Reason" placeholder="输入不良原因"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="col-md-12 text-center">
+        <button class="btn btn-success" type="button" ng-disabled="QcForm.$invalid" ng-click="gf.Save()">储存</button>
+        <button class="btn btn-warning" type="button" ng-click="gf.cancel()">取消</button>
+    </div>
+</div>
+<!--<pre>{{ gf.Item | json }}</pre>-->
