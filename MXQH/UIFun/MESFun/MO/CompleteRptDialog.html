@@ -72,10 +72,10 @@
                         </div>-->
                     </div>
                     <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">实际入库数量</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.ActualRcvQty.$invalid }">
-                            <input type="number" class="form-control" name="ActualRcvQty" placeholder="实际入库数量"
-                                   ng-model="crdc.Item.ActualRcvQty" required>
+                        <label class="control-label col-sm-4 padder-xs">累计完工数量</label>
+                        <div class="col-sm-8 padder-xs" >
+                            <input type="number" disabled="disabled" class="form-control" name="ActualRcvQty" placeholder="累计完工数量"
+                                   ng-model="crdc.TotalCompleteQty" >
                         </div>
                     </div>
                 </div>
