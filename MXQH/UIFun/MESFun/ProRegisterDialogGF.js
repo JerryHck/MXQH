@@ -1,9 +1,9 @@
 ﻿'use strict';
-angular.module('app').controller('ProRegisterDialogCtrl', ProRegisterDialogCtrl);
+angular.module('app').controller('ProRegisterDialogGFCtrl', ProRegisterDialogGFCtrl);
 
-ProRegisterDialogCtrl.$inject = ['$rootScope', '$scope', '$uibModalInstance', 'Form', 'ItemData', 'toastr', 'AjaxService'];
+ProRegisterDialogGFCtrl.$inject = ['$rootScope', '$scope', '$uibModalInstance', 'Form', 'ItemData', 'toastr', 'AjaxService'];
 
-function ProRegisterDialogCtrl($rootScope, $scope, $uibModalInstance, Form, ItemData, toastr, AjaxService) {
+function ProRegisterDialogGFCtrl($rootScope, $scope, $uibModalInstance, Form, ItemData, toastr, AjaxService) {
     var vm = this;
     vm.form = Form[ItemData.SysNo ? 1 : 0];
     vm.Item = ItemData;
@@ -19,7 +19,7 @@ function ProRegisterDialogCtrl($rootScope, $scope, $uibModalInstance, Form, Item
         if (keycode == 13 && vm.Item.SNCode) {
             var en = {};
             en.SNCode = vm.Item.SNCode;
-            AjaxService.ExecPlan("RMOSelect", "GetSN", en).then(function (data) {
+            AjaxService.ExecPlan("RMOSelectGF", "GetSNGF", en).then(function (data) {
                 
                 if (data.data[0].MsgType == 'Error') {
                     //vm.Item = undefined;
@@ -44,9 +44,9 @@ function ProRegisterDialogCtrl($rootScope, $scope, $uibModalInstance, Form, Item
     }
     //获取组织信息
     var con = [
-        { name: "Layer", value: 1, },
-        { name: "Layer", value: 3, action:"Or" },
-        //{ name: "Layer", value: 5, action: "Or" },
+        //{ name: "Layer", value: 1, },
+        //{ name: "Layer", value: 3, action:"Or" },
+        { name: "Layer", value: 5 },
         { name: "IsMonitor", value: 1, level: 1 }
     ];
    
@@ -68,7 +68,7 @@ function ProRegisterDialogCtrl($rootScope, $scope, $uibModalInstance, Form, Item
     
         var e = {};
         e.SNCode = vm.Item.SNCode;
-        AjaxService.ExecPlan("RMOSelect", "GetSN", e).then(function (data) {
+        AjaxService.ExecPlan("RMOSelectGF", "GetSNGF", e).then(function (data) {
             if (data.data[0].MsgType == 'Error') {
               
                 toastr.error(data.data[0].Msg);
@@ -92,7 +92,7 @@ function ProRegisterDialogCtrl($rootScope, $scope, $uibModalInstance, Form, Item
                 en.CreateBy = $rootScope.User.UserNo;//
                 console.log(en);
 
-                vm.promise = AjaxService.ExecPlan("RMOSelect", "AddRMO", en).then(function (data) {
+                vm.promise = AjaxService.ExecPlan("RMOSelectGF", "AddRMOGF", en).then(function (data) {
                     if (data.data[0].MsgType == 'Success') {
                         toastr.success('储存成功');
                         //$uibModalInstance.close(en);

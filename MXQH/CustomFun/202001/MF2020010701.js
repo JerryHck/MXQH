@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('proctrl', ['$rootScope', 'Dialog', '$scope', '$http', 'AjaxService', 'toastr', '$window', '$filter',
+.controller('CrtlRMOGF', ['$rootScope', 'Dialog', '$scope', '$http', 'AjaxService', 'toastr', '$window', '$filter',
 function ($rootScope, Dialog, $scope, $http, AjaxService, toastr, $window, $filter) {
 
     var vm = this;
@@ -15,8 +15,8 @@ function ($rootScope, Dialog, $scope, $http, AjaxService, toastr, $window, $filt
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
     vm.NgSave = NgSave;
-   
-  
+
+
     function Search() {
         vm.page.index = 1;
         PageChange();
@@ -24,10 +24,10 @@ function ($rootScope, Dialog, $scope, $http, AjaxService, toastr, $window, $filt
 
 
     function Edit(e) {
-        
+
         console.log(e);
         Open(e);
-      
+
     }
 
 
@@ -39,7 +39,7 @@ function ($rootScope, Dialog, $scope, $http, AjaxService, toastr, $window, $filt
 
 
     function Open(item) {
-        Dialog.OpenDialog("ProRegisterDialog", item).then(function (data) {
+        Dialog.OpenDialog("ProRegisterDialogGF", item).then(function (data) {
             PageChange();
         }).catch(function (reason) {
         });
@@ -58,7 +58,7 @@ function ($rootScope, Dialog, $scope, $http, AjaxService, toastr, $window, $filt
         en.SendPlaceName = vm.EditItem.SendPlaceName;//出货地
         en.SecondPoorName = vm.EditItem.SecondPoorName;//不良种类
         en.SecondPoorName = vm.EditItem.SecondPoorName;//不良原因
-      
+
         vm.promise = AjaxService.PlanUpdate("", en).then(function (data) {
             PageChange();
             toastr.success('更新成功');
@@ -66,7 +66,7 @@ function ($rootScope, Dialog, $scope, $http, AjaxService, toastr, $window, $filt
     }
 
     function PageChange() {
-        vm.promise = AjaxService.GetPlansPage("RMOSelect", GetContition(), vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("RMOSelectGF", GetContition(), vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
@@ -94,5 +94,5 @@ function ($rootScope, Dialog, $scope, $http, AjaxService, toastr, $window, $filt
         }
         return list;
     }
-   
+
 }]);

@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('Repairctrl', ['$rootScope', 'Dialog', '$scope', '$http', 'AjaxService', 'toastr', '$window', '$filter',
+.controller('CtrlGF', ['$rootScope', 'Dialog', '$scope', '$http', 'AjaxService', 'toastr', '$window', '$filter',
 function ($rootScope, Dialog, $scope, $http, AjaxService, toastr, $window, $filter) {
 
     var vm = this;
@@ -10,10 +10,7 @@ function ($rootScope, Dialog, $scope, $http, AjaxService, toastr, $window, $filt
     vm.Ser = {};
     vm.Focus = 0;
     vm.Insert = Insert;
-    //vm.SaveInsert = SaveInsert;
     vm.Edit = Edit;
-    //vm.Delete = Delete;
-    //vm.SaveEdit = SaveEdit;
     vm.PageChange = PageChange;
     vm.Search = Search;
     vm.PageChange2 = PageChange2;
@@ -26,19 +23,16 @@ function ($rootScope, Dialog, $scope, $http, AjaxService, toastr, $window, $filt
     function SelectTab(index) {
         vm.Focus = index;
     }
+
     function Search() {
         vm.page.index = 1;
         PageChange();
     }
+
     function Search2() {
         vm.page2.index = 1;
         PageChange2();
     }
-
-    //function Insert() {
-    //    vm.NewItem = {};
-    //    vm.IsInsert = true;
-    //}
 
     function Insert() {
         Open({});
@@ -50,27 +44,27 @@ function ($rootScope, Dialog, $scope, $http, AjaxService, toastr, $window, $filt
     }
 
     function Open(item) {
-        Dialog.OpenDialog("RMORepairDialog", item).then(function (data) {
+        Dialog.OpenDialog("RMORepairDialogGF", item).then(function (data) {
             PageChange();
         }).catch(function (reason) {
         });
     }
 
     function PageChange() {
-        vm.promise = AjaxService.GetPlansPage("SelectProRepair", GetContition(), vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("SelectProRepairGF", GetContition(), vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
 
     }
     function PageChange2() {
-        vm.promise = AjaxService.GetPlansPage("SelectRMORepair", GetContition2(), vm.page2.index, vm.page2.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("SelectRMORepairGF", GetContition2(), vm.page2.index, vm.page2.size).then(function (data) {
             vm.List2 = data.List;
             vm.page2.total = data.Count;
         });
     }
     function ExportExcel() {
-        vm.promise = AjaxService.GetPlanOwnExcel("SelectRMORepair", GetContition2()).then(function (data) {
+        vm.promise = AjaxService.GetPlanOwnExcel("SelectRMORepairGF", GetContition2()).then(function (data) {
             $window.location.href = data.File;
         });
     }
