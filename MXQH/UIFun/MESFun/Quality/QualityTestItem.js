@@ -19,11 +19,12 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     //绑定数据
     function GetTreeData() {
         var condition = [{ name: "PID", value: "-1" }];
-        vm.promise = AjaxService.GetPlans("QualityProperty", condition).then(function (poorType) {
+        vm.promise = AjaxService.GetPlans("QualityPropertyT", condition).then(function (poorType) {
+            console.log(poorType);
             var topNode = [{ID:-1,PID:-1,text:'所有分类',nodes:poorType}]
             $('#tree').treeview({
                 data: topNode,
-                levels: 3,
+                levels: 5,
                 emptyIcon: "glyphicon",
                 showTags: true,                
                 onNodeSelected: function (event, data) {//节点选中事件
