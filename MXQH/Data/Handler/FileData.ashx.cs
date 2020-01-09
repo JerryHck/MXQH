@@ -128,8 +128,11 @@ namespace MXQH.Data.Handers
         {
             try
             {
+                //Dir = Dir == "" ? DateTime.Now.ToString("yyyyMM") : Dir;
                 FileSave f = JsonConvert.DeserializeObject<FileSave>(data);
                 string dirPath = AppDomain.CurrentDomain.BaseDirectory + "CustomFun\\" + (Dir == "" ? "" : Dir + "\\");
+                dirPath = dirPath + (string.IsNullOrEmpty(f.Dir) ? "" : f.Dir + "\\");
+                
                 //验证文件路径
                 if (!Directory.Exists(dirPath))
                 {

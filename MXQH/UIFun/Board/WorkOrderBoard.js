@@ -12,11 +12,12 @@ function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window
     var vm = this;
     vm.page = { index: 1, size: 12 };
     vm.Ser = { Now: new Date().Format('yyyy-MM-dd'), StartDate: '08:00', EndDate: '23:00' };
-
+    
     //vm.Ser = { WorkOrder: 'AMO-30190805004', Now: '2019-09-16', StartDate: '08:00', EndDate: '23:00' };
 
     vm.IsAss = $state.current.name == 'AssProBoard';
 
+    
     vm.DateOp = {
         //formatTime: 'H:i',
         format: 'Y-m-d',
@@ -28,30 +29,45 @@ function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window
     vm.BtnText = "开始";
     vm.Begin = Begin;
     vm.Offline = Offline;
-    var conList = [
-        { name: "Status", value: 4, type: "!=" },
-        //{ name: "WorkOrder", value: "MO%", type: "not like" },
-        { name: "WorkOrder", value: "20%", type: "not like" },
-        { name: "WorkOrder", value: "HMO%", type: "not like" },
-    ];
-    var Con = {};
-    Con.planName = "MesMxWOrder";
-    Con.strJson = JSON.stringify(conList);
-    AjaxService.DoBefore("GetPlans", Con).then(function (data) {
-        vm.OrderList = data;
-    })
+    vm.ChangeLine = ChangeLine;
 
+   
+    //线别变动
+    function ChangeLine() {
+        vm.Ser.WorkOrder = undefined;
+        var conList = [
+       { name: "Status", value: 4, type: "!=", level: 0 },
+       //{ name: "WorkOrder", value: "MO%", type: "not like" },
+       { name: "WorkOrder", value: "20%", type: "not like", level: 0 },
+       { name: "WorkOrder", value: "HMO%", type: "not like", level: 0 },
+       { name: "AssemblyLineID", value: vm.LineId, level: 1 }
+        ];
+        var Con = {};
+        Con.planName = "MesMxWOrder";
+        Con.strJson = JSON.stringify(conList);
+        AjaxService.DoBefore("GetPlans", Con).then(function (data) {
+            vm.OrderList = data;
+        })
+    }
 
     function Offline() {
         //$window.location.href = appUrl + 'Access.html#!/AssProBoard?v=' + new Date();
         if ($state.current.name != 'AssProBoard') {
             $window.open(appUrl + 'Access.html#!/AssProBoard?v=' + new Date());
         }
+        vm.IsFull = !vm.IsFull;
+        if (vm.IsFull) {
+            fullScreen();
+        }
+        else {
+            exitScreen();
+        }
     }
 
     function Begin() {
         vm.IsHave = '';
         if (!vm.IsRun) {
+            
             if (!vm.Ser.WorkOrder) {
                 toastr.error("请先输入工单");
                 return;
@@ -75,19 +91,60 @@ function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window
             en.Interval = 60;
             //传送的参数字符串
             en.Json = JSON.stringify(enCon);
-            AjaxService.GetServerSocket(en, "KeyBoard", function (data, socket) {
-                vm.socket = socket;
-                if (vm.IsRun) {
-                    CalPie(JSON.parse(data));
-                }
-            })
+            GetData(en);
+            //定时计--每3分钟换下一次以防止服务器断开连接
+            vm.intervalId = setInterval(function () {
+                GetData(en)
+            }, 180000);
         }
         else {
+            if (vm.intervalId) {
+                clearInterval(vm.intervalId);
+            }
             if (vm.socket) {
                 vm.socket.close();
             }
             vm.IsRun = false;
             vm.BtnText = "开始";
+        }
+    }
+
+    function GetData(en) {
+        //console.log(new Date());
+        AjaxService.GetServerSocket(en, "KeyBoard", function (data, socket) {
+            vm.socket = socket;
+            if (vm.IsRun) {
+                CalPie(JSON.parse(data));
+            }
+        })
+    }
+
+    //全屏
+    function fullScreen() {
+        var el = document.documentElement;
+        var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+        if (typeof rfs != "undefined" && rfs) {
+            rfs.call(el);
+        };
+        return;
+    }
+
+    //退出全屏
+    function exitScreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+        else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        }
+        else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        }
+        else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+        if (typeof cfs != "undefined" && cfs) {
+            cfs.call(el);
         }
     }
 

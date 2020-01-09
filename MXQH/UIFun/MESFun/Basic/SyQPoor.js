@@ -24,9 +24,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     function GetTreeData() {
         var condition = [{ name: "PID", value: "-1" }];
         vm.promise = AjaxService.GetPlans("QPoorType", []).then(function (poorType) {
-            console.log(poorType);
             vm.promise = AjaxService.GetPlans("QPoorTreeView", condition).then(function (data) {
-                console.log(poorType);
                 //增加nodes属性
                 for (var i = 0; i < poorType.length; i++) {
                     poorType[i].nodes = [];
@@ -45,7 +43,6 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
                     onNodeSelected: function (event, data) {//节点选中时间
                         vm.selectedNode = data.nodeId;                        
                         $(this).treeview("expandNode", [data.nodeId]);
-                        console.log(data);
                         vm.ItemData = { PID: data.ID, TopType: data.TopType, ParentType: data.text, Layer: data.ID==-1?data.Layer:data.Layer+1 };
                         vm.PID = data.ID;
                         vm.TopType = data.TopType;
@@ -85,7 +82,6 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
         $(".pro-file").addClass("active");
         vm.IsEdit = false;
         //vm.ItemData = { PID: vm.PID,TopType:vm.TopType,ParentType:vm.ParentType, };
-        console.log(vm.ItemData);
     }
 
     ////弹出框--放弃按钮
@@ -103,7 +99,6 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
         vm.ItemData.text = item.text;
         vm.ItemData.TopType = item.TopType;
         vm.ItemData.Layer = item.Layer;
-        console.log(vm.ItemData);
     }
 
     //保存 物料分类
@@ -115,7 +110,6 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
             li.push(vm.ItemData);
             en.List = JSON.stringify(li);
             vm.promise = AjaxService.ExecPlan("QPoorTreeView", "Update", en).then(function (data) {
-                console.log(data);
                 if (data.data[0].MsgType == "1") {
                     toastr.success(data.data[0].Msg);
                     $(".pro-file").removeClass("active");
@@ -131,9 +125,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
             en.TempColumns = "List";
             li.push(vm.ItemData);
             en.List = JSON.stringify(li);
-            console.log(en);
             vm.promise = AjaxService.ExecPlan("QPoorTreeView", "Add", en).then(function (data) {
-                console.log(data);
                 if (data.data[0].MsgType == "1") {
                     toastr.success(data.data[0].Msg);
                     $(".pro-file").removeClass("active");
@@ -165,8 +157,6 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     //保存顶级分类
     function SaveTopType(flag) {
         vm.IsAddTop = flag;
-        console.log(vm.ItemData);
-        console.log(vm.NewTopType);
         vm.ItemData.TopType = vm.NewTopType.TopType;
         vm.ItemData.Layer = undefined;
     }

@@ -65,7 +65,7 @@ function ($rootScope, $scope, Dialog, AjaxService, toastr, $window) {
         var postData = {}, list = [];
         list.push();
         postData.ParaData = JSON.stringify(item);
-        postData.OutList = JSON.stringify(list);
+        postData.OutList = list;
 
         AjaxService.Print(item.TemplateId, item.TemplateVersion, postData, vm.PrinterName).then(function (data) {
             console.log(data);

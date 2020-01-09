@@ -1,11 +1,11 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('TestCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
+.controller('AQLStandCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
 function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
-    vm.page = { index: 1, size: 12 };
+    vm.page = { index: 1, size: 60 };
     vm.Ser = {};
 
     vm.Insert = Insert;
@@ -28,7 +28,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function SaveInsert() {
-        vm.promise = AjaxService.PlanInsert("MESMoLineArrDtl", vm.NewItem).then(function (data) {
+        vm.promise = AjaxService.PlanInsert("MESAQLCheckStand", vm.NewItem).then(function (data) {
             PageChange();
             toastr.success('新增成功');
             vm.IsInsert = false;
@@ -47,7 +47,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     function Delete(item) {
         var en = angular.copy(item);
         en.ItemForm = undefined;
-        vm.promise = AjaxService.PlanDelete("MESMoLineArrDtl", en).then(function (data) {
+        vm.promise = AjaxService.PlanDelete("MESAQLCheckStand", en).then(function (data) {
             PageChange();
             toastr.success('删除成功');
         });
@@ -56,31 +56,38 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     function SaveEdit(index) {
         var en = {};
         en.Id = vm.EditItem.Id;
-        en.ArrangeId = vm.EditItem.ArrangeId;
-        en.ProcedureId = vm.EditItem.ProcedureId;
-        en.HrUserNo = vm.EditItem.HrUserNo;
-        en.HrUserName = vm.EditItem.HrUserName;
-        en.Remark = vm.EditItem.Remark;
-        vm.promise = AjaxService.PlanUpdate("MESMoLineArrDtl", en).then(function (data) {
+        en.BacthMin = vm.EditItem.BacthMin;
+        en.BacthMax = vm.EditItem.BacthMax;
+        en.S1 = vm.EditItem.S1;
+        en.S2 = vm.EditItem.S2;
+        en.S3 = vm.EditItem.S3;
+        en.S4 = vm.EditItem.S4;
+        en.CI = vm.EditItem.CI;
+        en.CII = vm.EditItem.CII;
+        en.CIII = vm.EditItem.CIII;
+        vm.promise = AjaxService.PlanUpdate("MESAQLCheckStand", en).then(function (data) {
             PageChange();
             toastr.success('更新成功');
         });
     }
 
     function PageChange() {
-        vm.promise = AjaxService.GetPlansPage("MESMoLineArrDtl", GetContition(), vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("MESAQLCheckStand", GetContition(), vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
 
     }
     function ExportExcel() {
-        vm.promise = AjaxService.GetPlanOwnExcel("MESMoLineArrDtl", GetContition()).then(function (data) {
+        vm.promise = AjaxService.GetPlanOwnExcel("MESAQLCheckStand", GetContition()).then(function (data) {
             $window.location.href = data.File;
         });
     }
     function GetContition() {
         var list = [];
+        if (vm.Ser.a_BacthMax) {
+            list.push({ name: "BacthMax", value: vm.Ser.a_BacthMax, tableAs:"a", type:"<=" });
+        }
         return list;
     }
 

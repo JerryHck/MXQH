@@ -136,7 +136,11 @@ angular.module('AppSet')
         //从数据库中取得值
         template: function (element, attrs) {
             if (attrs.basicSelect) {
-                var data = AjaxService.GetPlansWait("SysUISelect", { name: "SelectName", value: attrs.basicSelect })
+                var Con = {};
+                Con.planName = "SysUISelect";
+                Con.strJson = JSON.stringify([{ name: "SelectName", value: attrs.basicSelect }]);
+                //var data = AjaxService.GetPlansWait("SysUISelect", { name: "SelectName", value: attrs.basicSelect })
+                var data = AjaxService.DoBeforeWait("GetPlans", Con);
                 attrs.SyData = data[0];
                 if (attrs.SyData && attrs.SyData.HTMLCode && attrs.SyData.HTMLCode != "") {
                     return $window.decodeURIComponent($window.atob(attrs.SyData.HTMLCode));
@@ -182,7 +186,11 @@ angular.module('AppSet')
                 InitSerData(1, ListData.length);
             }
             else {
-                AjaxService.GetPlans(enName.EntityName, list2).then(function (data2) {
+                var Con2 = {};
+                Con2.planName = enName.EntityName;
+                Con2.strJson = JSON.stringify(list2);
+                AjaxService.DoBefore("GetPlans", Con2).then(function (data2) {
+                //AjaxService.GetPlans(enName.EntityName, list2).then(function (data2) {
                     ListData = angular.copy(data2);
                     if (data2.length > 0 && scope.autoFirst.toLowerCase() == 'true' && !scope.ngModel) {
                         scope.ngModel = enName.ReturnColumn == undefined || enName.ReturnColumn == '' ? data2[0] : data2[0][enName.ReturnColumn];

@@ -11,6 +11,8 @@
         var obj = {
             //登录前服务
             DoBefore: DoBefore,
+            //同步执行方法
+            DoBeforeWait:DoBeforeWait,
             //自定义服务方法
             Custom: Custom,
             //
@@ -305,6 +307,12 @@
             var d = $q.defer(), url = serviceUrl + "Common.asmx/DoBefore";
             var json = { method: method, Json: JSON.stringify(en) };
             return httpFun(d, url, json);
+        }
+
+        function DoBeforeWait(method, en) {
+            var url = serviceUrl + "Common.asmx/DoBefore";
+            var json = { method: method, Json: JSON.stringify(en) };
+            return HTTPWait(url, json);
         }
 
         function LoginAction(method, en) {

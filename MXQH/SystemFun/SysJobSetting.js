@@ -51,6 +51,7 @@ function ($scope, $rootScope, toastr, AjaxService) {
 
     AjaxService.GetPlans("PlanEntity").then(function (data) {
         vm.EnList = data;
+        //console.log(data);
         vm.ToEnList = data;
     });
     //监控值变化

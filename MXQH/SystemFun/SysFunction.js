@@ -349,16 +349,26 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
             //保存文件
             if (!en.IsSystem && data.data[0] && data.data[0].SN && Content) {
                 vm.FunCodeSetting.FunNo = data.data[0].SN;
+
+                console.log(12314)
+                //是新增功能的时候--计算中间文件夹
+                var dir = vm.SelectedFun.FunNo == '-1' ? (new Date()).Format("yyyyMM") : new Date(vm.SelectedFun.CreateDate).Format("yyyyMM");
+
+                console.log(dir)
+
                 var htmlEn = {};
-                htmlEn.FileName = data.data[0].SN + ".html";
+                htmlEn.Dir = dir;
+                htmlEn.FileName = vm.FunCodeSetting.FunNo + ".html";
+                console.log(htmlEn)
                 htmlEn.Text = $window.btoa($window.encodeURIComponent(Content.Html));
                 //保存html
                 AjaxService.AjaxHandle("WriteFile", JSON.stringify(htmlEn));
 
                 var JsEn = {};
-                JsEn.FileName = data.data[0].SN + ".js";
+                JsEn.Dir = dir;
+                JsEn.FileName = vm.FunCodeSetting.FunNo + ".js";
                 JsEn.Text = $window.btoa($window.encodeURIComponent(Content.Js));
-                //保存html
+                //保存JS
                 AjaxService.AjaxHandle("WriteFile", JSON.stringify(JsEn));
 
                 //保存代码设定
@@ -416,11 +426,15 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
 
     //切换文件方式
     function FunctionFile(f) {
+
+        //是新增功能的时候--计算中间文件夹
+        var dir = vm.SelectedFun.FunNo == '-1' ? (new Date()).Format("yyyyMM") : new Date(vm.SelectedFun.CreateDate).Format("yyyyMM");
+     
         //添加文件
         if (vm.SelectedFun.IsSystem) {
             var have = false, index = -1;
             vm.SelectedFun.FunHtml = vm.OriHtml;
-            var js = "CustomFun\\" + vm.SelectedFun.FunNo + '.js';
+            var js = "CustomFun\\" + dir + "\\" + vm.SelectedFun.FunNo + '.js';
             angular.forEach(vm.SelectedFun.FunLoad, function (f, i) {
                 if (f.LoadName == js) {
                     have = true;
@@ -434,8 +448,8 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
         else {
             var have = false;
             vm.OriHtml = vm.SelectedFun.FunHtml;
-            vm.SelectedFun.FunHtml = "CustomFun\\" + vm.SelectedFun.FunNo + '.html';
-            var js = "CustomFun\\" + vm.SelectedFun.FunNo + '.js';
+            vm.SelectedFun.FunHtml = "CustomFun\\" + dir + "\\" + vm.SelectedFun.FunNo + '.html';
+            var js = "CustomFun\\" + dir + "\\" + vm.SelectedFun.FunNo + '.js';
             angular.forEach(vm.SelectedFun.FunLoad, function (f) {
                 if (f.LoadName == js) {
                     have = true; return;

@@ -7,6 +7,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     var vm = this;
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
+    vm.Ser.a_IsUse = "1";
 
     vm.Insert = Insert;
     vm.SaveInsert = SaveInsert;
@@ -61,8 +62,10 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         en.ID = vm.EditItem.ID;
         en.Code = vm.EditItem.Code;
         en.Name = vm.EditItem.Name;
+        en.IsUse = vm.EditItem.IsUse;
         en.TimeConsume = vm.EditItem.TimeConsume;
         en.LowerFPY = vm.EditItem.LowerFPY;
+        en.IsAss = vm.EditItem.IsAss;
         en.IsOutput = vm.EditItem.IsOutput;
         en.IsMonitor = vm.EditItem.IsMonitor;
         en.WorkSection = vm.EditItem.WorkSection;
@@ -112,6 +115,9 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         var list = [];
         if (vm.Ser.a_Name) {
             list.push({ name: "Name", value: vm.Ser.a_Name, tableAs:"a" });
+        }
+        if (vm.Ser.a_IsUse) {
+            list.push({ name: "IsUse", value: vm.Ser.a_IsUse, tableAs:"a" });
         }
         return list;
     }

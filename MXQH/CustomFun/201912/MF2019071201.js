@@ -137,6 +137,12 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
         if (end) {
             list.push({ name: "CreateDate", value: end, type: '<=' });
         }
+        if (vm.Ser.BarCode1) {
+            list.push({ name: "BarCode", value: '%' + vm.Ser.BarCode1 + '%' });
+        }
+        if (vm.Ser.CreateName1) {
+            list.push({ name: "CreateName", value: '%' + vm.Ser.CreateName1 + '%' });
+        }
         return list;
     }
     function GetContition2() {

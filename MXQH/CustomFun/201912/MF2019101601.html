@@ -16,6 +16,12 @@
                 <button ng-click="baqhh.Ser.b_CreateDate= undefined" class="btn btn-default" ng-disabled="ngDisabled">
                     <span class="glyphicon glyphicon-trash text-danger"></span>
                 </button>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="baqhh.Ser.BarCode1" placeholder="内控码">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="baqhh.Ser.CreateName1" placeholder="姓名">
+                </div>
                 <button class="btn btn-sm btn-info " ng-click="baqhh.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
                 <!--<button class= "btn btn-sm btn-success " ng-click= "baqhh.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>-->
             </div>

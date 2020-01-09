@@ -97,7 +97,7 @@
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">工单数量</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Quantity.$invalid }">
-                            <input type="number" ng-disabled="moDialog.Item.IsComplete" name="Quantity" class="form-control" placeholder="数量" ng-model="moDialog.Item.Quantity" required>
+                            <input type="number" ng-disabled="moDialog.Item.IsComplete||moDialog.Item.Status==2" name="Quantity" class="form-control" placeholder="数量" ng-model="moDialog.Item.Quantity" required>
                         </div>
                     </div>
                 </div>
@@ -167,7 +167,7 @@
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">ERP数量</label>
                         <div class="col-sm-8 padder-xs">
-                            <input type="text" name="ERPQuantity" ng-disabled="moDialog.Item.IsComplete" class="form-control" placeholder="ERP数量" ng-model="moDialog.Item.ERPQuantity">
+                            <input type="text" name="ERPQuantity" ng-disabled="moDialog.Item.IsComplete||moDialog.Item.Status==2" class="form-control" placeholder="ERP数量" ng-model="moDialog.Item.ERPQuantity">
                         </div>
                     </div>
                 </div>

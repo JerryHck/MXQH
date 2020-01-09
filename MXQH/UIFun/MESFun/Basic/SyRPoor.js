@@ -154,8 +154,6 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     //保存顶级分类
     function SaveTopType(flag) {
         vm.IsAddTop = flag;
-        console.log(vm.ItemData);
-        console.log(vm.NewTopType);
         vm.ItemData.TopType = vm.NewTopType.TopType;
         vm.ItemData.Layer = undefined;
     }
