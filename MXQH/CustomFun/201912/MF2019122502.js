@@ -89,6 +89,12 @@ function ($rootScope, Dialog, $scope, $http, AjaxService, toastr, $window, $filt
         if (end) {
             list.push({ name: "CreateDate", value: end, type: '<=' });
         }
+        if (vm.Ser.SNCode) {
+            list.push({ name: "SNCode", value: '%' + vm.Ser.SNCode + '%' });
+        }
+        if (vm.Ser.CreateBy) {
+            list.push({ name: "CreateBy", value: vm.Ser.CreateBy });
+        }
         return list;
     }
     function GetContition2() {
@@ -105,8 +111,8 @@ function ($rootScope, Dialog, $scope, $http, AjaxService, toastr, $window, $filt
         if (end2) {
             list.push({ name: "ModifyDate", value: end2, type: '<=' });
         }
-        if (vm.Ser.BarCode) {
-            list.push({ name: "BarCode", value: '%' + vm.Ser.BarCode + '%' });
+        if (vm.Ser.BSN) {
+            list.push({ name: "BSN", value: '%' + vm.Ser.BSN + '%' });
         }
         if (vm.Ser.ModifyBy) {
             list.push({ name: "ModifyBy", value: '%' + vm.Ser.ModifyBy + '%' });
