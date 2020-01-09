@@ -20,9 +20,9 @@
                             <label class="col-lg-3 control-label">工艺流程</label>
                             <div class="col-lg-8" ng-class="{ 'has-error' : woHH.OrderForm.router.$invalid }">
                                 <ui-select name="router" ng-model="woHH.RoutingData" theme="bootstrap" search-enabled="true" ng-required="true">
-                                    <ui-select-match placeholder="选择工艺..." class="h6">{{ $select.selected.RoutingName }}</ui-select-match>
+                                    <ui-select-match placeholder="选择工艺..." class="h6">{{ $select.selected.RouteName }}</ui-select-match>
                                     <ui-select-choices repeat="item in woHH.RoutingList | filter: $select.search track by item.ID">
-                                        <div ng-bind-html="item.RoutingName | highlight: $select.search"></div>
+                                        <div ng-bind-html="item.RouteName | highlight: $select.search"></div>
                                     </ui-select-choices>
                                 </ui-select>
                             </div>

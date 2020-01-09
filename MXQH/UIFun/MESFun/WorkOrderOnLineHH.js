@@ -197,7 +197,7 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
     //不良
     function NgSave() {
         var e = {};
-        e.RoutingName = vm.RoutingData.RoutingName;//工艺流程
+        e.RouteName = vm.RoutingData.RouteName;//工艺流程
         e.ProcedureName = vm.RoutingData.ProcedureName;//当前工序
         e.MaterialName = vm.OrderData.MaterialName;//产品名称
         e.MaterialCode = vm.OrderData.MaterialCode;//产品编号
