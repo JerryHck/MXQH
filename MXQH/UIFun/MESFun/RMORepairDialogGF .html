@@ -155,17 +155,8 @@
                             </label>
                         </div>
                     </div>
-                    <div class="col-md-6 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">维修备注：</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.PoorReason.$invalid }">
-                            <textarea class="form-control" rows="1" name="PoorReason" ng-model="rep.PoorReason" placeholder="输入备注信息"></textarea>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-md-6 padder-xs">
-                    <label class="control-label col-sm-4 padder-xs">是否更换主板:</label>
-                    <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Motherboard.$invalid }">
+                    <div class="col-sm-6 padder-xs" ng-class="{ 'has-error' : DialogForm.Motherboard.$invalid }">
+                        <label class="control-label col-sm-4 padder-xs">是否更换主板:</label>
                         <div class="input-group">
                             <input type="text" ng-keyup="rep.AddMotherboard($event)" name="Motherboard" class="col-sm-6 padder-xs form-control" placeholder="是否更换主板" ng-model="rep.Motherboard" ng-disabled="!rep.IsMotherboard">
                             <span class="input-group-addon">
@@ -176,7 +167,14 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="form-group-xs col-md-12">
+                        <div class="col-md-12 padder-xs">
+                            <label class="control-label col-sm-2 padder-xs">维修备注：</label>
+                            <div class="col-sm-10 padder-xs" ng-class="{ 'has-error' : DialogForm.PoorReason.$invalid }">
+                                <textarea class="form-control" rows="3" name="PoorReason" ng-model="rep.PoorReason" placeholder="输入备注信息" ng-required="true"></textarea>
+                            </div>
+                        </div>
+                </div>
         </div>
     </div>
 </div>
