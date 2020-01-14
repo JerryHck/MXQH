@@ -21,9 +21,12 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window,Form) {
         PageChange();
     }
 
-    function PageChange() {        
+    function PageChange() {
+        // vm.promise=AjaxService.ExecPlan("CompleteRpt")
+        vm.promise = AjaxService.ExecPlan("U9MoCompleteRpt", "GetQty", { WorkOrder: vm.Ser.WorkOrder }).then(function (data) {
+            vm.ActualRcvQty = data.data[0].ActualRcvQty;
+        })
         vm.promise = AjaxService.ExecPlan("CompleteRpt", "Report", vm.Ser).then(function (data) {
-            console.log(data);
             if (data.data.length>0) {
                 vm.Detail = data.data[0];
                 if (data.data1) {

@@ -143,7 +143,7 @@
                                 <option ng-selected="x.ID==moDialog.Item.SendPlaceID" ng-repeat="x in moDialog.Places" value="{{x.ID}}">{{x.Name}}</option>
                             </select>-->
                             <div class="py-xl-0 pt-xl-0" ng-class="{ 'input-group' : clear }">
-                                <ui-select ng-model="moDialog.Item.SendPlaceID" ng-change="ValueChange()" theme="bootstrap" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">
+                                <ui-select ng-model="moDialog.Item.SendPlaceID" ng-change="ValueChange()" theme="bootstrap" ng-class="{'has-error': DialogForm.SendPlaceID.$invalid }" ng-disabled="ngDisabled" name="SendPlaceID" required>
                                     <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>
                                     <ui-select-choices repeat="item.ID as item in moDialog.Places | filter: $select.search" refresh="refresh($select.search)">
                                         <div ng-bind-html="item.Name | highlight: $select.search"></div>
