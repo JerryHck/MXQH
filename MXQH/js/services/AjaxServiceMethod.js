@@ -46,6 +46,8 @@
             PlanBak: PlanBak,
             //执行计划实体
             ExecPlan: ExecPlan,
+            //执行计划实体-同步方式
+            ExecPlanWait: ExecPlanWait,
             //执行存储过程， 获取分页数据
             ExecPlanPage:ExecPlanPage,
             //执行实体关联的存储过程,获取Excel文件
@@ -93,8 +95,10 @@
 
             //Server Socket
             GetServerTime: GetServerTime,
-            GetServerSocket: GetServerSocket
+            GetServerSocket: GetServerSocket,
 
+            //休眠
+            sleep:sleep
 
         };
         var conect = 0;
@@ -260,6 +264,15 @@
             var en = getEn(name, shortName, json);
             return Ajax(d, url, en, "ExecPlan");
         }
+
+
+        //执行计划资料-同步
+        function ExecPlanWait(name, shortName, json) {
+            var url = serviceUrl + generic;
+            var en = getEn(name, shortName, json);
+            return AjaxWait(url, en, "ExecPlan")
+        }
+
 
         function ExecPlanMail(name, shortName, json) {
             var d = $q.defer(), url = serviceUrl + generic;

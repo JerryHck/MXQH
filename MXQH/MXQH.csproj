@@ -247,6 +247,8 @@
     <Content Include="UIFun\MESFun\PackageActPower.js" />
     <Content Include="UIFun\MESFun\Print\BodyLabelPrint.html" />
     <Content Include="UIFun\MESFun\Print\BodyLabelPrint.js" />
+    <Content Include="UIFun\MESFun\Quality\AQLCheckPara.html" />
+    <Content Include="UIFun\MESFun\Quality\AQLCheckPara.js" />
     <Content Include="UIFun\MESFun\Quality\QualityTemplate.html" />
     <Content Include="UIFun\MESFun\Quality\QualityTemplate.js" />
     <Content Include="UIFun\MESFun\Quality\QualityTemplateDialog.html" />

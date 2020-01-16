@@ -1,6 +1,13 @@
 ﻿<div cg-busy="file.promise">
     <div class="wrapper"></div>
     <div class="row">
+        <input type="file" accept="image/*" capture="camera">
+        <input type="file" accept="video/*" capture="camcorder">
+        <input type="file" accept="audio/*" capture="microphone">
+        <!--input:file标签还有一个属性multiple 用来支持多选 直接呼出原生选项-->
+        <input type="file" accept="image/*" multiple>
+    </div>
+    <div class="row">
         <div class="col-md-4">
             <div id="file1" import-sheet-js file-type=".xls,.xlsx" opts="file.FileData" ng-model="name" ng-complete="file.Do()"></div>
         </div>

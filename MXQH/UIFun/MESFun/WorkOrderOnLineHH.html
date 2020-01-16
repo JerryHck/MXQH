@@ -134,6 +134,16 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="control-label col-sm-2">U9开工数量:</label>
+                            <div class="col-sm-4">
+                                <p class="form-control-static font-bold h4 text-danger">{{woHH.OrderData.TotalStartQty}}</p>
+                            </div>
+                            <label class="control-label col-sm-2">最大可投量:</label>
+                            <div class="col-sm-4">
+                                <p class="form-control-static font-bold  h4 text-success">{{woHH.OrderData.MaxOverCount}}</p>
+                            </div>
+                        </div>
+                        <!--<div class="form-group">
                             <label class="control-label col-sm-2 padder-xs">最大可投量:</label>
                             <div class="col-sm-4 padder-xs">
                                 <p class="form-control-static font-bold  h4 text-success">{{woHH.OrderData.MaxOverCount}}</p>
@@ -142,11 +152,11 @@
                             <div class="col-sm-4 padder-xs">
                                 <p class="form-control-static font-bold  h4 text-success">{{woHH.RoutingData.LowerFPY}}%</p>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="form-group">
                             <label class="control-label col-sm-2 padder-xs">已总投入:</label>
                             <div class="col-sm-4  padder-xs">
-                                <p class="form-control-static font-bold  h4 text-success">{{wo.OrderCount.ToTalCount}}</p>
+                                <p class="form-control-static font-bold  h4 text-success">{{woHH.OrderCount.ToTalCount}}</p>
                             </div>
                             <label class="control-label col-sm-2  padder-xs">今日投入:</label>
                             <div class="col-sm-4">
