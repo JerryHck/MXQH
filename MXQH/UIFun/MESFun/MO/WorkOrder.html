@@ -100,6 +100,7 @@
                     <td ng-if="item.IsPack!=1" title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
                     <td ng-if="item.Status==0">开立</td>
                     <td ng-if="item.Status==2">开工</td>
+                    <td ng-if="item.Status==3">返工</td>
                     <td ng-if="item.Status==4" >完工</td>
                     <td ng-if="item.TemplateCount!=0" title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
                     <td ng-if="item.TemplateCount==0" class="bg-warning" title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
