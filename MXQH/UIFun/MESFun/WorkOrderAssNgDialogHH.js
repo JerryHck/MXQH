@@ -1,9 +1,9 @@
 ﻿'use strict';
 angular.module('app').controller('WorkOrderAssNgDialogHHCtrl', WorkOrderAssNgDialogHHCtrl);
 
-WorkOrderAssNgDialogHHCtrl.$inject = ['$rootScope', '$scope', '$uibModalInstance', 'Form', 'ItemData', 'toastr', 'AjaxService'];
+WorkOrderAssNgDialogHHCtrl.$inject = ['$scope', '$uibModalInstance', 'Form', 'ItemData', 'toastr', 'AjaxService'];
 
-function WorkOrderAssNgDialogHHCtrl($rootScope, $scope, $uibModalInstance, Form, ItemData, toastr, AjaxService) {
+function WorkOrderAssNgDialogHHCtrl($scope, $uibModalInstance, Form, ItemData, toastr, AjaxService) {
     var vm = this;
     vm.form = Form[ItemData.SysNo ? 1 : 0];
     vm.Item = ItemData;

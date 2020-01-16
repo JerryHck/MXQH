@@ -171,17 +171,16 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             vm.SelectedRo.Procedure.splice(index, 1);
         }
         else {
-            var en = [{ name: "RoutingID", value: vm.SelectedRo.ID },
-                { name: "MaterialID", value: vm.SelectetMate.Id },
-                { name: "Status", value: 4, type: "!=" }];
-            AjaxService.GetPlan("MESPlanExMain", en).then(function (data) {
-                if (data.ID) {
-                    toastr.error("工艺正在生产，无法删除流程");
-                }
-                else {
-                    vm.SelectedRo.Procedure.splice(index, 1);
-                }
-            })
+            vm.SelectedRo.Procedure.splice(index, 1);
+            //var en = [{ name: "RouteID", value: vm.SelectedRo.ID }];
+            //AjaxService.GetPlan("MESRouteMate", en).then(function (data) {
+            //    if (data.ID) {
+            //        toastr.error("工艺正在生产，无法删除流程");
+            //    }
+            //    else {
+            //        vm.SelectedRo.Procedure.splice(index, 1);
+            //    }
+            //})
         }
     }
 
