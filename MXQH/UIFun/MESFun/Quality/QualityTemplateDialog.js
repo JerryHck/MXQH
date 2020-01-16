@@ -8,7 +8,6 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     vm.Cancel = Cancel;
     Init();
     function Init() {
-        console.log(vm.Item);
         if (!vm.Item.OrderNo) {
             vm.Item.OrderNo = 0;
         }

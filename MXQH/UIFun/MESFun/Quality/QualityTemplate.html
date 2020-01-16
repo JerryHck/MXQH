@@ -32,7 +32,7 @@
                                             <span>{{ item.Code }}({{ item.Name }})</span>
                                         </small>
                                         <div class="clear ml-3 text-info">
-                                            <btn class="pull-right text-danger"  ng-confirm="{text:'确定要删除此模板？'}"  title="删除模板" ng-click="qtsc.Delete(item.ID)"><i class="fa fa-remove"></i></btn>
+                                            <btn class="pull-right text-danger" ng-confirm="{text:'确定要删除此模板？'}" title="删除模板" ng-click="qtsc.Delete(item.ID)"><i class="fa fa-remove"></i></btn>
                                             <btn class="pull-right text-primary" title="编辑" ng-click="qtsc.Edit(item)"><i class="fa fa-edit"></i></btn>
                                         </div>
                                     </a>
@@ -73,9 +73,9 @@
                                                 <button class="btn btn-xs btn-primary" ng-click="qtsc.EditDetail(item)"><i class="glyphicon glyphicon-edit"></i></button>
                                                 <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除此分类以及下阶所有数据吗'}" ng-click="qtsc.DeleteDetail(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>
                                             </td>
-                                            <td>{{ item.Code }}</td>
-                                            <td>{{ item.text }}</td>
-                                            <td>{{ item.Layer }}</td>
+                                            <td>{{ item.PropertyCode }}</td>
+                                            <td>{{ item.PropertyName }}</td>
+                                            <td>{{ item.OrderNo }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -109,28 +109,52 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-2">模板编码</label>
-                        <div class="col-md-4" >
+                        <div class="col-md-4">
                             <input type="text" name="Code" disabled="disabled" ng-model="qtsc.SelectedTemplate.Code" class="form-control" />
                         </div>
                         <label class="control-label col-md-2">模板名称</label>
-                        <div class="col-md-4" >
+                        <div class="col-md-4">
                             <input type="text" name="text" disabled="disabled" ng-model="qtsc.SelectedTemplate.Name" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-2">编码</label>
-                        <div class="col-md-4" ng-class="{ 'has-error' : DialogForm.Code.$invalid }">
-                            <input type="text" name="Code" ng-model="qtsc.ItemData.Code" class="form-control" required />
+                        <label class="control-label col-sm-2">检验大项</label>
+                        <div class="col-sm-4">
+                            <div class="py-xl-0 pt-xl-0" ng-class="{ 'input-group' : clear }">
+                                <ui-select ng-model="qtsc.TopLevel" ng-change="qtsc.ValueChange()" theme="bootstrap" ng-class="{'has-error': DialogForm.text.$invalid }" ng-disabled="ngDisabled" name="text" required>
+                                    <ui-select-match placeholder="检验大项">{{ $select.selected.text }}</ui-select-match>
+                                    <ui-select-choices repeat="item.ID as item in qtsc.TopLevels | filter: $select.search" refresh="refresh($select.search)">
+                                        <div ng-bind-html="item.text | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-btn" ng-if="clear">
+                                    <button ng-click="$parent.ngModel= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+                                        <span class="glyphicon glyphicon-trash text-danger"></span>
+                                    </button>
+                                </span>
+                            </div>
                         </div>
-                        <label class="control-label col-md-2">名称</label>
-                        <div class="col-md-4" ng-class="{ 'has-error' : DialogForm.text.$invalid }">
-                            <input type="text" name="text" ng-model="qtsc.ItemData.text" class="form-control" required />
+                        <label class="control-label col-sm-2">检验项</label>
+                        <div class="col-sm-4">
+                            <div class="py-xl-0 pt-xl-0" ng-class="{ 'input-group' : clear }">
+                                <ui-select ng-model="qtsc.Detail.PropertyID" ng-change="ValueChange()" theme="bootstrap" ng-class="{'has-error': DialogForm.TestItem.$invalid }" ng-disabled="ngDisabled" name="TestItem" required>
+                                    <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.text }}</ui-select-match>
+                                    <ui-select-choices repeat="item.ID as item in qtsc.TestItems | filter: $select.search" refresh="refresh($select.search)">
+                                        <div ng-bind-html="item.text | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-btn" ng-if="clear">
+                                    <button ng-click="$parent.ngModel= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+                                        <span class="glyphicon glyphicon-trash text-danger"></span>
+                                    </button>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-2">排序</label>
                         <div class="col-md-4" ng-class="{ 'has-error' : DialogForm.OrderNo.$invalid }">
-                            <input type="number" name="OrderNo" ng-model="qtsc.ItemData.OrderNo" class="form-control" required />
+                            <input type="number" name="OrderNo" ng-model="qtsc.OrderNo" class="form-control" required />
                         </div>
                     </div>
                 </div>
