@@ -1,18 +1,19 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('AuctusWPOFunCtrl', ['$rootScope', '$scope', 'Dialog', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, Dialog, AjaxService, toastr, $window) {
+.controller('AuctusWPOFunCtrl', ['$rootScope', '$scope', 'Dialog', 'AjaxService', 'toastr', 'MyPop',
+function ($rootScope, $scope, Dialog, AjaxService, toastr, MyPop) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
-    vm.Ser = {};
+    vm.Ser = { State: 0 };
 
     vm.PageChange = PageChange;
     vm.Search = Search;
     vm.Add = Add;
     vm.Edit = Edit;
     vm.Delete = Delete;
+    vm.Finish = Finish;
     Search();
     function Search() {
         vm.page.index = 1;
@@ -27,7 +28,9 @@ function ($rootScope, $scope, Dialog, AjaxService, toastr, $window) {
         if (vm.Ser.MO) {
             list.push({ name: "MO", value: vm.Ser.MO });
         }
-        vm.promise = AjaxService.GetPlansPage("WPOFun", list, vm.page.index, vm.page.size).then(function (data) {
+        list.push({ name: "State", value: vm.Ser.State });
+        
+        vm.promise = AjaxService.GetPlansPage("WPOFunPackNum", list, vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
@@ -39,6 +42,21 @@ function ($rootScope, $scope, Dialog, AjaxService, toastr, $window) {
 
     function Edit(item) {
         Open(item);
+    }
+
+    //完工/返完工
+    function Finish(item, state) {
+        var en = {};
+        en.Id = item.Id;
+        en.State = state;
+        var txt = state == 1 && item.PackCount.HavePackNum < item.AucPOQty ? "该工单还未包装完成， 是否确定要强制完工?" :
+              (state == 1 ? "确定要完工吗?" : "确定要返工吗?");
+        MyPop.ngConfirm({ text: txt }).then(function (data) {
+            AjaxService.PlanUpdate("WPOFun", en).then(function (data) {
+                toastr.success('储存成功');
+                Search();
+            });
+        });
     }
 
     function Delete(item) {

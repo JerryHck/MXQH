@@ -1,55 +1,68 @@
 ﻿<div class="modal-header">
-    <h3 class="modal-title">QC不良采集</h3>
+    <!--<div class="row">
+        <div class="col-md-3 text-info h4">组装不良采集</div>
+        <div class="col-md-3">
+            <label class="control-label col-md-4 wrapper-xs">内控码:</label>
+            <div class="col-md-8 wrapper-xs">
+                <span class="h4 font-bold text-info form-control-static">{{ wo.Item.InCode }}</span>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
+    </div>-->
+    <h5 class="modal-title">组装不良采集</h5>
 </div>
 <div class="modal-body wrapper-xs" ng-form="QcForm">
     <div class="panel panel-default">
         <div class="panel-body wrapper-xs">
             <div class="form-horizontal">
-                <div class="form-group col-md-6">
-                    <label class="control-label col-md-4 wrapper-xs">内控码:</label>
-                    <div class="col-md-8 wrapper-xs">
-                        <span class="h4 font-bold text-info form-control-static">{{ wo.Item.InCode }}</span>
+                <div class="form-group-xs padder-xxs">
+                    <div class="col-md-3 no-padder">
+                        <label class="control-label col-md-4 wrapper-xs">内控码:</label>
+                        <div class="col-md-8 wrapper-xs">
+                            <span class="h4 font-bold text-info form-control-static">{{ wo.Item.InCode }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 no-padder">
+                        <label class="control-label col-md-4 wrapper-xs">工单:</label>
+                        <div class="col-md-8 wrapper-xs">
+                            <span class="form-control-static">{{ wo.Item.OrderData.WorkOrder }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-5 no-padder">
+                        <label class="control-label col-md-4 wrapper-xs">当前工艺:</label>
+                        <div class="col-md-8 wrapper-xs">
+                            <span class="form-control-static  text-success font-bold">{{ wo.Item.ProcedureItem.RouteName }}</span>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group col-md-6">
-                    <label class="control-label col-md-4 wrapper-xs">产品编号:</label>
-                    <div class="col-md-8 wrapper-xs">
-                        <span class="h4 font-bold text-info  form-control-static">{{ wo.Item.OrderData.MaterialCode }}</span>
+                <div class="form-group-xs padder-xxs">
+                    <div class="col-md-3 no-padder">
+                        <label class="control-label col-md-4 wrapper-xs">产品编号:</label>
+                        <div class="col-md-8 wrapper-xs">
+                            <span class="h4 font-bold text-info  form-control-static">{{ wo.Item.OrderData.MaterialCode }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 no-padder">
+                        <label class="control-label col-md-4 wrapper-xs">产品名称:</label>
+                        <div class="col-md-8 wrapper-xs">
+                            <span class="form-control-static">{{ wo.Item.OrderData.MaterialName }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-5 no-padder">
+                        <label class="control-label col-md-4 wrapper-xs">当前工序:</label>
+                        <div class="col-md-8 wrapper-xs">
+                            <span class="form-control-static text-success font-bold">{{ wo.Item.ProcedureItem.ProcedureName }}</span>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group col-md-6">
-                    <label class="control-label col-md-4 wrapper-xs">工单:</label>
-                    <div class="col-md-8 wrapper-xs">
-                        <span class="form-control-static">{{ wo.Item.OrderData.WorkOrder }}</span>
-                    </div>
-                </div>
-                <div class="col-md-6 form-group">
-                    <label class="control-label col-md-4 wrapper-xs">产品名称:</label>
-                    <div class="col-md-8 wrapper-xs">
-                        <span class="form-control-static">{{ wo.Item.OrderData.MaterialName }}</span>
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    <label class="control-label col-md-4 wrapper-xs">当前工艺:</label>
-                    <div class="col-md-8 wrapper-xs">
-                        <span class="form-control-static  text-success font-bold">{{ wo.Item.ProcedureItem.RouteName }}</span>
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    <label class="control-label col-md-4 wrapper-xs">当前工序:</label>
-                    <div class="col-md-8 wrapper-xs">
-                        <span class="form-control-static text-success font-bold">{{ wo.Item.ProcedureItem.ProcedureName }}</span>
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    <!--<div class="col-md-6">-->
+                <!--<div class="form-group col-md-6">
                     <label class="control-label col-md-4 wrapper-xs">不良种类:</label>
                     <div class="col-md-8" ng-class="{ 'has-error' : QcForm.ngType.$invalid }">
                         <ui-select name="ngType" ng-model="wo.DialogItem.NgType" theme="bootstrap" required ng-change="wo.ChangeMonitor()">
                             <ui-select-match placeholder="选择不良种类...">{{ $select.selected.Name }}</ui-select-match>
                             <ui-select-choices repeat="item.ID as item in wo.TypeList | filter: $select.search">
                                 <div ng-bind-html="item.Name | highlight: $select.search"></div>
-                                <!--<small ng-bind-html="item.Name | highlight: $select.search"></small>-->
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -61,7 +74,6 @@
                             <ui-select-match placeholder="选择不良信息...">{{ $select.selected.Name }}</ui-select-match>
                             <ui-select-choices repeat="item.ID as item in wo.QpoorList | filter: $select.search">
                                 <div ng-bind-html="item.Name | highlight: $select.search"></div>
-                                <!--<small ng-bind-html="item.Name | highlight: $select.search"></small>-->
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -71,8 +83,38 @@
                     <div class="col-md-10">
                         <textarea class="form-control" rows="3" name="Reason" maxlength="255" ng-model="wo.DialogItem.Reason" placeholder="输入不良原因"></textarea>
                     </div>
+                </div>-->
+            </div>
+
+            <div class="col-md-12 padder-xs">
+                <div class="panel panel-default">
+                    <!--<div class="panel-heading">
+                        不良种类
+                    </div>-->
+                    <div class="panel-body scroll-y padder-xs" style="max-height:350px">
+                        <div class="col-md-4 m-t-xs padder-xs" ng-repeat="item in wo.TypeList">
+                            <button class="btn-group-vertical btn-lg w-full btn-primary" 
+                                    ng-click="wo.DialogItem.NgType=item.ID;
+                                    wo.ChangeMonitor()" 
+                                    ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1, 'btn-success':wo.DialogItem.NgType==item.ID}">{{ item.Name }}</button>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <!--<div class="col-md-3 padder-xs">
+                <div class="panel panel-default">
+                    <div class="panel-body scroll-y padder-xs" style="max-height:350px">
+                        <div class="col-md-12 m-t-xs" ng-repeat="item in wo.QpoorList">
+                            <button class="btn-group-vertical btn-lg w-full btn-primary"
+                                    ng-click="wo.DialogItem.Ng=item.ID" 
+                                    ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1, 
+                                    'btn-success':wo.DialogItem.Ng==item.ID}">
+                                {{ item.Name }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
         </div>
     </div>
 </div>
@@ -82,4 +124,4 @@
         <button class="btn btn-warning" type="button" ng-click="wo.cancel()">取消</button>
     </div>
 </div>
-<!--<pre>{{ wo.Item | json }}</pre>-->
+<!--<pre>{{ wo.DialogItem | json }}</pre>-->

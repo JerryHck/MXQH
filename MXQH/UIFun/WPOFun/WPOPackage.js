@@ -113,6 +113,7 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
                 vm.OrderData = data.data[0];
                 vm.Item.PackNum = parseInt(vm.OrderData.PackNum);
                 vm.Item.NoPackQty = vm.OrderData.AucPOQty - (data.data1[0] && data.data1[0].HavePackQty ? data.data1[0].HavePackQty : 0);
+                vm.Item.NoPackQty = vm.Item.NoPackQty < 0 ? 0 : vm.Item.NoPackQty;
             }
         })
     }
@@ -120,57 +121,71 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
     function KeyDonwSnCode(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.Item.BSN) {
-            vm.StaticBSN = angular.copy(vm.Item.BSN);
-            var en = {};
-            en.PackId = vm.PackId;
-            en.MOId = vm.MOId;
-            en.BSN = vm.Item.BSN;
-            en.UserNo = $rootScope.User.UserNo;
-            en.PackNum = vm.Item.PackNum;
-            en.VenderSn = $rootScope.User.OrgSn;
-            en.Remark = vm.Item.Remark;          
-
-            AjaxService.ExecPlan("WPOPackage", 'pack', en).then(function (data) {
-                vm.Item.BSN = undefined;
-                var msg = data.data[0];
-                if (msg.MsgType == 'success') {
-                    //
-                    vm.SNList = data.data1;
-                    //toastr.error(mes);
-                    showMsg(msg.Msg, true);
-                    var parkid = data.data2[0].PackId;
-                    vm.PrintPackId = data.data2[0].OriPackId;
-                    //判断打印,包装完成需要打印
-                    if (parkid == -1) {
-                        MyPop.ngConfirm({ text: "包装箱已经完成，是否要打印标签" }).then(function () {
-                            //打印
-                            PrintCode(vm.PrintPackId);
-                        })
-                        vm.NumIndex = 0;
-                        vm.Package = undefined;
-                        GetNoPackList();
-                    }
-                    else {
-                        vm.NumIndex++
-                        if (vm.NumIndex == vm.NoticeNum) {
-                            AjaxService.PlayVoice('5611.mp3');
-                            MyPop.ngConfirm({ text: "已经扫描了" + vm.NumIndex + "个" });
-                            vm.NumIndex = 0;
-                        }
-                    }
-                    vm.PackId = angular.copy(data.data2[0].PackId);
-                    //更新计数
-                    AjaxService.ExecPlan("WPOFun", 'order', { Id: vm.MOId }).then(function (data) {
-                        if (data.data[0]) {
-                            vm.Item.NoPackQty = vm.OrderData.AucPOQty - (data.data1[0] && data.data1[0].HavePackQty ? data.data1[0].HavePackQty : 0);
-                        }
-                    })
-                }
-                else if (msg.MsgType == 'fail') {
-                    showMsg(msg.Msg, false);
-                }
-            });
+            console.log(vm.Item.NoPackQty)
+            //超包装处理
+            if (vm.Item.NoPackQty <= 0) {
+                MyPop.ngConfirm({ text: "该工单已经包装完所有数量，是否继续以赠品方式继续包装?" }).then(function (data) {
+                    PackInCode();
+                });
+            }
+            else {
+                PackInCode();
+            }
         }
+    }
+
+    function PackInCode() {
+        vm.StaticBSN = angular.copy(vm.Item.BSN);
+        var en = {};
+        en.PackId = vm.PackId;
+        en.MOId = vm.MOId;
+        en.BSN = vm.Item.BSN;
+        en.UserNo = $rootScope.User.UserNo;
+        en.PackNum = vm.Item.PackNum;
+        en.VenderSn = $rootScope.User.OrgSn;
+        en.Remark = vm.Item.Remark;
+
+        AjaxService.ExecPlan("WPOPackage", 'pack', en).then(function (data) {
+            vm.Item.BSN = undefined;
+            var msg = data.data[0];
+            if (msg.MsgType == 'success') {
+                //
+                vm.SNList = data.data1;
+                //toastr.error(mes);
+                showMsg(msg.Msg, true);
+                var parkid = data.data2[0].PackId;
+                vm.PrintPackId = data.data2[0].OriPackId;
+                //判断打印,包装完成需要打印
+                if (parkid == -1) {
+                    MyPop.ngConfirm({ text: "包装箱已经完成，是否要打印标签" }).then(function () {
+                        //打印
+                        PrintCode(vm.PrintPackId);
+                    })
+                    vm.NumIndex = 0;
+                    vm.Package = undefined;
+                    GetNoPackList();
+                }
+                else {
+                    vm.NumIndex++
+                    if (vm.NumIndex == vm.NoticeNum) {
+                        AjaxService.PlayVoice('5611.mp3');
+                        MyPop.ngConfirm({ text: "已经扫描了" + vm.NumIndex + "个" });
+                        vm.NumIndex = 0;
+                    }
+                }
+                vm.PackId = angular.copy(data.data2[0].PackId);
+                //更新计数
+                AjaxService.ExecPlan("WPOFun", 'order', { Id: vm.MOId }).then(function (data) {
+                    if (data.data[0]) {
+                        vm.Item.NoPackQty = vm.OrderData.AucPOQty - (data.data1[0] && data.data1[0].HavePackQty ? data.data1[0].HavePackQty : 0);
+                        vm.Item.NoPackQty = vm.Item.NoPackQty < 0 ? 0 : vm.Item.NoPackQty;
+                    }
+                })
+            }
+            else if (msg.MsgType == 'fail') {
+                showMsg(msg.Msg, false);
+            }
+        });
     }
 
     function KeyDonwPackSn(e) {
@@ -193,9 +208,8 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
                     return;
                 }
                 var postData = {}, list = [];
-                list.push();
                 postData.ParaData = JSON.stringify(data);
-                postData.OutList = JSON.stringify(list);
+                postData.OutList = list;
 
                 AjaxService.Print(data.TemplateId, data.TemplateVersion, postData, vm.PrinterName).then(function (data) {
                     console.log(data);
@@ -258,7 +272,7 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
             var postData = {}, list = [];
             list.push();
             postData.ParaData = JSON.stringify(data);
-            postData.OutList = JSON.stringify(list);
+            postData.OutList = list;
 
             AjaxService.Print(data.TemplateId, data.TemplateVersion, postData, vm.PrinterName).then(function (data) {
                 console.log(data);
@@ -296,7 +310,7 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
     }
 
     function DownExe() {
-        $window.location.href = FileUrl + "DownLoad/打印插件.exe";
+        $window.location.href = FileUrl + "DownLoad/打印插件4.0.exe";
     }
 
     function DownNet() {

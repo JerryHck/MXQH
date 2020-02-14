@@ -25,15 +25,19 @@ function WorkOrderAssNgDialogCtrl($rootScope, $scope, $uibModalInstance, Form, I
 
     //储存
     vm.Save = function () {
+        if (!vm.DialogItem || !vm.DialogItem.NgType) {
+            toastr.error("还没有选择不良项");
+            return;
+        }
+
         var en = {};
         en.InternalCode = vm.Item.InCode;
         en.ProcedureID = vm.Item.ProcedureItem.boProcedureID;
         en.FirstPoor = vm.DialogItem.NgType;
-        en.SecondPoor = vm.DialogItem.Ng;
+        en.SecondPoor = vm.DialogItem.Ng || 0;
         en.ThridPoor = 0;
         en.PoorReason = vm.DialogItem.Reason;
         en.CreateBy = $rootScope.User.UserNo;
-
         console.log(en);
 
         vm.promise = AjaxService.ExecPlan("MesMxWOrder", "saveNg", en).then(function (data) {

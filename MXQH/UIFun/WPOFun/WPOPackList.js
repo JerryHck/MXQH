@@ -6,8 +6,8 @@ function ($rootScope, $scope, Dialog, AjaxService, toastr, $window) {
 
     var vm = this;
     vm.page = { index: 1, size: 10 };
-    vm.StateList = [{ State: undefined, Name: '全选' }, { State: 0, Name: '包装中' }, { State: 1, Name: '已包装' }, { State: 2, Name: '拆包中' }];
-    vm.Ser = {};
+    vm.StateList = [{ State: 0, Name: '包装中' }, { State: 1, Name: '已包装' }, { State: 2, Name: '拆包中' }];
+    vm.Ser = { State: 0 };
 
     vm.PageChange = PageChange;
     vm.Search = Search;
