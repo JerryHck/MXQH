@@ -12,10 +12,10 @@
     </div>-->
     <h5 class="modal-title">组装不良采集</h5>
 </div>
-<div class="modal-body wrapper-xs" ng-form="QcForm">
+<div class="modal-body wrapper-xs padder-v-xxs" ng-form="QcForm">
     <div class="panel panel-default">
-        <div class="panel-body wrapper-xs">
-            <div class="form-horizontal">
+        <div class="panel-body wrapper-xs padder-v-xxs">
+            <!--<div class="form-horizontal">
                 <div class="form-group-xs padder-xxs">
                     <div class="col-md-3 no-padder">
                         <label class="control-label col-md-4 wrapper-xs">内控码:</label>
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="form-group col-md-6">
+                <div class="form-group col-md-6">
                     <label class="control-label col-md-4 wrapper-xs">不良种类:</label>
                     <div class="col-md-8" ng-class="{ 'has-error' : QcForm.ngType.$invalid }">
                         <ui-select name="ngType" ng-model="wo.DialogItem.NgType" theme="bootstrap" required ng-change="wo.ChangeMonitor()">
@@ -83,20 +83,22 @@
                     <div class="col-md-10">
                         <textarea class="form-control" rows="3" name="Reason" maxlength="255" ng-model="wo.DialogItem.Reason" placeholder="输入不良原因"></textarea>
                     </div>
-                </div>-->
-            </div>
+                </div>
+            </div>-->
 
-            <div class="col-md-12 padder-xs">
+            <div class="col-md-12 no-padder">
                 <div class="panel panel-default">
                     <!--<div class="panel-heading">
                         不良种类
                     </div>-->
-                    <div class="panel-body scroll-y padder-xs" style="max-height:350px">
-                        <div class="col-md-4 m-t-xs padder-xs" ng-repeat="item in wo.TypeList">
-                            <button class="btn-group-vertical btn-lg w-full btn-primary" 
+                    <div class="panel-body scroll-y padder-xs padder-v-xs" style="max-height:600px">
+                        <div class="col-md-4 m-t-xs padder-md" ng-repeat="item in wo.TypeList">
+                            <button style="height:100px" class="btn-group-vertical h2 btn-lg w-full btn-primary"
                                     ng-click="wo.DialogItem.NgType=item.ID;
-                                    wo.ChangeMonitor()" 
-                                    ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1, 'btn-success':wo.DialogItem.NgType==item.ID}">{{ item.Name }}</button>
+                                    wo.ChangeMonitor()"
+                                    ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1, 'btn-success':wo.DialogItem.NgType==item.ID}">
+                                <span class="h1">{{ item.Name }}</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -120,8 +122,8 @@
 </div>
 <div class="modal-footer">
     <div class="col-md-12 text-center">
-        <button class="btn btn-success" type="button" ng-disabled="QcForm.$invalid" ng-click="wo.Save()">储存</button>
-        <button class="btn btn-warning" type="button" ng-click="wo.cancel()">取消</button>
+        <!--<button style="height:60px" class="btn btn-lg btn-success" type="button" ng-disabled="QcForm.$invalid" ng-click="wo.Save()">储存</button>-->
+        <button style="height:70px; width:200px" class="btn btn-lg btn-warning h2" type="button" ng-click="wo.cancel()">关闭</button>
     </div>
 </div>
 <!--<pre>{{ wo.DialogItem | json }}</pre>-->

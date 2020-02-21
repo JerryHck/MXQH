@@ -1,15 +1,16 @@
 ﻿'use strict';
 angular.module('app').controller('WorkOrderAssNgDialogCtrl', WorkOrderAssNgDialogCtrl);
 
-WorkOrderAssNgDialogCtrl.$inject = ['$rootScope', '$scope', '$uibModalInstance', 'Form', 'ItemData', 'toastr', 'AjaxService'];
+WorkOrderAssNgDialogCtrl.$inject = ['$scope', '$uibModalInstance', 'Form', 'ItemData', 'toastr', 'AjaxService', '$rootScope'];
 
-function WorkOrderAssNgDialogCtrl($rootScope, $scope, $uibModalInstance, Form, ItemData, toastr, AjaxService) {
+function WorkOrderAssNgDialogCtrl($scope, $uibModalInstance, Form, ItemData, toastr, AjaxService, $rootScope) {
     var vm = this;
     vm.form = Form[ItemData.SysNo ? 1 : 0];
     vm.Item = ItemData;
     vm.isExists = isExists;
     vm.ChangeMonitor = ChangeMonitor;
-
+    //储存
+    vm.Save = Save;
     //获取组织信息
 
     AjaxService.GetPlans("syQpoor", [{ name: "Layer", value: 1 }, { name: "IsMonitor", value: 1 }]).then(function (data) {
@@ -20,11 +21,12 @@ function WorkOrderAssNgDialogCtrl($rootScope, $scope, $uibModalInstance, Form, I
         vm.DialogItem.Ng = undefined;
         AjaxService.GetPlans("syQpoor", [{ name: "Layer", value: 2 }, { name: "IsMonitor", value: 1 }, { name: "PID", value: vm.DialogItem.NgType }]).then(function (data) {
             vm.QpoorList = data;
+            Save();
         });
     }
 
     //储存
-    vm.Save = function () {
+     function Save () {
         if (!vm.DialogItem || !vm.DialogItem.NgType) {
             toastr.error("还没有选择不良项");
             return;
@@ -37,8 +39,6 @@ function WorkOrderAssNgDialogCtrl($rootScope, $scope, $uibModalInstance, Form, I
         en.SecondPoor = vm.DialogItem.Ng || 0;
         en.ThridPoor = 0;
         en.PoorReason = vm.DialogItem.Reason;
-        en.CreateBy = $rootScope.User.UserNo;
-        console.log(en);
 
         vm.promise = AjaxService.ExecPlan("MesMxWOrder", "saveNg", en).then(function (data) {
             if (data.data[0].MsgType == 'Success') {

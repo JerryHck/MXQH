@@ -39,9 +39,18 @@
                                 </label>
                             </div>
                             <div class="col-md-7">
-                                <span><button type="submit" class="btn btn-sm btn-success" ng-click="wo.InCodeToDb()" ng-disabled="wo.OrderForm.$invalid || wo.IsAuto || !wo.InCodeControl">合格</button></span>
-                                <span class="pl-md-1"><button type="submit" class="btn btn-sm btn-success" ng-click="wo.NgSave()" ng-disabled="wo.OrderForm.$invalid || wo.IsAuto|| !wo.InCodeControl">不良</button></span>
+                                <span><button type="submit" class="btn btn-success" style="width:80px" ng-click="wo.InCodeToDb()" ng-disabled="wo.OrderForm.$invalid || wo.IsAuto || !wo.InCodeControl">合格</button></span>
+                                <span class="pl-md-1"><!--<button type="submit" class="btn btn-sm btn-success" ng-click="wo.NgSave()" ng-disabled="wo.OrderForm.$invalid || wo.IsAuto|| !wo.InCodeControl">不良</button>--></span>
                             </div>
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">不良录入</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control"
+                                   ui-focus="wo.Focus.InCode" name="InCode" ng-model="wo.Item.NgInCode" placeholder="不良条码" ng-keyup="wo.KeyDonwInCodeNg($event)" required>
+                            <div class="h6 text-danger">扫描不良内控码录入不良</div>
                         </div>
                     </div>
                 </div>
