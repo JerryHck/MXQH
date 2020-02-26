@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('SNQCSearchCtrl', ['$scope', '$http', 'AjaxService', 'toastr', '$window',
+.controller('QZSNSearchCtrl', ['$scope', '$http', 'AjaxService', 'toastr', '$window',
 function ($scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
@@ -9,7 +9,7 @@ function ($scope, $http, AjaxService, toastr, $window) {
 
     vm.PageChange = PageChange;
     vm.Search = Search;
-    vm.ExportExcel = ExportExcel;
+    vm.SearchATE = SearchATE;
     vm.KeyDonwSnCode = KeyDonwSnCode;
 
     function Search() {
@@ -24,16 +24,20 @@ function ($scope, $http, AjaxService, toastr, $window) {
     }
 
     function PageChange() {
-        vm.promise = AjaxService.ExecPlan("MESSNCode", "review", vm.Ser).then(function (data) {
+        vm.promise = AjaxService.ExecPlan("QZSaleDeliver", "review", vm.Ser).then(function (data) {
+            var msg = data.data[0];
             vm.Data = data;
+            if (msg.MsgType == 'Error') {
+                toastr.error(msg.Msg);
+                vm.Ser = {}
+            }
         });
 
     }
 
-    function ExportExcel() {
-        vm.promise = AjaxService.GetPlanExcel("MESWPOPIEGateTrans", "bsnreview", vm.Ser).then(function (data) {
-            $window.location.href = data.File;
-        });
+    function SearchATE(item) {
+        vm.SerItem = item;
+        $(".bsn-ate").addClass("active");
     }
 
 }]);

@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('WorkOrderAssemblyCtrl', ['$rootScope', '$scope', 'MyPop', 'AjaxService', 'toastr', '$window', 'Dialog',
-function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
+.controller('WorkOrderAssemblyCtrl', ['$rootScope', '$scope', '$timeout', 'Dialog', 'toastr', 'AjaxService', 'MyPop',
+function ($rootScope, $scope, $timeout, Dialog, toastr, AjaxService, MyPop) {
 
     var vm = this;
     vm.Item = { };
@@ -36,6 +36,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
 
     //不良条码扫描
     function KeyDonwInCodeNg(e) {
+        $scope.$applyAsync(function () { 
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.Item.NgInCode) {
             var en = {};
@@ -55,6 +56,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
                 }
             });
         }
+        });
     }
 
     function showError(mes) {
@@ -137,21 +139,22 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
         en.ProcedureID = vm.ProcedureItem.boProcedureID;
         AjaxService.ExecPlan("MesMxWOrder", "checkNg", en).then(function (data) {
             if (data.data[0].MsgType == 'Success') {
-                //打开窗体 WoAssNgDialog
+                    //打开窗体 WoAssNgDialog
                 var item = { InCode: vm.Item.NgInCode, ProcedureItem: vm.ProcedureItem, OrderData: vm.OrderData };
-                Dialog.OpenDialog("WoAssNgDialog", item).then(function (data) {
-                    ChangePro(vm.ProcedureItem);
-                    vm.Item.InCode = undefined;
-                    vm.InCodeControl = undefined;
-                    vm.Item.NgInCode = undefined;
-                    //console.log(data);
-                }).catch(function (reason) {
-                    //console.log(reason);
-                });
-
+                vm.NgItem = item;
+                $(".bsn-ng").addClass("active");
+                    //Dialog.OpenDialog("WoAssNgDialog", item).then(function (data) {
+                    //    //$scope.$applyAsync();
+                    //    ChangePro(vm.ProcedureItem);
+                    //    vm.Item.InCode = undefined;
+                    //    vm.InCodeControl = undefined;
+                    //    vm.Item.NgInCode = undefined;
+                    //}).catch(function (reason) {
+                    //    vm.Item.NgInCode = undefined
+                    //    //console.log(reason);
+                    //});
             }
             else if (data.data[0].MsgType == 'Error') {
-                console.log(data)
                 showError(data.data[0].Msg);
                 vm.Item.InCode = undefined;
                 vm.Item.NgInCode = undefined;
@@ -159,5 +162,64 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
             }
         })
     }
+
+    //============================================================不良登记
+    //储存
+    vm.BSNngSave = BSNngSave;
+    vm.ChangeMonitor = ChangeMonitor;
+    //获取组织信息
+    function ChangeMonitor() {
+        vm.DialogItem.Ng = undefined;
+        AjaxService.GetPlans("syQpoor", [{ name: "Layer", value: 2 }, { name: "IsMonitor", value: 1 }, { name: "PID", value: vm.DialogItem.NgType }]).then(function (data) {
+            vm.QpoorList = data;
+            BSNngSave();
+        });
+    }
+    AjaxService.GetPlans("syQpoor", [{ name: "Layer", value: 1 }, { name: "IsMonitor", value: 1 }]).then(function (data) {
+        vm.TypeList = data;
+    });
+
+    //储存
+    function BSNngSave() {
+        if (!vm.DialogItem || !vm.DialogItem.NgType) {
+            toastr.error("还没有选择不良项");
+            return;
+        }
+
+        var en = {};
+        en.InternalCode = vm.NgItem.InCode;
+        en.ProcedureID = vm.NgItem.ProcedureItem.boProcedureID;
+        en.FirstPoor = vm.DialogItem.NgType;
+        en.SecondPoor = vm.DialogItem.Ng || 0;
+        en.ThridPoor = 0;
+        en.PoorReason = vm.DialogItem.Reason;
+
+        vm.promise = AjaxService.ExecPlan("MesMxWOrder", "saveNg", en).then(function (data) {
+            if (data.data[0].MsgType == 'Success') {
+                toastr.success('储存成功');
+                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: "编码[" + en.InternalCode + "]录入不良成功" });
+                //$uibModalInstance.close(en);
+            }
+            else if (data.data[0].MsgType == 'Error') {
+                showError(data.data[0].Msg);
+                toastr.error(data.data[0].Msg);
+            }
+            ChangePro(vm.ProcedureItem);
+            vm.Item.InCode = undefined;
+            vm.InCodeControl = undefined;
+            vm.Item.NgInCode = undefined;
+            vm.DialogItem.NgType = undefined;
+            $(".bsn-ng").removeClass("active");
+        })
+    };
+
+    //取消
+    vm.cancel = function () {
+        vm.Item.NgInCode = undefined;
+        vm.DialogItem.NgType = undefined;
+        //$uibModalInstance.dismiss('cancel');
+    };
+
+
 }
 ]);

@@ -307,6 +307,10 @@
     <Content Include="Scripts\TestAngular\textAngularSetup.js" />
     <Content Include="UIFun\MESFun\WorkOrderOnLineHH.html" />
     <Content Include="UIFun\MESFun\WorkOrderOnLineHH.js" />
+    <Content Include="UIFun\QZDeliver\QZSaleDeliver.html" />
+    <Content Include="UIFun\QZDeliver\QZSaleDeliver.js" />
+    <Content Include="UIFun\QZDeliver\QZSNSearch.html" />
+    <Content Include="UIFun\QZDeliver\QZSNSearch.js" />
     <Content Include="UIFun\Router\data.js" />
     <Content Include="UIFun\Router\graphlib.min.js" />
     <Content Include="UIFun\Router\jquery.jsPlumb.min.js" />
