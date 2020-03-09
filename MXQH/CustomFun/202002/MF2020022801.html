@@ -1,0 +1,59 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="bsn.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">BSN报废登记审核</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="bsn.Ser.a_InternalCode" placeholder="BSN">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="bsn.Ser.c_WorkOrder" placeholder="工单号">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "bsn.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "bsn.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <div class="col-md-12 scroll-x no-padder" >
+                <table class= "table pad-xs" >
+                    <thead>
+                        <tr>
+                            <td style= "width:60px">操作</td>
+                            <td style= "width:100px ">工单号</td>
+                            <td style= "width:100px ">料号</td>
+                            <td style= "width:100px ">料名</td>
+                            <td style= "width:100px ">BSN</td>
+                            <td style= "width:100px ">备注</td>
+                            <td style= "width:100px ">登记人</td>
+                            <td style= "width:100px ">登记日期</td>
+                            <td style= "width:100px ">是否审核</td>
+                            <td style= "width:100px ">审核人</td>
+                            <td style= "width:100px ">审核日期</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in bsn.List " ng-form="item.ItemForm">
+                        <td>
+                            <span ng-if="!item.IsEdit">
+                                <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="bsn.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </span>
+                        </td>
+                        <td title="{{ item.Main.Order.WorkOrder }}">{{ item.Main.Order.WorkOrder }}</td>
+                        <td title="{{ item.Main.Order.MaterialCode }}">{{ item.Main.Order.MaterialCode }}</td>
+                        <td title="{{ item.Main.Order.MaterialName }}">{{ item.Main.Order.MaterialName }}</td>
+                        <td title="{{ item.InternalCode }}">{{ item.InternalCode }}</td>
+                        <td title="{{ item.Remark }}">{{ item.Remark }}</td>
+                        <td title="{{ item.Creater }}">{{ item.Creater }}</td>
+                        <td title="{{ item.CreateDate }}">{{ item.CreateDate }}</td>
+                        <td title="{{ item.IsQcCheck }}">{{ item.IsQcCheck }}</td>
+                        <td title="{{ item.CheckUser }}">{{ item.CheckUser }}</td>
+                        <td title="{{ item.CheckDate }}">{{ item.CheckDate }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "bsn.page.total>bsn.page.size ">
+                <div uib-pagination total-items= "bsn.page.total " ng-model= "bsn.page.index " items-per-page= "bsn.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "bsn.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

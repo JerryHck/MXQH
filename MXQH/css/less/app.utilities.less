@@ -395,9 +395,14 @@
   width : 8px;  /*高宽分别对应横竖滚动条的尺寸*/
   height: 1px;
   }
-.bar-xs::-webkit-scrollbar-thumb {
+.bar-xxs::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width : 4px;  /*高宽分别对应横竖滚动条的尺寸*/
+  height: 1px;
+  }
+.bar-xs::-webkit-scrollbar-thumb, .bar-xxs::-webkit-scrollbar-thumb {
   /*滚动条里面小方块*/
-  border-radius   : 8px;
+  border-radius   : 4px;
   background-color: skyblue;
   background-image: -webkit-linear-gradient(
       45deg,
@@ -410,7 +415,7 @@
       transparent
   );
   }
-.bar-xs::-webkit-scrollbar-track {
+.bar-xs::-webkit-scrollbar-track, .bar-xxs::-webkit-scrollbar-track {
   /*滚动条里面轨道*/
   box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
   background   : #ededed;

@@ -1,6 +1,6 @@
 ﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="pack.promise">
     <uib-tab index="0">
-        <uib-tab-heading class="h5">外协包装</uib-tab-heading>
+        <uib-tab-heading class="h5">新自定义功能</uib-tab-heading>
         <div class="wrapper-md">
             <div class="form-inline">
                 <div class="form-group">
@@ -14,30 +14,34 @@
             </div>
         </div>
         <div class= "padder-md ">
-            <table class= "table " >
-                <tr>
-                    <td style= "width:120px ">箱号</td>
-                    <td style= "width:100px ">力同委外单</td>
-                    <td style= "width:100px ">生产工单(外)</td>
-                    <td style= "width:100px ">供应商</td>
-                    <td style= "width:100px ">传回时间</td>
-                    <td style= "width:100px ">包装数量</td>
-                    <td style= "width:100px ">备注</td>
-                    <td style= "width:100px ">力同料号</td>
-                    <td style= "width:100px ">力同型号</td>
-                </tr>
-                <tr ng-repeat= "item in pack.List ">
-                    <td>{{ item.PackageSN }}</td>
-                    <td>{{ item.AuctusWPO }}</td>
-                    <td>{{ item.MO }}</td>
-                    <td>{{ item.VenderName }}</td>
-                    <td>{{ item.LogTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                    <td>{{ item.PackNum }}</td>
-                    <td>{{ item.Remark }}</td>
-                    <td>{{ item.EnMO.Mate.AucMateCode }}</td>
-                    <td>{{ item.EnMO.Mate.AucModelName }}</td>
-                </tr>
-            </table>
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table " >
+                    <thead>
+                        <tr>
+                            <td title="箱号" style= "width:100px ">箱号</td>
+                            <td title="生产工单(外)" style= "width:100px ">生产工单(外)</td>
+                            <td title="力同委外单" style= "width:100px ">力同委外单</td>
+                            <td title="供应商" style= "width:100px ">供应商</td>
+                            <td title="传回时间" style= "width:100px ">传回时间</td>
+                            <td title="包装数量" style= "width:100px ">包装数量</td>
+                            <td title="备注" style= "width:100px ">备注</td>
+                            <td title="力同料号" style= "width:100px ">力同料号</td>
+                            <td title="力同料名" style= "width:100px ">力同料名</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in pack.List ">
+                        <td title="{{ item.PackageSN }}">{{ item.PackageSN }}</td>
+                        <td title="{{ item.MO }}">{{ item.MO }}</td>
+                        <td title="{{ item.AuctusWPO }}">{{ item.AuctusWPO }}</td>
+                        <td title="{{ item.VenderName }}">{{ item.VenderName }}</td>
+                        <td title="{{ item.LogTime }}">{{ item.LogTime }}</td>
+                        <td title="{{ item.PackNum }}">{{ item.PackNum }}</td>
+                        <td title="{{ item.Remark }}">{{ item.Remark }}</td>
+                        <td title="{{ item.EnMO.Mate.AucMateCode }}">{{ item.EnMO.Mate.AucMateCode }}</td>
+                        <td title="{{ item.EnMO.Mate.AucMateName }}">{{ item.EnMO.Mate.AucMateName }}</td>
+                    </tr>
+                </table>
+            </div>
             <div class= "col-md-12 text-center " ng-if= "pack.page.total>pack.page.size ">
                 <div uib-pagination total-items= "pack.page.total " ng-model= "pack.page.index " items-per-page= "pack.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
                      ng-change= "pack.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>

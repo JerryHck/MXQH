@@ -12,7 +12,9 @@ angular.module('AppSet')
         });
         element.bind('blur', function () {
             if (model && model.assign) {
-                scope.$apply(model.assign(scope, false));
+                $timeout(function () {
+                    scope.$apply(model.assign(scope, false));
+                }, 0, false);
             }
         });
       }

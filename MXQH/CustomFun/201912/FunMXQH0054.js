@@ -13,25 +13,9 @@ function ($rootScope, $scope, AjaxService, toastr, $window) {
     vm.Text = "我是新的功能fdsfas！";
     //PageChange();
 
-
-    var arr = new Array();
-    //arr.unshift(1);
-    //arr.unshift(2);
-    //arr.unshift(3);
-    //arr.unshift(4);
-    arr.push("a")
-    arr.push("b")
-    arr.push("c")
-    arr.push("d")
-    arr.push("e")
-    console.log(arr.length);
-    // 此时数组arr= [4, 3, 2, 1]
-    console.log(arr.pop()) //把最后一位移出来
-    //此时arr = [4, 3, 2]，达到先进来的数据为1，先出去为1
-
-    console.log(arr);
-    console.log(arr.pop())
-    console.log(arr);
+AjaxService.GetPlans("syQpoor", [{ name: "Layer", value: 3 }, { name: "IsMonitor", value: 1 }]).then(function (data) {
+        vm.TypeList = data;
+    });
 
     function Search() {
         vm.page.index = 1;

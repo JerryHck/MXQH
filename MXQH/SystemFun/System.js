@@ -57,15 +57,13 @@ function ($scope, $http, Dialog, AjaxService) {
     function GetList() {
         vm.promise = AjaxService.GetPlans("System").then(function (data) {
             vm.List = data;
-        }).catch(function (mes) { console.log(mes); });
+        }).catch(function (mes) {  });
     }
 
     function Open(type, resolve) {
         Dialog.open("SystemDialog", resolve).then(function (data) {
             GetList();
-            //console.log(data);
         }).catch(function (reason) {
-            //console.log(reason);
         });
     }
 }

@@ -48,6 +48,7 @@ body{
 .app-aside{
 	float: left;
     z-index: 1025;
+    max-height:calc(100vh - @app-header-height - @app-footer-height - 5px)!important;
 	&:before{
 		content: "";
 		position: absolute;
@@ -107,6 +108,8 @@ body{
 	//padding-top: @app-header-height;
     padding-bottom:@app-footer-height;
     bottom: @app-header-height;
+    max-height:calc(100vh - @app-header-height - @app-footer-height - 2px)!important;
+    overflow-y:scroll;
     //min-height:80%;
 	float: left;
 	width: 100%;
@@ -287,7 +290,6 @@ body{
 				padding: 0;
 			}
 		}
-		
 	}
 
 	.app-aside-fixed{		

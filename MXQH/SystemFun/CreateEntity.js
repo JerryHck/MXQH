@@ -539,5 +539,95 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
         }).catch(function (reason) {
         });
     }
+
+
+    //-----实体缓存code
+    vm.OpenEntityCache = OpenEntityCache;
+    vm.IsColChange = IsColChange;
+    vm.IsColAll = IsColAll;
+    vm.SaveCache = SaveCache;
+
+    vm.CacheItem = {};
+
+    function OpenEntityCache(name) {
+        AjaxService.GetPlan("EntityCache", { name: "EntityName", value: vm.SelectedEn.EntityName }).then(function (data) {
+            vm.CaColList = angular.copy(vm.PropertyList);
+            vm.CacheItem = data;
+            vm.CacheItem.IsCache = vm.CacheItem.IsCache ? "1" : "0";
+            vm.CacheItem.ToList = vm.CacheItem.ToList || [];
+            //初始化
+            for (var i = 0, len = vm.CacheItem.ToList.length; i < len; i++) {
+                for (var j = 0, len1 = vm.CaColList.length; j < len1; j++) {
+                    if (vm.CacheItem.ToList[i].ToColName == vm.CaColList[j].ColumnName) {
+                        vm.CaColList[j].IsShow = true; break;
+                    }
+                }
+            }
+            $(".en-cache").addClass("active");
+        })
+    }
+
+    //显示栏位改变
+    function IsColChange(col) {
+        if (col.IsShow) {
+            if (!checkHaveCol(vm.CacheItem.ToList, col.ColumnName)) {
+                vm.CacheItem.ToList.push({ EntityName: vm.SelectedEn.EntityName, ToColName: col.ColumnName });
+            }
+        }
+        else {
+            var index = -1;
+            for (var i = 0, len = vm.CacheItem.ToList.length; i < len; i++) {
+                if (vm.CacheItem.ToList[i].ToColName == col.ColumnName) {
+                    index = i; break;
+                }
+            }
+            vm.IsAll = false;
+            vm.CacheItem.ToList.splice(index, 1);
+        }
+    }
+
+    function IsColAll() {
+        if (!vm.CaColList) { return; }
+        if (vm.CacheItem.IsAll) {
+            for (var i = 0, len = vm.CaColList.length; i < len; i++) {
+                if (!checkHaveCol(vm.CacheItem.ToList, vm.CaColList[i].ColumnName)) {
+                    vm.CacheItem.ToList.push({ EntityName: vm.SelectedEn.EntityName, ToColName: vm.CaColList[i].ColumnName });
+                }
+                vm.CaColList[i].IsShow = true;
+            }
+        }
+        else {
+            vm.CacheItem.ToList = [];
+            for (var i = 0, len = vm.CaColList.length; i < len; i++) {
+                vm.CaColList[i].IsShow = false;
+            }
+        }
+    }
+
+    //储存缓存设定
+    function SaveCache() {
+        var en = {};
+        en.EntityName = vm.SelectedEn.EntityName;
+        en.IsCache = vm.CacheItem.IsCache == "1";
+        en.KeyColName = vm.CacheItem.KeyColName;
+        en.Remark = vm.CacheItem.Remark;
+        en.ToList = JSON.stringify(vm.CacheItem.ToList || []);
+        en.TempColumns = "ToList";
+        vm.promise = AjaxService.ExecPlan("EntityCache", "save", en).then(function (data) {
+            toastr.success('储存成功');
+            $(".en-cache").removeClass("active");
+        })
+    }
+
+    //检查是否已经存在
+    function checkHaveCol(List, colName) {
+        var have = false;
+        for (var j = 0, len2 = List.length; j < len2; j++) {
+            if (List[j].ToColName == colName) {
+                have = true; break;
+            }
+        }
+        return have;
+    }
 }
 ]);

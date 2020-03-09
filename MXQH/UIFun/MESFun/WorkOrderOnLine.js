@@ -67,11 +67,11 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             showError('不存在或已完工');
             return false;
         }
-        if (vm.OrderData.MaxOverCount - vm.OrderCount.ToTalCount <= 0) {
-            showError('工单投入量已达U9开工量最大允许值，不可再投入');
-            vm.Item.InCode = undefined;
-            return false;
-        }
+        //if (vm.OrderData.MaxOverCount - vm.OrderCount.ToTalCount <= 0) {
+        //    showError('工单投入量已达U9开工量最大允许值，不可再投入');
+        //    vm.Item.InCode = undefined;
+        //    return false;
+        //}
         if (vm.OrderData.Quantity - vm.OrderCount.ToTalCount == 0) {
             AjaxService.PlayVoice('5611.mp3');
             MyPop.ngConfirm({ text: "投入数量已达到U9开工量, 是否继续投入?" }).then(function (data) {

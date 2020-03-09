@@ -207,6 +207,8 @@
     <Content Include="UIFun\MESFun\Basic\InCodeRelease.js" />
     <Content Include="UIFun\MESFun\InCodeBindSN.html" />
     <Content Include="UIFun\MESFun\InCodeBindSN.js" />
+    <Content Include="UIFun\MESFun\InCodeDump.html" />
+    <Content Include="UIFun\MESFun\InCodeDump.js" />
     <Content Include="UIFun\MESFun\InCodePrint.html" />
     <Content Include="UIFun\MESFun\InCodePrint.js" />
     <Content Include="UIFun\MESFun\MaterialType.html" />
@@ -307,6 +309,10 @@
     <Content Include="Scripts\TestAngular\textAngularSetup.js" />
     <Content Include="UIFun\MESFun\WorkOrderOnLineHH.html" />
     <Content Include="UIFun\MESFun\WorkOrderOnLineHH.js" />
+    <Content Include="UIFun\QZDeliver\QZSaleDeliver.html" />
+    <Content Include="UIFun\QZDeliver\QZSaleDeliver.js" />
+    <Content Include="UIFun\QZDeliver\QZSNSearch.html" />
+    <Content Include="UIFun\QZDeliver\QZSNSearch.js" />
     <Content Include="UIFun\Router\data.js" />
     <Content Include="UIFun\Router\graphlib.min.js" />
     <Content Include="UIFun\Router\jquery.jsPlumb.min.js" />

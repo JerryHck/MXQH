@@ -3,8 +3,8 @@
 /* Controllers */
 
 angular.module('app')
-  .controller('AppCtrl', ['$scope', '$localStorage', '$window', 'AjaxService', '$state', '$rootScope', '$cookieStore', 'appUrl', 'Dialog', 'FileUrl',
-    function ($scope, $localStorage, $window, AjaxService, $state, $rootScope, $cookieStore, appUrl, Dialog, FileUrl) {
+  .controller('AppCtrl', ['$scope', '$localStorage', '$window', 'toastr', 'AjaxService', '$state', '$rootScope', '$cookieStore', 'appUrl', 'Dialog', 'FileUrl',
+    function ($scope, $localStorage, $window, toastr, AjaxService, $state, $rootScope, $cookieStore, appUrl, Dialog, FileUrl) {
         // add 'ie' classes to html
         var isIE = !!navigator.userAgent.match(/MSIE/i);
         isIE && angular.element($window.document.body).addClass('ie');

@@ -20,9 +20,9 @@ function ($rootScope, $scope, FileUrl, AjaxService, toastr, $window) {
 
     AjaxService.GetLocalPrinters().then(function (data) {
         vm.PrintList = data;
-        console.log(data);
+        //console.log(data);
     }, function (err) {
-        console.log(err);
+        //console.log(err);
     });
 
     //内部码验证
@@ -48,15 +48,15 @@ function ($rootScope, $scope, FileUrl, AjaxService, toastr, $window) {
 
         list.push(vm.DeleteItem.InternalCode);
 
-        console.log(JSON.stringify(list));
+        //console.log(JSON.stringify(list));
 
         postData.ParaData = JSON.stringify({});
         postData.OutList = list;
 
         AjaxService.Print("1", (new Date().getDate()).toString(), postData, vm.PrinterName).then(function (data) {
-            console.log(data);
+            //console.log(data);
         }, function (err) {
-            console.log(err);
+            //console.log(err);
         })
     }
 

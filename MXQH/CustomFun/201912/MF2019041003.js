@@ -18,30 +18,26 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function PageChange() {
-        var list = [];
-        if (vm.Ser.a_PackageSN) {
-            list.push({ name: "PackageSN", value: vm.Ser.a_PackageSN });
-        }
-        if (vm.Ser.a_AuctusWPO) {
-            list.push({ name: "AuctusWPO", value: vm.Ser.a_AuctusWPO });
-        }
-        vm.promise = AjaxService.GetPlansPage("MESWPOPackageIn", list, vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("MESWPOPackageIn", GetContition(), vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
 
     }
     function ExportExcel() {
-        var list = [];
-        if (vm.Ser.a_PackageSN) {
-            list.push({ name: "PackageSN", value: vm.Ser.a_PackageSN });
-        }
-        if (vm.Ser.a_AuctusWPO) {
-            list.push({ name: "AuctusWPO", value: vm.Ser.a_AuctusWPO });
-        }
-        vm.promise = AjaxService.GetPlanOwnExcel("MESWPOPackageIn", list).then(function (data) {
+        vm.promise = AjaxService.GetPlanOwnExcel("MESWPOPackageIn", GetContition()).then(function (data) {
             $window.location.href = data.File;
         });
+    }
+    function GetContition() {
+        var list = [];
+        if (vm.Ser.a_PackageSN) {
+            list.push({ name: "PackageSN", value: vm.Ser.a_PackageSN, tableAs:"a" });
+        }
+        if (vm.Ser.a_AuctusWPO) {
+            list.push({ name: "AuctusWPO", value: vm.Ser.a_AuctusWPO, tableAs:"a" });
+        }
+        return list;
     }
 
 }]);

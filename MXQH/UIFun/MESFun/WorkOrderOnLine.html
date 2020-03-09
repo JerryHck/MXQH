@@ -143,13 +143,23 @@
                         </div>
                     </div>-->
                     <div class="form-group">
-                        <label class="control-label col-sm-2">已总投入:</label>
+                        <label class="control-label col-sm-2">有效总投入:</label>
                         <div class="col-sm-4">
                             <p class="form-control-static font-bold  h4 text-success">{{wo.OrderCount.ToTalCount}}</p>
                         </div>
                         <label class="control-label col-sm-2">今日投入:</label>
                         <div class="col-sm-4">
                             <p class="form-control-static font-bold  h4 text-success">{{wo.OrderCount.ToDayCount}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">全部投入:</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static font-bold  h4 text-success">{{wo.OrderCount.InNum}}</p>
+                        </div>
+                        <label class="control-label col-sm-2">报废数:</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static font-bold  h4 text-success">{{wo.OrderCount.DumpNum}}</p>
                         </div>
                     </div>
                     <div class="form-group" ng-if="wo.OrderCount.ToTalCount>wo.OrderData.ERPQuantity">

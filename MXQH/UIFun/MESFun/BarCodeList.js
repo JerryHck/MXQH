@@ -52,7 +52,6 @@ function ($window, $scope, FileUrl, AjaxService, toastr, serviceUrl) {
 
     function Edit(item) {
         var str = 'BarCode:' + serviceUrl + '-' + item.TemplateId + "-" + item.TypeID;
-        console.log(str);
         $window.location.href = str;
     }
 
@@ -67,7 +66,7 @@ function ($window, $scope, FileUrl, AjaxService, toastr, serviceUrl) {
 
     function NewLabel() {
         var str = 'BarCode:' + serviceUrl + '-0-' + (vm.SelectedType && vm.SelectedType.ID ? vm.SelectedType.ID : "0");
-        console.log(str);
+        //console.log(str);
         $window.location.href = str;
     }
 }

@@ -275,7 +275,6 @@ angular.module('AppSet')
         link: link,
     };
     function link(scope, element, attrs) {
-        console.log(scope.serData);
         if (scope.serData) {
             var en = [{ name: "SelectName", value: scope.serData }];
             //组织

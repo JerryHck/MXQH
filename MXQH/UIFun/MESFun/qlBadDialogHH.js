@@ -59,9 +59,19 @@ function qlBadDialogHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, to
   
 
     function Alter() {
+
+        if (vm.ProcessingMode == '3') {
+            MyPop.ngConfirm({ text: "条码报废将永久作废，不可再流线生产,确定要报废吗?" }).then(function (data) {
+                save();
+            })
+        }
+        else { save(); };
+    }
+
+    function save() {
         var en = {};
         console.log(en);
-        
+
         en.ID = vm.item.ID;
         en.BarCode = vm.item.BarCode;
         en.WorOrder = vm.item.WorOrder2;
@@ -71,7 +81,7 @@ function qlBadDialogHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, to
         en.FirstPoorName = vm.item.FirstPoorName;
         en.SecondPoorName = vm.item.SecondPoorName;
         en.ProcedureName = vm.AName.Name;
-        en.FirstPoor = vm.AName.ID;       
+        en.FirstPoor = vm.AName.ID;
         en.SecondPoor = vm.BName.ID;
         en.ProcedureID = vm.item.ProcedureID;
         if (vm.IsRepair == null) {
@@ -82,7 +92,7 @@ function qlBadDialogHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, to
         en.ProcdureName = vm.AName.Name;
         //console.log(en.ProcdureName);
         //console.log(en.ProcedureID);
-        
+
         en.WorkPartCode = vm.item.WorkPartCode;
         en.WorkPartName = vm.BName.Name;
         console.log(en.WorkPartName);
@@ -93,9 +103,9 @@ function qlBadDialogHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, to
 
         en.MaintenanceTtype = vm.MaintenanceTtype;//维修类型  1 功能  2 外观
         en.ProcessingMode = vm.ProcessingMode;//处理方式  1 维修 2 更换 3报废
-    
+
         en.CreateBy;
-        en.ModifyBy;    
+        en.ModifyBy;
         if (vm.IsRepair == true) {
             en.IsRepair = 1;
         } else if (vm.IsRepair == false) {
@@ -113,10 +123,7 @@ function qlBadDialogHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, to
                 toastr.error(data.data[0].Msg);
             }
         })
-
-
     }
-
 
     //取消
     vm.cancel = function () {

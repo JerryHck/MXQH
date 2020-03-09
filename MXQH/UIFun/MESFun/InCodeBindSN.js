@@ -23,6 +23,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     vm.PageChange = PageChange;
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
+    vm.KeyDonwInCodeNg = KeyDonwInCodeNg;
 
     //PageChange();
     //未完工工单
@@ -40,26 +41,31 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.Item.WorkOrder) {
             vm.OrderData = undefined;
-            var en = {};
-            en.WorkOrder = vm.Item.WorkOrder;
-            AjaxService.ExecPlan("BindCode", "getOrder", en).then(function (data) {
-                var mss = "工单 [" + vm.Item.WorkOrder + '] ';
-                if (!data.data[0] || !data.data[0].WorkOrder) {
-                    vm.Item.WorkOrder = undefined;
-                    showError(mss + '  不存在或已完工');
-                }
-                else if (data.data[0].TbName == "" || data.data[0].TbName == undefined || data.data[0].TbName == null
-                    || data.data[0].ClName == "" || data.data[0].ClName == undefined || data.data[0].ClName == null ) {
-                    vm.Item.WorkOrder = undefined;
-                    showError(mss + '  工单未设定SN生成编码规则，请联系管理员设定');
-                }
-                else {
-                    vm.OrderData = data.data[0];
-                    vm.OrderCount = data.data1[0];
-                    $("input.SnFocus").focus();
-                }
-            });
+            GetOrder();
         }
+    }
+
+    function GetOrder() {
+        var en = {};
+        en.WorkOrder = vm.Item.WorkOrder;
+        AjaxService.ExecPlan("BindCode", "getOrder", en).then(function (data) {
+            var mss = "工单 [" + vm.Item.WorkOrder + '] ';
+            if (!data.data[0] || !data.data[0].WorkOrder) {
+                vm.Item.WorkOrder = undefined;
+                showError(mss + '  不存在或已完工');
+            }
+            else if (data.data[0].TbName == "" || data.data[0].TbName == undefined || data.data[0].TbName == null
+                || data.data[0].ClName == "" || data.data[0].ClName == undefined || data.data[0].ClName == null) {
+                vm.Item.WorkOrder = undefined;
+                showError(mss + '  工单未设定SN生成编码规则，请联系管理员设定');
+            }
+            else {
+                vm.OrderData = data.data[0];
+                vm.OrderCount = data.data1[0];
+                vm.AssOrderCount = data.data2[0];
+                $("input.SnFocus").focus();
+            }
+        });
     }
 
     function Search() {
@@ -98,6 +104,47 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
         }
     }
     
+    //不良条码扫描
+    function KeyDonwInCodeNg(e) {
+        $scope.$applyAsync(function () {
+            var keycode = window.event ? e.keyCode : e.which;
+            if (keycode == 13 && vm.Item.NgInCode) {
+                var en = {};
+                en.InternalCode = vm.Item.NgInCode;
+                AjaxService.ExecPlan("MesMxWOrder", 'ass', en).then(function (data) {
+                    if (data.data[0].MsgType == 'Error') {
+                        vm.Item.NgInCode = undefined;
+                        showError(data.data[0].Msg);
+                    }
+                    else if (data.data[0].MsgType == 'Success') {
+                        vm.OrderDataNg = data.data1[0];
+                        NgSave();
+                    }
+                });
+            }
+        });
+    }
+
+    //不良
+    function NgSave() {
+        var en = {};
+        en.InternalCode = vm.Item.NgInCode;
+        //SN工序ID
+        en.ProcedureID = 588;
+        AjaxService.ExecPlan("MesMxWOrder", "checkNg", en).then(function (data) {
+            if (data.data[0].MsgType == 'Success') {
+                //打开窗体 WoAssNgDialog
+                var item = { InCode: vm.Item.NgInCode, ProcedureItem: vm.ProcedureItem, OrderDataNg: vm.OrderDataNg };
+                vm.NgItem = item;
+                $(".bsn-ng").addClass("active");
+            }
+            else if (data.data[0].MsgType == 'Error') {
+                showError(data.data[0].Msg);
+                vm.Item.NgInCode = undefined;
+            }
+        })
+    }
+
     //补打印
     function KeyDonwPrint(e) {
         var keycode = window.event ? e.keyCode : e.which;
@@ -188,6 +235,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
                 vm.MesList.splice(0, 0, Msg);
                 vm.NewBind = {};
                 vm.OrderCount = data.data3[0];
+                vm.AssOrderCount = data.data4[0];
                 AjaxService.PlayVoice('success.mp3');
                 //一般打印
                 if (vm.PrintType == 'G') {
@@ -206,7 +254,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
 
     //一般打印
     function PrintCode(teData, data) {
-        console.log(data)
+        //console.log(data)
         if (!data || !data.SNCode || data.SNCode == null) {
             toastr.error("SN不存在或还未生成");
             AjaxService.PlayVoice('error.mp3');
@@ -222,9 +270,9 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
         postData.ParaData = JSON.stringify(data);
         postData.OutList = list;
         AjaxService.Print(teData.TemplateId, teData.TemplateTime, postData, vm.PrinterName).then(function (data) {
-            console.log(data);
+            //console.log(data);
         }, function (err) {
-            console.log(err);
+            //console.log(err);
         })
     }
 
@@ -244,11 +292,11 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
         list.push(data.SNCode)
         postData.ParaData = JSON.stringify(data);
         postData.OutList = list;
-        console.log(postData.ParaData);
+        //console.log(postData.ParaData);
         AjaxService.LightPrint(teData.TemplateId, teData.TemplateTime, postData).then(function (data) {
-            console.log(data);
+            //console.log(data);
         }, function (err) {
-            console.log(err);
+            //console.log(err);
         })
     }
 
@@ -258,5 +306,60 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
             $window.location.href = data.File;
         });
     }
+
+    //============================================================不良登记
+    //储存
+    vm.BSNngSave = BSNngSave;
+    vm.ChangeMonitor = ChangeMonitor;
+    //获取组织信息
+    function ChangeMonitor() {
+        vm.DialogItem.Ng = undefined;
+        AjaxService.GetPlans("syQpoor", [{ name: "Layer", value: 2 }, { name: "IsMonitor", value: 1 }, { name: "PID", value: vm.DialogItem.NgType }]).then(function (data) {
+            vm.QpoorList = data;
+            BSNngSave();
+        });
+    }
+    AjaxService.GetPlans("syQpoor", [{ name: "Layer", value: 1 }, { name: "IsMonitor", value: 1 }]).then(function (data) {
+        vm.TypeList = data;
+    });
+
+    //储存
+    function BSNngSave() {
+        if (!vm.DialogItem || !vm.DialogItem.NgType) {
+            toastr.error("还没有选择不良项");
+            return;
+        }
+
+        var en = {};
+        en.InternalCode = vm.NgItem.InCode;
+        en.ProcedureID = 588;
+        en.FirstPoor = vm.DialogItem.NgType;
+        en.SecondPoor = vm.DialogItem.Ng || 0;
+        en.ThridPoor = 0;
+        en.PoorReason = vm.DialogItem.Reason;
+
+        vm.promise = AjaxService.ExecPlan("MesMxWOrder", "saveNg", en).then(function (data) {
+            if (data.data[0].MsgType == 'Success') {
+                toastr.success('储存成功');
+                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: "编码[" + en.InternalCode + "]录入不良成功" });
+                //$uibModalInstance.close(en);
+                GetOrder();
+            }
+            else if (data.data[0].MsgType == 'Error') {
+                showError(data.data[0].Msg);
+                toastr.error(data.data[0].Msg);
+            }
+            vm.Item.NgInCode = undefined;
+            vm.DialogItem.NgType = undefined;
+            $(".bsn-ng").removeClass("active");
+        })
+    };
+
+    //取消
+    vm.cancel = function () {
+        vm.Item.NgInCode = undefined;
+        //$uibModalInstance.dismiss('cancel');
+    };
+
 }
 ]);
