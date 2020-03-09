@@ -49,10 +49,17 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     function Delete(item) {
         var en = angular.copy(item);
         en.ItemForm = undefined;
-        vm.promise = AjaxService.PlanDelete("QZSaleAgent", en).then(function (data) {
-            PageChange();
-            toastr.success('删除成功');
-        });
+        AjaxService.GetPlansTop("QZSaleDeliver", { name: "AgentNo", value: en.AgentNo }, 1).then(function (data2) {
+            if (data2.length == 0) {
+                AjaxService.PlanDelete("QZSaleAgent", en).then(function (data) {
+                    PageChange();
+                    toastr.success('删除成功');
+                });
+            }
+            else {
+                toastr.error("已经和该代理商出货， 无法删除");
+            }
+        })
     }
 
     function SaveEdit(index) {

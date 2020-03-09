@@ -21,7 +21,6 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
         $rootScope.SysLic = data;
     });
 
-    //console.log($state.current.name)
     //檢查是否登入
     function onStateChangeStart(e, toState, toParams, fromState, fromParams) {
         if (!$cookieStore.get('user-token')) {
@@ -55,7 +54,6 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
                         });
                         route.LazyLoad = loadJs;
                     }
-                    //if (item.FunNo == 'MF2019110401') { console.log(route); }
                     router.setDataRouters(route);
                     if ($cookieStore.get('active-router') == item.RouteName) {
                         $state.go(item.RouteName);

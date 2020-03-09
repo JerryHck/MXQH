@@ -44,7 +44,6 @@ function ($scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $window) {
             vm.selectedNode = data.nodeId;
             $(this).treeview("expandNode", [data.nodeId]);
             vm.PID = data.ID;
-            console.log(data);
         }
     }
 

@@ -422,7 +422,7 @@
                             $window.location.href = appUrl + 'Access.html#!/login';
                         }
                     } else {
-                        console.log(data);
+                        //console.log(data);
                         var m = data.data ? data.data.split("。")[0].replace(/System.Exception:/, '') : "错误";
                         toastr.error(m, '服务错误');
                     }
@@ -455,7 +455,7 @@
                             $window.location.href = appUrl + 'Access.html#!/login';
                         }
                     } else {
-                        console.log(data);
+                        //console.log(data);
                         var m = data.data ? data.data.split("。")[0].replace(/System.Exception:/, '') : "错误";
                         toastr.error(m, '服务错误');
                     }
@@ -558,11 +558,9 @@
             }).then(function (s) {
                 if (index == MainList.length - 1) {
                     d.resolve(s);
-                    console.log('打印最后');
                 }
             }, function (err) {
                 d.reject(err);
-                console.log('打印最后错误');
             })
             return d.promise;
         }
@@ -620,7 +618,6 @@
                 var strAddress = "ws://" + (hostIp || "127.0.0.1") + ":2018";
                 var socket = new WebSocket(strAddress);
                 socket.onerror = function (evt) {
-                    console.log(evt.currentTarget);
                     if (evt.currentTarget.readyState == 3) {
                         var en = {};
                         $window.location.href = "MxqhPrinter:" + serviceUrl;
@@ -647,7 +644,6 @@
                     else if (reData.MesType == "Error") {
                         var m = reData.Data ? reData.Data.split("。")[0].replace(/System.Exception:/, '') : "错误";
                         toastr.error(m, '服务错误');
-                        console.log(reData.Data)
                         g.reject(m);
                     }
                     else if (reData.MesType == "Update") {
@@ -662,7 +658,6 @@
                 };
             }
             catch (e) {
-                console.log("服务错误");
                 toastr.error(e, '服务错误');
             }
             return g.promise;
@@ -716,7 +711,7 @@
                         socket.send(evt.data);
                     }
                     else {
-                        console.log(evt.data);
+                        //console.log(evt.data);
                     }
 
                 }

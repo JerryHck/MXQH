@@ -24,6 +24,10 @@
 }
 
 .navi {
+    &.scoll-bar{
+        max-height:calc(100vh - @app-header-height - @app-footer-height - 25px)!important;
+        overflow-y:scroll;
+    }
 	ul.nav {
 		li {
 			display: block;

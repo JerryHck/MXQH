@@ -75,7 +75,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
         if (!showPop(vm.editFun)) {
             vm.SelectedRoot = { FunNo: '' };
             var en = [{ name: 'FunType', value: 2 }];
-            console.log(en)
+            //console.log(en)
             vm.promise = AjaxService.GetEntities("FunRoot", en).then(function (data) {
                 vm.FunList = data;
             });
@@ -350,16 +350,12 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
             if (!en.IsSystem && data.data[0] && data.data[0].SN && Content) {
                 vm.FunCodeSetting.FunNo = data.data[0].SN;
 
-                console.log(12314)
                 //是新增功能的时候--计算中间文件夹
                 var dir = vm.SelectedFun.FunNo == '-1' ? (new Date()).Format("yyyyMM") : new Date(vm.SelectedFun.CreateDate).Format("yyyyMM");
-
-                console.log(dir)
 
                 var htmlEn = {};
                 htmlEn.Dir = dir;
                 htmlEn.FileName = vm.FunCodeSetting.FunNo + ".html";
-                console.log(htmlEn)
                 htmlEn.Text = $window.btoa($window.encodeURIComponent(Content.Html));
                 //保存html
                 AjaxService.AjaxHandle("WriteFile", JSON.stringify(htmlEn));

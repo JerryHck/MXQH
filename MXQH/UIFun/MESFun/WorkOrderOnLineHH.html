@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="col-md-2 padder-xxs " >
                                     <span><button   type="submit"   class="btn btn-sm btn-success" ng-click="woHH.InCodeToDbcClick()" ng-disabled="woHH.OrderForm.$invalid || woHH.IsAuto">合格</button></span>
-                                    <!--<span class="pl-md-1"><button type="submit" class="btn btn-sm btn-success" ng-click="wo.NgSave()" ng-disabled="wo.OrderForm.$invalid || wo.IsAuto">不良</button></span>-->
+                                    <!--<span class="pl-md-1"><button type="submit" class="btn btn-sm btn-success" ng-click="woHH.NgSave()" ng-disabled="woHH.OrderForm.$invalid || woHH.IsAuto">不良</button></span>-->
                                 </div>
                                 <div class="col-md-2 padder-xxs " >
                                     <span ><button type="submit" class="btn btn-sm btn-success" ng-click="woHH.NgSave()" ng-disabled="woHH.OrderForm.$invalid || woHH.IsAuto">不良</button></span>
@@ -106,7 +106,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-2 padder-xs">计划日期:</label>
                             <div class="col-sm-4 padder-xs">
-                                <p class="form-control-static font-bold">{{woHH.OrderData.AssemblyDate}}</p>
+                                <p class="form-control-static font-bold">{{woHH.OrderData.AssemblyDate | date:'yyyy-MM-dd'}}</p>
                             </div>
                             <label class="control-label col-sm-2 padder-xs">产线名称:</label>
                             <div class="col-sm-4 padder-xs">
@@ -154,13 +154,23 @@
                             </div>
                         </div>-->
                         <div class="form-group">
-                            <label class="control-label col-sm-2 padder-xs">已总投入:</label>
-                            <div class="col-sm-4  padder-xs">
+                            <label class="control-label col-sm-2">有效总投入:</label>
+                            <div class="col-sm-4">
                                 <p class="form-control-static font-bold  h4 text-success">{{woHH.OrderCount.ToTalCount}}</p>
                             </div>
-                            <label class="control-label col-sm-2  padder-xs">今日投入:</label>
+                            <label class="control-label col-sm-2">今日投入:</label>
                             <div class="col-sm-4">
                                 <p class="form-control-static font-bold  h4 text-success">{{woHH.OrderCount.ToDayCount}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">全部投入:</label>
+                            <div class="col-sm-4">
+                                <p class="form-control-static font-bold  h4 text-success">{{woHH.OrderCount.InNum}}</p>
+                            </div>
+                            <label class="control-label col-sm-2">报废数:</label>
+                            <div class="col-sm-4">
+                                <p class="form-control-static font-bold  h4 text-success">{{woHH.OrderCount.DumpNum}}</p>
                             </div>
                         </div>
                         <div class="form-group" ng-if="woHH.OrderCount.ToTalCount>woHH.OrderData.ERPQuantity">
@@ -179,4 +189,107 @@
 
 </div>
 
+<!--<div class="bsn-ng dialog dialog-lg">
+    <div class="padder-xs scroll-y">
+        <div class="panel panel-info">
+            <div class="panel-heading h3 text-center">
+                <span class="font-bold text-danger h2">{{ woHH.NgItem.InCode }}</span>后焊不良采集
+            </div>
+            <div class="panel-body wrapper-xs padder-v-xxs" ng-form="QcForm">
+                <div class="col-md-12 no-padder">
+                    <div class="panel panel-default">
+                        <div class="panel-body scroll-y padder-xs padder-v-xs" style="max-height:600px">
+                            <div class="panel-body wrapper-xs">
+                                <div class="form-horizontal">
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label col-md-4 wrapper-xs">内控码:</label>
+                                        <div class="col-md-8 wrapper-xs">
+                                            <span class="h4 font-bold text-info form-control-static">{{ woHH.Item.InCode }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label col-md-4 wrapper-xs">产品编号:</label>
+                                        <div class="col-md-8 wrapper-xs">
+                                            <span class="h4 font-bold text-info  form-control-static">{{ woHH.Item.MaterialCode }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label col-md-4 wrapper-xs">工单:</label>
+                                        <div class="col-md-8 wrapper-xs">
+                                            <span class="form-control-static">{{ woHH.Item.WorkOrder }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label class="control-label col-md-4 wrapper-xs">产品名称:</label>
+                                        <div class="col-md-8 wrapper-xs">
+                                            <span class="form-control-static">{{ woHH.Item.MaterialName }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label col-md-4 wrapper-xs">当前工艺:</label>
+                                        <div class="col-md-8 wrapper-xs">
+                                            <span class="form-control-static  text-success font-bold">{{ woHH.Item.RouteName }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label col-md-4 wrapper-xs">当前工序:</label>
+                                        <div class="col-md-8 wrapper-xs">
+                                            <span class="form-control-static text-success font-bold">{{ woHH.Item.ProcedureName }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label class="control-label col-md-2 wrapper-xs">备注:</label>
+                                        <div class="col-md-10" ng-class="{ 'has-error' : QcForm.Reason.$invalid }">
+                                            <textarea class="form-control" rows="3" name="Reason" maxlength="255" ng-model="woHH.DialogItem.Reason" placeholder="输入不良原因"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 col-xs-4 m-t-md padder-lg" ng-repeat="item in woHH.TypeList">
+                                <button style="height:90px" class="btn-group-vertical h2 btn-lg w-full btn-primary"
+                                        ng-click="woHH.DialogItem.NgType=item.ID; woHH.ChangeMonitor()"
+                                        ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1, 'btn-success':woHH.DialogItem.NgType==item.ID}">
+                                    <span class="h1">{{ item.Name }}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 no-padder">
+                    <div class="panel panel-default">
+                        <div class="panel-body scroll-y padder-xs padder-v-xs" style="max-height:600px">
+                            <div class="col-md-4 m-t-xs padder-md" ng-repeat="item in wo.TypeList">
+                                <button style="height:100px" class="btn-group-vertical h2 btn-lg w-full btn-primary"
+                                        ng-click="wo.DialogItem.NgType=item.ID;
+                                    wo.ChangeMonitor()"
+                                        ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1, 'btn-success':wo.DialogItem.NgType==item.ID}">
+                                    <span class="h1">{{ item.Name }}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7 padder-xs">
+                    <div class="panel panel-default">
+                        <div class="panel-body scroll-y padder-xs" style="max-height:350px">
+                            <div class="col-md-12 m-t-xs" ng-repeat="item in wo.QpoorList">
+                                <button class="btn-group-vertical btn-lg w-full btn-primary"
+                                        ng-click="wo.DialogItem.Ng=item.ID"
+                                        ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1,
+                                    'btn-success':wo.DialogItem.Ng==item.ID}">
+                                    {{ item.Name }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 text-center">
+                    <button class="btn btn-success" type="button" ng-disabled="QcForm.$invalid" ng-click="woHH.Save()">储存</button>
+                    <button style="width:200px" ui-remove-class="active" target=".bsn-ng" class="btn btn-lg btn-warning h1 pull-left m-t-n-xs" type="button" ng-click="woHH.cancelNg()">关闭</button>
+                </div><br />
+            </div>
+        </div>
+    </div>
+</div>-->
 

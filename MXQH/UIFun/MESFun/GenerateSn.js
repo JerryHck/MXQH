@@ -171,7 +171,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
         vm.NewItemType.TbName = vm.NewItemType.PkSet ? vm.NewItemType.PkSet.TbName : "";
         vm.NewItemType.ClName = vm.NewItemType.PkSet ? vm.NewItemType.PkSet.ClName : "";
         vm.NewItemType.IsPKGen = parseInt(vm.NewItemType.IsPKGen);
-        console.log(vm.NewItemType)
+        //console.log(vm.NewItemType)
         vm.promise = AjaxService.PlanInsert("MesItemType", vm.NewItemType).then(function (data) {
             toastr.success("新增成功");
             vm.NewItemType = { IsPKGen: 1 };

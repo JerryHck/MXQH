@@ -64,7 +64,7 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
 
        var data = AjaxService.GetPlansWait("AucWPOIQCCheck")
 
-        console.log(123465465)
+        //console.log(123465465)
 
         //AjaxService.GetComWeigth(vm.ComName, function (data) {
         //    vm.Weigth = data;

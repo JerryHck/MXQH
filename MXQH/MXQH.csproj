@@ -207,6 +207,8 @@
     <Content Include="UIFun\MESFun\Basic\InCodeRelease.js" />
     <Content Include="UIFun\MESFun\InCodeBindSN.html" />
     <Content Include="UIFun\MESFun\InCodeBindSN.js" />
+    <Content Include="UIFun\MESFun\InCodeDump.html" />
+    <Content Include="UIFun\MESFun\InCodeDump.js" />
     <Content Include="UIFun\MESFun\InCodePrint.html" />
     <Content Include="UIFun\MESFun\InCodePrint.js" />
     <Content Include="UIFun\MESFun\MaterialType.html" />

@@ -93,17 +93,18 @@ function ($rootScope, $scope, $timeout, Dialog, toastr, AjaxService, MyPop) {
 
     function Save() {
         var en = {};
+        vm.Item.InCode = undefined;
         if (!vm.ProcedureItem) {
             showError("请先选择工序");
             return;
         }
-        vm.Item.InCode = undefined;
         en.InternalCode = vm.InCodeControl;
         en.ProcedureID = vm.ProcedureItem.boProcedureID;
         vm.promise = AjaxService.ExecPlan("MesMxWOrder", "saveass", en).then(function (data) {
             if (data.data[0].MsgType == 'Success') {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
-                vm.PassCount = data.data1[0].ToTalCount;
+                //vm.PassCount = data.data1[0].ToTalCount;
+                vm.CalData = data.data1[0];
                 AjaxService.PlayVoice('success.mp3');
                 vm.InCodeControl = undefined;
             }
@@ -124,7 +125,8 @@ function ($rootScope, $scope, $timeout, Dialog, toastr, AjaxService, MyPop) {
         //console.log(en);
         AjaxService.ExecPlan("MesMxWOrder", "sum", en).then(function (data) {
             //console.log(data);
-            vm.PassCount = data.data[0].TotalCount;
+            //vm.PassCount = data.data[0].TotalCount;
+            vm.CalData = data.data[0];
         });
     }
 
@@ -216,7 +218,7 @@ function ($rootScope, $scope, $timeout, Dialog, toastr, AjaxService, MyPop) {
     //取消
     vm.cancel = function () {
         vm.Item.NgInCode = undefined;
-        vm.DialogItem.NgType = undefined;
+        vm.DialogItem = undefined;
         //$uibModalInstance.dismiss('cancel');
     };
 

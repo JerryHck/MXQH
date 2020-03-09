@@ -6,7 +6,7 @@
     right: -480px;
 	width: 480px;
     height:auto;
-	.transition(right 0.4s);
+	.transition(right 0.2s);
 	bottom: @app-footer-height;
 	padding: 0 !important;
 	&.h-full{
@@ -30,6 +30,11 @@
         right: -800px;
 	    width: 800px;
     }
+    &.xxl{
+         right: calc(1px - 100%);
+	     width: calc(100% - @app-aside-width - 40px);
+         background-color:#dedbde
+    }
 }
 .d-r.active{
 	right: -1px;
@@ -44,6 +49,84 @@
     width:  1600px;
 	left:  -1600px;
 }
+
+.dialog{
+    height:calc(100vh)!important;
+    bottom: calc(1px - 100vh);
+	width: calc(100vw);
+    left:0;
+    max-height:calc(100%);
+    z-index: 9000;
+    background-color:rgba(16, 15, 16, 0.50);
+    border-right-width: 0;
+    text-align:center;
+    position: absolute;
+	.transition(right 0.5s);
+	padding: 0 !important;
+    >div{
+        opacity:1!important;
+        top:calc(@app-header-height + 40px);
+        position:absolute;
+        height:auto;
+        width: 480px;
+        margin-left:-480px;
+    }
+    &.dialog-sm{
+        >div{
+            width: 240px;
+            margin-left:calc((100vw - 240px) / 2) !important;
+        }
+    } 
+    &.dialog-md{
+        >div{
+            width: 480px;
+            margin-left:calc((100vw - 480px) / 2) !important;
+        }
+    }
+    &.dialog-lg{
+        >div{
+            @media (max-width: 767px){
+                width: calc(98%);
+                margin-left:0!important;
+            }
+            @media (min-width: 767px){
+                width: 720px;
+                margin-left:calc((100vw - 720px) / 2) !important;
+            }
+        }
+    } 
+    &.dialog-xl{
+        >div{
+            @media (max-width: 980px){
+                width: calc(98%);
+                margin-left:0!important;
+            }
+            @media (min-width: 980px){
+                width: 980px;
+                margin-left:calc((100vw - 980px) / 2) !important;
+            }
+        }
+    } 
+    &.dialog-full{
+        //left:auto!important;
+        //width: calc(100% - 50px)!important;
+        >div{
+            top:@app-header-height!important;
+            @media (max-width: 767px){
+                width: calc(98%);
+                margin-left:0!important;
+            }
+            @media (min-width: 767px){
+                width: calc(98% - @app-aside-width / 2);
+                margin-left:calc((2vw + @app-aside-width / 2) / 2) !important
+            }
+        }
+    } 
+}
+.dialog.active{
+	bottom: -1px;
+}
+
 /*.d-r::-webkit-scrollbar{width: 0px;height: 0px;}*/
 
 // icon list

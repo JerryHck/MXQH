@@ -106,5 +106,4 @@ function (Dialog,$rootScope, $scope, $http, AjaxService, toastr, $window) {
         }
         return list;
     }
-
 }]);

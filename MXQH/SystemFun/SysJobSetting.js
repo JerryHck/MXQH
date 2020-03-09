@@ -7,7 +7,7 @@ function ($scope, $rootScope, toastr, AjaxService) {
 
     vm.Ser = {};
     vm.Item = {};
-    vm.page = { index: 1, size: 12 };
+    vm.page = { index: 1, size: 9 };
     vm.DeleteFile = [];
     vm.isEdit = false;
 
@@ -48,6 +48,7 @@ function ($scope, $rootScope, toastr, AjaxService) {
     vm.SerLog = SerLog;
     vm.checkToday = checkToday;
     vm.RunJob = RunJob;
+    vm.PageChange = PageChange;
 
     AjaxService.GetPlans("PlanEntity").then(function (data) {
         vm.EnList = data;
@@ -76,7 +77,7 @@ function ($scope, $rootScope, toastr, AjaxService) {
 
     function PageChange() {
         var list = [];
-        if (vm.Ser.ProNo) {
+        if (vm.Ser.JobName) {
             list.push({ name: "JobName", value: vm.Ser.JobName });
         }
         vm.promise = AjaxService.GetPlansPage("JobSet", list, vm.page.index, vm.page.size).then(function (data) {

@@ -13,11 +13,9 @@ function ($rootScope, $scope, AjaxService, toastr, $window) {
     vm.Text = "我是新的功能fdsfas！";
     //PageChange();
 
-vm.promise = AjaxService.GetPlansPage("TestEn", [], vm.page.index, vm.page.size).then(function (data) {
-         console.log(data)
-            vm.List = data.List;
-            vm.page.total = data.Count;
-        });
+AjaxService.GetPlans("syQpoor", [{ name: "Layer", value: 3 }, { name: "IsMonitor", value: 1 }]).then(function (data) {
+        vm.TypeList = data;
+    });
 
     function Search() {
         vm.page.index = 1;

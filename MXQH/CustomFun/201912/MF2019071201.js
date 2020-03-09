@@ -131,6 +131,7 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
        
     
         list.push({ name: "IsRepair", value: '0' });
+        list.push({ name: "IsNgLog", value: '1' });
         if (start) {
             list.push({ name: "CreateDate", value: start, type: '>=' });
         }
@@ -167,7 +168,7 @@ function ($rootScope,Dialog, $scope, $http, AjaxService, toastr, $window,$filter
         }
         
         list.push({ name: "IsRepair", value: '1' });
-        
+        list.push({ name: "IsNgLog", value: '0' });
         return list;
     }
 }]);

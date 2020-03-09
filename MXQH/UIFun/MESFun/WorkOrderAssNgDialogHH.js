@@ -1,19 +1,21 @@
 ﻿'use strict';
 angular.module('app').controller('WorkOrderAssNgDialogHHCtrl', WorkOrderAssNgDialogHHCtrl);
 
-WorkOrderAssNgDialogHHCtrl.$inject = ['$scope', '$uibModalInstance', 'Form', 'ItemData', 'toastr', 'AjaxService'];
+WorkOrderAssNgDialogHHCtrl.$inject = ['$rootScope', '$scope', '$uibModalInstance', 'Form', 'ItemData', 'toastr', 'AjaxService'];
 
-function WorkOrderAssNgDialogHHCtrl($scope, $uibModalInstance, Form, ItemData, toastr, AjaxService) {
+function WorkOrderAssNgDialogHHCtrl($rootScope, $scope, $uibModalInstance, Form, ItemData, toastr, AjaxService) {
     var vm = this;
     vm.form = Form[ItemData.SysNo ? 1 : 0];
     vm.Item = ItemData;
     vm.isExists = isExists;
     vm.ChangeMonitor = ChangeMonitor;
-
+    vm.DialogItem = {};
     //获取组织信息
 
     AjaxService.GetPlans("syQpoor", [{ name: "Layer", value: 3 }, { name: "IsMonitor", value: 1 }]).then(function (data) {
         vm.TypeList = data;
+        vm.DialogItem.NgType = data[0].ID;
+        ChangeMonitor();
     });
 
     function ChangeMonitor() {
@@ -32,7 +34,6 @@ function WorkOrderAssNgDialogHHCtrl($scope, $uibModalInstance, Form, ItemData, t
         en.SecondPoor = vm.DialogItem.Ng;//不良码id 二级
         en.ThridPoor = 0;
         en.PoorReason = vm.DialogItem.Reason;//不良原因
-        en.CreateBy = $rootScope.User.UserNo;//
         en.RoutingId = vm.Item.RoutingId;//当前工艺路由ID
         en.WorkOrder = vm.Item.WorkOrder;//工单
         console.log(en);

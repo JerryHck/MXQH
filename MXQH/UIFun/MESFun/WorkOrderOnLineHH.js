@@ -1,10 +1,10 @@
 ﻿'use strict';
 angular.module('app').controller('WorkOrderOnLineHHCtrl', WorkOrderOnLineHHCtrl);
-WorkOrderOnLineHHCtrl.$inject = ['$scope', '$uibModalInstance', 'Dialog', 'Form', 'ItemData', 'toastr', 'AjaxService', 'MyPop'];
+WorkOrderOnLineHHCtrl.$inject = ['$scope', '$uibModalInstance', 'Dialog', 'Form', 'ItemData', 'toastr', 'AjaxService', 'MyPop', '$timeout'];
 //angular.module('app')
 //.controller('WorkOrderOnLineCtrlHH', ['$rootScope', '$scope', 'MyPop', 'AjaxService', 'toastr', '$window',
 //function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
-function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, toastr,AjaxService, MyPop) {
+function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, toastr, AjaxService, MyPop, $timeout) {
     var vm = this;
     vm.form = Form[ItemData.Id ? 1 : 0];
     vm.Item = {};
@@ -23,27 +23,28 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
 
     vm.NgSave = NgSave;
     vm.SelectTab = SelectTab;
-  
+    GetOrder();
 
-    var en = {};
-    //en.WorkOrder = vm.Item.WorkOrder;
-    en.WorkOrder = vm.Item2.WorOrder;
-    AjaxService.ExecPlan("MesMxWOrderHH", "order", en).then(function (data) {
-        var mss = "工单 [" + vm.Item.WorkOrder + '] ';
-        vm.OrderData = undefined;
-        if (!data.data[0] || !data.data[0].WorkOrder) {
-            vm.Item.WorkOrder = undefined;
-            showError(mss + '  不存在或已完工');
-        }
-        else {
-            vm.OrderData = data.data[0];
-            vm.RoutingList = data.data1;
-            vm.RoutingData = data.data1[0];
-            vm.OrderCount = data.data2[0];
-            vm.Item.WorkOrder = vm.Item2.WorOrder;
-        }
-    });
-
+    function GetOrder() {
+        var en = {};
+        //en.WorkOrder = vm.Item.WorkOrder;
+        en.WorkOrder = vm.Item2.WorOrder;
+        AjaxService.ExecPlan("MesMxWOrderHH", "order", en).then(function (data) {
+            var mss = "工单 [" + vm.Item.WorkOrder + '] ';
+            vm.OrderData = undefined;
+            if (!data.data[0] || !data.data[0].WorkOrder) {
+                vm.Item.WorkOrder = undefined;
+                showError(mss + '  不存在或已完工');
+            }
+            else {
+                vm.OrderData = data.data[0];
+                vm.RoutingList = data.data1;
+                vm.RoutingData = data.data1[0];
+                vm.OrderCount = data.data2[0];
+                vm.Item.WorkOrder = vm.Item2.WorOrder;
+            }
+        });
+    }
 
     //获取包装信息
     AjaxService.GetPlans("MesMxWOrderHH", [{ name: "Status", value: 4, type:"!=" }]).then(function (data) {
@@ -96,11 +97,11 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
             showError('不存在或已完工');
             return false;
         }
-        if (vm.OrderData.MaxOverCount - vm.OrderCount.ToTalCount <= 0) {
-            showError('工单投入量已达最大允许值，不可再投入');
-            vm.Item.InCode = undefined;
-            return false;
-        }
+        //if (vm.OrderData.MaxOverCount - vm.OrderCount.ToTalCount <= 0) {
+        //    showError('工单投入量已达最大允许值，不可再投入');
+        //    vm.Item.InCode = undefined;
+        //    return false;
+        //}
         if (vm.OrderData.Quantity - vm.OrderCount.ToTalCount == 0) {
             AjaxService.PlayVoice('5611.mp3');
             MyPop.ngConfirm({ text: "投入数量已达到生产量, 是否继续投入?" }).then(function (data) {
@@ -123,11 +124,11 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
             showError('不存在或已完工');
             return false;
         }
-        if (vm.OrderData.MaxOverCount - vm.OrderCount.ToTalCount <= 0) {
-            showError('工单投入量已达最大允许值，不可再投入');
-            vm.Item.InCode = undefined;
-            return false;
-        }
+        //if (vm.OrderData.MaxOverCount - vm.OrderCount.ToTalCount <= 0) {
+        //    showError('工单投入量已达最大允许值，不可再投入');
+        //    vm.Item.InCode = undefined;
+        //    return false;
+        //}
         if (vm.OrderData.Quantity - vm.OrderCount.ToTalCount == 0) {
             AjaxService.PlayVoice('5611.mp3');
             MyPop.ngConfirm({ text: "投入数量已达到生产量, 是否继续投入?" }).then(function (data) {
@@ -212,20 +213,13 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
         if (vm.InCodeSave == null) {
             e.InCode = vm.Item.InCode;//内控码
         }
-        console.log(e);
+        //console.log(e);
         Open(e);
     }
-    //function Insert() {
-    //    Open({});
-    //}
-
-    //function Edit(e) {
-    //    Open(e);
-    //}
 
     function Open(item) {
         Dialog.OpenDialog("WorkOrderAssNgDialogHH", item).then(function (data) {
-            PageChange();
+            GetOrder();
         }).catch(function (reason) {
         });
     }
@@ -233,4 +227,5 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
     vm.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     }
+
 }
