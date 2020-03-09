@@ -20,6 +20,18 @@
                                 <a><i ng-click="mouldInfo.Ser.Name = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
                             </span>
                         </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mouldInfo.Ser.Holder" placeholder="使用厂商">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mouldInfo.Ser.Holder = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mouldInfo.Ser.ModelType" placeholder="使用机型">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mouldInfo.Ser.ModelType = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
                     </div>
                     <button class="btn btn-sm btn-info " ng-click="mouldInfo.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
                     <button class="btn btn-sm btn-success " ng-click="mouldInfo.Export() "><i class="glyphicon glyphicon-export "></i>导出</button>
@@ -34,11 +46,11 @@
                         <td style="width:100px ">模具料号</td>
                         <td style="width:140px ">模具名称</td>
                         <td style="width:140px ">模具规格</td>
-                        <td style="width:60px ">穴数</td>
-                        <td style="width:120px ">寿命总次数(K)</td>
+                        <td style="width:60px ">模具穴数</td>
+                        <td style="width:120px ">寿命(K)</td>
                         <td style="width:60px ">日产能</td>
                         <td style="width:60px ">日模次</td>
-                        <td style="width:80px">剩余模次</td>
+                        <td style="width:80px">剩余模次(K)</td>
                         <td style="width:120px ">使用厂商</td>
                         <td style="width:120px ">制造厂商</td>
                         <td style="width:100px ">成型周期(s)</td>
@@ -46,6 +58,8 @@
                         <td style="width:100px ">水口重量(g)</td>
                         <td style="width:140px ">购买日期</td>
                         <td style="width:140px ">启用日期</td>
+                        <td style="width:140px ">机台吨位</td>
+                        <td style="width:140px ">使用机型</td>
                     </tr>
                 </thead>
                 <tr ng-repeat="item in mouldInfo.List ">
@@ -68,6 +82,8 @@
                     <td title="{{ item.NozzleWeight }}">{{ item.NozzleWeight }}</td>
                     <td title="{{ item.DealDate }}" style="white-space:normal;">{{ item.DealDate |date:'yyyy-MM-dd'}}</td>
                     <td title="{{ item.EffectiveDate }}" style="white-space:normal;">{{ item.EffectiveDate|date:'yyyy-MM-dd' }}</td>
+                    <td title="{{ item.MachineWeight }}" style="white-space:normal;">{{ item.MachineWeight }}</td>
+                    <td title="{{ item.ModelType }}" style="white-space:normal;">{{ item.ModelType }}</td>
                 </tr>
             </table>
         </div>

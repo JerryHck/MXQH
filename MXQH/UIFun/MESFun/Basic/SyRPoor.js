@@ -16,6 +16,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     vm.AddNewTopType = AddNewTopType;//新增顶级分类
     vm.SaveTopType = SaveTopType;//保存顶级分类
     vm.IsAddTop = false;
+    vm.IsMonitor = { Table: 'AgingTestIsPass', Column: 'IsPass' };
     GetTreeData();
 
     //绑定数据

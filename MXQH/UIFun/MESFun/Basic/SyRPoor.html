@@ -50,6 +50,7 @@
                                             <td style="width:10%;" class="">编码</td>
                                             <td style="width:7%;" class="">名称</td>
                                             <td style="width:7%;" class="">层次编码</td>
+                                            <td style="width:7%;" class="">是否显示</td>
                                         </tr>
                                         <!--filter: auctusSO.search-->
                                         <!---->
@@ -62,6 +63,8 @@
                                             <td>{{ item.Code }}</td>
                                             <td>{{ item.text }}</td>
                                             <td>{{ item.Layer }}</td>
+                                            <td ng-if="item.IsMonitor">是</td>
+                                            <td ng-if="!item.IsMonitor">否</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -123,6 +126,10 @@
                         <label class="control-label col-md-2">层级编码</label>
                         <div class="col-md-4">
                             <input type="text" ng-model="rp.ItemData.Layer" class="form-control" />
+                        </div>
+                        <label class="control-label col-md-2">是否显示</label>
+                        <div class="col-md-4">
+                            <div config-select ng-model="rp.ItemData.IsMonitor" config-option="rp.IsMonitor" auto-first="false" ng-name="IsMonitor" placeholder="是否显示"></div>
                         </div>
                     </div>
                 </div>

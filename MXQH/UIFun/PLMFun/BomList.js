@@ -18,6 +18,7 @@ function ($scope, $http, $q, AjaxService, $window, toastr) {
     //获取数据源
     function DataBind() {
         vm.promise = AjaxService.ExecPlan("v_MaterislVersion", "GetList", vm.page).then(function (data) {
+            console.log(data);
             vm.List = data.data;
             vm.page.total = data.data1[0].Count;
         });

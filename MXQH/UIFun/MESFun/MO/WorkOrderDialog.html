@@ -143,7 +143,7 @@
                                 <option ng-selected="x.ID==moDialog.Item.SendPlaceID" ng-repeat="x in moDialog.Places" value="{{x.ID}}">{{x.Name}}</option>
                             </select>-->
                             <div class="py-xl-0 pt-xl-0" ng-class="{ 'input-group' : clear }">
-                                <ui-select ng-model="moDialog.Item.SendPlaceID" ng-change="ValueChange()" theme="bootstrap" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">
+                                <ui-select ng-model="moDialog.Item.SendPlaceID" ng-change="ValueChange()" theme="bootstrap" ng-class="{'has-error': DialogForm.SendPlaceID.$invalid }" ng-disabled="ngDisabled" name="SendPlaceID" required>
                                     <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>
                                     <ui-select-choices repeat="item.ID as item in moDialog.Places | filter: $select.search" refresh="refresh($select.search)">
                                         <div ng-bind-html="item.Name | highlight: $select.search"></div>
@@ -235,6 +235,7 @@
                             <td style="width:120px ">包装单机总数</td>
                             <td style="width:120px ">每箱单机头数</td>
                             <td style="width:120px ">每箱彩盒数量</td>
+                            <td style="width:130px ">箱号范围</td>
                             <td style="width:100px ">发货来源地</td>
                             <td style="width:130px ">出货说明</td>
                             <td style="width:120px ">彩盒最大重量</td>
@@ -260,6 +261,7 @@
                         <td title="{{ item.PlanQuantity }}">{{ item.PlanQuantity }}</td>
                         <td title="{{ item.PerBoxQuantity }}">{{ item.PerBoxQuantity }}</td>
                         <td title="{{ item.PerColorBoxQty }}">{{ item.PerColorBoxQty }}</td>
+                        <td title="{{ item.ShipForm }}">{{ item.StartNo }}-{{item.EndNo}}</td>
                         <td title="{{ item.ShipForm }}">{{ item.ShipForm }}</td>
                         <td title="{{ item.ShipInstruction }}">{{ item.ShipInstruction }}</td>
                         <td title="{{ item.MaxWeight }}">{{ item.MaxWeight }}</td>

@@ -7,13 +7,29 @@
                     <button class="btn btn-sm btn-success " ng-click="mouldRelation.Add() "><i class="glyphicon glyphicon-plus "></i>新增</button>
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" class="form-control" ng-model="mouldRelation.Ser.Code" placeholder="模具料号">
+                            <input type="text" class="form-control" ng-model="mouldRelation.Ser.ItemCode" placeholder="U9料号">
                             <span class="input-group-addon">
-                                <a><i ng-click="mouldRelation.Ser.Code = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                                <a><i ng-click="mouldRelation.Ser.ItemCode = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
                             </span>
                         </div>
-                    </div>
-                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mouldRelation.Ser.ItemName" placeholder="U9品名">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mouldRelation.Ser.ItemName = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mouldRelation.Ser.Holder" placeholder="使用厂商">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mouldRelation.Ser.Holder = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="mouldRelation.Ser.ModelType" placeholder="使用机型">
+                            <span class="input-group-addon">
+                                <a><i ng-click="mouldRelation.Ser.ModelType = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
                         <div class="input-group">
                             <input type="text" class="form-control" ng-model="mouldRelation.Ser.Name" placeholder="模具名称">
                             <span class="input-group-addon">
@@ -31,12 +47,25 @@
                 <thead>
                     <tr>
                         <td style="width:90px ">编辑</td>
-                        <td style="width:100px ">模具料号</td>
-                        <td style="width:140px ">模具名称</td>
-                        <td style="width:140px ">模具规格</td>
                         <td style="width:120px ">料号</td>
                         <td style="width:80px ">品名</td>
                         <td style="width:80px ">规格</td>
+                        <td style="width:100px ">模具料号</td>
+                        <td style="width:140px ">模具名称</td>
+                        <td style="width:140px ">模具规格</td>
+                        <td style="width:120px ">使用厂商</td>
+                        <td style="width:140px ">使用机型</td>
+                        <td style="width:60px ">模具穴数</td>
+                        <td style="width:120px ">寿命(K)</td>
+                        <td style="width:60px ">日产能</td>
+                        <td style="width:60px ">日模次</td>
+                        <td style="width:120px ">制造厂商</td>
+                        <td style="width:100px ">成型周期(s)</td>
+                        <td style="width:100px ">产品重量(g)</td>
+                        <td style="width:100px ">水口重量(g)</td>
+                        <td style="width:140px ">机台吨位</td>
+                        <td style="width:140px ">购买日期</td>
+                        <td style="width:140px ">启用日期</td>
                         <td style="width:80px ">单位产出</td>
                         <td style="width:140px ">不良率</td>
                         <td style="width:140px ">生效时间</td>
@@ -48,14 +77,27 @@
                         <button class="btn btn-xs btn-primary" title="查看" ng-click="mouldRelation.Edit(item.MouldCode)"><i class="glyphicon glyphicon-edit"></i></button>
                         <!--<button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除料号'+item.Code+'吗'}" ng-click="mouldRelation.Delete(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>-->
                     </td>
-                    <td title="{{ item.MouldCode }}">{{ item.MouldCode }}</td>
-                    <td title="{{ item.MouldName }}" style="white-space:normal;">{{ item.MouldName }}</td>
-                    <td title="{{ item.MouldSPECS }}">{{ item.MouldSPECS }}</td>
                     <td title="{{ item.ItemCode }}">{{ item.ItemCode }}</td>
                     <td title="{{ item.ItemName }}">{{ item.ItemName }}</td>
                     <td title="{{ item.ItemSPECS }}">{{ item.ItemSPECS }}</td>
-                    <td title="{{ item.DailyNum }}">{{ item.UnitOutput }}</td>
-                    <td title="{{ item.RemainNum }}">{{ item.PoorRate }}</td>
+                    <td title="{{ item.MouldCode }}">{{ item.MouldCode }}</td>
+                    <td title="{{ item.MouldName }}" style="white-space:normal;">{{ item.MouldName }}</td>
+                    <td title="{{ item.MouldSPECS }}">{{ item.MouldSPECS }}</td>
+                    <td title="{{ item.Holder }}">{{ item.Holder }}</td>
+                    <td title="{{ item.ModelType }}">{{ item.ModelType }}</td>
+                    <td title="{{ item.HoleNum }}">{{ item.HoleNum }}</td>
+                    <td title="{{ item.TotalNum }}">{{ item.TotalNum }}</td>
+                    <td title="{{ item.DailyCapacity }}">{{ item.DailyCapacity }}</td>
+                    <td title="{{ item.DailyNum }}">{{ item.DailyNum }}</td>
+                    <td title="{{ item.Manufacturer }}">{{ item.Manufacturer }}</td>
+                    <td title="{{ item.CycleTime }}">{{ item.CycleTime }}</td>
+                    <td title="{{ item.ProductWeight }}">{{ item.ProductWeight }}</td>
+                    <td title="{{ item.NozzleWeight }}">{{ item.NozzleWeight }}</td>
+                    <td title="{{ item.MachineWeight }}">{{ item.MachineWeight }}</td>
+                    <td title="{{ item.DealDate }}">{{ item.DealDate }}</td>
+                    <td title="{{ item.MouldEffectiveDate }}">{{ item.MouldEffectiveDate }}</td>
+                    <td title="{{ item.UnitOutput }}">{{ item.UnitOutput }}</td>
+                    <td title="{{ item.PoorRate }}">{{ item.PoorRate }}</td>
                     <td title="{{ item.EffectiveDate|date:'yyyy-MM-dd HH:mm:ss' }}">{{ item.EffectiveDate|date:'yyyy-MM-dd HH:mm:ss' }}</td>
                     <td title="{{ item.DisableDate|date:'yyyy-MM-dd HH:mm:ss' }}" style="white-space:normal;">{{ item.DisableDate |date:'yyyy-MM-dd HH:mm:ss'}}</td>
                 </tr>

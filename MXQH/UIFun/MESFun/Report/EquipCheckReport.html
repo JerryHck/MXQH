@@ -1,0 +1,139 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="ecrc.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">设备点检图</uib-tab-heading>
+        <div class="wrapper-md" cg-busy="ecrc.promise">
+            <div class="form-inline">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" date-picker class="form-control" ng-model="ecrc.page.SD" placeholder="开始时间" option="vm.DateTimeOption" required>
+                        <span class="input-group-addon">
+                            <a><i ng-click="ecrc.page.SD = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                        </span>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" date-picker class="form-control" ng-model="ecrc.page.ED" placeholder="结束时间" option="vm.DateTimeOption2">
+                        <span class="input-group-addon">
+                            <a><i ng-click="ecrc.page.ED = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                        </span>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="ecrc.page.EquipCode" placeholder="设备编码" >
+                        <span class="input-group-addon">
+                            <a><i ng-click="ecrc.page.EquipCode = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                        </span>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="ecrc.page.EquipName" placeholder="名称" >
+                        <span class="input-group-addon">
+                            <a><i ng-click="ecrc.page.EquipName = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                        </span>
+                    </div>
+                </div>
+                <button class="btn btn-sm btn-info " ng-click="ecrc.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+            </div>
+        </div>
+        <div>
+            <div id="container"></div>
+        </div>
+    </uib-tab>
+    <uib-tab index="1">
+        <uib-tab-heading class="h5">设备点检报表</uib-tab-heading>
+        <div class="wrapper-md" cg-busy="ecrc.promise">
+            <div class="form-inline">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" date-picker class="form-control" ng-model="ecrc.page2.SD" placeholder="开始时间" option="vm.DateTimeOption3" required>
+                        <span class="input-group-addon">
+                            <a><i ng-click="ecrc.page2.SD = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                        </span>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" date-picker class="form-control" ng-model="ecrc.page2.ED" placeholder="结束时间" option="vm.DateTimeOption4">
+                        <span class="input-group-addon">
+                            <a><i ng-click="ecrc.page2.ED = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                        </span>
+                    </div>
+                    <div class="input-group">
+                        <input type="text"  class="form-control" ng-model="ecrc.page2.EquipCode" placeholder="设备编码">
+                        <span class="input-group-addon">
+                            <a><i ng-click="ecrc.page2.EquipCode = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                        </span>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="ecrc.page2.EquipName" placeholder="设备名称" >
+                        <span class="input-group-addon">
+                            <a><i ng-click="ecrc.page2.EquipName = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                        </span>
+                    </div>
+                </div>
+                <button class="btn btn-sm btn-info " ng-click="ecrc.Search2() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                <button class="btn btn-sm btn-info " ng-click="ecrc.Export() "><i class="glyphicon glyphicon-export "></i>导出</button>
+            </div>
+        </div>
+        <div class="padder-md table-responsive">
+            <table class="table one-line">
+                <thead>
+                    <tr>
+                        <td style="width:100px ">设备编码</td>
+                        <td style="width:100px ">设备名称</td>
+                        <td style="width:100px ">工单号</td>
+                        <td style="width:140px ">点检日期</td>
+                        <td style="width:100px ">时间段</td>
+                        <td style="width:100px ">点检记录</td>
+                        <td style="width:100px ">点检单位</td>
+                        <td style="width:100px ">工单点检下限</td>
+                        <td style="width:100px ">工单点检上限</td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in ecrc.List ">
+                    <td title="{{ item.Code }}">{{ item.Code }}</td>
+                    <td title="{{ item.Name }}">{{ item.Name }}</td>
+                    <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td title="{{ item.CheckDate }}">{{ item.CheckDate }}</td>
+                    <td title="{{ item.Duration }}">{{ item.Duration }}</td>
+                    <td title="{{ item.Record }}">{{ item.Record }}</td>
+                    <td title="{{ item.CheckUOMName }}">{{ item.CheckUOMName }}</td>
+                    <td title="{{ item.LowerLimit }}">{{ item.LowerLimit }}</td>
+                    <td title="{{ item.UpperLimit }}">{{ item.UpperLimit }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-12 text-center " ng-if="ecrc.page2.total>ecrc.page2.pageSize ">
+            <div uib-pagination total-items="ecrc.page.total " ng-model="ecrc.page2.pageIndex " items-per-page="ecrc.page2.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                 ng-change="ecrc.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+
+
+
+
+<!--<div class="wrapper-md" cg-busy="ecrc.promise">
+    <div class="form-inline">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" date-picker class="form-control" ng-model="ecrc.Ser.SD" placeholder="开始时间" option="vm.DateTimeOption" required>
+                <span class="input-group-addon">
+                    <a><i ng-click="ecrc.Ser.SD = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                </span>
+            </div>
+            <div class="input-group">
+                <input type="text" date-picker class="form-control" ng-model="ecrc.Ser.ED" placeholder="结束时间" option="vm.DateTimeOption2">
+                <span class="input-group-addon">
+                    <a><i ng-click="ecrc.Ser.ED = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                </span>
+            </div>
+            <div class="input-group">
+                <input type="text" date-picker class="form-control" ng-model="ecrc.Ser.Code" placeholder="设备编码" option="vm.DateTimeOption2">
+                <span class="input-group-addon">
+                    <a><i ng-click="ecrc.Ser.Code = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                </span>
+            </div>
+        </div>
+        <button class="btn btn-sm btn-info " ng-click="ecrc.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+    </div>
+</div>
+<div>
+    <div id="container"></div>
+</div>-->

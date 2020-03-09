@@ -17,6 +17,12 @@
                                 <a><i ng-click="pmc.page.Name = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
                             </span>
                         </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="pmc.page.Brands" placeholder="厂牌">
+                            <span class="input-group-addon">
+                                <a><i ng-click="pmc.page.Brands = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
                     </div>
 
                     <button class="btn btn-sm btn-info " ng-click="pmc.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>

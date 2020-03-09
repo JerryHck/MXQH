@@ -19,11 +19,11 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     //绑定数据
     function GetTreeData() {
         var condition = [{ name: "PID", value: "-1" }];
-        vm.promise = AjaxService.GetPlans("QualityProperty", condition).then(function (poorType) {
+        vm.promise = AjaxService.GetPlans("QualityPropertyT", condition).then(function (poorType) {
             var topNode = [{ID:-1,PID:-1,text:'所有分类',nodes:poorType}]
             $('#tree').treeview({
                 data: topNode,
-                levels: 3,
+                levels: 5,
                 emptyIcon: "glyphicon",
                 showTags: true,                
                 onNodeSelected: function (event, data) {//节点选中事件
@@ -54,7 +54,6 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     function DataBind() {
         var condition = [{ name: "PID", value: vm.PID }]
         vm.promise = AjaxService.GetPlansPage("QualityProperty", condition, vm.page.pageIndex, vm.page.pageSize).then(function (data) {
-            console.log(data)
             vm.List = data.List;
             vm.page.total = data.Count;
         })
@@ -87,7 +86,6 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
         li.push(vm.ItemData);
         en.TempColumns = "List";
         en.List = JSON.stringify(li);
-        console.log(en);
         if (!vm.IsEdit) {//新增           
             vm.promise = AjaxService.ExecPlan("QualityProperty", "Add", en).then(function (data) {
                 if (data.data[0].MsgType == "1") {

@@ -1,0 +1,130 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="bdic.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">字典信息管理</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs">
+                <div class="form-inline">
+                    <button class="btn btn-sm btn-success " ng-click="bdic.Add() "><i class="glyphicon glyphicon-plus "></i>新增</button>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="bdic.Ser.Code" placeholder="编码">
+                            <span class="input-group-addon">
+                                <a><i ng-click="bdic.Ser.Code = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="bdic.Ser.Name" placeholder="名称">
+                            <span class="input-group-addon">
+                                <a><i ng-click="bdic.Ser.Name = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div config-select ng-model="bdic.Ser.IsActive" config-option="bdic.Ser_IsActive" auto-first="false" ng-name="IsActive" placeholder="是否生效"></div>
+                            <span class="input-group-addon">
+                                <a><i ng-click="bdic.Ser.IsActive = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-sm btn-info " ng-click="bdic.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                </div>
+            </div>
+        </div>
+        <div class="padder-md table-responsive">
+            <table class="table one-line">
+                <thead>
+                    <tr>
+                        <td style="width:90px ">编辑</td>
+                        <td style="width:100px ">创建人</td>
+                        <td style="width:140px ">创建日期</td>
+                        <td style="width:135px ">修改人</td>
+                        <td style="width:140px ">修改日期</td>
+                        <td style="width:100px ">编码</td>
+                        <td style="width:100px ">名称</td>
+                        <td style="width:100px ">分类编码</td>
+                        <td style="width:100px ">分类名称</td>
+                        <td style="width:100px ">是否生效</td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in bdic.List ">
+                    <td>
+                        <button class="btn btn-xs btn-primary" title="编辑" ng-click="bdic.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                        <!--<button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除此项吗'}" ng-click="bdic.Delete(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>-->
+                    </td>
+                    <td title="{{ item.CreateBy }}">{{ item.CreateBy }}</td>
+                    <td title="{{ item.CreateDate }}">{{ item.CreateDate|date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td title="{{ item.ModifyBy }}">{{ item.ModifyBy }}</td>
+                    <td title="{{ item.ModifyDate }}">{{ item.ModifyDate|date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td title="{{ item.Code }}">{{ item.Code }}</td>
+                    <td title="{{ item.Name }}">{{ item.Name }}</td>
+                    <td title="{{ item.TypeCode }}">{{ item.TypeCode }}</td>
+                    <td title="{{ item.TypeName }}">{{ item.TypeName }}</td>
+                    <td  ng-if="item.IsActive==1" title="是"><span class="text-success">是</span></td>
+                    <td  ng-if="item.IsActive==0" title="否"><span class="text-danger">否</span></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-12 text-center " ng-if="bdic.page.total>bdic.page.pageSize ">
+            <div uib-pagination total-items="bdic.page.total " ng-model="bdic.page.pageIndex " items-per-page="bdic.page.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                 ng-change="bdic.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+
+<!--右侧弹出框-->
+<div class="pro-file d-r lg bg-light dk wrapper-md padder-md scroll-y" ng-form="DialogForm">
+    <div class="b-b wrapper-md text-center">
+        <a href class="text-danger pull-left" ui-remove-class="active" target=".pro-file"><i class="glyphicon glyphicon-remove"></i></a>
+        <h3>字典</h3>
+    </div>
+    <div class="padder-md wrapper">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="input-group m-b-xxs" style="padding-bottom:10px;">
+                        <div class="form-inline">
+                            <button class="btn btn-sm btn-success" ng-click="bdic.Save()" ng-disabled="DialogForm.$invalid"><i class="glyphicon glyphicon-save"></i>保存</button>
+                            <button class="btn btn-sm btn-warning" ng-click="bdic.Cancel()"><i class="glyphicon glyphicon-remove"></i>放弃</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">编码</label>
+                        <div class="col-md-4" ng-class="{ 'has-error' : DialogForm.Code.$invalid }">
+                            <input type="text" name="Code" ng-model="bdic.NewItem.Code" class="form-control" required />
+                        </div>
+                        <label class="control-label col-md-2">名称</label>
+                        <div class="col-md-4" ng-class="{ 'has-error' : DialogForm.Name.$invalid }">
+                            <input type="text" name="Name" ng-model="bdic.NewItem.Name" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">分类编码</label>
+                        <div class="col-md-4" ng-class="{ 'has-error' : DialogForm.TypeCode.$invalid }">
+                            <input type="text" name="TypeCode" ng-model="bdic.NewItem.TypeCode" class="form-control" required />
+                        </div>
+                        <label class="control-label col-md-2">分类名称</label>
+                        <div class="col-md-4" ng-class="{ 'has-error' : DialogForm.TypeName.$invalid }">
+                            <input type="text" name="TypeName" ng-model="bdic.NewItem.TypeName" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">是否生效</label>
+                        <div class="col-md-4" ng-class="{ 'has-error' : DialogForm.IsActive.$invalid }">
+                            <div config-select ng-model="bdic.NewItem.IsActive" config-option="bdic.IsActive" auto-first="false" ng-name="IsActive" placeholder="是否生效"></div>
+                        </div>
+                        <label class="control-label col-md-2">排序</label>
+                        <div class="col-md-4" ng-class="{ 'has-error' : DialogForm.OrderNo.$invalid }">
+                            <input type="number" name="OrderNo" ng-model="bdic.NewItem.OrderNo" class="form-control" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,43 +1,56 @@
-﻿'use strict';
+﻿
+'use strict';
 angular.module('app')
-.controller('QualityTDCtrl', ['$rootScope', '$scope', 'ItemData', '$uibModalInstance', 'Dialog', 'toastr', 'AjaxService', 'Form',
+.controller('EquipmentDialogCtrl', ['$rootScope', '$scope', 'ItemData', '$uibModalInstance', 'Dialog', 'toastr', 'AjaxService', 'Form',
 function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxService, Form) {
     var vm = this;
     vm.Save = Save;
-    vm.Item = ItemData;
     vm.Cancel = Cancel;
     Init();
+    //初始化
     function Init() {
-        if (!vm.Item.OrderNo) {
-            vm.Item.OrderNo = 0;
+        vm.NewItem = {};
+        if (ItemData.ID) {
+            vm.NewItem = angular.copy(ItemData);
         }
     }
-    // #region 
+
+    // #region 设备信息
 
     //保存
     function Save() {
+        if (vm.NewItem.UpperLimit < vm.NewItem.LowerLimit) {
+            toastr.error('上限数值不能小于下限数值！！');
+            return;
+        }
+        if (!vm.NewItem.Remark) {
+            vm.NewItem.Remark = '';
+        }
         var en = {};
         var li = [];
-        li.push(vm.Item);
+        li.push(vm.NewItem);
         en.EntityInfo = JSON.stringify(li);
         en.TempColumns = "EntityInfo";
-        if (!vm.Item.ID) {//新增操作
-            vm.promise = AjaxService.ExecPlan("QualityTemplate", "Add", en).then(function (data) {
+        if (vm.NewItem.ID) {//编辑操作
+            vm.promise = AjaxService.ExecPlan("Equipment", "Update", en).then(function (data) {
                 if (data.data[0].MsgType == "0") {
                     toastr.error(data.data[0].Msg);
                 } else {
                     toastr.success(data.data[0].Msg);
                     $uibModalInstance.close("1");
                 }
+            }).catch(function (data) {
             });
-        } else {//编辑操作
-            vm.promise = AjaxService.ExecPlan("QualityTemplate", "Update", en).then(function (data) {
+        } else {//新增操作
+            vm.promise = AjaxService.ExecPlan("Equipment", "Add", en).then(function (data) {
                 if (data.data[0].MsgType == "0") {
                     toastr.error(data.data[0].Msg);
                 } else {
+                    var returnData = "1";
                     toastr.success(data.data[0].Msg);
                     $uibModalInstance.close("1");
                 }
+            }).catch(function (data) {
             });
         }
     }
@@ -45,9 +58,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     function Cancel() {
         $uibModalInstance.close("1");
     }
+
     // #endregion
-
-
-
 }
 ])
