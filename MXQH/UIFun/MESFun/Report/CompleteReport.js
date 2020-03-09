@@ -25,6 +25,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window,Form) {
         // vm.promise=AjaxService.ExecPlan("CompleteRpt")
         vm.promise = AjaxService.ExecPlan("U9MoCompleteRpt", "GetQty", { WorkOrder: vm.Ser.WorkOrder }).then(function (data) {
             vm.ActualRcvQty = data.data[0].ActualRcvQty;
+            vm.TotalStartQty = data.data[0].TotalStartQty;
         })
         vm.promise = AjaxService.ExecPlan("CompleteRpt", "Report", vm.Ser).then(function (data) {
             if (data.data.length>0) {

@@ -54,7 +54,6 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     function DataBind() {
         var condition = [{ name: "PID", value: vm.PID }]
         vm.promise = AjaxService.GetPlansPage("QualityProperty", condition, vm.page.pageIndex, vm.page.pageSize).then(function (data) {
-            console.log(data)
             vm.List = data.List;
             vm.page.total = data.Count;
         })

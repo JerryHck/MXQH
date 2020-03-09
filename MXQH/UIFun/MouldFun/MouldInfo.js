@@ -12,7 +12,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
     DataBind();
     function Export() {
         vm.promise = AjaxService.GetPlanOwnExcel("MouldInfo", GetCondition()).then(function (data) {
-            console.log(data);
             $window.location.href = data.File;
         });
     }
@@ -34,11 +33,17 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
     function GetCondition() {
         var li = [];
         li.push({ name: "Deleted", value: '0' });
-        if (vm.Ser.Code) {
-            li.push({ name: "Code", value: '%' + vm.Ser.Code + '%' });
+        if (vm.Ser.ProductCode) {
+            li.push({ name: "ProductCode", value: '%' + vm.Ser.ProductCode + '%' });
         }
         if (vm.Ser.Name) {
             li.push({ name: "Name", value: '%' + vm.Ser.Name + '%' });
+        }
+        if (vm.Ser.Holder) {
+            li.push({ name: "Holder", value: '%' + vm.Ser.Holder + '%' });
+        }
+        if (vm.Ser.ModelType) {
+            li.push({ name: "ModelType", value: '%' + vm.Ser.ModelType + '%' });
         }
         return li;
     }

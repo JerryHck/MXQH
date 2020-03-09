@@ -1,0 +1,73 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">设备信息</h3>
+</div>
+<div class="modal-body wrapper-sm" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body wrapper-xs">
+            <div class="form-group">
+                <button class="btn btn-success" type="button" ng-disabled="DialogForm.$invalid" ng-click="eqpd.Save()">储存</button>
+                <button class="btn btn-warning" type="button" ng-click="eqpd.Cancel()">取消</button>
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">设备分类</label>
+                        <div class="col-sm-8 padder-xs">
+                            <div ng-class="{ 'has-error' : DialogForm.TypeID.$invalid }" ng-name="TypeID" ng-required="true" basic-select="EquipmentType"
+                                 placeholder="点检单位" ng-model="eqpd.NewItem.TypeID" select-class="text-xs"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">设备编码</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Code.$invalid }">
+                            <input type="text" name="Code"  class="form-control" placeholder="设备编码" ng-model="eqpd.NewItem.Code" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">设备名称</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Name.$invalid }">
+                            <input type="text" name="Name" class="form-control" placeholder="设备名称" ng-model="eqpd.NewItem.Name" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">点检单位</label>
+                        <div class="col-sm-8 padder-xs">
+                            <div ng-class="{ 'has-error' : DialogForm.CheckUOM.$invalid }" ng-name="CheckUOM" ng-required="true" basic-select="CheckUOM"
+                                 placeholder="点检单位" ng-model="eqpd.NewItem.CheckUOM" select-class="text-xs"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">点检下限</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.LowerLimit.$invalid }">
+                            <input type="number" name="LowerLimit" ng-model="eqpd.NewItem.LowerLimit" class="form-control" required />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">点检上限</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.UpperLimit.$invalid }">
+                            <input type="number" name="UpperLimit" ng-model="eqpd.NewItem.UpperLimit" class="form-control" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">设备型号</label>
+                        <div class="col-sm-8 padder-xs">
+                            <input type="text" name="Type" class="form-control" placeholder="型号" ng-model="eqpd.NewItem.Type">
+                        </div>
+                    </div>
+                    <div class="col-sm-8 padder-xs">
+                        <label class="control-label col-sm-2 padder-xs">备注</label>
+                        <div class="col-sm-10 padder-xs" ng-class="{ 'has-error' : DialogForm.Remark.$invalid }">
+                            <textarea class="form-control" name="Remark" placeholder="备注" ng-model="eqpd.NewItem.Remark"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

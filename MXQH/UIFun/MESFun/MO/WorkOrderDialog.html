@@ -235,6 +235,7 @@
                             <td style="width:120px ">包装单机总数</td>
                             <td style="width:120px ">每箱单机头数</td>
                             <td style="width:120px ">每箱彩盒数量</td>
+                            <td style="width:130px ">箱号范围</td>
                             <td style="width:100px ">发货来源地</td>
                             <td style="width:130px ">出货说明</td>
                             <td style="width:120px ">彩盒最大重量</td>
@@ -260,6 +261,7 @@
                         <td title="{{ item.PlanQuantity }}">{{ item.PlanQuantity }}</td>
                         <td title="{{ item.PerBoxQuantity }}">{{ item.PerBoxQuantity }}</td>
                         <td title="{{ item.PerColorBoxQty }}">{{ item.PerColorBoxQty }}</td>
+                        <td title="{{ item.ShipForm }}">{{ item.StartNo }}-{{item.EndNo}}</td>
                         <td title="{{ item.ShipForm }}">{{ item.ShipForm }}</td>
                         <td title="{{ item.ShipInstruction }}">{{ item.ShipInstruction }}</td>
                         <td title="{{ item.MaxWeight }}">{{ item.MaxWeight }}</td>

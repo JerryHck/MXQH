@@ -16,7 +16,8 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     vm.AddNewTopType = AddNewTopType;//新增顶级分类
     vm.SaveTopType = SaveTopType;//保存顶级分类
     vm.IsAddTop = false;
-    
+    vm.IsMonitor = { Table: 'AgingTestIsPass', Column: 'IsPass' };
+
     //vm.Cancel = Cancel;
     GetTreeData();
 
@@ -72,6 +73,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     function DataBind() {
         var condition2 = [{ name: "PID", value: vm.PID }, { name: "TopType", value: vm.TopType }]
         vm.promise = AjaxService.GetPlansPage("QPoorTreeView", condition2, vm.page.pageIndex, vm.page.pageSize).then(function (data) {
+            console.log(data);
             vm.List = data.List;
             vm.page.total = data.Count;
         })

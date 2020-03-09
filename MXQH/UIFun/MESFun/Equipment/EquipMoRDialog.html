@@ -1,0 +1,80 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">工单设备管理</h3>
+</div>
+<div class="modal-body wrapper-sm" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body wrapper-xs">
+            <div class="form-group">
+                <button class="btn btn-success" type="button" ng-disabled="DialogForm.$invalid" ng-click="emrd.Save()">储存</button>
+                <button class="btn btn-warning" type="button" ng-click="emrd.Cancel()">取消</button>
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">设备编码</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Code.$invalid }">
+                            <input type="text" name="Code" ng-keyup="emrd.KeyDonwInCode($event)" class="form-control" placeholder="设备编码" ng-model="emrd.NewItem.Code" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">设备名称</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Name.$invalid }">
+                            <input type="text" disabled="disabled" name="Name" class="form-control" placeholder="设备名称" ng-model="emrd.NewItem.Name" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">设备分类</label>
+                        <div class="col-sm-8 padder-xs">
+                            <div ng-disabled="true" ng-class="{ 'has-error' : DialogForm.TypeID.$invalid }" ng-name="TypeID" ng-required="true" basic-select="EquipmentType"
+                                 placeholder="点检单位" ng-model="emrd.NewItem.TypeID" select-class="text-xs"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">工单号</label>
+                        <div class="col-sm-8 padder-xs">
+                            <div ng-class="{ 'has-error' : DialogForm.WorkOrderID.$invalid }" ng-name="WorkOrderID" ng-required="true" basic-select="WorkOrderSelect"
+                                 placeholder="工单号" ng-model="emrd.NewItem.WorkOrderID" select-class="text-xs"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">工单点检下限</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.LowerLimit.$invalid }">
+                            <input type="number" name="LowerLimit" ng-model="emrd.NewItem.LowerLimit" class="form-control" required />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">工单点检上限</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.UpperLimit.$invalid }">
+                            <input type="number" name="UpperLimit" ng-model="emrd.NewItem.UpperLimit" class="form-control" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">点检单位</label>
+                        <div class="col-sm-8 padder-xs">
+                            <div ng-disabled="true" ng-class="{ 'has-error' : DialogForm.CheckUOM.$invalid }" ng-name="CheckUOM" ng-required="true" basic-select="CheckUOM"
+                                 placeholder="点检单位" ng-model="emrd.NewItem.CheckUOM" select-class="text-xs"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">设备型号</label>
+                        <div class="col-sm-8 padder-xs">
+                            <input type="text" disabled="disabled" name="Type" class="form-control" placeholder="型号" ng-model="emrd.NewItem.Type">
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">备注</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Remark.$invalid }">
+                            <textarea class="form-control" name="Remark" placeholder="备注" ng-model="emrd.NewItem.Remark"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

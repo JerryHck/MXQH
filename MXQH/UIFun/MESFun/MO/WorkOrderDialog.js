@@ -192,13 +192,14 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     function GetPackInfo(IsEdit) {
         //弹窗为编辑操作时，获取包装信息
         if (vm.Item.ID) {
-            vm.promise = AjaxService.GetPlans("MESPackageMain", { name: 'AssemblyPlanDetailID', value: vm.Item.ID }).then(function (data) {
-                vm.PackInfo = data;
-                if (data.length == 0) {
+            //vm.promise = AjaxService.GetPlans("MESPackageMain", { name: 'AssemblyPlanDetailID', value: vm.Item.ID }).then(function (data) {
+            vm.promise = AjaxService.ExecPlan("MESPackageMain", "GetPackInfo", { AssemblyPlanDetailID: vm.Item.ID }).then(function (data) {
+                vm.PackInfo = data.data;
+                if (data.data.length == 0) {
                     vm.CanAddPack = false;
                 } else {
                     if (IsEdit=='1') {
-                        vm.Item.CustomerOrder = data[0].TransID
+                        vm.Item.CustomerOrder = data.data[0].TransID
                     }
                     vm.CanAddPack = true;
                 }

@@ -1,8 +1,8 @@
 ﻿
 'use strict';
 angular.module('app')
-.controller('MouldRelationCtrl', ['$rootScope', '$scope', 'Dialog', 'toastr', 'AjaxService', 'Form',
-function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
+.controller('MouldRelationCtrl', ['$rootScope', '$scope', 'Dialog', 'toastr', 'AjaxService', 'Form','$window',
+function ($rootScope, $scope, Dialog, toastr, AjaxService, Form,$window) {
     var vm = this;
     vm.page = { pageSize: 10, pageIndex: 1, maxSize: 10 };
     vm.pageDetail = { pageSize: 10, pageIndex: 1, maxSize: 10 };
@@ -36,6 +36,12 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
     }
     function GetLines(id) {
         var li = [];
+        if (vm.Ser.Code) {
+            vm.page.Code=vm.Ser.Code
+        }
+        if (vm.Ser.Name) {
+            vm.page.Name = vm.Ser.Name
+        }
         li.push({ name: "Deleted", value: '0' });
         li.push({ name: "MouldID", value: id });
         vm.promise = AjaxService.GetPlansPage("MouldRelation", li, vm.pageDetail.pageIndex, vm.pageDetail.pageSize).then(function (data) {
@@ -44,7 +50,10 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
         });
     }
     function Export() {
-        vm.promise = AjaxService.GetPlanOwnExcel("MouldRelation", GetCondition()).then(function (data) {
+        GetCondition();
+        vm.page.pageSize = 100000;
+        vm.promise = AjaxService.GetPlanExcel("MouldRelation", "GetList", vm.page).then(function (data) {
+            vm.page.pageSize = 1;
             $window.location.href = data.File;
         });
     }
@@ -66,6 +75,10 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
     function GetCondition() {
         vm.page.MouldCode = vm.Ser.Code == '' ? undefined : vm.Ser.Code;
         vm.page.MouldName = vm.Ser.Name == '' ? undefined : vm.Ser.Name;
+        vm.page.ItemCode = vm.Ser.ItemCode == '' ? undefined : vm.Ser.ItemCode;
+        vm.page.ItemName = vm.Ser.ItemName == '' ? undefined : vm.Ser.ItemName;
+        vm.page.Holder = vm.Ser.Holder == '' ? undefined : vm.Ser.Holder;
+        vm.page.ModelType = vm.Ser.ModelType == '' ? undefined : vm.Ser.ModelType;
     }
     //查看
     function Edit(mouldCode) {
@@ -153,7 +166,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
         } else {
             for (var i = 0; i < vm.Lines.length; i++) {
                 if (vm.Lines[i].ItemCode == l.ItemCode) {
-                    console.log(vm.Lines[i]);
                     vm.Lines[i].ID = l.ID;
                     vm.Lines[i].ItemCode = l.ItemCode;
                     vm.Lines[i].ItemName = l.ItemName;
@@ -175,7 +187,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
     }
 
     function DeleteLine(code) {
-        console.log(vm.Lines);
         for (var i = 0; i < vm.Lines.length; i++) {
             if (vm.Lines[i].ItemCode == code) {
                 vm.Lines.splice(i, 1);

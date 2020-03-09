@@ -17,7 +17,9 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     }
     //根据日产能计算日模次
     function CalDailyNum() {
-        vm.Item.DailyNum = Math.ceil(vm.Item.DailyCapacity/22.00);
+        if (vm.Item.HoleNum) {
+            vm.Item.DailyNum = Math.ceil(vm.Item.DailyCapacity / vm.Item.HoldNum);
+        }        
     }
     function Save() {
         var en = {};
@@ -28,11 +30,54 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
         if (!vm.Item.Remark) {
             vm.Item.Remark = '';
         }
+        if (!vm.Item.TotalNum) {
+            vm.Item.TotalNum = null;
+        }
+        if (!vm.Item.Code) {
+            vm.Item.Code = null;
+        }
+        if (!vm.Item.HoleNum) {
+            vm.Item.HoleNum = null;
+        }
+        if (!vm.Item.DailyCapacity) {
+            vm.Item.DailyCapacity = null;
+        }
+        if (!vm.Item.DailyNum) {
+            vm.Item.DailyNum = null;
+        }
+        if (!vm.Item.RemainNum) {
+            vm.Item.RemainNum = null;
+        }
+        if (!vm.Item.Manufacturer) {
+            vm.Item.Manufacturer = null;
+        }
+        if (!vm.Item.CycleTime) {
+            vm.Item.CycleTime = null;
+        }
+        if (!vm.Item.DealDate) {
+            vm.Item.DealDate = null;
+        }
+        if (!vm.Item.ProductWeight) {
+            vm.Item.ProductWeight = null;
+        }
+        if (!vm.Item.NozzleWeight) {
+            vm.Item.NozzleWeight = null;
+        }
+        if (!vm.Item.MachineWeight) {
+            vm.Item.MachineWeight = null;
+        }
+        if (!vm.Item.EffectiveDate) {
+            vm.Item.EffectiveDate = null;
+        }
+        if (!vm.Item.ProductCode) {
+            vm.Item.ProductCode = null;
+        }
         li.push(vm.Item);
         en.TempColumns = "Model";
         en.Model = JSON.stringify(li);
         if (!vm.Item.ID) {//新增操作
             vm.promise = AjaxService.ExecPlan("MouldInfo", "Add", en).then(function (data) {
+                console.log(data);
                 if (data.data[0].MsgType == "1") {
                     toastr.success(data.data[0].Msg);
                     $uibModalInstance.close('');

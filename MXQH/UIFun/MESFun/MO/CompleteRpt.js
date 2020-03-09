@@ -1,7 +1,7 @@
 ﻿'use strict';
 angular.module('app')
-.controller('CompleteRptCtrl', ['$rootScope', '$scope', 'Dialog', 'toastr', 'AjaxService', 'Form',
-function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
+.controller('CompleteRptCtrl', ['$rootScope', '$scope', 'Dialog', 'toastr', 'AjaxService', 'Form', '$window',
+function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     var vm = this;
     vm.page = { pageSize: 10, pageIndex: 1, maxSize: 10 };
     vm.DataBind = DataBind;
@@ -10,6 +10,7 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
     vm.Edit = Edit;
     vm.Delete = Delete;
     vm.Search = Search;
+    vm.Export = Export;
     Init();
     //初始化
     function Init() {
@@ -18,18 +19,10 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
 
     //绑定数据
     function DataBind() {
-        vm.promise = AjaxService.GetPlansPage("CompleteRpt", GetCondition(), vm.page.pageIndex, vm.page.pageSize).then(function (data) {
-            vm.List = data.List;
-            vm.page.total = data.Count;
+        vm.promise = AjaxService.ExecPlan("CompleteRpt", "GetList", vm.page).then(function (data) {
+            vm.List = data.data;
+            vm.page.total = data.data1[0].Count;
         });
-    }
-    //查询条件
-    function GetCondition() {
-        var li = []
-        if (vm.Ser.DocNo) {
-            li.push({ name: "WorkOrder", value: '%' + vm.Ser.DocNo + '%' });
-        }
-        return li;
     }
 
     //查询功能
@@ -37,8 +30,12 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
         vm.page.pageIndex = 1;
         DataBind();
     }
-
-
+    //导出
+    function Export() {
+        vm.promise = AjaxService.GetPlanExcel("CompleteRpt", 'GetList', vm.page).then(function (data) {
+                $window.location.href = data.File;
+            });
+    }
 
     //编辑
     function Edit(item) {

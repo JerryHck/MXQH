@@ -244,6 +244,29 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-4 padder-xs">
+                                <label class="control-label col-sm-4 padder-xs">机台吨位</label>
+                                <div class="col-sm-8  padder-xs" ng-class="{ 'has-error' : DialogForm.MachineWeight.$invalid }">
+                                    <input ng-disabled="mouldModify.IsEdit" type="text" class="form-control"   name="MachineWeight" placeholder="机台吨位" 
+                                           ng-model="mouldModify.Item.MachineWeight" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 padder-xs">
+                                <label class="control-label col-sm-4 padder-xs">产品料号</label>
+                                <div class="col-sm-8  padder-xs" ng-class="{ 'has-error' : DialogForm.ProductCode.$invalid }">
+                                    <input ng-disabled="mouldModify.IsEdit" type="text" class="form-control" name="ProductCode" placeholder="产品料号"
+                                           ng-model="mouldModify.Item.ProductCode" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 padder-xs">
+                                <label class="control-label col-sm-4 padder-xs">使用机型</label>
+                                <div class="col-sm-8  padder-xs" ng-class="{ 'has-error' : DialogForm.ModelType.$invalid }">
+                                    <input ng-disabled="mouldModify.IsEdit" type="text" class="form-control" name="ModelType" placeholder="使用机型"
+                                           ng-model="mouldModify.Item.ModelType" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 padder-xs">
                                 <label class="control-label col-sm-4 padder-xs">启用日期</label>
                                 <div class="col-sm-8  padder-xs" ng-class="{ 'has-error' : DialogForm.EffectiveDate.$invalid }">
                                     <input ng-disabled="mouldModify.IsEdit" type="text" date-picker class="form-control" name="EffectiveDate" placeholder="启用日期" option="mouldModify.dt"

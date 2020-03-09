@@ -1,0 +1,69 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="emc.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">工单设备管理</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs">
+                <div class="form-inline">
+                    <button class="btn btn-sm btn-success " ng-click="emc.Add() "><i class="glyphicon glyphicon-plus "></i>新增</button>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="emc.page.WorkOrder" placeholder="工单号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="emc.page.WorkOrder = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="emc.page.Code" placeholder="设备编码">
+                            <span class="input-group-addon">
+                                <a><i ng-click="emc.page.Code = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="emc.page.Name" placeholder="设备名称">
+                            <span class="input-group-addon">
+                                <a><i ng-click="emc.page.Name = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-info " ng-click="emc.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                </div>
+            </div>
+        </div>
+        <div class="padder-md table-responsive">
+            <table class="table one-line">
+                <thead>
+                    <tr>
+                        <td style="width:90px ">编辑</td>
+                        <td style="width:100px ">工单号</td>
+                        <td style="width:140px ">设备分类</td>
+                        <td style="width:90px ">设备编码</td>
+                        <td style="width:100px ">设备名称</td>
+                        <td style="width:100px ">型号</td>
+                        <td style="width:100px ">点检单位</td>
+                        <td style="width:100px ">点检下限</td>
+                        <td style="width:100px ">点检上限</td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in emc.List ">
+                    <td>
+                        <button class="btn btn-xs btn-primary" title="编辑" ng-click="emc.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                        <button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除吗？'}" ng-click="emc.Delete(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>
+                    </td>
+                    <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td title="{{ item.TypeName }}">{{ item.TypeName }}</td>
+                    <td title="{{ item.Code }}">{{ item.Code }}</td>
+                    <td title="{{ item.Name }}">{{ item.Name }}</td>
+                    <td title="{{ item.Type }}">{{ item.Type }}</td>
+                    <td title="{{ item.CheckUOMName }}">{{ item.CheckUOMName }}</td>
+                    <td title="{{ item.LowerLimit }}">{{ item.LowerLimit }}</td>
+                    <td title="{{ item.UpperLimit }}">{{ item.UpperLimit }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-12 text-center " ng-if="emc.page.total>emc.page.pageSize ">
+            <div uib-pagination total-items="emc.page.total " ng-model="emc.page.pageIndex " items-per-page="emc.page.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                 ng-change="emc.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
