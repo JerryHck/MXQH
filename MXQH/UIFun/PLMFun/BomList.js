@@ -11,6 +11,7 @@ function ($scope, $http, $q, AjaxService, $window, toastr) {
     vm.GetBomDetail = GetBomDetail;
     vm.tabIndex = 0;
     vm.Export = Export;
+    vm.ExportItems = ExportItems;
     vm.MaterialVerId = undefined;
     //vm.page.Code = '202020634';
     vm.GrayBg = { 'background-color': 'gray' };
@@ -47,6 +48,15 @@ function ($scope, $http, $q, AjaxService, $window, toastr) {
         } else {            
             toastr.error('请选择要导出的BOM料号！');
         }
+    }
+
+    //导出功能
+    function ExportItems() {
+        vm.page.pageSize = 100000;
+            vm.promise = AjaxService.GetPlanExcel("v_MaterislVersion", 'GetList', vm.page).then(function (data) {
+                vm.page.pageSize = 10;
+                $window.location.href = data.File;
+            });
     }
 
 }
