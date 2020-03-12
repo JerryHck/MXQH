@@ -73,10 +73,10 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
     }
     //选择工单
     function MOChange(workorderID) {
-        vm.promise = AjaxService.GetPlan("EquipMORelate", [{ name: "EquipID", value: vm.NewItem.EquipID }, { name: "WorkOrderID", workorderID}]).then(function(data) {
+        vm.promise = AjaxService.GetPlan("EquipMORelate", [{ name: "EquipID", value: vm.NewItem.EquipID }, { name: "WorkOrderID", value: workorderID }]).then(function (data) {
             vm.MOLowerLimit = data.LowerLimit;
             vm.MOUpperLimit = data.UpperLimit;
-        })
+        });
     }
     //取消
     function Cancel() {
