@@ -10,7 +10,7 @@
                         <label class="control-label col-sm-4 padder-xs">物料编码：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaterialCode.$invalid }">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="MaterialCode" placeholder="请输入物料编码（必填）"
+                                <input type="text" class="form-control" name="MaterialCode" ng-keyup="ma.KeyUpEvent($event)" placeholder="请输入物料编码（必填）"
                                        ng-model="ma.Item.MaterialCode" ng-disabled="ma.form.index == 1" ng-blur="ma.isExists()" required>
                                 <span class="input-group-addon"><a class="text-success"><i class="glyphicon glyphicon-open"></i></a></span>
                             </div>

@@ -10,6 +10,7 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
     vm.isExists = isExists;
     vm.ChangeMonitor = ChangeMonitor;
     vm.OpenMate = OpenMate;
+    vm.KeyUpEvent = KeyUpEvent;
 
     vm.ConfigCodeType = { Table: 'MaterialCodeType', Column: 'CodeType' };
     vm.ConfigMaterialUnit = { Table: 'MaterialUnit', Column: 'Unit' };
@@ -22,8 +23,19 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
         vm.SerialNum.ClName = vm.Item.ClName;
     }
    
-   
-
+   //Enter事件
+    function KeyUpEvent(e) {
+        var keycode = window.event ? e.keyCode : e.which;
+        if (keycode == 13 && vm.Item.MaterialCode) {
+            vm.promise = AjaxService.GetPlan("CBO_Itemmaster", { name: "Code", value: vm.Item.MaterialCode }).then(function (data) {
+                if (data.ID) {
+                    vm.Item.MaterialName = data.Name;
+                    vm.Item.Spec = data.SPECS;
+                    vm.Item.UPPH = parseFloat(data.UPPH);
+                }                 
+            });
+        }
+    }
 
     //获取组织信息
 

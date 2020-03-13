@@ -77,6 +77,9 @@
                         <td style="width:100px ">设备编码</td>
                         <td style="width:100px ">设备名称</td>
                         <td style="width:100px ">工单号</td>
+                        <td style="width:100px ">工单料号</td>
+                        <td style="width:160px ">工单品名</td>
+                        <td style="width:100px ">工单数量</td>
                         <td style="width:140px ">点检日期</td>
                         <td style="width:100px ">时间段</td>
                         <td style="width:100px ">点检记录</td>
@@ -89,7 +92,10 @@
                     <td title="{{ item.Code }}">{{ item.Code }}</td>
                     <td title="{{ item.Name }}">{{ item.Name }}</td>
                     <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
-                    <td title="{{ item.CheckDate }}">{{ item.CheckDate }}</td>
+                    <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                    <td title="{{ item.MaterialName }}" style="white-space:normal;word-break:normal;">{{ item.MaterialName }}</td>
+                    <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
+                    <td title="{{ item.CheckDate }}">{{ item.CheckDate|date:'yyyy-MM-dd' }}</td>
                     <td title="{{ item.Duration }}">{{ item.Duration }}</td>
                     <td title="{{ item.Record }}">{{ item.Record }}</td>
                     <td title="{{ item.CheckUOMName }}">{{ item.CheckUOMName }}</td>
