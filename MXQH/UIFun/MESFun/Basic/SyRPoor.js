@@ -97,6 +97,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
         vm.ItemData.text = item.text;
         vm.ItemData.TopType = item.TopType;
         vm.ItemData.Layer = item.Layer;
+        vm.ItemData.IsMonitor = item.IsMonitor;
     }
 
     //保存 物料分类
