@@ -31,6 +31,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window,Form) {
             if (data.data.length>0) {
                 vm.Detail = data.data[0];
                 if (data.data1) {
+                    console.log(data.data1);
                     vm.List = data.data1;
                     vm.Ser.total = data.data2[0].Count;
                 }

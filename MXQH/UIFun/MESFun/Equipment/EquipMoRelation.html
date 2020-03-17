@@ -35,6 +35,9 @@
                     <tr>
                         <td style="width:90px ">编辑</td>
                         <td style="width:100px ">工单号</td>
+                        <td style="width:100px ">料号</td>
+                        <td style="width:160px">品名</td>
+                        <td style="width:100px ">工单数量</td>
                         <td style="width:140px ">设备分类</td>
                         <td style="width:90px ">设备编码</td>
                         <td style="width:100px ">设备名称</td>
@@ -50,6 +53,9 @@
                         <button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除吗？'}" ng-click="emc.Delete(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>
                     </td>
                     <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                    <td title="{{ item.MaterialName }}" style="white-space:normal;word-break:normal;">{{ item.MaterialName }}</td>
+                    <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
                     <td title="{{ item.TypeName }}">{{ item.TypeName }}</td>
                     <td title="{{ item.Code }}">{{ item.Code }}</td>
                     <td title="{{ item.Name }}">{{ item.Name }}</td>

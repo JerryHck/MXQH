@@ -31,7 +31,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
                     vm.NewItem.CheckUOMName = data.CheckUOMData.Name;
                     vm.promise = AjaxService.ExecPlan("EquipMORelate", "GetList", { Code: data.Code ,pageSize:10000,pageIndex:1}).then(function (data) {
                         vm.WorkOrders = data.data;
-                        console.log(data);
                     });
                 } else {
                     vm.NewItem.EquipID = undefined;
@@ -73,10 +72,13 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
     }
     //选择工单
     function MOChange(workorderID) {
-        vm.promise = AjaxService.GetPlan("EquipMORelate", [{ name: "EquipID", value: vm.NewItem.EquipID }, { name: "WorkOrderID", value:workorderID}]).then(function(data) {
+        vm.promise = AjaxService.GetPlan("EquipMORelate", [{ name: "EquipID", value: vm.NewItem.EquipID }, { name: "WorkOrderID", value: workorderID }]).then(function (data) {
             vm.MOLowerLimit = data.LowerLimit;
             vm.MOUpperLimit = data.UpperLimit;
-        })
+            vm.MaterialCode = data.WorkOrder.MaterialCode;
+            vm.MaterialName = data.WorkOrder.MaterialName;
+
+        });
     }
     //取消
     function Cancel() {

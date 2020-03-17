@@ -34,6 +34,7 @@
                         <td style="width:140px ">修改日期</td>
                         <td style="width:90px ">设备编码</td>
                         <td style="width:100px ">设备名称</td>
+                        <td style="width:100px ">是否启用</td>
                         <td style="width:100px ">设备型号</td>
                         <td style="width:100px ">设备分类</td>
                         <td style="width:100px ">点检单位</td>
@@ -44,7 +45,7 @@
                 <tr ng-repeat="item in equip.List ">
                     <td>
                         <button class="btn btn-xs btn-primary" title="编辑" ng-click="equip.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
-                        <button class="btn btn-xs btn-success" title="完工" ng-confirm="{text:'确定要完工吗'}" ng-click="equip.Complete(item.ID)"><i class="glyphicon glyphicon-check"></i></button>
+                        <!--<button class="btn btn-xs btn-success" title="完工" ng-confirm="{text:'确定要完工吗'}" ng-click="equip.Complete(item.ID)"><i class="glyphicon glyphicon-check"></i></button>-->
                     </td>
                     <td title="{{ item.CreateBy }}">{{ item.CreateBy }}</td>
                     <!--<td title="{{ item.CreateDate }}" style="white-space:normal;word-break:normal;">{{ item.CreateDate }}</td>-->
@@ -53,6 +54,8 @@
                     <td title="{{ item.ModifyDate }}">{{ item.ModifyDate|date:'yyyy-MM-dd HH:mm:ss' }}</td>
                     <td title="{{ item.Code }}">{{ item.Code }}</td>
                     <td title="{{ item.Name }}">{{ item.Name }}</td>
+                    <td ng-if="item.IsActive=='1'"><span class="text-success">是</span></td>
+                    <td ng-if="item.IsActive!='1'" ><span class="text-danger">否</span></td>
                     <td title="{{ item.Type }}">{{ item.Type }}</td>
                     <td title="{{ item.TypeName }}">{{ item.TypeName }}</td>
                     <td title="{{ item.CheckUOMName }}">{{ item.CheckUOMName }}</td>

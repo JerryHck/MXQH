@@ -10,7 +10,7 @@
                         <label class="control-label col-sm-4 padder-xs">物料编码：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaterialCode.$invalid }">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="MaterialCode" placeholder="请输入物料编码（必填）"
+                                <input type="text" class="form-control" name="MaterialCode" ng-keyup="ma.KeyUpEvent($event)" placeholder="请输入物料编码（必填）"
                                        ng-model="ma.Item.MaterialCode" ng-disabled="ma.form.index == 1" ng-blur="ma.isExists()" required>
                                 <span class="input-group-addon"><a class="text-success"><i class="glyphicon glyphicon-open"></i></a></span>
                             </div>
@@ -227,12 +227,22 @@
                                ng-model="ma.Item.AgeingTime" >
                          </div>
                      </div>
-                    <div class="col-md-6 padder-xs" ng-if="ma.Item.IsEdit">
-                        <label class="control-label col-sm-4 padder-xs">启用：</label>
-                        <div class="col-sm-1 padder-xs" ng-class="{ 'has-error' : DialogForm.PassSwitch.$invalid }">
-                            <label class="i-checks i-checks-sm control-label">
-                                <input type="checkbox" ng-model="ma.Item.State" name="State" class="ng-pristine ng-untouched ng-valid ng-not-empty"><i></i>
-                            </label>
+                    <div class="col-md-6 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">IMEI规则：</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.IMEI_SerialNum.$invalid }">
+                            <div class="input-group">
+                                <div basic-select="SerialNum" ng-disabled="!ma.Test2" ng-name="IMEI_SerialNum" ng-model="ma.IMEI_SerialNum" placeholder="IMEI规则">
+                                </div>
+                                <span class="input-group-addon">
+                                    <label class="i-checks i-checks-sm">
+                                        <input type="checkbox" ng-model="ma.Test2" class="ng-pristine ng-untouched ng-valid ng-not-empty"><i></i>
+                                    </label>
+                                </span>
+                                <span class="input-group-addon">
+                                    <a><i ng-click="ma.IMEI_SerialNum = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                                </span>
+
+                            </div>
                         </div>
                     </div>
 
@@ -244,7 +254,14 @@
                             <textarea class="form-control" rows="2" name="Remark" ng-model="ma.Item.Remark" placeholder="输入备注信息"></textarea>
                         </div>
                     </div>
-                  
+                    <div class="col-md-6 padder-xs" ng-if="ma.Item.IsEdit">
+                        <label class="control-label col-sm-4 padder-xs">启用：</label>
+                        <div class="col-sm-1 padder-xs" ng-class="{ 'has-error' : DialogForm.PassSwitch.$invalid }">
+                            <label class="i-checks i-checks-sm control-label">
+                                <input type="checkbox" ng-model="ma.Item.State" name="State" class="ng-pristine ng-untouched ng-valid ng-not-empty"><i></i>
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -253,7 +270,8 @@
 </div>
 <div class="modal-footer">
     <div class="text-center">
-        <button class="btn btn-success" type="button" ng-disabled="DialogForm.$invalid" ng-click="ma.Save()">保存</button>
+        <!--<button class="btn btn-success" type="button" ng-disabled="DialogForm.$invalid" ng-click="ma.Save()">保存</button>-->
+        <button class="btn btn-success" type="button" ng-click="ma.Save()">保存</button>
         <button class="btn btn-warning" type="button" ng-click="ma.cancel()">取消</button>
     </div>
 </div>

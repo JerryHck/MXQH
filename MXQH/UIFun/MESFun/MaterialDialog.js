@@ -10,6 +10,7 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
     vm.isExists = isExists;
     vm.ChangeMonitor = ChangeMonitor;
     vm.OpenMate = OpenMate;
+    vm.KeyUpEvent = KeyUpEvent;
 
     vm.ConfigCodeType = { Table: 'MaterialCodeType', Column: 'CodeType' };
     vm.ConfigMaterialUnit = { Table: 'MaterialUnit', Column: 'Unit' };
@@ -21,9 +22,28 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
         vm.SerialNum.TbName = vm.Item.TbName;
         vm.SerialNum.ClName = vm.Item.ClName;
     }
+    //IMEI规则
+    if (vm.Item.IMEI_TbName == null & vm.Item.IMEI_ClName == null) {
+        vm.IMEI_SerialNum = {};
+    } else {
+        vm.IMEI_SerialNum = {};
+        vm.IMEI_SerialNum.TbName = vm.Item.IMEI_TbName;
+        vm.IMEI_SerialNum.ClName = vm.Item.IMEI_ClName;
+    }
    
-   
-
+   //Enter事件
+    function KeyUpEvent(e) {
+        var keycode = window.event ? e.keyCode : e.which;
+        if (keycode == 13 && vm.Item.MaterialCode) {
+            vm.promise = AjaxService.GetPlan("CBO_Itemmaster", { name: "Code", value: vm.Item.MaterialCode }).then(function (data) {
+                if (data.ID) {
+                    vm.Item.MaterialName = data.Name;
+                    vm.Item.Spec = data.SPECS;
+                    vm.Item.UPPH = parseFloat(data.UPPH);
+                }                 
+            });
+        }
+    }
 
     //获取组织信息
 
@@ -88,7 +108,15 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
         
         en.TbName = vm.SerialNum.TbName;
         en.ClName = vm.SerialNum.ClName;
-        console.log(en);
+        if (vm.IMEI_SerialNum) {
+            en.IMEI_TbName = vm.IMEI_SerialNum.TbName;
+            en.IMEI_ClName = vm.IMEI_SerialNum.ClName;
+        } else {
+            en.IMEI_TbName = null;
+            en.IMEI_ClName = null;
+        }
+        
+        
         if (vm.Item.State == false) {
             vm.Item.State = 0;
         } else if (vm.Item.State == true) {
@@ -96,10 +124,8 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
         }
         en.State = vm.Item.State;//是否有效
 
-        //console.log(en);
         if (en.Id != null) {
             vm.promise = AjaxService.ExecPlan("MesMXMaterial", "alter", en).then(function (data) {
-                console.log(data);
                 if (data.data[0].MsgType == 'Success') {
                     toastr.success('更新成功');
                     $uibModalInstance.close(en);
@@ -110,7 +136,6 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
             })
         } else if (en.Id == null) {
             vm.promise = AjaxService.ExecPlan("MesMXMaterial", "add", en).then(function (data) {
-                //console.log(data);
                 if (data.data[0].MsgType == 'Success') {
                     toastr.success('新增成功');
                     $uibModalInstance.close(en);
