@@ -5,8 +5,7 @@ angular.module('app')
 function ($scope, $uibModalInstance, Form, ItemData, toastr, AjaxService, $rootScope) {
     var vm = this;
     vm.form = Form[ItemData.name ? 1 : 0];
-    vm.NewItem = ItemData.name ? ItemData : { LoadFiles: [] };
-    vm.NewItem.CreateBy = $rootScope.User.UserNo;
+    vm.NewItem = ItemData.name ? ItemData : { IsSystem: false, LoadFiles: [] };
     vm.NewItem.Action = ItemData.name ? "U" : "I";
     vm.isExists = isExists;
     vm.LoadAdd = LoadAdd;
@@ -18,6 +17,9 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, AjaxService, $rootS
     //取消
     vm.cancel = cancel;
 
+    vm.ToggleFile = ToggleFile;
+
+    console.log(vm.NewItem)
 
     function LoadAdd() {
         if (vm.loadFile) {
@@ -76,5 +78,55 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, AjaxService, $rootS
     function cancel() {
         $uibModalInstance.dismiss('cancel');
     };
+
+
+    //切换文件方式
+    function ToggleFile(f) {
+
+        //是新增功能的时候--计算中间文件夹
+        var dir = !vm.NewItem.CreateDate ? (new Date()).Format("yyyy") : new Date(vm.NewItem.CreateDate).Format("yyyy");
+
+        //添加文件
+        if (vm.NewItem.IsSystem) {
+            var have = false, index = -1;
+            vm.SelectedFun.FunHtml = vm.OriHtml;
+            var js = "CustomFun\\" + dir + "\\" + vm.SelectedFun.DialogNo + '.js';
+            angular.forEach(vm.SelectedFun.FunLoad, function (f, i) {
+                if (f.LoadName == js) {
+                    have = true;
+                    index = i; return;
+                }
+            });
+            if (have) {
+                vm.SelectedFun.FunLoad.splice(index, 1);
+            }
+        }
+        else {
+            var have = false;
+            vm.OriHtml = vm.SelectedFun.FunHtml;
+            vm.SelectedFun.FunHtml = "CustomFun\\" + dir + "\\" + vm.SelectedFun.DialogNo + '.html';
+            var js = "CustomFun\\" + dir + "\\" + vm.SelectedFun.DialogNo + '.js';
+            angular.forEach(vm.SelectedFun.FunLoad, function (f) {
+                if (f.LoadName == js) {
+                    have = true; return;
+                }
+            });
+            if (!have) {
+                var en = {};
+                en.FunNo = vm.SelectedFun.FunNo;
+                en.LoadName = js;
+                vm.SelectedFun.FunLoad = vm.SelectedFun.FunLoad || [];
+                vm.SelectedFun.FunLoad.push(en);
+            }
+
+            //获取js， html文件
+            AjaxService.AjaxHandle("GetFileText", dir + "\\" + ItemData.FunNo).then(function (data) {
+                vm.NewItem.Content = {};
+                vm.NewItem.Content.Html = (data.Html || "").replace(/ControlNew/g, vm.NewItem.ControllerAs);
+                vm.NewItem.Content.Js = (data.Js || "").replace(/NewJsCtrl/g, vm.NewItem.Controller);
+            })
+        }
+    }
+
 }
 ]);

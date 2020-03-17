@@ -39,7 +39,7 @@
                         <div class="cell-inner">
                             <div class="wrapper-xs">
                                 <div class="list-group">
-                                    <a ng-repeat="item in use.List | filter:use.UserQuery " class="list-group-item b-l-3x hover-anchor"
+                                    <a ng-repeat="item in use.List | filter:{UserNo:use.UserQuery}" class="list-group-item b-l-3x hover-anchor"
                                        ng-class="{'hover': item.UserNo == use.SelectedUser.UserNo, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="use.SelectUser(item)">
                                         <span class="pull-left h4 mr-1">
                                             <i ng-class="{ 'icon-user text-success': item.Sex=='M', 'icon-user-female text-danger': item.Sex=='F' }"></i>

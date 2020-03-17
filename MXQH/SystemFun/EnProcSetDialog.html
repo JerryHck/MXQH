@@ -1,19 +1,19 @@
-﻿<div class="modal-header" cg-busy="proc.promise">
+﻿<!--<div class="modal-header" cg-busy="proc.promise">
     <h3 class="modal-title">{{ vm.title }}设定</h3>
-</div>
+</div>-->
 <div class="modal-body" ng-form="proc.ProcSetForm">
     <uib-tabset active="active" type="tabs">
         <uib-tab index="$index" ng-repeat="t in proc.List">
             <uib-tab-heading class="h5">数据表{{ t.ReadIndex == 0?"":t.ReadIndex }}设定</uib-tab-heading>
-            <div class="tab-content scroll-y" style="height:500px">
+            <div class="tab-content">
                 <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="form-horizontal col-md-12">
+                    <div class="panel-body padder-xs padder-v-xs">
+                        <div class="form-horizontal col-xs-12">
                             <div class="form-group">
-                                <label class="control-label col-md-2">导出excel</label>
-                                <div class="col-md-10">
+                                <label class="control-label col-xs-2">导出excel</label>
+                                <div class="col-xs-10">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-xs-6">
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon">
                                                     <input type="checkbox" ng-model="t.IsExcel" />
@@ -24,7 +24,7 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-xs-6">
                                             <input type="text" class="form-control" ng-model="proc.ExcelName" placeholder="Excel名称" ng-disabled="!t.IsExcel">
                                         </div>
                                     </div>
@@ -32,19 +32,19 @@
                             </div>
                         </div>
 
-                        <div class="col-md-7 b-r pt-2 text-xs">
+                        <div class="col-xs-7 b-r pt-2 padder-xxs text-xs scroll-y bar-xs" style="max-height:400px">
                             <div class="b bg-light list-group-item" ng-repeat="col in t.Columns">
                                 <div class="row v-middle">
-                                    <div class="col-md-3">
+                                    <div class="col-xs-3">
                                         <label class="i-checks">
                                             <input type="checkbox" ng-model="col.IsConvert"><i></i>转换
                                         </label>
                                     </div>
-                                    <label class="col-md-3 font-bold">{{ col.ColumnName }}</label>
-                                    <div class="col-md-4 form-group-sm" ng-class="{ 'has-error' : !col.ColumnText }">
+                                    <label class="col-xs-3 font-bold">{{ col.ColumnName }}</label>
+                                    <div class="col-xs-4 form-group-sm" ng-class="{ 'has-error' : !col.ColumnText }">
                                         <input type="text" name="ColText" class="form-control" placeholder="中文栏名" ng-model="col.ColumnText" required/>
                                     </div>
-                                    <label class="col-md-2 i-checks pull-right">
+                                    <label class="col-xs-2 i-checks pull-right">
                                         <input type="checkbox" ng-disabled="!t.IsExcel" ng-change="proc.IsExcelChange(t, col)" ng-model="col.IsExcel"><i></i>excel
                                     </label>
                                 </div>
@@ -56,18 +56,18 @@
                             </div>
                         </div>
 
-                        <div class="col-md-5 pt-2 text-xs">
-                            <div class="row m-l-md col-md-12 wrapper-xs b-b" ng-repeat="excel in t.ExcelColumns " ng-drop="true" ng-drop-success="proc.Drop(t, $data,$index)">
-                                <label class="control-label text-md col-md-7">
+                        <div class="col-xs-5 pt-2 text-xs padder-xxs  scroll-y bar-xs" style="max-height:400px">
+                            <div class="row m-l-md col-xs-12 wrapper-xs b-b" ng-repeat="excel in t.ExcelColumns " ng-drop="true" ng-drop-success="proc.Drop(t, $data,$index)">
+                                <label class="control-label text-md col-xs-7">
                                     <span>
                                         <i class="glyphicon glyphicon-move text-info" ng-drag="true"
                                            ng-drag-data="excel" ng-drag-success="proc.Drag($data,$index)"></i>{{ excel.ColumnName }}
                                     </span>
                                 </label>
-                                <label class="i-checks col-md-3">
+                                <label class="i-checks col-xs-3">
                                     <input type="checkbox" ng-model="excel.IsAutoMerge"><i></i>合并行
                                 </label>
-                                <div class="col-md-1">
+                                <div class="col-xs-1">
                                     <a class="text-danger" ng-click="proc.DeleteExcel(t, $index)"><i class="glyphicon glyphicon-remove"></i></a>
                                 </div>
                             </div>
@@ -79,9 +79,11 @@
         </uib-tab>
     </uib-tabset>
 </div>
-<div class="modal-footer text-center">
-    <button class="btn btn-success" type="button" ng-disabled="proc.ProcSetForm.$invalid" ng-click="proc.Save()">储存</button>
-    <button class="btn btn-warning" type="button" ng-click="proc.cancel()">取消</button>
+<div class="modal-footer">
+    <div class="col-xs-12 text-center">
+        <button class="btn btn-success" type="button" ng-disabled="proc.ProcSetForm.$invalid" ng-click="proc.Save()">储存</button>
+        <button class="btn btn-warning" type="button" ng-click="proc.cancel()">取消</button>
+    </div>
 </div>
 
 <!--<pre>{{ proc.DataList | json }}</pre>-->

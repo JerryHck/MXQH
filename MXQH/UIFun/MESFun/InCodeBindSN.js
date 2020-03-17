@@ -220,8 +220,12 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
         vm.ThisBind = {};
         vm.ThisBind.MOId = vm.OrderData.ID;
         vm.ThisBind.SNCode = "";
+        vm.ThisBind.IMEICode = "";
         vm.ThisBind.InternalCode = KeyInCode;
         var SNList = [{ name: vm.OrderData.TbName, col: vm.OrderData.ClName, parm: "SNCode", charName: vm.CharName }];
+        if (vm.OrderData.IMEI_TbName && vm.OrderData.IMEI_TbName) {
+            SNList.push({ name: vm.OrderData.IMEI_TbName, col: vm.OrderData.IMEI_ClName, parm: "IMEICode" });
+        }
         vm.ThisBind.SNColumns = JSON.stringify(SNList);
         vm.promise = AjaxService.ExecPlan("BindCode", 'saveBind', vm.ThisBind).then(function (data) {
             vm.isFinist = true;
@@ -230,8 +234,8 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
                 vm.NewBind = {};
             }
             else if (data.data[0].MsgType == "Success") {
-                var mss = "内控码[" + KeyInCode + ']  SN码 [' + data.data1[0].SNCode + '] 绑定成功';
-                var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };
+                //var mss = "内控码[" + KeyInCode + ']  SN码 [' + data.data1[0].SNCode + '] 绑定成功';
+                var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].MsgText };
                 vm.MesList.splice(0, 0, Msg);
                 vm.NewBind = {};
                 vm.OrderCount = data.data3[0];

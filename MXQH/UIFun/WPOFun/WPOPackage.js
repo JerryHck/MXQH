@@ -285,6 +285,7 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
     function showMsg(msg, type) {
         if (type) {
             vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: msg });
+            AjaxService.PlayVoice('success.mp3');
         }
         else {
             vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: msg });

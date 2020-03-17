@@ -17,6 +17,7 @@ function ($uibModalInstance, ItemData, $rootScope, $scope, MyPop, AjaxService, t
     vm.InCodeToDb = InCodeToDb;
     vm.NgSave = NgSave;
     vm.SelectTab = SelectTab;
+    vm.KeyDonwBSNPrint = KeyDonwBSNPrint;
 
     getDonwOrder();
 
@@ -56,6 +57,28 @@ function ($uibModalInstance, ItemData, $rootScope, $scope, MyPop, AjaxService, t
                 vm.RoutingData = data.data1[0];
                 vm.OrderCount = data.data2[0];
                 $("input.SnFocus").focus();
+            }
+        });
+    }
+
+    //bsn打印
+    function KeyDonwBSNPrint(e) {
+        $scope.$applyAsync(function () {
+            var keycode = window.event ? e.keyCode : e.which;
+            if (keycode == 13 && vm.Item.BSNPrint) {
+                var en = {};
+                en.InternalCode = vm.Item.BSNPrint;
+                AjaxService.ExecPlan("MesMxWOrder", 'bsnPrint', en).then(function (data) {
+                    if (data.data[0].MsgType == 'Error') {
+                        showError(data.data[0].Msg);
+                    }
+                    else if (data.data[0].MsgType == 'Success') {
+                        vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
+                        AjaxService.PlayVoice('success.mp3');
+                        print(en.InternalCode);
+                    }
+                    vm.Item.BSNPrint = undefined;
+                });
             }
         });
     }
@@ -108,18 +131,7 @@ function ($uibModalInstance, ItemData, $rootScope, $scope, MyPop, AjaxService, t
                 AjaxService.PlayVoice('success.mp3');
                 //打印
                 if (vm.RoutingData.IsPrint || vm.IsPrint) {
-                    var postData = {}, list = [];
-
-                    list.push(en.InternalCode);
-
-                    postData.ParaData = JSON.stringify({});
-                    postData.OutList = list;
-
-                    AjaxService.Print(vm.Template.TemplateId, vm.Template.TS, postData).then(function (data) {
-                        console.log(data);
-                    }, function (err) {
-                        console.log(err);
-                    })
+                    print(en.InternalCode);
                 }
                 vm.InCodeSave = undefined;
 
@@ -128,6 +140,21 @@ function ($uibModalInstance, ItemData, $rootScope, $scope, MyPop, AjaxService, t
                 showError(data.data[0].Msg);
                 vm.InCodeSave = undefined;
             }
+        })
+    }
+
+    function print(bsn) {
+        var postData = {}, list = [];
+
+        list.push(bsn);
+
+        postData.ParaData = JSON.stringify({});
+        postData.OutList = list;
+
+        AjaxService.Print(vm.Template.TemplateId, vm.Template.TS, postData).then(function (data) {
+            console.log(data);
+        }, function (err) {
+            console.log(err);
         })
     }
 

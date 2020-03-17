@@ -22,7 +22,7 @@
                         <div class="cell-inner">
                             <div class="padder-xs">
                                 <div class="list-group pad-xss">
-                                    <a ng-repeat="item in line.MoList  | orderBy: 'Status'| filter:line.MoQuery | limitTo:200" class="list-group-item b-l-4x hover-anchor cl padder-xs" ng-click="line.SelectMo(item)"
+                                    <a ng-repeat="item in line.MoList  | orderBy: 'Status'| filter:{ WorkOrder:line.MoQuery } | limitTo:200" class="list-group-item b-l-4x hover-anchor cl padder-xs" ng-click="line.SelectMo(item)"
                                        ng-class="{'hover': item.ID == line.SelectedMo.ID, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}">
                                         <span class="text-info hover text-lg" ng-class="{ 'text-success-dk font-bold' : item.Status == 4 }" ng-bind-html="item.WorkOrder | highlight: line.MoQuery"></span>
                                         <span ng-if="item.Status == 4" class="pull-right font-v5 h6">完</span>
@@ -169,13 +169,13 @@
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-lg-5 padder-xxs control-label text-info">开始时间:</label>
                                                         <div class="col-lg-7 padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.StartTime.$invalid }">
-                                                            <input type="text" time-picker ng-disabled="!line.editArrange" class="form-control" name="StartTime" placeholder="开始时间" step="10" ng-model="line.SelectedArrange.StartTime" required />
+                                                            <input type="text" time-picker ng-disabled="!line.editArrange" class="form-control" name="StartTime" placeholder="开始时间" step="30" ng-model="line.SelectedArrange.StartTime" required />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-lg-5 padder-xxs control-label text-info">结束时间:</label>
                                                         <div class="col-lg-7  padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.EndTime.$invalid }">
-                                                            <input type="text" time-picker ng-disabled="!line.editArrange" class="form-control" name="EndTime" placeholder="结束时间" step="10" ng-model="line.SelectedArrange.EndTime" required />
+                                                            <input type="text" time-picker ng-disabled="!line.editArrange" class="form-control" name="EndTime" placeholder="结束时间" step="30" ng-model="line.SelectedArrange.EndTime" required />
                                                         </div>
                                                     </div>
                                                 </div>

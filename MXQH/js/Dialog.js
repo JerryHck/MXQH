@@ -1,5 +1,5 @@
 ﻿'use strict'
-angular.module('app').factory('Dialog', ['$rootScope', '$ocLazyLoad', '$uibModal', '$q', 'AjaxService', 'Version',
+angular.module('AppSet').factory('Dialog', ['$rootScope', '$ocLazyLoad', '$uibModal', '$q', 'AjaxService', 'Version',
 function ($rootScope, $ocLazyLoad, $uibModal, $q, AjaxService, Version) {
     var obj = {
         //開啟

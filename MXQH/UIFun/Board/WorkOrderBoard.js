@@ -6,12 +6,12 @@
 //if (angular.module('access')) {
 //    angular.module('access').controller('WorkOrderBoardCtrl', WorkOrderBoardCtrl);
 //}
-WorkOrderBoardCtrl.$inject = ['$scope', '$state', 'AjaxService', 'toastr', 'appUrl', '$window'];
-function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window) {
+WorkOrderBoardCtrl.$inject = ['$scope', '$state', 'AjaxService', 'toastr', 'appUrl', '$window', 'Dialog', '$timeout'];
+function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window, Dialog, $timeout) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
-    vm.Ser = { Now: new Date().Format('yyyy-MM-dd'), StartDate: '08:00', EndDate: '23:00' };
+    vm.Ser = { Now: new Date().Format('yyyy-MM-dd'), StartDate: '08:00', EndDate: '23:00', SerType:'1' };
     
     //vm.Ser = { WorkOrder: 'AMO-30190805004', Now: '2019-09-16', StartDate: '08:00', EndDate: '23:00' };
 
@@ -30,6 +30,27 @@ function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window
     vm.Begin = Begin;
     vm.Offline = Offline;
     vm.ChangeLine = ChangeLine;
+    vm.Open = Open;
+
+    $timeout(function () {
+        Open();
+    }, 1000, false);
+
+    
+    function Open() {
+        if (vm.IsRun) {
+            Begin();
+        }
+        Dialog.OpenDialog("WorkOrderSerDialog", vm.Ser).then(function (data) {
+            vm.Ser = data;
+            Begin();
+            //$scope.$applyAsync();
+        }).catch(function (reason) {
+            Begin();
+            //console.log(reason);
+        });
+    }
+
 
    
     //线别变动
@@ -149,6 +170,7 @@ function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window
     }
 
     function CalPie(data) {
+        //console.log(data)
         var ListTitle = ['项目'];
         var List = [];
         var List1 = [{Val: 1, Text: "投入数量/人数" }],

@@ -11,7 +11,7 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
     vm.Item2 = ItemData;
 
     vm.MesList = [];
-    vm.Focus = { Order: true, SNCode: false, SN: false };
+    vm.Focus = { Order: false, SNCode: true, SN: false };
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
     vm.IsAuto = true;
@@ -20,6 +20,7 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
     vm.KeyDonwOrder = KeyDonwOrder;
     vm.InCodeToDb = InCodeToDb;
     vm.InCodeToDbcClick = InCodeToDbcClick;
+    vm.KeyDonwBSNPrint = KeyDonwBSNPrint;
 
     vm.NgSave = NgSave;
     vm.SelectTab = SelectTab;
@@ -55,6 +56,29 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
     AjaxService.GetPlan("MESBarCodeTemplate", [{ name: "TemplateId", value: 1 }]).then(function (data) {
         vm.Template = data;
     })
+
+    //bsn打印
+    function KeyDonwBSNPrint(e) {
+        $scope.$applyAsync(function () {
+            var keycode = window.event ? e.keyCode : e.which;
+            if (keycode == 13 && vm.Item.BSNPrint) {
+                var en = {};
+                en.InternalCode = vm.Item.BSNPrint;
+                AjaxService.ExecPlan("MesMxWOrder", 'bsnPrint', en).then(function (data) {
+                    if (data.data[0].MsgType == 'Error') {
+                        showError(data.data[0].Msg);
+                    }
+                    else if (data.data[0].MsgType == 'Success') {
+                        vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
+                        AjaxService.PlayVoice('success.mp3');
+                        print(en.InternalCode);
+                    }
+                    vm.Item.BSNPrint = undefined;
+                });
+            }
+        });
+    }
+
     //内部码验证
     function KeyDonwInCode(e) {
         var keycode = window.event ? e.keyCode : e.which;
@@ -159,7 +183,6 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
         en.WorkOrder = vm.Item.WorkOrder;
         en.InternalCode = vm.InCodeSave;
         en.RoutingId = vm.RoutingData.ID;
-        console.log(en);
         //vm.promise = AjaxService.ExecPlanWait("MesMxWOrderHH", "save", en).then(function (data) {
         var data = AjaxService.ExecPlanWait("MesMxWOrderHH", "save", en);
         if (data.data[0].MsgType == 'Success') {
@@ -168,18 +191,7 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
             AjaxService.PlayVoice('success.mp3');
             //打印
             if (vm.RoutingData.IsPrint || vm.IsPrint) {
-                var postData = {}, list = [];
-
-                list.push(en.InternalCode);
-
-                postData.ParaData = JSON.stringify({});
-                postData.OutList = list;
-
-                AjaxService.Print(vm.Template.TemplateId, vm.Template.TS, postData).then(function (data) {
-                    console.log(data);
-                }, function (err) {
-                    console.log(err);
-                })
+                print(en.InternalCode);
             }
             vm.InCodeSave = undefined;
 
@@ -215,6 +227,21 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
         }
         //console.log(e);
         Open(e);
+    }
+
+    function print(bsn) {
+        var postData = {}, list = [];
+
+        list.push(bsn);
+
+        postData.ParaData = JSON.stringify({});
+        postData.OutList = list;
+
+        AjaxService.Print(vm.Template.TemplateId, vm.Template.TS, postData).then(function (data) {
+            console.log(data);
+        }, function (err) {
+            console.log(err);
+        })
     }
 
     function Open(item) {
