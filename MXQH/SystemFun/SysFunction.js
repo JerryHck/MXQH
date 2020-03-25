@@ -335,7 +335,6 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
         en.IsUsed = vm.SelectedFun.IsUsed;
         en.OrderBy = vm.FunList.Length || 1;
         en.IsSystem = vm.SelectedFun.IsSystem || 0;
-        en.CreateBy = $rootScope.User.UserNo;
         en.TempColumns = 'ListLoad';
         vm.promise = AjaxService.ExecPlan('FunRoot', "save", en).then(function (data) {
             var Content = vm.SelectedFun.Content;

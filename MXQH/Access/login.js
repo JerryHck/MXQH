@@ -91,8 +91,10 @@ function LoginCtrl($rootScope, $scope, AjaxService, toastr, MyPop, appUrl, $cook
         //$cookieStore.remove('active-router');
         $window.location.href = appUrl + '/index.html?v=' + (new Date().getSeconds()).toString();
         // 保存唯一标识符
-        $cookieStore.remove("GUID")
-        $cookieStore.put("GUID", uuid());
+        //$cookieStore.remove("GUID")
+        if (!$cookieStore.get('GUID') || $cookieStore.get('GUID') == "") {
+            $cookieStore.put("GUID", uuid());
+        }
     }
 
     function CheckCode() {

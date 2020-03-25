@@ -17,48 +17,50 @@
             <uib-tab-heading class="h5">功能设定</uib-tab-heading>
             <div class="panel panel-default no-padder col-md-12">
                 <div class="panel-body padder-xs">
-                    <div class="form-group-xs col-md-12">
-                        <div class="col-md-4 no-padder">
-                            <label class="col-md-4 padder-xs control-label text-info">功能名称：</label>
-                            <div class="col-md-8 no-padder">
-                                <input type="text" class="form-control" ng-model="fun.ThisFun.FunName" placeholder="功能名称" />
+                    <div class="form form-horizontal">
+                        <div class="form-group-xs col-md-12">
+                            <div class="col-md-4 no-padder">
+                                <label class="col-md-4 padder-xs control-label text-info">功能名称：</label>
+                                <div class="col-md-8 no-padder">
+                                    <input type="text" class="form-control" ng-model="fun.ThisFun.FunName" placeholder="功能名称" />
+                                </div>
+                            </div>
+                            <div class="col-md-4 no-padder">
+                                <label class="col-md-4 padder-xs control-label text-info">功能类型：</label>
+                                <div class="col-md-8 no-padder">
+                                    <span class="btn-group">
+                                        <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.FunType" uib-btn-radio="'B'" ng-click="fun.ThisFun.DataType=='E'">功能</label>
+                                        <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.FunType" uib-btn-radio="'R'" ng-click="fun.ChangeFunType()">报表</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 no-padder">
+                                <label class="col-md-4 padder-xs control-label text-info">数据类型：</label>
+                                <div class="col-md-8 no-padder">
+                                    <span class="btn-group" ng-if="fun.ThisFun.FunType=='R'">
+                                        <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.DataType" uib-btn-radio="'E'" ng-click="fun.FunType()">实体</label>
+                                        <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.DataType" uib-btn-radio="'P'" ng-click="fun.FunType()">存储过程</label>
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4 no-padder">
-                            <label class="col-md-4 padder-xs control-label text-info">功能类型：</label>
-                            <div class="col-md-8 no-padder">
-                                <span class="btn-group">
-                                    <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.FunType" uib-btn-radio="'B'" ng-click="fun.ThisFun.DataType=='E'">功能</label>
-                                    <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.FunType" uib-btn-radio="'R'" ng-click="fun.ChangeFunType()">报表</label>
-                                </span>
+                        <div class="form-group-xs col-md-12">
+                            <div class="col-md-4 no-padder">
+                                <label class="col-md-4 padder-xs control-label text-info">查询实体：</label>
+                                <div class="col-md-8 no-padder">
+                                    <div entity-select ng-model="fun.ThisFun.EntityName" auto-first="true" select-class="'text-xs'" ng-change="fun.ChangeEntity()"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-4 no-padder">
-                            <label class="col-md-4 padder-xs control-label text-info">数据类型：</label>
-                            <div class="col-md-8 no-padder">
-                                <span class="btn-group" ng-if="fun.ThisFun.FunType=='R'">
-                                    <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.DataType" uib-btn-radio="'E'" ng-click="fun.FunType()">实体</label>
-                                    <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.DataType" uib-btn-radio="'P'" ng-click="fun.FunType()">存储过程</label>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group-xs col-md-12">
-                        <div class="col-md-4 no-padder">
-                            <label class="col-md-4 padder-xs control-label text-info">查询实体：</label>
-                            <div class="col-md-8 no-padder">
-                                <div entity-select ng-model="fun.ThisFun.EntityName" auto-first="true" select-class="'text-xs'" ng-change="fun.ChangeEntity()"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-8 no-padder" ng-show="fun.ThisFun.DataType == 'P'">
-                            <label class="col-md-2 padder-xs  control-label text-info">存储过程：</label>
-                            <div class="col-md-8 no-padder">
-                                <ui-select name="remark" ng-model="fun.ThisFun.ShortName" theme="bootstrap" search-enabled="true" ng-change="fun.ChangeProc()">
-                                    <ui-select-match placeholder="选择存储过程.."><span>{{ $select.selected.ProcSchema }}.{{ $select.selected.ProcName }}</span></ui-select-match>
-                                    <ui-select-choices repeat="item.ShortName as item in fun.ProcList | filter: $select.search track by item.ShortName">
-                                        <div><span ng-bind-html="item.ProcSchema | highlight: $select.search"></span>.<span ng-bind-html="item.ProcName | highlight: $select.search"></span></div>
-                                    </ui-select-choices>
-                                </ui-select>
+                            <div class="col-md-8 no-padder" ng-show="fun.ThisFun.DataType == 'P'">
+                                <label class="col-md-2 padder-xs  control-label text-info">存储过程：</label>
+                                <div class="col-md-8 no-padder">
+                                    <ui-select name="remark" ng-model="fun.ThisFun.ShortName" theme="bootstrap" search-enabled="true" ng-change="fun.ChangeProc()">
+                                        <ui-select-match placeholder="选择存储过程.."><span>{{ $select.selected.ProcSchema }}.{{ $select.selected.ProcName }}</span></ui-select-match>
+                                        <ui-select-choices repeat="item.ShortName as item in fun.ProcList | filter: $select.search track by item.ShortName">
+                                            <div><span ng-bind-html="item.ProcSchema | highlight: $select.search"></span>.<span ng-bind-html="item.ProcName | highlight: $select.search"></span></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -183,7 +185,7 @@
                                 </tr>
                             </table>
                         </div>
-                        <div class="col-md-10 wrapper-xs no-padder scroll-y" ng-form="fun.ColForm" style="max-height:400px">
+                        <div class="col-md-10 wrapper-xs no-padder scroll-y" ng-form="fun.ColForm" style="max-height:400px; min-height:350px">
                             <table class="table pad-xs no-padder">
                                 <thead>
                                     <tr>

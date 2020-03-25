@@ -10,7 +10,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     vm.Focus = { SN: true };
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
-    vm.IsAuto = true;
+    vm.IsPrint = true;
 
     vm.KeyDonwSnCode = KeyDonwSnCode;
     vm.KeyDonwOrder = KeyDonwOrder;
@@ -22,8 +22,14 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     vm.Print = Print;
    
     //获取包装信息-未完工的资料
-    AjaxService.GetPlans("MesMxWOrder", [{ name: "Status", value: 4, type: "!=" }, { name: "WorkOrder", value: "AMO%", type: "not like", action: "and" }]).then(function (data) {
+    AjaxService.GetPlans("MesMxWOrder", [{ name: "Status", value: 4, type: "!=" }
+        , { name: "WorkOrder", value: "AMO%", type: "not like", action: "and" }
+        , { name: "WorkOrder", value: "HMO%", type: "not like", action: "and" }
+    ]).then(function (data) {
         vm.OrderList = data;
+        for (var i = 0, len = vm.OrderList.length; i < len; i++) {
+            vm.OrderList[i].FirstChar = vm.OrderList[i].WorkOrder.substring(0, 1);
+        }
     })
 
     //内部码验证
@@ -33,7 +39,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         if (keycode == 13 && vm.Item.SNCode) {
             vm.ThisSnCode = vm.Item.SNCode;
             if (vm.SNList.length == vm.PackDetail.ProductCount) {
-                MyPop.Confirm({ text: "包装箱已经包满， 请结束包厢" }, function () { });
+                MyPop.Confirm({ text: "包装箱已经包满， 请结束包箱" }, function () { });
                 vm.Item.SNCode = undefined;
                 return;
             }
@@ -49,6 +55,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             var en = {};
             en.Sn = vm.Item.SNCode;
             en.PackDetailID = vm.PackDetail.ID;
+            //console.log(en)
             AjaxService.ExecPlan("MESPackageDtl", 'checkSn', en).then(function (data) {
                 if (data.data[0].MsgType == "Error") {
                     showErr(data.data[0].MsgText);
@@ -170,7 +177,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 toastr.success('包装成功, 打印标签');
                 vm.IsEdit = false;
                 vm.PrintDtlId = vm.PackDetail.ID;
-                $("input.SnFocus").focus();
+                vm.Focus.SN = true;
                 Print("COTTONCODE");
                 getBoxList();
                 //打印询问
@@ -191,6 +198,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     }
 
     function Print(type) {
+        if (!vm.IsPrint) return;
         var en = {};
         en.PackDetailID = vm.PrintDtlId;
         en.TypeCode = type;

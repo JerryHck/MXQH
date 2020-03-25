@@ -98,7 +98,8 @@
             GetServerSocket: GetServerSocket,
 
             //休眠
-            sleep:sleep
+            sleep: sleep,
+            convertArray: convertArray
 
         };
         var conect = 0;

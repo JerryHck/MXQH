@@ -1,45 +1,41 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('TestCtrl', ['$rootScope', '$scope', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, AjaxService, toastr, $window) {
+.controller('TestCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
+function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
+
     vm.PageChange = PageChange;
     vm.Search = Search;
-
-    vm.Text = "我是新的功能fdsfas！";
-    //PageChange();
-
-AjaxService.GetPlans("syQpoor", [{ name: "Layer", value: 3 }, { name: "IsMonitor", value: 1 }]).then(function (data) {
-        vm.TypeList = data;
-    });
+    vm.ExportExcel = ExportExcel;
 
     function Search() {
         vm.page.index = 1;
-        PageChange()
+        PageChange();
     }
 
     function PageChange() {
-        var list = [];
-        if (vm.Ser.Name) {
-            list.push({ name: "name", value: vm.Ser.InternalCode });
-        }
-        //if (vm.Ser.DeleteBy) {
-        //    list.push({ name: "DeleteBy", value: vm.Ser.DeleteBy });
-        //}
-        //if (vm.Ser.StartDate) {
-        //    list.push({ name: "DeleteDate", value: vm.Ser.StartDate, type: ">=" });
-        //}
-        //if (vm.Ser.EndDate) {
-        //    list.push({ name: "DeleteDate", value: vm.Ser.EndDate, type: "<=" });
-        //}
-        vm.promise = AjaxService.GetPlansPage("Dialog", list, vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("FunList", GetContition(), vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
+           console.log(data.List)
             vm.page.total = data.Count;
         });
+
     }
-}
-]);
+    function ExportExcel() {
+        vm.promise = AjaxService.GetPlanOwnExcel("FunList", GetContition()).then(function (data) {
+            $window.location.href = data.File;
+        });
+    }
+    function GetContition() {
+        var list = [];
+        if (vm.Ser.aFunNo) {
+            list.push({ name: "FunNo", value: vm.Ser.aFunNo, tableAs:"a" });
+        }
+        return list;
+    }
+
+}]);

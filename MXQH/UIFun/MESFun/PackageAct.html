@@ -1,230 +1,233 @@
-﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="pack.promise">
-    <uib-tab index="0" select="pack.SelectTab(0)" deselect="pack.SelectTab(-1)">
-        <uib-tab-heading class="h5">包装处理</uib-tab-heading>
-        <div class="wrapper-xs">
-            <div class="col-sm-6 padder-xs" ng-form="pack.UpdateForm">
-                <div class="panel panel-default scroll-y">
-                    <div class="panel-heading font-bold text-center">
-                        包装信息
-                    </div>
-                    <div class="panel-body padder-xs">
-                        <div class="form-horizontal no-padder">
-                            <div class="form-group-xs col-md-12 no-padder">
-                                <div class="col-sm-6 no-padder">
-                                    <label class="col-sm-5 padder-xs control-label">工单号:</label>
-                                    <div class="col-sm-7 padder-xs" ng-class="{ 'has-error' : pack.UpdateForm.Order.$invalid }">
-                                        <input type="text" name="Order" ng-model="pack.Item.WorkOrder" uib-typeahead="order.WorkOrder as order.WorkOrder for order in pack.OrderList | filter:$viewValue | limitTo:8"
-                                               class="form-control" placeholder="工单号" ng-keyup="pack.KeyDonwOrder($event)" required>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 no-padder">
-                                    <label class="control-label padder-xs col-sm-5">客户订单:</label>
-                                    <div class="col-sm-7 padder-xs">
-                                        <p class="form-control-static font-bold">{{pack.PackMain.TransID}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group-xs col-md-12">
-                                <div class="col-sm-6 no-padder">
-                                    <label class="control-label padder-xs col-sm-5">产品编号:</label>
-                                    <div class="col-sm-7 padder-xs">
-                                        <p class="form-control-static font-bold">{{pack.PackMain.Order.MaterialCode}}</p>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 no-padder">
-                                    <label class="control-label padder-xs col-sm-5">产品名称:</label>
-                                    <div class="col-sm-7 padder-xs">
-                                        <p class="form-control-static font-bold">{{pack.PackMain.Order.MaterialName}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group-xs col-md-12">
-                                <div class="col-sm-6 no-padder">
-                                    <label class="control-label padder-xs col-sm-5">零件号:</label>
-                                    <div class="col-sm-7 padder-xs">
-                                        <p class="form-control-static font-bold">{{pack.PackMain.CustomPartNo}}</p>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 no-padder">
-                                    <label class="control-label padder-xs col-sm-5">Model:</label>
-                                    <div class="col-sm-7 padder-xs">
-                                        <p class="form-control-static font-bold">{{pack.PackMain.Model}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group-xs col-md-12 no-padder">
-                                <div class="col-sm-6 no-padder">
-                                    <label class="control-label padder-xs col-sm-5">包装编号:</label>
-                                    <div class="col-sm-7 padder-xs">
-                                        <p class="form-control-static font-bold">{{pack.PackMain.PackListNo}}</p>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 no-padder">
-                                    <label class="control-label padder-xs col-sm-5">Tanapa:</label>
-                                    <div class="col-sm-7 padder-xs">
-                                        <p class="form-control-static font-bold">{{pack.PackMain.Tanapa}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group-xs col-md-12 no-padder">
-                                <div class="col-sm-6 no-padder">
-                                    <label class="control-label padder-xs col-sm-5">计划数量:</label>
-                                    <div class="col-sm-7 padder-xs">
-                                        <p class="form-control-static font-v3">{{pack.PackMain.PlanQuantity}}</p>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 no-padder">
-                                    <label class="control-label padder-xs col-sm-5">Erp订单数:</label>
-                                    <div class="col-sm-7 padder-xs">
-                                        <p class="form-control-static font-v3">{{pack.PackMain.Order.ERPQuantity}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group-xs col-md-12 no-padder">
-                                <div class="col-sm-6 no-padder">
-                                    <label class="control-label padder-xs col-sm-5">Erp销售单:</label>
-                                    <div class="col-sm-7 padder-xs">
-                                        <p class="form-control-static font-bold">{{pack.PackMain.Order.ERPSO}}</p>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 no-padder">
-                                    <label class="control-label padder-xs col-sm-5">到货地名:</label>
-                                    <div class="col-sm-7 padder-xs">
-                                        <p class="form-control-static font-bold">{{pack.PackMain.SendPlaceName}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group-xs col-md-12 no-padder">
-                                <div class="col-sm-6 no-padder">
-                                    <label class="control-label padder-xs col-sm-5">单机头:</label>
-                                    <div class="col-sm-7 padder-xs">
-                                        <p class="form-control-static font-v3">{{pack.PackMain.PerBoxQuantity}}</p>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 no-padder">
-                                    <label class="control-label padder-xs col-sm-5">彩盒数:</label>
-                                    <div class="col-sm-7 padder-xs">
-                                        <p class="form-control-static font-v3">{{pack.PackMain.PerColorBoxQty}}</p>
-                                    </div>
-                                </div>
+﻿<div class="wrapper-xs" cg-busy="pack.promise">
+    <div class="col-sm-6 padder-xs" ng-form="pack.UpdateForm">
+        <div class="panel panel-default scroll-y">
+            <div class="panel-heading font-bold text-center">
+                产品包装
+            </div>
+            <div class="panel-body padder-xs">
+                <div class="form-horizontal no-padder">
+                    <div class="form-group-xs col-md-12 no-padder">
+                        <div class="col-sm-6 no-padder">
+                            <label class="col-sm-5 padder-xs control-label padder-xxs">工单号:</label>
+                            <div class="col-sm-7 padder-xs" ng-class="{ 'has-error' : pack.UpdateForm.Order.$invalid }">
+                                <input type="text" name="Order" ng-model="pack.Item.WorkOrder" uib-typeahead="order.WorkOrder as order.WorkOrder for order in pack.OrderList | orderBy: 'FirstChar'| filter:{WorkOrder: $viewValue} | limitTo:8"
+                                       class="form-control" placeholder="工单号" ng-keyup="pack.KeyDonwOrder($event)" required>
                             </div>
                         </div>
-                        <div class="line line-dashed b-b line-lg pull-in"></div>
-                        <div class="form-horizontal no-padder" ng-if="pack.PackMain">
-                            <div class="form-group-xs col-md-12">
-                                <div class="col-sm-6 no-pader">
-                                    <label class="control-label padder-xs col-sm-3">栈板号:</label>
-                                    <div class="col-sm-9 padder-xs input-group" ng-class="{ 'has-error' : pack.UpdateForm.PalletCode.$invalid }">
-                                        <input type="text" class="form-control" name="PalletCode" ng-disabled="pack.PackDetail.IsHasPrint" ng-model="pack.PackDetail.PalletCode" required/>
-                                        <span class="input-group-btn">
-                                            <button class="btn text-success h3" ng-confirm="{text:'确定要生成新的栈板号吗'}" title="新栈板号"
-                                                    ng-if="!pack.PackDetail.IsHasPrint && pack.Item.BoxNumber" ng-click="pack.NewPaletCode()">
-                                                <i class="fa fa-plus-square"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 no-pader">
-                                    <label class="control-label padder-xs col-sm-3">包装重量:</label>
-                                    <div class="col-sm-9 padder-xs" ng-class="{ 'has-error' : pack.UpdateForm.Packweigth.$invalid }">
-                                        <input type="number" name="Packweigth" ng-disabled="pack.PackDetail.IsHasPrint" class="form-control" ng-model="pack.Weight" required/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group-xs col-md-12">
-                                <div class="col-sm-6 no-pader">
-                                    <label class="control-label padder-xs col-sm-3">箱号:</label>
-                                    <div class="col-sm-9 padder-xs">
-                                        <p class="form-control-static font-v3">{{pack.Item.BoxNumber}}</p>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 no-pader">
-                                    <label class="control-label padder-xs col-sm-3">包装状态:</label>
-                                    <div class="col-sm-9 padder-xs">
-                                        <p class="form-control-static font-bold text-danger" ng-if="pack.PackDetail">
-                                            {{ pack.PackDetail.IsHasPrint ? "已完成包装" : "待包装"}}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group-xs col-md-12">
-                                <div class="col-sm-6 no-pader">
-                                    <label class="control-label padder-xs col-sm-3">打印SN数:</label>
-                                    <div class="col-sm-9 padder-xs">
-                                        <input class="form-control" type="number" ng-model="pack.PrintSnNum" placeholder="打印SN数">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 no-pader">
-                                    <label class="control-label padder-xs col-sm-3">S/N号:</label>
-                                    <div class="col-sm-9 padder-xs">
-                                        <input class="form-control SnFocus" id="SnFocus" type="text" ng-focus="pack.Focus.SN" ng-disabled="!pack.Item.BoxNumber" 
-                                               name="InCode" ng-model="pack.Item.SNCode" placeholder="生产条码" ng-keyup="pack.KeyDonwSnCode($event)">
-                                    </div>
-                                </div>
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label padder-xs col-sm-5 padder-xxs">客户订单:</label>
+                            <div class="col-sm-7 padder-xs">
+                                <p class="form-control-static font-bold">{{pack.PackMain.TransID}}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="panel-footer text-center" ng-if="pack.Item.BoxNumber && pack.PackDetail">
-                        <button class="btn btn-success" ng-if="!pack.PackDetail.IsHasPrint" type="button" ng-disabled="pack.UpdateForm.$invalid" ng-confirm="{text:'确定要包装吗'}" ng-click="pack.PackSave()">包装</button>
-                        <button class="btn btn-danger" ng-if="!pack.PackDetail.IsHasPrint" type="button" ng-disabled="pack.UpdateForm.$invalid" ng-confirm="{text:'确定要删除SN列表吗'}" ng-click="pack.DeleteSn()">清空SN</button>
-                        <button class="btn btn-success" type="button" ng-click="pack.Print('COTTONCODE')">打印</button>
-                        <button class="btn btn-success" type="button" ng-click="pack.Print('3SCODE')">打印3S</button>
-                        <button class="btn btn-success" type="button" ng-click="pack.Print('4SCODE')">打印4S</button>
+                    <div class="form-group-xs col-md-12">
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label padder-xs col-sm-5 padder-xxs">产品编号:</label>
+                            <div class="col-sm-7 padder-xs">
+                                <p class="form-control-static font-bold">{{pack.PackMain.Order.MaterialCode}}</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label padder-xs col-sm-5 padder-xxs">产品名称:</label>
+                            <div class="col-sm-7 padder-xs">
+                                <p class="form-control-static font-bold">{{pack.PackMain.Order.MaterialName}}</p>
+                            </div>
+                        </div>
                     </div>
-                    <!--<pre>{{ pack.PackMain | json }}</pre>-->
+                    <div class="form-group-xs col-md-12">
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label padder-xs col-sm-5 padder-xxs">零件号:</label>
+                            <div class="col-sm-7 padder-xs">
+                                <p class="form-control-static font-bold">{{pack.PackMain.CustomPartNo}}</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label padder-xs col-sm-5 padder-xxs">Model:</label>
+                            <div class="col-sm-7 padder-xs">
+                                <p class="form-control-static font-bold">{{pack.PackMain.Model}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12 no-padder">
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label padder-xs col-sm-5 padder-xxs">包装编号:</label>
+                            <div class="col-sm-7 padder-xs">
+                                <p class="form-control-static font-bold">{{pack.PackMain.PackListNo}}</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label padder-xs col-sm-5 padder-xxs">Tanapa:</label>
+                            <div class="col-sm-7 padder-xs">
+                                <p class="form-control-static font-bold">{{pack.PackMain.Tanapa}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12 no-padder">
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label padder-xs col-sm-5 padder-xxs">计划数量:</label>
+                            <div class="col-sm-7 padder-xs">
+                                <p class="form-control-static font-v3">{{pack.PackMain.PlanQuantity}}</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label padder-xs col-sm-5 padder-xxs">Erp订单数:</label>
+                            <div class="col-sm-7 padder-xs">
+                                <p class="form-control-static font-v3">{{pack.PackMain.Order.ERPQuantity}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12 no-padder">
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label padder-xs col-sm-5 padder-xxs">Erp销售单:</label>
+                            <div class="col-sm-7 padder-xs">
+                                <p class="form-control-static font-bold">{{pack.PackMain.Order.ERPSO}}</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label padder-xs col-sm-5 padder-xxs">到货地名:</label>
+                            <div class="col-sm-7 padder-xs">
+                                <p class="form-control-static font-bold">{{pack.PackMain.SendPlaceName}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12 no-padder">
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label padder-xs col-sm-5 padder-xxs">单机头:</label>
+                            <div class="col-sm-7 padder-xs">
+                                <p class="form-control-static font-v3">{{pack.PackMain.PerBoxQuantity}}</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 no-padder">
+                            <label class="control-label padder-xs col-sm-5 padder-xxs">彩盒数:</label>
+                            <div class="col-sm-7 padder-xs">
+                                <p class="form-control-static font-v3">{{pack.PackMain.PerColorBoxQty}}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel panel-default scroll-y" style="max-height:350px">
-                    <div class="panel-heading font-bold text-center">信息显示</div>
-                    <div class="panel-body">
-                        <div class="list-group">
-                            <ul class="list-group bg-white">
-                                <li class="list-group-item" ng-repeat="item in pack.MesList track by item.Id" ng-class="{ 'text-danger' : !item.IsOk, 'text-success':item.IsOk }">
-                                    <span herf class="pull-left">
-                                        <i class="glyphicon" ng-class="{ 'glyphicon-remove' : !item.IsOk, 'glyphicon-ok':item.IsOk }"></i>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-horizontal no-padder" ng-if="pack.PackMain">
+                    <div class="form-group-xs col-md-12">
+                        <div class="col-sm-6 no-pader">
+                            <label class="control-label padder-xs col-sm-3 padder-xxs">栈板号:</label>
+                            <div class="col-sm-9 padder-xs input-group" ng-class="{ 'has-error' : pack.UpdateForm.PalletCode.$invalid }">
+                                <input type="text" class="form-control" name="PalletCode" ng-disabled="pack.PackDetail.IsHasPrint" ng-model="pack.PackDetail.PalletCode" required />
+                                <span class="input-group-btn">
+                                    <button class="btn text-success h3" ng-confirm="{text:'确定要生成新的栈板号吗'}" title="新栈板号"
+                                            ng-if="!pack.PackDetail.IsHasPrint && pack.Item.BoxNumber" ng-click="pack.NewPaletCode()">
+                                        <i class="fa fa-plus-square"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 no-pader">
+                            <label class="control-label padder-xs col-sm-3 padder-xxs">包装重量:</label>
+                            <div class="col-sm-9 padder-xs" ng-class="{ 'has-error' : pack.UpdateForm.Packweigth.$invalid }">
+                                <input type="number" name="Packweigth" ng-disabled="pack.PackDetail.IsHasPrint" class="form-control" ng-model="pack.Weight" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12">
+                        <div class="col-sm-6 no-pader">
+                            <label class="control-label padder-xs col-sm-3 padder-xxs">箱号:</label>
+                            <div class="col-sm-9 padder-xs">
+                                <p class="form-control-static font-v3">{{pack.Item.BoxNumber}}</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 no-pader">
+                            <label class="control-label padder-xs col-sm-3 padder-xxs">包装状态:</label>
+                            <div class="col-sm-9 padder-xs">
+                                <p class="form-control-static font-bold text-danger" ng-if="pack.PackDetail">
+                                    {{ pack.PackDetail.IsHasPrint ? "已完成包装" : "待包装"}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12">
+                        <div class="col-sm-6 no-pader">
+                            <label class="control-label padder-xs col-sm-3 padder-xxs">打印SN数:</label>
+                            <div class="col-sm-9 padder-xs">
+                                <div class="input-group">
+                                    <input class="form-control" type="number" ng-disabled="!pack.IsPrint" ng-model="pack.PrintSnNum" placeholder="打印SN数">
+                                    <span class="input-group-addon" title="是否打印">
+                                        <label class="i-checks i-checks-sm">
+                                            <input type="checkbox" class="ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="pack.IsPrint"><i></i>
+                                        </label>
                                     </span>
-                                    <div class="clear">
-                                        <div>{{ item.Msg }}</div>
-                                    </div>
-                                </li>
-                            </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 no-pader">
+                            <label class="control-label padder-xs col-sm-3 padder-xxs">S/N号:</label>
+                            <div class="col-sm-9 padder-xs">
+                                <input class="form-control SnFocus" id="SnFocus" type="text" ng-focus="pack.Focus.SN" ng-disabled="!pack.Item.BoxNumber"
+                                       name="InCode" ng-model="pack.Item.SNCode" placeholder="生产条码" ng-keyup="pack.KeyDonwSnCode($event)">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-sm-2 no-padder">
-                <div class="panel panel-default">
-                    <div class="panel-heading font-bold text-center">箱号列表</div>
-                    <div class="panel-body scroll-y" id="sc" style="max-height:600px">
-                        <div class="list-group">
-                            <a class="list-group-item text-success h5 text-center" ng-class="{ 'bg-danger' : box.BoxNumber==pack.Item.BoxNumber, 'bg-success-light':box.IsHasPrint==1 && box.BoxNumber!=pack.Item.BoxNumber }"
-                               ng-repeat="box in pack.BoxList" ng-click="pack.ChangeBoxNum(box.BoxNumber)">
-                                <span class="font-v3 h3">{{ box.BoxNumber }}</span>
-                            </a>
-                        </div>
-                    </div>
+            <div class="panel-footer text-center" ng-if="pack.Item.BoxNumber && pack.PackDetail">
+                <button class="btn btn-success" ng-if="!pack.PackDetail.IsHasPrint" type="button" ng-disabled="!pack.SNList || pack.SNList.length ==0 || pack.UpdateForm.$invalid" ng-confirm="{text:'确定要包装吗'}" ng-click="pack.PackSave()">包装</button>
+                <button class="btn btn-danger" ng-if="!pack.PackDetail.IsHasPrint" type="button" ng-disabled="!pack.SNList || pack.SNList.length ==0 || pack.UpdateForm.$invalid" ng-confirm="{text:'确定要删除SN列表吗'}" ng-click="pack.DeleteSn()">清空SN</button>
+                <button class="btn btn-success" type="button" ng-click="pack.Print('COTTONCODE')">打印</button>
+                <button class="btn btn-success" type="button" ng-click="pack.Print('3SCODE')">打印3S</button>
+                <button class="btn btn-success" type="button" ng-click="pack.Print('4SCODE')">打印4S</button>
+            </div>
+            <!--<pre>{{ pack.PackMain | json }}</pre>-->
+        </div>
+        <div class="panel panel-default scroll-y" style="max-height:350px">
+            <div class="panel-heading font-bold text-center">信息显示</div>
+            <div class="panel-body">
+                <div class="list-group">
+                    <ul class="list-group bg-white">
+                        <li class="list-group-item" ng-repeat="item in pack.MesList track by item.Id" ng-class="{ 'text-danger' : !item.IsOk, 'text-success':item.IsOk }">
+                            <span herf class="pull-left">
+                                <i class="glyphicon" ng-class="{ 'glyphicon-remove' : !item.IsOk, 'glyphicon-ok':item.IsOk }"></i>
+                            </span>
+                            <div class="clear">
+                                <div>{{ item.Msg }}</div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="col-sm-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading font-bold text-center">包装SN列表</div>
-                    <div class="panel-body scroll-y" style="max-height:600px">
-                        <div class="row col-md-12" ng-show="pack.PackDetail">
-                            <div class="list-group col-md-2 pad-xss bg-light">
-                                <a class="list-group-item pad-xss bg-light text-center" ng-repeat="no in pack.NoList|limitTo:200">
-                                    <span class="font-v2">{{ no }}</span>
-                                </a>
-                            </div>
-                            <div class="list-group col-md-9 pad-xss">
-                                <a class="list-group-item pad-xss" ng-repeat="sn in pack.SNList">
-                                    <span ng-class="{ 'font-bold text-danger' : sn.SNCode==pack.ThisSnCode }">{{ sn.SNCode }}</span>
-                                </a>
-                            </div>
-                        </div>
+    <div class="col-sm-2 no-padder">
+        <div class="panel panel-default">
+            <div class="panel-heading font-bold text-center">箱号列表</div>
+            <div class="panel-body scroll-y" id="sc" style="max-height:600px">
+                <div class="list-group">
+                    <a class="list-group-item text-success h5 text-center" ng-class="{ 'bg-danger' : box.BoxNumber==pack.Item.BoxNumber, 'bg-success-light':box.IsHasPrint==1 && box.BoxNumber!=pack.Item.BoxNumber }"
+                       ng-repeat="box in pack.BoxList" ng-click="pack.ChangeBoxNum(box.BoxNumber)">
+                        <span class="font-v3 h3">{{ box.BoxNumber }}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading font-bold text-center">包装SN列表</div>
+            <div class="panel-body scroll-y" style="max-height:600px">
+                <div class="row col-md-12" ng-show="pack.PackDetail">
+                    <div class="list-group col-md-2 pad-xss bg-light">
+                        <a class="list-group-item pad-xss bg-light text-center" ng-repeat="no in pack.NoList|limitTo:200">
+                            <span class="font-v2">{{ no }}</span>
+                        </a>
+                    </div>
+                    <div class="list-group col-md-9 pad-xss">
+                        <a class="list-group-item pad-xss" ng-repeat="sn in pack.SNList">
+                            <span ng-class="{ 'font-bold text-danger' : sn.SNCode==pack.ThisSnCode }">{{ sn.SNCode }}</span>
+                            <span ng-class="{ 'font-bold text-danger' : sn.SNCode==pack.ThisSnCode }">【{{ sn.InternalCode }}】</span>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-    </uib-tab>
-</uib-tabset>
+    </div>
+</div>

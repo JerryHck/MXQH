@@ -1,7 +1,7 @@
 ﻿<uib-tabset active="dialog.Index" type="tabs">
     <uib-tab index="0">
         <uib-tab-heading class="h5">弹出窗{{ dialog.form.title }}</uib-tab-heading>
-        <div class="panel panel-default padder-xs">
+        <div class="panel panel-default padder-xs" ng-form="dialog.DialogForm">
             <div class="panel-body padder-xs">
                 <div class="form-horizontal">
                     <div class="form-group-sm pull-in clearfix">
@@ -73,7 +73,7 @@
                                                 <div fun-file-select file-type="1" ng-model="dialog.NewItem.templateUrl" clear="true" ng-name="Html" ng-required="true"></div>
                                             </div>
                                             <div class="col-sm-6 no-padder-xxs input-group" ng-if="!dialog.NewItem.IsSystem">
-                                                <span class="input-group-addon" title="编辑html/js文件"><a class="text-success" ng-click="dialog.OpenHtmlJs()"><i class="glyphicon glyphicon-edit"></i></a></span>
+                                                <!--<span class="input-group-addon" title="编辑html/js文件"><a class="text-success" ng-click="dialog.OpenHtmlJs()"><i class="glyphicon glyphicon-edit"></i></a></span>-->
                                                 <input class="form-control" ng-model="dialog.NewItem.templateUrl" disabled />
                                             </div>
                                         </div>
@@ -120,52 +120,72 @@
             </div>
         </div>
     </uib-tab>
-    <uib-tab index="1">
-        <uib-tab-heading class="h5">功能设定</uib-tab-heading>
+    <uib-tab index="1" disable="dialog.NewItem.IsSystem">
+        <uib-tab-heading class="h5">弹窗设定</uib-tab-heading>
         <div class="panel panel-default no-padder col-md-12">
             <div class="panel-body padder-xs">
-                <div class="form-group-xs col-md-12">
-                    <div class="col-md-4 no-padder">
-                        <label class="col-md-4 padder-xs control-label text-info">功能名称：</label>
-                        <div class="col-md-8 no-padder">
-                            <input type="text" class="form-control" ng-model="dialog.ThisFun.FunName" placeholder="功能名称" />
+                <div class="form form-horizontal">
+                    <div class="form-group-xs col-md-12">
+                        <div class="col-md-4 no-padder">
+                            <label class="col-md-4 padder-xs control-label text-info">弹窗名称：</label>
+                            <div class="col-md-8 no-padder">
+                                <input type="text" class="form-control" ng-model="dialog.ThisFun.FunName" placeholder="弹窗名称" />
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padder">
+                            <label class="col-md-4 padder-xs control-label text-info">弹窗类型：</label>
+                            <div class="col-md-8 no-padder">
+                                <span class="btn-group">
+                                    <label class="btn btn-sm btn-default" ng-model="dialog.ThisFun.FunType" uib-btn-radio="'B'" ng-click="dialog.ThisFun.DataType=='E'">编辑</label>
+                                    <label class="btn btn-sm btn-default" ng-model="dialog.ThisFun.FunType" uib-btn-radio="'R'" ng-click="dialog.ChangeFunType()">查询</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padder">
+                            <label class="col-md-4 padder-xs control-label text-info">数据类型：</label>
+                            <div class="col-md-8 no-padder">
+                                <span class="btn-group" ng-if="dialog.ThisFun.FunType=='R'">
+                                    <label class="btn btn-sm btn-default" ng-model="dialog.ThisFun.DataType" uib-btn-radio="'E'" ng-click="dialog.FunType()">实体</label>
+                                    <label class="btn btn-sm btn-default" ng-model="dialog.ThisFun.DataType" uib-btn-radio="'P'" ng-click="dialog.FunType()">存储过程</label>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4 no-padder">
-                        <label class="col-md-4 padder-xs control-label text-info">功能类型：</label>
-                        <div class="col-md-8 no-padder">
-                            <span class="btn-group">
-                                <label class="btn btn-sm btn-default" ng-model="dialog.ThisFun.FunType" uib-btn-radio="'B'" ng-click="dialog.ThisFun.DataType=='E'">功能</label>
-                                <label class="btn btn-sm btn-default" ng-model="dialog.ThisFun.FunType" uib-btn-radio="'R'" ng-click="dialog.ChangeFunType()">报表</label>
-                            </span>
+                    <div class="form-group-xs col-md-12">
+                        <div class="col-md-4 no-padder">
+                            <label class="col-md-4 padder-xs control-label text-info">查询实体：</label>
+                            <div class="col-md-8 no-padder">
+                                <div entity-select ng-model="dialog.ThisFun.EntityName" select-class="'text-xs'" ng-change="dialog.ChangeEntity()"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4 no-padder">
-                        <label class="col-md-4 padder-xs control-label text-info">数据类型：</label>
-                        <div class="col-md-8 no-padder">
-                            <span class="btn-group" ng-if="dialog.ThisFun.FunType=='R'">
-                                <label class="btn btn-sm btn-default" ng-model="dialog.ThisFun.DataType" uib-btn-radio="'E'" ng-click="dialog.FunType()">实体</label>
-                                <label class="btn btn-sm btn-default" ng-model="dialog.ThisFun.DataType" uib-btn-radio="'P'" ng-click="dialog.FunType()">存储过程</label>
-                            </span>
+                        <div class="col-md-4 no-padder" ng-show="dialog.ThisFun.DataType == 'P'">
+                            <label class="col-md-4 padder-xs  control-label text-info">存储过程：</label>
+                            <div class="col-md-8 no-padder">
+                                <ui-select name="remark" ng-model="dialog.ThisFun.ShortName" theme="bootstrap" search-enabled="true" ng-change="dialog.ChangeProc()">
+                                    <ui-select-match placeholder="选择存储过程.."><span>{{ $select.selected.ProcSchema }}.{{ $select.selected.ProcName }}</span></ui-select-match>
+                                    <ui-select-choices repeat="item.ShortName as item in dialog.ProcList | filter: $select.search track by item.ShortName">
+                                        <div><span ng-bind-html="item.ProcSchema | highlight: $select.search"></span>.<span ng-bind-html="item.ProcName | highlight: $select.search"></span></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="form-group-xs col-md-12">
-                    <div class="col-md-4 no-padder">
-                        <label class="col-md-4 padder-xs control-label text-info">查询实体：</label>
-                        <div class="col-md-8 no-padder">
-                            <div entity-select ng-model="dialog.ThisFun.EntityName" auto-first="true" select-class="'text-xs'" ng-change="dialog.ChangeEntity()"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-8 no-padder" ng-show="dialog.ThisFun.DataType == 'P'">
-                        <label class="col-md-2 padder-xs  control-label text-info">存储过程：</label>
-                        <div class="col-md-8 no-padder">
-                            <ui-select name="remark" ng-model="dialog.ThisFun.ShortName" theme="bootstrap" search-enabled="true" ng-change="dialog.ChangeProc()">
-                                <ui-select-match placeholder="选择存储过程.."><span>{{ $select.selected.ProcSchema }}.{{ $select.selected.ProcName }}</span></ui-select-match>
-                                <ui-select-choices repeat="item.ShortName as item in dialog.ProcList | filter: $select.search track by item.ShortName">
-                                    <div><span ng-bind-html="item.ProcSchema | highlight: $select.search"></span>.<span ng-bind-html="item.ProcName | highlight: $select.search"></span></div>
-                                </ui-select-choices>
-                            </ui-select>
+                        <div class="col-md-4 no-padder">
+                            <label class="col-md-4 padder-xs control-label text-info">返回栏位：</label>
+                            <div class="col-md-8 no-padder" title="不选则返回实体数据">
+                                <div class="py-xl-0 pt-xl-0 input-group">
+                                    <ui-select name="ReturnColumn" ng-model="dialog.NewItem.ReturnColumn" theme="bootstrap" search-enabled="true">
+                                        <ui-select-match placeholder="选择返回栏...">{{ $select.selected.ColumnName }}</ui-select-match>
+                                        <ui-select-choices repeat="item.ColumnName as item in dialog.EnColList | filter: $select.search">
+                                            <div ng-bind-html="item.ColumnName | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-btn">
+                                        <button ng-click="dialog.Item.ReturnColumn= undefined" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-trash text-danger"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -358,13 +378,13 @@
             <!--<pre>{{ dialog.ThisFun |json }}</pre>-->
         </div>
     </uib-tab>
-    <uib-tab index="2">
+    <uib-tab index="2" disable="dialog.NewItem.IsSystem">
         <uib-tab-heading class="h5">HTML文件代码</uib-tab-heading>
         <div class="panel">
             <textarea class="form-control" rows="22" ng-model="dialog.NewItem.Content.Html"></textarea>
         </div>
     </uib-tab>
-    <uib-tab index="3">
+    <uib-tab index="3" disable="dialog.NewItem.IsSystem">
         <uib-tab-heading class="h5">Js文件代码</uib-tab-heading>
         <div class="panel">
             <textarea class="form-control" rows="22" ng-model="dialog.NewItem.Content.Js"></textarea>
@@ -373,6 +393,8 @@
 </uib-tabset>
 <div class="modal-footer">
     <div class="text-center">
+        <button class="btn btn-info" type="button" ng-disabled="dialog.DialogForm.$invalid" ng-click="dialog.Pre()">预览</button>
+        <button class="btn btn-info" type="button" ng-disabled="dialog.DialogForm.$invalid" ng-click="dialog.SaveAndPre()">储存并预览</button>
         <button class="btn btn-success" type="button" ng-disabled="dialog.DialogForm.$invalid" ng-click="dialog.Save()">储存</button>
         <button class="btn btn-warning" type="button" ng-click="dialog.cancel()">取消</button>
     </div>

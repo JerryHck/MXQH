@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="panel-body scroll-y padder-xs padder-v-xs bar-xs" style="max-height:400px">
-                        <div class="col-md-12 m-t-xs padder-xs" ng-if="wo.Ser.SerType == '1'" ng-repeat="item in wo.OrderList | filter:{WorkOrder:wo.MoQuery}">
+                        <div class="col-md-12 m-t-xs padder-xs" ng-if="wo.Ser.SerType == '1'" ng-repeat="item in wo.OrderList | filter:wo.MoQuery">
                             <button class="btn-group-vertical h2 btn-lg w-full btn-primary"
                                     ng-click="wo.Ser.WorkOrder=item.Order.WorkOrder;"
                                     ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1, 'btn-success':wo.Ser.WorkOrder==item.Order.WorkOrder}">
