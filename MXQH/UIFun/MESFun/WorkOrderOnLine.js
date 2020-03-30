@@ -123,7 +123,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         en.WorkOrder = vm.Item.WorkOrder;
         en.InternalCode = vm.InCodeSave;
         en.RoutingId = vm.RoutingData.ID;
-        console.log(en);
+        //console.log(en);
         vm.promise = AjaxService.ExecPlan("MesMxWOrder", "save", en).then(function (data) {
             if (data.data[0].MsgType == 'Success') {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });

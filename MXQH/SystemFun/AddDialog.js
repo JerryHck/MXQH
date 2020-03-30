@@ -105,18 +105,18 @@ function ($scope, $http, Dialog, AjaxService, toastr) {
         var en = {};
         en.name = item.name;
         console.log(item);
-        vm.promise = AjaxService.PlanDelete("DailogLoad", en).then(function (data) {
-            //AjaxService.PlanDelete("DailogLoad", en).then(function (data2) {
-            //    toastr.success('删除成功');
-            //    var index = -1;
-            //    for (var i = 0, len = vm.List.length; i < len; i++) {
-            //        if (item.name == vm.List[i].name) {
-            //            index = i;
-            //            break;
-            //        }
-            //    }
-            //    vm.List.splice(index, 1);
-            //})
+        vm.promise = AjaxService.PlanDelete("Dialog", en).then(function (data) {
+            AjaxService.PlanDelete("DailogLoad", en).then(function (data2) {
+                toastr.success('删除成功');
+                var index = -1;
+                for (var i = 0, len = vm.List.length; i < len; i++) {
+                    if (item.name == vm.List[i].name) {
+                        index = i;
+                        break;
+                    }
+                }
+                vm.List.splice(index, 1);
+            })
         });
     }
 

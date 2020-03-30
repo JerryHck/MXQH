@@ -9,7 +9,7 @@
                 <button class="btn btn-sm pull-left btn-info m-l-xs" ng-click="wo.Offline()" ng-if="!wo.IsBefore && $index == 0"><i class="glyphicon glyphicon-fullscreen"></i></button>
                 <div class="padder-xs" ng-if="SerItem.Now && SerItem.IsRun">
                     <div class="form-control-static padder-xs h3 font-bold text-white">
-                        {{ SerItem.MainData.LineName }}&nbsp; &nbsp;&nbsp; &nbsp;   {{ SerItem.Now }}  {{ SerItem.StartDate }} --- {{ SerItem.EndDate }}  &nbsp;  &nbsp;&nbsp;&nbsp; 直通率:{{ SerItem.ProData.OKRate }}
+                        {{ SerItem.MainData.LineName }}&nbsp; &nbsp;&nbsp; &nbsp;   {{ SerItem.Now }} &nbsp;{{ SerItem.MainData.StartDate }}~{{ SerItem.MainData.EndDate }}  &nbsp;  &nbsp;&nbsp;&nbsp; 直通率:{{ SerItem.ProData.OKRate }}
                     </div>
                 </div>
             </div>

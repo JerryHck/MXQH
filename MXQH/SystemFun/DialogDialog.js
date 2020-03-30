@@ -560,6 +560,7 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
 
     //查询HTML代码生成
     function genHtmlForReport(fun) {
+        var maxSize = vm.NewItem.size == 'sm' || !vm.NewItem.size || vm.NewItem.size == "" ? "5" : "10";
         var sbHtml = "";
         sbHtml += "<div class=\"modal-header text-center\">\n";
         sbHtml += '    <button class="btn btn-sm btn-warning pull-left" type="button" ng-click="' + vm.NewItem.controllerAs + '.Cancel()">取消</button>\n';
@@ -567,7 +568,7 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
         sbHtml += "</div>\n";
         sbHtml += '<div class="modal-body wrapper-xs h6" ng-form="DialogForm">\n';
         sbHtml += '    <div class="panel panel-default">\n';
-        sbHtml += '        <div class="panel-body padder-xxs padder-v-xxs">\n';
+        sbHtml += '        <div class="panel-body padder-xs padder-v-xxs">\n';
         sbHtml += '            <div class="wrapper-sm">\n';
         sbHtml += '                <div class="form-inline">\n';
         //生成查询条件
@@ -600,8 +601,8 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
         sbHtml += "                    </tr>\n";
         sbHtml += "                </table>\n";
         sbHtml += "                <div class= \"col-md-12 text-center \" ng-if= \"" + vm.NewItem.controllerAs + ".page.total>" + vm.NewItem.controllerAs + ".page.size \">\n";
-        sbHtml += "                    <div uib-pagination total-items= \"" + vm.NewItem.controllerAs + ".page.total \" ng-model= \"" + vm.NewItem.controllerAs + ".page.index \" items-per-page= \"" + vm.NewItem.controllerAs + ".page.size \" max-size= \"10 \" first-text= \"第一页 \" previous-text= \"上一页 \"\n";
-        sbHtml += "                     ng-change= \"" + vm.NewItem.controllerAs + ".PageChange() \" next-text= \"下一页 \" last-text= \"最后页 \" boundary-links= \"true \" boundary-link-numbers= \"true \"></div>\n";
+        sbHtml += "                    <div uib-pagination total-items= \"" + vm.NewItem.controllerAs + ".page.total \" ng-model= \"" + vm.NewItem.controllerAs + ".page.index \" items-per-page= \"" + vm.NewItem.controllerAs + ".page.size \" max-size= \"" + maxSize + " \" first-text= \"<< \" previous-text= \"< \"\n";
+        sbHtml += "                     ng-change= \"" + vm.NewItem.controllerAs + ".PageChange() \" next-text= \"> \" last-text= \">> \" boundary-links= \"true \" boundary-link-numbers= \"true \"></div>\n";
         sbHtml += '                </div>\n';
         sbHtml += '            </div>\n';
         sbHtml += '        </div>\n';
@@ -720,7 +721,7 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
         sbHtml += '</div>\n';
         sbHtml += '<div class="modal-body wrapper-xs">\n';
         sbHtml += '    <div class="panel panel-default scroll-y" ng-form=\"' + vm.NewItem.controllerAs + '.DialogForm\">\n';
-        sbHtml += '        <div class="panel-body  padder-xxs padder-v-xxs">\n';
+        sbHtml += '        <div class="panel-body  padder-xs padder-v-xxs">\n';
         sbHtml += '            <div class="form-horizontal no-padder">\n';
 
         //是否有下拉选择框

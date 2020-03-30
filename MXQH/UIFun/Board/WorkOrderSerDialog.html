@@ -84,6 +84,9 @@
                         <div class="col-md-6 padder-xs">
                             <input type="text" ng-disabled="wo.IsRun" time-picker class="form-control" placeholder="结束" ng-model="wo.Ser.EndDate" option="wo.TimeOp" />
                         </div>
+                        <div class="col-md-12 padder-xs m-b-md">
+                            <span class="text-danger h6">注：系统优先以排班设置的开始~结束时间做查询依据</span>
+                        </div>
                         <div class="col-md-12 m-t-lg">
                             <button class="btn btn-success pull-left" type="button" ng-disabled="QcForm.$invalid" ng-click="wo.Save()">确定查询</button>
                             <button class="btn btn-warning pull-right" type="button" ng-click="wo.cancel()">关闭</button>

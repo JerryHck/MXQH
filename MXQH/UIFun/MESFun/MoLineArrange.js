@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('MoLineArrangeCtrl', ['$rootScope', '$scope', 'MyPop', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
+.controller('MoLineArrangeCtrl', ['$rootScope', '$scope', 'MyPop', 'AjaxService', 'toastr', '$window', 'Dialog',
+function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
@@ -25,6 +25,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     vm.ChangeMo = ChangeMo;
     //排班
     vm.SaveArrange = SaveArrange;
+    vm.OpenMoDialog = OpenMoDialog;
 
     vm.Cancel = Cancel;
     vm.DeletePer = DeletePer;
@@ -62,6 +63,23 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             vm.MesLis = [];
             vm.SelectedArrange = {};
         }
+    }
+
+    function OpenMoDialog() {
+        Dialog.OpenDialog("MESMODialog", {}).then(function (data) {
+            vm.SelectedMo = data;
+            GetMoArrange();
+            vm.promise = AjaxService.GetPlan("MESLineOrder", { name: "ID", value: vm.SelectedMo.ID }).then(function (data2) {
+                vm.SelectedArrange.WorkOrder = vm.SelectedMo.WorkOrder;
+                vm.SelectedArrange.Order = { MaterialCode: vm.SelectedMo.MaterialCode, Quantity: vm.SelectedMo.Quantity, MaterialName: vm.SelectedMo.MaterialName };
+                vm.SelectedArrange.LineId = data2.Plan.Line.ID;
+                vm.SelectedArrange.Line = { Name: data2.Plan.Line.Name };
+                vm.SelectedArrange.LineLeader = data2.Plan.Line.UserName.Id;
+                vm.SelectedArrange.MesUser = { Name: data2.Plan.Line.UserName.Name };
+                vm.SelectedArrange.StandPerson = data2.Plan.Line.LineNumber
+            })
+            vm.MesLis = [];
+        })
     }
 
     //扫描人员

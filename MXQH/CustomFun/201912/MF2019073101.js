@@ -86,6 +86,7 @@ function (Dialog,$rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     function PageChange() {
         vm.promise = AjaxService.GetPlansPage("VWMesMxWOrderHH", GetContition(), vm.page.index, vm.page.size).then(function (data) {
+            console.log(data)
             vm.List = data.List;
             vm.page.total = data.Count;
         });
