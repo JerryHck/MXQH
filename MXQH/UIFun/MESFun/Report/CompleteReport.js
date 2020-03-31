@@ -5,7 +5,7 @@ angular.module('app')
 function ($rootScope, $scope, $http, AjaxService, toastr, $window,Form) {
 
     var vm = this;
-    vm.Ser = { pageIndex: 1, pageSize: 12 };
+    vm.Ser = { pageIndex: 1, pageSize: 5 };
     vm.Detail = {};
 
     vm.PageChange = PageChange;

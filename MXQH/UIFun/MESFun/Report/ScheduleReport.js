@@ -30,7 +30,6 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, Form) {
         en.toProc = 'dbo.sp_GetScheduleReport';
         en.toJson = JSON.stringify({ WorkOrder: vm.Ser.WorkOrder, pageSize: vm.Ser.pageSize, pageIndex: vm.Ser.pageIndex, LineID: vm.Ser.LineID, SD: vm.Ser.SD, ED: vm.Ser.ED });
         vm.promise = AjaxService.BasicCustom("ExecProcCross", en).then(function (data) {
-            console.log(data);
             vm.List = data.data;
             vm.Ser.total = data.data1[0].Count;
         });
