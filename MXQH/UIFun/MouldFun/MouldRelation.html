@@ -135,9 +135,9 @@
                                            ng-model="mouldRelation.MouldInfo.Name" required>
                                 </div>
                                 <label class="col-md-1 control-label text-lg text-left">模具规格</label>
-                                <div class="col-md-3" ng-class="{ 'has-error' : mouldRelation.form.SPECS.$invalid }">
+                                <div class="col-md-3" >
                                     <input type="text" class="form-control" name="SPECS" placeholder="模具规格"
-                                           ng-model="mouldRelation.MouldInfo.SPECS" required>
+                                           ng-model="mouldRelation.MouldInfo.SPECS">
                                 </div>
                             </div>
                         </div>
@@ -231,7 +231,7 @@
                                 <label class="col-md-1 control-label text-lg text-left">单位产出</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : mouldRelation.formLine.UnitOutput.$invalid }">
                                     <input type="number" class="form-control" name="UnitOutput" placeholder="单位产出"
-                                           ng-model="mouldRelation.Line.UnitOutput" required>
+                                           ng-model="mouldRelation.Line.UnitOutput">
                                 </div>
                                 <label class="col-md-1 control-label text-lg text-left">不良率：</label>
                                 <div class="col-md-3" >
@@ -241,14 +241,14 @@
                                 <label class="col-md-1 control-label text-lg text-left">生效时间</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : mouldRelation.formLine.EffectiveDate.$invalid }">
                                     <input type="text" date-picker class="form-control" name="EffectiveDate" placeholder="生效时间" option="mouldRelation.dt"
-                                           ng-model="mouldRelation.Line.EffectiveDate" required>
+                                           ng-model="mouldRelation.Line.EffectiveDate">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-1 control-label text-lg text-left">失效时间</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : mouldRelation.formLine.DisableDate.$invalid }">
                                     <input type="text" date-picker class="form-control" name="DisableDate" placeholder="生效时间" option="mouldRelation.dt"
-                                           ng-model="mouldRelation.Line.DisableDate" required>
+                                           ng-model="mouldRelation.Line.DisableDate">
                                 </div>
                                 <label class="col-md-1 control-label text-lg text-left">备注</label>
                                 <div class="col-md-3">
