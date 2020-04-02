@@ -37,6 +37,7 @@
                             <td style="width:100px ">线别</td>
                             <td style="width:80px ">产品编码</td>
                             <td style="width:160px ">产品名称</td>
+                            <td style="width:160px ">客户品名</td>
                             <td style="width:80px ">工单数量</td>
                             <td style="width:100px ">客户订单</td>
                             <td style="width:100px ">ERP销售订单</td>
@@ -56,6 +57,7 @@
 
                         <td ng-class="{'bg-warning':item.IsCode}" title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
                         <td title="{{ item.MaterialName }}" style="white-space:normal;word-break:break-all;">{{ item.MaterialName }}</td>
+                        <td title="{{ item.CustomerItemName }}" style="white-space:normal;word-break:break-all;">{{ item.CustomerItemName }}</td>
                         <td ng-class="{'bg-warning':item.IsQuantity}" title="{{ item.ProductQty }}">{{ item.ProductQty }}</td>
                         <td ng-class="{'bg-warning':item.IsCustomerOrder}" title="{{ item.CustomerOrder }}">{{ item.CustomerOrder }}</td>
                         <td ng-class="{'bg-warning':item.IsERPSO}"  title="{{ item.ERPSO }}" style="white-space:normal;word-break:break-all;">{{ item.ERPSO }}</td>

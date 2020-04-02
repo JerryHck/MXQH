@@ -233,6 +233,15 @@
                         </div>
                     </div>                 
                 </div>
+                <div class="form-group" ng-show="!moDialog.Item.IsNotAdmin">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">客户品名</label>
+                        <div class="col-sm-8 padder-xs">
+                            <input type="text" class="form-control" ng-disabled="moDialog.Item.IsComplete" name="CustomerItemName" placeholder="客户品名"
+                                   ng-model="moDialog.Item.CustomerItemName">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -82,6 +82,9 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
         if (!vm.Item.Remark) {
             vm.Item.Remark = '';
         }
+        if (!vm.Item.CustomerItemName) {
+            vm.Item.CustomerItemName = '';
+        }        
         if (vm.Item.MaxWeight<vm.Item.MinWeight) {
             toastr.error('最大重量不能小于最小重量');
             return;
@@ -279,6 +282,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
                             vm.Item.ERPQuantity = data.ERPQuantity
                             vm.Item.SendPlaceID = data.SendPlaceID;
                             vm.Item.AssemblyLineID = data.AssemblyLineID;
+                            vm.Item.CustomerItemName = data.CustomerItemName;
                         });
                     } else if (vm.Item.WorkOrder != data.DocNo) {
                         toastr.error('同步的不是当前工单！');
