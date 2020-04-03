@@ -96,7 +96,7 @@
                             <div data-ng-include="'Access/SignUpProtocol.html' "></div>
                             <div class="checkbox m-b-md m-t-none text-center" ng-class="{ 'has-error' : sign.Form.Agree.$invalid }">
                                 <label class="i-checks">
-                                    <input type="checkbox" name="Agree" ng-model="sign.Item.IsAgree" ng-change="sign.Agree()" required><i></i> 同意协议
+                                    <input autocomplete="off"  type="checkbox" name="Agree" ng-model="sign.Item.IsAgree" ng-change="sign.Agree()" required><i></i> 同意协议
                                 </label>
                             </div>
                         </div>
@@ -113,7 +113,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-3">注册账号:</label>
                                             <div class="col-md-9" ng-class="{ 'has-error' : sign.OneForm.Account.$invalid }">
-                                                <input placeholder="请填写账号" name="Account" class="form-control" ng-minlength="8" ng-maxlength="16" ng-model="sign.Item.Account"
+                                                <input autocomplete="off"  placeholder="请填写账号" name="Account" class="form-control" ng-minlength="8" ng-maxlength="16" ng-model="sign.Item.Account"
                                                        ng-pattern="/^(?![^a-zA-Z]+$)|(?!\D+$)/" ng-change="sign.checkAccount()" required>
                                                 <div ng-messages="sign.OneForm.Account.$error" class="help-block h6" role="alert">
                                                     <div ng-message="minlength">账号必须大于8位</div>
@@ -126,7 +126,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-3">密码:</label>
                                             <div class="col-md-9" ng-class="{ 'has-error' : sign.OneForm.Password.$invalid }">
-                                                <input type="password" name="Password" class="form-control" ng-minlength="8" ng-maxlength="16" placeholder="密码" ng-model="sign.Item.Password"
+                                                <input autocomplete="off"  type="password" name="Password" class="form-control" ng-minlength="8" ng-maxlength="16" placeholder="密码" ng-model="sign.Item.Password"
                                                        ng-pattern="/^(?![^a-zA-Z]+$)(?!\D+$)/" ng-change="sign.checkPwdSign()" required>
                                                 <div ng-messages="sign.OneForm.Password.$error" class="help-block h6" role="alert">
                                                     <div ng-message="minlength">密码必须大于8位</div>
@@ -138,7 +138,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-3">确认密码:</label>
                                             <div class="col-md-9" ng-class="{ 'has-error' : sign.OneForm.PasswordSign.$invalid }">
-                                                <input type="password" name="PasswordSign" class="form-control" ng-minlength="8" ng-maxlength="16" placeholder="密码确认" ng-model="sign.Item.PasswordSign"
+                                                <input autocomplete="off"  type="password" name="PasswordSign" class="form-control" ng-minlength="8" ng-maxlength="16" placeholder="密码确认" ng-model="sign.Item.PasswordSign"
                                                        ng-pattern="/^(?![^a-zA-Z]+$)(?!\D+$)/" ng-change="sign.checkPwdSign()" required>
                                                 <div ng-messages="sign.OneForm.PasswordSign.$error" class="help-block h6" role="alert">
                                                     <div ng-message="minlength">密码必须大于8位</div>
@@ -169,19 +169,19 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3">公司名称:</label>
                                     <div class="col-md-9" ng-class="{ 'has-error' : sign.TwoForm.CompanyName.$invalid }">
-                                        <input placeholder="请填写公司全称" name="CompanyName" class="form-control" ng-maxlength="255" ng-model="sign.Item.CompanyName" required>
+                                        <input autocomplete="off"  placeholder="请填写公司全称" name="CompanyName" class="form-control" ng-maxlength="255" ng-model="sign.Item.CompanyName" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">公司授权联系人:</label>
                                     <div class="col-md-9" ng-class="{ 'has-error' : sign.TwoForm.Contact.$invalid }">
-                                        <input placeholder="姓名" name="Contact" class="form-control" ng-maxlength="50" ng-model="sign.Item.Contact" required>
+                                        <input autocomplete="off"  placeholder="姓名" name="Contact" class="form-control" ng-maxlength="50" ng-model="sign.Item.Contact" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">联系人手机:</label>
                                     <div class="col-md-9" ng-class="{ 'has-error' : sign.TwoForm.Mobile.$invalid }">
-                                        <input type="text" placeholder="联系人手机" name="Mobile" class="form-control" ng-maxlength="20" ng-model="sign.Item.Mobile"
+                                        <input autocomplete="off"  type="text" placeholder="联系人手机" name="Mobile" class="form-control" ng-maxlength="20" ng-model="sign.Item.Mobile"
                                                ng-pattern="/^[\d\+\-\(\)]+$/" required>
                                     </div>
                                 </div>
@@ -204,21 +204,21 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3">公司邮箱:</label>
                                     <div class="col-md-9" ng-class="{ 'has-error' : sign.TwoForm.Email.$invalid }">
-                                        <input placeholder="请填写公司正式接收的邮箱（带公司简称后缀）" type="email" name="Email" class="form-control" ng-maxlength="30"
+                                        <input autocomplete="off"  placeholder="请填写公司正式接收的邮箱（带公司简称后缀）" type="email" name="Email" class="form-control" ng-maxlength="30"
                                                ng-pattern="/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/" ng-model="sign.Item.Email" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">联系人座机:</label>
                                     <div class="col-md-9" ng-class="{ 'has-error' : sign.TwoForm.Phone.$invalid }">
-                                        <input placeholder="联系人座机" name="Phone" class="form-control" ng-maxlength="50" ng-model="sign.Item.Phone"
+                                        <input autocomplete="off"  placeholder="联系人座机" name="Phone" class="form-control" ng-maxlength="50" ng-model="sign.Item.Phone"
                                                ng-pattern="/^[\d\+\-\(\)]+$/" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">联系人职务:</label>
                                     <div class="col-md-9" ng-class="{ 'has-error' : sign.TwoForm.Position.$invalid }">
-                                        <input placeholder="请填写所在公司任职职务" name="Position" class="form-control" ng-maxlength="30" ng-model="sign.Item.Position" required>
+                                        <input autocomplete="off"  placeholder="请填写所在公司任职职务" name="Position" class="form-control" ng-maxlength="30" ng-model="sign.Item.Position" required>
                                     </div>
                                 </div>
                             </div>

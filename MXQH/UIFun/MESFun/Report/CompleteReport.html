@@ -4,11 +4,11 @@
         <div class="wrapper-md" ng-form="DialogForm">
             <div class="form-inline">
                 <div class="form-group" ng-class="{'has-error':DialogForm.WorkOrder.$invalid }">
-                    <input type="text" class="form-control" name="WorkOrder" ng-model="crc.Ser.WorkOrder" placeholder="工单号" required>
+                    <input autocomplete="off"  type="text" class="form-control" name="WorkOrder" ng-model="crc.Ser.WorkOrder" placeholder="工单号" required>
                 </div>
                 <!--<div class="form-group">
                     <div class="input-group">
-                        <input type="text" date-picker class="form-control" ng-model="crc.Ser.CompleteDate" placeholder="完工日期" option="vm.DateTimeOption">
+                        <input autocomplete="off"  type="text" date-picker class="form-control" ng-model="crc.Ser.CompleteDate" placeholder="完工日期" option="vm.DateTimeOption">
                         <span class="input-group-addon">
                             <a ng-click="crc.Ser.CompleteDate=undefined" class="text-danger"><i class="glyphicon glyphicon-trash"></i></a>
                         </span>
@@ -71,19 +71,22 @@
                 <!--<pre>{{ crc.Detail | json }}</pre>-->
             </div>
         </div>
-        <div class="padder-md col-sm-2">
+        <div class="padder-md col-sm-4">
             <div class="panel panel-default scroll-y" style="max-height:600px">
                 <div class="panel-heading font-bold text-center">
                     未完工明细
                 </div>
-                <table class="table ">
-                    <!--<thead>
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td style="width:100px ">内控码</td>
+                            <td  >内控码</td>
+                            <td  >是否报废</td>
                         </tr>
-                    </thead>-->
+                    </thead>
                     <tr ng-repeat="item in crc.List">
-                        <td title="{{ item.InternalCode }}">{{ item.InternalCode }}</td>
+                        <td  title="{{ item.InternalCode }}">{{ item.InternalCode }}</td>
+                        <td ng-if="item.IsDump=='是'" title="{{ item.IsDump }}"><span class="text-danger" >{{ item.IsDump }}</span></td>
+                        <td ng-if="item.IsDump!='是'"  title="否"><span class="text-success">否</span></td>
                     </tr>
                 </table>
                 <div class="col-md-12 text-center " ng-if="crc.Ser.total>crc.Ser.pageSize ">

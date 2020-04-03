@@ -10,6 +10,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     //初始化
     function Init() {
         vm.NewItem = {};
+        vm.IsActive = { Table: 'AgingTestIsPass', Column: 'IsPass' };
         if (ItemData.ID) {
             vm.NewItem = angular.copy(ItemData);
         }

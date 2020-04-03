@@ -5,7 +5,7 @@
     </div>
     <div class="form-inline">
         <div class="form-group">
-            <input type="text" class="form-control" ng-model="job.Ser.JobName" placeholder="任务名称">
+            <input autocomplete="off"  type="text" class="form-control" ng-model="job.Ser.JobName" placeholder="任务名称">
         </div>
         <button class="btn btn-sm btn-info" ng-click="job.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
 
@@ -71,7 +71,7 @@
                         <div class="col-sm-6 no-padder">
                             <label class="control-label col-md-3 padder-xs">计划名</label>
                             <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : job.JobForm.JobName.$invalid }">
-                                <input type="text" class="form-control" name="JobName" placeholder="计划名" ng-model="job.Item.JobName" ng-disabled="job.isEdit || job.isCopy" ng-blur="job.isJobExists()" required>
+                                <input autocomplete="off"  type="text" class="form-control" name="JobName" placeholder="计划名" ng-model="job.Item.JobName" ng-disabled="job.isEdit || job.isCopy" ng-blur="job.isJobExists()" required>
                                 <div ng-messages="job.JobForm.JobName.$error" class="help-block" role="alert">
                                     <div ng-message="unique">任务名已经存在</div>
                                 </div>
@@ -89,7 +89,7 @@
                             <label class="control-label col-md-3 padder-xs">执行一次</label>
                             <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : job.JobForm.NextRunTime.$invalid }">
                                 <div class="input-group">
-                                    <input type="text" date-time-picker class="form-control" name="NextRunTime" placeholder="选择执行时间" ng-model="job.Item.NextRunTime" option="job.NextOption" required>
+                                    <input autocomplete="off"  type="text" date-time-picker class="form-control" name="NextRunTime" placeholder="选择执行时间" ng-model="job.Item.NextRunTime" option="job.NextOption" required>
                                     <span class="input-group-addon"><a class="text-success"><i class="glyphicon glyphicon-calendar"></i></a></span>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                             <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : job.JobForm.Interval.$invalid }">
                                 <div class="input-group">
                                     <span class="input-group-addon">每</span>
-                                    <input type="number" name="Interval" min="1" max="100" class="form-control" ng-model="job.Item.Interval" required />
+                                    <input autocomplete="off"  type="number" name="Interval" min="1" max="100" class="form-control" ng-model="job.Item.Interval" required />
                                     <span class="input-group-addon" ng-if="job.Item.RepeatType=='D'">天</span>
                                     <span class="input-group-addon" ng-if="job.Item.RepeatType=='W'">周</span>
                                     <span class="input-group-addon" ng-if="job.Item.RepeatType=='M'">月</span>
@@ -133,7 +133,7 @@
                             <label class="control-label col-md-3 padder-xs">在第</label>
                             <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : job.JobForm.IntervalMonth.$invalid }">
                                 <div class="input-group">
-                                    <input type="number" name="IntervalMonth" min="1" max="31" class="form-control" ng-model="job.Item.IntervalMonth" required />
+                                    <input autocomplete="off"  type="number" name="IntervalMonth" min="1" max="31" class="form-control" ng-model="job.Item.IntervalMonth" required />
                                     <span class="input-group-addon">天</span>
                                 </div>
                             </div>
@@ -150,14 +150,14 @@
                         <div class="col-sm-6 no-padder" ng-if="job.Item.DayType=='O'">
                             <label class="control-label col-md-3 padder-xs">执行时间</label>
                             <div class="col-md-9 padder-xs">
-                                <input type="text" date-time-picker class="form-control" placeholder="执行时间" ng-model="job.Item.DayOneTime" option="job.TimeOption" />
+                                <input autocomplete="off"  type="text" date-time-picker class="form-control" placeholder="执行时间" ng-model="job.Item.DayOneTime" option="job.TimeOption" />
                             </div>
                         </div>
                         <div class="col-sm-6 no-padder" ng-if="job.Item.DayType=='R'">
                             <label class="control-label col-md-3 padder-xs">每</label>
                             <div class="col-md-9 padder-xs">
                                 <div class="col-md-6 no-padder" ng-class="{ 'has-error' : job.JobForm.DayInterval.$invalid }">
-                                    <input type="number" name="DayInterval" min="1" max="100" class="form-control" ng-model="job.Item.DayInterval" required />
+                                    <input autocomplete="off"  type="number" name="DayInterval" min="1" max="100" class="form-control" ng-model="job.Item.DayInterval" required />
                                 </div>
                                 <div class="col-md-6" ng-class="{ 'has-error' : job.JobForm.DayFreUnit.$invalid }">
                                     <div config-select ng-name="DayFreUnit" ng-model="job.Item.DayFreUnit" auto-first="true" placeholder="请选择执行类型" select-class="text-xs" config-option="job.Unit" ng-required="true"></div>
@@ -169,7 +169,7 @@
                         <div class="col-sm-6 no-padder">
                             <label class="control-label col-md-3 padder-xs">开始时间</label>
                             <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : job.JobForm.StartDate.$invalid }">
-                                <input type="text" name="StartDate" date-time-picker class="form-control" placeholder="开始时间" ng-model="job.Item.StartDate" option="job.StartOption" required />
+                                <input autocomplete="off"  type="text" name="StartDate" date-time-picker class="form-control" placeholder="开始时间" ng-model="job.Item.StartDate" option="job.StartOption" required />
                             </div>
                         </div>
                         <div class="col-sm-6 no-padder">
@@ -177,9 +177,9 @@
                             <div class="col-md-9  padder-xs">
                                 <div class="input-group">
                                     <span class="input-group-addon" title="是否无结束日期">
-                                        <input type="checkbox" ng-model="job.Item.NoEndDate">
+                                        <input autocomplete="off"  type="checkbox" ng-model="job.Item.NoEndDate">
                                     </span>
-                                    <input type="text" ng-disabled="job.Item.NoEndDate" name="EndDate" date-time-picker class="form-control" placeholder="结束时间" ng-model="job.Item.EndDate" option="job.StartOption" />
+                                    <input autocomplete="off"  type="text" ng-disabled="job.Item.NoEndDate" name="EndDate" date-time-picker class="form-control" placeholder="结束时间" ng-model="job.Item.EndDate" option="job.StartOption" />
                                 </div>
                             </div>
                         </div>
@@ -198,7 +198,7 @@
                         <div class="col-sm-12 no-padder">
                             <label class="control-label m-l-n-lg padder-xs col-md-2">方法名</label>
                             <div class="col-md-10 padder-xs" ng-class="{ 'has-error' : job.JobForm.JobExecMethod.$invalid }" title="方法名">
-                                <input type="text" class="form-control" name="JobExecMethod" placeholder="方法名" ng-model="job.Item.JobExecMethod" required>
+                                <input autocomplete="off"  type="text" class="form-control" name="JobExecMethod" placeholder="方法名" ng-model="job.Item.JobExecMethod" required>
                             </div>
                         </div>
                         <div class="col-sm-12 no-padder m-t-xs">

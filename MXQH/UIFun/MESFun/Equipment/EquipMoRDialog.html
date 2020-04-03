@@ -34,9 +34,10 @@
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">工单号</label>
                         <div class="col-sm-8 padder-xs">
-                            <div ng-class="{ 'has-error' : DialogForm.WorkOrderID.$invalid }" ng-name="WorkOrderID" ng-required="true" basic-select="WorkOrderSelect"
+                            <div ng-class="{ 'has-error' : DialogForm.WorkOrderID.$invalid }" ng-change="emrd.GetMoInfo()" ng-name="WorkOrderID" ng-required="true" basic-select="WorkOrderSelect"
                                  placeholder="工单号" ng-model="emrd.NewItem.WorkOrderID" select-class="text-xs"></div>
                         </div>
+
                     </div>
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">工单点检下限</label>
@@ -49,6 +50,27 @@
                         <label class="control-label col-sm-4 padder-xs">工单点检上限</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.UpperLimit.$invalid }">
                             <input type="number" name="UpperLimit" ng-model="emrd.NewItem.UpperLimit" class="form-control" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="emrd.MO.ID">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">工单料号</label>
+                        <div class="col-sm-8 padder-xs">
+                            <input type="text" name="MaterialCode" ng-model="emrd.MO.MaterialCode" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">工单品名</label>
+                        <div class="col-sm-8 padder-xs" >
+                            <input type="text" name="MaterialName" ng-model="emrd.MO.MaterialName" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">工单数量</label>
+                        <div class="col-sm-8 padder-xs" >
+                            <input type="number" name="Quantity" ng-model="emrd.MO.Quantity" class="form-control" />
                         </div>
                     </div>
                 </div>

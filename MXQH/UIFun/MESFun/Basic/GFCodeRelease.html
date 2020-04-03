@@ -1,0 +1,154 @@
+﻿<div class="wrapper-xs padder-xxs col-md-12" cg-busy="gf.promise">
+    <div class="col-sm-3 padder-xs">
+        <div class="panel panel-success">
+            <div class="panel-heading font-bold">
+                功放条码生成
+            </div>
+            <div class="panel-body padder-v-xs padder-xs" ng-form="gf.BasicForm">
+                <div class="form-horizontal">
+                    <div class="form-group-md col-md-12 no-padder">
+                        <label class="control-label col-md-3 padder-xs">物料:</label>
+                        <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : gf.BasicForm.Item.$invalid }">
+                            <div basic-select="InCodeMate" placeholder="物料" con="{{ gf.Contition }}" clear="true" ng-name="Item" ng-model="gf.MateItem" ng-required="true" ng-change="gf.ChangeMate()"></div>
+                        </div>
+                    </div>
+                    <!--<div class="form-group-md col-md-12 no-padder">
+                        <label class="control-label col-md-3 padder-xs">根据日期:</label>
+                        <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : gf.BasicForm.ToDay.$invalid }">
+                            <input date-picker class="form-control" placeholder="根据日期" ng-disabled="!gf.MateItem" ng-change="gf.SerThisDate() " autocomplete="off" name="ToDay" ng-model="gf.ReleaseItem.ToDay" required option="gf.Op">
+                            <span class="pull-left text-danger" ng-if="gf.PKData.SN">预计编号: {{ gf.PKData.SN }}  可再生成:{{ gf.PKData.CanCount }}个</span>
+                        </div>
+                    </div>-->
+                    <div class="form-group-md col-md-12 no-padder">
+                        <label class="control-label col-sm-3 padder-xs">订单号:</label>
+                        <div class="col-sm-9 padder-xs" ng-class="{ 'has-error' : gf.BasicForm.BatchNo.$invalid }">
+                            <input type="text" class="form-control" placeholder="订单号" name="BatchNo" ng-model="gf.ReleaseItem.BatchNo" required />
+                        </div>
+                    </div>
+                    <div class="form-group-md col-md-12 no-padder">
+                        <label class="control-label col-md-3 padder-xs">供应商:</label>
+                        <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : gf.BasicForm.VenderNo.$invalid }">
+                            <div basic-select="VenderSelect" placeholder="供应商" ng-name="VenderNo" ng-model="gf.ReleaseItem.VenderNo" ng-required="true"></div>
+                        </div>
+                    </div>
+                    <div class="form-group-md col-md-12 no-padder">
+                        <label class="control-label col-md-3 padder-xs">需求数量:</label>
+                        <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : gf.BasicForm.NeedCount.$invalid }">
+                            <input type="number" class="form-control" min="1" placeholder="需求数量" name="NeedCount" ng-model="gf.ReleaseItem.NeedCount" required>
+                        </div>
+                    </div>
+                    <div class="form-group-md col-md-12 no-padder">
+                        <label class="control-label col-md-3 padder-xs">释放数量:</label>
+                        <div class="col-md-9 padder-xs" ng-class="{ 'has-error' : gf.BasicForm.ReleaseNum.$invalid }">
+                            <input type="number" class="form-control" min="1" max="9999" placeholder="释放数量" name="ReleaseNum" ng-model="gf.ReleaseItem.ReleaseNum" required>
+                        </div>
+                    </div>
+                    <div class="form-group-md col-md-12 no-padder">
+                        <label class="control-label col-md-3 padder-xs">备注:</label>
+                        <div class="col-md-9 padder-xs">
+                            <textarea class="form-control" placeholder="备注" ng-model="gf.ReleaseItem.Remark" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group-md col-md-12 no-padder">
+                        <label class="control-label col-md-3 padder-xs"></label>
+                        <div class="col-md-9 padder-xs">
+                            <button class="btn btn-success " ng-disabled="gf.BasicForm.$invalid" ng-click="gf.Release() "><i class="glyphicon glyphicon-save "></i>释放</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-9 no-padder">
+        <div class="panel panel-default">
+            <div class="panel-heading font-bold">
+                释放列表
+            </div>
+            <div class="panel-body padder-xs">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <input type="text" date-picker class="form-control" ng-model="gf.Ser.ReleaseDate" placeholder="根据日期" option="gf.Op">
+                    </div>
+                    <div class="form-group">
+                        <div basic-select="VenderSelect" ng-model="gf.Ser.a_VenderNo" placeholder="供应商"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="gf.Ser.a_ItemCode" placeholder="料号">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="gf.Ser.a_BatchNo" placeholder="订单号">
+                    </div>
+                    <!--<div class="form-group">
+                        <input type="text" date-picker class="form-control" ng-model="gf.Ser.a_CreateDate" placeholder="开始时间" option="gf.DateOption">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" date-picker class="form-control" ng-model="gf.Ser.a_CreateDate1" placeholder="结束时间" option="gf.DateOption">
+                    </div>-->
+                    <button class="btn btn-sm btn-info " ng-click="gf.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                    <button class="btn btn-sm btn-success " ng-click="gf.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>
+                </div>
+                <div class="col-md-12 scroll-x no-padder m-t-xs">
+                    <table class="table pad-xs">
+                        <thead>
+                            <tr>
+                                <td style="width:60px">操作</td>
+                                <td style="width:80px ">根据日期</td>
+                                <td style="width:90px ">供应商编号</td>
+                                <td style="width:100px ">供应商名称</td>
+                                <td style="width:80px ">料号</td>
+                                <td style="width:100px ">料名</td>
+                                <td style="width:80px ">订单号</td>
+                                <td style="width:100px ">需求数量</td>
+                                <td style="width:80px ">释放数量</td>
+                                <td style="width:100px ">BSN范围</td>
+                                <td style="width:70px ">操作者</td>
+                                <td style="width:100px ">生成时间</td>
+                                <td style="width:100px ">备注</td>
+                                <!--<td style="width:100px ">是否下发</td>
+                                <td style="width:100px ">已经下发</td>-->
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in gf.List">
+                            <td>
+                                <button class="btn btn-xs btn-primary" ng-if="!item.IsPublish" ng-click="gf.ReleaseDown(item)"><i class="glyphicon glyphicon-send"></i>下发</button>
+                                <button class="btn btn-xs btn-success" ng-if="item.IsPublish && item.HaveDown" ng-click="gf.SendMail(item)"><i class="fa fa-mail-reply"></i>补邮件</button>
+                            </td>
+                            <td title="{{ item.ReleaseDate }}">{{ item.ReleaseDate }}</td>
+                            <td title="{{ item.VenderNo }}">{{ item.VenderNo }}</td>
+                            <td title="{{ item.VenderName }}" ng-class="{ 'bg-info' : item.HaveDown }">{{ item.VenderName }}</td>
+                            <td title="{{ item.ItemCode }}">{{ item.ItemCode }}</td>
+                            <td title="{{ item.ItemName }}">{{ item.ItemName }}</td>
+                            <td title="{{ item.BatchNo }}">{{ item.BatchNo }}</td>
+                            <td title="{{ item.NeedCount }}">{{ item.NeedCount }}</td>
+                            <td title="{{ item.ReleaseNum }}">{{ item.ReleaseNum }}</td>
+                            <td title="{{ item.RangNo }}">{{ item.RangNo }}</td>
+                            <td title="{{ item.Creator }}">{{ item.Creator }}</td>
+                            <td title="{{ item.CreateDate }}">{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                            <td title="{{ item.Remark }}">{{ item.Remark }}</td>
+
+                            <!--<td title="{{ item.IsPublish }}">{{ item.IsPublish }}</td>
+                            <td title="{{ item.HaveDown }}">{{ item.HaveDown }}</td>-->
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-12 text-center " ng-if="gf.page.total>gf.page.size ">
+                    <div uib-pagination total-items="gf.page.total " ng-model="gf.page.index " items-per-page="gf.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                         ng-change="gf.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 text-danger">
+            <span herf class="pull-left thumb-sm avatar m-r">
+                注：
+            </span>
+            <div class="clear">
+                列表操作中显示有<button class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-send"></i>下发</button>按钮，则表示内控码还没有下发给供应商。
+                 点击后系统会开始下发数据到供应商，完成后自动发送邮件给供应商。
+                <br />
+                供应商栏位背景变为<div class="bg-info inline" style="width:20px;">&nbsp;</div>时表示系统已经把内控码下发到对应供应商。
+            </div>
+        </div>
+        <pre>{{ gf.MateList | json }}</pre>
+
+    </div>
+</div>

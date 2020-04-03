@@ -22,10 +22,8 @@
                 <thead>
                     <tr>
                         <td style="width:60px">工单上线</td>
-                        <!--<td style= "width:100px ">ID</td>-->
                         <td style="width:100px ">计划时间</td>
                         <td style="width:100px ">工单号</td>
-                        <!--<td style= "width:100px ">产品ID</td>-->
                         <td style="width:100px ">产品名称</td>
                         <td style="width:100px ">产品编号</td>
                         <td style="width:100px ">生产线名称</td>
@@ -35,83 +33,17 @@
                         <td style="width:100px ">出货地名称</td>
                     </tr>
                 </thead>
-                <!--<tr ng-if="pdHH.IsInsert" ng-form="pdHH.InsertForm">
-                    <td>
-                        <button class="btn btn-xs btn-success" ng-disabled="pdHH.InsertForm.$invalid" ng-click="pdHH.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
-                        <button class="btn btn-xs btn-warning" ng-click="pdHH.IsInsert=false" ><i class="fa fa-undo"></i></button>
-                    </td>
-                    <td>
-                        <div ng-class="{ 'has-error': pdHH.InsertForm.ID.$invalid }">
-                            <input type="text" name="ID" class="form-control" placeholder="a_ID" ng-model="pdHH.NewItem.ID" required />
-                        </div>
-                    </td>
-                    <td>
-                        <div ng-class="{ 'has-error': pdHH.InsertForm.TS.$invalid }">
-                            <input type="text" name="TS" class="form-control" placeholder="a_TS" ng-model="pdHH.NewItem.TS" required />
-                        </div>
-                    </td>
-                    <td>
-                        <div ng-class="{ 'has-error': pdHH.InsertForm.WorOrder.$invalid }">
-                            <input type="text" name="WorOrder" class="form-control" placeholder="a_WorOrder" ng-model="pdHH.NewItem.WorOrder" required />
-                        </div>
-                    </td>
-                    <td>
-                        <div ng-class="{ 'has-error': pdHH.InsertForm.MaterialID.$invalid }">
-                            <input type="text" name="MaterialID" class="form-control" placeholder="a_MaterialID" ng-model="pdHH.NewItem.MaterialID" required />
-                        </div>
-                    </td>
-                    <td>
-                        <div ng-class="{ 'has-error': pdHH.InsertForm.MaterialName.$invalid }">
-                            <input type="text" name="MaterialName" class="form-control" placeholder="a_MaterialName" ng-model="pdHH.NewItem.MaterialName" required />
-                        </div>
-                    </td>
-                    <td>
-                        <div ng-class="{ 'has-error': pdHH.InsertForm.MaterialCode.$invalid }">
-                            <input type="text" name="MaterialCode" class="form-control" placeholder="a_MaterialCode" ng-model="pdHH.NewItem.MaterialCode" required />
-                        </div>
-                    </td>
-                    <td>
-                        <div ng-class="{ 'has-error': pdHH.InsertForm.AssemblyLineName.$invalid }">
-                            <input type="text" name="AssemblyLineName" class="form-control" placeholder="a_AssemblyLineName" ng-model="pdHH.NewItem.AssemblyLineName" required />
-                        </div>
-                    </td>
-                    <td>
-                        <div ng-class="{ 'has-error': pdHH.InsertForm.Quantity.$invalid }">
-                            <input type="text" name="Quantity" class="form-control" placeholder="a_Quantity" ng-model="pdHH.NewItem.Quantity" required />
-                        </div>
-                    </td>
-                    <td>
-                        <div ng-class="{ 'has-error': pdHH.InsertForm.Completion.$invalid }">
-                            <input type="text" name="Completion" class="form-control" placeholder="a_Completion" ng-model="pdHH.NewItem.Completion" required />
-                        </div>
-                    </td>
-                    <td>
-                        <div ng-class="{ 'has-error': pdHH.InsertForm.CustomerName.$invalid }">
-                            <input type="text" name="CustomerName" class="form-control" placeholder="a_CustomerName" ng-model="pdHH.NewItem.CustomerName" required />
-                        </div>
-                    </td>
-                    <td>
-                        <div ng-class="{ 'has-error': pdHH.InsertForm.SendPlaceName.$invalid }">
-                            <input type="text" name="SendPlaceName" class="form-control" placeholder="a_SendPlaceName" ng-model="pdHH.NewItem.SendPlaceName" required />
-                        </div>
-                    </td>
-                </tr>-->
                 <tr ng-repeat="item in pdHH.List " ng-form="item.ItemForm">
                     <td>
                         <span ng-if="!item.IsEdit">
                             <button class="btn btn-xs btn-primary" ng-click="pdHH.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
-                            <!--<button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="pdHH.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>-->
                         </span>
                         <span ng-if="item.IsEdit">
                             <button class="btn btn-xs btn-primary" ng-click="pdHH.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
-                            <!--<button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="pdHH.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
-                            <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>-->
                         </span>
                     </td>
-                    <!--<td title="{{ item.ID }}">{{ item.ID }}</td>-->
                     <td title="{{ item.TS }}">{{ item.TS | date: yyyy-mm-dd}}</td>
                     <td title="{{ item.WorOrder }}">{{ item.WorOrder }}</td>
-                    <!--<td title="{{ item.MaterialID }}">{{ item.MaterialID }}</td>-->
                     <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
                     <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
                     <td title="{{ item.AssemblyLineName }}">{{ item.AssemblyLineName }}</td>

@@ -7,11 +7,6 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     var vm = this;
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
-    vm.Ser.LineId = "";
-    vm.Ser.WorkOrder = "";
-    vm.Ser.MateCode = "";
-    vm.Ser.StartDate = "";
-    vm.Ser.EndDate = "";
 
     vm.PageChange = PageChange;
     vm.Search = Search;

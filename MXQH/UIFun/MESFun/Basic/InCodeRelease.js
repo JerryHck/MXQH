@@ -48,6 +48,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             return;
         }
         MyPop.ngConfirm({ text: "确定要释放内控码吗" }).then(function () {
+            vm.ReleaseItem.ItemTypeId = vm.MateItem.MaterialTypeID;
             vm.ReleaseItem.ItemCode = vm.MateItem.MaterialCode;
             vm.ReleaseItem.ItemName = vm.MateItem.MaterialName;
             vm.ReleaseItem.ReleaseDate = vm.ReleaseItem.ToDay;
@@ -92,17 +93,6 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         for (var t = Date.now() ; Date.now() - t <= d;);
     }
 
-    function GetContition() {
-        var list = [];
-        if (vm.Ser.a_WorkOrder) {
-            list.push({ name: "WorkOrder", value: vm.Ser.a_WorkOrder, tableAs: "a" });
-        }
-        if (vm.Ser.a_MaterialCode) {
-            list.push({ name: "MaterialCode", value: vm.Ser.a_MaterialCode, tableAs: "a" });
-        }
-        return list;
-    }
-
     function GetContition1() {
         var list = [];
         list.push({ name: "MainId", value: vm.SelectId||-1, tableAs: "a" });
@@ -143,7 +133,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     }
 
     function GetContition() {
-        var list = [];
+        var list = [{ name: "ItemTypeId", value: 6, type: "=" }];
         if (vm.Ser.a_VenderNo) {
             list.push({ name: "VenderNo", value: vm.Ser.a_VenderNo, tableAs: "a" });
         }

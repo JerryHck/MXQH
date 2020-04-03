@@ -91,13 +91,14 @@ angular.module('AppSet')
         restrict: 'A',
         scope: {
             ngModel: '=',
-            step: '@'
+            step: '@',
+            format:'@'
         },
         link: function (scope, element, attr, ngModel) {
             scope.option = scope.option ||
                 {
                     datepicker: false,
-                    format: 'H:i:s',
+                    format: scope.format||'H:i:s',
                     step: parseInt(scope.step || "5")
                 }
             //scope.option.formatTime = scope.option.formatTime || 'H:i';
@@ -119,7 +120,7 @@ angular.module('AppSet')
             ngModel: '=',
             ngDisabled: '=',
             searchEnabled: '=',
-            srcData:'=',
+            srcData: '=',
             clear: '=',
             selectClass: '@',
             autoFirst: '@',
@@ -127,6 +128,7 @@ angular.module('AppSet')
             ngRequired: '@',
             ngName: '@',
             limit: '@',
+            con:'@',
             ngChange: '&'
         },
         //templateUrl: function (element, attrs) {
@@ -150,6 +152,7 @@ angular.module('AppSet')
         link: link,
     };
     function link(scope, element, attrs) {
+        //console.log(scope)
         scope.data = undefined;
         scope.autoFirst = scope.autoFirst || "false";
         var list = [], enName = undefined, ListData = [], NowList = [];
@@ -158,7 +161,10 @@ angular.module('AppSet')
             //获取数据
             var holder = attrs.SyData.Placeholder || "请选择...";
             scope.placeholder = scope.placeholder || holder;
-            if (attrs.SyData.SerList && attrs.SyData.SerList.length > 0) {
+            if (scope.con && scope.con != "") {
+                list = AjaxService.convertArray(JSON.parse(scope.con));
+            }
+            else if (attrs.SyData.SerList && attrs.SyData.SerList.length > 0) {
                 for (var i = 0, len = attrs.SyData.SerList.length; i < len; i++) {
                     var en = {};
                     en.name = attrs.SyData.SerList[i].ColName;
@@ -192,6 +198,9 @@ angular.module('AppSet')
                 AjaxService.DoBefore("GetPlans", Con2).then(function (data2) {
                 //AjaxService.GetPlans(enName.EntityName, list2).then(function (data2) {
                     ListData = angular.copy(data2);
+                    if (scope.srcData) {
+                        scope.srcData = data2;
+                    }
                     if (data2.length > 0 && scope.autoFirst.toLowerCase() == 'true' && !scope.ngModel) {
                         scope.ngModel = enName.ReturnColumn == undefined || enName.ReturnColumn == '' ? data2[0] : data2[0][enName.ReturnColumn];
                     }
@@ -584,7 +593,7 @@ angular.module('AppSet')
                   + '    <ui-select ng-model="$parent.ngModel" ng-change="ValueChange()" class="{{ selectClass }}" theme="bootstrap" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">'
                   + '         <ui-select-match placeholder="请选择...">{{ $select.selected.EntityName }}</ui-select-match>'
                   + '          <ui-select-choices class="pl-1" repeat="item.EntityName as item in data | filter: $select.search track by item.EntityName" refresh="refresh($select.search)" refresh-delay="0">'
-                  + '             <div ng-bind-html="item.EntityName | highlight: $select.search"></div>'
+                  + '             <div><span class="text-info h6 pull-right" ng-bind-html="item.ConnectName | highlight: $select.search"></span><span ng-bind-html="item.EntityName | highlight: $select.search"></span></div>'
                   + '         </ui-select-choices>'
                   + '     </ui-select>'
                   + '    <span class="input-group-btn" ng-if="clear">'
@@ -937,3 +946,55 @@ angular.module('AppSet')
         
     }
 })
+//图标插件指令
+.directive('eChart', function () {
+         return {
+             restrict: 'AE',
+             scope: {
+                 show: '=',
+                 width: '@',
+                 height: '@'
+             },
+             template: '<div style="width: 100%;height:100%;">图标</div>',
+             controller: function ($scope) {
+             },
+             link: function (scope, element, attr) {
+                 scope.show = scope.show || {};
+
+                 var chart = element.find('div')[0];
+                 var parent = element['context'];
+                 //    console.log(parent.clientHeight+":"+parent.clientWidth);
+                 //chart.style.width = scope.width || '400px';
+                 //chart.style.height = scope.height || '400px';
+
+                 // 基于准备好的dom，初始化echarts实例
+                 var myChart = echarts.init(chart);
+                 myChart.showLoading();
+                 scope.show.setOption = function (option) {
+                     option = option ||
+                     {
+                         title: {
+                             text: '数据加载中'
+                         },
+                         tooltip: {},
+                         legend: {
+                             data: []
+                         },
+                         xAxis: {
+                             data: []
+                         },
+                         yAxis: {},
+                         series: [{
+                             name: '销量',
+                             type: 'bar',
+                             data: []
+                         }]
+                     };
+                     myChart.hideLoading();
+                     // 使用刚指定的配置项和数据显示图表。
+                     myChart.setOption(option);
+                     //myChart.resize()
+                 }
+             }
+         };
+     })

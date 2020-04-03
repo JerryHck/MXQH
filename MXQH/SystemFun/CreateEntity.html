@@ -11,7 +11,7 @@
                             <div connect-select ng-model="en.ConnectName" ng-disabled="en.isEditing" ng-name="obConnect" ng-change="en.conChange()"></div>
                         </div>
                         <div class="input-group">
-                            <input type="text" class="form-control input-sm" placeholder="查询" ng-model="en.EntityQuery">
+                            <input autocomplete="off"  type="text" class="form-control input-sm" placeholder="查询" ng-model="en.EntityQuery">
                             <span class="input-group-btn">
                                 <button class="btn btn-sm btn-default" ng-click="en.EnAdd()" ng-disabled="en.isAddOpen">
                                     <i class="glyphicon glyphicon-plus text-success">新增</i>
@@ -29,13 +29,13 @@
                                         <div class="panel-body" ng-form="en.EntityForm">
                                             <div class="form-horizontal">
                                                 <div class="form-group" ng-class="{ 'has-error' : en.EntityForm.entityName.$invalid }">
-                                                    <input placeholder="实体名" ng-disabled="!en.isAdd" class="form-control text-xs warning" name="entityName" ng-blur="en.isExists(en.SelectedEn.EntityName)" type="text" ng-model="en.SelectedEn.EntityName" required>
+                                                    <input autocomplete="off"  placeholder="实体名" ng-disabled="!en.isAdd" class="form-control text-xs warning" name="entityName" ng-blur="en.isExists(en.SelectedEn.EntityName)" type="text" ng-model="en.SelectedEn.EntityName" required>
                                                 </div>
                                                 <div class="form-group" ng-class="{ 'has-error' : en.EntityForm.obConnect.$invalid }">
                                                     <div object-select ob-type="'UV'" ob-connect="en.ConnectName" first-load="en.firstLoad" ng-model="en.EnTable" ng-name="obTable" ng-required="true"></div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input ui-jq="TouchSpin" placeholder="往下展开层级" class="input-sm" type="text" ng-model="en.SelectedEn.Level" data-min='1' data-max="10">
+                                                    <input autocomplete="off"  ui-jq="TouchSpin" placeholder="往下展开层级" class="input-sm" type="text" ng-model="en.SelectedEn.Level" data-min='1' data-max="10">
                                                 </div>
                                                 <div class="form-group text-center">
                                                     <div toggle-switch ng-model="en.SelectedEn.AutoDelLog" class="switch-success" on-label="记录删除日志" off-label="不记录删除日志"></div>
@@ -119,8 +119,8 @@
                                                                             <div config-select ng-model="pro.OrderWay" config-option="en.ConfigOrderWay" ng-disabled="!en.isEditing"></div>
                                                                         </div>
                                                                         <div class="col-lg-4 col-md-12 col-sm-12 padder-xs">
-                                                                            <input type="number" class="form-control" ng-model="pro.OrderNum" ng-disabled="!en.isEditing" maxlength="2" min="0" max="20" />
-                                                                            <!--<input ui-jq="TouchSpin" type="text" ng-model="pro.OrderNum" class="form-control-sm input-sm" data-min='0' data-max="20" ng-disabled="!en.isEditing"
+                                                                            <input autocomplete="off"  type="number" class="form-control" ng-model="pro.OrderNum" ng-disabled="!en.isEditing" maxlength="2" min="0" max="20" />
+                                                                            <!--<input autocomplete="off"  ui-jq="TouchSpin" type="text" ng-model="pro.OrderNum" class="form-control-sm input-sm" data-min='0' data-max="20" ng-disabled="!en.isEditing"
                                                                                    data-verticalbuttons="false" data-verticalupclass="btn-xs fa fa-caret-up" data-verticaldownclass="btn-xs btn-sm fa fa-caret-down">-->
                                                                         </div>
                                                                     </div>
@@ -160,7 +160,7 @@
                                                                     <div class="col-md-7" title="属性名">
                                                                         <label class="sr-only">属性名:</label>
                                                                         <div ng-class="{ 'has-error' : en.ClassForm.Pro.$invalid }">
-                                                                            <input type="text" class="form-control text-xs" name="Pro" placeholder="属性名"
+                                                                            <input autocomplete="off"  type="text" class="form-control text-xs" name="Pro" placeholder="属性名"
                                                                                    ng-model="en.ProItem.ColumnName" ng-disabled="!en.isEditing || en.IsProEdit" ng-blur="en.isProExists(en.ProItem.ColumnName)" required>
                                                                             <div ng-messages="en.ClassForm.Pro.$error" class="help-block" role="alert">
                                                                                 <div ng-message="required">请输入属性名</div>
@@ -246,8 +246,8 @@
                                                                                         <div ng-bind-html="item.ColumnName | highlight: $select.search"></div>
                                                                                     </ui-select-choices>
                                                                                 </ui-select>
-                                                                                <input type="text" name="ParentKey" class="form-control" ng-model="en.newRelCon.ParentKey" ng-if="en.newRelCon.ParenType=='2'" required />
-                                                                                <input ui-jq="TouchSpin" name="ParentKey" type="text" ng-model="en.newRelCon.ParentKey" ng-if="en.newRelCon.ParenType=='1'" class="form-control" ng-disabled="!en.isEditing"
+                                                                                <input autocomplete="off"  type="text" name="ParentKey" class="form-control" ng-model="en.newRelCon.ParentKey" ng-if="en.newRelCon.ParenType=='2'" required />
+                                                                                <input autocomplete="off"  ui-jq="TouchSpin" name="ParentKey" type="text" ng-model="en.newRelCon.ParentKey" ng-if="en.newRelCon.ParenType=='1'" class="form-control" ng-disabled="!en.isEditing"
                                                                                        data-verticalbuttons="true" data-verticalupclass="btn-xs fa fa-caret-up" data-verticaldownclass="btn-xs btn-sm fa fa-caret-down"
                                                                                        data-min='-2147483647' data-max="2147483647" required>
                                                                             </div>
@@ -266,8 +266,8 @@
                                                                                         <div ng-bind-html="item.ColumnName | highlight: $select.search"></div>
                                                                                     </ui-select-choices>
                                                                                 </ui-select>
-                                                                                <input type="text" name="ChildKey" class="form-control" ng-model="en.newRelCon.ChildKey" ng-if="en.newRelCon.ChildType=='2'" required />
-                                                                                <input ui-jq="TouchSpin" name="ChildKey" type="text" ng-model="en.newRelCon.ChildKey" ng-if="en.newRelCon.ChildType=='1'" class="form-control" ng-disabled="!en.isEditing"
+                                                                                <input autocomplete="off"  type="text" name="ChildKey" class="form-control" ng-model="en.newRelCon.ChildKey" ng-if="en.newRelCon.ChildType=='2'" required />
+                                                                                <input autocomplete="off"  ui-jq="TouchSpin" name="ChildKey" type="text" ng-model="en.newRelCon.ChildKey" ng-if="en.newRelCon.ChildType=='1'" class="form-control" ng-disabled="!en.isEditing"
                                                                                        data-verticalbuttons="true" data-verticalupclass="btn-xs fa fa-caret-up" data-verticaldownclass="btn-xs btn-sm fa fa-caret-down"
                                                                                        data-min='-2147483647' data-max="2147483647" required>
                                                                             </div>
@@ -315,7 +315,7 @@
                                                         <div class="col-sm-12">
                                                             <div class="row">
                                                                 <div class="col-sm-2 m-l-none pl-md-0 pr-md-0" ng-class="{ 'has-error' : en.ProcedureForm.ShortName1.$invalid }">
-                                                                    <input class="form-control" name="ShortName1" placeholder="存储过程简称" type="text" ng-blur="en.isProcExists(en.NewProc.ShortName)" ng-model="en.NewProc.ShortName" required />
+                                                                    <input autocomplete="off"  class="form-control" name="ShortName1" placeholder="存储过程简称" type="text" ng-blur="en.isProcExists(en.NewProc.ShortName)" ng-model="en.NewProc.ShortName" required />
                                                                     <div ng-messages="en.ProcedureForm.ShortName1.$error" class="help-block" role="alert">
                                                                         <div ng-message="unique">简称重复</div>
                                                                     </div>
@@ -403,8 +403,8 @@
                                                         <div class="form-group">
                                                             <label class="col-lg-4 control-label">导入</label>
                                                             <div class="col-lg-8 input-group">
-                                                                <input id="importPlan" type="file" style="display:none" accept=".json">
-                                                                <input class="form-control" type="text" ng-model="en.ImportFile">
+                                                                <input autocomplete="off"  id="importPlan" type="file" style="display:none" accept=".json">
+                                                                <input autocomplete="off"  class="form-control" type="text" ng-model="en.ImportFile">
                                                                 <span class="input-group-addon " ng-click="en.ImportPlan()" style="cursor: pointer; background-color: #e7e7e7">
                                                                     <i class="glyphicon glyphicon-import">导入</i>
                                                                 </span>
@@ -430,9 +430,9 @@
                     <p class="text-black-50">{{  en.SelectedEn.TableSchema  + (en.SelectedEn.TableSchema?".":"") + en.SelectedEn.TableName }}栏位列表</p>
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <input type="checkbox" title="全选" class="input-group-sm" ng-model="en.IsTbAll" ng-change="en.TbAllChecked()" ng-disabled="!en.isEditing"><i></i>
+                            <input autocomplete="off"  type="checkbox" title="全选" class="input-group-sm" ng-model="en.IsTbAll" ng-change="en.TbAllChecked()" ng-disabled="!en.isEditing"><i></i>
                         </span>
-                        <input type="text" class="form-control input-sm" placeholder="查询" ng-model="en.TbColunmName">
+                        <input autocomplete="off"  type="text" class="form-control input-sm" placeholder="查询" ng-model="en.TbColunmName">
                     </div>
                 </div>
                 <div class="row-row">
@@ -443,7 +443,7 @@
                                     <article class="media" ng-repeat="item in en.TbColunms | filter:en.TbColunmName ">
                                         <div class="pull-left">
                                             <label class="i-checks">
-                                                <input type="checkbox" ng-checked="en.TbChecked(item)" ng-disabled="!en.isEditing" ng-model="item.isCheck" ng-change="en.CheckChange(item)"><i></i>
+                                                <input autocomplete="off"  type="checkbox" ng-checked="en.TbChecked(item)" ng-disabled="!en.isEditing" ng-model="item.isCheck" ng-change="en.CheckChange(item)"><i></i>
                                             </label>
                                         </div>
                                         <div class="media-body form-group padder-xxs" title="{{ item.ColumnName }}">
@@ -518,7 +518,7 @@
                                         <tr>
                                             <td class="col-md-3 pad-xss" style="text-align:left">
                                                 <label class="i-checks i-checks-sm">
-                                                    <input type="checkbox" ng-change="en.IsColAll()" ng-model="en.CacheItem.IsAll"><i></i>
+                                                    <input autocomplete="off"  type="checkbox" ng-change="en.IsColAll()" ng-model="en.CacheItem.IsAll"><i></i>
                                                 </label>
                                             </td>
                                             <td class="col-md-9">栏名</td>
@@ -527,7 +527,7 @@
                                     <tr class="text-center" ng-repeat="col in en.CaColList">
                                         <td class="text-left">
                                             <label class="i-checks i-checks-sm">
-                                                <input type="checkbox" ng-change="en.IsColChange(col)" ng-model="col.IsShow"><i></i>
+                                                <input autocomplete="off"  type="checkbox" ng-change="en.IsColChange(col)" ng-model="col.IsShow"><i></i>
                                             </label>
                                         </td>
                                         <td title="{{ col.ColumnName }}" ng-class="{'bg-warning':col.ColumnType != '0'}">{{ col.ColumnName }}</td>

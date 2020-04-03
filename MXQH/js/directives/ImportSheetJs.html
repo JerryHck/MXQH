@@ -1,7 +1,7 @@
 ﻿<div class="form-group col-md-12 has-feedback m-b-none">
     <div class="col-md-12 input-group">
-        <input type="file" class="fileType" style="display:none" accept="{{ fileType }}">
-        <input class="form-control" type="text" ng-show="isImport == 'false'" ng-model="ngModel" ng-if="isImport=='false'">
+        <input autocomplete="off"  type="file" class="fileType" style="display:none" accept="{{ fileType }}">
+        <input autocomplete="off"  class="form-control" type="text" ng-show="isImport == 'false'" ng-model="ngModel" ng-if="isImport=='false'">
         <span class="input-group-addon " ng-click="Open($event)" style="cursor: pointer; background-color: #e7e7e7"> 
             <i class="fa fa-folder-open">浏览</i>
         </span>

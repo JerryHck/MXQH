@@ -8,25 +8,35 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     //初始化
     function Init() {
         vm.NewItem = {};
+        vm.MO = {};
         if (ItemData.ID) {
             vm.NewItem = angular.copy(ItemData);
         }        
         vm.Save = Save;
         vm.Cancel = Cancel;
+        vm.GetMoInfo = GetMoInfo;
         vm.KeyDonwInCode = KeyDonwInCode;
     }
-   
+    //获取工单信息
+    function GetMoInfo() {
+        //console.log(workorderID);        
+        vm.promise = AjaxService.GetPlan("MesPlanDetail", { name: "ID", value: vm.NewItem.WorkOrderID }).then(function (data) {
+            vm.MO = angular.copy(data);
+        });
+    }
     //通过设备编码查询设备信息
     function KeyDonwInCode(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.NewItem.Code) {
             //获取设备信息
             vm.promise = AjaxService.GetPlan("Equipment", [{ name: "Code", value: vm.NewItem.Code }]).then(function (data) {
-                console.log(data, 'data');
                 if (data.ID) {
                     vm.NewItem.EquipID = data.ID;
                     vm.NewItem.Code = data.Code;
                     vm.NewItem.Name = data.Name;
+                    //vm.NewItem.MaterialCode = data.MaterialCode;
+                    //vm.NewItem.MaterialName = data.MaterialName;
+                    //vm.NewItem.Quantity = data.Quantity;
                     vm.NewItem.TypeID = data.TypeID;
                     vm.NewItem.Type = data.Type;
                     vm.NewItem.CheckUOM = data.CheckUOM;
@@ -34,6 +44,9 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
                     vm.NewItem.EquipID = undefined;
                     vm.NewItem.Code = undefined;
                     vm.NewItem.Name = undefined;
+                    //vm.NewItem.MaterialCode = undefined;
+                    //vm.NewItem.MaterialName = undefined;
+                    //vm.NewItem.Quantity = undefined;
                     vm.NewItem.TypeID = undefined;
                     vm.NewItem.Type = undefined;
                     vm.NewItem.CheckUOM = undefined;

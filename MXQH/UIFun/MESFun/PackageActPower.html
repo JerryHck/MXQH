@@ -13,7 +13,7 @@
                                 <div class="col-sm-6 no-padder">
                                     <label class="col-sm-5 padder-xs control-label">工单号:</label>
                                     <div class="col-sm-7 padder-xs" ng-class="{ 'has-error' : pap.UpdateForm.Order.$invalid }">
-                                        <input type="text" name="Order" ng-model="pap.Item.WorkOrder" uib-typeahead="order.WorkOrder as order.WorkOrder for order in pap.OrderList | filter:$viewValue | limitTo:8"
+                                        <input autocomplete="off"  type="text" name="Order" ng-model="pap.Item.WorkOrder" uib-typeahead="order.WorkOrder as order.WorkOrder for order in pap.OrderList | filter:$viewValue | limitTo:8"
                                                class="form-control" placeholder="工单号" ng-keyup="pap.KeyDonwOrder($event)" required>
                                     </div>
                                 </div>
@@ -115,7 +115,7 @@
                                 <div class="col-sm-6 no-pader">
                                     <label class="control-label padder-xs col-sm-3">栈板号:</label>
                                     <div class="col-sm-9 padder-xs input-group" ng-class="{ 'has-error' : pap.UpdateForm.PalletCode.$invalid }">
-                                        <input type="text" class="form-control" name="PalletCode" ng-disabled="pap.PackDetail.IsHasPrint" ng-model="pap.PackDetail.PalletCode" required />
+                                        <input autocomplete="off"  type="text" class="form-control" name="PalletCode" ng-disabled="pap.PackDetail.IsHasPrint" ng-model="pap.PackDetail.PalletCode" required />
                                         <span class="input-group-btn">
                                             <button class="btn text-success h3" ng-confirm="{text:'确定要生成新的栈板号吗'}" title="新栈板号"
                                                     ng-if="!pap.PackDetail.IsHasPrint && pap.Item.BoxNumber" ng-click="pap.NewPaletCode()">
@@ -127,7 +127,7 @@
                                 <div class="col-sm-6 no-pader">
                                     <label class="control-label padder-xs col-sm-3">包装重量:</label>
                                     <div class="col-sm-9 padder-xs" ng-class="{ 'has-error' : pap.UpdateForm.Packweigth.$invalid }">
-                                        <input type="number" name="Packweigth" ng-disabled="pap.PackDetail.IsHasPrint" class="form-control" ng-model="pap.Weight" required />
+                                        <input autocomplete="off"  type="number" name="Packweigth" ng-disabled="pap.PackDetail.IsHasPrint" class="form-control" ng-model="pap.Weight" required />
                                     </div>
                                 </div>
                             </div>
@@ -151,13 +151,13 @@
                                 <div class="col-sm-6 no-pader">
                                     <label class="control-label padder-xs col-sm-3">打印SN数:</label>
                                     <div class="col-sm-9 padder-xs">
-                                        <input class="form-control" type="number" ng-model="pap.PrintSnNum" placeholder="打印SN数">
+                                        <input autocomplete="off"  class="form-control" type="number" ng-model="pap.PrintSnNum" placeholder="打印SN数">
                                     </div>
                                 </div>
                                 <div class="col-sm-6 no-pader">
                                     <label class="control-label padder-xs col-sm-3">S/N号:</label>
                                     <div class="col-sm-9 padder-xs">
-                                        <input class="form-control SnFocus" id="SnFocus" type="text" ng-focus="pap.Focus.SN" ng-disabled="!pap.Item.BoxNumber"
+                                        <input autocomplete="off"  class="form-control SnFocus" id="SnFocus" type="text" ng-focus="pap.Focus.SN" ng-disabled="!pap.Item.BoxNumber"
                                                name="InCode" ng-model="pap.Item.SNCode" placeholder="生产条码" ng-keyup="pap.KeyDonwSnCode($event)">
                                     </div>
                                 </div>

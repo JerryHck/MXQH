@@ -19,7 +19,7 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">内部码/SN码</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : sn.DeleteForm.sn.$invalid }">
-                                    <input type="text" class="form-control" ui-focus="sn.Focus == 0" name="InCode" ng-model="sn.DeleteItem.InternalCode" placeholder="内部码/SN码" ng-keyup="sn.KeyDonwInCode($event)" required>
+                                    <input autocomplete="off"  type="text" class="form-control" ui-focus="sn.Focus == 0" name="InCode" ng-model="sn.DeleteItem.InternalCode" placeholder="内部码/SN码" ng-keyup="sn.KeyDonwInCode($event)" required>
                                 </div>
                             </div>
                         </div>

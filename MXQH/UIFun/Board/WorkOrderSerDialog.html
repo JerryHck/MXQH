@@ -1,0 +1,100 @@
+﻿<div class="modal-header text-center">
+    <h4 class="modal-title text-center">
+        看板条件设定
+        <span class="btn-group pull-left">
+            <label class="btn btn-default btn-sm btn-success reset ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="wo.Ser.SerType" uib-btn-radio="'1'" ng-click="wo.GetData()">生产日期方式</label>
+            <label class="btn btn-default btn-sm btn-success reset ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="wo.Ser.SerType" uib-btn-radio="'2'" ng-click="wo.GetData()">线别选择方式</label>
+        </span>
+    </h4>
+</div>
+<div class="modal-body wrapper-xs padder-v-xxs" ng-form="QcForm">
+    <div class="panel panel-info">
+        <div class="panel-body no-padder padder-v-xxs">
+            <div class="col-md-4 padder-xs">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center padder-v-xs">
+                        {{ wo.Ser.SerType == '1' ? '生产日期选择':'线别选择' }}
+                    </div>
+                    <div class="panel-body scroll-y padder-xs padder-v-xs bar-xs" style="max-height:400px">
+                        <div ng-if="wo.Ser.SerType == '1'" class="col-md-12 m-t-xs padder-xs" ng-repeat="item in wo.DateList">
+                            <button class="btn-group-vertical h2 btn-lg w-full btn-primary"
+                                    ng-click="wo.Ser.Now=item.NowDate;
+                                    wo.ChangeDate()"
+                                    ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1, 'btn-success':wo.Ser.Now==item.NowDate}">
+                                <span class="h3">{{ item.NowDate }}</span>
+                            </button>
+                        </div>
+                        <div ng-if="wo.Ser.SerType == '2'" class="col-md-12 m-t-xs padder-xs" ng-repeat="item in wo.LineList">
+                            <button class="btn-group-vertical h2 btn-lg w-full btn-primary"
+                                    ng-click="wo.Ser.LineId=item.ID;
+                                    wo.ChangeMonitor()"
+                                    ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1, 'btn-success':wo.Ser.LineId==item.ID}">
+                                <span class="h3">{{ item.Name }}</span>
+                            </button>
+                        </div>
+                        <div class="col-md-12 padder-xxs m-t-md text-center " ng-if="wo.page.total>wo.page.size ">
+                            <div uib-pagination total-items="wo.page.total " ng-model="wo.page.index " items-per-page="wo.page.size " max-size="3" first-text="<<" previous-text="< "
+                                 ng-change="wo.GetData() " next-text="> " last-text=">> " boundary-links="false " boundary-link-numbers="true"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 padder-xs">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center padder-v-xs">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" placeholder="查询工单" ng-model="wo.MoQuery">
+                            <span class="input-group-btn">
+                                <button class="btn btn-sm btn-default" disabled>
+                                    <i class="glyphicon glyphicon-search text-success"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="panel-body scroll-y padder-xs padder-v-xs bar-xs" style="max-height:400px">
+                        <div class="col-md-12 m-t-xs padder-xs" ng-if="wo.Ser.SerType == '1'" ng-repeat="item in wo.OrderList | filter:wo.MoQuery">
+                            <button class="btn-group-vertical h2 btn-lg w-full btn-primary"
+                                    ng-click="wo.Ser.WorkOrder=item.Order.WorkOrder;"
+                                    ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1, 'btn-success':wo.Ser.WorkOrder==item.Order.WorkOrder}">
+                                <span class="h3">{{ item.Order.WorkOrder }}</span>
+                            </button>
+                        </div>
+                        <div class="col-md-12 m-t-xs padder-xs" ng-if="wo.Ser.SerType == '2'" ng-repeat="item in wo.OrderList | filter:{WorkOrder:wo.MoQuery}">
+                            <button class="btn-group-vertical h2 btn-lg w-full btn-primary"
+                                    ng-click="wo.Ser.WorkOrder=item.WorkOrder;"
+                                    ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1, 'btn-success':wo.Ser.WorkOrder==item.WorkOrder}">
+                                <span class="h3">{{ item.WorkOrder }}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 padder-xs">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                        查询时间
+                    </div>
+                    <div class="panel-body scroll-y padder-xs padder-v-xs bar-xs" style="max-height:400px">
+                        <div class="col-md-12 padder-xs m-b-md">
+                            <input type="text" ng-disabled="wo.IsRun" date-picker class="form-control" placeholder="日期" ng-model="wo.Ser.Now" option="wo.DateOp" />
+                        </div>
+                        <div class="col-md-6 padder-xs">
+                            <input type="text" ng-disabled="wo.IsRun" time-picker class="form-control" placeholder="开始" ng-model="wo.Ser.StartDate" option="wo.TimeOp" />
+                        </div>
+                        <div class="col-md-6 padder-xs">
+                            <input type="text" ng-disabled="wo.IsRun" time-picker class="form-control" placeholder="结束" ng-model="wo.Ser.EndDate" option="wo.TimeOp" />
+                        </div>
+                        <div class="col-md-12 padder-xs m-b-md">
+                            <span class="text-danger h6">注：系统优先以排班设置的开始~结束时间做查询依据</span>
+                        </div>
+                        <div class="col-md-12 m-t-lg">
+                            <button class="btn btn-success pull-left" type="button" ng-disabled="QcForm.$invalid" ng-click="wo.Save()">确定查询</button>
+                            <button class="btn btn-warning pull-right" type="button" ng-click="wo.cancel()">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<pre>{{ wo.OrderList | json }}</pre>-->

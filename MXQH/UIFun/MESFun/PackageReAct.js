@@ -33,7 +33,7 @@ function ($scope, $http, AjaxService, toastr, $window) {
             var en = {};
             en.name = "SNCode";
             en.value = vm.Item.SNCode;
-            AjaxService.GetPlan("MESPackageChi", en).then(function (data) {
+            AjaxService.GetPlan("vwPackageChi", en).then(function (data) {
                 var mss = "SN 码 [" + vm.Item.SNCode + '] ';
                 vm.List = data;
                 if (!data.SNCode) {
@@ -121,6 +121,7 @@ function ($scope, $http, AjaxService, toastr, $window) {
         en.PalletCode = vm.PackDetail.PalletCode;
         en.Packweight = vm.PackDetail.Packweight;
         en.ActType = t;
+        //console.log(en);
         vm.promise = AjaxService.ExecPlan("MESPackageDtl", "save", en).then(function (data) {
             toastr.success('操作成功');
             getDtl();

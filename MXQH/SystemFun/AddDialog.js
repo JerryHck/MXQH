@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('AddDialogCtrl', ['$scope', '$http', 'Dialog', 'AjaxService', 'toastr',  '$rootScope',
-function ($scope, $http, Dialog, AjaxService, toastr, $rootScope) {
+.controller('AddDialogCtrl', ['$scope', '$http', 'Dialog', 'AjaxService', 'toastr',
+function ($scope, $http, Dialog, AjaxService, toastr) {
     var vm = this;
     vm.NewItem = { LoadFiles: [] };
     vm.page = { index: 1, size: 10 };
@@ -72,7 +72,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, $rootScope) {
     function JsonToDb() {
         vm.promise = AjaxService.GetJson('Dialog.json', '').then(function (data) {
             var List = [], listLoad = [];
-            var en = { CreateBy: $rootScope.User.UserNo };
+            var en = {};
             en.TempColumns = "List,ListLoad";
             for (var i = 0, len = data.length; i < len; i++) {
                 var wait = false;
@@ -102,16 +102,21 @@ function ($scope, $http, Dialog, AjaxService, toastr, $rootScope) {
     }
 
     function Delete(item) {
-        vm.promise = AjaxService.PlanDelete("Dialog", item).then(function (data) {
-            toastr.success('删除成功');
-            var index = -1;
-            for (var i = 0, len = vm.List.length; i < len; i++) {
-                if (item.name == vm.List[i].name) {
-                    index = i;
-                    break;
+        var en = {};
+        en.name = item.name;
+        console.log(item);
+        vm.promise = AjaxService.PlanDelete("Dialog", en).then(function (data) {
+            AjaxService.PlanDelete("DailogLoad", en).then(function (data2) {
+                toastr.success('删除成功');
+                var index = -1;
+                for (var i = 0, len = vm.List.length; i < len; i++) {
+                    if (item.name == vm.List[i].name) {
+                        index = i;
+                        break;
+                    }
                 }
-            }
-            vm.List.splice(index, 1);
+                vm.List.splice(index, 1);
+            })
         });
     }
 

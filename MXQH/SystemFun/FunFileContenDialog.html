@@ -4,6 +4,7 @@
             <uib-tab-heading class="h5">HTML文件代码</uib-tab-heading>
             <div class="panel">
                 <textarea class="form-control" rows="22" ng-model="fun.NewItem.Content.Html"></textarea>
+                <!--<text-angular ng-model="fun.NewItem.Content.Html"></text-angular>-->
             </div>
         </uib-tab>
         <uib-tab index="1">
@@ -16,48 +17,50 @@
             <uib-tab-heading class="h5">功能设定</uib-tab-heading>
             <div class="panel panel-default no-padder col-md-12">
                 <div class="panel-body padder-xs">
-                    <div class="form-group-xs col-md-12">
-                        <div class="col-md-4 no-padder">
-                            <label class="col-md-4 padder-xs control-label text-info">功能名称：</label>
-                            <div class="col-md-8 no-padder">
-                                <input type="text" class="form-control" ng-model="fun.ThisFun.FunName" placeholder="功能名称" />
+                    <div class="form form-horizontal">
+                        <div class="form-group-xs col-md-12">
+                            <div class="col-md-4 no-padder">
+                                <label class="col-md-4 padder-xs control-label text-info">功能名称：</label>
+                                <div class="col-md-8 no-padder">
+                                    <input autocomplete="off"  type="text" class="form-control" ng-model="fun.ThisFun.FunName" placeholder="功能名称" />
+                                </div>
+                            </div>
+                            <div class="col-md-4 no-padder">
+                                <label class="col-md-4 padder-xs control-label text-info">功能类型：</label>
+                                <div class="col-md-8 no-padder">
+                                    <span class="btn-group">
+                                        <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.FunType" uib-btn-radio="'B'" ng-click="fun.ThisFun.DataType=='E'">功能</label>
+                                        <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.FunType" uib-btn-radio="'R'" ng-click="fun.ChangeFunType()">报表</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 no-padder">
+                                <label class="col-md-4 padder-xs control-label text-info">数据类型：</label>
+                                <div class="col-md-8 no-padder">
+                                    <span class="btn-group" ng-if="fun.ThisFun.FunType=='R'">
+                                        <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.DataType" uib-btn-radio="'E'" ng-click="fun.FunType()">实体</label>
+                                        <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.DataType" uib-btn-radio="'P'" ng-click="fun.FunType()">存储过程</label>
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4 no-padder">
-                            <label class="col-md-4 padder-xs control-label text-info">功能类型：</label>
-                            <div class="col-md-8 no-padder">
-                                <span class="btn-group">
-                                    <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.FunType" uib-btn-radio="'B'" ng-click="fun.ThisFun.DataType=='E'">功能</label>
-                                    <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.FunType" uib-btn-radio="'R'" ng-click="fun.ChangeFunType()">报表</label>
-                                </span>
+                        <div class="form-group-xs col-md-12">
+                            <div class="col-md-4 no-padder">
+                                <label class="col-md-4 padder-xs control-label text-info">查询实体：</label>
+                                <div class="col-md-8 no-padder">
+                                    <div entity-select ng-model="fun.ThisFun.EntityName" auto-first="true" select-class="'text-xs'" ng-change="fun.ChangeEntity()"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-4 no-padder">
-                            <label class="col-md-4 padder-xs control-label text-info">数据类型：</label>
-                            <div class="col-md-8 no-padder">
-                                <span class="btn-group" ng-if="fun.ThisFun.FunType=='R'">
-                                    <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.DataType" uib-btn-radio="'E'" ng-click="fun.FunType()">实体</label>
-                                    <label class="btn btn-sm btn-default" ng-model="fun.ThisFun.DataType" uib-btn-radio="'P'" ng-click="fun.FunType()">存储过程</label>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group-xs col-md-12">
-                        <div class="col-md-4 no-padder">
-                            <label class="col-md-4 padder-xs control-label text-info">查询实体：</label>
-                            <div class="col-md-8 no-padder">
-                                <div entity-select ng-model="fun.ThisFun.EntityName" auto-first="true" select-class="'text-xs'" ng-change="fun.ChangeEntity()"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-8 no-padder" ng-show="fun.ThisFun.DataType == 'P'">
-                            <label class="col-md-2 padder-xs  control-label text-info">存储过程：</label>
-                            <div class="col-md-8 no-padder">
-                                <ui-select name="remark" ng-model="fun.ThisFun.ShortName" theme="bootstrap" search-enabled="true" ng-change="fun.ChangeProc()">
-                                    <ui-select-match placeholder="选择存储过程.."><span>{{ $select.selected.ProcSchema }}.{{ $select.selected.ProcName }}</span></ui-select-match>
-                                    <ui-select-choices repeat="item.ShortName as item in fun.ProcList | filter: $select.search track by item.ShortName">
-                                        <div><span ng-bind-html="item.ProcSchema | highlight: $select.search"></span>.<span ng-bind-html="item.ProcName | highlight: $select.search"></span></div>
-                                    </ui-select-choices>
-                                </ui-select>
+                            <div class="col-md-8 no-padder" ng-show="fun.ThisFun.DataType == 'P'">
+                                <label class="col-md-2 padder-xs  control-label text-info">存储过程：</label>
+                                <div class="col-md-8 no-padder">
+                                    <ui-select name="remark" ng-model="fun.ThisFun.ShortName" theme="bootstrap" search-enabled="true" ng-change="fun.ChangeProc()">
+                                        <ui-select-match placeholder="选择存储过程.."><span>{{ $select.selected.ProcSchema }}.{{ $select.selected.ProcName }}</span></ui-select-match>
+                                        <ui-select-choices repeat="item.ShortName as item in fun.ProcList | filter: $select.search track by item.ShortName">
+                                            <div><span ng-bind-html="item.ProcSchema | highlight: $select.search"></span>.<span ng-bind-html="item.ProcName | highlight: $select.search"></span></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -88,7 +91,7 @@
                                     </ui-select>
                                 </div>
                                 <div class="col-md-2 padder-xxs form-group-sm" title="查询栏中文名" ng-class="{ 'has-error' : fun.NewSerForm.SerName.$invalid }">
-                                    <input type="text" class="form-control" name="SerName" ng-model="fun.newSer.SerName" placeholder="查询栏位描述" required />
+                                    <input autocomplete="off"  type="text" class="form-control" name="SerName" ng-model="fun.newSer.SerName" placeholder="查询栏位描述" required />
                                 </div>
                                 <div class="col-md-2 padder-xxs form-group-sm"  title="查询栏属性类型"  ng-class="{ 'has-error' : fun.NewSerForm.SerType.$invalid }">
                                     <!--<div config-select ng-model="fun.newSer.SerType" ng-name="SerType" config-option="fun.SerTypeConfig" ng-required="true"></div>-->
@@ -109,11 +112,11 @@
                                     <div config-select ng-model="fun.newSer.SerAss" ng-disabled="fun.ThisFun.DataType == 'P'" ng-name="SerAss" config-option="fun.SerAssConfig" ng-required="true"></div>
                                 </div>
                                 <div class="col-md-2 padder-xs form-group-sm" title="查询栏初始默认值" >
-                                    <input type="text" class="form-control" name="SerValue" ng-model="fun.newSer.SerValue" placeholder="查询初始默认值" />
+                                    <input autocomplete="off"  type="text" class="form-control" name="SerValue" ng-model="fun.newSer.SerValue" placeholder="查询初始默认值" />
                                 </div>
                                 <div class="col-md-1 padder-xxs form-control-static" title="是否为隐藏条件">
                                     <label class="i-checks i-checks">
-                                        <input type="checkbox" ng-model="fun.newSer.IsHide"><i></i>隐藏
+                                        <input autocomplete="off"  type="checkbox" ng-model="fun.newSer.IsHide"><i></i>隐藏
                                     </label>
                                 </div>
                             </div>
@@ -125,7 +128,7 @@
                                     {{ ser.ColumnName }}
                                 </div>
                                 <div class="col-md-2 padder-xxs form-group-sm" ng-class="{ 'has-error' : fun.ColForm.SerNameL.$invalid }">
-                                    <input type="text" class="form-control" name="SerNameL" ng-model="ser.SerName" placeholder="查询栏位描述" required />
+                                    <input autocomplete="off"  type="text" class="form-control" name="SerNameL" ng-model="ser.SerName" placeholder="查询栏位描述" required />
                                 </div>
                                 <div class="col-md-2 padder-xxs form-group-sm" ng-class="{ 'has-error' : fun.ColForm.SerTypeS.$invalid }">
                                     <!--<div config-select ng-model="ser.SerType" ng-name="SerTypeL" config-option="fun.SerTypeConfig" ng-required="true"></div>-->
@@ -148,11 +151,11 @@
                                     <div config-select ng-model="ser.SerAss" ng-disabled="fun.ThisFun.DataType == 'P'" ng-name="SerAssL" config-option="fun.SerAssConfig" ng-required="true"></div>
                                 </div>
                                 <div class="col-md-2 padder-xs form-group-sm">
-                                    <input type="text" class="form-control" ng-model="ser.SerValue" placeholder="查询默认值" />
+                                    <input autocomplete="off"  type="text" class="form-control" ng-model="ser.SerValue" placeholder="查询默认值" />
                                 </div>
                                 <div class="col-md-1 padder-xxs form-control-static">
                                     <label class="i-checks i-checks">
-                                        <input type="checkbox" ng-model="ser.IsHide"><i></i>隐藏
+                                        <input autocomplete="off"  type="checkbox" ng-model="ser.IsHide"><i></i>隐藏
                                     </label>
                                 </div>
                             </div>
@@ -165,7 +168,7 @@
                                     <tr>
                                         <td class="col-md-3 pad-xss" style="text-align:left">
                                             <label class="i-checks i-checks-sm">
-                                                <input type="checkbox" ng-change="fun.IsColAll()" ng-model="fun.IsAll"><i></i>
+                                                <input autocomplete="off"  type="checkbox" ng-change="fun.IsColAll()" ng-model="fun.IsAll"><i></i>
                                             </label>
                                         </td>
                                         <td class="col-md-9">栏名</td>
@@ -175,14 +178,14 @@
                                     <!--<td>{{ col.ColumnText }}</td>-->
                                     <td class="text-left">
                                         <label class="i-checks i-checks-sm">
-                                            <input type="checkbox" ng-change="fun.IsColChange(col)" ng-model="col.IsShow"><i></i>
+                                            <input autocomplete="off"  type="checkbox" ng-change="fun.IsColChange(col)" ng-model="col.IsShow"><i></i>
                                         </label>
                                     </td>
                                     <td title="{{ col.ColumnName }}" ng-class="{'bg-warning':col.ColumnType == '3'}">{{ col.ColumnName }}</td>
                                 </tr>
                             </table>
                         </div>
-                        <div class="col-md-10 wrapper-xs no-padder scroll-y" ng-form="fun.ColForm" style="max-height:400px">
+                        <div class="col-md-10 wrapper-xs no-padder scroll-y" ng-form="fun.ColForm" style="max-height:400px; min-height:350px">
                             <table class="table pad-xs no-padder">
                                 <thead>
                                     <tr>
@@ -205,8 +208,8 @@
                                     <td class="one-line" ng-class="{'bg-warning':show.ColumnType == '3'}" title="{{ show.ColumnName }}">
                                         <div style="width:80px" class="width-fix">{{ show.ColumnName }}</div>
                                     </td>
-                                    <td class="multi-line"><input type="text" name="ColumnText" class="form-control padder-xxs" placeholder="中文栏名" ng-model="show.ColumnText" /></td>
-                                    <td class="multi-line"><input type="text" name="Width" class="form-control padder-xxs" placeholder="宽度" ng-model="show.Width" /></td>
+                                    <td class="multi-line"><input autocomplete="off"  type="text" name="ColumnText" class="form-control padder-xxs" placeholder="中文栏名" ng-model="show.ColumnText" /></td>
+                                    <td class="multi-line"><input autocomplete="off"  type="text" name="Width" class="form-control padder-xxs" placeholder="宽度" ng-model="show.Width" /></td>
                                     <td class="text-center multi-line" ng-if="fun.ThisFun.FunType=='B'">
                                         <div ng-class="{ 'has-error' : fun.ColForm.editCol.$invalid }">
                                             <ui-select name="editCol" ng-model="show.EditCol" class="padder-xxs" search-enabled="true" ng-required="true">
@@ -236,7 +239,7 @@
                                     </td>
                                     <td class="text-center multi-line" ng-if="fun.ThisFun.FunType=='B'">
                                         <label class="i-checks i-checks-sm">
-                                            <input type="checkbox" ng-model="show.CheckExists" ng-disabled="show.ColumnType == '3'|| show.TableAs != 'a' || show.ColType!='Text'"><i></i>
+                                            <input autocomplete="off"  type="checkbox" ng-model="show.CheckExists" ng-disabled="show.ColumnType == '3'|| show.TableAs != 'a' || show.ColType!='Text'"><i></i>
                                         </label>
                                     </td>
                                     <td class="text-center h4">

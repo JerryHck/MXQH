@@ -1,6 +1,6 @@
-﻿<div class="modal-header">
+﻿<div class="modal-header text-center">
     <span class="modal-title" style="font-size:25px">工单上线(后焊)</span>
-    <button class="btn btn-warning" type="button" ng-click="woHH.cancel()" style="float:right">关闭</button>
+    <button class="btn btn-warning pull-left" type="button" ng-click="woHH.cancel()">关闭</button>
 </div>
 <div class="panel panel-default" ng-form="DialogForm">
     <div class="panel-body padder-xs">
@@ -9,16 +9,16 @@
                 <div class="panel-heading font-bold text-center">工单上线(后焊)</div>
                 <div class="panel-body padder-xs">
                     <div class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">输入工单</label>
-                            <div class="col-lg-8" ng-class="{ 'has-error' : woHH.OrderForm.woHH.$invalid }">
-                                <input disabled="disabled" type="text" name="Order" ng-model="woHH.Item.WorkOrder" uib-typeahead="item.WorkOrder as item.WorkOrder for item in woHH.OrderList | filter:$viewValue | limitTo:8"
+                        <div class="form-group-xs col-xs-12 padder-xxs ">
+                            <label class="col-xs-3 padder-xxs control-label">输入工单</label>
+                            <div class="col-xs-9" ng-class="{ 'has-error' : woHH.OrderForm.woHH.$invalid }">
+                                <input autocomplete="off"  disabled="disabled" type="text" name="Order" ng-model="woHH.Item.WorkOrder" uib-typeahead="item.WorkOrder as item.WorkOrder for item in woHH.OrderList | filter:$viewValue | limitTo:8"
                                        class="form-control" placeholder="工单号" ng-keyup="woHH.KeyDonwOrder($event)" required>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">工艺流程</label>
-                            <div class="col-lg-8" ng-class="{ 'has-error' : woHH.OrderForm.router.$invalid }">
+                        <div class="form-group-xs col-xs-12 padder-xxs ">
+                            <label class="col-xs-3 padder-xxs control-label">工艺流程</label>
+                            <div class="col-xs-9" ng-class="{ 'has-error' : woHH.OrderForm.router.$invalid }">
                                 <ui-select name="router" ng-model="woHH.RoutingData" theme="bootstrap" search-enabled="true" ng-required="true">
                                     <ui-select-match placeholder="选择工艺..." class="h6">{{ $select.selected.RouteName }}</ui-select-match>
                                     <ui-select-choices repeat="item in woHH.RoutingList | filter: $select.search track by item.ID">
@@ -27,33 +27,33 @@
                                 </ui-select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">当前工序</label>
-                            <div class="col-lg-8 form-control-static">
+                        <div class="form-group-xs col-xs-12 padder-xxs ">
+                            <label class="col-xs-3 padder-xxs control-label">当前工序</label>
+                            <div class="col-xs-9 form-control-static">
                                 <span class="text-info font-bold" ng-if="woHH.RoutingData.Code">
                                     <!--[{{ woHH.RoutingData.Code }}]-->
                                     {{ woHH.RoutingData.ProcedureName }}
                                 </span>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">内控码</label>
-                            <div class="col-lg-8" ng-class="{ 'has-error' : woHH.OrderForm.InCode.$invalid }">
-                                <input type="text" ng-disabled="woHH.OrderForm.woHH.$invalid|| woHH.OrderForm.router.$invalid" class="form-control"
+                        <div class="form-group-xs col-xs-12 padder-xxs ">
+                            <label class="col-xs-3 padder-xxs control-label">内控码</label>
+                            <div class="col-xs-9" ng-class="{ 'has-error' : woHH.OrderForm.InCode.$invalid }">
+                                <input autocomplete="off"  type="text" ng-disabled="woHH.OrderForm.woHH.$invalid|| woHH.OrderForm.router.$invalid" class="form-control"
                                        ui-focus="woHH.Focus.SNCode" name="InCode" ng-model="woHH.Item.InCode" placeholder="生产条码" ng-keyup="woHH.KeyDonwInCode($event)" required>
                                 <div class="h6 text-danger">扫描内控码上线</div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-lg-12">
+                        <div class="form-group-xs col-xs-12 padder-xxs">
+                            <div class="col-xs-12">
                                 <div class="checkbox col-md-2 col-md-offset-1 padder-xxs ">
                                     <label class="i-checks">
-                                        <input type="checkbox" ng-model="woHH.IsAuto"><i></i> 合格
+                                        <input autocomplete="off"  type="checkbox" ng-model="woHH.IsAuto"><i></i> 合格
                                     </label>
                                 </div> 
                                 <div class="checkbox col-md-4  padder-xxs " >
                                     <label class="i-checks">
-                                        <input type="checkbox" ng-model="woHH.IsPrint"><i></i> 打印内控码
+                                        <input autocomplete="off"  type="checkbox" ng-model="woHH.IsPrint"><i></i> 打印内控码
                                     </label>
                                 </div>
                                 <div class="col-md-2 padder-xxs " >
@@ -63,6 +63,14 @@
                                 <div class="col-md-2 padder-xxs " >
                                     <span ><button type="submit" class="btn btn-sm btn-success" ng-click="woHH.NgSave()" ng-disabled="woHH.OrderForm.$invalid || woHH.IsAuto">不良</button></span>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 line line-dashed b-b line-lg pull-in m-t-sm"></div>
+                        <div class="form-group-xs col-xs-12 padder-xxs">
+                            <label class="col-xs-3 padder-xxs control-label h4 text-danger font-bold">补打印</label>
+                            <div class="col-xs-9 has-error">
+                                <input autocomplete="off"  type="text" class="form-control" ng-model="woHH.Item.BSNPrint" placeholder="内控码" ng-keyup="woHH.KeyDonwBSNPrint($event)">
+                                <div class="h6 text-danger">上线后才可补打</div>
                             </div>
                         </div>
                     </div>
@@ -188,108 +196,4 @@
     </div>
 
 </div>
-
-<!--<div class="bsn-ng dialog dialog-lg">
-    <div class="padder-xs scroll-y">
-        <div class="panel panel-info">
-            <div class="panel-heading h3 text-center">
-                <span class="font-bold text-danger h2">{{ woHH.NgItem.InCode }}</span>后焊不良采集
-            </div>
-            <div class="panel-body wrapper-xs padder-v-xxs" ng-form="QcForm">
-                <div class="col-md-12 no-padder">
-                    <div class="panel panel-default">
-                        <div class="panel-body scroll-y padder-xs padder-v-xs" style="max-height:600px">
-                            <div class="panel-body wrapper-xs">
-                                <div class="form-horizontal">
-                                    <div class="form-group col-md-6">
-                                        <label class="control-label col-md-4 wrapper-xs">内控码:</label>
-                                        <div class="col-md-8 wrapper-xs">
-                                            <span class="h4 font-bold text-info form-control-static">{{ woHH.Item.InCode }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="control-label col-md-4 wrapper-xs">产品编号:</label>
-                                        <div class="col-md-8 wrapper-xs">
-                                            <span class="h4 font-bold text-info  form-control-static">{{ woHH.Item.MaterialCode }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="control-label col-md-4 wrapper-xs">工单:</label>
-                                        <div class="col-md-8 wrapper-xs">
-                                            <span class="form-control-static">{{ woHH.Item.WorkOrder }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label class="control-label col-md-4 wrapper-xs">产品名称:</label>
-                                        <div class="col-md-8 wrapper-xs">
-                                            <span class="form-control-static">{{ woHH.Item.MaterialName }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="control-label col-md-4 wrapper-xs">当前工艺:</label>
-                                        <div class="col-md-8 wrapper-xs">
-                                            <span class="form-control-static  text-success font-bold">{{ woHH.Item.RouteName }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="control-label col-md-4 wrapper-xs">当前工序:</label>
-                                        <div class="col-md-8 wrapper-xs">
-                                            <span class="form-control-static text-success font-bold">{{ woHH.Item.ProcedureName }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label class="control-label col-md-2 wrapper-xs">备注:</label>
-                                        <div class="col-md-10" ng-class="{ 'has-error' : QcForm.Reason.$invalid }">
-                                            <textarea class="form-control" rows="3" name="Reason" maxlength="255" ng-model="woHH.DialogItem.Reason" placeholder="输入不良原因"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4 col-sm-4 col-xs-4 m-t-md padder-lg" ng-repeat="item in woHH.TypeList">
-                                <button style="height:90px" class="btn-group-vertical h2 btn-lg w-full btn-primary"
-                                        ng-click="woHH.DialogItem.NgType=item.ID; woHH.ChangeMonitor()"
-                                        ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1, 'btn-success':woHH.DialogItem.NgType==item.ID}">
-                                    <span class="h1">{{ item.Name }}</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5 no-padder">
-                    <div class="panel panel-default">
-                        <div class="panel-body scroll-y padder-xs padder-v-xs" style="max-height:600px">
-                            <div class="col-md-4 m-t-xs padder-md" ng-repeat="item in wo.TypeList">
-                                <button style="height:100px" class="btn-group-vertical h2 btn-lg w-full btn-primary"
-                                        ng-click="wo.DialogItem.NgType=item.ID;
-                                    wo.ChangeMonitor()"
-                                        ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1, 'btn-success':wo.DialogItem.NgType==item.ID}">
-                                    <span class="h1">{{ item.Name }}</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-7 padder-xs">
-                    <div class="panel panel-default">
-                        <div class="panel-body scroll-y padder-xs" style="max-height:350px">
-                            <div class="col-md-12 m-t-xs" ng-repeat="item in wo.QpoorList">
-                                <button class="btn-group-vertical btn-lg w-full btn-primary"
-                                        ng-click="wo.DialogItem.Ng=item.ID"
-                                        ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1,
-                                    'btn-success':wo.DialogItem.Ng==item.ID}">
-                                    {{ item.Name }}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12 text-center">
-                    <button class="btn btn-success" type="button" ng-disabled="QcForm.$invalid" ng-click="woHH.Save()">储存</button>
-                    <button style="width:200px" ui-remove-class="active" target=".bsn-ng" class="btn btn-lg btn-warning h1 pull-left m-t-n-xs" type="button" ng-click="woHH.cancelNg()">关闭</button>
-                </div><br />
-            </div>
-        </div>
-    </div>
-</div>-->
 

@@ -27,7 +27,7 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">包装数量/箱</label>
                                 <div class="col-lg-3" ng-class="{ 'has-error' : w.OrderForm.PackNum.$invalid }">
-                                    <input type="number" min="0" class="form-control" name="PackNum" ng-model="w.Item.PackNum" placeholder="包装数量" required>
+                                    <input autocomplete="off"  type="number" min="0" class="form-control" name="PackNum" ng-model="w.Item.PackNum" placeholder="包装数量" required>
                                 </div>
                                 <label class="col-lg-3 control-label">未包装数</label>
                                 <div class="col-lg-2" ng-class="{ 'has-error' : w.OrderForm.PackNum.$invalid }">
@@ -43,7 +43,7 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">SN码</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : w.OrderForm.BSN.$invalid }">
-                                    <input type="text" class="form-control" name="BSN" ng-model="w.Item.BSN" placeholder="SNCode"
+                                    <input autocomplete="off"  type="text" class="form-control" name="BSN" ng-model="w.Item.BSN" placeholder="SNCode"
                                            ng-disabled="!w.OrderData.MO || !w.Item.PackNum" ng-keypress="w.KeyDonwSnCode($event)" required>
                                     <div class="h6 text-danger">注:扫描枪请设定自动回车功能，如果手动输入则需按回车进行包装。</div>
                                 </div>
@@ -133,7 +133,7 @@
                     <div class="panel-body padder-xs" style="min-height:400px" >
                         <div class="input-group no-padder">
                             <span class="text-success input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                            <input type="text" class="form-control input-sm" ng-model="w.SerBSN" />
+                            <input autocomplete="off"  type="text" class="form-control input-sm" ng-model="w.SerBSN" />
                         </div>
                         <div class="scroll-y m-t-xs" style="max-height:530px">
                             <div class="list-group">
@@ -178,14 +178,14 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">包装箱号</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : w.PrintForm.PackSn.$invalid }">
-                                    <input type="text" class="form-control" ui-focus="w.Focus == 1" name="PackSn" ng-model="w.PrintItem.PackSn" placeholder="包装箱号" ng-keyup="w.KeyDonwPackSn($event)" required>
+                                    <input autocomplete="off"  type="text" class="form-control" ui-focus="w.Focus == 1" name="PackSn" ng-model="w.PrintItem.PackSn" placeholder="包装箱号" ng-keyup="w.KeyDonwPackSn($event)" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-offset-4 col-lg-8">
                                     <div class="checkbox col-md-5">
                                         <label class="i-checks">
-                                            <input type="checkbox" ng-model="w.IsAuto"><i></i> 自动打印
+                                            <input autocomplete="off"  type="checkbox" ng-model="w.IsAuto"><i></i> 自动打印
                                         </label>
                                     </div>
                                     <div class="col-md-3">

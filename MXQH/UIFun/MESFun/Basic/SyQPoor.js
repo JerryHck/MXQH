@@ -73,7 +73,6 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     function DataBind() {
         var condition2 = [{ name: "PID", value: vm.PID }, { name: "TopType", value: vm.TopType }]
         vm.promise = AjaxService.GetPlansPage("QPoorTreeView", condition2, vm.page.pageIndex, vm.page.pageSize).then(function (data) {
-            console.log(data);
             vm.List = data.List;
             vm.page.total = data.Count;
         })
@@ -101,6 +100,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
         vm.ItemData.text = item.text;
         vm.ItemData.TopType = item.TopType;
         vm.ItemData.Layer = item.Layer;
+        vm.ItemData.IsMonitor=item.IsMonitor
     }
 
     //保存 物料分类

@@ -73,7 +73,7 @@ function ($rootScope, $scope, $timeout, Dialog, toastr, AjaxService, MyPop) {
         if (vm.InCodeControl == undefined) return;
         var en = {};
         en.InternalCode = vm.InCodeControl;
-        AjaxService.ExecPlan("MesMxWOrder", 'ass', en).then(function (data) {
+        AjaxService.ExecPlan("MesMxWOrder", 'ass', en, false).then(function (data) {
             if (data.data[0].MsgType == 'Error') {
                 vm.Item.InCode = undefined;
                 showError(data.data[0].Msg);
@@ -104,12 +104,16 @@ function ($rootScope, $scope, $timeout, Dialog, toastr, AjaxService, MyPop) {
             if (data.data[0].MsgType == 'Success') {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
                 //vm.PassCount = data.data1[0].ToTalCount;
-                vm.CalData = data.data1[0];
+                //vm.CalData = data.data1[0];
+
+                //更新工序信息，读写分离避免死锁
+                ChangePro(vm.ProcedureItem);
                 AjaxService.PlayVoice('success.mp3');
                 vm.InCodeControl = undefined;
             }
             else if (data.data[0].MsgType == 'Error') {
                 showError(data.data[0].Msg);
+                console.log(data)
                 vm.InCodeControl = undefined;
             }
             vm.IsFisnish = true;
@@ -123,7 +127,7 @@ function ($rootScope, $scope, $timeout, Dialog, toastr, AjaxService, MyPop) {
         en.RouteId = item.ID;
         en.ProcedureID = item.boProcedureID;
         //console.log(en);
-        AjaxService.ExecPlan("MesMxWOrder", "sum", en).then(function (data) {
+        AjaxService.ExecPlan("MesMxWOrder", "sum", en, false).then(function (data) {
             //console.log(data);
             //vm.PassCount = data.data[0].TotalCount;
             vm.CalData = data.data[0];

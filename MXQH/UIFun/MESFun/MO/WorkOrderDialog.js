@@ -199,7 +199,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
                     vm.CanAddPack = false;
                 } else {
                     if (IsEdit=='1') {
-                        vm.Item.CustomerOrder = data.data[0].TransID
+                        vm.Item.CustomerOrder = data.data[0].TransID;
                     }
                     vm.CanAddPack = true;
                 }

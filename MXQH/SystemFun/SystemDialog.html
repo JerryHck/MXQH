@@ -7,7 +7,7 @@
             <div class="form-group col-md-12">
                 <div class="col-sm-4" ng-class="{ 'has-error' : SystemForm.No.$invalid }">
                     <label>系统编号</label>
-                    <input type="text" class="form-control" name="No" placeholder="系统编号" 
+                    <input autocomplete="off"  type="text" class="form-control" name="No" placeholder="系统编号" 
                            ng-model="sys.Item.SysNo" ng-disabled="sys.form.index == 1" ng-blur="sys.isExists()" required>
                     <div ng-messages="SystemForm.No.$error" class="help-block" role="alert">
                         <div ng-message="required">请输入系统编号</div>
@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-sm-8" ng-class="{ 'has-error' : SystemForm.Name.$invalid }">
                     <label>系统名称</label>
-                    <input type="text" name="Name" class="form-control" placeholder="系统名称" ng-model="sys.Item.SysName" required>
+                    <input autocomplete="off"  type="text" name="Name" class="form-control" placeholder="系统名称" ng-model="sys.Item.SysName" required>
                     <div ng-messages="SystemForm.Name.$error" class="help-block" role="alert">
                         <div ng-message="required">请输入系统名称</div>
                     </div>
@@ -25,7 +25,7 @@
             <div class="form-group col-md-12" ng-class="{ 'has-error' : SystemForm.Com.$invalid }">
                 <div class="col-sm-4" ng-class="{ 'has-error' : SystemForm.OrderNo.$invalid }">
                     <label>系统顺序</label>
-                    <input type="number" name="OrderNo" class="form-control" placeholder="系统顺序" ng-model="sys.Item.OrderNo" required>
+                    <input autocomplete="off"  type="number" name="OrderNo" class="form-control" placeholder="系统顺序" ng-model="sys.Item.OrderNo" required>
                     <div ng-messages="SystemForm.Name.$error" class="help-block" role="alert">
                         <div ng-message="required">设定系统所在顺序</div>
                     </div>

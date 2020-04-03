@@ -7,7 +7,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     var vm = this;
     vm.Item = {};
     vm.MesList = [];
-    vm.Focus = { Order: true, SNCode: false, SN: false };
+    vm.Focus = { Order: true, InCode: false, SN: false };
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
     vm.IsAuto = true;
@@ -17,7 +17,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     vm.InCodeToDb = InCodeToDb;
     vm.NgSave = NgSave;
     vm.SelectTab = SelectTab;
-
+    vm.KeyDonwBSNPrint = KeyDonwBSNPrint;
 
     //获取包装信息
     AjaxService.GetPlans("MesMxWOrder", [{ name: "Status", value: 4, type:"!=" }]).then(function (data) {
@@ -43,7 +43,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         if (keycode == 13 && vm.Item.WorkOrder) {
             var en = {};
             en.WorkOrder = vm.Item.WorkOrder;
-            AjaxService.ExecPlan("MesMxWOrder", "order", en).then(function (data) {
+            AjaxService.ExecPlan("MesMxWOrder", "order", en, false).then(function (data) {
                 var mss = "工单 [" + vm.Item.WorkOrder + '] ';
                 vm.OrderData = undefined;
                 if (!data.data[0] || !data.data[0].WorkOrder) {
@@ -55,10 +55,32 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                     vm.RoutingList = data.data1;
                     vm.RoutingData = data.data1[0];
                     vm.OrderCount = data.data2[0];
-                    $("input.SnFocus").focus();
+                    vm.Focus = { Order: false, InCode: true, SN: false };
                 }
             });
         }
+    }
+
+    //bsn打印
+    function KeyDonwBSNPrint(e) {
+        $scope.$applyAsync(function () {
+            var keycode = window.event ? e.keyCode : e.which;
+            if (keycode == 13 && vm.Item.BSNPrint) {
+                var en = {};
+                en.InternalCode = vm.Item.BSNPrint;
+                AjaxService.ExecPlan("MesMxWOrder", 'bsnPrint', en).then(function (data) {
+                    if (data.data[0].MsgType == 'Error') {
+                        showError(data.data[0].Msg);
+                    }
+                    else if (data.data[0].MsgType == 'Success') {
+                        vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
+                        AjaxService.PlayVoice('success.mp3');
+                        print(en.InternalCode);
+                    }
+                    vm.Item.BSNPrint = undefined;
+                });
+            }
+        });
     }
 
     function InCodeToDb() {
@@ -73,7 +95,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         //    return false;
         //}
         if (vm.OrderData.Quantity - vm.OrderCount.ToTalCount == 0) {
-            AjaxService.PlayVoice('5611.mp3');
+            AjaxService.PlayVoice('error.mp3');
             MyPop.ngConfirm({ text: "投入数量已达到U9开工量, 是否继续投入?" }).then(function (data) {
                 if (vm.IsAuto) {
                     Save();
@@ -101,7 +123,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         en.WorkOrder = vm.Item.WorkOrder;
         en.InternalCode = vm.InCodeSave;
         en.RoutingId = vm.RoutingData.ID;
-        console.log(en);
+        //console.log(en);
         vm.promise = AjaxService.ExecPlan("MesMxWOrder", "save", en).then(function (data) {
             if (data.data[0].MsgType == 'Success') {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
@@ -109,18 +131,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 AjaxService.PlayVoice('success.mp3');
                 //打印
                 if (vm.RoutingData.IsPrint || vm.IsPrint) {
-                    var postData = {}, list = [];
-
-                    list.push(en.InternalCode);
-
-                    postData.ParaData = JSON.stringify({});
-                    postData.OutList = list;
-
-                    AjaxService.Print(vm.Template.TemplateId, vm.Template.TS, postData).then(function (data) {
-                        console.log(data);
-                    }, function (err) {
-                        console.log(err);
-                    })
+                    print(en.InternalCode);
                 }
                 vm.InCodeSave = undefined;
 
@@ -129,6 +140,21 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 showError(data.data[0].Msg);
                 vm.InCodeSave = undefined;
             }
+        })
+    }
+
+    function print(bsn) {
+        var postData = {}, list = [];
+
+        list.push(bsn);
+
+        postData.ParaData = JSON.stringify({});
+        postData.OutList = list;
+
+        AjaxService.Print(vm.Template.TemplateId, vm.Template.TS, postData).then(function (data) {
+            console.log(data);
+        }, function (err) {
+            console.log(err);
         })
     }
 

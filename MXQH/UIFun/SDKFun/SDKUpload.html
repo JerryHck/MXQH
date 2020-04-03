@@ -5,7 +5,7 @@
     </div>
     <div class="form-inline">
         <div class="form-group">
-            <input type="text" class="form-control" ng-model="sdk.Ser.ProNo" placeholder="产品名称">
+            <input autocomplete="off"  type="text" class="form-control" ng-model="sdk.Ser.ProNo" placeholder="产品名称">
         </div>
         <button class="btn btn-sm btn-info" ng-click="sdk.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
 
@@ -69,12 +69,12 @@
                 <div class="form-group pull-in clearfix">
                     <div class="col-sm-6" ng-class="{ 'has-error' : sdk.ProductForm.No.$invalid }">
                         <label>产品名称</label>
-                        <input type="text" class="form-control" name="No" placeholder="产品名"
+                        <input autocomplete="off"  type="text" class="form-control" name="No" placeholder="产品名"
                                ng-model="sdk.Item.ProNo" ng-disabled="sdk.isEdit || sdk.isCopy" ng-blur="sdk.isProExists()" required>
                     </div>
                     <div class="col-sm-6" ng-class="{ 'has-error' : sdk.ProductForm.Version.$invalid }">
                         <label>产品版本</label>
-                        <input type="text" ng-disabled="sdk.isEdit" name="Version" class="form-control" ng-blur="sdk.isProExists()" placeholder="产品版本" ng-model="sdk.Item.Version" required>
+                        <input autocomplete="off"  type="text" ng-disabled="sdk.isEdit" name="Version" class="form-control" ng-blur="sdk.isProExists()" placeholder="产品版本" ng-model="sdk.Item.Version" required>
                         <div ng-messages="sdk.ProductForm.Version.$error" class="help-block" role="alert">
                             <div ng-message="unique">产品版本已存在</div>
                         </div>
@@ -83,7 +83,7 @@
                 <div class="form-group">
                     <label>发布日期</label>
                     <div ng-class="{ 'has-error' : sdk.ProductForm.PublishTime.$invalid }">
-                        <input type="text" name="PublishTime" date-time-picker class="form-control" placeholder="发布日期" ng-model="sdk.Item.PublishTime" option="sdk.Option" />
+                        <input autocomplete="off"  type="text" name="PublishTime" date-time-picker class="form-control" placeholder="发布日期" ng-model="sdk.Item.PublishTime" option="sdk.Option" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -133,7 +133,7 @@
                                 <span class="input-group-addon" title="所在服务器文件夹">
                                     {{ f.File.FormalDir }}
                                 </span>
-                                <input class="form-control" ng-disabled="ngDisabled == 'true'" type="text" ng-model="f.File.OriginalName">
+                                <input autocomplete="off"  class="form-control" ng-disabled="ngDisabled == 'true'" type="text" ng-model="f.File.OriginalName">
                                 <span class="input-group-addon text-success">{{ f.File.FileType }}</span>
                                 <span class="input-group-addon text-success">{{ f.File.SizeDesc }}</span>
                                 <span class="input-group-addon">

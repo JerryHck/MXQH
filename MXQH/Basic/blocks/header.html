@@ -89,7 +89,7 @@
     <!-- search form -->
     <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" target=".navbar-collapse" role="search">
         <div class="form-group">
-            <input type="text" ng-model="vm.SelectedFun" uib-typeahead="fun as fun.FunName for fun in vm.FunctionList | filter:$viewValue | limitTo:8"
+            <input autocomplete="off"  type="text" ng-model="vm.SelectedFun" uib-typeahead="fun as fun.FunName for fun in vm.FunctionList | filter:$viewValue | limitTo:8"
                    class="form-control input-sm bg-light no-border rounded padder" placeholder="查找功能..." ng-keypress="vm.Go(vm.SelectedFun.RouteName)">
         </div>
     </form>

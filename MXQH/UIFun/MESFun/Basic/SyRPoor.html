@@ -63,8 +63,8 @@
                                             <td>{{ item.Code }}</td>
                                             <td>{{ item.text }}</td>
                                             <td>{{ item.Layer }}</td>
-                                            <td ng-if="item.IsMonitor">是</td>
-                                            <td ng-if="!item.IsMonitor">否</td>
+                                            <td ng-if="item.IsMonitor=='1'">是</td>
+                                            <td ng-if="item.IsMonitor!='1'">否</td>
                                         </tr>
                                     </table>
                                 </div>

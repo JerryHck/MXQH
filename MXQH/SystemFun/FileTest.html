@@ -1,11 +1,11 @@
 ﻿<div cg-busy="file.promise">
     <div class="wrapper"></div>
     <div class="row">
-        <input type="file" accept="image/*" capture="camera">
-        <input type="file" accept="video/*" capture="camcorder">
-        <input type="file" accept="audio/*" capture="microphone">
+        <input autocomplete="off"  type="file" accept="image/*" capture="camera">
+        <input autocomplete="off"  type="file" accept="video/*" capture="camcorder">
+        <input autocomplete="off"  type="file" accept="audio/*" capture="microphone">
         <!--input:file标签还有一个属性multiple 用来支持多选 直接呼出原生选项-->
-        <input type="file" accept="image/*" multiple>
+        <input autocomplete="off"  type="file" accept="image/*" multiple>
     </div>
     <div class="row">
         <div class="col-md-4">
@@ -25,7 +25,7 @@
 
     <div class="row wrapper-sm">
         <div class="col-md-8">
-            <input type="text" ng-model="file.PrintData" uib-typeahead="order as order.EntityName for order in file.List | filter:$viewValue | limitTo:8"/>
+            <input autocomplete="off"  type="text" ng-model="file.PrintData" uib-typeahead="order as order.EntityName for order in file.List | filter:$viewValue | limitTo:8"/>
         </div>
     </div>
 
@@ -34,7 +34,7 @@
             <div basic-select="MESBoProcedure" ng-model="file.Select.Com" auto-first="true"></div>
         </div>
         <div class="col-md-4">
-            <input ser-data="FunSelect" list="file.SerData" class="form-control" ng-model="file.Select.Fun" type="text"
+            <input autocomplete="off"  ser-data="FunSelect" list="file.SerData" class="form-control" ng-model="file.Select.Fun" type="text"
                    uib-typeahead="item.FunNo as item.FunName for item in file.SerData | filter:$viewValue | limitTo:8"/>
         </div>
         <div class="col-md-4">
@@ -93,5 +93,5 @@
 
     <!--<div id="file2" import-sheet-js opts="file.FileData2" ng-complete="file.Do2()"></div>-->
     <!--<div import-sheet-js opts="file.FileData3" ng-complete="file.Do()"></div>-->
-    <!--<input type="file" import-sheet-js="" opts="file.FileData" ng-complete="file.Do()" />-->
+    <!--<input autocomplete="off"  type="file" import-sheet-js="" opts="file.FileData" ng-complete="file.Do()" />-->
 </div>

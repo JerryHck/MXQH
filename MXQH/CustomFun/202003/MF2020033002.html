@@ -1,0 +1,120 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="mo.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">工单排产</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class= "btn btn-sm btn-success " ng-click= "mo.Insert() "><i class= "glyphicon glyphicon-plus "></i>新增</button>
+                <div class="form-group">
+                    <input type="text" date-picker class="form-control"  ng-model="mo.Ser.aPlanDate" placeholder="排产日期" option="mo.DateOption">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="mo.Ser.aWorkOrder" placeholder="工单号">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="mo.Ser.bMaterialCode" placeholder="料号">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "mo.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "mo.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <div class="col-md-12 scroll-x no-padder" >
+                <table class= "table pad-xs" >
+                    <thead>
+                        <tr>
+                            <td style= "width:60px">操作</td>
+                            <td style= "width:100px ">排产日期</td>
+                            <td style= "width:100px ">工单号</td>
+                            <td style= "width:100px ">料号</td>
+                            <td style= "width:100px ">料名</td>
+                            <td style= "width:100px ">工单数量</td>
+                            <td style= "width:100px ">线别</td>
+                            <td style= "width:100px ">排产数量</td>
+                            <td style= "width:100px ">备注</td>
+                        </tr>
+                    </thead>
+                    <tr ng-if="mo.IsInsert" ng-form="mo.InsertForm">
+                        <td>
+                            <button class="btn btn-xs btn-success" ng-disabled="mo.InsertForm.$invalid" ng-click="mo.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="mo.IsInsert=false" ><i class="fa fa-undo"></i></button>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': mo.InsertForm.PlanDate.$invalid }">
+                                <input type="text" date-picker  name="PlanDate" class="form-control" placeholder="排产日期" ng-model="mo.NewItem.PlanDate" option="mo.DateOption"  required />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group" ng-class="{ 'has-error': mo.InsertForm.WorkOrder.$invalid }">
+                                <input type="text" name="WorkOrder" disabled class="form-control" placeholder="工单号" ng-model="mo.NewItem.WorkOrder" required  ng-blur="mo.IsAddWorkOrderExists()" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-warning" ng-click="mo.OpenMoDialog()">
+                                        <i class="glyphicon glyphicon-search text-info"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div ng-class="{ 'has-error': mo.InsertForm.PlanCount.$invalid }">
+                                <input type="text" name="PlanCount" class="form-control" placeholder="排产数量" ng-model="mo.NewItem.PlanCount" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': mo.InsertForm.Remark.$invalid }">
+                                <input type="text" name="Remark" class="form-control" placeholder="备注" ng-model="mo.NewItem.Remark" required />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-repeat= "item in mo.List " ng-form="item.ItemForm">
+                        <td>
+                            <span ng-if="!item.IsEdit">
+                                <button class="btn btn-xs btn-primary" ng-click="mo.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="mo.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </span>
+                            <span ng-if="item.IsEdit">
+                                <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="mo.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                                <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                            </span>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.PlanDate }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_PlanDate.$invalid }">
+                                 <input type="text" date-picker  name="item_PlanDate" class="form-control" placeholder="排产日期" ng-model="mo.EditItem.PlanDate" option="mo.DateOption"  required />
+                            </div>
+
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.WorkOrder }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_WorkOrder.$invalid }">
+                                 <input type="text" name="item_WorkOrder" class="form-control" placeholder="工单号" ng-model="mo.EditItem.WorkOrder" required  ng-blur="mo.IsEditWorkOrderExists()" />
+                                 <div ng-messages="item.ItemForm.item_WorkOrder.$error" class="help-block" role="alert">
+                                      <div ng-message="unique">工单号重复</div>
+                                 </div>
+                            </div>
+
+                        </td>
+                        <td title="{{ item.Order.MaterialCode }}">{{ item.Order.MaterialCode }}</td>
+                        <td title="{{ item.Order.MaterialName }}">{{ item.Order.MaterialName }}</td>
+                        <td title="{{ item.Order.Quantity }}">{{ item.Order.Quantity }}</td>
+                        <td title="{{ item.LineId }}">{{ item.LineId }}</td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.PlanCount }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_PlanCount.$invalid }">
+                                 <input type="text" name="item_PlanCount" class="form-control" placeholder="排产数量" ng-model="mo.EditItem.PlanCount" required />
+                            </div>
+
+                        </td>
+                        <td title="{{ item.Remark }}">{{ item.Remark }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "mo.page.total>mo.page.size ">
+                <div uib-pagination total-items= "mo.page.total " ng-model= "mo.page.index " items-per-page= "mo.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "mo.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

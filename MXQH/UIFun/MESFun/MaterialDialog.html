@@ -10,7 +10,7 @@
                         <label class="control-label col-sm-4 padder-xs">物料编码：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaterialCode.$invalid }">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="MaterialCode" placeholder="请输入物料编码（必填）"
+                                <input autocomplete="off"  type="text" class="form-control" name="MaterialCode" ng-keyup="ma.KeyUpEvent($event)" placeholder="请输入物料编码（必填）"
                                        ng-model="ma.Item.MaterialCode" ng-disabled="ma.form.index == 1" ng-blur="ma.isExists()" required>
                                 <span class="input-group-addon"><a class="text-success"><i class="glyphicon glyphicon-open"></i></a></span>
                             </div>
@@ -23,7 +23,7 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">规格：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Spec.$invalid }">
-                            <input type="text" name="Spec" class="form-control" placeholder="规格" ng-model="ma.Item.Spec">
+                            <input autocomplete="off"  type="text" name="Spec" class="form-control" placeholder="规格" ng-model="ma.Item.Spec">
                             <div ng-messages="DialogForm.Spec.$error" class="help-block" role="alert">
                                 <div ng-message="required">请输入规格</div>
                             </div>
@@ -34,7 +34,7 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">物料名称：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaterialName.$invalid }">
-                            <input type="text" class="form-control" name="MaterialName" placeholder="物料名称（必填）"
+                            <input autocomplete="off"  type="text" class="form-control" name="MaterialName" placeholder="物料名称（必填）"
                                    ng-model="ma.Item.MaterialName" required>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">颜色：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Color.$invalid }">
-                            <input type="text" name="Color" class="form-control" placeholder="颜色" ng-model="ma.Item.Color">
+                            <input autocomplete="off"  type="text" name="Color" class="form-control" placeholder="颜色" ng-model="ma.Item.Color">
 
                         </div>
                     </div>
@@ -66,14 +66,14 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">品牌：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Brand.$invalid }">
-                            <input type="text" class="form-control" name="Brand" placeholder="品牌"
+                            <input autocomplete="off"  type="text" class="form-control" name="Brand" placeholder="品牌"
                                    ng-model="ma.Item.Brand">
                         </div>
                     </div>
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">材质：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Texture.$invalid }">
-                            <input type="text" name="Texture" class="form-control" placeholder="材质" ng-model="ma.Item.Texture">
+                            <input autocomplete="off"  type="text" name="Texture" class="form-control" placeholder="材质" ng-model="ma.Item.Texture">
 
                         </div>
                     </div>
@@ -82,14 +82,14 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">允许最低直通率（%）：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.LowerFPY.$invalid }">
-                            <input onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" class="form-control" name="LowerFPY" placeholder="允许最低直通率（%）（必填）"
+                            <input autocomplete="off"  onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" class="form-control" name="LowerFPY" placeholder="允许最低直通率（%）（必填）"
                                    ng-model="ma.Item.LowerFPY" required>
                         </div>
                     </div>
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">重量（g）：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Weight.$invalid }">
-                            <input onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" name="Weight" class="form-control" placeholder="重量（必填）" ng-model="ma.Item.Weight" required>
+                            <input autocomplete="off"  onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" name="Weight" class="form-control" placeholder="重量（必填）" ng-model="ma.Item.Weight" required>
                         </div>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">每卡板重量（kg）:</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.PalletSumWight.$invalid }">
-                            <input onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" class="form-control" name="PalletSumWight" placeholder="每卡板重量（kg）"
+                            <input autocomplete="off"  onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" class="form-control" name="PalletSumWight" placeholder="每卡板重量（kg）"
                                    ng-model="ma.Item.PalletSumWight">
                             <div ng-messages="DialogForm.PalletSumWight.$error" class="help-block" role="alert">
                                 <div ng-message="required">请输入每卡板重量（kg）</div>
@@ -108,7 +108,7 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">每箱重量（kg）：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.BoxWeight.$invalid }">
-                            <input onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" name="BoxWeight" class="form-control" placeholder="每箱重量（kg）" ng-model="ma.Item.BoxWeight">
+                            <input autocomplete="off"  onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" name="BoxWeight" class="form-control" placeholder="每箱重量（kg）" ng-model="ma.Item.BoxWeight">
                             <div ng-messages="DialogForm.BoxWeight.$error" class="help-block" role="alert">
                                 <div ng-message="required">请输每箱重量（kg）</div>
                             </div>
@@ -120,14 +120,14 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">每卡板卡通数：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.BoxCount.$invalid }">
-                            <input ng-pattern="/^[1-9]\d*$/" type="number" class="form-control" name="BoxCount" placeholder="每卡板卡通数（必须输入整数）"
+                            <input autocomplete="off"  ng-pattern="/^[1-9]\d*$/" type="number" class="form-control" name="BoxCount" placeholder="每卡板卡通数（必须输入整数）"
                                    ng-model="ma.Item.BoxCount">
                         </div>
                     </div>
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">每箱单机头数：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.PerBoxCount.$invalid }">
-                            <input ng-pattern="/^[1-9]\d*$/" type="number" name="PerBoxCount" class="form-control" placeholder="每箱单机头数（必须输入整数）" ng-model="ma.Item.PerBoxCount">
+                            <input autocomplete="off"  ng-pattern="/^[1-9]\d*$/" type="number" name="PerBoxCount" class="form-control" placeholder="每箱单机头数（必须输入整数）" ng-model="ma.Item.PerBoxCount">
                         </div>
                     </div>
                 </div>
@@ -135,14 +135,14 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">箱/层：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Box_Layer.$invalid }">
-                            <input ng-pattern="/^[1-9]\d*$/" type="number" class="form-control" name="Box_Layer" placeholder="箱/层（必须输入整数）"
+                            <input autocomplete="off"  ng-pattern="/^[1-9]\d*$/" type="number" class="form-control" name="Box_Layer" placeholder="箱/层（必须输入整数）"
                                    ng-model="ma.Item.Box_Layer">
                         </div>
                     </div>
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">层/卡板：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Layer_card.$invalid }">
-                            <input ng-pattern="/^[1-9]\d*$/" type="number" name="Layer_card" class="form-control" placeholder="层/卡板（必须输入整数）" ng-model="ma.Item.Layer_card">
+                            <input autocomplete="off"  ng-pattern="/^[1-9]\d*$/" type="number" name="Layer_card" class="form-control" placeholder="层/卡板（必须输入整数）" ng-model="ma.Item.Layer_card">
                         </div>
                     </div>
                 </div>
@@ -150,14 +150,14 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">彩盒数量：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.ColorBoxCount.$invalid }">
-                            <input ng-pattern="/^[1-9]\d*$/" type="number" class="form-control" name="ColorBoxCount" placeholder="彩盒数量（必须输入整数）"
+                            <input autocomplete="off"  ng-pattern="/^[1-9]\d*$/" type="number" class="form-control" name="ColorBoxCount" placeholder="彩盒数量（必须输入整数）"
                                    ng-model="ma.Item.ColorBoxCount">
                         </div>
                     </div>
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">卡板重量：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.PalletRoughWeight.$invalid }">
-                            <input onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" name="PalletRoughWeight" class="form-control" placeholder="请输入卡板重量（必填）" ng-model="ma.Item.PalletRoughWeight" required>
+                            <input autocomplete="off"  onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" name="PalletRoughWeight" class="form-control" placeholder="请输入卡板重量（必填）" ng-model="ma.Item.PalletRoughWeight" required>
                         </div>
                     </div>
                 </div>
@@ -165,14 +165,14 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">彩盒标签打印数量：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.ColorBoxPrintNum.$invalid }">
-                            <input ng-pattern="/^[1-9]\d*$/" type="number" class="form-control" name="ColorBoxPrintNum" placeholder="彩盒标签打印数量（必填）"
+                            <input autocomplete="off"  ng-pattern="/^[1-9]\d*$/" type="number" class="form-control" name="ColorBoxPrintNum" placeholder="彩盒标签打印数量（必填）"
                                    ng-model="ma.Item.ColorBoxPrintNum" required>
                         </div>
                     </div>
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">UPPH(PCS/H/人)：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.UPPH.$invalid }">
-                            <input onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" name="UPPH" class="form-control" placeholder="UPPH(PCS/H/人)" ng-model="ma.Item.UPPH">
+                            <input autocomplete="off"  onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" name="UPPH" class="form-control" placeholder="UPPH(PCS/H/人)" ng-model="ma.Item.UPPH">
 
                         </div>
                     </div>
@@ -181,14 +181,14 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">产线人数：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.PersonCount.$invalid }">
-                            <input ng-pattern="/^[1-9]\d*$/" type="number" class="form-control" name="PersonCount" placeholder="产线人数（必填，必须输入整数）"
+                            <input autocomplete="off"  ng-pattern="/^[1-9]\d*$/" type="number" class="form-control" name="PersonCount" placeholder="产线人数（必填，必须输入整数）"
                                    ng-model="ma.Item.PersonCount" required>
                         </div>
                     </div>
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">直通率报警阀值(%)：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.ProductSwitch.$invalid }">
-                            <input onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" name="ProductSwitch" class="form-control" placeholder="直通率报警阀值(%)（必填）" ng-model="ma.Item.ProductSwitch" required>
+                            <input autocomplete="off"  onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" name="ProductSwitch" class="form-control" placeholder="直通率报警阀值(%)（必填）" ng-model="ma.Item.ProductSwitch" required>
                             <!--<div ng-messages="DialogForm.ProductSwitch.$error" class="help-block" role="alert">
                                 <div ng-message="required">请输入直通率报警阀值(%)（必填）</div>
                             </div>-->
@@ -199,7 +199,7 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">产出报警阀值：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.PassSwitch.$invalid }">
-                            <input onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" class="form-control" name="PassSwitch" placeholder="产出报警阀值（必填）"
+                            <input autocomplete="off"  onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" class="form-control" name="PassSwitch" placeholder="产出报警阀值（必填）"
                                    ng-model="ma.Item.PassSwitch" required>
                         </div>
                     </div>
@@ -211,7 +211,7 @@
                                 </div>
                                 <span class="input-group-addon">
                                     <label class="i-checks i-checks-sm">
-                                        <input type="checkbox" ng-model="ma.Test" class="ng-pristine ng-untouched ng-valid ng-not-empty"><i></i>
+                                        <input autocomplete="off"  type="checkbox" ng-model="ma.Test" class="ng-pristine ng-untouched ng-valid ng-not-empty"><i></i>
                                     </label>
                                 </span>
 
@@ -223,16 +223,26 @@
                   <div class="col-md-6 padder-xs">
                     <label class="control-label col-sm-4 padder-xs">老化时间(min)：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.AgeingTime.$invalid }">
-                            <input ng-pattern="/^[0-9]\d*$/" type="number" class="form-control" name="AgeingTime" placeholder="老化时间（必须输入整数）"
+                            <input autocomplete="off"  ng-pattern="/^[0-9]\d*$/" type="number" class="form-control" name="AgeingTime" placeholder="老化时间（必须输入整数）"
                                ng-model="ma.Item.AgeingTime" >
                          </div>
                      </div>
-                    <div class="col-md-6 padder-xs" ng-if="ma.Item.IsEdit">
-                        <label class="control-label col-sm-4 padder-xs">启用：</label>
-                        <div class="col-sm-1 padder-xs" ng-class="{ 'has-error' : DialogForm.PassSwitch.$invalid }">
-                            <label class="i-checks i-checks-sm control-label">
-                                <input type="checkbox" ng-model="ma.Item.State" name="State" class="ng-pristine ng-untouched ng-valid ng-not-empty"><i></i>
-                            </label>
+                    <div class="col-md-6 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">IMEI规则：</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.IMEI_SerialNum.$invalid }">
+                            <div class="input-group">
+                                <div basic-select="SerialNum" ng-disabled="!ma.Test2" ng-name="IMEI_SerialNum" ng-model="ma.IMEI_SerialNum" placeholder="IMEI规则">
+                                </div>
+                                <span class="input-group-addon">
+                                    <label class="i-checks i-checks-sm">
+                                        <input autocomplete="off"  type="checkbox" ng-model="ma.Test2" class="ng-pristine ng-untouched ng-valid ng-not-empty"><i></i>
+                                    </label>
+                                </span>
+                                <span class="input-group-addon">
+                                    <a><i ng-click="ma.IMEI_SerialNum = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                                </span>
+
+                            </div>
                         </div>
                     </div>
 
@@ -244,7 +254,14 @@
                             <textarea class="form-control" rows="2" name="Remark" ng-model="ma.Item.Remark" placeholder="输入备注信息"></textarea>
                         </div>
                     </div>
-                  
+                    <div class="col-md-6 padder-xs" ng-if="ma.Item.IsEdit">
+                        <label class="control-label col-sm-4 padder-xs">启用：</label>
+                        <div class="col-sm-1 padder-xs" ng-class="{ 'has-error' : DialogForm.PassSwitch.$invalid }">
+                            <label class="i-checks i-checks-sm control-label">
+                                <input autocomplete="off"  type="checkbox" ng-model="ma.Item.State" name="State" class="ng-pristine ng-untouched ng-valid ng-not-empty"><i></i>
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -253,7 +270,8 @@
 </div>
 <div class="modal-footer">
     <div class="text-center">
-        <button class="btn btn-success" type="button" ng-disabled="DialogForm.$invalid" ng-click="ma.Save()">保存</button>
+        <!--<button class="btn btn-success" type="button" ng-disabled="DialogForm.$invalid" ng-click="ma.Save()">保存</button>-->
+        <button class="btn btn-success" type="button" ng-click="ma.Save()">保存</button>
         <button class="btn btn-warning" type="button" ng-click="ma.cancel()">取消</button>
     </div>
 </div>

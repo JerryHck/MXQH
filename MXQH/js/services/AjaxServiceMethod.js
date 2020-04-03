@@ -22,6 +22,8 @@
             GetPlan: GetPlan,
             //获得实体资料-列表
             GetPlans: GetPlans,
+            //无事务读取存储过程——存储过程内只允许读
+            GetProc:GetProc,
             //同步获取数据
             GetPlansWait:GetPlansWait,
             GetPlansTop:GetPlansTop,
@@ -98,7 +100,8 @@
             GetServerSocket: GetServerSocket,
 
             //休眠
-            sleep:sleep
+            sleep: sleep,
+            convertArray: convertArray
 
         };
         var conect = 0;
@@ -259,10 +262,22 @@
             return Ajax(d, url, en, "DeletePlan");
         }
 
-        function ExecPlan(name, shortName, json) {
+        //无事务读取存储过程——只读的情况下使用
+        function GetProc(conn, procName, json) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = {};
+            en.conn = conn;
+            en.procName = procName;
+            en.strJson = JSON.stringify(json);
+            return Ajax(d, url, en, "GetProc");
+        }
+
+        function ExecPlan(name, shortName, json, isTrans) {
             var d = $q.defer(), url = serviceUrl + generic;
             var en = getEn(name, shortName, json);
-            return Ajax(d, url, en, "ExecPlan");
+            var isTrans = isTrans == undefined ? true : isTrans;
+            var method = isTrans == false ? "GetPlanProc" : "ExecPlan";//默认启用事务
+            return Ajax(d, url, en, method);
         }
 
 

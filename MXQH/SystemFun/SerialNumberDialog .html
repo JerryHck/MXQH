@@ -6,14 +6,14 @@
                 <div class="form-group">
                     <label class="col-md-3 padder-xs control-label">规则名:</label>
                     <div class="col-md-9" no-padder ng-class="{ 'has-error' : pk.DialogForm.TbName.$invalid }">
-                        <input type="text" class="form-control" name="TbName" placeholder="规则名" maxlength="30" ng-blur="pk.isExists()"
+                        <input autocomplete="off"  type="text" class="form-control" name="TbName" placeholder="规则名" maxlength="30" ng-blur="pk.isExists()"
                                ng-model="pk.Item.TbName" ng-disabled="pk.form.index>0" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 padder-xs  control-label">规则栏:</label>
                     <div class="col-md-9" ng-class="{ 'has-error' : pk.DialogForm.ClName.$invalid }">
-                        <input type="text" name="ClName" class="form-control" ng-maxlength="30" ng-blur="pk.isExists()"
+                        <input autocomplete="off"  type="text" name="ClName" class="form-control" ng-maxlength="30" ng-blur="pk.isExists()"
                                ng-disabled="pk.form.index>0" placeholder="规则栏" ng-model="pk.Item.ClName" required>
                         <div ng-messages="pk.DialogForm.ClName.$error" class="help-block" role="alert">
                             <div ng-message="unique">规则名和规则栏重复</div>
@@ -23,13 +23,13 @@
                 <div class="form-group">
                     <label class="col-md-3 padder-xs  control-label">前字串:</label>
                     <div class="col-md-9">
-                        <input type="text" name="PreFixChar" class="form-control" ng-maxlength="30" placeholder="前字串" ng-model="pk.Item.PreFixChar">
+                        <input autocomplete="off"  type="text" name="PreFixChar" class="form-control" ng-maxlength="30" placeholder="前字串" ng-model="pk.Item.PreFixChar">
                     </div>
                 </div>
                 <!--<div class="form-group">
                     <label class="col-md-3 padder-xs  control-label">默认分割符:</label>
                     <div class="col-md-9">
-                        <input type="text" name="PartitionChar" class="form-control" ng-maxlength="1" placeholder="默认分割符" ng-model="pk.Item.PartitionChar">
+                        <input autocomplete="off"  type="text" name="PartitionChar" class="form-control" ng-maxlength="1" placeholder="默认分割符" ng-model="pk.Item.PartitionChar">
                     </div>
                 </div>-->
                 <div class="form-group">
@@ -41,7 +41,7 @@
                 <div class="form-group">
                     <label class="col-md-3 padder-xs  control-label">流水长度:</label>
                     <div class="col-md-9" ng-class="{ 'has-error' : pk.DialogForm.SerialLenth.$invalid }">
-                        <input type="number" name="SerialLenth" class="form-control" ng-maxlength="15" placeholder="流水长度" ng-model="pk.Item.SerialLenth" required>
+                        <input autocomplete="off"  type="number" name="SerialLenth" class="form-control" ng-maxlength="15" placeholder="流水长度" ng-model="pk.Item.SerialLenth" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -67,7 +67,7 @@
                     <div class="col-md-9">
                         <div class="input-group" ng-repeat="now in pk.Item.Info">
                             <span class="input-group-addon">{{ now.CharName }}</span>
-                            <input type="text" class="form-control" placeholder="序号" ng-model="now.NextSerialSN">
+                            <input autocomplete="off"  type="text" class="form-control" placeholder="序号" ng-model="now.NextSerialSN">
                         </div>
                     </div>
                 </div>
@@ -93,28 +93,28 @@
                                         <div config-select ng-name="CharTyped" ng-required="true" ng-model="pk.NewCom.CharType" config-option="pk.CTOption"></div>
                                     </div>
                                     <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='FIX'" ng-class="{ 'has-error' : pk.InsertForm.FixValue.$invalid }">
-                                        <input class="form-control" name="FixValue" title="字符" placeholder="字符" min="1" maxlength="30" type="text" ng-model="pk.NewCom.CValue" required />
+                                        <input autocomplete="off"  class="form-control" name="FixValue" title="字符" placeholder="字符" min="1" maxlength="30" type="text" ng-model="pk.NewCom.CValue" required />
                                     </div>
                                     <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='YC'" ng-class="{ 'has-error' : pk.InsertForm.YCYear.$invalid }">
-                                        <input class="form-control" name="YCYear" title="从哪一年转换" placeholder="年(YYYY)" min="2000" maxlength="4" type="number" ng-model="pk.NewCom.YCYear" required />
+                                        <input autocomplete="off"  class="form-control" name="YCYear" title="从哪一年转换" placeholder="年(YYYY)" min="2000" maxlength="4" type="number" ng-model="pk.NewCom.YCYear" required />
                                     </div>
                                     <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='MC'" ng-class="{ 'has-error' : pk.InsertForm.MCMonth.$invalid }">
-                                        <input class="form-control" name="MCMonth" title="从哪月份开始转换" placeholder="月(MM)" min="01" max="12" maxlength="2" type="text" ng-model="pk.NewCom.MCMonth" required />
+                                        <input autocomplete="off"  class="form-control" name="MCMonth" title="从哪月份开始转换" placeholder="月(MM)" min="01" max="12" maxlength="2" type="text" ng-model="pk.NewCom.MCMonth" required />
                                     </div>
                                     <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='YC'|| pk.NewCom.CharType =='MC'" ng-class="{ 'has-error' : pk.InsertForm.CTo.$invalid }">
-                                        <input class="form-control" name="CTo" title="转成的字母" placeholder="转成" maxlength="1" type="text" ng-model="pk.NewCom.CTo" required />
+                                        <input autocomplete="off"  class="form-control" name="CTo" title="转成的字母" placeholder="转成" maxlength="1" type="text" ng-model="pk.NewCom.CTo" required />
                                     </div>
                                     <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='SER'">
-                                        <input class="form-control" name="SERTo" title="流水达最大值时转成的字母" placeholder="转成" maxlength="1" type="text" ng-model="pk.NewCom.CTo"/>
+                                        <input autocomplete="off"  class="form-control" name="SERTo" title="流水达最大值时转成的字母" placeholder="转成" maxlength="1" type="text" ng-model="pk.NewCom.CTo"/>
                                     </div>
                                     <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='DC'" ng-class="{ 'has-error' : pk.InsertForm.DCTo.$invalid }">
-                                        <input class="form-control" name="DCTo" title="日期天数大于10时转换成的字母" placeholder="转成" maxlength="1" type="text" ng-model="pk.NewCom.CTo" required/>
+                                        <input autocomplete="off"  class="form-control" name="DCTo" title="日期天数大于10时转换成的字母" placeholder="转成" maxlength="1" type="text" ng-model="pk.NewCom.CTo" required/>
                                     </div>
                                     <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='YC'|| pk.NewCom.CharType =='MC'|| pk.NewCom.CharType =='DC'|| pk.NewCom.CharType =='SER'">
-                                        <input class="form-control" name="CEx" title="需要排除的字母" placeholder="排除" maxlength="10" type="text" ng-model="pk.NewCom.CEx" />
+                                        <input autocomplete="off"  class="form-control" name="CEx" title="需要排除的字母" placeholder="排除" maxlength="10" type="text" ng-model="pk.NewCom.CEx" />
                                     </div>
                                     <div class="col-sm-1 padder-xs">
-                                        <input class="form-control" name="PartChar" title="分隔符" maxlength="1" type="text" ng-model="pk.NewCom.PartChar" />
+                                        <input autocomplete="off"  class="form-control" name="PartChar" title="分隔符" maxlength="1" type="text" ng-model="pk.NewCom.PartChar" />
                                     </div>
                                 </div>
                             </div>
@@ -135,28 +135,28 @@
                                         <div config-select ng-name="CharTyped" ng-required="true" ng-disabled="true" ng-model="com.CharType" config-option="pk.CTOption"></div>
                                     </div>
                                     <div class="col-sm-2 padder-xs" ng-if="com.CharType =='FIX'" ng-class="{ 'has-error' : pk.ListForm.FixValue.$invalid }">
-                                        <input class="form-control" name="FixValue" title="字符" placeholder="字符" min="1" maxlength="30" type="text" ng-model="com.CValue" required />
+                                        <input autocomplete="off"  class="form-control" name="FixValue" title="字符" placeholder="字符" min="1" maxlength="30" type="text" ng-model="com.CValue" required />
                                     </div>
                                     <div class="col-sm-2 padder-xs" ng-if="com.CharType =='YC'" ng-class="{ 'has-error' : pk.ListForm.YCYear.$invalid }">
-                                        <input class="form-control" name="YCYear" title="从哪一年转换" placeholder="年(YYYY)" min="2000" maxlength="4" type="number" ng-model="com.YCYear" required />
+                                        <input autocomplete="off"  class="form-control" name="YCYear" title="从哪一年转换" placeholder="年(YYYY)" min="2000" maxlength="4" type="number" ng-model="com.YCYear" required />
                                     </div>
                                     <div class="col-sm-2 padder-xs" ng-if="com.CharType =='MC'" ng-class="{ 'has-error' : pk.ListForm.MCMonth.$invalid }">
-                                        <input class="form-control" name="MCMonth" title="从哪月份开始转换" placeholder="月(MM)" min="01" max="12" maxlength="2" type="text" ng-model="com.MCMonth" required />
+                                        <input autocomplete="off"  class="form-control" name="MCMonth" title="从哪月份开始转换" placeholder="月(MM)" min="01" max="12" maxlength="2" type="text" ng-model="com.MCMonth" required />
                                     </div>
                                     <div class="col-sm-1 padder-xs" ng-if="com.CharType =='YC'|| com.CharType =='MC'" ng-class="{ 'has-error' : pk.ListForm.CTo.$invalid }">
-                                        <input class="form-control" name="CTo" title="转成的字母" placeholder="转成" maxlength="1" type="text" ng-model="com.CTo" required />
+                                        <input autocomplete="off"  class="form-control" name="CTo" title="转成的字母" placeholder="转成" maxlength="1" type="text" ng-model="com.CTo" required />
                                     </div>
                                     <div class="col-sm-2 padder-xs" ng-if="com.CharType =='SER'">
-                                        <input class="form-control" title="流水达最大值时转成的字母" placeholder="转成" maxlength="1" type="text" ng-model="com.CTo" />
+                                        <input autocomplete="off"  class="form-control" title="流水达最大值时转成的字母" placeholder="转成" maxlength="1" type="text" ng-model="com.CTo" />
                                     </div>
                                     <div class="col-sm-2 padder-xs" ng-if="com.CharType =='DC'" ng-class="{ 'has-error' : pk.ListForm.DCDay.$invalid }">
-                                        <input class="form-control" name="DCDay" title="日期天数大于10时转换成的字母" placeholder="转成" maxlength="1" type="text" ng-model="com.CTo" required/>
+                                        <input autocomplete="off"  class="form-control" name="DCDay" title="日期天数大于10时转换成的字母" placeholder="转成" maxlength="1" type="text" ng-model="com.CTo" required/>
                                     </div>
                                     <div class="col-sm-2 padder-xs" ng-if="com.CharType =='YC'|| com.CharType =='MC'|| com.CharType =='DC' || com.CharType =='SER'">
-                                        <input class="form-control" name="CEx" title="需要排除的字母" placeholder="排除" maxlength="10" type="text" ng-model="com.CEx" />
+                                        <input autocomplete="off"  class="form-control" name="CEx" title="需要排除的字母" placeholder="排除" maxlength="10" type="text" ng-model="com.CEx" />
                                     </div>
                                     <div class="col-sm-1 padder-xs">
-                                        <input class="form-control" name="PartChar" title="分隔符" maxlength="1" type="text" ng-model="com.PartChar" />
+                                        <input autocomplete="off"  class="form-control" name="PartChar" title="分隔符" maxlength="1" type="text" ng-model="com.PartChar" />
                                     </div>
                                 </div>
                             </div>
