@@ -20,7 +20,7 @@
                                 <a><i ng-click="mesmo.Ser.MaterialID = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
                             </span>
                         </div>
-                    </div>                    
+                    </div>
                     <div class="form-group">
                         <div class="input-group">
                             <input autocomplete="off"  type="text" date-picker class="form-control" name="AssemblyDate" placeholder="计划日期" option="auctusSO.UnExist2"
@@ -59,10 +59,10 @@
             </div>
         </div>
         <div class="padder-md table-responsive">
-            <table class="table one-line" >
+            <table class="table one-line">
                 <thead>
                     <tr>
-                        <td style="width:90px ">编辑</td>
+                        <td style="width:130px ">编辑</td>
                         <td style="width:100px ">计划日期</td>
                         <td style="width:100px ">生产线</td>
                         <td style="width:100px ">计划序号</td>
@@ -71,7 +71,8 @@
                         <td style="width:100px ">到货地</td>
                         <td style="width:100px ">编码规则</td>
                         <td style="width:130px ">产品编号</td>
-                        <td style="width:160px" >产品名称</td>
+                        <td style="width:160px">产品名称</td>
+                        <td style="width:160px">客户品名</td>
                         <td style="width:100px ">计划数量</td>
                         <td style="width:100px ">投入数量</td>
                         <td style="width:100px ">完工数量</td>
@@ -90,6 +91,7 @@
                     <td>
                         <button class="btn btn-xs btn-primary" title="编辑" ng-click="mesmo.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
                         <!--<button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除吗'}" ng-click="mesmo.Delete(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>-->
+                        <!--<button class="btn btn-xs btn-success" title="开工"  ng-click="mesmo.StartMo(item.ID)">开工</button>-->
                         <button class="btn btn-xs btn-success" title="完工" ng-confirm="{text:'确定要完工吗'}" ng-click="mesmo.Complete(item.ID)"><i class="glyphicon glyphicon-check"></i></button>
 
                     </td>
@@ -98,16 +100,17 @@
                     <td title="{{ item.ListNo }}">{{ item.ListNo }}</td>
                     <td ng-if="item.IsPack==1" title="{{ item.WorkOrder }}"><span class="text-success"><i class="glyphicon glyphicon-ok"></i></span>{{ item.WorkOrder }}</td>
                     <td ng-if="item.IsPack!=1" title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
-                    <td ng-if="item.Status==0">开立</td>
+                    <td ng-if="item.Status==0||item.Status==1">开立</td>
                     <td ng-if="item.Status==2">开工</td>
                     <td ng-if="item.Status==3">返工</td>
-                    <td ng-if="item.Status==4" >完工</td>
+                    <td ng-if="item.Status==4">完工</td>
                     <td ng-if="item.TemplateCount!=0" title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
                     <td ng-if="item.TemplateCount==0" class="bg-warning" title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
-                    <td ng-if="item.ClName!=''" class="bg-warning"  title="{{ item.ClName }}">{{ item.ClName }}</td>
+                    <td ng-if="item.ClName!=''" class="bg-warning" title="{{ item.ClName }}">{{ item.ClName }}</td>
                     <td ng-if="item.ClName==''">{{item.MaterialClName}}</td>
                     <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
-                    <td title="{{ item.MaterialName }}" style="white-space:normal;word-break:normal;" >{{ item.MaterialName }}</td>
+                    <td title="{{ item.MaterialName }}" style="white-space:normal;word-break:normal;">{{ item.MaterialName }}</td>
+                    <td title="{{ item.CustomerItemName }}" style="white-space:normal;word-break:normal;">{{ item.CustomerItemName }}</td>
                     <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
                     <td title="{{ item.OnlineQty }}">{{ item.OnlineQty }}</td>
                     <td title="{{ item.FinishQty }}">{{ item.FinishQty }}</td>
@@ -153,12 +156,12 @@
                     </div>
                     <div class="form-group">
                         <div class="input-group">
-                            <div  basic-select="MaterialID" ng-model="mesmo.Ser2.MaterialID" select-class="text-xs" ></div>
+                            <div basic-select="MaterialID" ng-model="mesmo.Ser2.MaterialID" select-class="text-xs"></div>
                             <span class="input-group-addon">
                                 <a><i ng-click="mesmo.Ser2.MaterialID = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
                             </span>
                         </div>
-                    </div> 
+                    </div>
                     <div class="form-group">
                         <div class="input-group">
                             <input autocomplete="off"  type="text" date-picker class="form-control" name="AssemblyDate" placeholder="计划日期" option="auctusSO.UnExist2"
@@ -252,6 +255,6 @@
             <div uib-pagination total-items="mesmo.pageCom.total " ng-model="mesmo.pageCom.pageIndex " items-per-page="mesmo.pageCom.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
                  ng-change="mesmo.DataBindCom() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
             </div>
-        </div>       
+        </div>
     </uib-tab>
 </uib-tabset>

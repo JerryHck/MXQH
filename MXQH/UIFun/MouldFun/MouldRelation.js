@@ -161,6 +161,16 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form,$window) {
         if (!l.Remark) {
             l.Remark = '';
         }
+        if (!l.UnitOutput) {
+            l.UnitOutput = null;
+        }
+        if (!l.EffectiveDate) {
+            l.EffectiveDate = null;
+        }
+        if (!l.DisableDate) {
+            l.DisableDate = null;
+        }
+
         if (vm.IsAddLine) {
             vm.Lines.push(l);
         } else {
@@ -218,10 +228,15 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form,$window) {
         var mouldInfo = {};
         var en = {};
         var mouldArr = [];
+        if (!vm.MouldInfo.SPECS) {
+            mouldInfo.MouldSPECS ='';
+        } else {
+            mouldInfo.MouldSPECS = vm.MouldInfo.SPECS;
+
+        }
         mouldInfo.MouldID = vm.MouldInfo.ID;
         mouldInfo.MouldCode = vm.MouldInfo.Code;
         mouldInfo.MouldName = vm.MouldInfo.Name;
-        mouldInfo.MouldSPECS = vm.MouldInfo.SPECS;
         mouldInfo.CreateBy = $rootScope.User.Name;
         mouldInfo.ModifyBy = $rootScope.User.Name;
         mouldArr.push(mouldInfo);

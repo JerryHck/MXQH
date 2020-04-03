@@ -14,7 +14,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     vm.AddPack = AddPack;
     vm.EditPack = EditPack;
     vm.DeletePack = DeletePack;
-    vm.SyncMO = SyncMO;
+    vm.SyncMO = SyncMO;    
     vm.Places = [];
     GetPlaces();
     if (!vm.Item.AssemblyDate) {
@@ -31,12 +31,14 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     if (vm.Item.ID) {
         vm.IsEdit = true;
         vm.Routing.ID = vm.Item.boRoutingID;//工艺信息
+        vm.Item.CompleteType = vm.Item.CompleteType == undefined ? '0' : vm.Item.CompleteType.toString();
         vm.Routing.RoutingName = vm.Item.RoutingName;
         vm.SNRule.TbName = vm.Item.TbName;//编码规则信息
         vm.SNRule.ClName = vm.Item.ClName;
         vm.IsEditSNRule = false;
         GetPackInfo();//获取包装信息
     } else {
+        vm.Item.CompleteType = vm.Item.Mat_CompleteType == undefined ? '0' : vm.Item.Mat_CompleteType.toString();
         vm.IsEdit = false;
         vm.Item.MinWeight = 100;
         vm.Item.MaxWeight = 200;
@@ -80,6 +82,9 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
         if (!vm.Item.Remark) {
             vm.Item.Remark = '';
         }
+        if (!vm.Item.CustomerItemName) {
+            vm.Item.CustomerItemName = '';
+        }        
         if (vm.Item.MaxWeight<vm.Item.MinWeight) {
             toastr.error('最大重量不能小于最小重量');
             return;
@@ -277,6 +282,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
                             vm.Item.ERPQuantity = data.ERPQuantity
                             vm.Item.SendPlaceID = data.SendPlaceID;
                             vm.Item.AssemblyLineID = data.AssemblyLineID;
+                            vm.Item.CustomerItemName = data.CustomerItemName;
                         });
                     } else if (vm.Item.WorkOrder != data.DocNo) {
                         toastr.error('同步的不是当前工单！');

@@ -10,11 +10,10 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
     vm.isExists = isExists;
     vm.ChangeMonitor = ChangeMonitor;
     vm.OpenMate = OpenMate;
-    vm.KeyUpEvent = KeyUpEvent;
-
+    vm.KeyUpEvent = KeyUpEvent;    
     vm.ConfigCodeType = { Table: 'MaterialCodeType', Column: 'CodeType' };
     vm.ConfigMaterialUnit = { Table: 'MaterialUnit', Column: 'Unit' };
-    
+    vm.Item.CompleteType = vm.Item.CompleteType == undefined ? '0':vm.Item.CompleteType.toString();
     if (vm.Item.TbName == null & vm.Item.ClName == null) {
         vm.SerialNum = {};
     } else {
@@ -66,7 +65,7 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
     }
 
     //储存或修改
-    vm.Save = function () {
+    vm.Save = function () {        
         var en = {};
         //vm.Item.type = 0;
         en.type = vm.Item.type;//新增 null ，更新 1
@@ -96,6 +95,7 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
         en.CreateBy = vm.Item.CreateBy;
         en.Box_Layer = vm.Item.Box_Layer;
         en.Layer_card = vm.Item.Layer_card;
+        en.CompleteType = vm.Item.CompleteType;
         en.ModifyBy;
         en.ModifyDate;
 

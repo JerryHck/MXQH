@@ -1,0 +1,132 @@
+﻿<div class="wrapper-md">
+    <div class="input-group m-b-xxs">
+        <div class="form-inline">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="woc.Ser.DocNo" placeholder="工单号">
+                    <span class="input-group-addon">
+                        <a><i ng-click="woc.Ser.DocNo = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div basic-select="MaterialID" placeholder="料号" ng-model="woc.Ser.MaterialID" ng-name="MaterialID" ng-required="true" select-class="text-xs"></div>
+                    <span class="input-group-addon">
+                        <a><i ng-click="woc.Ser.MaterialID = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" date-picker class="form-control" name="AssemblyDate" placeholder="计划日期" option="auctusSO.UnExist2"
+                           ng-model="woc.Ser.AssemblyDate" required>
+                    <span class="input-group-addon">
+                        <a><i ng-click="woc.Ser.AssemblyDate = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div style="min-width:120px;" basic-select="AssemblyLine" ng-model="woc.Ser.LineID" select-class="text-xs" ng-name="LineID" ng-required="true"></div>
+            </div>
+            <div class="form-group">
+                <span class="input-group-addon">
+                    <a><i ng-click="woc.Ser.LineID = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                </span>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="woc.Ser.CustomerOrder" placeholder="客户订单号">
+                    <span class="input-group-addon">
+                        <a><i ng-click="woc.Ser.CustomerOrder = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="woc.Ser.ERPSo" placeholder="ERP销售单号">
+                    <span class="input-group-addon">
+                        <a><i ng-click="woc.Ser.ERPSo = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                    </span>
+                </div>
+            </div>
+            <button class="btn btn-sm btn-info " ng-click="woc.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+        </div>
+    </div>
+</div>
+<div class="padder-md table-responsive">
+    <table class="table one-line">
+        <thead>
+            <tr>
+                <td style="width:130px ">编辑</td>
+                <td style="width:100px ">计划日期</td>
+                <td style="width:100px ">生产线</td>
+                <td style="width:100px ">计划序号</td>
+                <td style="width:135px ">工单号</td>
+                <td style="width:90px ">状态</td>
+                <td style="width:100px ">到货地</td>
+                <td style="width:100px ">编码规则</td>
+                <td style="width:130px ">产品编号</td>
+                <td style="width:160px">产品名称</td>
+                <td style="width:100px ">计划数量</td>
+                <td style="width:100px ">投入数量</td>
+                <td style="width:100px ">完工数量</td>
+                <td style="width:130px ">客户订单号</td>
+                <td style="width:100px ">计划交货期</td>
+                <td style="width:100px ">客户编号</td>
+                <td style="width:140px ">客户名称</td>
+                <td style="width:130px ">ERP销售单号</td>
+                <td style="width:100px ">ERP订单数量</td>
+                <td style="width:100px ">最小重量</td>
+                <td style="width:100px ">最大重量</td>
+
+            </tr>
+        </thead>
+        <tr ng-repeat="item in woc.List ">
+            <td>
+                <button class="btn btn-xs btn-primary" title="编辑" ng-click="woc.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+            </td>
+            <td title="{{ item.AssemblyDate }}">{{ item.AssemblyDate }}</td>
+            <td title="{{ item.AssemblyLineName }}" style="white-space:normal;word-break:normal;">{{ item.AssemblyLineName }}</td>
+            <td title="{{ item.ListNo }}">{{ item.ListNo }}</td>
+            <td ng-if="item.IsPack==1" title="{{ item.WorkOrder }}"><span class="text-success"><i class="glyphicon glyphicon-ok"></i></span>{{ item.WorkOrder }}</td>
+            <td ng-if="item.IsPack!=1" title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+            <td ng-if="item.Status==0">开立</td>
+            <td ng-if="item.Status==2">开工</td>
+            <td ng-if="item.Status==3">返工</td>
+            <td ng-if="item.Status==4">完工</td>
+            <td ng-if="item.TemplateCount!=0" title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
+            <td ng-if="item.TemplateCount==0" class="bg-warning" title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
+            <td ng-if="item.ClName!=''" class="bg-warning" title="{{ item.ClName }}">{{ item.ClName }}</td>
+            <td ng-if="item.ClName==''">{{item.MaterialClName}}</td>
+            <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+            <td title="{{ item.MaterialName }}" style="white-space:normal;word-break:normal;">{{ item.MaterialName }}</td>
+            <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
+            <td title="{{ item.OnlineQty }}">{{ item.OnlineQty }}</td>
+            <td title="{{ item.FinishQty }}">{{ item.FinishQty }}</td>
+            <td title="{{ item.CustomerOrder }}">{{ item.CustomerOrder }}</td>
+            <td title="{{ item.DeliveryDate }}">{{ item.DeliveryDate }}</td>
+            <td title="{{ item.CustomerCode }}">{{ item.CustomerCode }}</td>
+            <td title="{{ item.CustomerName }}">{{ item.CustomerName }}</td>
+            <td title="{{ item.ERPSO }}">{{ item.ERPSO }}</td>
+            <td title="{{ item.ERPQuantity }}">{{ item.ERPQuantity }}</td>
+            <td title="{{ item.MinWeight }}">{{ item.MinWeight }}</td>
+            <td title="{{ item.MaxWeight }}">{{ item.MaxWeight }}</td>
+        </tr>
+    </table>
+</div>
+<div class="col-md-12 text-center " ng-if="woc.page.total>woc.page.pageSize ">
+    <div uib-pagination total-items="woc.page.total " ng-model="woc.page.pageIndex " items-per-page="woc.page.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
+         ng-change="woc.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
+    </div>
+</div>
+
+<div class="col-md-12">
+    <span class="font-bold">注：</span>
+    <ol>
+        <li>“工单号”列中的<span class="text-success"><i class="glyphicon glyphicon-ok"></i></span>代表此工单已经创建了“包装登记”</li>
+        <li>“编码规则”列的背景色为<div class="bg-warning inline" style="width:20px;">&nbsp;</div>时，代表此工单使用的是工单的“编码规则”，否则使用的是料号的“编码规则”</li>
+        <li>“到货地”列的背景色为<div class="bg-warning inline" style="width:20px;">&nbsp;</div>时，代表此料号、到货地没有SN标签模板</li>
+
+    </ol>
+</div>

@@ -1,0 +1,79 @@
+﻿<div class="wrapper-md">
+    <div class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="src.Ser.WorkOrder" placeholder="工单号">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="src.Ser.MRPCategory" placeholder="MRP分类">
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div basic-select="AssemblyLine" placeholder="线别" ng-model="src.Ser.LineID" select-class="text-xs" ng-name="src.Ser.LineID"></div>
+                <span class="input-group-addon">
+                    <a><i ng-click="src.Ser.LineID = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="text" date-picker class="form-control" ng-model="src.Ser.SD" placeholder="开始时间" option="vm.DateTimeOption">
+        </div>
+        <div class="form-group">
+            <input type="text" date-picker class="form-control" ng-model="src.Ser.ED" placeholder="结束时间" option="vm.DateTimeOption">
+        </div>
+        <button class="btn btn-sm btn-info " ng-click="src.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+        <!--<button class="btn btn-sm btn-success " ng-click="src.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>-->
+    </div>
+</div>
+<div class="padder-md " style="min-height:400px;">
+    <table class="table ">
+        <thead>
+            <tr>
+                <td style="width:100px ">排产日期</td>
+                <td style="width:100px ">MRP分类</td>                
+                <td style="width:100px ">线别</td>
+                <td style="width:100px ">料号</td>
+                <td style="width:100px ">品名</td>
+                <td style="width:100px ">工单号</td>
+                <td style="width:100px ">工单数量</td>
+                <td style="width:100px ">U9累计开工数</td>
+                <td style="width:100px ">U9累计完工数</td>
+                <td style="width:100px ">累计排产数量</td>
+                <td style="width:100px ">当日排产数量</td>
+                <td style="width:100px ">日产出数量</td>
+                <td style="width:100px ">是否齐套开工</td>
+                <td style="width:100px ">MC责任人</td>
+            </tr>
+        </thead>
+        <tr ng-repeat="item in src.List ">
+            <td title="{{ item.MESDate }}">{{ item.MESDate }}</td>
+            <td title="{{ item.MRPCategoryName }}">{{ item.MRPCategoryName }}</td>
+            <td title="{{ item.AssemblyLineName }}">{{ item.AssemblyLineName }}</td>
+            <td title="{{ item.Code }}">{{ item.Code }}</td>
+            <td title="{{ item.Name }}">{{ item.Name }}</td>
+            <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+            <td title="{{ item.ProductQty }}">{{ item.ProductQty }}</td>
+            <td title="{{ item.TotalStartQty }}">{{ item.TotalStartQty }}</td>
+            <td title="{{ item.TotalCompleteQty }}">{{ item.TotalCompleteQty }}</td>
+            <td title="{{ item.TotalPlanCount }}">{{ item.TotalPlanCount }}</td>
+            <td title="{{ item.PlanCount }}">{{ item.PlanCount }}</td>
+            <td title="{{ item.FinishSum }}">{{ item.FinishSum }}</td>
+            <td ng-if="item.IsKitting=='是'" class="bg-success"><span >是</span></td>
+            <td ng-if="item.IsKitting=='否'" class="bg-danger"><span >否</span></td>
+            <td title="{{ item.MCName }}">{{ item.MCName }}</td>
+        </tr>
+    </table>
+    <div class="col-md-12 text-center " ng-if="src.Ser.total>src.Ser.pageSize ">
+        <div uib-pagination total-items="src.Ser.total " ng-model="src.Ser.pageIndex " items-per-page="src.Ser.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
+             ng-change="src.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+    </div>
+    <div class="col-md-12">
+        <span class="font-bold">注：</span>
+        <ol>
+            <li>“累计排产数量”列的数量不含“当日排产数量”列</li>
+            <!--<li>“编码规则”列的背景色为<div class="bg-warning inline" style="width:20px;">&nbsp;</div>时，代表此工单使用的是工单的“编码规则”，否则使用的是料号的“编码规则”</li>
+            <li>“到货地”列的背景色为<div class="bg-warning inline" style="width:20px;">&nbsp;</div>时，代表此料号、到货地没有SN标签模板</li>-->
+
+        </ol>
+    </div>
+</div>
+

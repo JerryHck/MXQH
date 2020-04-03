@@ -10,6 +10,7 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
     vm.Search = Search;
     vm.Export = Export;
     vm.Import = Import;
+    vm.DataBind = DataBind;
     vm.Do = Do;
     vm.OpenImport = OpenImport;
     vm.FileData = {
@@ -90,7 +91,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
         if (!vm.ImportList[0].MachineWeight) {
             vm.ImportList[0].MachineWeight = null;
         }
-        console.log(vm.IsValid);
     }
     function Export() {
         vm.promise = AjaxService.GetPlanOwnExcel("MouldInfo", GetCondition()).then(function (data) {
@@ -115,8 +115,8 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
     function GetCondition() {
         var li = [];
         li.push({ name: "Deleted", value: '0' });
-        if (vm.Ser.ProductCode) {
-            li.push({ name: "ProductCode", value: '%' + vm.Ser.ProductCode + '%' });
+        if (vm.Ser.Code) {
+            li.push({ name: "Code", value: '%' + vm.Ser.Code + '%' });
         }
         if (vm.Ser.Name) {
             li.push({ name: "Name", value: '%' + vm.Ser.Name + '%' });

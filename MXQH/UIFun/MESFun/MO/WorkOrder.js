@@ -15,6 +15,7 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
     vm.EditCom = EditCom;
     vm.SearchCom = SearchCom;
     vm.Complete = Complete;
+    vm.StartMo = StartMo;//开工
     //vm.Delete = Delete;
     DataBind();
     //绑定数据
@@ -125,6 +126,19 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
         vm.promise = AjaxService.ExecPlan("MesPlanDetail", "Complete", en).then(function (data) {
                 DataBind();
                 toastr.success("成功");
+        });
+    }
+    //开工
+    function StartMo(id) {        
+        var resolve = {
+            ItemData: function () {
+                return {WorkOrderID:id};
+            }
+        }
+        Dialog.open("MOStartDialog", resolve).then(function (data) {
+            
+        }).catch(function (reason) {
+
         });
     }
 

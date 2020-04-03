@@ -32,9 +32,11 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     }
     //导出
     function Export() {
+        vm.page.pageSize = 100000;
         vm.promise = AjaxService.GetPlanExcel("CompleteRpt", 'GetList', vm.page).then(function (data) {
-                $window.location.href = data.File;
-            });
+            $window.location.href = data.File;
+            vm.page.pageSize = 10;
+        });
     }
 
     //编辑
@@ -69,7 +71,7 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     //删除工单
     function Delete(item) {
         vm.promise = AjaxService.ExecPlan("U9MoCompleteRpt", "GetQty", { WorkOrder: item.WorkOrder }).then(function (data) {
-            var en = { ID: item.ID,CompleteQty:data.data[0].CompleteQty };
+            var en = { ID: item.ID, CompleteQty: data.data[0].CompleteQty };
             vm.promise = AjaxService.ExecPlan("CompleteRpt", "Delete", en).then(function (data) {
                 if (data.data[0].MsgType == "1") {
                     DataBind();

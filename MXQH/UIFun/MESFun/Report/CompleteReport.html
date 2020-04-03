@@ -89,9 +89,13 @@
                         <td ng-if="item.IsDump!='是'"  title="否"><span class="text-success">否</span></td>
                     </tr>
                 </table>
-                <div class="col-md-12 text-center " ng-if="crc.Ser.total>crc.Ser.pageSize ">
+                <!--<div class="col-md-12 text-center " ng-if="crc.Ser.total>crc.Ser.pageSize ">
                     <div uib-pagination total-items="crc.Ser.total " ng-model="crc.Ser.pageIndex " items-per-page="crc.Ser.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
                          ng-change="crc.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+                </div>-->
+                <div class="col-md-12 text-center " ng-if="crc.Ser.total>crc.Ser.pageSize ">
+                    <div uib-pagination total-items="crc.Ser.total " ng-model="crc.Ser.pageIndex " items-per-page="crc.Ser.pageSize " max-size="10 " first-text="" previous-text="上一页 "
+                         ng-change="crc.PageChange() " next-text="下一页 " last-text="" boundary-links="false" direction-links="false" boundary-link-numbers="true"></div>
                 </div>
             </div>
 
