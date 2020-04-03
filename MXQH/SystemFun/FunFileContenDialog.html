@@ -22,7 +22,7 @@
                             <div class="col-md-4 no-padder">
                                 <label class="col-md-4 padder-xs control-label text-info">功能名称：</label>
                                 <div class="col-md-8 no-padder">
-                                    <input type="text" class="form-control" ng-model="fun.ThisFun.FunName" placeholder="功能名称" />
+                                    <input autocomplete="off"  type="text" class="form-control" ng-model="fun.ThisFun.FunName" placeholder="功能名称" />
                                 </div>
                             </div>
                             <div class="col-md-4 no-padder">
@@ -91,7 +91,7 @@
                                     </ui-select>
                                 </div>
                                 <div class="col-md-2 padder-xxs form-group-sm" title="查询栏中文名" ng-class="{ 'has-error' : fun.NewSerForm.SerName.$invalid }">
-                                    <input type="text" class="form-control" name="SerName" ng-model="fun.newSer.SerName" placeholder="查询栏位描述" required />
+                                    <input autocomplete="off"  type="text" class="form-control" name="SerName" ng-model="fun.newSer.SerName" placeholder="查询栏位描述" required />
                                 </div>
                                 <div class="col-md-2 padder-xxs form-group-sm"  title="查询栏属性类型"  ng-class="{ 'has-error' : fun.NewSerForm.SerType.$invalid }">
                                     <!--<div config-select ng-model="fun.newSer.SerType" ng-name="SerType" config-option="fun.SerTypeConfig" ng-required="true"></div>-->
@@ -112,11 +112,11 @@
                                     <div config-select ng-model="fun.newSer.SerAss" ng-disabled="fun.ThisFun.DataType == 'P'" ng-name="SerAss" config-option="fun.SerAssConfig" ng-required="true"></div>
                                 </div>
                                 <div class="col-md-2 padder-xs form-group-sm" title="查询栏初始默认值" >
-                                    <input type="text" class="form-control" name="SerValue" ng-model="fun.newSer.SerValue" placeholder="查询初始默认值" />
+                                    <input autocomplete="off"  type="text" class="form-control" name="SerValue" ng-model="fun.newSer.SerValue" placeholder="查询初始默认值" />
                                 </div>
                                 <div class="col-md-1 padder-xxs form-control-static" title="是否为隐藏条件">
                                     <label class="i-checks i-checks">
-                                        <input type="checkbox" ng-model="fun.newSer.IsHide"><i></i>隐藏
+                                        <input autocomplete="off"  type="checkbox" ng-model="fun.newSer.IsHide"><i></i>隐藏
                                     </label>
                                 </div>
                             </div>
@@ -128,7 +128,7 @@
                                     {{ ser.ColumnName }}
                                 </div>
                                 <div class="col-md-2 padder-xxs form-group-sm" ng-class="{ 'has-error' : fun.ColForm.SerNameL.$invalid }">
-                                    <input type="text" class="form-control" name="SerNameL" ng-model="ser.SerName" placeholder="查询栏位描述" required />
+                                    <input autocomplete="off"  type="text" class="form-control" name="SerNameL" ng-model="ser.SerName" placeholder="查询栏位描述" required />
                                 </div>
                                 <div class="col-md-2 padder-xxs form-group-sm" ng-class="{ 'has-error' : fun.ColForm.SerTypeS.$invalid }">
                                     <!--<div config-select ng-model="ser.SerType" ng-name="SerTypeL" config-option="fun.SerTypeConfig" ng-required="true"></div>-->
@@ -151,11 +151,11 @@
                                     <div config-select ng-model="ser.SerAss" ng-disabled="fun.ThisFun.DataType == 'P'" ng-name="SerAssL" config-option="fun.SerAssConfig" ng-required="true"></div>
                                 </div>
                                 <div class="col-md-2 padder-xs form-group-sm">
-                                    <input type="text" class="form-control" ng-model="ser.SerValue" placeholder="查询默认值" />
+                                    <input autocomplete="off"  type="text" class="form-control" ng-model="ser.SerValue" placeholder="查询默认值" />
                                 </div>
                                 <div class="col-md-1 padder-xxs form-control-static">
                                     <label class="i-checks i-checks">
-                                        <input type="checkbox" ng-model="ser.IsHide"><i></i>隐藏
+                                        <input autocomplete="off"  type="checkbox" ng-model="ser.IsHide"><i></i>隐藏
                                     </label>
                                 </div>
                             </div>
@@ -168,7 +168,7 @@
                                     <tr>
                                         <td class="col-md-3 pad-xss" style="text-align:left">
                                             <label class="i-checks i-checks-sm">
-                                                <input type="checkbox" ng-change="fun.IsColAll()" ng-model="fun.IsAll"><i></i>
+                                                <input autocomplete="off"  type="checkbox" ng-change="fun.IsColAll()" ng-model="fun.IsAll"><i></i>
                                             </label>
                                         </td>
                                         <td class="col-md-9">栏名</td>
@@ -178,7 +178,7 @@
                                     <!--<td>{{ col.ColumnText }}</td>-->
                                     <td class="text-left">
                                         <label class="i-checks i-checks-sm">
-                                            <input type="checkbox" ng-change="fun.IsColChange(col)" ng-model="col.IsShow"><i></i>
+                                            <input autocomplete="off"  type="checkbox" ng-change="fun.IsColChange(col)" ng-model="col.IsShow"><i></i>
                                         </label>
                                     </td>
                                     <td title="{{ col.ColumnName }}" ng-class="{'bg-warning':col.ColumnType == '3'}">{{ col.ColumnName }}</td>
@@ -208,8 +208,8 @@
                                     <td class="one-line" ng-class="{'bg-warning':show.ColumnType == '3'}" title="{{ show.ColumnName }}">
                                         <div style="width:80px" class="width-fix">{{ show.ColumnName }}</div>
                                     </td>
-                                    <td class="multi-line"><input type="text" name="ColumnText" class="form-control padder-xxs" placeholder="中文栏名" ng-model="show.ColumnText" /></td>
-                                    <td class="multi-line"><input type="text" name="Width" class="form-control padder-xxs" placeholder="宽度" ng-model="show.Width" /></td>
+                                    <td class="multi-line"><input autocomplete="off"  type="text" name="ColumnText" class="form-control padder-xxs" placeholder="中文栏名" ng-model="show.ColumnText" /></td>
+                                    <td class="multi-line"><input autocomplete="off"  type="text" name="Width" class="form-control padder-xxs" placeholder="宽度" ng-model="show.Width" /></td>
                                     <td class="text-center multi-line" ng-if="fun.ThisFun.FunType=='B'">
                                         <div ng-class="{ 'has-error' : fun.ColForm.editCol.$invalid }">
                                             <ui-select name="editCol" ng-model="show.EditCol" class="padder-xxs" search-enabled="true" ng-required="true">
@@ -239,7 +239,7 @@
                                     </td>
                                     <td class="text-center multi-line" ng-if="fun.ThisFun.FunType=='B'">
                                         <label class="i-checks i-checks-sm">
-                                            <input type="checkbox" ng-model="show.CheckExists" ng-disabled="show.ColumnType == '3'|| show.TableAs != 'a' || show.ColType!='Text'"><i></i>
+                                            <input autocomplete="off"  type="checkbox" ng-model="show.CheckExists" ng-disabled="show.ColumnType == '3'|| show.TableAs != 'a' || show.ColType!='Text'"><i></i>
                                         </label>
                                     </td>
                                     <td class="text-center h4">

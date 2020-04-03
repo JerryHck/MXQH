@@ -12,7 +12,7 @@
                                 <i class="glyphicon glyphicon-plus text-success">新增</i>
                             </button>
                         </span>
-                        <input type="text" class="form-control" placeholder="查询" ng-model="role.UserRole">
+                        <input autocomplete="off"  type="text" class="form-control" placeholder="查询" ng-model="role.UserRole">
                         <span class="input-group-btn">
                             <button class="btn btn-default" ng-click="role.getListRole()">
                                 <i class="glyphicon glyphicon-search text-success"></i>
@@ -82,7 +82,7 @@
                                             <i class="glyphicon glyphicon-plus"></i>
                                         </button>
                                     </span>
-                                    <input type="text" class="form-control" placeholder="查询" ng-model="role.RoleFunQuery">
+                                    <input autocomplete="off"  type="text" class="form-control" placeholder="查询" ng-model="role.RoleFunQuery">
                                     <span class="input-group-btn">
                                         <button class="btn btn-default" disabled>
                                             <i class="glyphicon glyphicon-search text-success"></i>
@@ -111,13 +111,13 @@
                                                             <a ng-click='role.DeleteRoleFun(rf)' class="pull-right hover text-muted h4"><i class="fa fa-times text-danger"></i></a>
                                                             <span class="form-group h5 text-success pull-right padder-md">
                                                                 <label class="checkbox-inline">
-                                                                    <input type="checkbox" ng-model="rf.AbleInsert" ng-checked="rf.AbleInsert" ng-change="role.UpdateRoleFun(rf)"> 增
+                                                                    <input autocomplete="off"  type="checkbox" ng-model="rf.AbleInsert" ng-checked="rf.AbleInsert" ng-change="role.UpdateRoleFun(rf)"> 增
                                                                 </label>
                                                                 <label class="checkbox-inline">
-                                                                    <input type="checkbox" ng-model="rf.AbleDelete" ng-checked="rf.AbleDelete" ng-change="role.UpdateRoleFun(rf)"> 删
+                                                                    <input autocomplete="off"  type="checkbox" ng-model="rf.AbleDelete" ng-checked="rf.AbleDelete" ng-change="role.UpdateRoleFun(rf)"> 删
                                                                 </label>
                                                                 <label class="checkbox-inline">
-                                                                    <input type="checkbox" ng-model="rf.AbleUpdate" ng-checked="rf.AbleUpdate" ng-change="role.UpdateRoleFun(rf)"> 改
+                                                                    <input autocomplete="off"  type="checkbox" ng-model="rf.AbleUpdate" ng-checked="rf.AbleUpdate" ng-change="role.UpdateRoleFun(rf)"> 改
                                                                 </label>
                                                             </span>
                                                         </p>
@@ -162,7 +162,7 @@
                                             <i class="glyphicon glyphicon-plus"></i>
                                         </button>
                                     </span>
-                                    <input type="text" class="form-control" placeholder="查询" ng-model="role.RoleUserQuery">
+                                    <input autocomplete="off"  type="text" class="form-control" placeholder="查询" ng-model="role.RoleUserQuery">
                                     <span class="input-group-btn">
                                         <button class="btn btn-default" disabled>
                                             <i class="glyphicon glyphicon-search text-success"></i>

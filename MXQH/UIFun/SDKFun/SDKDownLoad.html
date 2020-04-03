@@ -4,10 +4,10 @@
     </div>
     <div class="form-inline">
         <div class="form-group">
-            <input type="text" class="form-control" ng-model="sdk.Ser.ProNo" placeholder="产品名称">
+            <input autocomplete="off"  type="text" class="form-control" ng-model="sdk.Ser.ProNo" placeholder="产品名称">
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" ng-model="sdk.Ser.Version" placeholder="产品版本">
+            <input autocomplete="off"  type="text" class="form-control" ng-model="sdk.Ser.Version" placeholder="产品版本">
         </div>
         <button class="btn btn-sm btn-info" ng-click="sdk.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
 
@@ -64,7 +64,7 @@
                         <tr class="text-center">
                             <td class="col-md-2">
                                 <label class="i-checks">
-                                    <input type="checkbox" ng-model="sdk.IsAll" ng-change="sdk.SelectAll()"><i></i>全选
+                                    <input autocomplete="off"  type="checkbox" ng-model="sdk.IsAll" ng-change="sdk.SelectAll()"><i></i>全选
                                 </label>
                             </td>
                             <td class="col-md-8"><span class="h-3 font-bold">文件名</span></td>
@@ -73,7 +73,7 @@
                         <tr ng-repeat="f in sdk.ProFileList">
                             <td>
                                 <label class="i-checks">
-                                    <input type="checkbox" ng-model="f.isCheck"><i></i>
+                                    <input autocomplete="off"  type="checkbox" ng-model="f.isCheck"><i></i>
                                 </label>
                             </td>
                             <td class="text-left"><span class="h-3 text-success">{{ f.File.OriginalName }} {{ f.File.FileType }}</span></td>

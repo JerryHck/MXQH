@@ -30,7 +30,7 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
         var en = {};
         //en.WorkOrder = vm.Item.WorkOrder;
         en.WorkOrder = vm.Item2.WorOrder;
-        AjaxService.ExecPlan("MesMxWOrderHH", "order", en).then(function (data) {
+        AjaxService.ExecPlan("MesMxWOrderHH", "order", en, false).then(function (data) {
             var mss = "工单 [" + vm.Item.WorkOrder + '] ';
             vm.OrderData = undefined;
             if (!data.data[0] || !data.data[0].WorkOrder) {
@@ -95,7 +95,7 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
             var en = {};
             en.WorkOrder = vm.Item.WorkOrder;
             
-            AjaxService.ExecPlan("MesMxWOrderHH", "order", en).then(function (data) {
+            AjaxService.ExecPlan("MesMxWOrderHH", "order", en, false).then(function (data) {
                 var mss = "工单 [" + vm.Item.WorkOrder + '] ';
                 vm.OrderData = undefined;
                 if (!data.data[0] || !data.data[0].WorkOrder) {

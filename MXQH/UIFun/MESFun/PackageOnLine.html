@@ -7,7 +7,7 @@
                     <div class="form-group-xs col-xs-12">
                         <label class="col-xs-3 control-label">输入工单</label>
                         <div class="col-xs-8" ng-class="{ 'has-error' : pk.OrderForm.pk.$invalid }">
-                            <input type="text" name="Order" ng-model="pk.Item.WorkOrder" uib-typeahead="item.WorkOrder as item.WorkOrder for item in pk.OrderList | orderBy: 'FirstChar' | filter:$viewValue | limitTo:8"
+                            <input autocomplete="off"  type="text" name="Order" ng-model="pk.Item.WorkOrder" uib-typeahead="item.WorkOrder as item.WorkOrder for item in pk.OrderList | orderBy: 'FirstChar' | filter:$viewValue | limitTo:8"
                                   ui-focus="pk.Focus.Order"  class="form-control" placeholder="工单号" ng-keyup="pk.KeyDonwOrder($event)" required>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                     <div class="form-group-xs col-xs-12 m-t-sm">
                         <label class="col-xs-3 control-label">内控码/SN</label>
                         <div class="col-xs-8" ng-class="{ 'has-error' : pk.OrderForm.InCode.$invalid }">
-                            <input type="text" ng-disabled="pk.OrderForm.pk.$invalid|| pk.OrderForm.router.$invalid" class="form-control" ui-focus="pk.Focus.InCode" 
+                            <input autocomplete="off"  type="text" ng-disabled="pk.OrderForm.pk.$invalid|| pk.OrderForm.router.$invalid" class="form-control" ui-focus="pk.Focus.InCode" 
                                    name="InCode" ng-model="pk.Item.InCode" placeholder="内控码/SN" ng-keyup="pk.KeyDonwInCode($event)" required>
                             <div class="h6 text-danger">扫描内控码/SN上线</div>
                         </div>

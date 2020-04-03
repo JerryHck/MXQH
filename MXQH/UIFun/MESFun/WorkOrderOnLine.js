@@ -43,7 +43,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         if (keycode == 13 && vm.Item.WorkOrder) {
             var en = {};
             en.WorkOrder = vm.Item.WorkOrder;
-            AjaxService.ExecPlan("MesMxWOrder", "order", en).then(function (data) {
+            AjaxService.ExecPlan("MesMxWOrder", "order", en, false).then(function (data) {
                 var mss = "工单 [" + vm.Item.WorkOrder + '] ';
                 vm.OrderData = undefined;
                 if (!data.data[0] || !data.data[0].WorkOrder) {

@@ -68,6 +68,12 @@ angular.module('AppSet')
                   ]
               },
               {
+                  name: 'Echart',
+                  files: [
+                      'Scripts/ECharts/4.7.0/echarts.min.js',
+                  ]
+              },
+              {
                   name: 'datetimepicker',
                   files: [
                       //'Scripts/bootstrap/DateTimePicker/bootstrap-datetimepicker.min.css',

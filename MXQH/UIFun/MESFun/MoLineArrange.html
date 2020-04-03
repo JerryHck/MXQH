@@ -163,19 +163,19 @@
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-sm-5 padder-xxs control-label text-info">排班日期:</label>
                                                         <div class="col-sm-7 padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.SelectedArrange.$invalid }">
-                                                            <input type="text" date-picker ng-disabled="!line.IsCopy && line.SelectedArrange.Id!=-1" class="form-control" name="SelectedArrange" placeholder="排班日期" option="line.Option" ng-model="line.SelectedArrange.ArrangeDate" required />
+                                                            <input type="text" date-picker ng-change="line.ChangeRemark()" autocomplete="off" ng-disabled="!line.IsCopy && line.SelectedArrange.Id!=-1" class="form-control" name="SelectedArrange" placeholder="排班日期" option="line.Option" ng-model="line.SelectedArrange.ArrangeDate" required />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-sm-5 padder-xxs control-label text-info">开始时间:</label>
                                                         <div class="col-sm-7 padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.StartTime.$invalid }">
-                                                            <input type="text" time-picker ng-disabled="!line.editArrange" class="form-control" name="StartTime" placeholder="开始时间" step="30" ng-model="line.SelectedArrange.StartTime" required />
+                                                            <input type="text" time-picker format='H:i' ng-disabled="!line.editArrange" class="form-control" name="StartTime" placeholder="开始时间" step="30" ng-model="line.SelectedArrange.StartTime" required />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-sm-5 padder-xxs control-label text-info">结束时间:</label>
                                                         <div class="col-sm-7  padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.EndTime.$invalid }">
-                                                            <input type="text" time-picker ng-disabled="!line.editArrange" class="form-control" name="EndTime" placeholder="结束时间" step="30" ng-model="line.SelectedArrange.EndTime" required />
+                                                            <input type="text" time-picker format='H:i' ng-disabled="!line.editArrange" class="form-control" name="EndTime" placeholder="结束时间" step="30" ng-model="line.SelectedArrange.EndTime" required />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -189,13 +189,19 @@
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-sm-5 padder-xxs control-label text-info">计划排产量:</label>
                                                         <div class="col-sm-7  padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.PlanCount.$invalid }">
-                                                            <input type="number" ng-disabled="!line.editArrange" class="form-control" name="PlanCount" placeholder="计划排产量" ng-model="line.SelectedArrange.PlanCount" required />
+                                                            <input type="number" ng-disabled="!line.editArrange || line.SelectedArrange.Remark == '正常工单'" class="form-control" name="PlanCount" placeholder="计划排产量" ng-model="line.SelectedArrange.PlanCount" required />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-sm-5 padder-xxs control-label text-info">备注:</label>
-                                                        <div class="col-sm-7  padder-xxs text-xs">
-                                                            <input type="text" ng-disabled="!line.editArrange" class="form-control" name="Remark" placeholder="备注" ng-model="line.SelectedArrange.Remark" />
+                                                        <div class="col-sm-7  padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.Remark.$invalid }">
+                                                            <!--<input type="text" ng-disabled="!line.editArrange" class="form-control" name="Remark" placeholder="备注" ng-model="line.SelectedArrange.Remark" required/>-->
+                                                            <select class="form-control" name="Remark" ng-disabled="!line.editArrange" ng-change="line.ChangeRemark()" ng-model="line.SelectedArrange.Remark" required>
+                                                                <option></option>
+                                                                <option value="正常工单" ng-selected="line.SelectedArrange.Remark == '正常工单'">正常工单</option>
+                                                                <option value="清尾工单" ng-selected="line.SelectedArrange.Remark == '清尾工单'">清尾工单</option>
+                                                                <option value="返工工单" ng-selected="line.SelectedArrange.Remark == '返工工单'">返工工单</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -308,7 +314,6 @@
                                                             </ui-select>-->
                                                         </div>
                                                     </td>
-                                                    <td>
                                                     <td>
                                                         <div>
                                                             <input type="text" name="Remark" ng-disabled="!line.editArrange" class="form-control" placeholder="备注" ng-model="item.Remark" />

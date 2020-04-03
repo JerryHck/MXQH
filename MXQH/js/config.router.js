@@ -85,7 +85,7 @@ function Config($stateProvider, $urlRouterProvider, Version) {
             resolve: {
                 deps: ['$ocLazyLoad',
                   function ($ocLazyLoad) {
-                      return $ocLazyLoad.load(['ui.select', 'ngGrid']);
+                      return $ocLazyLoad.load(['ui.select', 'ngGrid', 'Echart']);
                   }]
             }
         })
@@ -99,11 +99,21 @@ function Config($stateProvider, $urlRouterProvider, Version) {
         //首页
         .state('app.dashboard-v1', {
             url: '/dashboard-v1',
-            templateUrl: 'Basic/app_dashboard_v1.html'+ "?v=" + Version,
+            templateUrl: 'Basic/app_mes_dashboard.html' + "?v=" + Version,
+            controller: 'MesDashboardCtrl',
+            controllerAs: 'mes',
             resolve: {
+                //deps: ['$ocLazyLoad',
+                //        function ($ocLazyLoad) {
+                //            return $ocLazyLoad.load('Echart').then(
+                //                function () {
+                //                    return $ocLazyLoad.load('Basic/app_mes_dashboard.js');
+                //                }
+                //            );
+                //        }],
                 deps: ['$ocLazyLoad',
                   function ($ocLazyLoad) {
-                      return $ocLazyLoad.load(['js/controllers/chart.js']);
+                      return $ocLazyLoad.load(['Basic/app_mes_dashboard.js']);
                   }]
             }
         })

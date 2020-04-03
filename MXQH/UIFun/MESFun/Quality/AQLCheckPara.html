@@ -14,7 +14,7 @@
     <div class="form-inline">
         <button class="btn btn-sm btn-success " ng-click="aql.Insert() "><i class="glyphicon glyphicon-plus "></i>新增</button>
         <div class="form-group">
-            <input type="number" class="form-control" ng-model="aql.Ser.AChar" placeholder="字码查询">
+            <input autocomplete="off"  type="number" class="form-control" ng-model="aql.Ser.AChar" placeholder="字码查询">
         </div>
         <button class="btn btn-sm btn-info " ng-click="aql.Search()"><i class="glyphicon glyphicon-search "></i>查询</button>
     </div>
@@ -48,17 +48,17 @@
                     </td>
                     <td>
                         <div ng-class="{ 'has-error': aql.InsertForm.AChar.$invalid }">
-                            <input type="text" maxlength="1" name="AChar" class="form-control" placeholder="样本字码" ng-model="aql.NewItem.AChar" required />
+                            <input autocomplete="off"  type="text" maxlength="1" name="AChar" class="form-control" placeholder="样本字码" ng-model="aql.NewItem.AChar" required />
                         </div>
                     </td>
                     <td>
                         <div ng-class="{ 'has-error': aql.InsertForm.SampleNum.$invalid }">
-                            <input type="number" name="SampleNum" class="form-control" placeholder="抽样值" ng-model="aql.NewItem.SampleNum" required />
+                            <input autocomplete="off"  type="number" name="SampleNum" class="form-control" placeholder="抽样值" ng-model="aql.NewItem.SampleNum" required />
                         </div>
                     </td>
                     <td ng-repeat="col in aql.ParaData.data2">
                         <div ng-class="{ 'has-error': aql.InsertForm.$invalid }">
-                            <input type="number" name="insert_{{ col.ColName }}" class="form-control" placeholder="{{ col.ColName }}" ng-model="aql.NewItem[col.ColName]" required />
+                            <input autocomplete="off"  type="number" name="insert_{{ col.ColName }}" class="form-control" placeholder="{{ col.ColName }}" ng-model="aql.NewItem[col.ColName]" required />
                         </div>
                     </td>
                 </tr>
@@ -77,13 +77,13 @@
                     <td>
                         <span ng-if="!item.IsEdit">{{ item.SampleNum }}</span>
                         <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_SampleNum.$invalid }">
-                            <input type="number" name="item_SampleNum" class="form-control" placeholder="抽样值" ng-model="aql.EditItem.SampleNum" required />
+                            <input autocomplete="off"  type="number" name="item_SampleNum" class="form-control" placeholder="抽样值" ng-model="aql.EditItem.SampleNum" required />
                         </div>
                     </td>
                     <td ng-repeat="col in aql.ParaData.data2">
                         <span ng-if="!item.IsEdit">{{ item[col.ColName] }}</span>
                         <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.$invalid }">
-                            <input type="number" name="item_{{ col.ColName }}" class="form-control" ng-model="aql.EditItem[col.ColName]" required />
+                            <input autocomplete="off"  type="number" name="item_{{ col.ColName }}" class="form-control" ng-model="aql.EditItem[col.ColName]" required />
                         </div>
                     </td>
                 </tr>

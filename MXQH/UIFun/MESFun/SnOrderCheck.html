@@ -11,7 +11,7 @@
                                 <label class="col-lg-3 control-label">工单号</label>
                                 <div class="col-lg-8">
                                     <div class="input-group">
-                                        <input type="text" ng-model="sn.Item.WorkOrder" uib-typeahead="order as order.WorkOrder for order in sn.OrderList | filter:$viewValue | limitTo:8"
+                                        <input autocomplete="off"  type="text" ng-model="sn.Item.WorkOrder" uib-typeahead="order as order.WorkOrder for order in sn.OrderList | filter:$viewValue | limitTo:8"
                                                class="form-control" placeholder="工单号" ng-keyup="sn.KeyDonwOrder($event)" ui-focus="sn.Focus.Order">
                                         <span class="input-group-addon">
                                             <a ng-if="sn.Item.WorkOrder.ID" class="text-success"><i class="glyphicon glyphicon-ok"></i></a>
@@ -23,7 +23,7 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">SNCode</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : sn.PackageForm.InCode.$invalid }">
-                                    <input type="text" class="form-control" ng-disabled="sn.PackageForm.Antenna.$invalid" ui-focus="sn.Focus.SN" name="InCode" ng-model="sn.Item.SNCode" placeholder="生产条码" ng-keyup="sn.KeyDonwSnCode($event)" required>
+                                    <input autocomplete="off"  type="text" class="form-control" ng-disabled="sn.PackageForm.Antenna.$invalid" ui-focus="sn.Focus.SN" name="InCode" ng-model="sn.Item.SNCode" placeholder="生产条码" ng-keyup="sn.KeyDonwSnCode($event)" required>
                                     <div class="h6 text-danger">扫SN进行信息验证</div>
                                 </div>
                             </div>

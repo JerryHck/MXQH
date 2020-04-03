@@ -8,7 +8,7 @@
                 <div class="wrapper-xs b-t m-b-xxs">
                     <div class="form-group-xs">
                         <div class="input-group">
-                            <input type="text" class="form-control input-sm" placeholder="查询" ng-model="pro.MateQuery">
+                            <input autocomplete="off"  type="text" class="form-control input-sm" placeholder="查询" ng-model="pro.MateQuery">
                             <span class="input-group-btn">
                                 <button class="btn btn-sm btn-default" disabled>
                                     <i class="glyphicon glyphicon-search text-success"></i>
@@ -107,7 +107,7 @@
                                     <label class="col-lg-4 padder-xs control-label text-info">是否默认</label>
                                     <div class="col-lg-8 text-xs form-control-static padder-md">
                                         <label class="i-checks i-checks m-l-md">
-                                            <input type="checkbox" ng-disabled="!pro.editRoute" ng-model="pro.SelectedRo.IsDefault"><i></i>
+                                            <input autocomplete="off"  type="checkbox" ng-disabled="!pro.editRoute" ng-model="pro.SelectedRo.IsDefault"><i></i>
                                         </label>
                                     </div>
                                 </div>
@@ -115,7 +115,7 @@
                                     <label class="col-lg-4 control-label text-info">是否控制</label>
                                     <div class="col-lg-8 text-xs form-control-static">
                                         <label class="i-checks i-checks">
-                                            <input type="checkbox" ng-disabled="!pro.editRoute" ng-model="pro.SelectedRo.IsControl"><i></i>
+                                            <input autocomplete="off"  type="checkbox" ng-disabled="!pro.editRoute" ng-model="pro.SelectedRo.IsControl"><i></i>
                                         </label>
                                     </div>
                                 </div>
@@ -173,7 +173,7 @@
                                                 <div class="col-md-6 no-padder">
                                                     <label class="col-lg-4 control-label text-info">UPPH:</label>
                                                     <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : pro.ProcForm.UPPH.$invalid }">
-                                                        <input type="number"  disabled class="form-control" name="UPPH" placeholder="UPPH" ng-model="pro.ProcItem.StandardCapacity" required />
+                                                        <input autocomplete="off"  type="number"  disabled class="form-control" name="UPPH" placeholder="UPPH" ng-model="pro.ProcItem.StandardCapacity" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -181,13 +181,13 @@
                                                 <div class="col-md-6 no-padder">
                                                     <label class="col-lg-4  padder-xs  control-label text-info">单位:</label>
                                                     <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : pro.ProcForm.Unit.$invalid }">
-                                                        <input type="text" disabled class="form-control" name="Unit" placeholder="单位" ng-model="pro.ProcItem.Unit" required />
+                                                        <input autocomplete="off"  type="text" disabled class="form-control" name="Unit" placeholder="单位" ng-model="pro.ProcItem.Unit" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 no-padder">
                                                     <label class="col-lg-4 control-label text-info">工位人数:</label>
                                                     <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : pro.ProcForm.Remark.$invalid }">
-                                                        <input type="text" disabled class="form-control" name="Remark" placeholder="工位人数" ng-model="pro.ProcItem.Remark" required />
+                                                        <input autocomplete="off"  type="text" disabled class="form-control" name="Remark" placeholder="工位人数" ng-model="pro.ProcItem.Remark" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -195,13 +195,13 @@
                                                 <div class="col-md-6 no-padder">
                                                     <label class="col-lg-4  padder-xs  control-label text-info">标准工时:</label>
                                                     <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : pro.ProcForm.Item1.$invalid }">
-                                                        <input type="text" disabled class="form-control" name="Item1" placeholder="标准工时" ng-model="pro.ProcItem.Item1" required />
+                                                        <input autocomplete="off"  type="text" disabled class="form-control" name="Item1" placeholder="标准工时" ng-model="pro.ProcItem.Item1" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 no-padder">
                                                     <label class="col-lg-4 control-label text-info">直通率预警:</label>
                                                     <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : pro.ProcForm.Item2.$invalid }">
-                                                        <input type="text" disabled class="form-control" name="Item2" placeholder="直通率预警" ng-model="pro.ProcItem.Item2" required />
+                                                        <input autocomplete="off"  type="text" disabled class="form-control" name="Item2" placeholder="直通率预警" ng-model="pro.ProcItem.Item2" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -209,13 +209,13 @@
                                                 <div class="col-md-6 no-padder">
                                                     <label class="col-lg-4  padder-xs  control-label text-info">工段人数:</label>
                                                     <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : pro.ProcForm.Item3.$invalid }">
-                                                        <input type="text" disabled class="form-control" name="Item3" placeholder="工段人数" ng-model="pro.ProcItem.Item3" required />
+                                                        <input autocomplete="off"  type="text" disabled class="form-control" name="Item3" placeholder="工段人数" ng-model="pro.ProcItem.Item3" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 no-padder">
                                                     <label class="col-lg-4 control-label text-info">产出报警:</label>
                                                     <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : pro.ProcForm.Item4.$invalid }">
-                                                        <input type="text" disabled class="form-control" name="Item4" placeholder="产出报警" ng-model="pro.ProcItem.Item4" required />
+                                                        <input autocomplete="off"  type="text" disabled class="form-control" name="Item4" placeholder="产出报警" ng-model="pro.ProcItem.Item4" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -225,7 +225,7 @@
                                                     <div class="col-lg-8 no-padder text-xs">
                                                         <div class="col-md-12 m-t-xs padder-xs b-b" ng-repeat="item in pro.ProcWPList | limitTo: pro.ProIndex+1">
                                                             <label class="i-checks i-checks m-l-md">
-                                                                <input type="checkbox" disabled ng-model="item.IsCheck" ng-change="pro.RepairCheck()"><i></i>
+                                                                <input autocomplete="off"  type="checkbox" disabled ng-model="item.IsCheck" ng-change="pro.RepairCheck()"><i></i>
                                                             </label>{{ item.ProcedureInfo.Name }}
                                                         </div>
                                                         <span class="text-danger h6" ng-if="pro.editRoute">注：必须选一个返修工序</span>
@@ -235,7 +235,7 @@
                                                     <label class="col-lg-4  padder-xs  control-label text-info">是否打印:</label>
                                                     <div class="col-lg-8 text-xs form-control-static">
                                                         <label class="i-checks i-checks m-l-md">
-                                                            <input type="checkbox" disabled ng-model="pro.ProcItem.IsPrint"><i></i>
+                                                            <input autocomplete="off"  type="checkbox" disabled ng-model="pro.ProcItem.IsPrint"><i></i>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -245,7 +245,7 @@
                                                     <label class="col-lg-4  padder-xs  control-label text-info">老化工艺:</label>
                                                     <div class="col-lg-8 text-xs form-control-static">
                                                         <label class="i-checks i-checks m-l-md">
-                                                            <input type="checkbox" disabled ng-model="pro.ProcItem.IsAging"><i></i>
+                                                            <input autocomplete="off"  type="checkbox" disabled ng-model="pro.ProcItem.IsAging"><i></i>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -253,7 +253,7 @@
                                                     <label class="col-lg-4  padder-xs  control-label text-info">功放测试:</label>
                                                     <div class="col-lg-8 text-xs form-control-static">
                                                         <label class="i-checks i-checks m-l-md">
-                                                            <input type="checkbox" disabled ng-model="pro.ProcItem.IsGfTest"><i></i>
+                                                            <input autocomplete="off"  type="checkbox" disabled ng-model="pro.ProcItem.IsGfTest"><i></i>
                                                         </label>
                                                     </div>
                                                 </div>

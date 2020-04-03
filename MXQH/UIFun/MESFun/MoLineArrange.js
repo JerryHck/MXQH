@@ -30,6 +30,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
     vm.Cancel = Cancel;
     vm.DeletePer = DeletePer;
     vm.DeleteArr = DeleteArr;
+    vm.ChangeRemark = ChangeRemark;
 
     function Search() {
         vm.page.index = 1;
@@ -80,6 +81,18 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
             })
             vm.MesLis = [];
         })
+    }
+
+    //备注现在改变
+    function ChangeRemark() {
+        if (vm.SelectedArrange.Remark == "正常工单") {
+            AjaxService.GetPlan("MoPlanCount", [{ name: "WorkOrder", value: vm.SelectedArrange.WorkOrder }, { name: "PlanDate", value: vm.SelectedArrange.ArrangeDate }]).then(function (data) {
+                if (!data.Id) {
+                    toastr.error("该工单[" + vm.SelectedArrange.ArrangeDate + "]日排产计划没有录入，请找PMC维护");
+                }
+                vm.SelectedArrange.PlanCount = data.PlanCount;
+            });
+        }
     }
 
     //扫描人员

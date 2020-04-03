@@ -26,12 +26,12 @@
                             <div class="form-group">
                                 <label class="col-md-1 control-label text-lg text-left">订单号：</label>
                                 <div class="col-md-2">
-                                    <input type="text" disabled="disabled" class="form-control" name="DocNo" placeholder="订单号"
+                                    <input autocomplete="off"  type="text" disabled="disabled" class="form-control" name="DocNo" placeholder="订单号"
                                            ng-model="auFc.Forecast.DocNo">
                                 </div>
                                 <label class="col-md-2 control-label text-lg text-left">业务日期：</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : auFc.form.BusinessDate.$invalid }">
-                                    <input type="text" date-time-picker class="form-control" name="BusinessDate" placeholder="业务日期" option="auFc.UnExist2"
+                                    <input autocomplete="off"  type="text" date-time-picker class="form-control" name="BusinessDate" placeholder="业务日期" option="auFc.UnExist2"
                                            ng-model="auFc.Forecast.BusinessDate" required>
                                 </div>
                                 <label class="col-md-1 control-label text-lg text-left">客户：</label>
@@ -42,7 +42,7 @@
                             <div class="form-group">
                                 <label class="col-md-1 control-label text-lg text-left">制单人：</label>
                                 <div class="col-md-2" ng-class="{ 'has-error' : auFc.form.CreatedBy.$invalid }">
-                                    <input type="text" disabled="disabled" class="form-control" name="Forecast" placeholder="制单人"
+                                    <input autocomplete="off"  type="text" disabled="disabled" class="form-control" name="Forecast" placeholder="制单人"
                                            ng-model="auFc.Forecast.CreatedBy" required>
                                 </div>
                                 <label class="col-md-2 control-label text-lg text-left">订单类型：</label>
@@ -65,7 +65,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input type="submit" class="btn btn-sm btn-success" ng-click="auFc.AddLine()" value="新增行" />
+                        <input autocomplete="off"  type="submit" class="btn btn-sm btn-success" ng-click="auFc.AddLine()" value="新增行" />
                     </div>
                     <table class="table b-2x table-responsive" style="word-break:break-all; word-wrap:break-word;">
                         <tr class="text-center bg-gd-dk h4">
@@ -113,17 +113,17 @@
                     <div class="panel-body">
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <input type="submit" class="btn btn-sm btn-success" style="margin-left:15px;" ng-click="auFc.SaveLine(formLine)" value="保存" />
-                                <input type="button" class="btn btn-sm btn-warning" style="margin-left:5px;" ng-click="auFc.CancelLine()" value="放弃" />
+                                <input autocomplete="off"  type="submit" class="btn btn-sm btn-success" style="margin-left:15px;" ng-click="auFc.SaveLine(formLine)" value="保存" />
+                                <input autocomplete="off"  type="button" class="btn btn-sm btn-warning" style="margin-left:5px;" ng-click="auFc.CancelLine()" value="放弃" />
                             </div>
                             <div class="form-group">
                                 <label class="col-md-1 control-label text-lg text-left">料号：</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : auFc.formLine.Code.$invalid }">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="Code" placeholder="料号"
+                                        <input autocomplete="off"  type="text" class="form-control" name="Code" placeholder="料号"
                                                ng-model="auFc.ForecastLine.Code" ng-click="auFc.SelectItem()" required>
 
-                                        <input type="hidden" ng-model="auFc.ForecastLine.Itemmaster" />
+                                        <input autocomplete="off"  type="hidden" ng-model="auFc.ForecastLine.Itemmaster" />
                                         <span class="input-group-btn">
                                             <button class="btn" ng-click="auFc.SelectItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
                                         </span>
@@ -132,7 +132,7 @@
                                 <label class="col-md-1 control-label text-lg text-left">品名：</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : auFc.formLine.Name.$invalid }">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="Name" placeholder="品名"
+                                        <input autocomplete="off"  type="text" class="form-control" name="Name" placeholder="品名"
                                                ng-model="auFc.ForecastLine.Name" ng-click="auFc.SelectItem()" required>
                                         <span class="input-group-btn">
                                             <button class="btn" ng-click="auFc.SelectItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
@@ -142,7 +142,7 @@
                                 <label class="col-md-1 control-label text-lg text-left">规格：</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : auFc.formLine.SPECS.$invalid }">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="SPECS" placeholder="规格"
+                                        <input autocomplete="off"  type="text" class="form-control" name="SPECS" placeholder="规格"
                                                ng-model="auFc.ForecastLine.SPECS" ng-click="auFc.SelectItem()" required>
                                         <span class="input-group-btn">
                                             <button class="btn" ng-click="auFc.SelectItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
@@ -153,17 +153,17 @@
                             <div class="form-group">
                                 <label class="col-md-1 control-label text-lg text-left">数量：</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : auFc.formLine.Qty.$invalid }">
-                                    <input type="number" class="form-control" name="Qty" placeholder="数量"
+                                    <input autocomplete="off"  type="number" class="form-control" name="Qty" placeholder="数量"
                                            ng-model="auFc.ForecastLine.Qty" required>
                                 </div>
                                 <label class="col-md-1 control-label text-lg text-left">交期：</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : auFc.formLine.DeliveryDate.$invalid }">
-                                    <input type="text" date-picker class="form-control" name="DeliveryDate" placeholder="交期" option="auFc.dp"
+                                    <input autocomplete="off"  type="text" date-picker class="form-control" name="DeliveryDate" placeholder="交期" option="auFc.dp"
                                            ng-model="auFc.ForecastLine.DeliveryDate" required>
                                 </div>
                                 <label class="col-md-1 control-label text-lg text-left" style="padding-right:0px;">所属月份：</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : auFc.formLine.DemandDate.$invalid }">
-                                    <input type="text" date-picker class="form-control" name="DemandDate" placeholder="所属月份" option="auFc.DateOption"
+                                    <input autocomplete="off"  type="text" date-picker class="form-control" name="DemandDate" placeholder="所属月份" option="auFc.DateOption"
                                            ng-model="auFc.ForecastLine.DemandDate" required>
                                 </div>
                             </div>
@@ -195,7 +195,7 @@
                 <div class="form-inline">
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" class="form-control" ng-model="auFc.page.Code" placeholder="料号">
+                            <input autocomplete="off"  type="text" class="form-control" ng-model="auFc.page.Code" placeholder="料号">
                             <!--<span class="input-group-btn"><button class="btn" style="background:white;border:1px solid #cfdadd;"><i class="fa fa-search"></i></button></span>-->
                         </div>
                     </div>

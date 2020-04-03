@@ -26,7 +26,7 @@
                     <div class="form-group">
                         <label class="col-xs-3 control-label">内控码</label>
                         <div class="col-xs-8" ng-class="{ 'has-error' : wo.OrderForm.InCode.$invalid }">
-                            <input type="text" class="form-control"
+                            <input autocomplete="off"  type="text" class="form-control"
                                    ui-focus="wo.Focus.InCode" name="InCode" ng-model="wo.Item.InCode" placeholder="生产条码" ng-keyup="wo.KeyDonwInCode($event)" required>
                             <div class="h6 text-danger">扫描内控码装配</div>
                         </div>
@@ -35,7 +35,7 @@
                         <div class="col-xs-offset-3 col-xs-9">
                             <div class="checkbox col-md-5">
                                 <label class="i-checks">
-                                    <input type="checkbox" ng-model="wo.IsAuto"><i></i> 自动合格
+                                    <input autocomplete="off"  type="checkbox" ng-model="wo.IsAuto"><i></i> 自动合格
                                 </label>
                             </div>
                             <div class="col-md-7">
@@ -50,7 +50,7 @@
                     <div class="form-group m-t-lg">
                         <label class="col-xs-3 control-label h4 text-danger font-bold">不良录入</label>
                         <div class="col-xs-8 has-error">
-                            <input type="text" class="form-control" ng-model="wo.Item.NgInCode" placeholder="不良条码" ng-keyup="wo.KeyDonwInCodeNg($event)">
+                            <input autocomplete="off"  type="text" class="form-control" ng-model="wo.Item.NgInCode" placeholder="不良条码" ng-keyup="wo.KeyDonwInCodeNg($event)">
                             <div class="h6 text-danger">扫描不良内控码录入不良</div>
                         </div>
                     </div>

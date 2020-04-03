@@ -44,9 +44,11 @@ function WorkOrderSerDialogCtrl($scope, $uibModalInstance, Form, ItemData, toast
         if (!vm.Ser.Now) {
             return;
         }
-        var conList = [{ name: "OpDate", value: vm.Ser.Now }];
+        //var conList = [{ name: "OpDate", value: vm.Ser.Now }];//
+        var conList = [{ name: "ArrangeDate", value: vm.Ser.Now }];//ArrangeDate
         var Con = {};
-        Con.planName = "MesPlanExBackNumMain";
+        //Con.planName = "MesPlanExBackNumMain";//MoLineArrangeBoard
+        Con.planName = "MoLineArrangeBoard";
         Con.strJson = JSON.stringify(conList);
         AjaxService.DoBefore("GetPlans", Con).then(function (data) {
             vm.OrderList = data;

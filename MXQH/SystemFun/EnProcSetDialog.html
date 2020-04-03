@@ -16,16 +16,16 @@
                                         <div class="col-xs-6">
                                             <div class="input-group m-b">
                                                 <span class="input-group-addon">
-                                                    <input type="checkbox" ng-model="t.IsExcel" />
+                                                    <input autocomplete="off"  type="checkbox" ng-model="t.IsExcel" />
                                                 </span>
-                                                <input type="text" class="form-control" ng-model="t.SheetName" placeholder="sheet 名称" ng-disabled="!t.IsExcel">
+                                                <input autocomplete="off"  type="text" class="form-control" ng-model="t.SheetName" placeholder="sheet 名称" ng-disabled="!t.IsExcel">
                                                 <span class="input-group-addon">
-                                                    <input type="checkbox" ng-model="t.IsAll" ng-change="proc.SelectAll(t)" ng-disabled="!t.IsExcel" /><i></i>全选
+                                                    <input autocomplete="off"  type="checkbox" ng-model="t.IsAll" ng-change="proc.SelectAll(t)" ng-disabled="!t.IsExcel" /><i></i>全选
                                                 </span>
                                             </div>
                                         </div>
                                         <div class="col-xs-6">
-                                            <input type="text" class="form-control" ng-model="proc.ExcelName" placeholder="Excel名称" ng-disabled="!t.IsExcel">
+                                            <input autocomplete="off"  type="text" class="form-control" ng-model="proc.ExcelName" placeholder="Excel名称" ng-disabled="!t.IsExcel">
                                         </div>
                                     </div>
                                 </div>
@@ -37,15 +37,15 @@
                                 <div class="row v-middle">
                                     <div class="col-xs-3">
                                         <label class="i-checks">
-                                            <input type="checkbox" ng-model="col.IsConvert"><i></i>转换
+                                            <input autocomplete="off"  type="checkbox" ng-model="col.IsConvert"><i></i>转换
                                         </label>
                                     </div>
                                     <label class="col-xs-3 font-bold">{{ col.ColumnName }}</label>
                                     <div class="col-xs-4 form-group-sm" ng-class="{ 'has-error' : !col.ColumnText }">
-                                        <input type="text" name="ColText" class="form-control" placeholder="中文栏名" ng-model="col.ColumnText" required/>
+                                        <input autocomplete="off"  type="text" name="ColText" class="form-control" placeholder="中文栏名" ng-model="col.ColumnText" required/>
                                     </div>
                                     <label class="col-xs-2 i-checks pull-right">
-                                        <input type="checkbox" ng-disabled="!t.IsExcel" ng-change="proc.IsExcelChange(t, col)" ng-model="col.IsExcel"><i></i>excel
+                                        <input autocomplete="off"  type="checkbox" ng-disabled="!t.IsExcel" ng-change="proc.IsExcelChange(t, col)" ng-model="col.IsExcel"><i></i>excel
                                     </label>
                                 </div>
                                 <div class="row text-center" ng-if="col.IsConvert">
@@ -65,7 +65,7 @@
                                     </span>
                                 </label>
                                 <label class="i-checks col-xs-3">
-                                    <input type="checkbox" ng-model="excel.IsAutoMerge"><i></i>合并行
+                                    <input autocomplete="off"  type="checkbox" ng-model="excel.IsAutoMerge"><i></i>合并行
                                 </label>
                                 <div class="col-xs-1">
                                     <a class="text-danger" ng-click="proc.DeleteExcel(t, $index)"><i class="glyphicon glyphicon-remove"></i></a>

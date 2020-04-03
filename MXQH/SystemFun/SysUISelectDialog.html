@@ -12,7 +12,7 @@
                             <div class="col-md-6 padder-xs">
                                 <label class="col-md-4 control-label">下拉名称</label>
                                 <div class="col-md-8 no-padder" ng-class="{ 'has-error' : u.DialogForm.SelectName.$invalid }">
-                                    <input type="text" class="form-control" name="SelectName" placeholder="下拉名称"
+                                    <input autocomplete="off"  type="text" class="form-control" name="SelectName" placeholder="下拉名称"
                                            ng-model="u.Item.SelectName" ng-disabled="u.form.index == 1" ng-blur="u.isExists()" required>
                                     <div ng-messages="u.DialogForm.SelectName.$error" class="help-block" role="alert">
                                         <div ng-message="unique">下拉名称重复</div>
@@ -96,7 +96,7 @@
                             <div class="col-md-12 padder-xs">
                                 <label class="col-md-2 control-label">Placeholder</label>
                                 <div class="col-md-8 no-padder">
-                                    <input type="text" name="Placeholder" class="form-control" placeholder="Placeholder" ng-model="u.Item.Placeholder">
+                                    <input autocomplete="off"  type="text" name="Placeholder" class="form-control" placeholder="Placeholder" ng-model="u.Item.Placeholder">
                                 </div>
                             </div>
                         </div>
@@ -137,13 +137,13 @@
                             <div config-select ng-name="SerExp" auto-first="true" ng-required="true" ng-model="u.Ser.SerExp" select-class="text-xs" config-option="u.EntityRelationExp"></div>
                         </div>
                         <div class="col-md-2 padder-xs" title="留空默认空字符串">
-                            <input type="text" class="form-control" placeholder="值" ng-model="u.Ser.SerValue" />
+                            <input autocomplete="off"  type="text" class="form-control" placeholder="值" ng-model="u.Ser.SerValue" />
                         </div>
                         <div class="col-md-2 padder-xs">
                             <div config-select ng-name="SerAss" auto-first="true" ng-model="u.Ser.SerAss" select-class="text-xs" config-option="u.EntityRelationAss"></div>
                         </div>
                         <div class="col-md-2 padder-xs" ng-class="{ 'has-error' : SerForm.SerLevel.$invalid }">
-                            <input type="number" name="SerLevel" placeholder="层级" class="form-control" max="10" min="0" ng-model="u.Ser.SerLevel" required/>
+                            <input autocomplete="off"  type="number" name="SerLevel" placeholder="层级" class="form-control" max="10" min="0" ng-model="u.Ser.SerLevel" required/>
                         </div>
                     </div>
                     <div class="line line-dashed b-b line-lg pull-in"></div>
@@ -156,13 +156,13 @@
                             <div config-select ng-name="SerExp" auto-first="true" ng-model="s.SerExp" select-class="text-xs" config-option="u.EntityRelationExp"></div>
                         </div>
                         <div class="col-md-2 padder-xs">
-                            <input type="text" class="form-control" placeholder="值" ng-model="s.SerValue" />
+                            <input autocomplete="off"  type="text" class="form-control" placeholder="值" ng-model="s.SerValue" />
                         </div>
                         <div class="col-md-2 padder-xs">
                             <div config-select ng-name="SerAss" auto-first="true" ng-model="s.SerAss" select-class="text-xs" config-option="u.EntityRelationAss"></div>
                         </div>
                         <div class="col-md-2 padder-xs">
-                            <input type="number" name="SerLevel" placeholder="层级" class="form-control" max="10" min="0" ng-model="s.SerLevel" />
+                            <input autocomplete="off"  type="number" name="SerLevel" placeholder="层级" class="form-control" max="10" min="0" ng-model="s.SerLevel" />
                         </div>
                     </div>
                 </div>

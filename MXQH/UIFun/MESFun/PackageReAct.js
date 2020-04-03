@@ -93,7 +93,7 @@ function ($scope, $http, AjaxService, toastr, $window) {
         var list = [];
         list.push({ name: "PackMainID", value: vm.PackMain.ID });
         list.push({ name: "BoxNumber", value: vm.Item.BoxNumber });
-        vm.promise = AjaxService.GetPlan("vwPackageChi", list).then(function (data) {
+        vm.promise = AjaxService.GetPlan("MESPackageDtl", list).then(function (data) {
             vm.ItemData = data;
             var mss = "箱号 [" + vm.Item.BoxNumber + '] ';
             if (!data.ID) {
@@ -121,6 +121,7 @@ function ($scope, $http, AjaxService, toastr, $window) {
         en.PalletCode = vm.PackDetail.PalletCode;
         en.Packweight = vm.PackDetail.Packweight;
         en.ActType = t;
+        //console.log(en);
         vm.promise = AjaxService.ExecPlan("MESPackageDtl", "save", en).then(function (data) {
             toastr.success('操作成功');
             getDtl();

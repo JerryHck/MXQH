@@ -14,7 +14,7 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">内控码：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.BarCode.$invalid }">
-                            <input ng-keyup="qlBad.SelectqlBad($event)" type="text" class="form-control" name="BarCode" placeholder="内控码（必填）"
+                            <input autocomplete="off"  ng-keyup="qlBad.SelectqlBad($event)" type="text" class="form-control" name="BarCode" placeholder="内控码（必填）"
                                    ng-model="qlBad.BarCode" ng-blur="qlBad.isExists()" >
                             <div ng-messages="DialogForm.BarCode.$error" class="help-block" role="alert">
                                 <div ng-message="required" style="font-size:0.1px;">内控码（必填）</div>
@@ -25,7 +25,7 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">当前条码：</label>
                         <div class="col-sm-8 padder-xs">
-                            <input type="text" name="BarCode" class="form-control" placeholder="当前条码" ng-model="qlBad.item.BarCode" disabled="disabled" required>
+                            <input autocomplete="off"  type="text" name="BarCode" class="form-control" placeholder="当前条码" ng-model="qlBad.item.BarCode" disabled="disabled" required>
                         </div>
                     </div>
                 </div>
@@ -39,14 +39,14 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">工单号：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.WorOrder.$invalid }">
-                            <input type="text" class="form-control" name="WorOrder" placeholder="工单号"
+                            <input autocomplete="off"  type="text" class="form-control" name="WorOrder" placeholder="工单号"
                                    ng-model="qlBad.item.WorOrder" disabled="disabled">
                         </div>
                     </div>
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">客户订单号：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.CustomerOrder.$invalid }">
-                            <input type="text" class="form-control" name="CustomerOrder" placeholder="客户订单号"
+                            <input autocomplete="off"  type="text" class="form-control" name="CustomerOrder" placeholder="客户订单号"
                                    ng-model="qlBad.item.CustomerOrder" disabled="disabled">
                         </div>
                     </div>
@@ -55,14 +55,14 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">产品名称：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaterialName.$invalid }">
-                            <input type="text" class="form-control" name="MaterialName" placeholder="产品名称"
+                            <input autocomplete="off"  type="text" class="form-control" name="MaterialName" placeholder="产品名称"
                                    ng-model="qlBad.item.MaterialName" disabled="disabled">
                         </div>
                     </div>
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">客户名称：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.CustomerName.$invalid }">
-                            <input type="text" name="CustomerName" class="form-control" placeholder="客户名称" ng-model="qlBad.item.CustomerName" disabled="disabled">
+                            <input autocomplete="off"  type="text" name="CustomerName" class="form-control" placeholder="客户名称" ng-model="qlBad.item.CustomerName" disabled="disabled">
 
                         </div>
                     </div>
@@ -76,14 +76,14 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">不良类别：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.FirstPoorName.$invalid }">
-                            <input type="text" class="form-control" name="FirstPoorName" placeholder=""
+                            <input autocomplete="off"  type="text" class="form-control" name="FirstPoorName" placeholder=""
                                    ng-model="qlBad.item.FirstPoorName" disabled="disabled">
                         </div>
                     </div>
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">不良信息：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.SecondPoorName.$invalid }">
-                            <input type="text" name="SecondPoorName" class="form-control" placeholder="不良信息" ng-model="qlBad.item.SecondPoorName" disabled="disabled">
+                            <input autocomplete="off"  type="text" name="SecondPoorName" class="form-control" placeholder="不良信息" ng-model="qlBad.item.SecondPoorName" disabled="disabled">
 
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">维修条码：</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.BarCode.$invalid }">
-                            <input  type="text" class="form-control" name="BarCode" placeholder="维修条码"
+                            <input autocomplete="off"   type="text" class="form-control" name="BarCode" placeholder="维修条码"
                                    ng-model="BarCode" >
                         </div>
                     </div>
@@ -158,7 +158,7 @@
                         <label class="control-label col-sm-4 padder-xs">是否修复：</label>
                         <div class="col-sm-1 padder-xs" ng-class="{ 'has-error' : DialogForm.IsRepair.$invalid }">
                             <label class="i-checks i-checks-sm control-label">
-                                <input  type="checkbox"  ng-model="qlBad.IsRepair" name="IsRepair" class="ng-pristine ng-untouched ng-valid ng-not-empty"><i></i>
+                                <input autocomplete="off"   type="checkbox"  ng-model="qlBad.IsRepair" name="IsRepair" class="ng-pristine ng-untouched ng-valid ng-not-empty"><i></i>
                             </label>
                         </div>
                     </div>

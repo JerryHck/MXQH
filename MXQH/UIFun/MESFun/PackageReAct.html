@@ -10,22 +10,22 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">SNCode</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : pack.PackageForm.InCode.$invalid }">
-                                    <input type="text" ng-disabled="pack.IsEdit" class="form-control" ui-focus="pack.Focus.SNCode" name="InCode" ng-model="pack.Item.SNCode" placeholder="生产条码" ng-keyup="pack.KeyDonwSnCode($event)" required>
+                                    <input autocomplete="off"  type="text" ng-disabled="pack.IsEdit" class="form-control" ui-focus="pack.Focus.SNCode" name="InCode" ng-model="pack.Item.SNCode" placeholder="生产条码" ng-keyup="pack.KeyDonwSnCode($event)" required>
                                     <div class="h6 text-danger">扫SN可带出包装箱信息</div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">工单号</label>
                                 <div class="col-lg-8">
-                                    <input type="text" ng-disabled="pack.IsEdit" ng-model="pack.Item.WorkOrder" uib-typeahead="order.WorkOrder as order.WorkOrder for order in pack.OrderList | filter:$viewValue | limitTo:8"
+                                    <input autocomplete="off"  type="text" ng-disabled="pack.IsEdit" ng-model="pack.Item.WorkOrder" uib-typeahead="order.WorkOrder as order.WorkOrder for order in pack.OrderList | filter:$viewValue | limitTo:8"
                                            class="form-control" placeholder="工单号" ng-keyup="pack.KeyDonwOrder($event)">
-                                    <!--<input type="text" class="form-control" ng-model="pack.Item.WorkOrder" placeholder="工单号">-->
+                                    <!--<input autocomplete="off"  type="text" class="form-control" ng-model="pack.Item.WorkOrder" placeholder="工单号">-->
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">箱号</label>
                                 <div class="col-lg-8">
-                                    <input type="text" ng-disabled="pack.IsEdit" class="form-control" ng-model="pack.Item.BoxNumber" placeholder="箱号" ng-keyup="pack.KeyDonwNum($event)">
+                                    <input autocomplete="off"  type="text" ng-disabled="pack.IsEdit" class="form-control" ng-model="pack.Item.BoxNumber" placeholder="箱号" ng-keyup="pack.KeyDonwNum($event)">
                                 </div>
                             </div>
                         </div>
@@ -85,7 +85,7 @@
                                 <label class="control-label col-sm-5 font-bold text-info">栈板号:</label>
                                 <div class="col-sm-7">
                                     <p class="form-control-static"  ng-if="!pack.IsEdit">{{pack.PackDetail.PalletCode}}</p>
-                                    <input type="text" ng-show="pack.IsEdit" class="form-control" ng-model="pack.PackDetail.PalletCode" />
+                                    <input autocomplete="off"  type="text" ng-show="pack.IsEdit" class="form-control" ng-model="pack.PackDetail.PalletCode" />
                                 </div>
                             </div>
                         </div>
@@ -118,7 +118,7 @@
                                 <label class="control-label col-sm-5 font-bold text-info">包装重量:</label>
                                 <div class="col-sm-7" ng-class="{ 'has-error' : pack.UpdateForm.Packweigth.$invalid }">
                                     <p class="form-control-static" ng-if="!pack.IsEdit">{{pack.PackDetail.Packweight}}</p>
-                                    <input type="number" ng-if="pack.IsEdit" name="Packweigth" class="form-control" ng-model="pack.PackDetail.Packweight"/>
+                                    <input autocomplete="off"  type="number" ng-if="pack.IsEdit" name="Packweigth" class="form-control" ng-model="pack.PackDetail.Packweight"/>
                                 </div>
                             </div>
                         </div>

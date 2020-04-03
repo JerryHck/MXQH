@@ -18,7 +18,7 @@
                                     </ui-select>-->
 
                                     <input type="text" name="Order" ng-model="sn.Item.WorkOrder" uib-typeahead="item.WorkOrder as item.WorkOrder for item in sn.OrderList | orderBy: 'WorkOrder':true | filter:{WorkOrder:$viewValue} | limitTo:8"
-                                           class="form-control" placeholder="工单号" ng-keyup="sn.KeyDonwOrder($event)" required>
+                                           class="form-control"  placeholder="工单号" ng-keyup="sn.KeyDonwOrder($event)" required>
                                 </div>
                             </div>
                             <div class="form-group col-md-12 padder-xxs">

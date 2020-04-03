@@ -37,7 +37,7 @@
                         <div class="form-group-xs col-md-12">
                             <label class="col-lg-3 control-label padder-xxs">SN码/箱号:</label>
                             <div class="col-lg-9" ng-class="{ 'has-error' : qz.OrderForm.BSN.$invalid }">
-                                <input type="text" class="form-control" name="BSN" ng-model="qz.Item.BSN" placeholder="SN/箱号"
+                                <input autocomplete="off"  type="text" class="form-control" name="BSN" ng-model="qz.Item.BSN" placeholder="SN/箱号"
                                        ng-keypress="qz.KeyDonwSnCode($event)" required>
                                 <div class="h6 text-danger">注:扫描枪请设定自动回车功能，如果手动输入则需按回车键。</div>
                             </div>
@@ -84,7 +84,7 @@
                 </div>
                 <div class="panel-body padder-xs" style="min-height:400px">
                     <div class="input-group no-padder col-md-offset-1 col-md-10">
-                        <input type="text" class="form-control input-sm" ng-model="qz.SerBSN" />
+                        <input autocomplete="off"  type="text" class="form-control input-sm" ng-model="qz.SerBSN" />
                         <span class="text-success input-group-btn" ng-click="qz.Search()">
                             <button type="submit" class="btn btn-sm btn-success" >
                                 <i class="glyphicon glyphicon-search"></i>

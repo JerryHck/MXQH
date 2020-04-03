@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="form-inline">
             <div class="form-group">
-                <input type="text" class="form-control" ng-model="qz.Ser.SN" placeholder="SN/内控码" ng-keyup="qz.KeyDonwSnCode($event)">
+                <input autocomplete="off"  type="text" class="form-control" ng-model="qz.Ser.SN" placeholder="SN/内控码" ng-keyup="qz.KeyDonwSnCode($event)">
             </div>
             <button class="btn btn-sm btn-info " ng-click="qz.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
         </div>

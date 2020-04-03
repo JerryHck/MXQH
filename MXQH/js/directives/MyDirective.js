@@ -91,13 +91,14 @@ angular.module('AppSet')
         restrict: 'A',
         scope: {
             ngModel: '=',
-            step: '@'
+            step: '@',
+            format:'@'
         },
         link: function (scope, element, attr, ngModel) {
             scope.option = scope.option ||
                 {
                     datepicker: false,
-                    format: 'H:i:s',
+                    format: scope.format||'H:i:s',
                     step: parseInt(scope.step || "5")
                 }
             //scope.option.formatTime = scope.option.formatTime || 'H:i';
@@ -945,3 +946,55 @@ angular.module('AppSet')
         
     }
 })
+//图标插件指令
+.directive('eChart', function () {
+         return {
+             restrict: 'AE',
+             scope: {
+                 show: '=',
+                 width: '@',
+                 height: '@'
+             },
+             template: '<div style="width: 100%;height:100%;">图标</div>',
+             controller: function ($scope) {
+             },
+             link: function (scope, element, attr) {
+                 scope.show = scope.show || {};
+
+                 var chart = element.find('div')[0];
+                 var parent = element['context'];
+                 //    console.log(parent.clientHeight+":"+parent.clientWidth);
+                 //chart.style.width = scope.width || '400px';
+                 //chart.style.height = scope.height || '400px';
+
+                 // 基于准备好的dom，初始化echarts实例
+                 var myChart = echarts.init(chart);
+                 myChart.showLoading();
+                 scope.show.setOption = function (option) {
+                     option = option ||
+                     {
+                         title: {
+                             text: '数据加载中'
+                         },
+                         tooltip: {},
+                         legend: {
+                             data: []
+                         },
+                         xAxis: {
+                             data: []
+                         },
+                         yAxis: {},
+                         series: [{
+                             name: '销量',
+                             type: 'bar',
+                             data: []
+                         }]
+                     };
+                     myChart.hideLoading();
+                     // 使用刚指定的配置项和数据显示图表。
+                     myChart.setOption(option);
+                     //myChart.resize()
+                 }
+             }
+         };
+     })

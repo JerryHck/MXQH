@@ -8,7 +8,7 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">用户账户</label>
                     <div class="col-md-10" ng-class="{ 'has-error' : use.UserForm.No.$invalid }">
-                        <input type="text" class="form-control" name="No" placeholder="用户账户"
+                        <input autocomplete="off"  type="text" class="form-control" name="No" placeholder="用户账户"
                                ng-model="use.Item.UserNo" ng-disabled="use.form.index == 1" ng-blur="use.isExists()" required>
                         <div ng-messages="use.UserForm.No.$error" class="help-block" role="alert">
                             <div ng-message="unique">用户账户重复</div>
@@ -18,7 +18,7 @@
                 <div class="form-group pull-in clearfix">
                     <label class="col-md-2 control-label">初始密码</label>
                     <div class="col-md-10" ng-class="{ 'has-error' : use.UserForm.psw.$invalid }">
-                        <input type="password" name="psw" class="form-control" ng-minlength="8" ng-maxlength="18" placeholder="登陆密码" ng-model="use.Item.UserPswd"
+                        <input autocomplete="off"  type="password" name="psw" class="form-control" ng-minlength="8" ng-maxlength="18" placeholder="登陆密码" ng-model="use.Item.UserPswd"
                                ng-pattern="/^(?![^a-zA-Z]+$)(?!\D+$)/" required>
                         <div ng-messages="use.UserForm.psw.$error" class="help-block" role="alert">
                             <!--<div ng-message="required">请输入登陆密码</div>-->
@@ -31,10 +31,10 @@
                 <div class="form-group pull-in clearfix">
                     <label class="col-md-2 control-label">姓名</label>
                     <div class="col-md-4" ng-class="{ 'has-error' : use.UserForm.ChLastName.$invalid }">
-                        <input type="text" name="ChLastName" class="form-control" ng-maxlength="10" placeholder="姓" ng-model="use.Item.ChiLastName" required>
+                        <input autocomplete="off"  type="text" name="ChLastName" class="form-control" ng-maxlength="10" placeholder="姓" ng-model="use.Item.ChiLastName" required>
                     </div>
                     <div class="col-md-6" ng-class="{ 'has-error' : use.UserForm.ChiFirstName.$invalid }">
-                        <input type="text" class="form-control" name="ChiFirstName" ng-maxlength="10" placeholder="名" ng-model="use.Item.ChiFirstName" required>
+                        <input autocomplete="off"  type="text" class="form-control" name="ChiFirstName" ng-maxlength="10" placeholder="名" ng-model="use.Item.ChiFirstName" required>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">料号</label>
                     <div class="col-md-4" ng-class="{ 'has-error' : ItemmasterDialog.form.Code.$invalid }">
-                        <input type="text" class="form-control" name="Code" placeholder="料号"
+                        <input autocomplete="off"  type="text" class="form-control" name="Code" placeholder="料号"
                                ng-model="ItemmasterDialog.Item.Code" required>
                         <div ng-messages="ItemmasterDialog.form.Code.$error" class="help-block" role="alert">
                             <div ng-message="required">料号不能为空</div>
@@ -16,7 +16,7 @@
                     </div>
                     <label class="col-md-2 control-label">品名</label>
                     <div class="col-md-4" ng-class="{ 'has-error' : ItemmasterDialog.form.Name.$invalid }">
-                        <input type="text" class="form-control" name="Name" placeholder="品名"
+                        <input autocomplete="off"  type="text" class="form-control" name="Name" placeholder="品名"
                                ng-model="ItemmasterDialog.Item.Name" required>
                         <div ng-messages="ItemmasterDialog.form.Name.$error" class="help-block" role="alert">
                             <div ng-message="required">品名不能为空</div>
@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">优选顺序</label>
                     <div class="col-md-4" ng-class="{ 'has-error' : ItemmasterDialog.form.OrderNo.$invalid }">
-                        <input type="text" class="form-control" name="OrderNo" placeholder="优选顺序"
+                        <input autocomplete="off"  type="text" class="form-control" name="OrderNo" placeholder="优选顺序"
                                ng-model="ItemmasterDialog.Item.OrderNo" required>
                         <div ng-messages="ItemmasterDialog.form.OrderNo.$error" class="help-block" role="alert">
                             <div ng-message="required">优选顺序不能为空</div>
@@ -44,7 +44,7 @@
                     </div>
                     <label class="col-md-2 control-label">组号</label>
                     <div class="col-md-4" ng-class="{ 'has-error' : ItemmasterDialog.form.DocLineNo.$invalid }">
-                        <input type="number" class="form-control" name="DocLineNo" placeholder="组号"
+                        <input autocomplete="off"  type="number" class="form-control" name="DocLineNo" placeholder="组号"
                                ng-model="ItemmasterDialog.Item.DocLineNo" required>
                         <div ng-messages="ItemmasterDialog.form.DocLineNo.$error" class="help-block" role="alert">
                             <div ng-message="required">组号不能为空</div>

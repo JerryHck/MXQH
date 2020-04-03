@@ -7,10 +7,10 @@
     <div class="input-group m-b-xxs">
         <div class="form-inline">
             <div class="form-group">
-                <input type="text" class="form-control" ng-model="dsinfo.page.Code" placeholder="料号">
+                <input autocomplete="off"  type="text" class="form-control" ng-model="dsinfo.page.Code" placeholder="料号">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" ng-model="dsinfo.page.PlanCode" placeholder="计划名称">
+                <input autocomplete="off"  type="text" class="form-control" ng-model="dsinfo.page.PlanCode" placeholder="计划名称">
             </div>
             <button class="btn btn-sm btn-info" ng-click="dsinfo.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
             <button class="btn btn-sm btn-success" ng-click="dsinfo.BatchSave()"><i class="glyphicon glyphicon-floppy-save"></i>全部保存</button>
@@ -48,7 +48,7 @@
                     <td>{{ item.DemandDate|date:'yyyy-MM-dd' }}</td>
                     <td>
                         <!--<button class="btn btn-xs btn-primary" ng-click="dsinfo.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>-->
-                        <input type="text" onmouseover="this.title=this.value" class="form-control text-sm" ng-model="item.Remark" />
+                        <input autocomplete="off"  type="text" onmouseover="this.title=this.value" class="form-control text-sm" ng-model="item.Remark" />
                     </td>
                     <!--<td ng-if="item.ComponentType==null">无</td>
                     <td ng-if="item.ComponentType==0">标准</td>

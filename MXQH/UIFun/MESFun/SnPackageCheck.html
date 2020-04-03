@@ -11,7 +11,7 @@
                                 <label class="col-lg-3 control-label">工单号</label>
                                 <div class="col-lg-8">
                                     <div class="input-group">
-                                        <input type="text" ng-model="sn.Item.WorkOrder" uib-typeahead="order as order.WorkOrder for order in sn.OrderList | filter:$viewValue | limitTo:8"
+                                        <input autocomplete="off"  type="text" ng-model="sn.Item.WorkOrder" uib-typeahead="order as order.WorkOrder for order in sn.OrderList | filter:$viewValue | limitTo:8"
                                                class="form-control" placeholder="工单号" ng-keyup="sn.KeyDonwOrder($event)" ui-focus="sn.Focus.Order">
                                         <span class="input-group-addon">
                                             <a ng-if="sn.Item.WorkOrder.ID" class="text-success"><i class="glyphicon glyphicon-ok"></i></a>
@@ -23,13 +23,13 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">纸盒条码</label>
                                 <div class="col-lg-8" ng-class="{'has-error': sn.PackageForm.Antenna.$invalid}">
-                                    <input type="text" ng-model="sn.Item.Antenna" name="Antenna" ui-focus="sn.Focus.Antenna" class="form-control" placeholder="纸盒条码" ng-keyup="sn.KeyDonwAntenna($event)" required>
+                                    <input autocomplete="off"  type="text" ng-model="sn.Item.Antenna" name="Antenna" ui-focus="sn.Focus.Antenna" class="form-control" placeholder="纸盒条码" ng-keyup="sn.KeyDonwAntenna($event)" required>
                                 </div>
                             </div>
                             <!--<div class="form-group">
                                 <label class="col-lg-3 control-label">SNCode</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : sn.PackageForm.InCode.$invalid }">
-                                    <input type="text" class="form-control" ng-disabled="sn.PackageForm.Antenna.$invalid" ui-focus="sn.Focus.SN" name="InCode" ng-model="sn.Item.SNCode" placeholder="生产条码" ng-keyup="sn.KeyDonwSnCode($event)" required>
+                                    <input autocomplete="off"  type="text" class="form-control" ng-disabled="sn.PackageForm.Antenna.$invalid" ui-focus="sn.Focus.SN" name="InCode" ng-model="sn.Item.SNCode" placeholder="生产条码" ng-keyup="sn.KeyDonwSnCode($event)" required>
                                     <div class="h6 text-danger">扫SN进行信息验证</div>
                                 </div>
                             </div>-->
@@ -121,13 +121,13 @@
         <div class="wrapper-md">
             <div class="form-inline">
                 <div class="form-group">
-                    <input type="text" class="form-control" uib-typeahead="order as order.WorkOrder for order in sn.OrderList | filter:$viewValue | limitTo:8" ui-focus="sn.Focus == -1" ng-model="sn.Ser.PlanDetailId" placeholder="工单号">
+                    <input autocomplete="off"  type="text" class="form-control" uib-typeahead="order as order.WorkOrder for order in sn.OrderList | filter:$viewValue | limitTo:8" ui-focus="sn.Focus == -1" ng-model="sn.Ser.PlanDetailId" placeholder="工单号">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" ng-model="sn.Ser.SNCode" placeholder="SN码">
+                    <input autocomplete="off"  type="text" class="form-control" ng-model="sn.Ser.SNCode" placeholder="SN码">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" ng-model="sn.Ser.PackNoCode" placeholder="纸盒条码">
+                    <input autocomplete="off"  type="text" class="form-control" ng-model="sn.Ser.PackNoCode" placeholder="纸盒条码">
                 </div>
                 <button class="btn btn-sm btn-info" ng-click="sn.PageChange()"><i class="glyphicon glyphicon-search"></i>查询</button>
             </div>

@@ -4,10 +4,10 @@
         <div class="wrapper-md">
             <div class="form-inline">
                 <div class="form-group">
-                    <input type="text" class="form-control" ng-model="mo.Ser.a_WorkOrder" placeholder="工单号">
+                    <input autocomplete="off"  type="text" class="form-control" ng-model="mo.Ser.a_WorkOrder" placeholder="工单号">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" ng-model="mo.Ser.a_MaterialCode" placeholder="料号">
+                    <input autocomplete="off"  type="text" class="form-control" ng-model="mo.Ser.a_MaterialCode" placeholder="料号">
                 </div>
                 <button class="btn btn-sm btn-info " ng-click="mo.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
             </div>
@@ -65,19 +65,19 @@
                                 <div class="col-sm-3 padder-xs">
                                     <label class="control-label col-sm-4 padder-xs">工单号</label>
                                     <div class="col-sm-8 padder-xs">
-                                        <input type="text" disabled class="form-control" ng-model="mo.MoData.WorkOrder" required>
+                                        <input autocomplete="off"  type="text" disabled class="form-control" ng-model="mo.MoData.WorkOrder" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-3 padder-xs">
                                     <label class="control-label col-sm-4 padder-xs">料号</label>
                                     <div class="col-sm-8 padder-xs">
-                                        <input type="text" disabled class="form-control" ng-model="mo.MoData.MaterialCode" required>
+                                        <input autocomplete="off"  type="text" disabled class="form-control" ng-model="mo.MoData.MaterialCode" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 padder-xs">
                                     <label class="control-label col-sm-3 padder-xs">料名</label>
                                     <div class="col-sm-9 padder-xs">
-                                        <input type="text" disabled class="form-control" ng-model="mo.MoData.MaterialName" required>
+                                        <input autocomplete="off"  type="text" disabled class="form-control" ng-model="mo.MoData.MaterialName" required>
                                     </div>
                                 </div>
                             </div>
@@ -85,19 +85,19 @@
                                 <div class="col-sm-3 padder-xs">
                                     <label class="control-label col-sm-4 padder-xs">销售单</label>
                                     <div class="col-sm-8 padder-xs">
-                                        <input type="text" disabled class="form-control" ng-model="mo.MoData.ERPSO" required>
+                                        <input autocomplete="off"  type="text" disabled class="form-control" ng-model="mo.MoData.ERPSO" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-3 padder-xs">
                                     <label class="control-label col-sm-4 padder-xs">出货地</label>
                                     <div class="col-sm-8 padder-xs">
-                                        <input type="text" disabled class="form-control" ng-model="mo.MoData.SendPlaceName" required>
+                                        <input autocomplete="off"  type="text" disabled class="form-control" ng-model="mo.MoData.SendPlaceName" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 padder-xs">
                                     <label class="control-label col-sm-3 padder-xs">客户</label>
                                     <div class="col-sm-9 padder-xs">
-                                        <input type="text" disabled class="form-control" ng-model="mo.MoData.CustomerName" required>
+                                        <input autocomplete="off"  type="text" disabled class="form-control" ng-model="mo.MoData.CustomerName" required>
                                     </div>
                                 </div>
                             </div>
@@ -156,12 +156,12 @@
                                 </div>
                                 <div class="col-sm-2 padder-xxs">
                                     <div class="col-sm-12 padder-xxs" ng-class="{ 'has-error' : mo.BasicForm.ReleaseNum.$invalid }">
-                                        <input type="number" class="form-control" placeholder="释放数量" name="ReleaseNum" ng-model="mo.ReleaseItem.ReleaseNum" required>
+                                        <input autocomplete="off"  type="number" class="form-control" placeholder="释放数量" name="ReleaseNum" ng-model="mo.ReleaseItem.ReleaseNum" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-9 padder-xxs">
                                     <div class="col-sm-12 padder-xs">
-                                        <input type="text" class="form-control" placeholder="备注" ng-model="mo.ReleaseItem.Remark">
+                                        <input autocomplete="off"  type="text" class="form-control" placeholder="备注" ng-model="mo.ReleaseItem.Remark">
                                     </div>
                                 </div>
                             </div>
@@ -223,7 +223,7 @@
                     <div class="panel-heading font-bold">SN列表</div>
                     <div class="panel-body padder-xs padder-v-xs">
                         <div class="input-group no-padder">
-                            <input type="text" class="form-control" placeholder="查询SN" ng-model="mo.SerBSN" />
+                            <input autocomplete="off"  type="text" class="form-control" placeholder="查询SN" ng-model="mo.SerBSN" />
                             <span class="input-group-btn" >
                                 <button class="btn btn-info btn-success" ng-click="mo.SearchSN()">
                                     <i class="glyphicon glyphicon-search"></i>

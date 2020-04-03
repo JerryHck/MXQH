@@ -626,18 +626,18 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
             sbHtml += "                            <div " + (row.ABleNull != "3" ? "ng-class=\"{ 'has-error': " + fun.ControllerAs + ".InsertForm." + colName + ".$invalid }\">\n" : ">\n");
             var str = "                                ";
             switch (row.ColType) {
-                case "Text": str += "<input type=\"text\" name=\"{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.NewItem.{0}\" {3} {4}/>"; break;
-                case "Num": str += "<input type=\"number\" name=\"{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.NewItem.{0}\" {3} />"; break;
-                case "Email": str += "<input type=\"email\" name=\"{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.NewItem.{0}\" {3} />"; break;
-                case "Date": str += "<input type=\"text\" date-picker  name=\"{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.NewItem.{0}\" option=\"{2}.DateOption\"  {3} />"; break;
-                case "DateTime": str += "<input type=\"text\" date-time-picker  name=\"{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.NewItem.{0}\" option=\"{2}.DateOption\"  {3} />"; break;
+                case "Text": str += "<input autocomplete=\"off\"  type=\"text\" name=\"{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.NewItem.{0}\" {3} {4}/>"; break;
+                case "Num": str += "<input autocomplete=\"off\"  type=\"number\" name=\"{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.NewItem.{0}\" {3} />"; break;
+                case "Email": str += "<input autocomplete=\"off\"  type=\"email\" name=\"{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.NewItem.{0}\" {3} />"; break;
+                case "Date": str += "<input autocomplete=\"off\"  type=\"text\" date-picker  name=\"{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.NewItem.{0}\" option=\"{2}.DateOption\"  {3} />"; break;
+                case "DateTime": str += "<input autocomplete=\"off\"  type=\"text\" date-time-picker  name=\"{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.NewItem.{0}\" option=\"{2}.DateOption\"  {3} />"; break;
                 case "Select": str += "<div basic-select=\"" + row.ColValue + "\" ng-name=\"{0}\" placeholder=\"{1}\" ng-model=\"{2}.NewItem.{0}\" " + (row.ABleNull != "3" ? " ng-required =\"true\"" : "") + "></div>"; break;
                 case "Config": str += "<div config-select ng-model=\"{2}.NewItem.{0}\" ng-name=\"{0}\" placeholder=\"{1}\" tb=\"" + row.ColValue.split(',')[0] + "\" col=\"" + row.ColValue.split(',')[1] + "\"" + (row.ABleNull != "3" ? " ng-required =\"true\"" : "") + "></div>"; break;
                 case "Switch":
                     str += "<div toggle-switch ng-model=\"{2}.NewItem.{0}\" class=\"w-xxs switch-success\" on-label=\"是\" off-label=\"否\" on-value = \"1\" off-value =\"0\"></div>";
                     break;
                 case "CheckBox":
-                    str += "<label class=\"i-checks i-checks\"><input type =\"checkbox\" ng-model = \"{2}.NewItem.{0}\"><i></i>{2}</label>";
+                    str += "<label class=\"i-checks i-checks\"><input autocomplete=\"off\"  type =\"checkbox\" ng-model = \"{2}.NewItem.{0}\"><i></i>{2}</label>";
                     break;
             }
             sbHtml += str.Format(colName, row.ColumnText, fun.ControllerAs, (row.ABleNull == "3" ? "" : "required"), strCheckExcist) + "\n";
@@ -664,11 +664,11 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
         var strCheckExcist = row.CheckExists ? (" ng-blur=\"{0}.IsEdit{1}Exists()\" ").Format(fun.ControllerAs, ColName) : "";
         var boolEnable = false;
         switch (row.ColType) {
-            case "Text": str = "<input type=\"text\" name=\"item_{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.EditItem.{0}\" {3} {4}/>"; break;
-            case "Num": str = "<input type=\"number\" name=\"item_{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.EditItem.{0}\" {3} />"; break;
-            case "Email": str = "<input type=\"email\" name=\"item_{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.EditItem.{0}\" {3} />"; break;
-            case "Date": str = "<input type=\"text\" date-picker  name=\"item_{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.EditItem.{0}\" option=\"{2}.DateOption\"  {3} />"; break;
-            case "DateTime": str = "<input type=\"text\" date-time-picker  name=\"item_{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.EditItem.{0}\" option=\"{2}.DateOption\"  {3} />"; break;
+            case "Text": str = "<input autocomplete=\"off\"  type=\"text\" name=\"item_{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.EditItem.{0}\" {3} {4}/>"; break;
+            case "Num": str = "<input autocomplete=\"off\"  type=\"number\" name=\"item_{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.EditItem.{0}\" {3} />"; break;
+            case "Email": str = "<input autocomplete=\"off\"  type=\"email\" name=\"item_{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.EditItem.{0}\" {3} />"; break;
+            case "Date": str = "<input autocomplete=\"off\"  type=\"text\" date-picker  name=\"item_{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.EditItem.{0}\" option=\"{2}.DateOption\"  {3} />"; break;
+            case "DateTime": str = "<input autocomplete=\"off\"  type=\"text\" date-time-picker  name=\"item_{0}\" class=\"form-control\" placeholder=\"{1}\" ng-model=\"{2}.EditItem.{0}\" option=\"{2}.DateOption\"  {3} />"; break;
             case "Select": str = "<div basic-select=\"" + row.ColValue + "\" ng-name=\"item_{0}\" placeholder=\"{1}\" ng-model=\"{2}.EditItem.{0}\" " + (row.ABleNull != "3" ? " ng-required =\"true\"" : "") + "></div>"; break;
             case "Config": str = "<div config-select ng-model=\"{2}.EditItem.{0}\" ng-name=\"item_{0}\" placeholder=\"{1}\" config-option=\"{2}.{0}Config\"" + (row.ABleNull != "3" ? " ng-required =\"true\"" : "") + "></div>"; break;
             case "Switch":
@@ -677,8 +677,8 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
                 boolEnable = true;
                 break;
             case "CheckBox":
-                str = "<label class=\"i-checks i-checks\"><input type =\"checkbox\" ng-model = \"{2}.EditItem.{0}\" ng-disabled=\"!item.IsEdit\"><i></i>{2}</label>";
-                str2 = "<label class=\"i-checks i-checks\"><input type =\"checkbox\" ng-model = \"item." + row.EditColDiv + ColName + "\" disabled><i></i>{2}</label>";
+                str = "<label class=\"i-checks i-checks\"><input autocomplete=\"off\"  type =\"checkbox\" ng-model = \"{2}.EditItem.{0}\" ng-disabled=\"!item.IsEdit\"><i></i>{2}</label>";
+                str2 = "<label class=\"i-checks i-checks\"><input autocomplete=\"off\"  type =\"checkbox\" ng-model = \"item." + row.EditColDiv + ColName + "\" disabled><i></i>{2}</label>";
                 boolEnable = true;
                 break;
         }
@@ -726,15 +726,15 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
                 sbHtml += "                <div class=\"form-group\">\n";
                 var str = "";
                 switch (ser.SerType) {
-                    case "Text": str += "<input type=\"text\" class=\"form-control\"  ng-model=\"{0}.Ser.{1}\" placeholder=\"{2}\">"; break;
-                    case "Num": str += "<input type=\"number\" class=\"form-control\"  ng-model=\"{0}.Ser.{1}\" placeholder=\"{2}\">"; break;
-                    case "Email": str += "<input type=\"Email\" class=\"form-control\"  ng-model=\"{0}.Ser.{1}\" placeholder=\"{2}\">"; break;
-                    case "Date": str += "<input type=\"text\" date-picker class=\"form-control\"  ng-model=\"{0}.Ser.{1}\" placeholder=\"{2}\" option=\"{0}.DateOption\">"; break;
-                    case "DateTime": str += "<input type=\"text\" date-time-picker class=\"form-control\"  ng-model=\"{0}.Ser.{1}\" placeholder=\"{2}\" option=\"{0}.DateTimeOption\">"; break;
+                    case "Text": str += "<input autocomplete=\"off\"  type=\"text\" class=\"form-control\"  ng-model=\"{0}.Ser.{1}\" placeholder=\"{2}\">"; break;
+                    case "Num": str += "<input autocomplete=\"off\"  type=\"number\" class=\"form-control\"  ng-model=\"{0}.Ser.{1}\" placeholder=\"{2}\">"; break;
+                    case "Email": str += "<input autocomplete=\"off\"  type=\"Email\" class=\"form-control\"  ng-model=\"{0}.Ser.{1}\" placeholder=\"{2}\">"; break;
+                    case "Date": str += "<input autocomplete=\"off\"  type=\"text\" date-picker class=\"form-control\"  ng-model=\"{0}.Ser.{1}\" placeholder=\"{2}\" option=\"{0}.DateOption\">"; break;
+                    case "DateTime": str += "<input autocomplete=\"off\"  type=\"text\" date-time-picker class=\"form-control\"  ng-model=\"{0}.Ser.{1}\" placeholder=\"{2}\" option=\"{0}.DateTimeOption\">"; break;
                     case "Select": str += "<div basic-select=\"{3}\"  ng-model=\"{0}.Ser.{1}\" placeholder=\"{2}\" ></div>"; break;
                     case "Config": str += "<div config-select ng-model=\"{0}.Ser.{1}\" tb=\"" + ser.SerTName.Split(',')[0] + "\" col=\"" + ser.SerTName.Split(',')[1] + "\" placeholder=\"{2}\"></div>"; break;
                     case "Switch": str += "<div toggle-switch ng-model=\"{0}.Ser.{1}\" class=\"w-xxs switch-success\" on-label=\"是\" off-label=\"否\" on-value = \"1\" off-value =\"0\"></div >"; break;
-                    case "CheckBox": str += "<label class=\"i-checks i-checks\"><input type =\"checkbox\" ng-model = \"{0}.Ser.{1}\" ><i></i>{2}</label>"; break;
+                    case "CheckBox": str += "<label class=\"i-checks i-checks\"><input autocomplete=\"off\"  type =\"checkbox\" ng-model = \"{0}.Ser.{1}\" ><i></i>{2}</label>"; break;
                 }
                 sbHtml += "                    " + str.Format(fun.ControllerAs, name, ser.SerName, ser.SerTName, ser.ColumnName) + "\n";
                 sbHtml += "                </div>\n";

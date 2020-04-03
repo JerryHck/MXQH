@@ -13,20 +13,20 @@
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">编码</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Code.$invalid }">
-                            <input type="text" class="form-control" name="Code" placeholder="编码"
+                            <input autocomplete="off"  type="text" class="form-control" name="Code" placeholder="编码"
                                    ng-model="qtdc.Item.Code" required>
                         </div>
                     </div>
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">名称</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Name.$invalid }">
-                            <input type="text" name="Name" class="form-control" placeholder="名称" ng-model="qtdc.Item.Name" required>
+                            <input autocomplete="off"  type="text" name="Name" class="form-control" placeholder="名称" ng-model="qtdc.Item.Name" required>
                         </div>
                     </div>
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">排序</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.OrderNo.$invalid }">
-                            <input type="number" name="OrderNo" class="form-control" placeholder="排序" ng-model="qtdc.Item.OrderNo" required>
+                            <input autocomplete="off"  type="number" name="OrderNo" class="form-control" placeholder="排序" ng-model="qtdc.Item.OrderNo" required>
                         </div>
                     </div>
                 </div>

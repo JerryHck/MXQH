@@ -9,7 +9,7 @@
                     <div class="col-md-12 padder-xs">
                         <label class="col-md-3 control-label">生产工单号</label>
                         <div class="col-md-8 no-padder" ng-class="{ 'has-error' : m.DialogForm.MO.$invalid }">
-                            <input type="text" class="form-control"  ng-disabled="m.form.index == 1" name="MO" ng-blur="m.isExists()" placeholder="厂商工单" ng-model="m.Item.MO" required>
+                            <input autocomplete="off"  type="text" class="form-control"  ng-disabled="m.form.index == 1" name="MO" ng-blur="m.isExists()" placeholder="厂商工单" ng-model="m.Item.MO" required>
                             <div ng-messages="m.DialogForm.MO.$error" class="help-block" role="alert">
                                 <div ng-message="unique">单据重复</div>
                             </div>
@@ -20,7 +20,7 @@
                     <div class="col-md-12 padder-xs">
                         <label class="col-md-3 control-label">力同委外单号</label>
                         <div class="col-md-8 no-padder" ng-class="{ 'has-error' : m.DialogForm.AucWPO.$invalid }">
-                            <input type="text" class="form-control" name="AucWPO" placeholder="力同委外单号"
+                            <input autocomplete="off"  type="text" class="form-control" name="AucWPO" placeholder="力同委外单号"
                                    ng-model="m.Item.AucWPO" ng-disabled="m.IsPack"  required>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                     <div class="col-md-12 padder-xs">
                         <label class="col-md-3 control-label">工单数量</label>
                         <div class="col-md-8 no-padder" title="工单数量" ng-class="{ 'has-error' : m.DialogForm.AucPOQty.$invalid }">
-                            <input type="number" min="0" class="form-control" name="AucPOQty" placeholder="工单数量" ng-model="m.Item.AucPOQty" required>
+                            <input autocomplete="off"  type="number" min="0" class="form-control" name="AucPOQty" placeholder="工单数量" ng-model="m.Item.AucPOQty" required>
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                     <div class="col-md-12 padder-xs">
                         <label class="col-md-3 control-label">包装数量/箱</label>
                         <div class="col-md-8 no-padder" title="包装数量/箱" ng-class="{ 'has-error' : m.DialogForm.PackNum.$invalid }">
-                            <input type="number" min="0" class="form-control" name="PackNum" placeholder="包装数量/箱" ng-model="m.Item.PackNum" required>
+                            <input autocomplete="off"  type="number" min="0" class="form-control" name="PackNum" placeholder="包装数量/箱" ng-model="m.Item.PackNum" required>
                         </div>
                     </div>
                 </div>

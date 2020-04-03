@@ -1,24 +1,16 @@
 ﻿'use strict';
 
-angular.module('app')
-.controller('MoLinelistCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
+angular.module('AppSet')
+.controller('MoLinelistCtrl', ['$scope', '$http', 'AjaxService', 'toastr', '$window',
+function ($scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
-    vm.Ser.a_ArrangeDate = "";
-    vm.Ser.a_WorkOrder = "";
 
     vm.PageChange = PageChange;
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
-
-    vm.DateOption = {
-        format: 'Y-m-d',
-        formatDate: 'Y-m-d',
-        timepicker: false
-    };
 
     function Search() {
         vm.page.index = 1;
@@ -39,11 +31,11 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
     function GetContition() {
         var list = [];
-        if (vm.Ser.a_ArrangeDate) {
-            list.push({ name: "ArrangeDate", value: vm.Ser.a_ArrangeDate, tableAs:"a" });
+        if (vm.Ser.aArrangeDate) {
+            list.push({ name: "ArrangeDate", value: vm.Ser.aArrangeDate, tableAs:"a" });
         }
-        if (vm.Ser.a_WorkOrder) {
-            list.push({ name: "WorkOrder", value: vm.Ser.a_WorkOrder, tableAs:"a" });
+        if (vm.Ser.aWorkOrder) {
+            list.push({ name: "WorkOrder", value: vm.Ser.aWorkOrder, tableAs:"a" });
         }
         return list;
     }
