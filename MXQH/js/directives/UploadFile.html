@@ -3,12 +3,12 @@
         <span class="input-group-addon" ng-if="ngDisabled=='false'">
             <a class="pull-left" ng-click="Open($event)"><i class="fa fa-folder-open">浏览</i></a>
         </span>
-        <input class="form-control" ng-disabled="ngDisabled == 'true'" placeholder="{{ placeholder }}" type="text" ng-model="fileData.OriginalName">
+        <input autocomplete="off"  class="form-control" ng-disabled="ngDisabled == 'true'" placeholder="{{ placeholder }}" type="text" ng-model="fileData.OriginalName">
         <span class="input-group-addon text-success" ng-if="isUploaded">{{ fileData.FileType }}</span>
         <span class="input-group-addon" ng-if="isUploaded">
             <a ng-click="DownLoad(fileData.FileUrl)" class="text-success"><i class="glyphicon glyphicon-download"></i></a>
         </span>
-        <input type="file" class="fileType" name="{{ ngName }}" ng-required="ngRequired" nv-file-select="" uploader="uploader" style="display: none" accept="{{ fileType }}">
+        <input autocomplete="off"  type="file" class="fileType" name="{{ ngName }}" ng-required="ngRequired" nv-file-select="" uploader="uploader" style="display: none" accept="{{ fileType }}">
     </div>
 </div>
 <div class="form-group-sm col-md-12  m-t-none" ng-if="uploader.progress<100 && uploader.progress>0">

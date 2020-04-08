@@ -13,14 +13,14 @@
                     <!--<div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">单号</label>
                         <div class="col-sm-8 padder-xs">
-                            <input type="text" name="DocNo" disabled="disabled" class="form-control" placeholder="单号" ng-model="crdc.Item.DocNo" required>
+                            <input autocomplete="off"  type="text" name="DocNo" disabled="disabled" class="form-control" placeholder="单号" ng-model="crdc.Item.DocNo" required>
                         </div>
                     </div>-->
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">工单号</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.WorkOrder.$invalid }">
                             <div class="input-group">
-                                <input type="text" disabled="disabled" name="WorkOrder" class="form-control" placeholder="工单号" ng-model="crdc.Item.WorkOrder" required>
+                                <input autocomplete="off"  type="text" disabled="disabled" name="WorkOrder" class="form-control" placeholder="工单号" ng-model="crdc.Item.WorkOrder" required>
                                 <span class="input-group-addon">
                                     <a ng-click="crdc.SelectWorkOrder()"><i class="glyphicon glyphicon-search"></i></a>
                                 </span>
@@ -30,14 +30,14 @@
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">完工日期</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.CompleteDate.$invalid }">
-                            <input date-time-picker type="text" class="form-control" name="CompleteDate" placeholder="完工日期"
+                            <input autocomplete="off"  date-time-picker type="text" class="form-control" name="CompleteDate" placeholder="完工日期"
                                    ng-model="crdc.Item.CompleteDate" required option="crdc.DateOption">
                         </div>
                     </div>
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">完工数量</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.CompleteQty.$invalid }">
-                            <input type="number" class="form-control" name="CompleteQty" placeholder="完工数量"
+                            <input autocomplete="off"  type="number" class="form-control" name="CompleteQty" placeholder="完工数量"
                                    ng-model="crdc.Item.CompleteQty" required>
                         </div>
                     </div>
@@ -46,11 +46,11 @@
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">料号</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaterialCode.$invalid }">
-                            <input type="text" name="MaterialCode" disabled="disabled" class="form-control" placeholder="品名" ng-model="crdc.Item.MaterialCode" required>
+                            <input autocomplete="off"  type="text" name="MaterialCode" disabled="disabled" class="form-control" placeholder="品名" ng-model="crdc.Item.MaterialCode" required>
                         </div>
                         <!--<div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaterialCode.$invalid }">
                             <div class="input-group">
-                                <input type="text" name="MaterialCode" disabled="disabled" class="form-control" placeholder="品名" ng-model="crdc.Item.MaterialCode" required>
+                                <input autocomplete="off"  type="text" name="MaterialCode" disabled="disabled" class="form-control" placeholder="品名" ng-model="crdc.Item.MaterialCode" required>
                                 <span class="input-group-addon">
                                     <a ng-click="crdc.SelectProduct()"><i class="glyphicon glyphicon-search"></i></a>
                                 </span>
@@ -60,11 +60,11 @@
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">品名</label>
                         <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaterialName.$invalid }">
-                            <input type="text" name="MaterialName" disabled="disabled" class="form-control" placeholder="品名" ng-model="crdc.Item.MaterialName" required>
+                            <input autocomplete="off"  type="text" name="MaterialName" disabled="disabled" class="form-control" placeholder="品名" ng-model="crdc.Item.MaterialName" required>
                         </div>
                         <!--<div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaterialName.$invalid }">
                             <div class="input-group">
-                                <input type="text" name="MaterialName" disabled="disabled" class="form-control" placeholder="品名" ng-model="crdc.Item.MaterialName" required>
+                                <input autocomplete="off"  type="text" name="MaterialName" disabled="disabled" class="form-control" placeholder="品名" ng-model="crdc.Item.MaterialName" required>
                                 <span class="input-group-addon">
                                     <a ng-click="crdc.SelectProduct()"><i class="glyphicon glyphicon-search"></i></a>
                                 </span>
@@ -74,7 +74,7 @@
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">累计完工数量</label>
                         <div class="col-sm-8 padder-xs" >
-                            <input type="number" disabled="disabled" class="form-control" name="ActualRcvQty" placeholder="累计完工数量"
+                            <input autocomplete="off"  type="number" disabled="disabled" class="form-control" name="ActualRcvQty" placeholder="累计完工数量"
                                    ng-model="crdc.TotalCompleteQty" >
                         </div>
                     </div>

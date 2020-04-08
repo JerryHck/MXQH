@@ -48,7 +48,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     function GetOrder() {
         var en = {};
         en.WorkOrder = vm.Item.WorkOrder;
-        AjaxService.ExecPlan("BindCode", "getOrder", en).then(function (data) {
+        AjaxService.ExecPlan("BindCode", "getOrder", en, false).then(function (data) {
             var mss = "工单 [" + vm.Item.WorkOrder + '] ';
             if (!data.data[0] || !data.data[0].WorkOrder) {
                 vm.Item.WorkOrder = undefined;
@@ -84,7 +84,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
         en.IsExcel = 'N';
         en.Start = (vm.page.index - 1) * vm.page.size + 1;
         en.End = vm.page.index * vm.page.size;
-        vm.promise = AjaxService.ExecPlan("MesInCodeBindSnCode", "getSn", en).then(function (data) {
+        vm.promise = AjaxService.ExecPlan("MesInCodeBindSnCode", "getSn", en, false).then(function (data) {
             vm.BindList = data.data;
             vm.page.total = data.data1[0].Count;
         });
@@ -111,7 +111,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
             if (keycode == 13 && vm.Item.NgInCode) {
                 var en = {};
                 en.InternalCode = vm.Item.NgInCode;
-                AjaxService.ExecPlan("MesMxWOrder", 'ass', en).then(function (data) {
+                AjaxService.ExecPlan("MesMxWOrder", 'ass', en, false).then(function (data) {
                     if (data.data[0].MsgType == 'Error') {
                         vm.Item.NgInCode = undefined;
                         showError(data.data[0].Msg);
@@ -180,7 +180,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
         vm.KeySn = undefined;
         vm.CharName = undefined;
         var en = { InternalCode: vm.KeyInCode, WorkOrder: vm.OrderData.WorkOrder, TbName: vm.OrderData.TbName, ClName: vm.OrderData.ClName };
-        AjaxService.ExecPlan("BindCode", "checkSn", en).then(function (data) {
+        AjaxService.ExecPlan("BindCode", "checkSn", en, false).then(function (data) {
             if (data.data[0].MsgType == "Error") {
                 showError(data.data[0].MsgText);
                 vm.NewBind.InternalCode = undefined;
@@ -220,8 +220,12 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
         vm.ThisBind = {};
         vm.ThisBind.MOId = vm.OrderData.ID;
         vm.ThisBind.SNCode = "";
+        vm.ThisBind.IMEICode = "";
         vm.ThisBind.InternalCode = KeyInCode;
         var SNList = [{ name: vm.OrderData.TbName, col: vm.OrderData.ClName, parm: "SNCode", charName: vm.CharName }];
+        if (vm.OrderData.IMEI_TbName && vm.OrderData.IMEI_TbName) {
+            SNList.push({ name: vm.OrderData.IMEI_TbName, col: vm.OrderData.IMEI_ClName, parm: "IMEICode" });
+        }
         vm.ThisBind.SNColumns = JSON.stringify(SNList);
         vm.promise = AjaxService.ExecPlan("BindCode", 'saveBind', vm.ThisBind).then(function (data) {
             vm.isFinist = true;
@@ -230,8 +234,8 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
                 vm.NewBind = {};
             }
             else if (data.data[0].MsgType == "Success") {
-                var mss = "内控码[" + KeyInCode + ']  SN码 [' + data.data1[0].SNCode + '] 绑定成功';
-                var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: mss };
+                //var mss = "内控码[" + KeyInCode + ']  SN码 [' + data.data1[0].SNCode + '] 绑定成功';
+                var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].MsgText };
                 vm.MesList.splice(0, 0, Msg);
                 vm.NewBind = {};
                 vm.OrderCount = data.data3[0];

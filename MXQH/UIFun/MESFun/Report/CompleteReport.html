@@ -4,11 +4,11 @@
         <div class="wrapper-md" ng-form="DialogForm">
             <div class="form-inline">
                 <div class="form-group" ng-class="{'has-error':DialogForm.WorkOrder.$invalid }">
-                    <input type="text" class="form-control" name="WorkOrder" ng-model="crc.Ser.WorkOrder" placeholder="工单号" required>
+                    <input autocomplete="off"  type="text" class="form-control" name="WorkOrder" ng-model="crc.Ser.WorkOrder" placeholder="工单号" required>
                 </div>
                 <!--<div class="form-group">
                     <div class="input-group">
-                        <input type="text" date-picker class="form-control" ng-model="crc.Ser.CompleteDate" placeholder="完工日期" option="vm.DateTimeOption">
+                        <input autocomplete="off"  type="text" date-picker class="form-control" ng-model="crc.Ser.CompleteDate" placeholder="完工日期" option="vm.DateTimeOption">
                         <span class="input-group-addon">
                             <a ng-click="crc.Ser.CompleteDate=undefined" class="text-danger"><i class="glyphicon glyphicon-trash"></i></a>
                         </span>

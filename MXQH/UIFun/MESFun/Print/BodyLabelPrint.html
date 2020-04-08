@@ -19,7 +19,7 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">SN码</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : blp.DeleteForm.blp.$invalid }">
-                                    <input type="text" class="form-control" ui-focus="blp.Focus == 0" name="InCode" ng-model="blp.DeleteItem.InternalCode" placeholder="内部码/SN码" ng-keyup="blp.KeyDonwInCode($event)" required>
+                                    <input autocomplete="off"  type="text" class="form-control" ui-focus="blp.Focus == 0" name="InCode" ng-model="blp.DeleteItem.InternalCode" placeholder="内部码/SN码" ng-keyup="blp.KeyDonwInCode($event)" required>
                                 </div>
                             </div>
                         </div>
@@ -56,7 +56,7 @@
 
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" class="form-control" ng-model="blp.page.DocNo" placeholder="工单号">
+                            <input autocomplete="off"  type="text" class="form-control" ng-model="blp.page.DocNo" placeholder="工单号">
                             <span class="input-group-addon">
                                 <a><i ng-click="blp.page.DocNo = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
                             </span>
@@ -64,7 +64,7 @@
                     </div>
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" class="form-control" ng-model="blp.page.CreatedBy" placeholder="创建人">
+                            <input autocomplete="off"  type="text" class="form-control" ng-model="blp.page.CreatedBy" placeholder="创建人">
                             <span class="input-group-addon">
                                 <a><i ng-click="blp.page.CreatedBy = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
                             </span>
@@ -72,7 +72,7 @@
                     </div>
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" class="form-control" ng-model="blp.page.SNCode" placeholder="SN码">
+                            <input autocomplete="off"  type="text" class="form-control" ng-model="blp.page.SNCode" placeholder="SN码">
                             <span class="input-group-addon">
                                 <a><i ng-click="blp.page.SNCode = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
                             </span>

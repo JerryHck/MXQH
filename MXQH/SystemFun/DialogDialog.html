@@ -1,15 +1,13 @@
-﻿<div class="modal-header">
-    <h3 class="modal-title">弹出窗路由{{ dialog.form.title }}</h3>
-</div>
-<div class="modal-body wrapper-md" ng-form="dialog.DialogForm">
-    <div class="panel panel-default padder-xs">
-        <div class="panel-body padder-xs">
-            <div class="col-sm-6">
+﻿<uib-tabset active="dialog.Index" type="tabs">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">弹出窗{{ dialog.form.title }}</uib-tab-heading>
+        <div class="panel panel-default padder-xs" ng-form="dialog.DialogForm">
+            <div class="panel-body padder-xs">
                 <div class="form-horizontal">
-                    <div class="form-group-xs pull-in clearfix">
-                        <label class="col-lg-3 padder-xs control-label text-info">弹出窗名</label>
-                        <div class="col-lg-9 padder-xs" ng-class="{ 'has-error' : dialog.DialogForm.name.$invalid }">
-                            <input type="text" class="form-control" name="name" placeholder="弹出窗名"
+                    <div class="form-group-sm pull-in clearfix">
+                        <label class="col-sm-2 padder-xs control-label text-info">弹出窗名</label>
+                        <div class="col-sm-9 padder-xs" ng-class="{ 'has-error' : dialog.DialogForm.name.$invalid }">
+                            <input autocomplete="off"  type="text" class="form-control" name="name" placeholder="弹出窗名"
                                    ng-model="dialog.NewItem.name" ng-disabled="dialog.form.index == 1" ng-blur="dialog.isExists(dialog.NewItem.name)" required>
                             <div ng-messages="dialog.DialogForm.name.$error" class="help-block" role="alert">
                                 <div ng-message="required">请输入弹出窗名</div>
@@ -17,44 +15,33 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group-xs pull-in clearfix">
-                        <label class="col-lg-3 padder-xs control-label text-info">HTML文件</label>
-                        <div class="col-lg-9 padder-xs" ng-class="{ 'has-error' : dialog.DialogForm.Html.$invalid }">
-                            <div fun-file-select file-type="1" ng-model="dialog.NewItem.templateUrl" clear="true" ng-name="Html" ng-required="true"></div>
-                            <div ng-messages="dialog.DialogForm.Html.$error" class="help-block" role="alert">
-                                <div ng-message="required">请选择对应Html文件</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group-xs pull-in clearfix">
-                        <label class="col-lg-3 padder-xs control-label text-info">控制器</label>
-                        <div class="col-lg-9 padder-xs" ng-class="{ 'has-error' : dialog.DialogForm.Control.$invalid }">
-                            <input class="form-control text-xs" name="Control" type="text" ng-model="dialog.NewItem.controller" ng-disabled="dialog.editDialog" required>
+                    <div class="form-group-sm pull-in clearfix">
+                        <label class="col-sm-2 padder-xs control-label text-info">控制器</label>
+                        <div class="col-sm-3 padder-xs" ng-class="{ 'has-error' : dialog.DialogForm.Control.$invalid }">
+                            <input autocomplete="off"  class="form-control text-xs" name="Control" type="text" ng-model="dialog.NewItem.controller" ng-disabled="dialog.editDialog" required>
                             <div ng-messages="dialog.DialogForm.Control.$error" class="help-block" role="alert">
                                 <div ng-message="required">请输入控制器</div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group-xs pull-in clearfix">
-                        <label class="col-lg-3 padder-xs control-label text-info">控制器简写</label>
-                        <div class="col-lg-9 padder-xs">
-                            <input class="form-control text-xs" type="text" ng-model="dialog.NewItem.controllerAs">
+                        <label class="col-sm-3 padder-xs control-label text-info">控制器简写</label>
+                        <div class="col-sm-3 padder-xs">
+                            <input autocomplete="off"  class="form-control text-xs" type="text" ng-model="dialog.NewItem.controllerAs">
                         </div>
                     </div>
-                    <div class="form-group-xs pull-in clearfix">
-                        <label class="col-lg-3 padder-xs control-label text-info">大小</label>
-                        <div class="col-lg-9 padder-xs">
+                    <div class="form-group-sm pull-in clearfix">
+                        <label class="col-sm-2 padder-xs control-label text-info">大小</label>
+                        <div class="col-sm-3 padder-xs">
                             <select class="form-control" ng-model="dialog.NewItem.size">
                                 <option></option>
                                 <option value="sm" ng-selected="dialog.NewItem.size == 'sm'">sm</option>
                                 <option value="lg" ng-selected="dialog.NewItem.size == 'lg'">lg</option>
-                                <!--<option value="xxl" ng-selected="dialog.NewItem.size == 'xxl'">xxl</option>-->
+                                <option value="xl" ng-selected="dialog.NewItem.size == 'xl'">xl</option>
+                                <option value="xxl" ng-selected="dialog.NewItem.size == 'xxl'">xxl</option>
+                                <option value="full" ng-selected="dialog.NewItem.size == 'full'">full</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="form-group-xs pull-in clearfix">
-                        <label class="col-lg-3 padder-xs control-label text-info">背景</label>
-                        <div class="col-lg-9 padder-xs" ng-class="{ 'has-error' : dialog.DialogForm.BackDrop.$invalid }">
+                        <label class="col-sm-3 padder-xs control-label text-info">背景</label>
+                        <div class="col-sm-3 padder-xs" ng-class="{ 'has-error' : dialog.DialogForm.BackDrop.$invalid }">
                             <select class="form-control" ng-model="dialog.NewItem.backdrop" name="BackDrop" required>
                                 <option value="static" ng-selected="dialog.NewItem.backdrop == 'static'">static</option>
                                 <option value="true" ng-selected="dialog.NewItem.backdrop == 'true'">true</option>
@@ -62,45 +49,355 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group-xs pull-in clearfix">
-                        <label class="col-lg-3 padder-xs control-label text-info">依赖文件</label>
-                        <div class="input-group col-lg-9 padder-xs">
-                            <div fun-file-select file-type="2" ng-model="dialog.loadFile"></div>
-                            <span class="input-group-btn">
-                                <button class="btn btn-default">
-                                    <span class="glyphicon glyphicon-plus text-success" ng-click="dialog.LoadAdd()"></span>
-                                </button>
-                            </span>
+                    <div class="form-group-sm pull-in clearfix m-t">
+                        <label class="col-sm-2 padder-xs control-label text-info">备注</label>
+                        <div class="col-sm-9 padder-xs">
+                            <textarea rows="2" class="form-control" ng-model="dialog.NewItem.Remark"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group-sm pull-in clearfix m-t">
+                        <label class="col-sm-2 padder-xs control-label text-info">依赖文件</label>
+                        <div class="col-sm-9 padder-xs">
+                            <div class="panel panel-info">
+                                <div class="panel-body padder-xxs">
+                                    <div class="form-horizontal">
+                                        <div class="form-group-sm" ng-class="{ 'has-error' : dialog.FormFun.Html.$invalid }">
+                                            <label class="col-sm-2 control-label text-info">HTML文件</label>
+                                            <div class="col-sm-3">
+                                                <span class="btn-group">
+                                                    <label class="btn btn-sm btn-default" ng-model="dialog.NewItem.IsSystem" uib-btn-radio="true" ng-click="dialog.ToggleFile()">内置</label>
+                                                    <label class="btn btn-sm btn-default" ng-model="dialog.NewItem.IsSystem" uib-btn-radio="false" ng-click="dialog.ToggleFile()">自定义</label>
+                                                </span>
+                                            </div>
+                                            <div class="col-sm-6 padder-xxs" ng-if="dialog.NewItem.IsSystem">
+                                                <div fun-file-select file-type="1" ng-model="dialog.NewItem.templateUrl" clear="true" ng-name="Html" ng-required="true"></div>
+                                            </div>
+                                            <div class="col-sm-6 no-padder-xxs input-group" ng-if="!dialog.NewItem.IsSystem">
+                                                <!--<span class="input-group-addon" title="编辑html/js文件"><a class="text-success" ng-click="dialog.OpenHtmlJs()"><i class="glyphicon glyphicon-edit"></i></a></span>-->
+                                                <input autocomplete="off"  class="form-control" ng-model="dialog.NewItem.templateUrl" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="form-group-sm">
+                                            <label class="col-sm-2 control-label text-info"></label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default btn-sm">
+                                                            <span class="glyphicon glyphicon-plus text-success" ng-click="dialog.LoadAdd()"></span>
+                                                        </button>
+                                                    </span>
+                                                    <div fun-file-select file-type="2" ng-model="dialog.loadFile"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group-sm">
+                                            <label class="col-sm-2 control-label text-info">JS文件</label>
+                                            <div class="col-sm-10">
+                                                <div class="panel panel-default panel-body">
+                                                    <div class="list-group no-radius no-border no-bg m-b-none">
+                                                        <a ng-repeat="load in dialog.NewItem.LoadFiles | orderBy:'load.Orderby'"
+                                                           class="list-group-item"
+                                                           ng-drop="true" ng-drop-success="dialog.LoadDrop($data,$index)">
+                                                            <span ng-if="dialog.editFun" ng-click='dialog.DeleteLoad($index)' class="pull-right text-danger">
+                                                                <i class="fa fa-times"></i>
+                                                            </span>
+                                                            <span class="block m-l-n bg-transparent">
+                                                                <i class="glyphicon glyphicon-move text-info" ng-drag="true"
+                                                                   ng-drag-data="load" ng-drag-success="dialog.LoadDrag($data,$index)"></i>{{ load.LoadName }}
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                
             </div>
-            <div class="col-sm-6 padder-xs">
-                <div class="panel panel-info">
-                    <div class="panel-heading">依赖文件列表</div>
-                    <div class="panel-body">
-                        <div class="list-group no-radius no-border no-bg m-b-none">
-                            <a ng-repeat="load in dialog.NewItem.LoadFiles"
-                               class="list-group-item"
-                               ng-drop="true" ng-drop-success="dialog.LoadDrop($data,$index)">
-                                <span ng-click='dialog.DeleteLoad($index)' class="pull-right text-danger">
-                                    <i class="fa fa-times"></i>
+        </div>
+    </uib-tab>
+    <uib-tab index="1" disable="dialog.NewItem.IsSystem">
+        <uib-tab-heading class="h5">弹窗设定</uib-tab-heading>
+        <div class="panel panel-default no-padder col-md-12">
+            <div class="panel-body padder-xs">
+                <div class="form form-horizontal">
+                    <div class="form-group-xs col-md-12">
+                        <div class="col-md-4 no-padder">
+                            <label class="col-md-4 padder-xs control-label text-info">弹窗名称：</label>
+                            <div class="col-md-8 no-padder">
+                                <input autocomplete="off"  type="text" class="form-control" ng-model="dialog.ThisFun.FunName" placeholder="弹窗名称" />
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padder">
+                            <label class="col-md-4 padder-xs control-label text-info">弹窗类型：</label>
+                            <div class="col-md-8 no-padder">
+                                <span class="btn-group">
+                                    <label class="btn btn-sm btn-default" ng-model="dialog.ThisFun.FunType" uib-btn-radio="'B'" ng-click="dialog.ThisFun.DataType=='E'">编辑</label>
+                                    <label class="btn btn-sm btn-default" ng-model="dialog.ThisFun.FunType" uib-btn-radio="'R'" ng-click="dialog.ChangeFunType()">查询</label>
                                 </span>
-                                <span class="block m-l-n bg-transparent">
-                                    <i class="glyphicon glyphicon-move text-info" ng-drag="true"
-                                       ng-drag-data="load" ng-drag-success="dialog.LoadDrag($data,$index)"></i>{{ load.LoadName }}
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padder">
+                            <label class="col-md-4 padder-xs control-label text-info">数据类型：</label>
+                            <div class="col-md-8 no-padder">
+                                <span class="btn-group" ng-if="dialog.ThisFun.FunType=='R'">
+                                    <label class="btn btn-sm btn-default" ng-model="dialog.ThisFun.DataType" uib-btn-radio="'E'" ng-click="dialog.FunType()">实体</label>
+                                    <label class="btn btn-sm btn-default" ng-model="dialog.ThisFun.DataType" uib-btn-radio="'P'" ng-click="dialog.FunType()">存储过程</label>
                                 </span>
-                            </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12">
+                        <div class="col-md-4 no-padder">
+                            <label class="col-md-4 padder-xs control-label text-info">查询实体：</label>
+                            <div class="col-md-8 no-padder">
+                                <div entity-select ng-model="dialog.ThisFun.EntityName" select-class="'text-xs'" ng-change="dialog.ChangeEntity()"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padder" ng-show="dialog.ThisFun.DataType == 'P'">
+                            <label class="col-md-4 padder-xs  control-label text-info">存储过程：</label>
+                            <div class="col-md-8 no-padder">
+                                <ui-select name="remark" ng-model="dialog.ThisFun.ShortName" theme="bootstrap" search-enabled="true" ng-change="dialog.ChangeProc()">
+                                    <ui-select-match placeholder="选择存储过程.."><span>{{ $select.selected.ProcSchema }}.{{ $select.selected.ProcName }}</span></ui-select-match>
+                                    <ui-select-choices repeat="item.ShortName as item in dialog.ProcList | filter: $select.search track by item.ShortName">
+                                        <div><span ng-bind-html="item.ProcSchema | highlight: $select.search"></span>.<span ng-bind-html="item.ProcName | highlight: $select.search"></span></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padder">
+                            <label class="col-md-4 padder-xs control-label text-info">返回栏位：</label>
+                            <div class="col-md-8 no-padder" title="不选则返回实体数据">
+                                <div class="py-xl-0 pt-xl-0 input-group">
+                                    <ui-select name="ReturnColumn" ng-model="dialog.NewItem.ReturnColumn" theme="bootstrap" search-enabled="true">
+                                        <ui-select-match placeholder="选择返回栏...">{{ $select.selected.ColumnName }}</ui-select-match>
+                                        <ui-select-choices repeat="item.ColumnName as item in dialog.EnColList | filter: $select.search">
+                                            <div ng-bind-html="item.ColumnName | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-btn">
+                                        <button ng-click="dialog.Item.ReturnColumn= undefined" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-trash text-danger"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+        <div class="panel panel-success">
+            <div class="panel-heading text-center h4 font-bold">
+                条件栏位设定
+                <span class="pull-right" ng-if="!dialog.ColForm.$invalid">
+                    <a class="text-success" ng-click="dialog.GenCode()">
+                        <i class="fa fa-support"></i>生成代码
+                    </a>
+                </span>
+            </div>
+            <div class="panel-body no-bar padder-xxs col-md-12">
+                <div class="form-horizontal b-b col-md-12 padder-xxs">
+                    <div class="form-group-xs col-md-12 padder-xxs">
+                        <div class="col-md-12 no-padder" ng-if="dialog.ThisFun.DataType == 'E'" ng-form="dialog.NewSerForm">
+                            <div class="col-md-1 padder-xxs">
+                                <button class="btn btn-sm btn-success" ng-disabled="dialog.NewSerForm.$invalid" ng-click="dialog.AddSer()"><i class="glyphicon glyphicon-plus"></i>条件</button>
+                            </div>
+                            <div class="col-md-2 padder-xxs form-group-sm" ng-class="{ 'has-error' : dialog.NewSerForm.ColumnName.$invalid }">
+                                <ui-select name="ColumnName" ng-model="dialog.newSer.ColumnName" theme="bootstrap" search-enabled="true" ng-required="true">
+                                    <ui-select-match placeholder="选择条件属性.."><span>{{ $select.selected.ColumnName }}</span></ui-select-match>
+                                    <ui-select-choices repeat="item.ColumnName as item in dialog.EnColList | filter : {ColumnType : '0'} | filter: $select.search track by item.ColumnName">
+                                        <div><span ng-bind-html="item.ColumnName | highlight: $select.search"></span></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-md-2 padder-xxs form-group-sm" title="查询栏中文名" ng-class="{ 'has-error' : dialog.NewSerForm.SerName.$invalid }">
+                                <input autocomplete="off"  type="text" class="form-control" name="SerName" ng-model="dialog.newSer.SerName" placeholder="查询栏位描述" required />
+                            </div>
+                            <div class="col-md-2 padder-xxs form-group-sm" title="查询栏属性类型" ng-class="{ 'has-error' : dialog.NewSerForm.SerType.$invalid }">
+                                <!--<div config-select ng-model="dialog.newSer.SerType" ng-name="SerType" config-option="dialog.SerTypeConfig" ng-required="true"></div>-->
+                                <div config-select ng-model="dialog.newSer.SerType" ng-name="SerType" config-option="dialog.ColTypeConfig" ng-required="true"></div>
+                                <div ng-if="dialog.newSer.SerType=='Select'" class="m-t-xs" ng-class="{ 'has-error' : dialog.ColForm.SerTValue.$invalid }">
+                                    <ui-select name="SerTValue" ng-model="dialog.newSer.SerTName" theme="bootstrap" search-enabled="true" ng-required="true">
+                                        <ui-select-match placeholder="请选择.."><span>{{ $select.selected.SelectName }}</span></ui-select-match>
+                                        <ui-select-choices repeat="item.SelectName as item in dialog.SelectList | filter: $select.search track by item.SelectName">
+                                            <div class="h5"><span ng-bind-html="item.SelectName | highlight: $select.search"></span></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div ng-if="dialog.newSer.SerType=='Config'" class="m-t-xs" ng-class="{ 'has-error' : dialog.ColForm.SerTableCofig.$invalid }">
+                                    <div basic-select="TableCofig" ng-model="dialog.newSer.SerTName" ng-name="STableCofig" ng-required="true"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 padder-xxs form-group-sm" title="查询栏与值的关系" ng-class="{ 'has-error' : dialog.NewSerForm.SerType.$invalid }">
+                                <div config-select ng-model="dialog.newSer.SerAss" ng-disabled="dialog.ThisFun.DataType == 'P'" ng-name="SerAss" config-option="dialog.SerAssConfig" ng-required="true"></div>
+                            </div>
+                            <div class="col-md-2 padder-xs form-group-sm" title="查询栏初始默认值">
+                                <input autocomplete="off"  type="text" class="form-control" name="SerValue" ng-model="dialog.newSer.SerValue" placeholder="查询初始默认值" />
+                            </div>
+                            <div class="col-md-1 padder-xxs form-control-static" title="是否为隐藏条件">
+                                <label class="i-checks i-checks">
+                                    <input autocomplete="off"  type="checkbox" ng-model="dialog.newSer.IsHide"><i></i>隐藏
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 no-padder" ng-repeat="ser in dialog.ThisFun.SerList ">
+                            <div class="col-md-1 padder-xxs">
+                                <button class="btn btn-sm btn-danger" ng-click="dialog.DeleteSer($index)"><i class="glyphicon glyphicon-remove"></i>删除</button>
+                            </div>
+                            <div class="col-md-2 padder-xxs form-control-static h4 font-bold text-info">
+                                {{ ser.ColumnName }}
+                            </div>
+                            <div class="col-md-2 padder-xxs form-group-sm" ng-class="{ 'has-error' : dialog.ColForm.SerNameL.$invalid }">
+                                <input autocomplete="off"  type="text" class="form-control" name="SerNameL" ng-model="ser.SerName" placeholder="查询栏位描述" required />
+                            </div>
+                            <div class="col-md-2 padder-xxs form-group-sm" ng-class="{ 'has-error' : dialog.ColForm.SerTypeS.$invalid }">
+                                <!--<div config-select ng-model="ser.SerType" ng-name="SerTypeL" config-option="dialog.SerTypeConfig" ng-required="true"></div>-->
+
+                                <div config-select ng-model="ser.SerType" ng-name="SerTypeS" config-option="dialog.ColTypeConfig" ng-required="true"></div>
+                                <div ng-if="ser.SerType=='Select'" class="m-t-xs" ng-class="{ 'has-error' : dialog.ColForm.SerTValueS.$invalid }">
+                                    <ui-select name="SerTValueS" ng-model="ser.SerTName" theme="bootstrap" search-enabled="true" ng-required="true">
+                                        <ui-select-match placeholder="请选择.."><span>{{ $select.selected.SelectName }}</span></ui-select-match>
+                                        <ui-select-choices repeat="item.SelectName as item in dialog.SelectList | filter: $select.search track by item.SelectName">
+                                            <div class="h5"><span ng-bind-html="item.SelectName | highlight: $select.search"></span></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div ng-if="ser.SerType=='Config'" class="m-t-xs" ng-class="{ 'has-error' : dialog.ColForm.STableCofigL.$invalid }">
+                                    <div basic-select="TableCofig" ng-model="ser.SerTName" ng-name="STableCofigL" ng-required="true"></div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-2 padder-xxs form-group-sm" ng-class="{ 'has-error' : dialog.ColForm.SerAssL.$invalid }">
+                                <div config-select ng-model="ser.SerAss" ng-disabled="dialog.ThisFun.DataType == 'P'" ng-name="SerAssL" config-option="dialog.SerAssConfig" ng-required="true"></div>
+                            </div>
+                            <div class="col-md-2 padder-xs form-group-sm">
+                                <input autocomplete="off"  type="text" class="form-control" ng-model="ser.SerValue" placeholder="查询默认值" />
+                            </div>
+                            <div class="col-md-1 padder-xxs form-control-static">
+                                <label class="i-checks i-checks">
+                                    <input autocomplete="off"  type="checkbox" ng-model="ser.IsHide"><i></i>隐藏
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-t-xs col-md-12 padder-xs">
+                    <div class="col-md-2 text-xs no-padder scroll-y" style="max-height:400px">
+                        <table class="table pad-xs col-md-12 one-line">
+                            <thead>
+                                <tr>
+                                    <td class="col-md-3 pad-xss" style="text-align:left">
+                                        <label class="i-checks i-checks-sm">
+                                            <input autocomplete="off"  type="checkbox" ng-change="dialog.IsColAll()" ng-model="dialog.IsAll"><i></i>
+                                        </label>
+                                    </td>
+                                    <td class="col-md-9">栏名</td>
+                                </tr>
+                            </thead>
+                            <tr class="text-left" ng-repeat="col in dialog.EnColList">
+                                <!--<td>{{ col.ColumnText }}</td>-->
+                                <td class="text-left">
+                                    <label class="i-checks i-checks-sm">
+                                        <input autocomplete="off"  type="checkbox" ng-change="dialog.IsColChange(col)" ng-model="col.IsShow"><i></i>
+                                    </label>
+                                </td>
+                                <td title="{{ col.ColumnName }}" ng-class="{'bg-warning':col.ColumnType == '3'}">{{ col.ColumnName }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-10 wrapper-xs no-padder scroll-y" ng-form="dialog.ColForm" style="max-height:400px">
+                        <table class="table pad-xs no-padder">
+                            <thead>
+                                <tr>
+                                    <td style="width:30px"></td>
+                                    <td style="width:80px">栏名</td>
+                                    <td style="width:110px">中文名</td>
+                                    <td style="width:50px">宽度</td>
+                                    <td style="width:80px" ng-if="dialog.ThisFun.FunType=='B'">编辑栏</td>
+                                    <td style="width:80px" ng-if="dialog.ThisFun.FunType=='B'">类型</td>
+                                    <td style="width:80px" ng-if="dialog.ThisFun.FunType=='B'">属性</td>
+                                    <td style="width:50px" ng-if="dialog.ThisFun.FunType=='B'">验重</td>
+                                    <td style="width:30px"></td>
+                                </tr>
+                            </thead>
+                            <tr class="text-left h6" ng-repeat="show in dialog.ThisFun.ColList" ng-drop="true" ng-drop-success="dialog.Drop($data,$index)">
+                                <td class="text-center h4">
+                                    <i class="glyphicon glyphicon-move text-info" ng-drag="true"
+                                       ng-drag-data="show" ng-drag-success="dialog.Drag($data,$index)"></i>
+                                </td>
+                                <td class="one-line" ng-class="{'bg-warning':show.ColumnType == '3'}" title="{{ show.ColumnName }}">
+                                    <div style="width:80px" class="width-fix">{{ show.ColumnName }}</div>
+                                </td>
+                                <td class="multi-line"><input autocomplete="off"  type="text" name="ColumnText" class="form-control padder-xxs" placeholder="中文栏名" ng-model="show.ColumnText" /></td>
+                                <td class="multi-line"><input autocomplete="off"  type="text" name="Width" class="form-control padder-xxs" placeholder="宽度" ng-model="show.Width" /></td>
+                                <td class="text-center multi-line" ng-if="dialog.ThisFun.FunType=='B'">
+                                    <div ng-class="{ 'has-error' : dialog.ColForm.editCol.$invalid }">
+                                        <ui-select name="editCol" ng-model="show.EditCol" class="padder-xxs" search-enabled="true" ng-required="true">
+                                            <ui-select-match class="padder-xxs" placeholder="请选择.."><span>{{ $select.selected.ColumnName }}</span></ui-select-match>
+                                            <ui-select-choices repeat="item.ColumnName as item in dialog.EnColList | filter: $select.search track by item.ColumnName">
+                                                <div><span ng-bind-html="item.ColumnName | highlight: $select.search"></span></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </td>
+                                <td class="text-center multi-line" ng-if="dialog.ThisFun.FunType=='B'">
+                                    <div config-select ng-model="show.ColType" ng-name="ColType" config-option="dialog.ColTypeConfig" ng-required="true"></div>
+                                    <div ng-if="show.ColType=='Select'" class="m-t-xs" ng-class="{ 'has-error' : dialog.ColForm.ColValue.$invalid }">
+                                        <ui-select name="ColValue" ng-model="show.ColValue" theme="bootstrap" search-enabled="true" ng-required="true">
+                                            <ui-select-match placeholder="请选择.."><span>{{ $select.selected.SelectName }}</span></ui-select-match>
+                                            <ui-select-choices repeat="item.SelectName as item in dialog.SelectList | filter: $select.search track by item.SelectName">
+                                                <div class="h5"><span ng-bind-html="item.SelectName | highlight: $select.search"></span></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div ng-if="show.ColType=='Config'" class="m-t-xs" ng-class="{ 'has-error' : dialog.ColForm.TableCofig.$invalid }">
+                                        <div basic-select="TableCofig" ng-model="show.ColValue" ng-name="TableCofig" ng-required="true"></div>
+                                    </div>
+                                </td>
+                                <td class="text-center multi-line" ng-if="dialog.ThisFun.FunType=='B'">
+                                    <div config-select ng-model="show.ABleNull" ng-name="ColType" config-option="dialog.AbleNullConfig" ng-required="true"></div>
+                                </td>
+                                <td class="text-center multi-line" ng-if="dialog.ThisFun.FunType=='B'">
+                                    <label class="i-checks i-checks-sm">
+                                        <input autocomplete="off"  type="checkbox" ng-model="show.CheckExists" ng-disabled="show.ColumnType == '3'|| show.TableAs != 'a' || show.ColType!='Text'"><i></i>
+                                    </label>
+                                </td>
+                                <td class="text-center h4">
+                                    <a class="text-danger" ng-click="dialog.DeleteFunCol(show, $index)"><i class="glyphicon glyphicon-remove"></i></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--<pre>{{ dialog.ThisFun |json }}</pre>-->
+        </div>
+    </uib-tab>
+    <uib-tab index="2" disable="dialog.NewItem.IsSystem">
+        <uib-tab-heading class="h5">HTML文件代码</uib-tab-heading>
+        <div class="panel">
+            <textarea class="form-control" rows="22" ng-model="dialog.NewItem.Content.Html"></textarea>
+        </div>
+    </uib-tab>
+    <uib-tab index="3" disable="dialog.NewItem.IsSystem">
+        <uib-tab-heading class="h5">Js文件代码</uib-tab-heading>
+        <div class="panel">
+            <textarea class="form-control" rows="22" ng-model="dialog.NewItem.Content.Js"></textarea>
+        </div>
+    </uib-tab>
+</uib-tabset>
 <div class="modal-footer">
-    <button class="btn btn-success" type="button" ng-disabled="dialog.DialogForm.$invalid" ng-click="dialog.Save()">储存</button>
-    <button class="btn btn-warning" type="button" ng-click="dialog.cancel()">取消</button>
+    <div class="text-center">
+        <button class="btn btn-info" type="button" ng-disabled="dialog.DialogForm.$invalid" ng-click="dialog.Pre()">预览</button>
+        <button class="btn btn-info" type="button" ng-disabled="dialog.DialogForm.$invalid" ng-click="dialog.SaveAndPre()">储存并预览</button>
+        <button class="btn btn-success" type="button" ng-disabled="dialog.DialogForm.$invalid" ng-click="dialog.Save()">储存</button>
+        <button class="btn btn-warning" type="button" ng-click="dialog.cancel()">取消</button>
+    </div>
 </div>
 
 <!--<pre>{{ dialog.NewItem | json }}</pre>-->

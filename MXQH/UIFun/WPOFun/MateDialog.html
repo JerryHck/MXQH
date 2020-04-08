@@ -9,7 +9,7 @@
                     <div class="col-md-12 padder-xs">
                         <label class="col-md-3 control-label">料号</label>
                         <div class="col-md-8 no-padder" ng-class="{ 'has-error' : m.DialogForm.MateCode.$invalid }">
-                            <input type="text" class="form-control" name="MateCode" placeholder="料号"
+                            <input autocomplete="off"  type="text" class="form-control" name="MateCode" placeholder="料号"
                                    ng-model="m.Item.MateCode" ng-disabled="m.form.index == 1" ng-blur="m.isExists()" required>
                             <div ng-messages="m.DialogForm.MateCode.$error" class="help-block" role="alert">
                                 <div ng-message="unique">料号重复</div>
@@ -21,7 +21,7 @@
                     <div class="col-md-12 padder-xs">
                         <label class="col-md-3 control-label">料名</label>
                         <div class="col-md-8 no-padder" title="料名" ng-class="{ 'has-error' : m.DialogForm.MateName.$invalid }">
-                            <input type="text" class="form-control" name="MateName" placeholder="料名" ng-model="m.Item.MateName" required>
+                            <input autocomplete="off"  type="text" class="form-control" name="MateName" placeholder="料名" ng-model="m.Item.MateName" required>
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                     <div class="col-md-12 padder-xs">
                         <label class="col-md-3 control-label">力同料号</label>
                         <div class="col-md-8 no-padder" ng-class="{ 'has-error' : m.DialogForm.AucMateCode.$invalid }">
-                            <input type="text" class="form-control" name="AucMateCode" placeholder="力同料号" ng-model="m.Item.AucMateCode" required>
+                            <input autocomplete="off"  type="text" class="form-control" name="AucMateCode" placeholder="力同料号" ng-model="m.Item.AucMateCode" required>
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                     <div class="col-md-12 padder-xs">
                         <label class="col-md-3 control-label">力同料名</label>
                         <div class="col-md-8 no-padder" title="力同料名" ng-class="{ 'has-error' : m.DialogForm.AucMateName.$invalid }">
-                            <input type="text" class="form-control" name="AucMateName" placeholder="力同料名" ng-model="m.Item.AucMateName" required>
+                            <input autocomplete="off"  type="text" class="form-control" name="AucMateName" placeholder="力同料名" ng-model="m.Item.AucMateName" required>
                         </div>
                     </div>
                 </div>

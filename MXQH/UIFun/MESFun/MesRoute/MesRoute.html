@@ -17,7 +17,7 @@
                             <div class="input-group-btn">
                                 <button class="btn btn-success pull-right" ng-click="ro.AddRoute()"><i class="glyphicon glyphicon-plus"></i></button>
                             </div>
-                            <input type="text" class="form-control" placeholder="查询" ng-model="ro.MateQuery">
+                            <input autocomplete="off"  type="text" class="form-control" placeholder="查询" ng-model="ro.MateQuery">
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                                 <div class="col-md-12 padder-xs">
                                     <label class="col-lg-2 control-label text-info">工艺名称:</label>
                                     <div class="col-lg-10" ng-class="{ 'has-error' : ro.RouteForm.RouteName.$invalid }">
-                                        <input class="form-control text-xs" name="RouteName" type="text" ng-model="ro.SelectedRo.RouteName"
+                                        <input autocomplete="off"  class="form-control text-xs" name="RouteName" type="text" ng-model="ro.SelectedRo.RouteName"
                                                ng-blur="ro.isExists()" ng-disabled="!ro.editRoute" required>
                                         <div ng-messages="ro.RouteForm.RouteName.$error" class="help-block" role="alert">
                                             <div ng-message="unique" class="h6">工艺名称重复</div>
@@ -83,7 +83,7 @@
                                     <label class="col-lg-4 padder-xs control-label text-info">是否显示</label>
                                     <div class="col-lg-8 text-xs form-control-static padder-md">
                                         <label class="i-checks i-checks m-l-md">
-                                            <input type="checkbox" ng-disabled="!ro.editRoute" ng-model="ro.SelectedRo.IsUse"><i></i>
+                                            <input autocomplete="off"  type="checkbox" ng-disabled="!ro.editRoute" ng-model="ro.SelectedRo.IsUse"><i></i>
                                         </label>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                                     <!--<label class="col-lg-4 control-label text-info">是否控制</label>
                                     <div class="col-lg-8 text-xs form-control-static">
                                         <label class="i-checks i-checks">
-                                            <input type="checkbox" ng-disabled="!ro.editRoute" ng-model="ro.SelectedRo.IsControl"><i></i>
+                                            <input autocomplete="off"  type="checkbox" ng-disabled="!ro.editRoute" ng-model="ro.SelectedRo.IsControl"><i></i>
                                         </label>
                                     </div>-->
                                 </div>
@@ -164,7 +164,7 @@
                                                 <div class="col-md-6 no-padder">
                                                     <label class="col-lg-4 control-label text-info">UPPH:</label>
                                                     <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : ro.ProcForm.UPPH.$invalid }">
-                                                        <input type="number" ng-disabled="!ro.editRoute" class="form-control" name="UPPH" placeholder="UPPH" ng-model="ro.ProcItem.StandardCapacity" required />
+                                                        <input autocomplete="off"  type="number" ng-disabled="!ro.editRoute" class="form-control" name="UPPH" placeholder="UPPH" ng-model="ro.ProcItem.StandardCapacity" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -172,13 +172,13 @@
                                                 <div class="col-md-6 no-padder">
                                                     <label class="col-lg-4  padder-xs  control-label text-info">单位:</label>
                                                     <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : ro.ProcForm.Unit.$invalid }">
-                                                        <input type="text" ng-disabled="!ro.editRoute" class="form-control" name="Unit" placeholder="单位" ng-model="ro.ProcItem.Unit" required />
+                                                        <input autocomplete="off"  type="text" ng-disabled="!ro.editRoute" class="form-control" name="Unit" placeholder="单位" ng-model="ro.ProcItem.Unit" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 no-padder">
                                                     <label class="col-lg-4 control-label text-info">工位人数:</label>
                                                     <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : ro.ProcForm.Remark.$invalid }">
-                                                        <input type="text" ng-disabled="!ro.editRoute" class="form-control" name="Remark" placeholder="工位人数" ng-model="ro.ProcItem.Remark" required />
+                                                        <input autocomplete="off"  type="text" ng-disabled="!ro.editRoute" class="form-control" name="Remark" placeholder="工位人数" ng-model="ro.ProcItem.Remark" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -186,13 +186,13 @@
                                                 <div class="col-md-6 no-padder">
                                                     <label class="col-lg-4  padder-xs  control-label text-info">标准工时:</label>
                                                     <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : ro.ProcForm.Item1.$invalid }">
-                                                        <input type="text" ng-disabled="!ro.editRoute" class="form-control" name="Item1" placeholder="标准工时" ng-model="ro.ProcItem.Item1" required />
+                                                        <input autocomplete="off"  type="text" ng-disabled="!ro.editRoute" class="form-control" name="Item1" placeholder="标准工时" ng-model="ro.ProcItem.Item1" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 no-padder">
                                                     <label class="col-lg-4 control-label text-info">直通率预警:</label>
                                                     <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : ro.ProcForm.Item2.$invalid }">
-                                                        <input type="text" ng-disabled="!ro.editRoute" class="form-control" name="Item2" placeholder="直通率预警" ng-model="ro.ProcItem.Item2" required />
+                                                        <input autocomplete="off"  type="text" ng-disabled="!ro.editRoute" class="form-control" name="Item2" placeholder="直通率预警" ng-model="ro.ProcItem.Item2" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -200,13 +200,13 @@
                                                 <div class="col-md-6 no-padder">
                                                     <label class="col-lg-4  padder-xs  control-label text-info">工段人数:</label>
                                                     <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : ro.ProcForm.Item3.$invalid }">
-                                                        <input type="text" ng-disabled="!ro.editRoute" class="form-control" name="Item3" placeholder="工段人数" ng-model="ro.ProcItem.Item3" required />
+                                                        <input autocomplete="off"  type="text" ng-disabled="!ro.editRoute" class="form-control" name="Item3" placeholder="工段人数" ng-model="ro.ProcItem.Item3" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 no-padder">
                                                     <label class="col-lg-4 control-label text-info">产出报警:</label>
                                                     <div class="col-lg-8 text-xs" ng-class="{ 'has-error' : ro.ProcForm.Item4.$invalid }">
-                                                        <input type="text" ng-disabled="!ro.editRoute" class="form-control" name="Item4" placeholder="产出报警" ng-model="ro.ProcItem.Item4" required />
+                                                        <input autocomplete="off"  type="text" ng-disabled="!ro.editRoute" class="form-control" name="Item4" placeholder="产出报警" ng-model="ro.ProcItem.Item4" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -216,7 +216,7 @@
                                                     <div class="col-lg-8 no-padder text-xs">
                                                         <div class="col-md-12 m-t-xs padder-xs b-b" ng-repeat="item in ro.ProcWPList | limitTo: ro.ProIndex+1">
                                                             <label class="i-checks i-checks m-l-md">
-                                                                <input type="checkbox" ng-disabled="!ro.editRoute" ng-model="item.IsCheck" ng-change="ro.RepairCheck()"><i></i>
+                                                                <input autocomplete="off"  type="checkbox" ng-disabled="!ro.editRoute" ng-model="item.IsCheck" ng-change="ro.RepairCheck()"><i></i>
                                                             </label>{{ item.ProcedureInfo.Name }}
                                                         </div>
                                                         <span class="text-danger h6" ng-if="ro.editRoute">注：必须选一个返修工序</span>
@@ -226,7 +226,7 @@
                                                     <label class="col-lg-4  padder-xs  control-label text-info">是否打印:</label>
                                                     <div class="col-lg-8 text-xs form-control-static">
                                                         <label class="i-checks i-checks m-l-md">
-                                                            <input type="checkbox" ng-disabled="!ro.editRoute" ng-model="ro.ProcItem.IsPrint"><i></i>
+                                                            <input autocomplete="off"  type="checkbox" ng-disabled="!ro.editRoute" ng-model="ro.ProcItem.IsPrint"><i></i>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -236,7 +236,7 @@
                                                     <label class="col-lg-4  padder-xs  control-label text-info">老化工艺:</label>
                                                     <div class="col-lg-8 text-xs form-control-static">
                                                         <label class="i-checks i-checks m-l-md">
-                                                            <input type="checkbox" ng-disabled="!ro.editRoute" ng-model="ro.ProcItem.IsAging"><i></i>
+                                                            <input autocomplete="off"  type="checkbox" ng-disabled="!ro.editRoute" ng-model="ro.ProcItem.IsAging"><i></i>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -244,7 +244,7 @@
                                                     <label class="col-lg-4  padder-xs  control-label text-info">功放测试:</label>
                                                     <div class="col-lg-8 text-xs form-control-static">
                                                         <label class="i-checks i-checks m-l-md">
-                                                            <input type="checkbox" ng-disabled="!ro.editRoute" ng-model="ro.ProcItem.IsGfTest"><i></i>
+                                                            <input autocomplete="off"  type="checkbox" ng-disabled="!ro.editRoute" ng-model="ro.ProcItem.IsGfTest"><i></i>
                                                         </label>
                                                     </div>
                                                 </div>

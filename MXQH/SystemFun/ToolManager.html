@@ -5,7 +5,7 @@
             <div class="form-inline">
                 <button class="btn btn-sm btn-success " ng-click="to.InsertTool() "><i class="glyphicon glyphicon-plus "></i>新增</button>
                 <div class="form-group">
-                    <input type="text" class="form-control" ng-model="to.Ser.ToolName" placeholder="工具名称">
+                    <input autocomplete="off"  type="text" class="form-control" ng-model="to.Ser.ToolName" placeholder="工具名称">
                 </div>
                 <button class="btn btn-sm btn-info " ng-click="to.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
             </div>
@@ -32,7 +32,7 @@
                     </td>
                     <td>
                         <div ng-class="{ 'has-error' : to.InToolForm.toolName.$invalid }">
-                            <input type="text" name="toolName" class="form-control" ng-model="to.NewTool.Name" required />
+                            <input autocomplete="off"  type="text" name="toolName" class="form-control" ng-model="to.NewTool.Name" required />
                         </div>
                     </td>
                     <td>
@@ -42,10 +42,10 @@
                     </td>
                     <td>
                         <div ng-class="{ 'has-error' : to.InToolForm.Pathlink.$invalid }">
-                            <input type="text" name="Pathlink" class="form-control" ng-model="to.NewTool.PathLink" required />
+                            <input autocomplete="off"  type="text" name="Pathlink" class="form-control" ng-model="to.NewTool.PathLink" required />
                         </div>
                     </td>
-                    <td><input type="text" class="form-control" ng-model="to.NewTool.Remark" /></td>
+                    <td><input autocomplete="off"  type="text" class="form-control" ng-model="to.NewTool.Remark" /></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -64,7 +64,7 @@
                     </td>
                     <td>
                         <span ng-if="!item.IsEdit">{{ item.Name }}</span>
-                        <input ng-if="item.IsEdit" type="text" class="form-control" ng-model="to.EditItem.Name" />
+                        <input autocomplete="off"  ng-if="item.IsEdit" type="text" class="form-control" ng-model="to.EditItem.Name" />
                     </td>
                     <td>
                         <span ng-if="!item.IsEdit">{{ item.ToolType.TName }}</span>
@@ -72,11 +72,11 @@
                     </td>
                     <td>
                         <span ng-if="!item.IsEdit">{{ item.PathLink }}</span>
-                        <input ng-if="item.IsEdit" type="text" class="form-control" ng-model="to.EditItem.PathLink" />
+                        <input autocomplete="off"  ng-if="item.IsEdit" type="text" class="form-control" ng-model="to.EditItem.PathLink" />
                     </td>
                     <td>
                         <span ng-if="!item.IsEdit">{{ item.Remark }}</span>
-                        <input ng-if="item.IsEdit" type="text" class="form-control" ng-model="to.EditItem.Remark" />
+                        <input autocomplete="off"  ng-if="item.IsEdit" type="text" class="form-control" ng-model="to.EditItem.Remark" />
                     </td>
                     <td>{{ item.CreateBy }}</td>
                     <td>{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
@@ -96,7 +96,7 @@
             <div class="form-inline">
                 <button class="btn btn-sm btn-success " ng-disabled="to.InType" ng-click="to.InsertType() "><i class="glyphicon glyphicon-plus "></i>新增</button>
                 <div class="form-group">
-                    <input type="text" class="form-control" ng-model="to.SerType.TCode" placeholder="工具名称">
+                    <input autocomplete="off"  type="text" class="form-control" ng-model="to.SerType.TCode" placeholder="工具名称">
                 </div>
             </div>
         </div>
@@ -122,10 +122,10 @@
                     <td>{{ to.NewType.TCode  }}</td>
                     <td>
                         <div ng-class="{ 'has-error' : to.InTypeForm.TName.$invalid }">
-                            <input type="text" name="TName" class="form-control" ng-model="to.NewType.TName" required />
+                            <input autocomplete="off"  type="text" name="TName" class="form-control" ng-model="to.NewType.TName" required />
                         </div>
                     </td>
-                    <td><input type="text" class="form-control" ng-model="to.NewType.Remark" /></td>
+                    <td><input autocomplete="off"  type="text" class="form-control" ng-model="to.NewType.Remark" /></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -146,12 +146,12 @@
                     <td>
                         <span ng-if="!item.IsEdit">{{ item.TName }}</span>
                         <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.ITName.$invalid }">
-                            <input type="text" name="ITName" class="form-control" ng-model="to.EditTypeItem.TName" required />
+                            <input autocomplete="off"  type="text" name="ITName" class="form-control" ng-model="to.EditTypeItem.TName" required />
                         </div>
                     </td>
                     <td>
                         <span ng-if="!item.IsEdit">{{ item.Remark }}</span>
-                        <input ng-if="item.IsEdit" type="text" class="form-control" ng-model="to.EditTypeItem.Remark" />
+                        <input autocomplete="off"  ng-if="item.IsEdit" type="text" class="form-control" ng-model="to.EditTypeItem.Remark" />
                     </td>
                     <td>{{ item.CreateBy }}</td>
                     <td>{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>

@@ -7,14 +7,14 @@
                     <button class="btn btn-sm btn-success " ng-click="crc.Add() "><i class="glyphicon glyphicon-plus "></i>新增</button>
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" class="form-control" ng-model="crc.page.WorkOrder" placeholder="工单号">
+                            <input autocomplete="off"  type="text" class="form-control" ng-model="crc.page.WorkOrder" placeholder="工单号">
                             <span class="input-group-addon">
                                 <a><i ng-click="crc.page.WorkOrder = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
                             </span>
                         </div>
                         <div class="input-group">
                             <div class="input-group">
-                                <input type="text" date-time-picker class="form-control" name="StartDate" placeholder="开始日期" option="crc.dt1"
+                                <input autocomplete="off"  type="text" date-time-picker class="form-control" name="StartDate" placeholder="开始日期" option="crc.dt1"
                                        ng-model="crc.page.StartDate">
                                 <span class="input-group-addon">
                                     <a><i ng-click="crc.page.StartDate = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
@@ -22,7 +22,7 @@
                             </div>
                         </div>
                         <div class="input-group">
-                            <input type="text" date-time-picker class="form-control" name="EndDate" placeholder="结束日期" option="crc.dt2"
+                            <input autocomplete="off"  type="text" date-time-picker class="form-control" name="EndDate" placeholder="结束日期" option="crc.dt2"
                                    ng-model="crc.page.EndDate">
                             <span class="input-group-addon">
                                 <a><i ng-click="crc.page.EndDate = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
@@ -31,7 +31,7 @@
                     </div>
                     <!--<div class="form-group">
                         <div class="input-group">
-                            <input type="text" date-picker class="form-control" name="AssemblyDate" placeholder="完工日期" option="auctusSO.UnExist2"
+                            <input autocomplete="off"  type="text" date-picker class="form-control" name="AssemblyDate" placeholder="完工日期" option="auctusSO.UnExist2"
                                    ng-model="crc.Ser.AssemblyDate" required>
                             <span class="input-group-addon">
                                 <a><i ng-click="crc.Ser.AssemblyDate = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>

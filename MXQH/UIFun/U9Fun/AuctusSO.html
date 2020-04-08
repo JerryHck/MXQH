@@ -21,7 +21,7 @@
                             <div class="form-group">
                                 <label class="col-md-1 control-label text-lg text-left">订单号：</label>
                                 <div class="col-md-2">
-                                    <input type="text" disabled="disabled" class="form-control" name="DocNo" placeholder="订单号"
+                                    <input autocomplete="off"  type="text" disabled="disabled" class="form-control" name="DocNo" placeholder="订单号"
                                            ng-model="auctusSO.SO.DocNo">
                                 </div>
                                 <label class="col-md-1 control-label text-lg text-left">客户：</label>
@@ -30,7 +30,7 @@
                                 </div>
                                 <label class="col-md-2 control-label text-lg text-left">业务日期：</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.form.BusinessDate.$invalid }">
-                                    <input type="text" date-time-picker class="form-control" name="BusinessDate" placeholder="业务日期" option="auctusSO.UnExist2"
+                                    <input autocomplete="off"  type="text" date-time-picker class="form-control" name="BusinessDate" placeholder="业务日期" option="auctusSO.UnExist2"
                                            ng-model="auctusSO.SO.BusinessDate" required>
                                 </div>
                             </div>
@@ -38,10 +38,10 @@
                                 <label class="col-md-1 control-label text-lg text-left">整机料号：</label>
                                 <div class="col-md-2" ng-class="{ 'has-error' : auctusSO.form.Code.$invalid }">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="Code" placeholder="料号"
+                                        <input autocomplete="off"  type="text" class="form-control" name="Code" placeholder="料号"
                                                ng-model="auctusSO.SO.Code" ng-click="auctusSO.SelectSOItem()" required>
 
-                                        <input type="hidden" ng-model="auctusSO.SO.Itemmaster" />
+                                        <input autocomplete="off"  type="hidden" ng-model="auctusSO.SO.Itemmaster" />
                                         <span class="input-group-btn">
                                             <button class="btn" ng-click="auctusSO.SelectSOItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
                                         </span>
@@ -50,7 +50,7 @@
                                 <label class="col-md-1 control-label text-lg text-left">整机品名：</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.form.Name.$invalid }">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="Name" placeholder="品名"
+                                        <input autocomplete="off"  type="text" class="form-control" name="Name" placeholder="品名"
                                                ng-model="auctusSO.SO.Name" ng-click="auctusSO.SelectSOItem()" required>
                                         <span class="input-group-btn">
                                             <button class="btn" ng-click="auctusSO.SelectSOItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
@@ -60,7 +60,7 @@
                                 <label class="col-md-2 control-label text-lg text-left">整机规格：</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.form.SPECS.$invalid }">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="SPECS" placeholder="规格"
+                                        <input autocomplete="off"  type="text" class="form-control" name="SPECS" placeholder="规格"
                                                ng-model="auctusSO.SO.SPECS" ng-click="auctusSO.SelectSOItem()" required>
                                         <span class="input-group-btn">
                                             <button class="btn" ng-click="auctusSO.SelectSOItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
@@ -71,12 +71,12 @@
                             <div class="form-group">
                                 <label class="col-md-1 control-label text-lg text-left">数量：</label>
                                 <div class="col-md-2" ng-class="{ 'has-error' : auctusSO.form.Qty.$invalid }">
-                                    <input type="number" class="form-control" name="Qty" placeholder="数量"
+                                    <input autocomplete="off"  type="number" class="form-control" name="Qty" placeholder="数量"
                                            ng-model="auctusSO.SO.Qty" required>
                                 </div>
                                 <label class="col-md-1 control-label text-lg text-left">制单人：</label>
                                 <div class="col-md-2" ng-class="{ 'has-error' : auctusSO.form.Operator.$invalid }">
-                                    <input type="text" disabled="disabled" class="form-control" name="Operator" placeholder="制单人"
+                                    <input autocomplete="off"  type="text" disabled="disabled" class="form-control" name="Operator" placeholder="制单人"
                                            ng-model="auctusSO.SO.Operator" required>
                                 </div>
                                 <label class="col-md-1 control-label text-lg text-left">备注：</label>
@@ -92,7 +92,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input type="submit" class="btn btn-sm btn-success" ng-click="auctusSO.AddSOLine(formSOLine)" value="新增行" />
+                        <input autocomplete="off"  type="submit" class="btn btn-sm btn-success" ng-click="auctusSO.AddSOLine(formSOLine)" value="新增行" />
                     </div>
                     <table class="table b-2x table-responsive" style="word-break:break-all; word-wrap:break-word;">
                         <tr class="text-center bg-gd-dk h4">
@@ -142,17 +142,17 @@
                     <div class="panel-body">
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <input type="submit" class="btn btn-sm btn-success" style="margin-left:15px;" ng-click="auctusSO.SaveSOLine(formSOLine)" value="保存" />
-                                <input type="button" class="btn btn-sm btn-warning" style="margin-left:5px;" ng-click="auctusSO.CancelSOLine()" value="放弃" />
+                                <input autocomplete="off"  type="submit" class="btn btn-sm btn-success" style="margin-left:15px;" ng-click="auctusSO.SaveSOLine(formSOLine)" value="保存" />
+                                <input autocomplete="off"  type="button" class="btn btn-sm btn-warning" style="margin-left:5px;" ng-click="auctusSO.CancelSOLine()" value="放弃" />
                             </div>
                             <div class="form-group">
                                 <label class="col-md-1 control-label text-lg text-left">料号：</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.formSOLine.Code.$invalid }">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="Code" placeholder="料号"
+                                        <input autocomplete="off"  type="text" class="form-control" name="Code" placeholder="料号"
                                                ng-model="auctusSO.SOLine.Code" ng-click="auctusSO.SelectItem()" required>
 
-                                        <input type="hidden" ng-model="auctusSO.SOLine.Itemmaster" />
+                                        <input autocomplete="off"  type="hidden" ng-model="auctusSO.SOLine.Itemmaster" />
                                         <span class="input-group-btn">
                                             <button class="btn" ng-click="auctusSO.SelectItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
                                         </span>
@@ -161,7 +161,7 @@
                                 <label class="col-md-1 control-label text-lg text-left">品名：</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.formSOLine.Name.$invalid }">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="Name" placeholder="品名"
+                                        <input autocomplete="off"  type="text" class="form-control" name="Name" placeholder="品名"
                                                ng-model="auctusSO.SOLine.Name" ng-click="auctusSO.SelectItem()" required>
                                         <span class="input-group-btn">
                                             <button class="btn" ng-click="auctusSO.SelectItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
@@ -171,7 +171,7 @@
                                 <label class="col-md-1 control-label text-lg text-left">规格：</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.formSOLine.SPECS.$invalid }">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="SPECS" placeholder="规格"
+                                        <input autocomplete="off"  type="text" class="form-control" name="SPECS" placeholder="规格"
                                                ng-model="auctusSO.SOLine.SPECS" ng-click="auctusSO.SelectItem()" required>
                                         <span class="input-group-btn">
                                             <button class="btn" ng-click="auctusSO.SelectItem()" style="background:white;border:1px solid #cfdadd;border-left:0px;"><i class="fa fa-search"></i></button>
@@ -182,17 +182,17 @@
                             <div class="form-group">
                                 <label class="col-md-1 control-label text-lg text-left">数量：</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.formSOLine.Qty.$invalid }">
-                                    <input type="number" class="form-control" name="Qty" placeholder="数量"
+                                    <input autocomplete="off"  type="number" class="form-control" name="Qty" placeholder="数量"
                                            ng-model="auctusSO.SOLine.Qty" required>
                                 </div>
                                 <label class="col-md-1 control-label text-lg text-left">交期：</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.formSOLine.RequireDate.$invalid }">
-                                    <input type="text" date-picker class="form-control" name="RequireDate" placeholder="交期" option="auctusSO.UnExist"
+                                    <input autocomplete="off"  type="text" date-picker class="form-control" name="RequireDate" placeholder="交期" option="auctusSO.UnExist"
                                            ng-model="auctusSO.SOLine.RequireDate" required>
                                 </div>
                                 <label class="col-md-1 control-label text-lg text-left" style="padding-right:0px;">客户单号：</label>
                                 <div class="col-md-3" ng-class="{ 'has-error' : auctusSO.formSOLine.Customer_DocNo.$invalid }">
-                                    <input type="text" class="form-control" name="Customer_DocNo" placeholder="客户单号"
+                                    <input autocomplete="off"  type="text" class="form-control" name="Customer_DocNo" placeholder="客户单号"
                                            ng-model="auctusSO.SOLine.Customer_DocNo" required>
                                 </div>
                               
@@ -235,18 +235,18 @@
                 <div class="form-inline">
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" class="form-control" ng-model="auctusSO.Code" placeholder="料号">
+                            <input autocomplete="off"  type="text" class="form-control" ng-model="auctusSO.Code" placeholder="料号">
                             <span class="input-group-btn"><button class="btn" style="background:white;border:1px solid #cfdadd;"><i class="fa fa-search"></i></button></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" ng-model="auctusSO.Customer_DocNo" placeholder="客户订单">
+                        <input autocomplete="off"  type="text" class="form-control" ng-model="auctusSO.Customer_DocNo" placeholder="客户订单">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" ng-model="auctusSO.U9_DocNo" placeholder="U9订单号">
+                        <input autocomplete="off"  type="text" class="form-control" ng-model="auctusSO.U9_DocNo" placeholder="U9订单号">
                     </div>              
                     <div class="form-group">
-                        <input type="text" class="form-control" ng-model="auctusSO.HK_DocNo" placeholder="整机订单">
+                        <input autocomplete="off"  type="text" class="form-control" ng-model="auctusSO.HK_DocNo" placeholder="整机订单">
                     </div>
                     <button class="btn btn-sm btn-info" ng-click="auctusSO.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
                     <button class="btn btn-sm btn-success" ng-click="auctusSO.Export()"><i class="glyphicon glyphicon-search"></i>导出</button>                    

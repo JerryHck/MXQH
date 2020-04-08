@@ -18,7 +18,7 @@
               <a ng-repeat="item in groups" ng-dblclick="editItem(item)" class="list-group-item m-l hover-anchor b-a no-select" ng-class="{'focus m-l-none': item.selected}" ng-click="selectGroup(item)">
                 <span ng-click='deleteGroup(item)' class="pull-right text-muted hover-action"><i class="fa fa-times"></i></span>
                 <span class="block m-l-n" ng-class="{'m-n': item.selected }">{{ item.name ? item.name : 'Untitled' }}</span>
-                <input type="text" class="form-control pos-abt" ng-show="item.editing" ng-blur="doneEditing(item)" ng-model="item.name" style="top:3px;left:2px;width:98%" ui-focus="item.editing">
+                <input autocomplete="off"  type="text" class="form-control pos-abt" ng-show="item.editing" ng-blur="doneEditing(item)" ng-model="item.name" style="top:3px;left:2px;width:98%" ui-focus="item.editing">
               </a>
             </div>
           </div>
@@ -37,7 +37,7 @@
       <div class="wrapper-xs b-b">
         <div class="input-group m-b-xxs">
           <span class="input-group-addon input-sm no-border no-bg"><i class="icon-magnifier text-md m-t-xxs"></i></span>
-          <input type="text" class="form-control input-sm no-border no-bg text-md" placeholder="Search {{group.name ? group.name : 'All Contacts'}}" ng-model="query">
+          <input autocomplete="off"  type="text" class="form-control input-sm no-border no-bg text-md" placeholder="Search {{group.name ? group.name : 'All Contacts'}}" ng-model="query">
         </div>
       </div>
       <div class="row-row">
@@ -87,8 +87,8 @@
                 <div class="col v-middle h1 font-thin">
                   <div ng-hide="item.editing">{{item.first}} {{item.last}}</div>
                   <div ng-show="item.editing">
-                    <input type="text" placeholder="First" class="form-control w-auto input-lg m-b-n-xxs font-bold" ng-model="item.first" >
-                    <input type="text" placeholder="Last" class="form-control w-auto input-lg font-bold" ng-model="item.last" >
+                    <input autocomplete="off"  type="text" placeholder="First" class="form-control w-auto input-lg m-b-n-xxs font-bold" ng-model="item.first" >
+                    <input autocomplete="off"  type="text" placeholder="Last" class="form-control w-auto input-lg font-bold" ng-model="item.last" >
                   </div>
                 </div>
               </div>
@@ -98,28 +98,28 @@
                   <label class="col-sm-3 control-label">Mobile</label>
                   <div class="col-sm-9">
                     <p class="form-control-static" ng-hide="item.editing">{{item.mobile}}</p>
-                    <input type="text" class="form-control" ng-show="item.editing" ng-model="item.mobile" >
+                    <input autocomplete="off"  type="text" class="form-control" ng-show="item.editing" ng-model="item.mobile" >
                   </div>
                 </div>
                 <div class="form-group m-b-sm" ng-hide="!item.home && !item.editing">
                   <label class="col-sm-3 control-label">Home</label>
                   <div class="col-sm-9">
                     <p class="form-control-static" ng-hide="item.editing">{{item.home}}</p>
-                    <input type="text" class="form-control" ng-show="item.editing" ng-model="item.home" >
+                    <input autocomplete="off"  type="text" class="form-control" ng-show="item.editing" ng-model="item.home" >
                   </div>
                 </div>
                 <div class="form-group m-b-sm" ng-hide="!item.work && !item.editing">
                   <label class="col-sm-3 control-label">Work</label>
                   <div class="col-sm-9">
                     <p class="form-control-static" ng-hide="item.editing">{{item.work}}</p>
-                    <input type="text" class="form-control" ng-show="item.editing" ng-model="item.work" >
+                    <input autocomplete="off"  type="text" class="form-control" ng-show="item.editing" ng-model="item.work" >
                   </div>
                 </div>
                 <div class="form-group m-b-sm" ng-hide="!item.company && !item.editing">
                   <label class="col-sm-3 control-label">Company</label>
                   <div class="col-sm-9">
                     <p class="form-control-static" ng-hide="item.editing">{{item.company}}</p>
-                    <input type="text" class="form-control" ng-show="item.editing" ng-model="item.company" >
+                    <input autocomplete="off"  type="text" class="form-control" ng-show="item.editing" ng-model="item.company" >
                   </div>
                 </div>
                 <div class="form-group m-b-sm" ng-hide="!item.note && !item.editing">

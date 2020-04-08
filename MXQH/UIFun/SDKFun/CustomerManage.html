@@ -8,7 +8,7 @@
                 <div class="wrapper b-t m-b-md">
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" class="form-control input-sm" ng-keypress="($event.which === 13)?customer.Search():0" placeholder="账号/姓名/公司名称" ng-model="customer.S.WhereClause">
+                            <input autocomplete="off"  type="text" class="form-control input-sm" ng-keypress="($event.which === 13)?customer.Search():0" placeholder="账号/姓名/公司名称" ng-model="customer.S.WhereClause">
                             <span class="input-group-btn">
                                 <button class="btn btn-sm btn-default" ng-click="customer.Search()">
                                     <i class="glyphicon glyphicon-search text-success">查询</i>
@@ -64,19 +64,19 @@
                                                 <div class="form-group pull-in clearfix  m-t-xs col-md-6" title="">
                                                     <label class="col-md-12  font-bold">注册账号:</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" class="form-control text-xs" name="Account" placeholder="注册账号" ng-model="customer.selectedCustomer.Account" disabled required>
+                                                        <input autocomplete="off"  type="text" class="form-control text-xs" name="Account" placeholder="注册账号" ng-model="customer.selectedCustomer.Account" disabled required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group pull-in clearfix  m-t-xs col-md-6" title="">
                                                     <label class="col-md-12  font-bold">公司地址:</label>
                                                     <div class="col-md-12" ng-class="{ 'has-error' : customer.form.Address.$invalid }">
-                                                        <input type="text" class="form-control text-xs" ng-disabled="!customer.isEdit" name="Address" placeholder="公司地址" ng-model="customer.selectedCustomer.Address" disabled>
+                                                        <input autocomplete="off"  type="text" class="form-control text-xs" ng-disabled="!customer.isEdit" name="Address" placeholder="公司地址" ng-model="customer.selectedCustomer.Address" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="form-group pull-in clearfix  m-t-xs  col-md-6" title="">
                                                     <label class="col-md-12  font-bold">公司名称:</label>
                                                     <div class="col-md-12" ng-class="{ 'has-error' : customer.form.CompanyName.$invalid }">
-                                                        <input type="text" name="CompanyName" class="form-control" ng-disabled="!customer.isEdit" placeholder="公司名称" ng-model="customer.selectedCustomer.CompanyName" required>
+                                                        <input autocomplete="off"  type="text" name="CompanyName" class="form-control" ng-disabled="!customer.isEdit" placeholder="公司名称" ng-model="customer.selectedCustomer.CompanyName" required>
                                                         <div ng-messages="customer.form.CompanyName.$error" class="help-block" role="alert">
                                                             <div ng-message="required">公司名称不能为空</div>
                                                         </div>
@@ -85,7 +85,7 @@
                                                 <div class="form-group pull-in clearfix  m-t-xs  col-md-6" title="">
                                                     <label class="col-md-12  font-bold">公司邮箱:</label>
                                                     <div class="col-md-12" ng-class="{ 'has-error' : customer.form.Email.$invalid }">
-                                                        <input type="email" class="form-control" name="Email" ng-disabled="!customer.isEdit" placeholder="公司邮箱"
+                                                        <input autocomplete="off"  type="email" class="form-control" name="Email" ng-disabled="!customer.isEdit" placeholder="公司邮箱"
                                                                ng-pattern="/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/" ng-model="customer.selectedCustomer.Email" required>
                                                         <div ng-messages="customer.form.email.$error" class="help-block" role="alert">
                                                             <div ng-message="required">邮箱地址不对</div>
@@ -95,7 +95,7 @@
                                                 <div class="form-group pull-in clearfix  m-t-xs  col-md-6" title="">
                                                     <label class="col-md-12  font-bold">公司授权联系人:</label>
                                                     <div class="col-md-12" ng-class="{ 'has-error' : customer.form.Contact.$invalid }">
-                                                        <input type="text" name="Contact" class="form-control" ng-disabled="!customer.isEdit" placeholder="公司授权联系人" ng-model="customer.selectedCustomer.Contact" required>
+                                                        <input autocomplete="off"  type="text" name="Contact" class="form-control" ng-disabled="!customer.isEdit" placeholder="公司授权联系人" ng-model="customer.selectedCustomer.Contact" required>
                                                         <div ng-messages="customer.form.Contact.$error" class="help-block" role="alert">
                                                             <div ng-message="required">公司授权联系人不能为空</div>
                                                         </div>
@@ -105,7 +105,7 @@
                                                 <div class="form-group pull-in clearfix  m-t-xs  col-md-6" title="">
                                                     <label class="col-md-12  font-bold">联系人座机:</label>
                                                     <div class="col-md-12" ng-class="{ 'has-error' : customer.form.Phone.$invalid }">
-                                                        <input type="text" class="form-control" name="Phone" ng-disabled="!customer.isEdit" placeholder="联系人座机" ng-model="customer.selectedCustomer.Phone" required>
+                                                        <input autocomplete="off"  type="text" class="form-control" name="Phone" ng-disabled="!customer.isEdit" placeholder="联系人座机" ng-model="customer.selectedCustomer.Phone" required>
                                                         <div ng-messages="customer.form.Phone.$error" class="help-block" role="alert">
                                                             <div ng-message="required">联系人座机不能为空</div>
                                                         </div>
@@ -116,7 +116,7 @@
                                                 <div class="form-group pull-in clearfix  m-t-xs col-md-6" title="">
                                                     <label class="col-md-12  font-bold">联系人手机:</label>
                                                     <div class="col-md-12" ng-class="{ 'has-error' : customer.form.Mobile.$invalid }">
-                                                        <input type="text" name="Mobile" class="form-control" ng-disabled="!customer.isEdit" placeholder="联系人手机" ng-model="customer.selectedCustomer.Mobile" required>
+                                                        <input autocomplete="off"  type="text" name="Mobile" class="form-control" ng-disabled="!customer.isEdit" placeholder="联系人手机" ng-model="customer.selectedCustomer.Mobile" required>
                                                         <div ng-messages="customer.form.Mobile.$error" class="help-block" role="alert">
                                                             <div ng-message="required">联系人手机不能为空</div>
                                                         </div>
@@ -126,7 +126,7 @@
                                                 <div class="form-group pull-in clearfix  m-t-xs col-md-6" title="">
                                                     <label class="col-md-12 font-bold">联系人职务:</label>
                                                     <div class="col-md-12" ng-class="{ 'has-error' : customer.form.Position.$invalid }">
-                                                        <input type="text" class="form-control" name="Position" ng-disabled="!customer.isEdit" placeholder="联系人职务" ng-model="customer.selectedCustomer.Position" required>
+                                                        <input autocomplete="off"  type="text" class="form-control" name="Position" ng-disabled="!customer.isEdit" placeholder="联系人职务" ng-model="customer.selectedCustomer.Position" required>
                                                         <div ng-messages="customer.form.Position.$error" class="help-block" role="alert">
                                                             <div ng-message="required">联系人职务不能为空</div>
                                                         </div>
@@ -136,40 +136,40 @@
                                                 <div class="form-group pull-in clearfix  m-t-xs col-md-6" title="">
                                                     <label class="col-md-12 font-bold">社会信用代码:</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" name="Code" class="form-control" ng-disabled="!customer.isEdit" placeholder="社会信用代码" ng-model="customer.selectedCustomer.Code">
+                                                        <input autocomplete="off"  type="text" name="Code" class="form-control" ng-disabled="!customer.isEdit" placeholder="社会信用代码" ng-model="customer.selectedCustomer.Code">
                                                     </div>
 
                                                 </div>
                                                 <div class="form-group pull-in clearfix  m-t-xs col-md-6" title="">
                                                     <label class="col-md-12 font-bold">公司开户银行:</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" class="form-control" name="Bank" ng-disabled="!customer.isEdit" placeholder="公司开户银行" ng-model="customer.selectedCustomer.Bank">
+                                                        <input autocomplete="off"  type="text" class="form-control" name="Bank" ng-disabled="!customer.isEdit" placeholder="公司开户银行" ng-model="customer.selectedCustomer.Bank">
                                                     </div>
                                                 </div>
                                                 <div class="form-group pull-in clearfix  m-t-xs col-md-6" title="">
                                                     <label class="col-md-12 font-bold">法人:</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" name="LegalPerson" class="form-control" ng-disabled="!customer.isEdit" placeholder="法人" ng-model="customer.selectedCustomer.LegalPerson">
+                                                        <input autocomplete="off"  type="text" name="LegalPerson" class="form-control" ng-disabled="!customer.isEdit" placeholder="法人" ng-model="customer.selectedCustomer.LegalPerson">
                                                     </div>
 
                                                 </div>
                                                 <div class="form-group pull-in clearfix  m-t-xs col-md-6" title="">
                                                     <label class="col-md-12  font-bold">公司收款账号:</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" class="form-control" name="ReceiveAccount" ng-disabled="!customer.isEdit" placeholder="公司收款账号" ng-model="customer.selectedCustomer.ReceiveAccount">
+                                                        <input autocomplete="off"  type="text" class="form-control" name="ReceiveAccount" ng-disabled="!customer.isEdit" placeholder="公司收款账号" ng-model="customer.selectedCustomer.ReceiveAccount">
                                                     </div>
                                                 </div>
                                                 <div class="form-group pull-in clearfix  m-t-xs col-md-6" title="">
                                                     <label class="col-md-12 font-bold">股东信息:</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" name="ShareHolder" class="form-control" ng-disabled="!customer.isEdit" placeholder="股东信息" ng-model="customer.selectedCustomer.ShareHolder">
+                                                        <input autocomplete="off"  type="text" name="ShareHolder" class="form-control" ng-disabled="!customer.isEdit" placeholder="股东信息" ng-model="customer.selectedCustomer.ShareHolder">
                                                     </div>
                                                 
                                                 </div>
                                                 <div class="form-group pull-in clearfix  m-t-xs col-md-6" title="">
                                                     <label class="col-md-12 font-bold">营业执照:</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" class="form-control" name="BusinessLicense" ng-disabled="!customer.isEdit" placeholder="营业执照" ng-model="customer.selectedCustomer.BusinessLicense">
+                                                        <input autocomplete="off"  type="text" class="form-control" name="BusinessLicense" ng-disabled="!customer.isEdit" placeholder="营业执照" ng-model="customer.selectedCustomer.BusinessLicense">
                                                     </div>
                                                 </div>
                                                 <div class="form-group pull-in clearfix  m-t-xs col-md-6" title="">
@@ -232,7 +232,7 @@
                                                                     <i class="glyphicon glyphicon-plus"></i>
                                                                 </button>
                                                             </span>
-                                                            <input type="text" class="form-control" placeholder="查询" ng-model="customer.S2.WhereClause">
+                                                            <input autocomplete="off"  type="text" class="form-control" placeholder="查询" ng-model="customer.S2.WhereClause">
                                                             <span class="input-group-btn">
                                                                 <button class="btn btn-default" ng-click="customer.SearchPro()" disabled>
                                                                     <i class="glyphicon glyphicon-search text-success"></i>

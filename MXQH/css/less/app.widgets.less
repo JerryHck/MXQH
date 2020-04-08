@@ -37,7 +37,7 @@
     }
 }
 .d-r.active{
-	right: -1px;
+	right: 5px;
 }
 .d-r.active > .blur-close{
     z-index:200 !important;
@@ -52,9 +52,9 @@
 
 .dialog{
     height:calc(100vh)!important;
-    bottom: calc(1px - 100vh);
+    top: 0px!important;
 	width: calc(100vw);
-    left:0;
+    right:calc(0px - 100vw);
     max-height:calc(100%);
     z-index: 9000;
     background-color:rgba(16, 15, 16, 0.50);
@@ -124,7 +124,7 @@
     } 
 }
 .dialog.active{
-	bottom: -1px;
+	right: 1px;
 }
 
 /*.d-r::-webkit-scrollbar{width: 0px;height: 0px;}*/

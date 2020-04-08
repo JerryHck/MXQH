@@ -10,7 +10,7 @@
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">组装工单</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : bsn.BindingForm.Order.$invalid }">
-                                    <input type="text" name="Order" ng-model="bsn.Item.WorkOrder" uib-typeahead="item.WorkOrder as item.WorkOrder for item in bsn.OrderList | orderBy:'WorkOrder':true | filter:$viewValue | limitTo:8"
+                                    <input autocomplete="off"  type="text" name="Order" ng-model="bsn.Item.WorkOrder" uib-typeahead="item.WorkOrder as item.WorkOrder for item in bsn.OrderList | orderBy:'WorkOrder':true | filter:$viewValue | limitTo:8"
                                            class="form-control" placeholder="工单号" ng-keyup="bsn.KeyDonwOrder($event)" required>
                                 </div>
                             </div>
@@ -23,7 +23,7 @@
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">BSN条码</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : bsn.BindingForm.InCode.$invalid }">
-                                    <input type="text" class="form-control" name="InCode" ng-model="bsn.NewBind.InternalCode" placeholder="生产条码" ng-keyup="bsn.KeyDonwInCode($event)" required>
+                                    <input autocomplete="off"  type="text" class="form-control" name="InCode" ng-model="bsn.NewBind.InternalCode" placeholder="生产条码" ng-keyup="bsn.KeyDonwInCode($event)" required>
                                 </div>
                             </div>
                         </div>
@@ -142,17 +142,17 @@
         <div class="wrapper-md">
             <div class="form-inline">
                 <div class="form-group">
-                    <input type="text" class="form-control" ui-focus="bsn.Focus == -1" ng-model="bsn.Ser.InCode" placeholder="内控码">
+                    <input autocomplete="off"  type="text" class="form-control" ui-focus="bsn.Focus == -1" ng-model="bsn.Ser.InCode" placeholder="内控码">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" ng-model="bsn.Ser.SNCode" placeholder="SN码">
+                    <input autocomplete="off"  type="text" class="form-control" ng-model="bsn.Ser.SNCode" placeholder="SN码">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" ng-model="bsn.Ser.Mo" placeholder="生成工单"
+                    <input autocomplete="off"  type="text" class="form-control" ng-model="bsn.Ser.Mo" placeholder="生成工单"
                            uib-typeahead="item.WorkOrder as item.WorkOrder for item in bsn.AllOrderList | orderBy:'WorkOrder':true | filter:$viewValue | limitTo:8">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" ng-model="bsn.Ser.PackMo" placeholder="SN生成工单" 
+                    <input autocomplete="off"  type="text" class="form-control" ng-model="bsn.Ser.PackMo" placeholder="SN生成工单" 
                            uib-typeahead="item.WorkOrder as item.WorkOrder for item in bsn.AllOrderList | orderBy:'WorkOrder':true | filter:$viewValue | limitTo:8">
                 </div>
                 <button class="btn btn-sm btn-info" ng-click="bsn.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>

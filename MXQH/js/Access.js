@@ -34,9 +34,7 @@ app.config(
 app.run(Run);
 
 Run.$inject = ['$rootScope', '$state', '$stateParams', 'AjaxService', 'appUrl', 'toastr', 'Version'];
-function Run($rootScope, $state, $stateParams, AjaxService, appUrl, toastr, Version) {
-    $rootScope.$state = $state;
-    $rootScope.$stateParams = $stateParams;
+function Run($rootScope, $state, $stateParams, AjaxService, appUrl, toastr, Version) { 
     //获取系统license
     AjaxService.DoBefore("GetSysLic").then(function (data) {
         if (data.Type == "will") {
@@ -47,6 +45,16 @@ function Run($rootScope, $state, $stateParams, AjaxService, appUrl, toastr, Vers
         }
         $rootScope.SysLic = data;
     });
+
+    //获取dialog信息
+    var Con = {};
+    Con.planName = "Dialog";
+    Con.strJson = JSON.stringify([]);
+    AjaxService.DoBefore("GetPlans", Con).then(function (data) {
+        $rootScope.DialogData = data;
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
+    })
 }
 
 app.config(Config);

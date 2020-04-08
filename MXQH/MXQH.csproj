@@ -64,6 +64,7 @@
   <ItemGroup>
     <Content Include="Access.html" />
     <Content Include="Access\login-.html" />
+    <Content Include="Basic\app_mes_dashboard.js" />
     <Content Include="Basic\blocks\tool.html" />
     <Content Include="Board.html" />
     <Content Include="Content\bootstrap-treeview.css" />
@@ -92,7 +93,7 @@
     <Content Include="Basic\apps_note.html" />
     <Content Include="Basic\apps_weather.html" />
     <Content Include="Basic\app_calendar.html" />
-    <Content Include="Basic\app_dashboard_v1.html" />
+    <Content Include="Basic\app_mes_dashboard.html" />
     <Content Include="Basic\app_dashboard_v2.html" />
     <Content Include="Basic\blank.html" />
     <Content Include="Basic\blocks\aside.html" />
@@ -187,6 +188,11 @@
     <Content Include="js\doboard.min.js" />
     <Content Include="Scripts\bootstrap-treeview.js" />
     <Content Include="Scripts\bootstrap-treeview.min.js" />
+    <Content Include="Scripts\ECharts\4.7.0\echarts.common.js" />
+    <Content Include="Scripts\ECharts\4.7.0\echarts.common.min.js" />
+    <Content Include="Scripts\ECharts\4.7.0\echarts.min.js" />
+    <Content Include="Scripts\ECharts\4.7.0\echarts.simple.js" />
+    <Content Include="Scripts\ECharts\4.7.0\echarts.simple.min.js" />
     <Content Include="SystemFun\ResetPswDialog.html" />
     <Content Include="SystemFun\ResetPswDialog.js" />
     <Content Include="SystemFun\SerialNumber.html" />
@@ -253,6 +259,8 @@
     <Content Include="UIFun\MESFun\PackageAct.js" />
     <Content Include="UIFun\MESFun\PackageActPower.html" />
     <Content Include="UIFun\MESFun\PackageActPower.js" />
+    <Content Include="UIFun\MESFun\PackageOnLine.html" />
+    <Content Include="UIFun\MESFun\PackageOnLine.js" />
     <Content Include="UIFun\MESFun\Print\BodyLabelPrint.html" />
     <Content Include="UIFun\MESFun\Print\BodyLabelPrint.js" />
     <Content Include="UIFun\MESFun\Quality\AQLCheckPara.html" />

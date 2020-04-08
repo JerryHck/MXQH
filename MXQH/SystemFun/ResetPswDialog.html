@@ -14,7 +14,7 @@
                 <div class="form-group pull-in clearfix">
                     <label class="col-md-4 control-label">新密码</label>
                     <div class="col-md-6" ng-class="{ 'has-error' : psw.PswForm.newPwd.$invalid }">
-                        <input type="password" name="newPwd" class="form-control" ng-minlength="8" ng-maxlength="18" placeholder="新密码" ng-model="psw.Item.NewPwd"
+                        <input autocomplete="off"  type="password" name="newPwd" class="form-control" ng-minlength="8" ng-maxlength="18" placeholder="新密码" ng-model="psw.Item.NewPwd"
                                ng-pattern="/^(?![^a-zA-Z]+$)(?!\D+$)/" ng-change="psw.checkNewPwd()" required>
                         <div ng-messages="psw.PswForm.newPwd.$error" class="help-block" role="alert">
                             <div ng-message="minlength">密码必须大于8位</div>
@@ -27,7 +27,7 @@
                 <div class="form-group pull-in clearfix">
                     <label class="col-md-4 control-label">新密码</label>
                     <div class="col-md-6" ng-class="{ 'has-error' : psw.PswForm.newPwdSign.$invalid }">
-                        <input type="password" name="newPwdSign" class="form-control" ng-minlength="8" ng-maxlength="18" placeholder="新密码确认" ng-model="psw.Item.NewPwdSign"
+                        <input autocomplete="off"  type="password" name="newPwdSign" class="form-control" ng-minlength="8" ng-maxlength="18" placeholder="新密码确认" ng-model="psw.Item.NewPwdSign"
                                ng-pattern="/^(?![^a-zA-Z]+$)(?!\D+$)/" ng-change="psw.checkNewPwdSign()" required>
                         <div ng-messages="psw.PswForm.newPwdSign.$error" class="help-block" role="alert">
                             <div ng-message="minlength">密码必须大于8位</div>

@@ -1,107 +1,78 @@
 ﻿<div class="w-full bg-black-opacity h-full" ng-init="vm.app.settings.asideFolded=true" ng-class="{'app-content-full': !wo.IsAss, 'content-full':wo.IsAss}">
     <div class="panel panel-default h-full w-100 bg-black-opacity">
-        <div class="panel-body m-r-lg padder-xs">
-            <div class="wrapper-xs padder-xs">
-                <div class="col-md-7 no-padder">
-                    <div class="col-md-3 padder-xs">
-                        <div basic-select="AssemblyLine" ng-model="wo.LineId" placeholder="请选择线别" ng-disabled="wo.IsRun" ng-change="wo.ChangeLine()"></div>
-                        <!--<ui-select ng-model="wo.Ser.WorkOrder" name="Order" theme="bootstrap" ng-disabled="wo.IsRun">
-                            <ui-select-match placeholder="请选择工单">{{ $select.selected.WorkOrder }}</ui-select-match>
-                            <ui-select-choices repeat="item.WorkOrder as item in wo.OrderList | filter: $select.search">
-                                <div ng-bind-html="item.WorkOrder | highlight: $select.search"></div>
-                            </ui-select-choices>
-                        </ui-select>-->
-                    </div>
-                    <div class="col-md-3 padder-xs">
-                        <ui-select ng-model="wo.Ser.WorkOrder" name="Order" theme="bootstrap" ng-disabled="wo.IsRun">
-                            <ui-select-match placeholder="请选择工单">{{ $select.selected.WorkOrder }}</ui-select-match>
-                            <ui-select-choices repeat="item.WorkOrder as item in wo.OrderList | filter: $select.search">
-                                <div ng-bind-html="item.WorkOrder | highlight: $select.search"></div>
-                            </ui-select-choices>
-                        </ui-select>
-                    </div>
-                    <div class="col-md-2 padder-xs">
-                        <input type="text" ng-disabled="wo.IsRun" date-picker class="form-control" placeholder="日期" ng-model="wo.Ser.Now" option="wo.DateOp" />
-                    </div>
-                    <div class="col-md-1 padder-xs">
-                        <input type="text" ng-disabled="wo.IsRun" time-picker class="form-control" placeholder="开始" ng-model="wo.Ser.StartDate" option="wo.TimeOp" />
-                    </div>
-                    <div class="col-md-1 padder-xs">
-                        <input type="text" ng-disabled="wo.IsRun" time-picker class="form-control" placeholder="结束" ng-model="wo.Ser.EndDate" option="wo.TimeOp" />
-                    </div>
-                    <button class="btn m-l-xs" ng-class="{'btn-success':!wo.IsRun, 'btn-danger':wo.IsRun}" ng-click="wo.Begin()"><i class="glyphicon glyphicon-search"></i>{{ wo.BtnText }}</button>
+        <div class="panel-body m-r-lg padder-xs padder-v-xxs" ng-repeat="SerItem in wo.SerItemList">
 
-                    <button class="btn btn-info m-l-xs" ng-click="wo.Offline()" ng-if="!wo.IsBefore"><i class="glyphicon glyphicon-fullscreen"></i></button>
-                </div>
-                <div class="col-md-5 no-padder text-danger" ng-if="wo.IsHave == 'Y'">
-                    <div class="form-group no-padder">
-                        <!--<div class="form-control-static padder-xs col-md-5 h3 font-x font-yellow-gold">
-                            排产:{{ wo.ProData.PlanCount }}
-                        </div>
-                        <div class="form-control-static padder-xs col-md-6 h3 font-x font-yellow-gold">
-                            达成率:{{ wo.ProData.ArrRate }}
-                        </div>-->
+            <div class="col-md-12 line line-dashed b-b-4x b-b-dark" ng-if="$index>0"></div>
+
+            <div class="wrapper-xs padder-xs text-center">
+                <button class="btn btn-sm m-l-xs pull-left" ng-class="{'btn-success':!SerItem.IsRun, 'btn-danger':SerItem.IsRun}" ng-click="wo.Open($index)"><i class="glyphicon glyphicon-search"></i>查询</button>
+                <button class="btn btn-sm pull-left btn-info m-l-xs" ng-click="wo.Offline()" ng-if="!wo.IsBefore && $index == 0"><i class="glyphicon glyphicon-fullscreen"></i></button>
+                <div class="padder-xs" ng-if="SerItem.Now && SerItem.IsRun">
+                    <div class="form-control-static padder-xs h3 font-bold text-white">
+                        {{ SerItem.MainData.LineName }}&nbsp; &nbsp;&nbsp; &nbsp;   {{ SerItem.Now }} &nbsp;{{ SerItem.MainData.StartDate }}~{{ SerItem.MainData.EndDate }} 
                     </div>
                 </div>
             </div>
 
-            <div class="padder-xs wrapper-xs" ng-if="wo.IsHave == 'Y'">
-                <!--<table class="table-purple-head col-md-12">
-                    <thead>
-                        <tr>
-                            <th style="width:30px">工单: <span class="h3 text-danger">{{ wo.MainData.WorkOrder }}</span></th>
-                            <th style="width:40px">料号:<span class="h3 text-danger">{{ wo.MainData.MateCode }}</span></th>
-                            <th style="width:120px">料名:<span class="h4 text-danger">{{ wo.MainData.MateName }}</span></th>
-                            <th style="width:140px">线别:<span class="h4 text-danger">{{ wo.MainData.LineName }}</span></th>
-                            <th style="width:40px">SN产出:<span class="font-v3 h2">{{ wo.ProData.ProductCount }}</span></th>
-                            <th style="width:40px">直通率:<span class="font-v3 h2">{{ wo.ProData.OKRate }}</span></th>
-                        </tr>
-                    </thead>
-                </table>-->
-                <div class="form-group-xs col-md-12 no-padder">
-                    <div class="form-control-static padder-xs col-md-3 h2 font-bold text-white">{{ wo.MainData.WorkOrder }}</div>
-                    <div class="form-control-static padder-xs col-md-2 h2 font-bold text-white">{{ wo.MainData.MateCode }}</div>
-                    <div class="form-control-static padder-xs h2 col-md-4 font-bold text-white">{{ wo.MainData.MateName }}</div>
-                    <div class="form-control-static padder-xs h2 col-md-3 font-bold text-white">{{ wo.MainData.LineName }}</div>
+            <div class="padder-xs wrapper-xs m-t-n-md" ng-if="SerItem.IsHave == 'Y'">
+                <div class="form-group-xs col-md-12 padder-xs no-padder">
+                    <div class="form-control-static padder-xxs col-md-3 h3 font-bold text-white">工单：{{ SerItem.MainData.WorkOrder }}</div>
+                    <div class="form-control-static padder-xxs col-md-2 h3 font-bold text-white">料号：{{ SerItem.MainData.MateCode }}</div>
+                    <div class="form-control-static padder-xxs h3 col-md-4 font-bold text-white">型号：{{ SerItem.MainData.MateName }}</div>
+                    <div class="form-control-static padder-xxs h3 col-md-3 font-bold text-white">工单数：{{ SerItem.ProData.Quantity }}</div>
                 </div>
-
-                <div class="form-group-xs col-md-12 m-t-n-sm no-padder">
-                    <div class="form-control-static padder-xs col-md-3 h2 font-bold text-white">
-                        排产:{{ wo.ProData.PlanCount }}
+                <div class="form form-horizontal">
+                    <div class="form-group-xs col-md-12 padder-xs m-t-n-sm no-padder">
+                        <div class="form-control-static padder-xxs col-md-3 h3 font-bold text-white">
+                            累计开工：{{ SerItem.MainData.TotalStartQty }}
+                        </div>
+                        <div class="form-control-static padder-xxs col-md-2 h3 font-bold text-white">
+                            累计完工：{{ SerItem.ProData.FinishSum }}
+                        </div>
+                        <div class="form-control-static padder-xxs col-md-4 h3 font-bold text-white">
+                            日计划/当天完工：{{ SerItem.ProData.PlanCount }}/{{ SerItem.ProData.TodayFinishNum }}
+                        </div>
+                        <div class="form-control-static padder-xxs col-md-3 h3 font-bold text-white">
+                            落产数：{{ SerItem.ProData.NoFinishSum }}
+                        </div>
                     </div>
-                    <div class="form-control-static padder-xs col-md-2 h2 font-bold text-white">
-                        SN产出:{{ wo.ProData.ProductCount }}
-                    </div>
-                    <div class="form-control-static padder-xs col-md-4 h2 font-bold text-white">
-                        达成率:{{ wo.ProData.ArrRate }}
-                    </div>
-                    <div class="form-control-static padder-xs col-md-3 h2 font-bold text-white">
-                        直通率:{{ wo.ProData.OKRate }}
+                    <div class="form-group-xs col-md-12 padder-xs m-t-n-sm no-padder">
+                        <div class="form-control-static padder-xxs col-md-3 h3 font-bold text-white">
+                            直通率：{{ SerItem.ProData.OKRate }}
+                        </div>
+                        <div class="form-control-static padder-xxs col-md-2 h3 font-bold text-white">
+                            计划完成：{{ SerItem.ProData.ArrRate }}
+                        </div>
+                        <div class="form-control-static padder-xxs col-md-4 h3 font-bold text-white">
+                            累计不良/报废：{{ SerItem.ProData.BSNNgSum }}/{{ SerItem.ProData.DumpNum }}
+                        </div>
+                        <div class="form-control-static padder-xxs col-md-3 h3 font-bold text-white">
+                            排产人数：{{ SerItem.MainData.PlanPerson }}
+                        </div>
                     </div>
                 </div>
-
                 <table class="table-purple col-md-12 m-t-xs">
                     <thead>
                         <tr>
-                            <th class="text-center" ng-repeat="col in wo.ListTitle">{{ col }}</th>
+                            <th class="text-center" ng-repeat="col in SerItem.ListTitle">{{ col }}</th>
                         </tr>
                     </thead>
-                    <tr ng-repeat="item in wo.List" style="height:50px">
+                    <tr ng-repeat="item in SerItem.List" style="height:50px">
                         <td class="text-center bg-danger" ng-class="{'bg-danger-light': c.IsLow}" ng-repeat="c in item"><span>{{ c.Text }}</span></td>
                     </tr>
                 </table>
             </div>
-            <div class="padder-xs wrapper-md m-t-lg" ng-if="wo.IsHave == 'N'">
+            <div class="padder-xs wrapper-md m-t-lg" ng-if="SerItem.IsHave == 'N'">
                 <table class="table-purple col-md-12">
                     <tr style="height:100px;">
                         <td class="text-center" style="font-size:36px">没有生产数据</td>
                     </tr>
                 </table>
             </div>
+            <!--<pre>{{ SerItem.IsHave }}</pre>-->
         </div>
     </div>
 </div>
-
 
 
 

@@ -9,11 +9,11 @@
                 可拖曳文件到此上传
             </div>
         </div>
-        <input type="text" class="form-control" name="{{ ngName }}" placeholder="{{ placeholder }}" disabled ng-required="ngRequired"/>
+        <input autocomplete="off"  type="text" class="form-control" name="{{ ngName }}" placeholder="{{ placeholder }}" disabled ng-required="ngRequired"/>
         <span class="input-group-addon">
             <a class="pull-right text-success" ng-click="uploader.uploadAll()"><i class="glyphicon glyphicon-upload">上传</i></a>
         </span>
-        <input type="file" class="fileType" nv-file-select="" multiple uploader="uploader" style="display: none" accept="{{ fileType }}">
+        <input autocomplete="off"  type="file" class="fileType" nv-file-select="" multiple uploader="uploader" style="display: none" accept="{{ fileType }}">
     </div>
 </div>
 <div ng-repeat="f in fileData">
@@ -22,7 +22,7 @@
             <span class="input-group-addon" ng-if="ngDisabled=='false'" ng-click="Delete($index)">
                 <a class="text-danger"><i class="glyphicon glyphicon-trash"></i></a>
             </span>
-            <input class="form-control" ng-disabled="ngDisabled == 'true'" type="text" ng-model="f.OriginalName">
+            <input autocomplete="off"  class="form-control" ng-disabled="ngDisabled == 'true'" type="text" ng-model="f.OriginalName">
             <span class="input-group-addon text-success">{{ f.FileType }}</span>
             <span class="input-group-addon">
                 <a ng-click="DownLoad(f.FileUrl)" class="text-success"><i class="glyphicon glyphicon-download"></i></a>
@@ -36,7 +36,7 @@
     <div class="form-group col-md-12 has-feedback m-b-none" ng-if="!item.isSuccess">
         <div class="col-md-12 input-group">
             <span ng-if="item.isSuccess" class="input-group-addon text-success"><i class="glyphicon glyphicon-ok"></i></span>
-            <input class="form-control" type="text" ng-model="item.file.name" disabled>
+            <input autocomplete="off"  class="form-control" type="text" ng-model="item.file.name" disabled>
             <span class="input-group-addon" ng-click="item.cancel()" ng-if="item.isUploading">
                 <a class="text-warning"><i class="glyphicon glyphicon-ban-circle"></i></a>
             </span>

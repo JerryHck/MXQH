@@ -41,7 +41,7 @@
                                             <span class="input-group-btn" ui-focus="root.editing" ng-click="fun.OpenIcon()">
                                                 <span class="btn btn-default"><i ng-class="fun.editRootItem.FunImge"></i></span>
                                             </span>
-                                            <input type="text" class="form-control" ng-model="fun.editRootItem.FunName">
+                                            <input autocomplete="off"  type="text" class="form-control" ng-model="fun.editRootItem.FunName">
                                             <span class="input-group-btn">
                                                 <span class="btn btn-default"><i class="glyphicon glyphicon-save bg-success" ng-click="fun.DoneRootEdit(root)"></i></span>
                                             </span>
@@ -76,7 +76,7 @@
                 <div class="wrapper-xs b-b">
                     <div class="input-group m-b-xxs">
                         <span class="input-group-addon input-sm no-border no-bg"><i class="icon-magnifier text-md m-t-xxs"></i></span>
-                        <input type="text" class="form-control input-sm no-border no-bg text-xs" placeholder="查询" ng-model="fun.FunQuery">
+                        <input autocomplete="off"  type="text" class="form-control input-sm no-border no-bg text-xs" placeholder="查询" ng-model="fun.FunQuery">
                     </div>
                 </div>
                 <div class="row-row">
@@ -133,7 +133,7 @@
                                                                 <i ng-class="fun.SelectedFun.FunImge"></i>
                                                             </button>
                                                         </span>
-                                                        <input class="form-control text-xs" name="FunName" type="text" ng-model="fun.SelectedFun.FunName" ng-disabled="!fun.editFun" required>
+                                                        <input autocomplete="off"  class="form-control text-xs" name="FunName" type="text" ng-model="fun.SelectedFun.FunName" ng-disabled="!fun.editFun" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -146,13 +146,13 @@
                                             <div class="form-group">
                                                 <label class="col-lg-4 control-label text-info">控制器</label>
                                                 <div class="col-lg-8">
-                                                    <input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.Controller" ng-disabled="!fun.editFun">
+                                                    <input autocomplete="off"  class="form-control text-xs" type="text" ng-model="fun.SelectedFun.Controller" ng-disabled="!fun.editFun">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-lg-4 control-label text-info">控制器简写</label>
                                                 <div class="col-lg-8">
-                                                    <input class="form-control text-xs" type="text" ng-model="fun.SelectedFun.ControllerAs" ng-disabled="!fun.editFun">
+                                                    <input autocomplete="off"  class="form-control text-xs" type="text" ng-model="fun.SelectedFun.ControllerAs" ng-disabled="!fun.editFun">
                                                 </div>
                                             </div>
                                         </div>
@@ -168,13 +168,13 @@
                                             <div class="form-group" ng-class="{ 'has-error' : fun.FormFun.Route.$invalid }">
                                                 <label class="col-lg-4 control-label text-info">路由</label>
                                                 <div class="col-lg-8">
-                                                    <input class="form-control text-xs" name="Route" type="text" ng-model="fun.SelectedFun.RouteName" ng-disabled="!fun.editFun" required>
+                                                    <input autocomplete="off"  class="form-control text-xs" name="Route" type="text" ng-model="fun.SelectedFun.RouteName" ng-disabled="!fun.editFun" required>
                                                 </div>
                                             </div>
                                             <div class="form-group" ng-class="{ 'has-error' : fun.FormFun.routeUrl.$invalid }">
                                                 <label class="col-lg-4 control-label text-info">路由路径</label>
                                                 <div class="col-lg-8">
-                                                    <input class="form-control text-xs" name="routeUrl" type="text" ng-model="fun.SelectedFun.RouteUrl" ng-disabled="!fun.editFun" required>
+                                                    <input autocomplete="off"  class="form-control text-xs" name="routeUrl" type="text" ng-model="fun.SelectedFun.RouteUrl" ng-disabled="!fun.editFun" required>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -202,7 +202,7 @@
                                                 </div>
                                                 <div class="col-sm-7 input-group" ng-if="!fun.SelectedFun.IsSystem">
                                                     <span class="input-group-addon" ng-if="fun.editFun" title="编辑html/js文件"><a class="text-success" ng-click="fun.OpenHtmlJs()"><i class="glyphicon glyphicon-edit"></i></a></span>
-                                                    <input class="form-control" ng-model="fun.SelectedFun.FunHtml" disabled />
+                                                    <input autocomplete="off"  class="form-control" ng-model="fun.SelectedFun.FunHtml" disabled />
                                                 </div>
                                             </div>
                                             <div class="form-group-sm py-xl-1 pt-xl-1" ng-if="fun.editFun">
