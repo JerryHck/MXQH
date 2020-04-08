@@ -237,8 +237,14 @@
     <Content Include="UIFun\MESFun\MO\MesRoutingSer.html" />
     <Content Include="UIFun\MESFun\MO\MesRoutingSer.js" />
     <Content Include="UIFun\MESFun\MO\MORelease.js" />
+    <Content Include="UIFun\MESFun\MO\MOStart.html" />
+    <Content Include="UIFun\MESFun\MO\MOStart.js" />
+    <Content Include="UIFun\MESFun\MO\MOStartDialog.html" />
+    <Content Include="UIFun\MESFun\MO\MOStartDialog.js" />
     <Content Include="UIFun\MESFun\MO\WorkOrder.html" />
     <Content Include="UIFun\MESFun\MO\WorkOrder.js" />
+    <Content Include="UIFun\MESFun\MO\WorkOrder2.html" />
+    <Content Include="UIFun\MESFun\MO\WorkOrder2.js" />
     <Content Include="UIFun\MESFun\MO\WorkOrderDialog.html" />
     <Content Include="UIFun\MESFun\MO\WorkOrderDialog.js" />
     <Content Include="UIFun\MESFun\MO\WorkOrderSer.html" />
@@ -259,6 +265,8 @@
     <Content Include="UIFun\MESFun\Quality\QualityTestItem.js" />
     <Content Include="UIFun\MESFun\Report\CompleteReport.html" />
     <Content Include="UIFun\MESFun\Report\CompleteReport.js" />
+    <Content Include="UIFun\MESFun\Report\ScheduleReport.html" />
+    <Content Include="UIFun\MESFun\Report\ScheduleReport.js" />
     <Content Include="UIFun\MESFun\SnCodePrint.html" />
     <Content Include="UIFun\MESFun\SnCodePrint.js" />
     <Content Include="UIFun\MESFun\SNWeigth.html" />
@@ -313,6 +321,8 @@
     <Content Include="UIFun\QZDeliver\QZSaleDeliver.js" />
     <Content Include="UIFun\QZDeliver\QZSNSearch.html" />
     <Content Include="UIFun\QZDeliver\QZSNSearch.js" />
+    <Content Include="UIFun\QZDeliver\SO\SOAgent.html" />
+    <Content Include="UIFun\QZDeliver\SO\SOAgent.js" />
     <Content Include="UIFun\Router\data.js" />
     <Content Include="UIFun\Router\graphlib.min.js" />
     <Content Include="UIFun\Router\jquery.jsPlumb.min.js" />
