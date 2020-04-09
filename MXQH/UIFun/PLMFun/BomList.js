@@ -13,16 +13,36 @@ function ($scope, $http, $q, AjaxService, $window, toastr) {
     vm.Export = Export;
     vm.ExportItems = ExportItems;
     vm.MaterialVerId = undefined;
+    vm.BatchInput = BatchInput;
+    vm.BatchCancel = BatchCancel;
+    vm.BatchSave = BatchSave;
     //vm.page.Code = '202020634';
     vm.GrayBg = { 'background-color': 'gray' };
     //DataBind();
     //获取数据源
     function DataBind() {
         vm.promise = AjaxService.ExecPlan("v_MaterislVersion", "GetList", vm.page).then(function (data) {
-            console.log(data);
             vm.List = data.data;
             vm.page.total = data.data1[0].Count;
         });
+    }
+
+    function BatchInput() {
+        $(".pro-file").addClass("active");
+        vm.Codes = undefined;
+    }
+    function BatchCancel() {
+        $(".pro-file").removeClass("active");
+        vm.Codes = undefined;
+    }
+
+    function BatchSave() {
+        $(".pro-file").removeClass("active");
+        var uidArr = vm.Codes.split(/[(\r\n)\r\n]+/);
+        vm.page.Code = '';
+        for (var i = 0; i < uidArr.length; i++) {
+            vm.page.Code +=uidArr[i]+',';
+        }
     }
 
     function GetBomDetail(materialVerId) {
