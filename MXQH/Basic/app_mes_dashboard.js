@@ -75,7 +75,7 @@ function ($document, $scope, $http, AjaxService, toastr, $window) {
                 boundaryGap: [0.2, 0.2]
             },
             {
-                name: '完工/不良/维修',
+                name: '完工',
                 type: 'value',
                 scale: true,
                 min: 0, // 设置y轴刻度的最小值

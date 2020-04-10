@@ -184,29 +184,31 @@ function WorkOrderOnLineHHCtrl($scope, $uibModalInstance, Dialog, Form, ItemData
         en.InternalCode = vm.InCodeSave;
         en.RoutingId = vm.RoutingData.ID;
         //console.log(en);
-        vm.promise = AjaxService.ExecPlan("MesMxWOrderHH", "save", en).then(function (data) {
-            //var data = AjaxService.ExecPlanWait("MesMxWOrderHH", "save", en);
-            if (data.data[0].MsgType == 'Success') {
-                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
-                vm.OrderCount = data.data1[0];
-                AjaxService.PlayVoice('success.mp3');
-                //打印
-                if (vm.RoutingData.IsPrint || vm.IsPrint) {
-                    print(en.InternalCode);
-                }
-                vm.InCodeSave = undefined;
+        
+        //vm.promise = AjaxService.ExecPlan("MesMxWOrderHH", "save", en).then(function (data) {
+        //同步执行方式
+        var data = AjaxService.ExecPlanWait("MesMxWOrderHH", "save", en);
+        if (data.data[0].MsgType == 'Success') {
+            vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
+            vm.OrderCount = data.data1[0];
+            AjaxService.PlayVoice('success.mp3');
+            //打印
+            if (vm.RoutingData.IsPrint || vm.IsPrint) {
+                print(en.InternalCode);
+            }
+            vm.InCodeSave = undefined;
 
-            }
-            else if (data.data[0].MsgType == 'Error') {//一般错误认证
-                showError(data.data[0].Msg);
-                vm.InCodeSave = undefined;
-            }
-            else if (data.data[0].MsgType == 'SSError') {
-                showError(data.data[0].Msg);
-                NgSave();//弹出不良录入         
-                vm.InCodeSave = undefined;
-            }
-        })
+        }
+        else if (data.data[0].MsgType == 'Error') {//一般错误认证
+            showError(data.data[0].Msg);
+            vm.InCodeSave = undefined;
+        }
+        else if (data.data[0].MsgType == 'SSError') {
+            showError(data.data[0].Msg);
+            NgSave();//弹出不良录入         
+            vm.InCodeSave = undefined;
+        }
+        //})
     }
 
     //不良

@@ -14,7 +14,7 @@
                     <div class="form-group-xs col-xs-12">
                         <label class="col-xs-3 control-label">工艺流程</label>
                         <div class="col-xs-8" ng-class="{ 'has-error' : pk.OrderForm.router.$invalid }">
-                            <ui-select name="router" ng-model="pk.RoutingData" theme="bootstrap" search-enabled="true" ng-required="true">
+                            <ui-select name="router" ng-disabled="true" ng-model="pk.RoutingData" theme="bootstrap" search-enabled="true" ng-required="true">
                                 <ui-select-match placeholder="选择工艺..." class="h6">{{ $select.selected.RouteName }}</ui-select-match>
                                 <ui-select-choices repeat="item in pk.RoutingList | filter: $select.search track by item.ID">
                                     <div ng-bind-html="item.RouteName | highlight: $select.search"></div>

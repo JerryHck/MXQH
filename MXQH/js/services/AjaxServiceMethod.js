@@ -280,12 +280,13 @@
             return Ajax(d, url, en, method);
         }
 
-
         //执行计划资料-同步
-        function ExecPlanWait(name, shortName, json) {
+        function ExecPlanWait(name, shortName, json, isTrans) {
             var url = serviceUrl + generic;
             var en = getEn(name, shortName, json);
-            return AjaxWait(url, en, "ExecPlan")
+            var isTrans = isTrans == undefined ? true : isTrans;
+            var method = isTrans == false ? "GetPlanProc" : "ExecPlan";//默认启用事务
+            return AjaxWait(url, en, method)
         }
 
 

@@ -25,6 +25,7 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
 
     function LoadAdd() {
         if (vm.loadFile) {
+            vm.NewItem.LoadFiles = vm.NewItem.LoadFiles || [];
             var have = false;
             angular.forEach(vm.NewItem.LoadFiles, function (f) {
                 if (f == vm.loadFile) {

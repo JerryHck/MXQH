@@ -710,6 +710,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
     }
 
     function genHtmlSer(fun, sbHtml) {
+        console.log(fun.SerList);
         if (!fun.SerList || fun.SerList.length == 0) { return sbHtml; }
         var listHave = [];
         //条件加入

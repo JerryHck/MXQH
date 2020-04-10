@@ -38,14 +38,18 @@ angular.module('AppSet')
         restrict: 'A',
         scope: {
             ngModel: '=',
-            option:'='
+            option: '=',
+            format: '@',
+            step: '@',
         },
         link: function (scope, element, attr, ngModel) {
             scope.option = scope.option ||
                 {
                     //mask:'9999/19/39 29:59',
-                    formatTime: 'H:i',
-                    formatDate: 'Y.m.d',
+                    format: scope.format || 'Y.m.d H:i',
+                    //formatTime: 'H:i',
+                    //formatDate: 'Y.m.d',
+                    step: parseInt(scope.step || "5"),
                     timepickerScrollbar: false
                 }
             //scope.option.formatTime = scope.option.formatTime || 'H:i';
@@ -64,14 +68,15 @@ angular.module('AppSet')
         restrict: 'A',
         scope: {
             ngModel: '=',
-            option: '='
+            option: '=',
+            format: '@'
         },
         link: function (scope, element, attr, ngModel) {
             scope.option = scope.option ||
                 {
                     //formatTime: 'H:i',
-                    format: 'Y/m/d',
-                    formatDate: 'Y/m/d',
+                    format: scope.format || 'Y/m/d',
+                    formatDate: scope.format || 'Y/m/d',
                     timepicker: false,
                 }
             //scope.option.formatTime = scope.option.formatTime || 'H:i';
