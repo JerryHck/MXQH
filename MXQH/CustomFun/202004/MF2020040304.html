@@ -22,7 +22,7 @@
                             <td style="width:100px ">品名</td>
                             <td style="width:100px ">状态</td>
                             <td style="width:100px ">数量</td>
-                            <td style="width:100px ">代理商名称</td>
+                            <td style="width:100px ">客户名称</td>
                             <td style="width:100px ">备注</td>
                         </tr>
                     </thead>
@@ -53,7 +53,7 @@
                         </td>
                         <td>
                             <div ng-class="{ 'has-error': qsc.InsertForm.SOAgentCode.$invalid }">
-                                <div basic-select="QZSOAgent" ng-name="SOAgent" placeholder="代理商名称" ng-model="qsc.SOAgent" ng-required="true"></div>
+                                <div basic-select="QZSOAgent" ng-name="SOAgent" placeholder="客户名称" ng-model="qsc.SOAgent" ng-required="true"></div>
                             </div>
                         </td>
                         <td>
@@ -100,7 +100,7 @@
                         <td>
                             <span ng-if="!item.IsEdit">{{ item.SOAgentName }}</span>
                             <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_SOAgent.$invalid }">
-                                <div basic-select="QZSOAgent" ng-name="SOAgent" placeholder="代理商名称" ng-model="qsc.SOAgent" ng-required="true"></div>
+                                <div basic-select="QZSOAgent" ng-name="SOAgent" placeholder="客户名称" ng-model="qsc.SOAgent" ng-required="true"></div>
                             </div>
                         </td>
 

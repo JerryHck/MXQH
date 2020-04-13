@@ -1,6 +1,6 @@
 ﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="sac.promise">
     <uib-tab index="0">
-        <uib-tab-heading class="h5">代理商管理</uib-tab-heading>
+        <uib-tab-heading class="h5">客户管理</uib-tab-heading>
         <div class="wrapper-md">
             <div class="form-inline">
                 <button class="btn btn-sm btn-success " ng-click="sac.Insert() "><i class="glyphicon glyphicon-plus "></i>新增</button>
@@ -30,8 +30,8 @@
                     <thead>
                         <tr>
                             <td style="width:60px">操作</td>
-                            <td style="width:100px ">代理商名称</td>
-                            <td style="width:100px ">代理商编码</td>
+                            <td style="width:100px ">客户名称</td>
+                            <td style="width:100px ">客户编码</td>
                             <td style="width:100px ">联系人</td>
                             <td style="width:100px ">联系电话</td>
                             <td style="width:100px ">备注</td>
@@ -44,12 +44,12 @@
                         </td>
                         <td>
                             <div ng-class="{ 'has-error': sac.InsertForm.Name.$invalid }">
-                                <input type="text" name="Name" class="form-control" placeholder="代理商名称" ng-model="sac.NewItem.Name" required />
+                                <input type="text" name="Name" class="form-control" placeholder="客户名称" ng-model="sac.NewItem.Name" required />
                             </div>
                         </td>
                         <td>
                             <div ng-class="{ 'has-error': sac.InsertForm.Code.$invalid }">
-                                <input type="text" name="Code" class="form-control" placeholder="代理商编码" ng-model="sac.NewItem.Code" required />
+                                <input type="text" name="Code" class="form-control" placeholder="客户编码" ng-model="sac.NewItem.Code" required />
                             </div>
                         </td>
                         <td>
@@ -82,13 +82,13 @@
                         <td>
                             <span ng-if="!item.IsEdit">{{ item.Name }}</span>
                             <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_Name.$invalid }">
-                                <input type="text" name="item_Name" class="form-control" placeholder="代理商名称" ng-model="sac.EditItem.Name" required />
+                                <input type="text" name="item_Name" class="form-control" placeholder="客户名称" ng-model="sac.EditItem.Name" required />
                             </div>
                         </td>
                         <td>
                             <span ng-if="!item.IsEdit">{{ item.Code }}</span>
                             <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_Code.$invalid }">
-                                <input type="text" name="item_Code" class="form-control" placeholder="代理商编码" ng-model="sac.EditItem.Code" required />
+                                <input type="text" name="item_Code" class="form-control" placeholder="客户编码" ng-model="sac.EditItem.Code" required />
                             </div>
                         </td>
                         <td>
