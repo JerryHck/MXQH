@@ -6,7 +6,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window,Dialog) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
-    vm.Ser = {};
+    vm.Ser = {Status:0};
 
     vm.Insert = Insert;
     vm.SaveInsert = SaveInsert;
@@ -19,6 +19,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window,Dialog) {
     vm.OpenScan = OpenScan;
     vm.SOAgent = {};
     vm.MaterialInfo = {};
+    vm.StatusList = [{ Status: 0, Name: '开立' }, { Status: 1, Name: '关闭' }];
 
     PageChange();
     function Search() {
@@ -128,6 +129,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window,Dialog) {
     }
     function GetContition() {
         var list = [];
+        list.push({name:"Status",value:vm.Ser.Status});
         if (vm.Ser.a_MaterialCode) {
             list.push({ name: "MaterialCode", value: vm.Ser.a_MaterialCode, tableAs: "a" });
         }
