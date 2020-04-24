@@ -43,14 +43,14 @@
                             <div class="form-group-xs col-md-12">
                                 <label class="col-lg-3 control-label padder-xxs">SN码/箱号:</label>
                                 <div class="col-lg-9" ng-class="{ 'has-error' : qsdc.OrderForm.BSN.$invalid }">
-                                    <input autocomplete="off" type="text" class="form-control" name="BSN" ng-model="qsdc.Item.BSN" placeholder="SN/箱号"
+                                    <input ng-disabled="qsdc.Item.Status=='1'" autocomplete="off" type="text" class="form-control" name="BSN" ng-model="qsdc.Item.BSN" placeholder="SN/箱号"
                                            ng-keypress="qsdc.KeyDonwSnCode($event)" required>
                                     <div class="h6 text-danger">注:扫描枪请设定自动回车功能，如果手动输入则需按回车键。</div>
                                 </div>
                             </div>
                             <div class="form-group-xs col-md-12">
                                 <div class="col-lg-offset-3 col-lg-9 padder-md">
-                                    <button type="submit" ng-disabled="qsdc.Item.HavePackQty==0" class="btn btn-success" ng-click="qsdc.Done(true)">
+                                    <button type="submit" ng-disabled="qsdc.Item.HavePackQty==0||qsdc.Item.Status=='1'" class="btn btn-success" ng-click="qsdc.Done(true)">
                                         完成销售单
                                     </button>
                                     <!--<button type="submit" ng-if="qsdc.Item.HavePackQty"  class="btn btn-success" ng-click="qsdc.Done(true)" ng-confirm="{text:'强制包装会自动根据已包装数量更新包装箱的包装数量并结束包装'}"
@@ -107,7 +107,7 @@
                             </div>
                             <div class="col-md-12 m-t-n-md text-center " ng-if="qsdc.page.total>qsdc.page.size ">
                                 <div uib-pagination total-items="qsdc.page.total " ng-model="qsdc.page.index " items-per-page="qsdc.page.size " max-size="5" first-text="<<" previous-text="< "
-                                     ng-change="qsdc.PageChange() " next-text="> " last-text=">> " boundary-links="false " boundary-link-numbers="true "></div>
+                                     ng-change="qsdc.GetSODetail() " next-text="> " last-text=">> " boundary-links="false " boundary-link-numbers="true "></div>
                             </div>
                         </div>
                     </div>
