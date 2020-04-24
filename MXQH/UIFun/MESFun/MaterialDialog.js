@@ -96,6 +96,7 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
         en.Box_Layer = vm.Item.Box_Layer;
         en.Layer_card = vm.Item.Layer_card;
         en.CompleteType = vm.Item.CompleteType;
+        en.IsQZ = vm.Item.IsQZ;
         en.ModifyBy;
         en.ModifyDate;
 
