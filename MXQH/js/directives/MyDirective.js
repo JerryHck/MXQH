@@ -38,14 +38,18 @@ angular.module('AppSet')
         restrict: 'A',
         scope: {
             ngModel: '=',
-            option:'='
+            option: '=',
+            format: '@',
+            step: '@',
         },
         link: function (scope, element, attr, ngModel) {
             scope.option = scope.option ||
                 {
                     //mask:'9999/19/39 29:59',
-                    formatTime: 'H:i',
-                    formatDate: 'Y.m.d',
+                    format: scope.format || 'Y.m.d H:i',
+                    //formatTime: 'H:i',
+                    //formatDate: 'Y.m.d',
+                    step: parseInt(scope.step || "5"),
                     timepickerScrollbar: false
                 }
             //scope.option.formatTime = scope.option.formatTime || 'H:i';
@@ -64,14 +68,15 @@ angular.module('AppSet')
         restrict: 'A',
         scope: {
             ngModel: '=',
-            option: '='
+            option: '=',
+            format: '@'
         },
         link: function (scope, element, attr, ngModel) {
             scope.option = scope.option ||
                 {
                     //formatTime: 'H:i',
-                    format: 'Y/m/d',
-                    formatDate: 'Y/m/d',
+                    format: scope.format || 'Y/m/d',
+                    formatDate: scope.format || 'Y/m/d',
                     timepicker: false,
                 }
             //scope.option.formatTime = scope.option.formatTime || 'H:i';
@@ -268,9 +273,11 @@ angular.module('AppSet')
         }
 
         scope.ValueChange = function () {
-            setTimeout(function () {
-                scope.ngChange();
-            }, 1);
+            if (scope.ngChange) {
+                AjaxService.AjaxHandle("GetFileText", "123").then(function (data) {
+                    scope.ngChange();
+                })
+            }
         }
     }
 }])
@@ -502,7 +509,7 @@ angular.module('AppSet')
             autoFirst:'@',
             ngChange:'&'
         },
-        template: '<ui-select name="{{ ngName }}" ng-change="ngChange()" class="{{ selectClass }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="ngRequired">'
+        template: '<ui-select name="{{ ngName }}" ng-change="OnChange()" class="{{ selectClass }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="ngRequired">'
                   + ' <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.ClDesc }}</ui-select-match>       '
                   + ' <ui-select-choices repeat="item.ClInf as item in data | propsFilter: {ClInf: $select.search, ClDesc: $select.search}">                          '
                   + '      <div ng-bind-html="item.ClDesc | highlight: $select.search"></div>'
@@ -526,6 +533,13 @@ angular.module('AppSet')
                     scope.ngModel = scope.ngModel || data[0].ClInf;
                 }
             });
+        }
+        scope.OnChange = function () {
+            if (scope.ngChange) {
+                AjaxService.AjaxHandle("GetFileText", "123").then(function (data) {
+                    scope.ngChange();
+                })
+            }
         }
     }
 }])

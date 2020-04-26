@@ -247,7 +247,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
                 }
                 //镭雕打印
                 else if (vm.PrintType == 'L') {
-                    LightPrintCode(teData, data);
+                    LightPrintCode(data.data2[0], data.data1[0]);
                 }
             }
 

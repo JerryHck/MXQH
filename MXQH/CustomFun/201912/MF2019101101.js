@@ -7,6 +7,12 @@ function ($scope, $http, AjaxService, toastr, $window) {
     var vm = this;
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
+    vm.OpDate = {
+                    //formatTime: 'H:i',
+                    format: 'Y-m-d',
+                    formatDate: 'Y-m-d',
+                    timepicker: false,
+                }
 
     vm.PageChange = PageChange;
     vm.Search = Search;

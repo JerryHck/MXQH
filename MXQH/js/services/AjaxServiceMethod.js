@@ -98,6 +98,7 @@
             //Server Socket
             GetServerTime: GetServerTime,
             GetServerSocket: GetServerSocket,
+            doAysc:doAysc,
 
             //休眠
             sleep: sleep,
@@ -280,12 +281,13 @@
             return Ajax(d, url, en, method);
         }
 
-
         //执行计划资料-同步
-        function ExecPlanWait(name, shortName, json) {
+        function ExecPlanWait(name, shortName, json, isTrans) {
             var url = serviceUrl + generic;
             var en = getEn(name, shortName, json);
-            return AjaxWait(url, en, "ExecPlan")
+            var isTrans = isTrans == undefined ? true : isTrans;
+            var method = isTrans == false ? "GetPlanProc" : "ExecPlan";//默认启用事务
+            return AjaxWait(url, en, method)
         }
 
 
@@ -415,6 +417,12 @@
                 function () { q.reject(); }
             );
             return q.promise;
+        }
+
+        function doAysc() {
+            var d = $q.defer();
+            d.resolve(123);
+            return d.promise;
         }
 
         function httpFun(q, url, postData, type) {

@@ -198,6 +198,7 @@ angular.module('app')
             AjaxService.GetServerTime(function (data) {
                 $scope.$apply(function () {
                     vm.SysTime = data;
+                    $rootScope.SysTime = data;
                 });
             })
         }

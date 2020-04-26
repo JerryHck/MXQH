@@ -4,7 +4,7 @@
         <div class="wrapper-xs">
             <div class="form-inline">
                 <div class="form-group">
-                    <input autocomplete="off"  type="text" date-picker class="form-control"  ng-model="line.Ser.aArrangeDate" placeholder="排班日期" option="line.DateOption">
+                    <input autocomplete="off"  type="text" date-picker class="form-control"  ng-model="line.Ser.aArrangeDate" placeholder="排班日期" option="line.OpDate ">
                 </div>
                 <div class="form-group">
                     <input autocomplete="off"  type="text" class="form-control"  ng-model="line.Ser.aWorkOrder" placeholder="工单号">
@@ -44,7 +44,7 @@
                         <td title="{{ item.NeedPerson }}">{{ item.NeedPerson }}</td>
                         <td title="{{ item.ActPerson }}">{{ item.ActPerson }}</td>
                         <td title="{{ item.DutyType }}">{{ item.DutyType }}</td>
-                        <td title="{{ item.ActUPPH }}">{{ item.ActUPPH }}</td>
+                        <td title="{{ item.ActHour }}">{{ item.ActHour }}</td>
                         <td title="{{ item.StartTime }}">{{ item.StartTime }}</td>
                         <td title="{{ item.EndTime }}">{{ item.EndTime }}</td>
                     </tr>

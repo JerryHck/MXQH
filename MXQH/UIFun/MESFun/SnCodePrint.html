@@ -11,14 +11,23 @@
                     <div class="panel-body">
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">是否补打印</label>
-                                <div class="col-lg-8">
+                                <label class="col-sm-3 control-label">是否补打印</label>
+                                <div class="col-sm-8">
                                     <div toggle-switch ng-model="sn.IsReprint" class="w-md i-switch-lg switch-bool" on-label="是" off-label="否" on-value="U" off-value="I"></div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">内部码/SN码</label>
-                                <div class="col-lg-8" ng-class="{ 'has-error' : sn.DeleteForm.sn.$invalid }">
+                                <label class="col-sm-3 control-label">打印方式</label>
+                                <div class="col-sm-8">
+                                    <span class="btn-group">
+                                        <label class="btn btn-default btn-success reset" ng-model="sn.PrintType" uib-btn-radio="'G'">一般打印</label>
+                                        <label class="btn btn-default btn-success reset" ng-model="sn.PrintType" uib-btn-radio="'L'">镭雕打印</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">内部码/SN码</label>
+                                <div class="col-sm-8" ng-class="{ 'has-error' : sn.DeleteForm.sn.$invalid }">
                                     <input autocomplete="off"  type="text" class="form-control" ui-focus="sn.Focus == 0" name="InCode" ng-model="sn.DeleteItem.InternalCode" placeholder="内部码/SN码" ng-keyup="sn.KeyDonwInCode($event)" required>
                                 </div>
                             </div>
