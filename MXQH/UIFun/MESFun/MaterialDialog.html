@@ -280,6 +280,14 @@
 
                 </div>
                 <div class="form-group-xs col-md-12">
+                    <div class="col-md-6 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">是否泉州出货：</label>
+                        <div class="col-sm-1 padder-xs" ng-class="{ 'has-error' : DialogForm.IsQZ.$invalid }">
+                            <label class="i-checks i-checks-sm control-label">
+                                <input type="checkbox" ng-model="ma.Item.IsQZ" name="IsQZ" class="ng-pristine ng-untouched ng-valid ng-not-empty"><i></i>
+                            </label>
+                        </div>
+                    </div>
                     <div class="col-md-6 padder-xs" ng-if="ma.Item.IsEdit">
                         <label class="control-label col-sm-4 padder-xs">启用：</label>
                         <div class="col-sm-1 padder-xs" ng-class="{ 'has-error' : DialogForm.PassSwitch.$invalid }">

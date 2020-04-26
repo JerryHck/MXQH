@@ -69,7 +69,7 @@
                         <td></td>
                         <td>
                             <div>
-                                <div basic-select="MaterialCode" ng-name="MateNo" placeholder="料号" ng-model="qz.NewItem.MateNo"></div>
+                                <div basic-select="QZMaterial" ng-name="MateNo" placeholder="料号" ng-model="qz.NewItem.MateNo"></div>
                             </div>
                         </td>
                         <td>
@@ -114,7 +114,7 @@
                         <td>
                             <span ng-if="!item.IsEdit">{{ item.MateNo }}</span>
                             <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_MateNo.$invalid }">
-                                <div basic-select="MaterialCode" ng-name="item_MateNo" placeholder="料号" ng-model="qz.EditItem.MateNo"></div>
+                                <div basic-select="QZMaterial" ng-name="item_MateNo" placeholder="料号" ng-model="qz.EditItem.MateNo"></div>
                             </div>
                         </td>
                         <!--<td title="{{ item.MateName }}">{{ item.MateName }}</td>-->

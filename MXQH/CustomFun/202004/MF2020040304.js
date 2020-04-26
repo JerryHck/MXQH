@@ -5,9 +5,12 @@ angular.module('app')
 function ($rootScope, $scope, $http, AjaxService, toastr, $window,Dialog) {
 
     var vm = this;
-    vm.page = { index: 1, size: 12 };
-    vm.Ser = {};
-
+    vm.page = { index: 1, size: 10 };
+    vm.pageDetail = { index: 1, size: 10 };
+    vm.Ser = {Status:0};
+    vm.ExportExcel1 = ExportExcel1;
+    vm.PageChange1 = PageChange1;
+    vm.Search1 = Search1;
     vm.Insert = Insert;
     vm.SaveInsert = SaveInsert;
     vm.Edit = Edit;
@@ -15,10 +18,13 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window,Dialog) {
     vm.SaveEdit = SaveEdit;
     vm.PageChange = PageChange;
     vm.Search = Search;
-    vm.ExportExcel = ExportExcel;
+    //vm.ExportExcel = ExportExcel;
     vm.OpenScan = OpenScan;
     vm.SOAgent = {};
     vm.MaterialInfo = {};
+    vm.StatusList = [{ Status: 0, Name: '开立' }, { Status: 1, Name: '关闭' }];
+    vm.SelectItem = SelectItem;//查看完成销售单明细
+    
 
     PageChange();
     function Search() {
@@ -38,7 +44,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window,Dialog) {
                 CreateBy: $rootScope.User.Name,
                 Status: 0
             };
-            vm.Ser = { State: 0 };
+            vm.Ser = { Status: 0 };
             //PK生成设定
             var snList = [{ name: "QZXS", col: "DocNo", parm: "DocNo" }];
             //SN生产
@@ -55,7 +61,6 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window,Dialog) {
         vm.NewItem.MaterialID = vm.MaterialInfo.Id;
         vm.NewItem.MaterialCode = vm.MaterialInfo.MaterialCode;
         vm.NewItem.MaterialName = vm.MaterialInfo.MaterialName;
-        console.log(vm.MaterialInfo);
         if (!vm.NewItem.Remark) {
             vm.NewItem.Reamrk = '';
         }
@@ -100,9 +105,9 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window,Dialog) {
         en.Quantity = vm.EditItem.Quantity;
         en.ModifyBy = vm.EditItem.ModifyBy;
         en.ModifyDate = vm.EditItem.ModifyDate;
-        en.SOAgentID = vm.EditItem.SOAgentID;
         en.CreateBy = vm.EditItem.CreateBy;
         en.CreateDate = vm.EditItem.CreateDate;
+        en.DeliverDate = vm.EditItem.DeliverDate;
         if (!vm.EditItem.Remark) {
             en.Remark = '';
         } else {
@@ -121,15 +126,22 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window,Dialog) {
         });
 
     }
-    function ExportExcel() {
-        vm.promise = AjaxService.GetPlanOwnExcel("QZSO", GetContition()).then(function (data) {
-            $window.location.href = data.File;
-        });
-    }
+    //function ExportExcel() {
+    //    vm.promise = AjaxService.GetPlanOwnExcel("QZSO", GetContition()).then(function (data) {
+    //        $window.location.href = data.File;
+    //    });
+    //}
     function GetContition() {
         var list = [];
+        list.push({name:"Status",value:vm.Ser.Status});
         if (vm.Ser.a_MaterialCode) {
             list.push({ name: "MaterialCode", value: vm.Ser.a_MaterialCode, tableAs: "a" });
+        }
+        if (vm.Ser.DocNo) {
+            list.push({ name: "DocNo", value: vm.Ser.DocNo, tableAs: "a" });
+        }
+        if (vm.Ser.DeliverDate) {
+            list.push({ name: "DeliverDate", value: vm.Ser.DeliverDate, tableAs: "a" });
         }
         return list;
     }
@@ -138,6 +150,40 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window,Dialog) {
         Dialog.OpenDialog("QZSODetail", item).then(function (data) {
             PageChange();
         }).catch(function (reason) {
+        });
+    }
+
+    function SelectItem(item) {
+        vm.SelectedItem = item;
+        $(".bsn-list").addClass("active");
+        Search1();
+    }
+
+    function PageChange1() {
+        vm.promise = AjaxService.GetPlansPage("QZSODetail", GetCondition1(), vm.pageDetail.index, vm.pageDetail.size).then(function (data) {
+            vm.SNList = data.List;
+            vm.pageDetail.total = data.Count;
+        });
+    }
+
+    function GetCondition1() {
+        var list = [];
+        if (vm.SerBSN) {
+            list.push({ name: "BSN", value: vm.SerBSN });
+        }
+        list.push({ name: "SOID", value: vm.SelectedItem.ID });
+        return list;
+    }
+
+    function Search1() {
+        vm.pageDetail.index = 1;
+        PageChange1();
+    }
+    function ExportExcel1() {
+        vm.pageDetail.size = 1000000;
+        vm.promise = AjaxService.GetPlanOwnExcel("QZSODetail", GetCondition1()).then(function (data) {
+            vm.pageDetail.size = 10;
+            $window.location.href = data.File;
         });
     }
 
