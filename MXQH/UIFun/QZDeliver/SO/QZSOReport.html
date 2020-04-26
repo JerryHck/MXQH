@@ -112,6 +112,7 @@
                     <td style="width:100px ">销售单号</td>
                     <td style="width:100px ">创建日期</td>
                     <td style="width:100px ">销售数量</td>
+                    <td style="width:100px ">销售日期</td>
                     <td style="width:100px ">料号</td>
                     <td style="width:160px ">品名</td>
                     <td style="width:100px ">客户编号</td>
@@ -124,6 +125,7 @@
                 <td>{{ item.DocNo }}</td>
                 <td>{{ item.CreateDate | date :'yyyy-MM-dd' }}</td>
                 <td>{{ item.Quantity }}</td>
+                <td>{{ item.DeliverDate | date :'yyyy-MM-dd' }}</td>
                 <td>{{ item.MaterialCode }}</td>
                 <td>{{ item.MaterialName }}</td>
                 <td>{{ item.SOAgentCode }}</td>
