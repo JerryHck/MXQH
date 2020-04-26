@@ -205,6 +205,8 @@
     <Content Include="UIFun\MESFun\BarCodeList.js" />
     <Content Include="UIFun\MESFun\Basic\InCodeRelease.html" />
     <Content Include="UIFun\MESFun\Basic\InCodeRelease.js" />
+    <Content Include="UIFun\MESFun\BSNConvertTxCode.html" />
+    <Content Include="UIFun\MESFun\BSNConvertTxCode.js" />
     <Content Include="UIFun\MESFun\InCodeBindSN.html" />
     <Content Include="UIFun\MESFun\InCodeBindSN.js" />
     <Content Include="UIFun\MESFun\InCodeDump.html" />

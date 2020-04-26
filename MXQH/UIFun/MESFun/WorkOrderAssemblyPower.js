@@ -78,7 +78,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
         vm.promise = AjaxService.ExecPlan("MesMxWOrder", "saveass", en).then(function (data) {
             if (data.data[0].MsgType == 'Success') {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
-                vm.CalData = data.data1[0];
+                ChangePro(item);
                 AjaxService.PlayVoice('success.mp3');
                 vm.InCodeControl = undefined;
             }

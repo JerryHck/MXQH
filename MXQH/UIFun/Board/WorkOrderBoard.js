@@ -131,7 +131,7 @@ function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window
             //定时计--每3分钟换下一次以防止服务器断开连接
             vm.SerItemList[index].intervalId = setInterval(function () {
                 GetData(en, index)
-            }, 10000);
+            }, 300000);
         }
         else {
             if (vm.SerItemList[index].intervalId) {
@@ -147,6 +147,9 @@ function WorkOrderBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window
 
     function GetData(en, index) {
         //console.log(en);
+        if (vm.SerItemList[index].socket) {
+            vm.SerItemList[index].socket.close();
+        }
         AjaxService.GetServerSocket(en, "KeyBoard" + index, function (data, socket) {
             vm.SerItemList[index].socket = socket;
             if (vm.SerItemList[index].IsRun) {

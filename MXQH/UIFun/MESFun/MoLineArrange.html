@@ -1,6 +1,6 @@
 ﻿<div class="app-content-full" cg-busy="line.promise">
     <div class="hbox hbox-auto-xs hbox-auto-sm">
-        <div class="col w lt b-r text-xs">
+        <!--<div class="col w lt b-r text-xs">
             <div class="vbox">
                 <div class="wrapper">
                     <div class="h4 text-center">工单列表</div>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <div class="col w lter b-r">
             <div class="vbox">
@@ -44,11 +44,22 @@
                         排班列表
                     </div>
                 </div>
-                <div class="wrapper-xs b-t m-b-xxs">
+                <div class="wrapper-xs b-t m-b-xxs" ng-form="line.MainOrder">
                     <div class="padder-xs">
+                        <div class="form-group padder-xxs" ng-class="{ 'has-error' : line.MainOrder.Order.$invalid }">
+                            <div class="input-group">
+                                <input autocomplete="off" ng-disabled="line.editArrange" type="text" name="Order" ng-model="line.Item.WorkOrder" uib-typeahead="order.WorkOrder as order.WorkOrder for order in line.MoList | orderBy: 'FirstChar'| filter:{WorkOrder: $viewValue} | limitTo:8"
+                                       class="form-control input-sm" placeholder="工单号" ng-keyup="line.KeyDonwOrder($event)" required>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-sm btn-default" ng-disabled="line.editArrange" ng-click="line.ClearMo()">
+                                        <i class="glyphicon glyphicon-remove text-info"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
                         <div class="form-group padder-xxs">
                             <div class="input-group">
-                                <input type="text" date-picker class="form-control input-sm" placeholder="查询" ng-model="line.MoArrnageQuery" option="line.Option">
+                                <input type="text" date-picker class="form-control input-sm" placeholder="日期查询" ng-model="line.MoArrnageQuery" option="line.Option">
                                 <span class="input-group-btn">
                                     <button class="btn btn-sm btn-default" ng-click="line.MoArrnageQuery=undefined">
                                         <i class="glyphicon glyphicon-remove text-info"></i>
@@ -74,7 +85,7 @@
                                             <span class="font-v3">{{ line.NewArrange.Line.Name }}</span>
                                         </small>
                                     </a>
-                                    <a ng-repeat="l in line.ArrangeList" class="list-group-item" ng-class="{'select': line.SelectedArrange.Id == l.Id }" ng-click="line.SelectArr(l)">
+                                    <a ng-repeat="l in line.ArrangeList | filter:{'ArrangeDate':  line.MoArrnageQuery}" class="list-group-item" ng-class="{'select': line.SelectedArrange.Id == l.Id }" ng-click="line.SelectArr(l)">
                                         <span ng-confirm="{text:'确定要删除该排班吗'}" ng-click='line.DeleteArr(l)' class="pull-right text-danger">
                                             <i class="fa fa-times"></i>
                                         </span>
@@ -169,13 +180,23 @@
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-sm-5 padder-xxs control-label text-info">开始时间:</label>
                                                         <div class="col-sm-7 padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.StartTime.$invalid }">
-                                                            <input type="text" time-picker format='H:i' ng-disabled="!line.editArrange" class="form-control" name="StartTime" placeholder="开始时间" step="30" ng-model="line.SelectedArrange.StartTime" required />
+                                                            <div class="input-group">
+                                                                <input type="text" readonly="readonly" time-picker format='H:i' ng-disabled="!line.editArrange" ng-change="line.ChangeStart()" class="form-control" name="StartTime" placeholder="开始时间" step="30" ng-model="line.SelectedArrange.StartTime" required />
+                                                                <span class="input-group-addon text-info">
+                                                                    <label class="text-info"><i class="glyphicon glyphicon-calendar"></i></label>
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-sm-5 padder-xxs control-label text-info">结束时间:</label>
                                                         <div class="col-sm-7  padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.EndTime.$invalid }">
-                                                            <input type="text" time-picker format='H:i' ng-disabled="!line.editArrange" class="form-control" name="EndTime" placeholder="结束时间" step="30" ng-model="line.SelectedArrange.EndTime" required />
+                                                            <div class="input-group">
+                                                                <input type="text" readonly="readonly" time-picker format='H:i' ng-disabled="!line.editArrange" ng-change="line.ChangeEnd()"  class="form-control" name="EndTime" placeholder="结束时间" step="30" ng-model="line.SelectedArrange.EndTime" required />
+                                                                <span class="input-group-addon text-info">
+                                                                    <label class="text-info"><i class="glyphicon glyphicon-calendar"></i></label>
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -269,9 +290,12 @@
                                                     <tr>
                                                         <td style="width:20px">操作</td>
                                                         <td style="width:80px ">作业工序</td>
-                                                        <td style="width:30px ">工号</td>
-                                                        <td style="width:50px ">姓名</td>
-                                                        <td style="width:150px ">备注</td>
+                                                        <td style="width:50px ">员工</td>
+                                                        <td style="width:40px ">类别</td>
+                                                        <td style="width:40px ">开始</td>
+                                                        <td style="width:40px ">结束</td>
+                                                        <td style="width:30px ">绩效</td>
+                                                        <td style="width:60px ">备注</td>
                                                     </tr>
                                                 </thead>
                                                 <tr ng-repeat="item in line.SelectedArrange.Dtl ">
@@ -291,33 +315,28 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div ng-class="{ 'has-error': line.ItemForm.HrUserNo{{ $index }}.$invalid }">
-                                                            <!--<ui-select name="HrUserNo{{ $index }}" ng-disabled="!line.editArrange" ng-model="item.User" theme="bootstrap" search-enabled="true" ng-required="true">
-                                                                <ui-select-match placeholder="工号.."><span class="font-v3">{{ $select.selected.UserNo }}</span></ui-select-match>
-                                                                <ui-select-choices repeat="item in line.UserList | filter: $select.search track by item.UserNo">
-                                                                    <div class="font-v3" ng-bind-html="item.Name | highlight: $select.search"></div>
-                                                                    <small ng-bind-html="item.UserNo | highlight: $select.search"></small>
-                                                                </ui-select-choices>
-                                                            </ui-select>-->
-                                                            {{ item.User.UserNo }}
+                                                        {{ item.User.Name }}<br />({{ item.User.UserNo }})
+                                                    </td>
+                                                    <td>
+                                                        <div ng-class="{ 'has-error': line.ItemForm.HrUserName{{ $index }}.$invalid }">
+                                                            <div config-select ng-change="line.CalPer()" tb="MESArrange" ng-disabled="!line.editArrange" col="EmpType" ng-model="item.EmpType" auto-first="true"></div>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div ng-class="{ 'has-error': line.ItemForm.HrUserName{{ $index }}.$invalid }">
-                                                            {{ item.User.Name }}
-                                                            <!--<ui-select name="HrUserName{{ $index }}" ng-disabled="!line.editArrange" ng-model="item.User" theme="bootstrap" search-enabled="true" ng-required="true">
-                                                                <ui-select-match placeholder="姓名.."><span class="font-v3">{{ $select.selected.Name }}</span></ui-select-match>
-                                                                <ui-select-choices repeat="item in line.UserList | filter: $select.search track by item.UserNo">
-                                                                    <div class="font-v3" ng-bind-html="item.Name | highlight: $select.search"></div>
-                                                                    <small ng-bind-html="item.UserNo | highlight: $select.search"></small>
-                                                                </ui-select-choices>
-                                                            </ui-select>-->
+                                                            <input type="text" readonly="readonly" ng-change="line.ChangeArrStart(item)" time-picker format='H:i' ng-disabled="!line.editArrange" class="form-control" name="StartTime" placeholder="开始时间" step="30" ng-model="item.StartTime" required />
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div>
-                                                            <input type="text" name="Remark" ng-disabled="!line.editArrange" class="form-control" placeholder="备注" ng-model="item.Remark" />
+                                                        <div ng-class="{ 'has-error': line.ItemForm.HrUserName{{ $index }}.$invalid }">
+                                                            <input type="text" readonly="readonly" time-picker ng-change="line.ChangeArrEnd(item)" format='H:i' ng-disabled="!line.editArrange" class="form-control" name="EndTime" placeholder="结束时间" step="30" ng-model="item.EndTime" required />
                                                         </div>
+                                                    </td>
+                                                    <td>
+                                                        <div config-select tb="MESArrange" ng-disabled="!line.editArrange" col="Merits" ng-model="item.Merits" auto-first="true"></div>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" ng-disabled="!line.editArrange" class="form-control" name="Remark" placeholder="备注" ng-model="item.Remark" />
                                                     </td>
                                                 </tr>
                                             </table>
@@ -333,6 +352,12 @@
                                                     <label class="control-label col-md-3 padder-xs text-info">工号:</label>
                                                     <div class="col-md-9 padder-xs">
                                                         <input type="text" name="HrUser" ng-disabled="!line.editArrange" ng-model="line.HrUserNo" class="form-control" placeholder="工号" ng-keyup="line.KeyDonwUserNo($event)" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group-xs col-md-12 padder-xs m-t-md">
+                                                    <label class="control-label col-md-3 padder-xs text-danger h6">注:</label>
+                                                    <div class="col-md-9 padder-xs">
+                                                        <span class="form-control-static text-danger h6">拉长与助拉也需添加到排班信息，并设置为拉长、助拉</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -356,10 +381,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <!--<pre>{{ line.PerList |json }}</pre>-->
-                                    <!--<pre>{{ line.ArrangeList | json }}</pre>-->
-                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <!--<pre>{{ line.PerList |json }}</pre>-->
+                                <!--<pre>{{ line.ArrangeList | json }}</pre>-->
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,201 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="ho.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">异常工时申报</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class="btn btn-success " ng-disabled="ho.Ser.aState != '0'" ng-click="ho.Insert() "><i class="glyphicon glyphicon-plus "></i>新增</button>
+                <div class="form-group">
+                    <div config-select ng-model="ho.Ser.aState" tb="UnusualHour" col="State" placeholder="状态"></div>
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "ho.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <div class="col-md-12 scroll-x no-padder" style="min-height:300px" >
+                <table class= "table pad-xs" >
+                    <thead>
+                        <tr>
+                            <td style= "width:60px" ng-if="ho.Ser.aState == '0'">操作</td>
+                            <td style="width:100px ">所属线别</td>
+                            <td style="width:100px ">工单</td>
+                            <td style="width:100px ">异常工时</td>
+                            <td style="width:100px ">备注</td>
+                            <td style="width:100px ">申请人</td>
+                            <td style="width:100px ">申请时间</td>
+                            <td style="width:100px " ng-if="ho.Ser.aState != '0'">审核人</td>
+                            <td style="width:100px " ng-if="ho.Ser.aState != '0'">审核时间</td>
+                        </tr>
+                    </thead>
+                    <tr ng-if="ho.IsInsert" ng-form="ho.InsertForm">
+                        <td>
+                            <button class="btn btn-xs btn-success" ng-disabled="ho.InsertForm.$invalid" ng-click="ho.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="ho.IsInsert=false" ><i class="fa fa-undo"></i></button>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': ho.InsertForm.LineID.$invalid }">
+                                <div basic-select="AssemblyLine" ng-name="LineID" placeholder="所属线别" ng-model="ho.NewItem.LineID"  ng-required ="true"></div>
+                            </div>
+                        </td>
+                        <!--<td>
+                            <div ng-class="{ 'has-error': ho.InsertForm.WorkOrder.$invalid }">
+                                <div basic-select="MesMxWOrder" ng-name="WorkOrder" placeholder="工单" ng-model="ho.NewItem.WorkOrder" ng-required="true"></div>
+                            </div>
+                        </td>-->
+                        <td></td>
+                        <td>
+                            <div ng-class="{ 'has-error': ho.InsertForm.UnusualHour.$invalid }">
+                                <input autocomplete="off"  type="number" name="UnusualHour" class="form-control" placeholder="异常工时" ng-model="ho.NewItem.UnusualHour" required />
+                            </div>
+                        </td>
+                        <td>
+                            <input autocomplete="off" type="text" name="Remark" class="form-control" placeholder="备注" ng-model="ho.NewItem.Remark" />
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr ng-repeat= "item in ho.List " ng-form="item.ItemForm">
+                        <td ng-if="ho.Ser.aState == '0'">
+                            <span ng-if="!item.IsEdit">
+                                <button class="btn btn-xs btn-primary" ng-click="ho.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="ho.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </span>
+                            <span ng-if="item.IsEdit">
+                                <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="ho.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                                <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                            </span>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.Line.Name }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_LineID.$invalid }">
+                                 <div basic-select="AssemblyLine" ng-name="item_LineID" placeholder="所属线别" ng-model="ho.EditItem.LineID"  ng-required ="true"></div>
+                            </div>
+
+                        </td>
+                        <!--<td>
+                            <span ng-if="!item.IsEdit">{{ item.WorkOrder }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_LineID.$invalid }">
+                                <div basic-select="MesMxWOrder" ng-name="item_LineID" placeholder="工单" ng-model="ho.EditItem.WorkOrder" ng-required="true"></div>
+                            </div>
+                        </td>-->
+                        <td title="{{ item.StateText }}">{{ item.StateText }}</td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.UnusualHour }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_UnusualHour.$invalid }">
+                                 <input autocomplete="off"  type="number" name="item_UnusualHour" class="form-control" placeholder="异常工时" ng-model="ho.EditItem.UnusualHour" required />
+                            </div>
+
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.Remark }}</span>
+                            <div ng-if="item.IsEdit">
+                                <input autocomplete="off" type="text" name="item_Remark" class="form-control" placeholder="备注" ng-model="ho.EditItem.Remark" />
+                            </div>
+                        </td>
+                        <td title="{{ item.CreateBy }}">{{ item.Creator }}</td>
+                        <td title="{{ item.CreateDate }}">{{ item.CreateDate| date:"yyyy-MM-dd HH:mm:ss" }}</td>
+                        <td  ng-if="ho.Ser.aState != '0'" title="{{ item.SignUserName }}">{{ item.SignUserName }}</td>
+                        <td  ng-if="ho.Ser.aState != '0'" title="{{ item.SignDate }}">{{ item.SignDate| date:"yyyy-MM-dd HH:mm:ss" }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "ho.page.total>ho.page.size ">
+                <div uib-pagination total-items= "ho.page.total " ng-model= "ho.page.index " items-per-page= "ho.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "ho.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="1">
+        <uib-tab-heading class="h5">维修费用申报</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class="btn btn-success " ng-disabled="ho.Ser1.aState != '0'" ng-click="ho.Insert1() "><i class="glyphicon glyphicon-plus "></i>新增</button>
+                <div class="form-group">
+                    <div config-select ng-model="ho.Ser1.aState" tb="UnusualHour" col="State" placeholder="状态"></div>
+                </div>
+                <button class="btn btn-sm btn-info " ng-click="ho.Search1() "><i class="glyphicon glyphicon-search "></i>查询</button>
+            </div>
+        </div>
+        <div class="padder-md ">
+            <div class="col-md-12 scroll-x no-padder" style="min-height:300px">
+                <table class="table pad-xs">
+                    <thead>
+                        <tr>
+                            <td style="width:60px" ng-if="ho.Ser1.aState == '0'">操作</td>
+                            <td style="width:100px ">所属线别</td>
+                            <td style="width:100px ">工单</td>
+                            <td style="width:100px ">维修费用</td>
+                            <td style="width:100px ">备注</td>
+                            <td style="width:100px ">申请人</td>
+                            <td style="width:100px ">申请时间</td>
+                            <td style="width:100px " ng-if="ho.Ser1.aState != '0'">审核人</td>
+                            <td style="width:100px " ng-if="ho.Ser1.aState != '0'">审核时间</td>
+                        </tr>
+                    </thead>
+                    <tr ng-if="ho.IsInsert1" ng-form="ho.InsertForm1">
+                        <td>
+                            <button class="btn btn-xs btn-success" ng-disabled="ho.InsertForm1.$invalid" ng-click="ho.SaveInsert1()"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="ho.IsInsert1=false"><i class="fa fa-undo"></i></button>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': ho.InsertForm1.LineID.$invalid }">
+                                <div basic-select="AssemblyLine" ng-name="LineID" placeholder="所属线别" ng-model="ho.NewItem1.LineID" ng-required="true"></div>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td>
+                            <div ng-class="{ 'has-error': ho.InsertForm1.UnusualHour1.$invalid }">
+                                <input autocomplete="off" type="number" name="UnusualHour1" class="form-control" placeholder="维修费用" ng-model="ho.NewItem1.UnusualHour" required />
+                            </div>
+                        </td>
+                        <td>
+                            <input autocomplete="off" type="text" name="Remark" class="form-control" placeholder="备注" ng-model="ho.NewItem1.Remark" />
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr ng-repeat="item in ho.List1 " ng-form="item.ItemForm">
+                        <td ng-if="ho.Ser1.aState == '0'">
+                            <span ng-if="!item.IsEdit">
+                                <button class="btn btn-xs btn-primary" ng-click="ho.Edit1(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="ho.Delete1(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </span>
+                            <span ng-if="item.IsEdit">
+                                <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="ho.SaveEdit1($index)"><i class="glyphicon glyphicon-save"></i></button>
+                                <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                            </span>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.Line.Name }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_LineID.$invalid }">
+                                <div basic-select="AssemblyLine" ng-name="item_LineID" placeholder="所属线别" ng-model="ho.EditItem1.LineID" ng-required="true"></div>
+                            </div>
+
+                        </td>
+                        <td title="{{ item.StateText }}">{{ item.StateText }}</td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.UnusualHour }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_UnusualHour.$invalid }">
+                                <input autocomplete="off" type="number" name="item_UnusualHour" class="form-control" placeholder="维修费用" ng-model="ho.EditItem1.UnusualHour" required />
+                            </div>
+
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.Remark }}</span>
+                            <div ng-if="item.IsEdit">
+                                <input autocomplete="off" type="text" name="item_Remark" class="form-control" placeholder="备注" ng-model="ho.EditItem1.Remark" />
+                            </div>
+                        </td>
+                        <td title="{{ item.CreateBy }}">{{ item.Creator }}</td>
+                        <td title="{{ item.CreateDate }}">{{ item.CreateDate| date:"yyyy-MM-dd HH:mm:ss" }}</td>
+                        <td ng-if="ho.Ser1.aState != '0'" title="{{ item.SignUserName }}">{{ item.SignUserName }}</td>
+                        <td ng-if="ho.Ser1.aState != '0'" title="{{ item.SignDate }}">{{ item.SignDate| date:"yyyy-MM-dd HH:mm:ss" }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-12 text-center " ng-if="ho.page1.total>ho.page1.size ">
+                <div uib-pagination total-items="ho.page1.total " ng-model="ho.page1.index " items-per-page="ho.page1.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                     ng-change="ho.PageChange1() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

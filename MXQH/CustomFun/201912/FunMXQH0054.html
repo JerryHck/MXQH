@@ -1,1 +1,48 @@
-﻿<div e-chart show='t.groupData' style="width:100%; height:100%; color:#527509"></div>
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="t.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">测试查询</uib-tab-heading>
+        <div class="wrapper-xs">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" date-time-picker class="form-control"  ng-model="t.Ser.aFunNo" placeholder="1234" format="Y/m/d H:i" step="30" option="t.DateTimeOption">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "t.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "t.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-xs ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table " >
+                    <thead>
+                        <tr>
+                            <td title="a_FunNo" style= "width:100px ">a_FunNo</td>
+                            <td title="a_ParFunNo" style= "width:100px ">a_ParFunNo</td>
+                            <td title="a_OrderBy" style= "width:100px ">a_OrderBy</td>
+                            <td title="a_FunName" style= "width:100px ">a_FunName</td>
+                            <td title="b_Id" style= "width:100px ">b_Id</td>
+                            <td title="b_LoadName" style= "width:100px ">b_LoadName</td>
+                            <td title="b_SortNo" style= "width:100px ">b_SortNo</td>
+                            <td title="b_FunNo" style= "width:100px ">b_FunNo</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in t.List ">
+                        <td title="{{ item.FunNo }}">{{ item.FunNo }}</td>
+                        <td title="{{ item.ParFunNo }}">{{ item.ParFunNo }}</td>
+                        <td title="{{ item.OrderBy }}">{{ item.OrderBy }}</td>
+                        <td title="{{ item.FunName }}">{{ item.FunName }}</td>
+                        <td title="{{ item.FunLoad.Id }}">{{ item.FunLoad.Id }}</td>
+                        <td title="{{ item.FunLoad.LoadName }}">{{ item.FunLoad.LoadName }}</td>
+                        <td title="{{ item.FunLoad.SortNo }}">{{ item.FunLoad.SortNo }}</td>
+                        <td title="{{ item.FunLoad.FunNo }}">{{ item.FunLoad.FunNo }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "t.page.total>t.page.size ">
+                <div uib-pagination total-items= "t.page.total " ng-model= "t.page.index " items-per-page= "t.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "t.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+        <font color="#FF0000">（2020-04-13）开始，所有条码发放以系统邮件为准，我司IT将不另行发送邮件!</font>
+
+    </uib-tab>
+</uib-tabset>
