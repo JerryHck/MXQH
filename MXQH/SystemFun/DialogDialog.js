@@ -816,7 +816,7 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
                     case "Date": str += "<input type=\"text\" date-picker class=\"form-control\"  ng-model=\"{0}.Ser.{1}\" placeholder=\"{2}\" option=\"{0}.DateOption\">"; break;
                     case "DateTime": str += "<input type=\"text\" date-time-picker class=\"form-control\"  ng-model=\"{0}.Ser.{1}\" placeholder=\"{2}\" option=\"{0}.DateTimeOption\">"; break;
                     case "Select": str += "<div basic-select=\"{3}\"  ng-model=\"{0}.Ser.{1}\" placeholder=\"{2}\" ></div>"; break;
-                    case "Config": str += "<div config-select ng-model=\"{0}.Ser.{1}\" tb=\"" + ser.SerTName.Split(',')[0] + "\" col=\"" + ser.SerTName.Split(',')[1] + "\" placeholder=\"{2}\"></div>"; break;
+                    case "Config": str += "<div config-select ng-model=\"{0}.Ser.{1}\" tb=\"" + ser.SerTName.split(',')[0] + "\" col=\"" + ser.SerTName.split(',')[1] + "\" placeholder=\"{2}\"></div>"; break;
                     case "Switch": str += "<div toggle-switch ng-model=\"{0}.Ser.{1}\" class=\"w-xxs switch-success\" on-label=\"是\" off-label=\"否\" on-value = \"1\" off-value =\"0\"></div >"; break;
                     case "CheckBox": str += "<label class=\"i-checks i-checks\"><input type =\"checkbox\" ng-model = \"{0}.Ser.{1}\" ><i></i>{2}</label>"; break;
                 }

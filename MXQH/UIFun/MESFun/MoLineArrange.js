@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('MoLineArrangeCtrl', ['$rootScope', '$scope', 'MyPop', 'AjaxService', 'toastr', '$window', 'Dialog',
-function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
+.controller('MoLineArrangeCtrl', ['$rootScope', '$scope', 'MyPop', 'AjaxService', 'toastr', '$timeout', 'Dialog',
+function ($rootScope, $scope, MyPop, AjaxService, toastr, $timeout, Dialog) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
@@ -15,7 +15,8 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
     };
     vm.MesList = [];
 
-    vm.SelectMo = SelectMo;
+    vm.KeyDonwOrder = KeyDonwOrder;
+    vm.ClearMo = ClearMo;
     vm.SelectArr = SelectArr;
     vm.AddLinePerson = AddLinePerson;
     vm.ChangeProc = ChangeProc;
@@ -31,6 +32,11 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
     vm.DeletePer = DeletePer;
     vm.DeleteArr = DeleteArr;
     vm.ChangeRemark = ChangeRemark;
+    vm.ChangeStart = ChangeStart;
+    vm.ChangeEnd = ChangeEnd;
+    vm.ChangeArrStart = ChangeArrStart;
+    vm.ChangeArrEnd = ChangeArrEnd;
+    vm.CalPer = CalPer;
 
     function Search() {
         vm.page.index = 1;
@@ -42,6 +48,9 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
     //工单获取
     vm.promise = AjaxService.GetPlans("MesMxWOrder", conList).then(function (data) {
         vm.MoList = data;
+        for (var i = 0, len = vm.MoList.length; i < len; i++) {
+            vm.MoList[i].FirstChar = vm.MoList[i].WorkOrder.substring(0, 1);
+        }
     });
     //工序获取
     vm.promise = AjaxService.GetPlans("MESBoProcedure", { name: "IsUse", value: 1 }).then(function (data) {
@@ -57,10 +66,33 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
         
     });
 
-    function SelectMo(item) {
+    function KeyDonwOrder(e) {
+        var keycode = window.event ? e.keyCode : e.which;
+        if (keycode == 13 && vm.Item.WorkOrder) {
+            vm.IsEdit = false;
+            var en = {};
+            en.name = "WorkOrder";
+            en.value = vm.Item.WorkOrder;
+            AjaxService.GetPlan("MesMxWOrder", en).then(function (data) {
+                var mss = "工单 [" + vm.Item.WorkOrder + '] ';
+                if (!data.ID) {
+                    vm.Item.WorkOrder = undefined;
+                    toastr.error(mss + '  不存在或已经完工');
+                }
+                else {
+                    vm.SelectedMo = data;
+                    GetMoArrange();
+                    vm.SelectedArrange = {};
+                }
+            });
+        }
+    }
+
+    function ClearMo() {
         if (!MyPop.Show(vm.editArrange, '功能信息还在编辑，请先保存！')) {
-            vm.SelectedMo = item;
-            GetMoArrange();
+            vm.SelectedMo = undefined;
+            vm.Item.WorkOrder = undefined;
+            vm.ArrangeList = [];
             vm.MesLis = [];
             vm.SelectedArrange = {};
         }
@@ -69,6 +101,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
     function OpenMoDialog() {
         Dialog.OpenDialog("MESMODialog", {}).then(function (data) {
             vm.SelectedMo = data;
+            vm.Item.WorkOrder = data.WorkOrder;
             GetMoArrange();
             vm.promise = AjaxService.GetPlan("MESLineOrder", { name: "ID", value: vm.SelectedMo.ID }).then(function (data2) {
                 vm.SelectedArrange.WorkOrder = vm.SelectedMo.WorkOrder;
@@ -95,10 +128,54 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
         }
     }
 
+    function ChangeArrEnd(item) {
+        var d = new Date(vm.SelectedArrange.ArrangeDate + ' ' + item.EndTime);
+        var dm = new Date(vm.SelectedArrange.ArrangeDate + ' ' + vm.SelectedArrange.EndTime);
+        if (d > dm) {
+            toastr.error("选择的结束时间不能晚于产线排班的结束时间")
+            item.EndTime = item.OriEndTime;
+        }
+        else {
+            item.OriEndTime = item.EndTime;
+        }
+    }
+
+    function ChangeArrStart(item) {
+        var d = new Date(vm.SelectedArrange.ArrangeDate + ' ' + item.StartTime);
+        var dm = new Date(vm.SelectedArrange.ArrangeDate + ' ' + vm.SelectedArrange.StartTime);
+        if (d < dm) {
+            toastr.error("选择的开始时间不能早于产线排班的开始时间")
+            item.StartTime = item.OriStartTime;
+        }
+        else {
+            item.OriStartTime = item.StartTime;
+        }
+    }
+
+    function ChangeStart() {
+        for (var j = 0, len1 = vm.SelectedArrange.Dtl.length; j < len1; j++) {
+            vm.SelectedArrange.Dtl[j].StartTime = vm.SelectedArrange.StartTime;
+            vm.SelectedArrange.Dtl[j].OriStartTime = vm.SelectedArrange.StartTime;
+        }
+    }
+
+    function ChangeEnd() {
+        for (var j = 0, len1 = vm.SelectedArrange.Dtl.length; j < len1; j++) {
+            vm.SelectedArrange.Dtl[j].EndTime = vm.SelectedArrange.EndTime;
+            vm.SelectedArrange.Dtl[j].OriEndTime = vm.SelectedArrange.EndTime;
+        }
+    }
+
     //扫描人员
     function KeyDonwUserNo(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.HrUserNo) {
+            if (!vm.SelectedArrange.ArrangeDate || !vm.SelectedArrange.StartTime || !vm.SelectedArrange.EndTime) {
+                toastr.error("请先填写排班开始时间/结束时间");
+                vm.HrUserNo = undefined;
+                return;
+            }
+
             var have = false;
             for (var i = 0, len = vm.HrData.length; i < len; i++) {
                 if (vm.HrData[i].UserNo == vm.HrUserNo) {
@@ -119,7 +196,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
                 }
                 else {
                     vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: '已成功扫描并添加[' + vm.KeyUser.Name + ']' });
-                    vm.NewPerItem = { User: { UserNo: vm.KeyUser.UserNo, Name: vm.KeyUser.Name } };
+                    vm.NewPerItem = { User: { UserNo: vm.KeyUser.UserNo, Name: vm.KeyUser.Name }, Merits: '1.0', EmpType: 'P', StartTime: vm.SelectedArrange.StartTime, EndTime: vm.SelectedArrange.EndTime };
                     vm.SelectedArrange.Dtl.push(vm.NewPerItem);
                     CalPer();
                 }
@@ -137,6 +214,8 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
             vm.SelectedArrange.Order = { MaterialCode: vm.SelectedMo.MaterialCode, MaterialName: vm.SelectedMo.MaterialName, Quantity: vm.SelectedMo.Quantity };
             for (var i = 0, len = vm.SelectedArrange.Dtl.length; i < len; i++) {
                 vm.SelectedArrange.Dtl[i].User = { UserNo: vm.SelectedArrange.Dtl[i].HrUserNo, Name: vm.SelectedArrange.Dtl[i].HrUserName };
+                vm.SelectedArrange.Dtl[i].OriStartTime = vm.SelectedArrange.Dtl[i].StartTime;
+                vm.SelectedArrange.Dtl[i].OriEndTime = vm.SelectedArrange.Dtl[i].EndTime;
             }
             CalPer();
             vm.MesLis = [];
@@ -171,7 +250,13 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
     }
 
     function CalPer() {
-        vm.SelectedArrange.ActPerson = vm.SelectedArrange.Dtl.length;
+        var index = 0;
+        for (var i = 0, len = vm.SelectedArrange.Dtl.length; i < len; i++) {
+            if (vm.SelectedArrange.Dtl[i].EmpType == 'P') {
+                index++;
+            }
+        }
+        vm.SelectedArrange.ActPerson = index;
         vm.SelectedArrange.NeedPerson = parseInt(vm.SelectedArrange.NeedPerson);
         vm.SelectedArrange.DutyType = vm.SelectedArrange.ActPerson == vm.SelectedArrange.NeedPerson ? "满勤" :
             (vm.SelectedArrange.ActPerson > vm.SelectedArrange.NeedPerson ? "超员" : "缺勤");
@@ -213,6 +298,10 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
             p.HrUserNo = en.Dtl[j].User.UserNo;
             p.HrUserName = en.Dtl[j].User.Name;
             p.ProcedureId = en.Dtl[j].ProcedureId;
+            p.EmpType = en.Dtl[j].EmpType;
+            p.StartTime = en.Dtl[j].StartTime;
+            p.EndTime = en.Dtl[j].EndTime;
+            p.Merits = en.Dtl[j].Merits;
             list.push(p);
         }
         en.Order = undefined;
@@ -252,6 +341,16 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
                 vm.NewArrange.ArrangeDate = undefined;
                 vm.editArrange = true;
                 vm.IsCopy = true;
+                vm.promise = AjaxService.GetPlan("MESLineOrder", { name: "ID", value: vm.SelectedMo.ID }).then(function (data2) {
+                    vm.NewArrange.WorkOrder = vm.SelectedMo.WorkOrder;
+                    vm.NewArrange.Order = { MaterialCode: vm.SelectedMo.MaterialCode, Quantity: vm.SelectedMo.Quantity, MaterialName: vm.SelectedMo.MaterialName };
+                    vm.NewArrange.LineId = data2.Plan.Line.ID;
+                    vm.NewArrange.Line = { Name: data2.Plan.Line.Name };
+                    vm.NewArrange.LineLeader = data2.Plan.Line.UserName.Id;
+                    vm.NewArrange.MesUser = { Name: data2.Plan.Line.UserName.Name };
+                    vm.NewArrange.StandPerson = data2.Plan.Line.LineNumber
+                })
+
             })
         });
     }

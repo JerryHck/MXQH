@@ -108,23 +108,25 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         en.InternalCode = vm.InCodeSave;
         en.RoutingId = vm.RoutingData.ID;
         console.log(en);
-        vm.promise = AjaxService.ExecPlan("MesMxWOrder", "savePK", en).then(function (data) {
-            if (data.data[0].MsgType == 'Success') {
-                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
-                vm.OrderCount = data.data1[0];
-                AjaxService.PlayVoice('success.mp3');
-                //打印
-                if (vm.RoutingData.IsPrint || vm.IsPrint) {
-                    print(en.InternalCode);
-                }
-                vm.InCodeSave = undefined;
+        //同步执行方式
+        var data = AjaxService.ExecPlanWait("MesMxWOrder", "savePK", en);
+        //vm.promise = AjaxService.ExecPlan("MesMxWOrder", "savePK", en).then(function (data) {
+        if (data.data[0].MsgType == 'Success') {
+            vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
+            vm.OrderCount = data.data1[0];
+            AjaxService.PlayVoice('success.mp3');
+            //打印
+            if (vm.RoutingData.IsPrint || vm.IsPrint) {
+                print(en.InternalCode);
+            }
+            vm.InCodeSave = undefined;
 
-            }
-            else if (data.data[0].MsgType == 'Error') {
-                showError(data.data[0].Msg);
-                vm.InCodeSave = undefined;
-            }
-        })
+        }
+        else if (data.data[0].MsgType == 'Error') {
+            showError(data.data[0].Msg);
+            vm.InCodeSave = undefined;
+        }
+        //})
     }
 
     function print(bsn) {

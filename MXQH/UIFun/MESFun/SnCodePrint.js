@@ -9,6 +9,8 @@ function ( $scope, FileUrl, AjaxService, toastr, $window) {
     vm.MesList = [];
     vm.Focus = 0;
     vm.page = { index: 1, size: 12 };
+
+    vm.PrintType = 'G';
     vm.Ser = {};
     vm.IsReprint = "I";
     vm.KeyDonwInCode = KeyDonwInCode;
@@ -39,13 +41,21 @@ function ( $scope, FileUrl, AjaxService, toastr, $window) {
             else if (data.data[0].MsgType == "Success") {
                 AjaxService.PlayVoice('success.mp3');
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].MsgText });
-                PrintCode(data.data1[0], data.data2[0]);
+
+                //一般打印
+                if (vm.PrintType == 'G') {
+                    PrintCode(data.data2[0], data.data1[0]);
+                }
+                    //镭雕打印
+                else if (vm.PrintType == 'L') {
+                    LightPrintCode(data.data2[0], data.data1[0]);
+                }
             }
             vm.DeleteItem = {};
         });
     }
 
-    function PrintCode(data, temData) {
+    function PrintCode(temData, data) {
         var postData = {}, list = [];
         list.push(data.SnCode);
         postData.ParaData = JSON.stringify(data);
@@ -59,6 +69,30 @@ function ( $scope, FileUrl, AjaxService, toastr, $window) {
                 console.log(err);
             })
         }
+    }
+
+    //镭雕
+    function LightPrintCode(teData, data) {
+        if (!data || !data.SNCode || data.SNCode == null) {
+            toastr.error("SN不存在或还未生成");
+            AjaxService.PlayVoice('error.mp3');
+            return;
+        }
+        if (!teData || !teData.TemplateId || teData.TemplateId == null) {
+            toastr.error("打印模版获取失败");
+            AjaxService.PlayVoice('error.mp3');
+            return;
+        }
+        var postData = {}, list = [];
+        list.push(data.SNCode)
+        postData.ParaData = JSON.stringify(data);
+        postData.OutList = list;
+        //console.log(postData.ParaData);
+        AjaxService.LightPrint(teData.TemplateId, teData.TemplateTime, postData).then(function (data) {
+            //console.log(data);
+        }, function (err) {
+            //console.log(err);
+        })
     }
 }
 ]);

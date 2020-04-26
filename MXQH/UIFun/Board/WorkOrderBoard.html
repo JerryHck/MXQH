@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-group-xs col-md-12 padder-xs m-t-n-sm no-padder">
                         <div class="form-control-static padder-xxs col-md-3 h3 font-bold text-white">
-                            直通率：{{ SerItem.ProData.OKRate }}
+                            直通率：<span ng-class="{'text-danger':SerItem.ProData.OKRateNo<98}">{{ SerItem.ProData.OKRate }}</span>
                         </div>
                         <div class="form-control-static padder-xxs col-md-2 h3 font-bold text-white">
                             计划完成：{{ SerItem.ProData.ArrRate }}

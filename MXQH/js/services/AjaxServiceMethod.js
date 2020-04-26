@@ -98,6 +98,7 @@
             //Server Socket
             GetServerTime: GetServerTime,
             GetServerSocket: GetServerSocket,
+            doAysc:doAysc,
 
             //休眠
             sleep: sleep,
@@ -416,6 +417,12 @@
                 function () { q.reject(); }
             );
             return q.promise;
+        }
+
+        function doAysc() {
+            var d = $q.defer();
+            d.resolve(123);
+            return d.promise;
         }
 
         function httpFun(q, url, postData, type) {
