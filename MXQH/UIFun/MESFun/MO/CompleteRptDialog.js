@@ -24,6 +24,9 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
         vm.promise = AjaxService.ExecPlan("CompleteRpt", "GetTotalQty", { WorkOrderID: workorderid }).then(function (data) {
             vm.TotalCompleteQty = data.data[0].CompleteQty;
         });
+        vm.promise = AjaxService.ExecPlan("U9MoCompleteRpt", "GetQty", { WorkOrder: vm.Item.WorkOrder }).then(function (data) {
+            vm.TotalStartQty = data.data[0].TotalStartQty;
+        });
     }
     //保存
     function Save() {
