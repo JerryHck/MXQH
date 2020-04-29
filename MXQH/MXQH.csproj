@@ -335,6 +335,12 @@
     <Content Include="UIFun\Router\Router.js" />
     <Content Include="UIFun\Router\jquery-ui.min.css" />
     <Content Include="UIFun\Router\uuid.js" />
+    <Content Include="UIFun\SampleFun\Rcv\RDSampleRcv.html" />
+    <Content Include="UIFun\SampleFun\Rcv\RDSampleRcv.js" />
+    <Content Include="UIFun\SampleFun\Ship\RDSampleShip.html" />
+    <Content Include="UIFun\SampleFun\Ship\RDSampleShip.js" />
+    <Content Include="UIFun\SampleFun\TestDetail.html" />
+    <Content Include="UIFun\SampleFun\TestDetail.js" />
     <Content Include="UIFun\SampleFun\TestRecord.html" />
     <Content Include="UIFun\SampleFun\TestRecord.js" />
     <Content Include="UIFun\SDKFun\ATEQuery.html" />
@@ -825,8 +831,6 @@
   <ItemGroup>
     <Folder Include="js\controllers\uploads\" />
     <Folder Include="src\" />
-    <Folder Include="UIFun\SampleFun\Rcv\" />
-    <Folder Include="UIFun\SampleFun\Ship\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
