@@ -106,6 +106,47 @@
             </div>
         </div>
         <div class="col w-auto b-r">
+            <div class="vbox" ng-if="!line.SelectedArrange.Id && line.SelectedMo.WorkOrder">
+                <div class="panel panel-default m-t-none">
+                    <div class="panel-body padder-xs bg-light h5 padder-v-xs">
+                        <div class="col-md-5 padder-xs">
+                            <div class="panel panel-success m-t-xxs">
+                                <div class="panel-heading text-center h4">工单信息</div>
+                                <div class="panel-body padder-xxs padder-v-xs">
+                                    <div class="form-horizontal">
+                                        <div class="form-group-xs col-md-12 padder-xs">
+                                            <label class="col-sm-3 control-label padder-xs text-info">工单:</label>
+                                            <div class="col-sm-9 padder-xs">
+                                                <div class="col-xs-12 input-group">
+                                                    <input type="text" disabled class="form-control" ng-model="line.SelectedMo.WorkOrder" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group-xs col-md-12 padder-xs">
+                                            <label class="col-sm-3 padder-xs control-label text-info">料号:</label>
+                                            <div class="col-sm-9 padder-xs">
+                                                <input type="text" disabled class="form-control" ng-model="line.SelectedMo.MaterialCode" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group-xs col-md-12 padder-xs">
+                                            <label class="col-sm-3 padder-xs control-label text-info">名称:</label>
+                                            <div class="col-sm-9 padder-xs">
+                                                <input type="text" disabled class="form-control" ng-model="line.SelectedMo.MaterialName" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group-xs col-md-12 padder-xs">
+                                            <label class="col-sm-3 padder-xs control-label text-info">数量:</label>
+                                            <div class="col-sm-9 padder-xs">
+                                                <input type="text" disabled class="form-control" ng-model="line.SelectedMo.Quantity" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="vbox" ng-if="line.SelectedArrange.Id">
                 <div class="wrapper">
                     <div class="h4 text-left">
@@ -128,7 +169,7 @@
                                     <div class="panel panel-success m-t-xxs">
                                         <div class="panel-heading text-center h4">基本信息</div>
                                         <div class="panel-body padder-xxs padder-v-xs">
-                                            <div class="form-horizontal" ng-form="line.MainForm">
+                                            <div class="form-horizontal" ng-if="line.SelectedArrange.Id" ng-form="line.MainForm">
                                                 <div class="form-group-xs col-md-12 padder-xs">
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-sm-5 padder-xxs control-label text-info">拉长:</label>
@@ -383,7 +424,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <!--<pre>{{ line.PerList |json }}</pre>-->
+                                <!--<pre>{{ line.SelectedMo |json }}</pre>-->
                                 <!--<pre>{{ line.ArrangeList | json }}</pre>-->
                             </div>
                         </div>

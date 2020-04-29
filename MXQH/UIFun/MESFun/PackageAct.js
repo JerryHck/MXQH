@@ -62,8 +62,11 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 }
                 else if (data.data[0].MsgType == "Success") {
                     vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].MsgText });
+                    AjaxService.GetPlans("vwBSNPackageChild", { name: "PackDetailID", value: vm.PackDetail.ID }).then(function (data2) {
+                        vm.SNList = data2;
+                    })
                     //vm.SNList = data.data1;
-                    ChangeBoxNum(vm.Item.BoxNumber);
+                    //ChangeBoxNum(vm.Item.BoxNumber);
                     AjaxService.PlayVoice('success.mp3');
                 }
                 vm.Item.SNCode = undefined;
