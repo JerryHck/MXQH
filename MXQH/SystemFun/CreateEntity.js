@@ -88,6 +88,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
             pro.OrderNum = vm.PropertyList[i].OrderNum;
             pro.BasicName = vm.PropertyList[i].BasicName || '';
             pro.BasicNamePro = vm.PropertyList[i].BasicNamePro || '';
+            pro.RowNum = i + 1;
             ProList.push(pro);
             if (pro.ColumnType == '1' || pro.ColumnType == '2') {
                 var relList = vm.PropertyList[i].RelateList;
