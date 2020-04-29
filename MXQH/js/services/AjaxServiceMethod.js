@@ -18,6 +18,8 @@
             //
             BasicCustom:BasicCustom,
 
+            //检验用户角色
+            CheckRole:CheckRole,
             //获得实体资料-单个
             GetPlan: GetPlan,
             //获得实体资料-列表
@@ -111,6 +113,14 @@
         function PlayVoice(name) {
             var auto = $("#autoVoice");
             auto.attr("src", FileUrl + '/Voice/' + name);
+        }
+
+        function CheckRole(role) {
+            var en = {};
+            en.RoleSn = role;
+            var url = serviceUrl + generic;
+            var d = $q.defer();
+            return Ajax(d, url, en, "CheckUserRole");
         }
 
         //JSON Data取得
