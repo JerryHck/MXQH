@@ -38,14 +38,14 @@ angular.module('app')
                 black: '#1c2b36'
             },
             settings: {
-                themeID: 1,
-                navbarHeaderColor: 'bg-black',
+                themeID: 4,
+                navbarHeaderColor: 'bg-info',
                 navbarCollapseColor: 'bg-white-only',
                 asideColor: 'bg-black',
                 //Fixs:[{headerFixed: true}]
                 headerFixed: true,
                 asideFixed: false,
-                asideFolded: true,
+                asideFolded: false,
                 asideDock: false,
                 container: false
             }
@@ -161,12 +161,21 @@ angular.module('app')
             })
         }
 
-        function Go(routeName) {
-            if (routeName) {
-                $state.go(routeName);
+        function Go(item) {
+            if (item) {
+                //vm.OpenList = vm.OpenList || [];
+                //var h = false;
+                //for (var i = 0, len = vm.OpenList.length; i < len; i++) {
+                //    if (vm.OpenList[i].RouteName == item.RouteName) {
+                //        h = true;
+                //    }
+                //}
+                //if (!h) {
+                //    vm.OpenList.push(item)
+                //}
+                $state.go(item.RouteName);
             }
         }
-
         function Reflash() {
             //console.log($cookieStore.get('active-router'));
             $state.reload($cookieStore.get('active-router'));

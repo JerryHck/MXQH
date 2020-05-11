@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('AppSet')
-.controller('MoLinelistCtrl', ['$scope', '$http', 'AjaxService', 'toastr', '$window',
-function ($scope, $http, AjaxService, toastr, $window) {
+.controller('MoLinelistCtrl', ['$scope', 'Dialog', 'AjaxService', 'toastr', '$window',
+function ($scope, Dialog, AjaxService, toastr, $window) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
@@ -17,10 +17,19 @@ function ($scope, $http, AjaxService, toastr, $window) {
     vm.PageChange = PageChange;
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
+    vm.OpenDtl = OpenDtl;
 
     function Search() {
         vm.page.index = 1;
         PageChange();
+    }
+
+    function OpenDtl(item) {
+        Dialog.OpenDialog("MESMoLineArrDtl", item).then(function (data) {
+
+        }, function (data2) {
+
+        });
     }
 
     function PageChange() {

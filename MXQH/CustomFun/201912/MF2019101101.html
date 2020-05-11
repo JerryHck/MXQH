@@ -18,6 +18,7 @@
                 <table class= "table " >
                     <thead>
                         <tr>
+                            <td title="人员详细" style="width:80px ">人员详细</td>
                             <td title="排班日期" style= "width:100px ">排班日期</td>
                             <td title="工单号" style= "width:100px ">工单号</td>
                             <td title="备注" style= "width:100px ">备注</td>
@@ -34,6 +35,9 @@
                         </tr>
                     </thead>
                     <tr ng-repeat= "item in line.List ">
+                        <td title="查询排班人员">
+                            <button class="btn btn-xs btn-info" ng-click="line.OpenDtl(item)"><i class="glyphicon glyphicon-search"></i></button>
+                        </td>
                         <td title="{{ item.ArrangeDate }}">{{ item.ArrangeDate }}</td>
                         <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
                         <td title="{{ item.Remark }}">{{ item.Remark }}</td>

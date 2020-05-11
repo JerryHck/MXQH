@@ -18,9 +18,10 @@
         </div>
         <div class= "padder-xs ">
             <div class="col-md-12 scroll-x no-padder">
-                <table class= "table " style="width:1800px">
+                <table class= "table ">
                     <thead>
                         <tr>
+                            <td title="查看详细" style="width:60px ">查看</td>
                             <td title="工作日" style= "width:100px ">工作日</td>
                             <td title="线别" style= "width:100px ">线别</td>
                             <td title="工单号" style= "width:100px ">工单号</td>
@@ -40,9 +41,13 @@
                             <td title="超产奖" style= "width:100px ">超产奖</td>
                             <td title="实际工时" style= "width:100px ">实际工时</td>
                             <td title="对应完工报告" style= "width:100px ">对应完工报告</td>
+                            <td title="备注" style="width:100px ">备注</td>
                         </tr>
                     </thead>
                     <tr ng-repeat= "item in bc.List ">
+                        <td title="查看详细">
+                            <button class="btn btn-xs btn-info"  ng-click="bc.OpenDtl(item)"><i class="glyphicon glyphicon-search"></i></button>
+                        </td>
                         <td title="{{ item.WorkDate }}">{{ item.WorkDate | date:'yyyy-MM-dd' }}</td>
                         <td title="{{ item.Line.Name }}">{{ item.Line.Name }}</td>
                         <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
@@ -62,6 +67,7 @@
                         <td title="{{ item.OverAmount }}">{{ item.OverAmount }}</td>
                         <td title="{{ item.ActHour }}">{{ item.ActHour }}</td>
                         <td title="{{ item.SrcDocNo }}">{{ item.SrcDocNo }}</td>
+                        <td title="{{ item.Arrange.Remark }}">{{ item.Arrange.Remark }}</td>
                     </tr>
                 </table>
             </div>

@@ -1,0 +1,80 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="pa.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">个人薪资</uib-tab-heading>
+        <div class="wrapper-xs">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" date-picker class="form-control"  ng-model="pa.Ser.aWorkDate" placeholder="生成日期" option="pa.DateOption">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" class="form-control"  ng-model="pa.Ser.aHrUserNo" placeholder="工号">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" class="form-control"  ng-model="pa.Ser.aHrUserName" placeholder="姓名">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "pa.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "pa.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-xs ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table " >
+                    <thead>
+                        <tr>
+                            <td title="查看详细" style="width:60px ">查看</td>
+                            <td title="生成日期" style= "width:100px ">生成日期</td>
+                            <td title="工号" style= "width:60px ">工号</td>
+                            <td title="姓名" style= "width:80px ">姓名</td>
+                            <td title="定额计件工资" style= "width:70px ">定额计件工资</td>
+                            <td title="超产奖" style= "width:70px ">超产奖</td>
+                            <td title="异常工时" style= "width:70px ">异常工时</td>
+                            <td title="维修费" style= "width:70px ">维修费</td>
+                            <td title="工资合计" style= "width:70px ">工资合计</td>
+                            <td title="最早打卡" style= "width:70px ">最早打卡</td>
+                            <td title="最后打卡" style= "width:70px ">最后打卡</td>
+                            <td title="总分钟" style= "width:70px ">总分钟</td>
+                            <td title="正常工时" style= "width:70px ">正常工时</td>
+                            <td title="加班工时" style= "width:70px ">加班工时</td>
+                            <td title="周末工时" style= "width:70px ">周末工时</td>
+                            <td title="正常计时工资" style= "width:70px ">正常计时工资</td>
+                            <td title="加班工时工资" style= "width:70px ">加班工时工资</td>
+                            <td title="周末工资" style= "width:70px ">周末工资</td>
+                            <td title="计时工资合计" style= "width:70px ">计时工资合计</td>
+                            <td title="盈亏" style= "width:70px ">盈亏</td>
+                            <td title="备注" style= "width:100px ">备注</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in pa.List ">
+                        <td title="查看详细">
+                            <button class="btn btn-xs btn-info" ng-click="pa.OpenDtl(item)"><i class="glyphicon glyphicon-search"></i></button>
+                        </td>
+                        <td title="{{ item.WorkDate }}">{{ item.WorkDate | date:'yyyy-MM-dd' }}</td>
+                        <td title="{{ item.HrUserNo }}">{{ item.HrUserNo }}</td>
+                        <td title="{{ item.HrUserName }}">{{ item.HrUserName }}</td>
+                        <td title="{{ item.StandAmount }}">{{ item.StandAmount }}</td>
+                        <td title="{{ item.OverAmount }}">{{ item.OverAmount }}</td>
+                        <td title="{{ item.UnusualAmount }}">{{ item.UnusualAmount }}</td>
+                        <td title="{{ item.RepairAmount }}">{{ item.RepairAmount }}</td>
+                        <td title="{{ item.UserPay }}">{{ item.UserPay }}</td>
+                        <td title="{{ item.FistTime }}">{{ item.FistTime }}</td>
+                        <td title="{{ item.ListTime }}">{{ item.ListTime }}</td>
+                        <td title="{{ item.WorkMinute }}">{{ item.WorkMinute }}</td>
+                        <td title="{{ item.NormalHour }}">{{ item.NormalHour }}</td>
+                        <td title="{{ item.OverHour }}">{{ item.OverHour }}</td>
+                        <td title="{{ item.WeekHour }}">{{ item.WeekHour }}</td>
+                        <td title="{{ item.GenHourAmount }}">{{ item.GenHourAmount }}</td>
+                        <td title="{{ item.OverHourAmount }}">{{ item.OverHourAmount }}</td>
+                        <td title="{{ item.WeekHourAmount }}">{{ item.WeekHourAmount }}</td>
+                        <td title="{{ item.HourAmount }}">{{ item.HourAmount }}</td>
+                        <td title="{{ item.DifAmount }}">{{ item.DifAmount }}</td>
+                        <td title="{{ item.Remark }}">{{ item.Remark }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "pa.page.total>pa.page.size ">
+                <div uib-pagination total-items= "pa.page.total " ng-model= "pa.page.index " items-per-page= "pa.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "pa.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
