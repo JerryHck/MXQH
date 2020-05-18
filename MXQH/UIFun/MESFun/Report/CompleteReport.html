@@ -70,6 +70,33 @@
                 </div>
                 <!--<pre>{{ crc.Detail | json }}</pre>-->
             </div>
+            <div class="panel panel-default scroll-y" style="max-height:600px">
+                <div class="panel-heading font-bold text-center">
+                    工单 <span class="h4 font-bold text-info">{{ crc.Detail.WorkOrder }}</span><span class="text-danger">U9完工报告列表</span>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>完工报告单号</td>
+                            <td>完工数量</td>
+                            <td>单据状态</td>
+                            <td>完工时间</td>
+                            <td>审核日期</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in crc.CompleteList">
+                        <td title="{{ item.DocNo }}">{{ item.DocNo }}</td>
+                        <td title="{{ item.CompleteQty }}">{{ item.CompleteQty }}</td>
+                        <td ng-if="item.DocState==0">开立</td>
+                        <td ng-if="item.DocState==1">已核准</td>
+                        <td ng-if="item.DocState==2">已质检</td>
+                        <td ng-if="item.DocState==3">关闭</td>
+                        <td ng-if="item.DocState==4">核准中</td>
+                        <td title="{{ item.CompleteDate }}">{{ item.CompleteDate|date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                        <td title="{{ item.ApproveOn }}">{{ item.ApproveOn|date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
         <div class="padder-md col-sm-4">
             <div class="panel panel-default scroll-y" style="max-height:600px">

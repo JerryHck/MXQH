@@ -21,6 +21,13 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window,Form) {
         PageChange();
     }
 
+    function GetCompleteRptList() {
+        AjaxService.GetPlan("U9MO", { name: "DocNo", value: vm.Ser.WorkOrder }).then(function (data) {
+            console.log(data);
+            vm.CompleteList = data.CompleteRpt;
+        });
+    }
+
     function PageChange() {
         // vm.promise=AjaxService.ExecPlan("CompleteRpt")
         vm.promise = AjaxService.ExecPlan("U9MoCompleteRpt", "GetQty", { WorkOrder: vm.Ser.WorkOrder }).then(function (data) {
@@ -37,9 +44,10 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window,Form) {
                 }
             } else {
                 toastr.error('没有工单'+vm.Ser.WorkOrder+'的完工信息');
-            }
-            
+            }            
         });
+
+        GetCompleteRptList();
 
     }
 

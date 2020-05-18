@@ -325,6 +325,8 @@
     <Content Include="UIFun\QZDeliver\QZSNSearch.js" />
     <Content Include="UIFun\QZDeliver\SO\QZSODetail.html" />
     <Content Include="UIFun\QZDeliver\SO\QZSODetail.js" />
+    <Content Include="UIFun\QZDeliver\SO\QZSOReport.html" />
+    <Content Include="UIFun\QZDeliver\SO\QZSOReport.js" />
     <Content Include="UIFun\Router\data.js" />
     <Content Include="UIFun\Router\graphlib.min.js" />
     <Content Include="UIFun\Router\jquery.jsPlumb.min.js" />
@@ -333,6 +335,14 @@
     <Content Include="UIFun\Router\Router.js" />
     <Content Include="UIFun\Router\jquery-ui.min.css" />
     <Content Include="UIFun\Router\uuid.js" />
+    <Content Include="UIFun\SampleFun\Rcv\RDSampleRcv.html" />
+    <Content Include="UIFun\SampleFun\Rcv\RDSampleRcv.js" />
+    <Content Include="UIFun\SampleFun\Ship\RDSampleShip.html" />
+    <Content Include="UIFun\SampleFun\Ship\RDSampleShip.js" />
+    <Content Include="UIFun\SampleFun\TestDetail.html" />
+    <Content Include="UIFun\SampleFun\TestDetail.js" />
+    <Content Include="UIFun\SampleFun\TestRecord.html" />
+    <Content Include="UIFun\SampleFun\TestRecord.js" />
     <Content Include="UIFun\SDKFun\ATEQuery.html" />
     <Content Include="UIFun\SDKFun\ATEQuery.js" />
     <Content Include="UIFun\SDKFun\RegUserSignDialog.html" />

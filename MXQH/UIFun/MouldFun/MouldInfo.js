@@ -10,6 +10,7 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
     vm.Search = Search;
     vm.Export = Export;
     vm.Import = Import;
+    vm.Delete = Delete;
     vm.DataBind = DataBind;
     vm.Do = Do;
     vm.OpenImport = OpenImport;
@@ -146,6 +147,17 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
             }
         }
         Open(resolve);
+    }
+    //删除
+    function Delete(id) {        
+        vm.promose = AjaxService.ExecPlan("MouldInfo", "Delete", { ID: id }).then(function (data) {
+            if (data.data[0].MsgType == '1') {
+                DataBind();
+                toastr.success(data.data[0].Msg);
+            } else {
+                toastr.error(data.data[0].Msg);
+            }
+        });
     }
     //弹出框
     function Open(resolve) {
