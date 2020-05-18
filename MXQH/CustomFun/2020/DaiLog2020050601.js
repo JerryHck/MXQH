@@ -5,7 +5,7 @@ angular.module('AppSet')
 function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window) {
 
     var vm = this;
-    vm.page = { index: 1, size: 10 };
+    vm.page = { index: 1, size: 30 };
     vm.Ser = {};
 
     vm.PageChange = PageChange;

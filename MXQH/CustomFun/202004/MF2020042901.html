@@ -1,61 +1,68 @@
 ﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="bc.promise">
     <uib-tab index="0">
-        <uib-tab-heading class="h5">工单完工计件工资</uib-tab-heading>
+        <uib-tab-heading class="h5">
+            工单完工计件工资
+        </uib-tab-heading>
         <div class="wrapper-xs">
             <div class="form-inline">
                 <div class="form-group">
-                    <input autocomplete="off"  type="text" date-picker class="form-control"  ng-model="bc.Ser.aWorkDate" placeholder="工作日" option="bc.DateOption">
+                    <input autocomplete="off" type="text" date-picker class="form-control" ng-model="bc.Ser.aWorkDate" placeholder="工作日" option="bc.DateOption">
                 </div>
                 <div class="form-group">
-                    <div basic-select="AssemblyLine"  ng-model="bc.Ser.aLineId" placeholder="线别" ></div>
+                    <div basic-select="AssemblyLine" ng-model="bc.Ser.aLineId" placeholder="线别"></div>
                 </div>
                 <div class="form-group">
-                    <input autocomplete="off"  type="text" class="form-control"  ng-model="bc.Ser.aWorkOrder" placeholder="工单">
+                    <input autocomplete="off" type="text" class="form-control" ng-model="bc.Ser.aWorkOrder" placeholder="工单">
                 </div>
-                <button class= "btn btn-sm btn-info " ng-click= "bc.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
-                <button class= "btn btn-sm btn-success " ng-click= "bc.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+                <button class="btn btn-sm btn-info " ng-click="bc.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                <button class="btn btn-sm btn-success " ng-click="bc.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>
+                <button class="btn btn-sm btn-success m-t-xs pull-right" ng-click="bc.OpenUser() "><i class="glyphicon glyphicon-search "></i>员工薪资详细</button>
             </div>
         </div>
-        <div class= "padder-xs ">
+        <div class="padder-xs ">
             <div class="col-md-12 scroll-x no-padder">
-                <table class= "table ">
+                <table class="table ">
                     <thead>
                         <tr>
-                            <td title="查看详细" style="width:60px ">查看</td>
-                            <td title="工作日" style= "width:100px ">工作日</td>
-                            <td title="线别" style= "width:100px ">线别</td>
-                            <td title="工单号" style= "width:100px ">工单号</td>
-                            <td title="料号" style= "width:100px ">料号</td>
-                            <td title="料名" style= "width:100px ">料名</td>
-                            <td title="所取排班日" style= "width:100px ">所取排班日</td>
-                            <td title="UPPH" style= "width:100px ">UPPH</td>
-                            <td title="标配人数" style= "width:100px ">标配人数</td>
-                            <td title="计划数量" style= "width:100px ">计划数量</td>
-                            <td title="标准产能" style= "width:100px ">标准产能</td>
-                            <td title="超产量" style= "width:100px ">超产量</td>
-                            <td title="实际入库数" style= "width:100px ">实际入库数</td>
-                            <td title="生成效率达成率" style= "width:100px ">生成效率达成率</td>
-                            <td title="定额计件单价" style= "width:100px ">定额计件单价</td>
-                            <td title="超产计件单价" style= "width:100px ">超产计件单价</td>
-                            <td title="定额计件工资" style= "width:100px ">定额计件工资</td>
-                            <td title="超产奖" style= "width:100px ">超产奖</td>
-                            <td title="实际工时" style= "width:100px ">实际工时</td>
-                            <td title="对应完工报告" style= "width:100px ">对应完工报告</td>
+                            <td title="操作" style="width:60px ">操作</td>
+                            <td title="工作日" style="width:100px ">工作日</td>
+                            <td title="所取排班日" style="width:100px ">所取排班日</td>
+                            <td title="线别" style="width:100px ">线别</td>
+                            <td title="工单号" style="width:100px ">工单号</td>
+                            <td title="料号" style="width:100px ">料号</td>
+                            <td title="料名" style="width:100px ">料名</td>
+                            <td title="UPPH" style="width:100px ">UPPH</td>
+                            <td title="标配人数" style="width:100px ">标配人数</td>
+                            <td title="实到人数" style="width:100px ">实到人数</td>
+                            <td title="计划数量" style="width:100px ">计划数量</td>
+                            <td title="标准产能" style="width:100px ">标准产能</td>
+                            <td title="超产量" style="width:100px ">超产量</td>
+                            <td title="实际入库数" style="width:100px ">实际入库数</td>
+                            <td title="生成效率达成率" style="width:100px ">生成效率达成率</td>
+                            <td title="定额计件单价" style="width:100px ">定额计件单价</td>
+                            <td title="超产计件单价" style="width:100px ">超产计件单价</td>
+                            <td title="定额计件工资" style="width:100px ">定额计件工资</td>
+                            <td title="超产奖" style="width:100px ">超产奖</td>
+                            <td title="实际工时" style="width:100px ">实际工时</td>
+                            <td title="对应完工报告" style="width:100px ">对应完工报告</td>
                             <td title="备注" style="width:100px ">备注</td>
                         </tr>
                     </thead>
-                    <tr ng-repeat= "item in bc.List ">
+                    <tr ng-repeat="item in bc.List ">
                         <td title="查看详细">
-                            <button class="btn btn-xs btn-info"  ng-click="bc.OpenDtl(item)"><i class="glyphicon glyphicon-search"></i></button>
+                            <button class="btn btn-xs btn-info" title="查看线别对应的人员详细" ng-click="bc.OpenDtl(item)"><i class="glyphicon glyphicon-search"></i></button>
                         </td>
                         <td title="{{ item.WorkDate }}">{{ item.WorkDate | date:'yyyy-MM-dd' }}</td>
+                        <td title="{{ item.ArrangeDate }}">{{ item.ArrangeDate }}</td>
                         <td title="{{ item.Line.Name }}">{{ item.Line.Name }}</td>
                         <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
                         <td title="{{ item.Order.MaterialCode }}">{{ item.Order.MaterialCode }}</td>
                         <td title="{{ item.Order.MaterialName }}">{{ item.Order.MaterialName }}</td>
-                        <td title="{{ item.ArrangeDate }}">{{ item.ArrangeDate }}</td>
-                        <td title="{{ item.UPPH }}">{{ item.UPPH }}</td>
+                        <td title="{{ item.UPPH }}">
+                            <a class="text-success" ng-click="bc.EditUPPH(item)"><i class="glyphicon glyphicon-edit"></i>{{ item.UPPH }}</a>
+                        </td>
                         <td title="{{ item.StandPerson }}">{{ item.StandPerson }}</td>
+                        <td title="{{ item.ActPerson }}">{{ item.ActPerson }}</td>
                         <td title="{{ item.PlanCount }}">{{ item.PlanCount }}</td>
                         <td title="{{ item.StandCount }}">{{ item.StandCount }}</td>
                         <td title="{{ item.OverCount }}">{{ item.OverCount }}</td>
@@ -71,10 +78,32 @@
                     </tr>
                 </table>
             </div>
-            <div class= "col-md-12 text-center " ng-if= "bc.page.total>bc.page.size ">
-                <div uib-pagination total-items= "bc.page.total " ng-model= "bc.page.index " items-per-page= "bc.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
-                     ng-change= "bc.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            <div class="col-md-12 text-center " ng-if="bc.page.total>bc.page.size ">
+                <div uib-pagination total-items="bc.page.total " ng-model="bc.page.index " items-per-page="bc.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                     ng-change="bc.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
             </div>
         </div>
     </uib-tab>
 </uib-tabset>
+<div class="new-upph dialog dialog-md">
+    <div class="padder-xs scroll-y">
+        <div class="panel panel-info">
+            <div class="panel-heading h3 text-center">
+                修改UPPH
+                <button ui-remove-class="active" target=".new-upph" class="btn btn-md btn-warning h1 pull-left m-t-n-xs" type="button" ng-click="bc.cancel()">关闭</button>
+            </div>
+            <div class="panel-body wrapper-xs padder-v-xxs" ng-form="UpphForm">
+                <div class="col-md-12 no-padder">
+                    <div class="panel panel-default">
+                        <div class="panel-body scroll-y padder-xs padder-v-xs" style="max-height:600px">
+                            <pre>{{ bc.UPItem | json }}</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 text-center">
+                </div><br />
+            </div>
+        </div>
+    </div>
+</div>
+

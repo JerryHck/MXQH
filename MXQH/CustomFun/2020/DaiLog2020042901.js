@@ -5,9 +5,15 @@ angular.module('AppSet')
 function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window) {
 
     var vm = this;
-    vm.page = { index: 1, size: 10 };
+    vm.page = { index: 1, size: 30 };
     vm.Ser = {};
+    if (ItemData.WorkDate) {
+        vm.Ser = {
+            WorkDate: (new Date(ItemData.WorkDate)).Format('yyyy-MM-dd'), WorkOrder: ItemData.WorkOrder
+        };
+    }
 
+    vm.Item = ItemData;
     vm.PageChange = PageChange;
     vm.Search = Search;
     vm.OK = OK;
@@ -42,8 +48,8 @@ function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window) {
         if (vm.Ser.aHrUserName) {
             list.push({ name: "HrUserName", value: vm.Ser.aHrUserName, tableAs:"a" });
         }
-        list.push({ name: "WorkDate", value: ItemData.WorkDate, tableAs:"a" });
-        list.push({ name: "WorkOrder", value: ItemData.WorkOrder, tableAs:"a" });
+        list.push({ name: "WorkDate", value: vm.Ser.WorkDate, tableAs: "a" });
+        list.push({ name: "WorkOrder", value: vm.Ser.WorkOrder, tableAs: "a" });
         list.push({ name: "ArrangeDate", value: ItemData.ArrangeDate, tableAs:"a" });
         return list;
     }

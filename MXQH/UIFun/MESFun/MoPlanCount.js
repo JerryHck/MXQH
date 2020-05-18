@@ -27,8 +27,8 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, Dialog) {
     vm.DeletePer = DeletePer;
     vm.DeleteArr = DeleteArr;
 
-    //获取全部排产
-    GetMoArrange();
+    ////获取全部排产
+    //GetMoArrange();
 
     function Search() {
         vm.page.index = 1;

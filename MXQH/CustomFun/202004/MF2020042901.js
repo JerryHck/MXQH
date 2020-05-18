@@ -12,6 +12,8 @@ function ($scope, Dialog, AjaxService, toastr, $window) {
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
     vm.OpenDtl = OpenDtl;
+    vm.OpenUser = OpenUser;
+    vm.EditUPPH = EditUPPH;
 
     function Search() {
         vm.page.index = 1;
@@ -31,9 +33,24 @@ function ($scope, Dialog, AjaxService, toastr, $window) {
         });
     }
 
+    function EditUPPH(item) {
+        vm.UPItem = angular.copy(item);
+        $(".new-upph").addClass("active");
+        //$(".new-upph").removeClass("active");
+    }
+
     //打开详细
     function OpenDtl(item) {
         Dialog.OpenDialog("BcWorkOrderUserDone", item).then(function (data) {
+
+        }, function (data2) {
+
+        });
+    }
+
+    //打开用户详细
+    function OpenUser() {
+        Dialog.OpenDialog("BcWorkOrderUserDone", {}).then(function (data) {
 
         }, function (data2) {
 

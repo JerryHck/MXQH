@@ -12,6 +12,7 @@ function ($scope, Dialog, AjaxService, toastr, $window) {
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
     vm.OpenDtl = OpenDtl;
+    vm.OpenUser = OpenUser;
 
     function Search() {
         vm.page.index = 1;
@@ -21,6 +22,15 @@ function ($scope, Dialog, AjaxService, toastr, $window) {
     //打开详细
     function OpenDtl(item) {
         Dialog.OpenDialog("BcMoLineUserPay", item).then(function (data) {
+
+        }, function (data2) {
+
+        });
+    }
+
+    //打开用户详细
+    function OpenUser() {
+        Dialog.OpenDialog("BcWorkOrderUserDone", {}).then(function (data) {
 
         }, function (data2) {
 

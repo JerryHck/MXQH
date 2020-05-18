@@ -1,5 +1,5 @@
 ﻿<div class="modal-header text-center">
-    <button class="btn btn-sm btn-warning pull-left" type="button" ng-click="bc.Cancel()">取消</button>
+    <button class="btn btn-sm btn-warning pull-right" type="button" ng-click="bc.Cancel()">取消</button>
     <h3 class="modal-title">工单人员日薪</h3>
 </div>
 <div class="modal-body wrapper-xs h6" ng-form="DialogForm">
@@ -7,6 +7,12 @@
         <div class="panel-body padder-xs padder-v-xxs">
             <div class="wrapper-sm">
                 <div class="form-inline">
+                    <div class="form-group">
+                        <input type="text" class="form-control" date-picker format="Y-m-d" option="bc.DateOption" ng-disabled="bc.Item.WorkDate" ng-model="bc.Ser.WorkDate" placeholder="工作日">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="bc.Ser.WorkOrder" ng-disabled="bc.Item.WorkOrder" placeholder="工单">
+                    </div>
                     <div class="form-group">
                         <input type="text" class="form-control"  ng-model="bc.Ser.aHrUserNo" placeholder="工号">
                     </div>
@@ -38,7 +44,7 @@
                             <td title="线别" style= "width:100px ">线别</td>
                         </tr>
                     </thead>
-                    <tr ng-repeat="item in bc.List " ng-click="bc.OK(item)">
+                    <tr ng-repeat="item in bc.List ">
                         <td title="{{ item.WorkDate }}">{{ item.WorkDate | date:'yyyy-MM-dd' }}</td>
                         <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
                         <td title="{{ item.EmpTypeText }}">{{ item.EmpTypeText }}</td>

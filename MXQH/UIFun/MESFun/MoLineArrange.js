@@ -37,6 +37,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $timeout, Dialog) {
     vm.ChangeArrStart = ChangeArrStart;
     vm.ChangeArrEnd = ChangeArrEnd;
     vm.CalPer = CalPer;
+    vm.GetUPPHFromU9 = GetUPPHFromU9;
 
     function Search() {
         vm.page.index = 1;
@@ -88,6 +89,13 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $timeout, Dialog) {
         }
     }
 
+    //获取UPPH
+    function GetUPPH(code) {
+        AjaxService.GetPlan("MESMate", { name: "MaterialCode", value: code }).then(function (data) {
+            vm.SelectedArrange.UPPH = data.UPPH;
+        })
+    }
+
     function ClearMo() {
         if (!MyPop.Show(vm.editArrange, '功能信息还在编辑，请先保存！')) {
             vm.SelectedMo = undefined;
@@ -110,7 +118,9 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $timeout, Dialog) {
                 vm.SelectedArrange.Line = { Name: data2.Plan.Line.Name };
                 vm.SelectedArrange.LineLeader = data2.Plan.Line.UserName.Id;
                 vm.SelectedArrange.MesUser = { Name: data2.Plan.Line.UserName.Name };
-                vm.SelectedArrange.StandPerson = data2.Plan.Line.LineNumber
+                vm.SelectedArrange.StandPerson = data2.Plan.Line.LineNumber;
+
+                GetUPPH(vm.SelectedMo.MaterialCode);
             })
             vm.MesLis = [];
         })
@@ -196,7 +206,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $timeout, Dialog) {
                 }
                 else {
                     vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: '已成功扫描并添加[' + vm.KeyUser.Name + ']' });
-                    vm.NewPerItem = { User: { UserNo: vm.KeyUser.UserNo, Name: vm.KeyUser.Name }, Merits: '1.0', EmpType: 'P', StartTime: vm.SelectedArrange.StartTime, EndTime: vm.SelectedArrange.EndTime };
+                    vm.NewPerItem = { User: { UserNo: vm.KeyUser.UserNo, Name: vm.KeyUser.Name }, Merits: 1.0, EmpType: 'P', StartTime: vm.SelectedArrange.StartTime, EndTime: vm.SelectedArrange.EndTime };
                     vm.SelectedArrange.Dtl.push(vm.NewPerItem);
                     CalPer();
                 }
@@ -216,6 +226,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $timeout, Dialog) {
                 vm.SelectedArrange.Dtl[i].User = { UserNo: vm.SelectedArrange.Dtl[i].HrUserNo, Name: vm.SelectedArrange.Dtl[i].HrUserName };
                 vm.SelectedArrange.Dtl[i].OriStartTime = vm.SelectedArrange.Dtl[i].StartTime;
                 vm.SelectedArrange.Dtl[i].OriEndTime = vm.SelectedArrange.Dtl[i].EndTime;
+                vm.SelectedArrange.Dtl[i].Merits = parseFloat(vm.SelectedArrange.Dtl[i].Merits);
             }
             CalPer();
             vm.MesLis = [];
@@ -282,6 +293,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $timeout, Dialog) {
                 vm.NewArrange.DocNo = data.data[0].SN;
                 vm.editArrange = true;
                 vm.SelectedArrange = vm.NewArrange;
+                GetUPPH(vm.SelectedMo.MaterialCode);
             })
         })
     }
@@ -395,6 +407,16 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $timeout, Dialog) {
                 vm.RouteForm.RouteName.$setValidity('unique', !data.RoutingName);
             });
         }
+    }
+
+    //同步UPPH
+    function GetUPPHFromU9() {
+        var en = {};
+        en.JobName = "同步UPPH";
+        vm.promise = AjaxService.Custom("RunJob", en).then(function (data) {
+            GetUPPH(vm.SelectedMo.MaterialCode);
+            toastr.success('同步成功');
+        })
     }
 
 }]);

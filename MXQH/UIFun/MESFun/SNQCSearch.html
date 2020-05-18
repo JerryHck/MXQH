@@ -60,6 +60,7 @@
                     <td style="width:100px ">操作员</td>
                     <td style="width:100px ">是否维修</td>
                     <td style="width:100px ">操作时间</td>
+                    <td style="width:100px ">说明</td>
                 </tr>
             </thead>
             <tr ng-repeat="item in sn.Data.data">
@@ -74,6 +75,7 @@
                     <div is-disabled="true" toggle-switch ng-model="item.IsRepair" class="switch-bool" on-label="是" off-label="否"></div>
                 </td>
                 <td>{{ item.OperatorDate | date :'yyyy-MM-dd HH:mm:ss' }}</td>
+                <td>{{ item.RepairMarket }}</td>
             </tr>
         </table>
     </div>

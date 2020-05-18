@@ -104,7 +104,9 @@
 
             //休眠
             sleep: sleep,
-            convertArray: convertArray
+            convertArray: convertArray,
+            //Ajax 方法
+            httpFun: httpFun
 
         };
         var conect = 0;

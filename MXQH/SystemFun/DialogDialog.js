@@ -797,7 +797,8 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
         if (!fun.SerList || fun.SerList.length == 0) { return sbHtml; }
         var listHave = [];
         //条件加入
-        fun.SerList.forEach(function (ser) {
+        for (var i = 0, len = fun.SerList.length; i < len; i++) {
+            var ser = fun.SerList[i];
             if (!ser.IsHide) {
                 var have = 0;
                 listHave.forEach(function (h) {
@@ -820,11 +821,11 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
                     case "Switch": str += "<div toggle-switch ng-model=\"{0}.Ser.{1}\" class=\"w-xxs switch-success\" on-label=\"是\" off-label=\"否\" on-value = \"1\" off-value =\"0\"></div >"; break;
                     case "CheckBox": str += "<label class=\"i-checks i-checks\"><input type =\"checkbox\" ng-model = \"{0}.Ser.{1}\" ><i></i>{2}</label>"; break;
                 }
-                sbHtml += "                        " + str.Format(vm.NewItem.controllerAs, name, ser.SerName, ser.SerTName, ser.ColumnName) + "\n";
+                sbHtml += "                        " + str.Format(vm.NewItem.controllerAs, name, ser.SerName, ser.SerTName || '', ser.ColumnName) + "\n";
                 sbHtml += "                    </div>\n";
                 listHave.push(ser.ColumnName);
             }
-        });
+        }
         return sbHtml;
     }
 

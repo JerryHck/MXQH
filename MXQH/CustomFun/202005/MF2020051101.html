@@ -1,0 +1,165 @@
+﻿<div class="wrapper-xs">
+    <div class="col-sm-5 padder-xs">
+        <div class="panel panel-default" ng-form="re.OrderForm">
+            <div class="panel-heading font-bold text-center">组装返工</div>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">所属工单</label>
+                        <div class="col-xs-8 form-control-static"><span class="text-info font-bold">{{ re.OrderData.WorkOrder }} </span> </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">工艺流程</label>
+                        <div class="col-xs-8 form-control-static"><span class="text-info font-bold">{{ re.ProcedureItem.RouteName }} </span> </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">返工工序</label>
+                        <div class="col-xs-8" ng-class="{ 'has-error' : re.OrderForm.router.$invalid }">
+                            <ui-select name="router" ng-model="re.ProcedureItem" theme="bootstrap" search-enabled="true" ng-required="true" ng-change="re.ChangePro(re.ProcedureItem)">
+                                <ui-select-match placeholder="选择工序..." class="h6">{{ $select.selected.ProcedureName }}</ui-select-match>
+                                <ui-select-choices repeat="item in re.ProcedureList | filter: $select.search track by item.boProcedureID">
+                                    <div ng-bind-html="item.ProcedureName | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="form-group m-t-lg">
+                        <label class="col-xs-3 control-label h4 text-danger font-bold">返工条码</label>
+                        <div class="col-xs-8 has-error">
+                            <input autocomplete="off" type="text" class="form-control" ng-model="re.Item.NgInCode" placeholder="内控码/SN吗" ng-keyup="re.KeyDonwInCodeNg($event)">
+                            <div class="h6 text-danger">扫描内控码/SN码返工</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-7 padder-xxs" ng-form="re.UpdateForm">
+        <div class="panel panel-default scroll-y" style="max-height:600px">
+            <div class="panel-heading font-bold text-center">
+                工单 <span class="h4 font-bold text-info">{{ re.OrderData.WorkOrder }}</span>信息
+            </div>
+            <div class="panel-body h5">
+                <div class="form-horizontal" ng-show="re.OrderData">
+                    <div class="form-group-xs col-md-12">
+                        <label class="control-label col-sm-2 padder-xs">产品编号:</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static font-bold">{{re.OrderData.MaterialCode}}</p>
+                        </div>
+                        <label class="control-label col-sm-2 padder-xs">产品名称:</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static font-bold">{{re.OrderData.MaterialName}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12">
+                        <label class="control-label col-sm-2 padder-xs">计划日期:</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static font-bold">{{re.OrderData.AssemblyDate}}</p>
+                        </div>
+                        <label class="control-label col-sm-2 padder-xs">产线名称:</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static font-bold">{{re.OrderData.AssemblyLineName}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12">
+                        <label class="control-label col-sm-2 padder-xs">出货地:</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static font-bold">{{re.OrderData.SendPlaceName}}</p>
+                        </div>
+                        <label class="control-label col-sm-2 padder-xs">ERP销售单:</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static font-bold">{{re.OrderData.ERPSO}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12">
+                        <label class="control-label col-sm-2 padder-xs">工单数量:</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static font-bold h4 text-success">{{re.OrderData.Quantity}}</p>
+                        </div>
+                        <label class="control-label col-sm-2 padder-xs">ERP订单数:</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static font-bold">{{re.OrderData.ERPQuantity}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12">
+                        <label class="control-label col-sm-2 padder-xs">总合格数:</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static font-bold  h4 text-success">{{re.CalData.ProOKSum}}</p>
+                        </div>
+                        <label class="control-label col-sm-2 padder-xs">总不良数:</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static font-bold  h4 text-success">{{re.CalData.ProNgSum}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12">
+                        <label class="control-label col-sm-2 padder-xs">今日合格:</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static font-bold  h4 text-success">{{re.CalData.TodayOKSum}}</p>
+                        </div>
+                        <label class="control-label col-sm-2 padder-xs">今日不良:</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static font-bold  h4 text-success">{{re.CalData.TodayNgSum}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12">
+                        <label class="control-label col-sm-2 padder-xs">总维修数:</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static font-bold  h4 text-success">{{re.CalData.ProRepairSum}}</p>
+                        </div>
+                        <label class="control-label col-sm-2 padder-xs">今日维修:</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static font-bold  h4 text-success">{{re.CalData.TodayRepairSum}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<pre>{{ re.CalData | json }}</pre>-->
+
+        </div>
+    </div>
+    <div class="panel panel-default scroll-y" style="max-height:350px">
+        <div class="panel-heading font-bold text-center">信息显示</div>
+        <div class="panel-body">
+            <div class="list-group">
+                <ul class="list-group bg-white">
+                    <li class="list-group-item" ng-repeat="item in re.MesList track by item.Id" ng-class="{ 'text-danger' : !item.IsOk, 'text-success':item.IsOk }">
+                        <span herf class="pull-left">
+                            <i class="glyphicon" ng-class="{ 'glyphicon-remove' : !item.IsOk, 'glyphicon-ok':item.IsOk }"></i>
+                        </span>
+                        <div class="clear">
+                            <div>{{ item.Msg }}</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bsn-ng dialog dialog-full">
+    <div class="padder-xs scroll-y">
+        <div class="panel panel-info">
+            <div class="panel-heading h3 text-center">
+                <span class="font-bold text-danger h2">{{ re.NgItem.InCode }}</span>返工不良采集
+                <button style="width:200px" ui-remove-class="active" target=".bsn-ng" class="btn btn-lg btn-warning h1 pull-left m-t-n-xs" type="button" ng-click="re.cancel()">关闭</button>
+            </div>
+            <div class="panel-body wrapper-xs padder-v-xxs" ng-form="QcForm">
+                <div class="col-md-12 no-padder">
+                    <div class="panel panel-default">
+                        <div class="panel-body scroll-y padder-xs padder-v-xs" style="max-height:600px">
+                            <div class="col-md-4 col-sm-4 col-xs-4 m-t-md padder-lg" ng-repeat="item in re.TypeList">
+                                <button style="height:90px" class="btn-group-vertical h2 btn-lg w-full btn-primary"
+                                        ng-click="re.DialogItem.NgType=item.ID; re.ChangeMonitor()"
+                                        ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1, 'btn-success':re.DialogItem.NgType==item.ID}">
+                                    <span class="h1">{{ item.Name }}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 text-center">
+                </div><br />
+            </div>
+        </div>
+    </div>
+</div>
+
