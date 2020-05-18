@@ -65,6 +65,7 @@
     <Content Include="Access.html" />
     <Content Include="Access\login-.html" />
     <Content Include="Basic\blocks\tool.html" />
+    <Content Include="Basic\content.html" />
     <Content Include="Board.html" />
     <Content Include="Content\bootstrap-treeview.css" />
     <Content Include="Content\bootstrap-treeview.min.css" />

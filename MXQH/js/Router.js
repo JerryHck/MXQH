@@ -2,7 +2,8 @@
 //angular.module('Routing', ['ui.router', 'oc.lazyLoad'])
 angular.module('app')
 .provider('router', function ($stateProvider) {
-      var urlCollection;
+    var urlCollection;
+
       this.$get = function ($http, $state) {
           return {
               setUpRoutes: function () {
@@ -26,8 +27,7 @@ angular.module('app')
                       if (route.ControllerAs) {
                           item.controllerAs = route.ControllerAs;
                       }
-                      if (route.LazyLoad && route.LazyLoad.length > 0)
-                      {
+                      if (route.LazyLoad && route.LazyLoad.length > 0) {
                           if (route.LazyLoad.length == 1) {
                               var len = route.LazyLoad.length;
                               item.resolve = {
@@ -64,7 +64,7 @@ angular.module('app')
                       });
                       $stateProvider.state(route.Name, item);
                   }
-              }
+              },
           }
       };
       this.setCollectionUrl = function (url) {

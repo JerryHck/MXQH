@@ -171,10 +171,17 @@
                                         <div class="panel-body padder-xxs padder-v-xs">
                                             <div class="form-horizontal" ng-if="line.SelectedArrange.Id" ng-form="line.MainForm">
                                                 <div class="form-group-xs col-md-12 padder-xs">
-                                                    <div class="col-md-4 padder-xxs">
+                                                    <!--<div class="col-md-4 padder-xxs">
                                                         <label class="col-sm-5 padder-xxs control-label text-info">拉长:</label>
                                                         <div class="col-sm-7 padder-xxs" ng-class="{ 'has-error' : line.MainForm.MesUserName.$invalid }">
                                                             <input type="text" disabled class="form-control" name="=MesUserName" ng-model="line.SelectedArrange.MesUser.Name" required />
+                                                        </div>
+                                                    </div>-->
+                                                    <div class="col-md-4 padder-xxs">
+                                                        <label class="col-sm-5 padder-xxs control-label text-info">UPPH:</label>
+                                                        <div class="col-sm-7 padder-xxs input-group" ng-class="{ 'has-error' : line.MainForm.MesUserName.$invalid }">
+                                                            <input type="text" disabled class="form-control" name="=MesUserName" ng-model="line.SelectedArrange.UPPH" required />
+                                                            <span class="input-group-addon" title="同步U9 UPPH值" ng-if="line.editArrange"><a class="text-success" ng-click="line.GetUPPHFromU9()"><i class="glyphicon glyphicon-refresh"></i></a></span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4 padder-xxs">
@@ -365,22 +372,28 @@
                                                     </td>
                                                     <td>
                                                         <div ng-class="{ 'has-error': line.ItemForm.HrUserName{{ $index }}.$invalid }">
-                                                            <input type="text" readonly="readonly" ng-change="line.ChangeArrStart(item)" time-picker format='H:i' ng-disabled="!line.editArrange" class="form-control" name="StartTime" placeholder="开始时间" step="30" ng-model="item.StartTime" required />
+                                                            <input type="text" readonly="readonly" ng-change="line.ChangeArrStart(item)" time-picker format='H:i' ng-disabled="!line.editArrange" class="form-control" name="StartTime{{ $index }}" placeholder="开始时间" step="30" ng-model="item.StartTime" required />
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div ng-class="{ 'has-error': line.ItemForm.HrUserName{{ $index }}.$invalid }">
-                                                            <input type="text" readonly="readonly" time-picker ng-change="line.ChangeArrEnd(item)" format='H:i' ng-disabled="!line.editArrange" class="form-control" name="EndTime" placeholder="结束时间" step="30" ng-model="item.EndTime" required />
+                                                            <input type="text" readonly="readonly" time-picker ng-change="line.ChangeArrEnd(item)" format='H:i' ng-disabled="!line.editArrange" class="form-control" name="EndTime{{ $index }}" placeholder="结束时间" step="30" ng-model="item.EndTime" required />
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div config-select tb="MESArrange" ng-disabled="!line.editArrange" col="Merits" ng-model="item.Merits" auto-first="true"></div>
+                                                        <div ng-class="{ 'has-error': line.ItemForm.Merits{{ $index }}.$invalid }">
+                                                            <input type="number" ng-disabled="!line.editArrange"  name="Merits{{ $index }}" max="1.4" min="0.6" step="0.01" 
+                                                                   class="form-control" required ng-model="item.Merits" />
+                                                            <!--<div config-select tb="MESArrange" ng-disabled="!line.editArrange" col="Merits" ng-model="item.Merits" auto-first="true"></div>-->
+                                                        </div>
                                                     </td>
                                                     <td>
                                                         <input type="text" ng-disabled="!line.editArrange" class="form-control" name="Remark" placeholder="备注" ng-model="item.Remark" />
                                                     </td>
                                                 </tr>
                                             </table>
+                                            <br />
+                                            <span class="h6 text-danger pull-left">注:员工排班时间不得早于工单排班开始时间，晚于工单结束时间;   绩效系数0.6~1.4之间，最多两位小数。</span>
                                         </div>
                                     </div>
                                 </div>

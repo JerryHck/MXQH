@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('AppSet')
-.controller('bcWorkOrderDoneCtrl', ['$scope', '$http', 'AjaxService', 'toastr', '$window',
-function ($scope, $http, AjaxService, toastr, $window) {
+.controller('bcWorkOrderDoneCtrl', ['$scope', 'Dialog', 'AjaxService', 'toastr', '$window',
+function ($scope, Dialog, AjaxService, toastr, $window) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
@@ -11,6 +11,9 @@ function ($scope, $http, AjaxService, toastr, $window) {
     vm.PageChange = PageChange;
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
+    vm.OpenDtl = OpenDtl;
+    vm.OpenUser = OpenUser;
+    vm.EditUPPH = EditUPPH;
 
     function Search() {
         vm.page.index = 1;
@@ -21,7 +24,6 @@ function ($scope, $http, AjaxService, toastr, $window) {
         vm.promise = AjaxService.GetPlansPage("BcWorkOrderDone", GetContition(), vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
-            console.log(data)
         });
 
     }
@@ -30,6 +32,31 @@ function ($scope, $http, AjaxService, toastr, $window) {
             $window.location.href = data.File;
         });
     }
+
+    function EditUPPH(item) {
+        vm.UPItem = angular.copy(item);
+        $(".new-upph").addClass("active");
+        //$(".new-upph").removeClass("active");
+    }
+
+    //打开详细
+    function OpenDtl(item) {
+        Dialog.OpenDialog("BcWorkOrderUserDone", item).then(function (data) {
+
+        }, function (data2) {
+
+        });
+    }
+
+    //打开用户详细
+    function OpenUser() {
+        Dialog.OpenDialog("BcWorkOrderUserDone", {}).then(function (data) {
+
+        }, function (data2) {
+
+        });
+    }
+
     function GetContition() {
         var list = [];
         if (vm.Ser.aWorkDate) {

@@ -38,7 +38,8 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
         $rootScope.User = data;
         //获取路由信息
         AjaxService.LoginAction("GetFunRoute").then(function (data) {
-            angular.forEach(data, function (item) {
+            for (var i = 0, len = data.length; i < len; i++) {
+                var item = data[i];
                 var route = {};
                 if (item.RouteName && item.RouteName != '') {
                     route.Name = item.RouteName;
@@ -59,7 +60,7 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
                         $state.go(item.RouteName);
                     }
                 }
-            });
+            }
         });
 
         //获取dialog信息
@@ -77,7 +78,7 @@ function Config($stateProvider, $urlRouterProvider, Version) {
     $stateProvider
         .state('app', {
             //表明此状态不能被显性激活，只能被子状态隐性激活
-            abstract: true,
+            //abstract: true,
             url: '/app',
             controllerAs: 'vm',
             controller: 'AppCtrl',

@@ -45,6 +45,10 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
             vm.Item.Compose[i].CTo = vm.Item.Compose[i].CValue.substr(0, 1)
             vm.Item.Compose[i].CEx = vm.Item.Compose[i].CValue.length > 3 ? vm.Item.Compose[i].CValue.substr(3) : undefined;
         }
+        else if ((vm.Item.Compose[i].CharType == "CarryUp" || vm.Item.Compose[i].CharType == "CarryDown") && vm.Item.Compose[i].CValue.length > 1) {
+            vm.Item.Compose[i].CTo = "";
+            vm.Item.Compose[i].CEx = vm.Item.Compose[i].CValue.length > 2 ? vm.Item.Compose[i].CValue.substr(2) : undefined;
+        }
     }
 
     function AddCom() {
@@ -61,6 +65,15 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
             $uibModalInstance.close(vm.Item);
         })
     };
+
+    function GetOen() {
+        var list = [];
+        list.push({ name: "TbName", value: vm.Item.TbName });
+        list.push({ name: "ClName", value: vm.Item.ClName });
+        vm.promise = AjaxService.GetPlans("SerialNumberInfo", list).then(function (data) {
+            vm.Item.Info = data;
+        });
+    }
 
     function DragCom(com, index) {
         vm.ComIndex = index;
@@ -111,6 +124,7 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
         en.CharName = "";
         AjaxService.ExecPlan("SerialNumberSet", "getSn", en).then(function (data) {
             vm.PKData = data.data[0];
+            GetOen();
         })
     }
 
@@ -140,6 +154,9 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
             }
             else if (com.CharType == "SER" || com.CharType == "DC") {
                 com.CValue = (com.CTo || "") + (com.CEx ? "Ex" : "") + (com.CEx || "");
+            }
+            else if ((vm.Item.Compose[i].CharType == "CarryUp" || vm.Item.Compose[i].CharType == "CarryDown")) {
+                com.CValue = (com.CEx ? "Ex" : "") + (com.CEx || "");
             }
             com.CValue = com.CValue || "";
             com.PartChar = com.PartChar || "";

@@ -1,0 +1,9 @@
+<uib-tabset active="active" ng-if="vm.OpenList && vm.OpenList.length > 0" type="tabs" class="h-100" cg-busy="bc.promise">
+    <uib-tab ng-repeat="item in vm.OpenList" index="$index">
+        <uib-tab-heading class="h5">
+            {{ item.FunName }}
+            <a href="" class="up text-danger">x</a>
+        </uib-tab-heading>
+        <div ui-view="{{ item.RouteName }}"></div>
+    </uib-tab>
+</uib-tabset>

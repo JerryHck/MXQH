@@ -33,6 +33,7 @@
                             <td title="释放数量" style= "width:100px ">释放数量</td>
                             <td title="需求数量" style= "width:100px ">需求数量</td>
                             <td title="内码码范围" style= "width:200px ">内码码范围</td>
+                            <td title="下发时间" style= "width:200px ">下发时间</td>
                             <td title="备注" style= "width:100px ">备注</td>
                         </tr>
                     </thead>
@@ -49,6 +50,7 @@
                         <td title="{{ item.ReleaseNum }}">{{ item.ReleaseNum }}</td>
                         <td title="{{ item.NeedCount }}">{{ item.NeedCount }}</td>
                         <td title="{{ item.RangNo }}">{{ item.RangNo }}</td>
+                       <td title="{{ item.TS}}">{{ item.TS | date:'yyyy-MM-dd HH:mm'}}</td>
                         <td title="{{ item.Remark }}">{{ item.Remark }}</td>
                     </tr>
                 </table>

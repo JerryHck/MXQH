@@ -87,10 +87,8 @@ function ProRegisterDialogCtrl($rootScope, $scope, $uibModalInstance, Form, Item
                 en.ProcedureCode = vm.Item.MaterialCode;
                 en.ProcedureName = vm.Item.MaterialName;
                 en.FirstPoor = vm.DialogItem.NgType;//不良码id
-                en.SecondPoor = vm.DialogItem.Ng;//不良码id 二级
+                en.SecondPoor = vm.DialogItem.Ng || -1;//不良码id 二级
                 en.PoorReason = vm.DialogItem.Reason;//不良原因
-                en.CreateBy = $rootScope.User.UserNo;//
-                console.log(en);
 
                 vm.promise = AjaxService.ExecPlan("RMOSelect", "AddRMO", en).then(function (data) {
                     if (data.data[0].MsgType == 'Success') {

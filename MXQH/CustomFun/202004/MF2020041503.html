@@ -33,8 +33,8 @@
                             <button class="btn btn-xs btn-success" title="核准" ng-confirm="{text:'确定核准吗'}" ng-click="ho.Sign(item, '1')"><i class="glyphicon glyphicon-ok-sign"></i></button>
                             <button class="btn btn-xs btn-danger" title="作废" ng-confirm="{text:'确定作废吗'}" ng-click="ho.Sign(item,'2')"><i class="glyphicon glyphicon-remove-sign"></i></button>
                         </td>
-                        <td title="申报类型">{{ item.DataType =='U'?'异常工时':'维修费用' }}</td>
                         <td title="{{ item.Line.Name }}">{{ item.Line.Name }}</td>
+                        <td title="申报类型">{{ item.DataType =='U'?'异常工时':'维修费用' }}</td>
                         <td title="{{ item.UnusualHour }}">{{ item.UnusualHour }}</td>
                         <td title="{{ item.Remark }}">{{ item.Remark }}</td>
                         <td title="{{ item.StateText }}">{{ item.StateText }}</td>

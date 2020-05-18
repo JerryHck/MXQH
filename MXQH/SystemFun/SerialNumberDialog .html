@@ -110,7 +110,8 @@
                                     <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='DC'" ng-class="{ 'has-error' : pk.InsertForm.DCTo.$invalid }">
                                         <input autocomplete="off"  class="form-control" name="DCTo" title="日期天数大于10时转换成的字母" placeholder="转成" maxlength="1" type="text" ng-model="pk.NewCom.CTo" required/>
                                     </div>
-                                    <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='YC'|| pk.NewCom.CharType =='MC'|| pk.NewCom.CharType =='DC'|| pk.NewCom.CharType =='SER'">
+                                    <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='YC'|| pk.NewCom.CharType =='MC'|| pk.NewCom.CharType =='DC'
+                                         || pk.NewCom.CharType =='SER'|| pk.NewCom.CharType =='CarryUp'|| pk.NewCom.CharType =='CarryDown'">
                                         <input autocomplete="off"  class="form-control" name="CEx" title="需要排除的字母" placeholder="排除" maxlength="10" type="text" ng-model="pk.NewCom.CEx" />
                                     </div>
                                     <div class="col-sm-1 padder-xs">
@@ -152,7 +153,7 @@
                                     <div class="col-sm-2 padder-xs" ng-if="com.CharType =='DC'" ng-class="{ 'has-error' : pk.ListForm.DCDay.$invalid }">
                                         <input autocomplete="off"  class="form-control" name="DCDay" title="日期天数大于10时转换成的字母" placeholder="转成" maxlength="1" type="text" ng-model="com.CTo" required/>
                                     </div>
-                                    <div class="col-sm-2 padder-xs" ng-if="com.CharType =='YC'|| com.CharType =='MC'|| com.CharType =='DC' || com.CharType =='SER'">
+                                    <div class="col-sm-2 padder-xs" ng-if="com.CharType =='YC'|| com.CharType =='MC'|| com.CharType =='DC' || com.CharType =='SER' || com.CharType =='CarryUp'|| com.CharType =='CarryDown'">
                                         <input autocomplete="off"  class="form-control" name="CEx" title="需要排除的字母" placeholder="排除" maxlength="10" type="text" ng-model="com.CEx" />
                                     </div>
                                     <div class="col-sm-1 padder-xs">
