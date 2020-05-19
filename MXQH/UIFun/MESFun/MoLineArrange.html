@@ -135,6 +135,12 @@
                                             </div>
                                         </div>
                                         <div class="form-group-xs col-md-12 padder-xs">
+                                            <label class="col-sm-3 padder-xs control-label text-info">状态:</label>
+                                            <div class="col-sm-9 padder-xs">
+                                                {{ line.SelectedMo.Status == 4 ? '完工' : '未完工' }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group-xs col-md-12 padder-xs">
                                             <label class="col-sm-3 padder-xs control-label text-info">数量:</label>
                                             <div class="col-sm-9 padder-xs">
                                                 <input type="text" disabled class="form-control" ng-model="line.SelectedMo.Quantity" />

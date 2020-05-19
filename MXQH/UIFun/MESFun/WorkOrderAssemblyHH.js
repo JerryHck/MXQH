@@ -175,7 +175,6 @@ function ($rootScope, $scope, $timeout, Dialog, toastr, AjaxService, MyPop) {
         en.InternalCode = vm.Item.NgInCode;
         en.ProcedureID = vm.ProcedureItem.boProcedureID;
         en.IsHH = true;
-        console.log(en)
         AjaxService.ExecPlan("MesMxWOrder", "checkNg", en).then(function (data) {
             if (data.data[0].MsgType == 'Success') {
                 var e = {};
