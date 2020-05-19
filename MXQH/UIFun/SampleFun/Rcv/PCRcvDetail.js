@@ -52,7 +52,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     //BSN扫描
     function ScanCode(isForce) {
         var en = {};
-        en.ShipID = vm.Item.ID;
+        en.RcvID = vm.Item.ID;
         en.pageIndex = vm.page.pageIndex;
         en.pageSize = vm.page.pageSize;
         en.SNCode = vm.SNCode;

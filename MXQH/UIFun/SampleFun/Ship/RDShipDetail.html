@@ -1,5 +1,5 @@
 ﻿<div class="modal-header">
-    <span class="modal-title h3">入库信息</span>
+    <span class="modal-title h3">出库信息</span>
     <button class="btn btn-warning pull-right" type="button" ng-click="ship.Cancel()">取消</button>
 </div>
 <div class="modal-body wrapper-sm" ng-form="DialogForm">
@@ -7,21 +7,21 @@
         <div class="panel-body no-padder m-t-xxs">
             <div class="col-sm-5 padder-xs">
                 <div class="panel panel-default" ng-form="ship.OrderForm">
-                    <div class="panel-heading font-bold  text-center">入库单单[<span class="font-bold text-info">{{ ship.Item.DocNo }}</span>]扫码操作</div>
+                    <div class="panel-heading font-bold  text-center">出库单[<span class="font-bold text-info">{{ ship.Item.DocNo }}</span>]扫码操作</div>
                     <div class="panel-body">
                         <div class="form-horizontal">
                             <div class="form-group-xs col-md-12">
-                                <label class="col-lg-3 control-label padder-xxs">入库单号:</label>
+                                <label class="col-lg-3 control-label padder-xxs">出库单号:</label>
                                 <div class="col-lg-9 form-control-static text-info font-bold">
                                     {{ ship.Item.DocNo }}
                                 </div>
                             </div>
                             <div class="form-group-xs col-md-12">
-                                <label class="col-lg-3 control-label padder-xxs">入库人:</label>
+                                <label class="col-lg-3 control-label padder-xxs">出库人:</label>
                                 <div class="col-lg-3 form-control-static">
                                     {{ ship.Item.Operator }}
                                 </div>
-                                <label class="col-lg-3 control-label padder-xxs">入库时间:</label>
+                                <label class="col-lg-3 control-label padder-xxs">出库时间:</label>
                                 <div class="col-lg-3 form-control-static">
                                     {{ ship.Item.RcvDate }}
                                 </div>
@@ -90,7 +90,7 @@
             <div class="col-sm-7 padder-xs">
                 <div class="panel panel-default">
                     <div class="panel-heading font-bold text-center">
-                        入库单SN列表
+                        出库单SN列表
                         <span title="清空所有SN"><a class="text-danger" ng-confirm="{text:'确定要清空所有SN吗'}" ng-click="ship.ClearBSN()"><i class="glyphicon glyphicon-remove"></i></a></span>
                     </div>
                     <div class="panel-body padder-md" style="min-height:400px">
@@ -126,7 +126,6 @@
                                                 <button class="btn btn-xs btn-success" ng-disabled="ship.EditForm.$invalid" ng-click="ship.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
                                                 <button class="btn btn-xs btn-warning" ng-click="sn.IsEdit=!sn.IsEdit"><i class="fa fa-undo"></i></button>
                                             </span>
-
                                         </td>
                                         <td>{{sn.SNCode}}</td>
                                         <td>

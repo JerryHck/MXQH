@@ -40,10 +40,10 @@
                             <td title="SN码" style="width:100px ">SN码</td>
                             <td title="出入库日期" style="width:100px ">出入库日期</td>
                             <td title="计划归还日" style="width:100px ">计划归还日</td>
-                            <td title="状态" style="width:100px ">状态</td>
+                            <!--<td title="状态" style="width:100px ">状态</td>
                             <td title="阶段" style="width:100px ">阶段</td>
                             <td title="项目" style="width:100px ">项目</td>
-                            <td title="部门" style="width:100px ">部门</td>
+                            <td title="部门" style="width:100px ">部门</td>-->
                             <td title="客户" style="width:100px ">客户</td>
                             <td title="领借人" style="width:100px ">领借人</td>
                         </tr>
@@ -52,15 +52,15 @@
                         <td title="{{ item.RN }}">{{ item.RN }}</td>
                         <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
                         <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
-                        <td title="{{ item.SNCode }}">{{ item.SNCode }}</td>
                         <td title="{{ item.DocNo }}">{{ item.DocNo }}</td>
                         <td title="{{ item.DocType }}">{{ item.DocType }}</td>
+                        <td title="{{ item.SNCode }}">{{ item.SNCode }}</td>
                         <td title="{{ item.OpDate|date:'yyyy-MM-dd HH:mm' }}">{{ item.OpDate|date:'yyyy-MM-dd HH:mm' }}</td>
                         <td title="{{ item.PlanReturnDate|date:'yyyy-MM-dd HH:mm' }}">{{ item.PlanReturnDate|date:'yyyy-MM-dd HH:mm' }}</td>
-                        <td title="{{ item.Status }}">{{ item.Status }}</td>
+                        <!--<td title="{{ item.Status }}">{{ item.Status }}</td>
                         <td title="{{ item.Progress }}">{{ item.Progress }}</td>
                         <td title="{{ item.ProjectName }}">{{ item.ProjectCode }}|{{item.ProjectName}}</td>
-                        <td title="{{ item.DeptName }}">{{ item.DeptName }}</td>
+                        <td title="{{ item.DeptName }}">{{ item.DeptName }}</td>-->
                         <td title="{{ item.CustomerName }}">{{ item.CustomerName }}</td>
                         <td title="{{ item.Borrower }}">{{ item.Borrower }}</td>
                     </tr>

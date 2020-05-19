@@ -135,10 +135,18 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
         //TODO:删除单据及其明细表，并校验单据是否已经被研发入库
         var en = angular.copy(item);
         en.ItemForm = undefined;
-        vm.promise = AjaxService.PlanDelete("TestRecord", en).then(function (data) {            
+        vm.promise = AjaxService.ExecPlan("TestRecord", "Delete", { ID: en.ID }).then(function (data) {
+            if (data.data[0].MsgType == '1') {
                 DataBind();
                 toastr.success('删除成功');
+            } else {
+                toastr.error('删除失败');
+            }
         });
+        //vm.promise = AjaxService.PlanDelete("TestRecord", en).then(function (data) {            
+        //        DataBind();
+        //        toastr.success('删除成功');
+        //});
     }
     //附件列表
     function ProFile(item) {
