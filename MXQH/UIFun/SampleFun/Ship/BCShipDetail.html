@@ -1,0 +1,148 @@
+﻿<div class="modal-header">
+    <span class="modal-title h3">出库信息</span>
+    <button class="btn btn-warning pull-right" type="button" ng-click="ship.Cancel()">取消</button>
+</div>
+<div class="modal-body wrapper-sm" ng-form="DialogForm">
+    <div class="panel-default" cg-busy="ship.promise">
+        <div class="panel-body no-padder m-t-xxs">
+            <div class="col-sm-5 padder-xs">
+                <div class="panel panel-default" ng-form="ship.OrderForm">
+                    <div class="panel-heading font-bold  text-center">出库单[<span class="font-bold text-info">{{ ship.Item.DocNo }}</span>]扫码操作</div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group-xs col-md-12">
+                                <label class="col-lg-3 control-label padder-xxs">出库单号:</label>
+                                <div class="col-lg-9 form-control-static text-info font-bold">
+                                    {{ ship.Item.DocNo }}
+                                </div>
+                            </div>
+                            <div class="form-group-xs col-md-12">
+                                <label class="col-lg-3 control-label padder-xxs">出库人:</label>
+                                <div class="col-lg-3 form-control-static">
+                                    {{ ship.Item.Operator }}
+                                </div>
+                                <label class="col-lg-3 control-label padder-xxs">出库时间:</label>
+                                <div class="col-lg-3 form-control-static">
+                                    {{ ship.Item.RcvDate }}
+                                </div>
+                            </div>
+                            <div class="form-group-xs col-md-12">
+                                <label class="col-lg-3 control-label padder-xxs">型号:</label>
+                                <div class="col-lg-3 form-control-static">
+                                    <div basic-select="TPDicBCPT" name="TypeName" placeholder="型号"
+                                         ng-model="ship.Type">
+                                    </div>
+                                </div>
+                                <label class="col-lg-3 control-label padder-xxs">已扫数量:</label>
+                                <div class="col-lg-3 form-control-static">
+                                    {{ ship.Item.RcvCount }}
+                                </div>
+                            </div>
+                            <div class="form-group-xs col-md-12">
+                                <label class="col-lg-3 control-label padder-xxs">SN码:</label>
+                                <div class="col-lg-9" ng-class="{ 'has-error' : ship.OrderForm.SNCode.$invalid }">
+                                    <input autocomplete="off" type="text" class="form-control" name="SNCode" ng-model="ship.SNCode" placeholder="SN"
+                                           ng-keypress="ship.KeyDonwSnCode($event)" required>
+                                    <div class="h6 text-danger">注:扫描枪请设定自动回车功能，如果手动输入则需按回车键。</div>
+                                </div>
+                            </div>
+                            <div class="form-group-xs col-md-12">
+                                <label class="col-lg-3 control-label padder-xxs">备注:</label>
+                                <div class="col-lg-9 form-control-static h4 text-success">
+                                    <textarea name="Remark" rows="2" ng-model="ship.Remark" class="form-control col-lg-12"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading font-bold text-center">
+                        信息显示
+                    </div>
+                    <div class="panel-body scroll-y" style="max-height:250px">
+                        <div class="list-group">
+                            <ul class="list-group bg-white">
+                                <li class="list-group-item" ng-repeat="item in ship.MesList | limitTo:100" ng-class="{ 'text-danger' : !item.IsOk, 'text-success':item.IsOk }">
+                                    <span herf class="pull-left">
+                                        <i class="glyphicon" ng-class="{ 'glyphicon-remove' : !item.IsOk, 'glyphicon-ok':item.IsOk }"></i>
+                                    </span>
+                                    <div class="clear">
+                                        <div>{{ item.Msg }}</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7 padder-xs">
+                <div class="panel panel-default">
+                    <div class="panel-heading font-bold text-center">
+                        出库单SN列表
+                        <span title="清空所有SN"><a class="text-danger" ng-confirm="{text:'确定要清空所有SN吗'}" ng-click="ship.ClearBSN()"><i class="glyphicon glyphicon-remove"></i></a></span>
+                    </div>
+                    <div class="panel-body padder-md" style="min-height:400px">
+                        <div class="input-group col-md-6">
+                            <input autocomplete="off" type="text" class="form-control input-sm" ng-model="ship.SerSNCode" />
+                            <span class="text-success input-group-btn" ng-click="ship.Search()">
+                                <button type="submit" class="btn btn-sm btn-success">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="scroll-y m-t-xs" style="max-height:530px">
+                            <div class="table-responsive" ng-form="ship.EditForm">
+                                <table class="table one-line no-padder">
+                                    <thead>
+                                        <tr>
+                                            <td style="width:60px;">删除</td>
+                                            <td style="width:80px;">SN编码</td>
+                                            <td style="width:60px;">型号</td>
+                                            <td style="width:60px;">料号</td>
+                                            <td style="width:120px;">品名</td>
+                                            <td style="width:120px;">备注</td>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="sn in ship.SNList">
+                                        <td>
+                                            <span ng-if="!sn.IsEdit">
+                                                <button class="btn btn-xs btn-success" ng-click="ship.Edit(sn)"><i class="glyphicon glyphicon-edit"></i></button>
+                                                <button class="btn btn-xs btn-danger" ng-click="ship.ClearBSN(sn.SNCode)" ng-confirm="{text:'确定移除该SN吗'}"><i class="glyphicon glyphicon-remove"></i></button>
+                                            </span>
+                                            <span ng-if="sn.IsEdit">
+                                                <button class="btn btn-xs btn-success" ng-disabled="ship.EditForm.$invalid" ng-click="ship.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                                                <button class="btn btn-xs btn-warning" ng-click="sn.IsEdit=!sn.IsEdit"><i class="fa fa-undo"></i></button>
+                                            </span>
+                                        </td>
+                                        <td>{{sn.SNCode}}</td>
+                                        <td>
+                                            <span ng-if="!sn.IsEdit">{{sn.TypeName}}</span>
+                                            <div ng-if="sn.IsEdit" ng-class="{ 'has-error': ship.EditForm.e_TypeName.$invalid }" basic-select="TPDicBCPT" name="e_TypeName" placeholder="型号"
+                                                 ng-model="ship.Type">
+                                            </div>
+                                            <!--<div ng-if="sn.IsEdit" ng-class="{ 'has-error': ship.EditForm.e_TypeName.$invalid }">
+                                            </div>-->
+                                        </td>
+                                        <td>{{sn.MaterialCode}}</td>
+                                        <td title="{{sn.MaterialName}}">{{sn.MaterialName}}</td>
+                                        <td>
+                                            <span ng-if="!sn.IsEdit">{{sn.Remark}}</span>
+                                            <textarea ng-if="sn.IsEdit" ng-model="ship.EditItem.Remark" rows="5" class="form-control"></textarea>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-12 m-t-n-md text-center " ng-if="ship.page.total>ship.page.pageSize ">
+                                <div uib-pagination total-items="ship.page.total " ng-model="ship.page.pageIndex " items-per-page="ship.page.pageSize " max-size="5" first-text="<<" previous-text="< "
+                                     ng-change="ship.GetDetail() " next-text="> " last-text=">> " boundary-links="false " boundary-link-numbers="true "></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,215 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="rcv.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">样机入库</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs">
+                <div class="form-inline">
+                    <button class="btn btn-sm btn-success " ng-click="rcv.Add() "><i class="glyphicon glyphicon-plus "></i>新增</button>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" class="form-control" ng-model="rcv.page.DocNo" placeholder="单号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="rcv.page.DocNo = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" class="form-control" ng-model="rcv.page.Project" placeholder="项目编码/名称">
+                            <span class="input-group-addon">
+                                <a><i ng-click="rcv.page.Project = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group">
+                                <input autocomplete="off" type="text" date-time-picker class="form-control" name="SD" placeholder="开始日期" option="rcv.dt1"
+                                       ng-model="rcv.page.SD">
+                                <span class="input-group-addon">
+                                    <a><i ng-click="rcv.page.SD = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" date-time-picker class="form-control" name="ED" placeholder="结束日期" option="rcv.dt2"
+                                   ng-model="rcv.page.ED">
+                            <span class="input-group-addon">
+                                <a><i ng-click="rcv.page.ED = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-info " ng-click="rcv.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                    <!--<button class="btn btn-sm btn-success " ng-click="rcv.Export() "><i class="glyphicon glyphicon-export "></i>导出</button>-->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 scroll-x" style="min-height:300px;">
+            <table class="table pad-xs">
+                <thead>
+                    <tr>
+                        <td style="width:60px ">编辑</td>
+                        <td style="width:60px ">序号</td>
+                        <td style="width:120px ">单号</td>
+                        <td style="width:120px ">单据类型</td>
+                        <td style="width:60px ">数量</td>
+                        <td style="width:100px ">入库人</td>
+                        <td style="width:110px ">入库日期</td>
+                        <td style="width:140px ">项目号</td>
+                        <td style="width:140px ">项目名称</td>
+                        <td style="width:100px ">归还部门</td>
+                        <td style="width:100px ">领借人</td>
+                        <td style="width:100px ">客户</td>
+                        <td style="width:200px ">备注</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-if="rcv.IsInsert" ng-form="rcv.InsertForm">
+                        <td>
+                            <button class="btn btn-xs btn-success" ng-disabled="rcv.InsertForm.$invalid" ng-click="rcv.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="rcv.IsInsert=false"><i class="fa fa-undo"></i></button>
+                        </td>
+                        <td></td>
+                        <td>
+                            {{rcv.NewItem.DocNo}}
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': rcv.InsertForm.DocType.$invalid }">
+                                <div config-select ng-model="rcv.NewItem.DocType" config-option="rcv.DocTypeList" auto-first="false" ng-name="DocType" placeholder="单据类型"></div>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td>
+                            <div ng-class="{ 'has-error': rcv.InsertForm.Operator.$invalid }">
+                                <input type="text" name="Operator" class="form-control" placeholder="入库人" ng-model="rcv.NewItem.Operator" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': rcv.InsertForm.RcvDate.$invalid }">
+                                <input type="text" date-picker name="RcvDate" class="form-control" placeholder="入库日期" ng-model="rcv.NewItem.RcvDate" option="rcv.DateOption" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': rcv.InsertForm.Project.$invalid }">
+                                <div basic-select="PLMProject" name="Project" placeholder="PLM项目号"
+                                     ng-model="rcv.Project" ng-change="rcv.ValueChange()" required>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            {{rcv.Project.WorkName}}
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': rcv.InsertForm.Dept.$invalid }">
+                                <div basic-select="TPDicPCDept" name="Dept" placeholder="归还部门"
+                                     ng-model="rcv.Dept" required>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': rcv.InsertForm.Borrower.$invalid }">
+                                <input type="text" name="Borrower" class="form-control" placeholder="领借人" ng-model="rcv.NewItem.Borrower" required />                            
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <div basic-select="TPDicPCCustomer" name="Customer" placeholder="客户"
+                                     ng-model="rcv.Customer">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <textarea class="form-control" name="Remark" placeholder="备注" ng-model="rcv.NewItem.Remark" rows="3"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="item in rcv.List " ng-form="EditForm">
+                        <td style="white-space:normal;word-break:normal;">
+                            <span ng-if="!item.IsEdit">
+                                <button class="btn btn-xs btn-success" ng-click="rcv.OpenScan(item)"><i class="fa fa-th"></i>扫码</button>
+                                <button class="btn btn-xs btn-primary" title="编辑" ng-click="rcv.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除['+item.DocNo+']及其明细数据吗'}" ng-click="rcv.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </span>
+                            <span ng-if="item.IsEdit">
+                                <button class="btn btn-xs btn-success" ng-disabled="rcv.EditForm.$invalid" ng-click="rcv.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                                <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=!item.IsEdit"><i class="fa fa-undo"></i></button>
+                            </span>
+                        </td>
+                        <td>
+                            {{item.RN}}
+                        </td>
+                        <td title="{{ item.DocNo }}">
+                            <span>{{ item.DocNo }}</span>
+                        </td>
+                        <td title="{{ item.DocType }}">
+                            <div ng-if="!item.IsEdit" ng-disabled="true" config-select ng-model="item.DocType" config-option="rcv.DocTypeList" auto-first="false" ng-name="DocType" placeholder="单据类型"></div>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': rcv.EditForm.e_DocType.$invalid }">
+                                <div config-select ng-model="rcv.EditItem.DocType" config-option="rcv.DocTypeList" auto-first="false" ng-name="e_DocType" placeholder="单据类型"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <span>{{ item.Count }}</span>
+                        </td>
+                        <td title="{{ item.Operator }}">
+                            <span ng-if="!item.IsEdit">{{ item.Operator }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': rcv.EditForm.e_Operator.$invalid }">
+                                <input type="text" name="e_Operator" class="form-control" placeholder="入库人" ng-model="rcv.EditItem.Operator" required />
+                            </div>
+                        </td>
+                        <td title="{{ item.RcvDate }}">
+                            <span ng-if="!item.IsEdit">{{ item.RcvDate|date:'yyyy-MM-dd' }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': rcv.EditForm.e_RcvDate.$invalid }">
+                                <input type="text" date-picker name="e_RcvDate" class="form-control" placeholder="测试日期" ng-model="rcv.EditItem.RcvDate" option="rcv.DateOption" required />
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.ProjectCode }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': rcv.EditForm.e_Project.$invalid }">
+                                <div basic-select="PLMProject" name="e_Project" placeholder="PLM项目号"
+                                     ng-model="rcv.Project" ng-change="rcv.ValueChange()" required>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="white-space:normal;word-break:normal;">
+                            <span ng-if="!item.IsEdit">{{ item.ProjectName }}</span>
+                            <span ng-if="item.IsEdit">{{ rcv.Project.WorkName }}</span>
+                        </td>
+                        <td title="{{ item.DeptName }}">
+                            <span ng-if="!item.IsEdit">{{ item.DeptName }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': rcv.EditForm.e_Dept.$invalid }">
+                                <div basic-select="TPDicPCDept" name="e_Dept" placeholder="归还部门"
+                                     ng-model="rcv.Dept">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.Borrower }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': rcv.EditForm.e_Borrower.$invalid }">
+                                <input type="text" name="e_Borrower" class="form-control" placeholder="领借人" ng-model="rcv.EditItem.Borrower" />
+                                <!--<div basic-select="TPDicPCUser" name="e_Borrower" placeholder="领借人"
+                                     ng-model="rcv.Borrower">
+                                </div>-->
+                            </div>
+                        </td>
+                        <td title="{{ item.CustomerName }}">
+                            <span ng-if="!item.IsEdit">{{ item.CustomerName }}</span>
+                            <div ng-if="item.IsEdit">
+                                <div basic-select="TPDicPCCustomer" name="e_CustomerName" placeholder="客户"
+                                     ng-model="rcv.Customer">
+                                </div>
+                            </div>
+                        </td>
+                        <td title="{{ item.Remark }}" style="white-space:normal;word-break:normal;">
+                            <span ng-if="!item.IsEdit">{{ item.Remark }}</span>
+                            <div ng-if="item.IsEdit">
+                                <input type="text" name="e_Remark" class="form-control" placeholder="备注" ng-model="rcv.EditItem.Remark" />
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12 text-center " ng-if="rcv.page.total>rcv.page.pageSize ">
+            <div uib-pagination total-items="rcv.page.total " ng-model="rcv.page.pageIndex " items-per-page="rcv.page.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                 ng-change="rcv.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

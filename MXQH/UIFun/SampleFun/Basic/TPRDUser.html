@@ -1,0 +1,152 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="tp.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">领借人信息管理</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs">
+                <div class="form-inline">
+                    <button class="btn btn-sm btn-success " ng-click="tp.Add() "><i class="glyphicon glyphicon-plus "></i>新增</button>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="tp.Ser.Code" placeholder="编码">
+                            <span class="input-group-addon">
+                                <a><i ng-click="tp.Ser.Code = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="tp.Ser.Name" placeholder="名称">
+                            <span class="input-group-addon">
+                                <a><i ng-click="tp.Ser.Name = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div config-select ng-model="tp.Ser.IsActive" config-option="tp.Ser_IsActive" auto-first="false" ng-name="IsActive" placeholder="是否生效"></div>
+                            <span class="input-group-addon">
+                                <a><i ng-click="tp.Ser.IsActive = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-sm btn-info " ng-click="tp.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                </div>
+            </div>
+        </div>
+        <div class="padder-md table-responsive">
+            <table class="table" style="min-height:200px;">
+                <thead>
+                    <tr>
+                        <td style="width:90px ">编辑</td>
+                        <td style="width:100px ">创建人</td>
+                        <td style="width:140px ">创建日期</td>
+                        <td style="width:135px ">修改人</td>
+                        <td style="width:140px ">修改日期</td>
+                        <td style="width:100px ">领借人编码</td>
+                        <td style="width:100px ">领借人名称</td>
+                        <td style="width:100px ">是否生效</td>
+                        <td style="width:100px ">排序</td>
+                        <td style="width:100px ">备注</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-if="tp.IsAdd" ng-form="tp.InsertForm">
+                        <td>
+                            <button class="btn btn-xs btn-success" ng-disabled="tp.InsertForm.$invalid" ng-click="tp.SaveAdd()"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="tp.IsAdd=false"><i class="fa fa-undo"></i></button>
+                        </td>
+                        <td>
+                            {{tp.NewItem.CreateBy}}
+                        </td>
+                        <td>
+                            {{tp.NewItem.CreateDate}}
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div ng-class="{ 'has-error': tp.InsertForm.Code.$invalid }">
+                                <input type="text" class="form-control" name="Code" ng-model="tp.NewItem.Code" ng-blur="tp.IsUnique(false)" required />
+                                <div ng-messages="tp.InsertForm.Code.$error" class="text-danger" role="alert">
+                                    <div ng-message="unique">编码重复</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': tp.InsertForm.Name.$invalid }">
+                                <input type="text" class="form-control" name="Name" ng-model="tp.NewItem.Name" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': tp.InsertForm.IsActive.$invalid }">
+                                <div config-select ng-model="tp.NewItem.IsActive" config-option="tp.IsActive" auto-first="false" ng-name="IsActive" placeholder="是否有效"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="OrderNo" ng-model="tp.NewItem.OrderNo" />
+                        </td>
+                        <td>
+                            <textarea class="form-control" rows="2" name="Remark" ng-model="tp.NewItem.Remark" placeholder="备注"></textarea>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="item in tp.List" ng-form="item.EditForm">
+                        <td>
+                            <span ng-if="!item.IsEdit">
+                                <button class="btn btn-xs btn-primary" title="编辑" ng-click="tp.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除此项吗'}" ng-click="tp.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                                <!--<button class="btn btn-xs btn-success" ng-click="rdsrc.OpenScan(item)"><i class="fa fa-th"></i>扫码</button>
+                                <button class="btn btn-xs btn-primary" title="编辑" ng-click="rdsrc.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除['+item.DocNo+']及其明细数据吗'}" ng-click="rdsrc.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>-->
+                            </span>
+                            <span ng-if="item.IsEdit">
+                                <button class="btn btn-xs btn-success" ng-disabled="item.EditForm.$invalid" ng-click="tp.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                                <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=!item.IsEdit"><i class="fa fa-undo"></i></button>
+                            </span>
+
+                        </td>
+                        <td title="{{ item.CreateBy }}">{{ item.CreateBy }}</td>
+                        <td title="{{ item.CreateDate }}">{{ item.CreateDate|date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                        <td title="{{ item.ModifyBy }}">{{ item.ModifyBy }}</td>
+                        <td title="{{ item.ModifyDate }}">{{ item.ModifyDate|date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                        <td title="{{ item.Code }}">
+                            <span ng-if="!item.IsEdit">{{ item.Code }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': item.EditForm.e_Code.$invalid }">
+                                <input type="text" class="form-control" name="e_Code" ng-model="tp.EditItem.Code" ng-blur="tp.IsUnique(true)" required />
+                                <div ng-if="item.EditForm.e_Code.$error.unique" ng-messages="item.EditForm.e_Code.$error" class="help-block" role="alert">
+                                    <div ng-message="unique">编码重复</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td title="{{ item.Name }}">
+                            {{ item.Name }}
+                        </td>
+                        <td ng-if="!item.IsEdit">
+                            <span ng-if="item.IsActive==1" class="text-success">是</span>
+                            <span ng-if="item.IsActive==0" class="text-danger">否</span>
+                        </td>
+                        <td ng-if="item.IsEdit">
+                            <div ng-class="{ 'has-error': item.EditForm.e_IsActive.$invalid }">
+                                <div config-select ng-model="tp.EditItem.IsActive" config-option="tp.IsActive" auto-first="false" ng-name="e_IsActive" placeholder="是否有效"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">
+                                {{ item.OrderNo }}
+                            </span>
+                            <input ng-if="item.IsEdit" type="text" class="form-control" name="e_OrderNo" ng-model="tp.EditItem.OrderNo" />
+                        </td>
+                        <td ng-if="!item.IsEdit">{{ item.Remark }}</td>
+                        <td ng-if="item.IsEdit">
+                            <textarea class="form-control" rows="2" name="e_Remark" ng-model="tp.EditItem.Remark" placeholder="备注"></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12 text-center " ng-if="tp.page.total>tp.page.pageSize ">
+            <div uib-pagination total-items="tp.page.total " ng-model="tp.page.pageIndex " items-per-page="tp.page.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                 ng-change="tp.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

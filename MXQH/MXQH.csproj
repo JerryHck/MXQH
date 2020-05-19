@@ -336,10 +336,42 @@
     <Content Include="UIFun\Router\Router.js" />
     <Content Include="UIFun\Router\jquery-ui.min.css" />
     <Content Include="UIFun\Router\uuid.js" />
+    <Content Include="UIFun\SampleFun\Basic\TPBCProductType.html" />
+    <Content Include="UIFun\SampleFun\Basic\TPBCProductType.js" />
+    <Content Include="UIFun\SampleFun\Basic\TPPCCustomer.js" />
+    <Content Include="UIFun\SampleFun\Basic\TPPCDept.html" />
+    <Content Include="UIFun\SampleFun\Basic\TPPCDept.js" />
+    <Content Include="UIFun\SampleFun\Basic\TPPCCustomer.html" />
+    <Content Include="UIFun\SampleFun\Basic\TPRDCustomer.html" />
+    <Content Include="UIFun\SampleFun\Basic\TPRDCustomer.js" />
+    <Content Include="UIFun\SampleFun\Basic\TPRDDept.html" />
+    <Content Include="UIFun\SampleFun\Basic\TPRDDept.js" />
+    <Content Include="UIFun\SampleFun\Basic\TPRDUser.html" />
+    <Content Include="UIFun\SampleFun\Basic\TPRDUser.js" />
+    <Content Include="UIFun\SampleFun\Rcv\BCRcv.html" />
+    <Content Include="UIFun\SampleFun\Rcv\BCRcv.js" />
+    <Content Include="UIFun\SampleFun\Rcv\BCRcvDetail.html" />
+    <Content Include="UIFun\SampleFun\Rcv\BCRcvDetail.js" />
+    <Content Include="UIFun\SampleFun\Rcv\PCRcv.html" />
+    <Content Include="UIFun\SampleFun\Rcv\PCRcv.js" />
+    <Content Include="UIFun\SampleFun\Rcv\PCRcvDetail.html" />
+    <Content Include="UIFun\SampleFun\Rcv\PCRcvDetail.js" />
+    <Content Include="UIFun\SampleFun\Rcv\RDRcvDetail.html" />
+    <Content Include="UIFun\SampleFun\Rcv\RDRcvDetail.js" />
     <Content Include="UIFun\SampleFun\Rcv\RDSampleRcv.html" />
     <Content Include="UIFun\SampleFun\Rcv\RDSampleRcv.js" />
+    <Content Include="UIFun\SampleFun\Ship\BCShip.html" />
+    <Content Include="UIFun\SampleFun\Ship\BCShip.js" />
+    <Content Include="UIFun\SampleFun\Ship\BCShipDetail.html" />
+    <Content Include="UIFun\SampleFun\Ship\BCShipDetail.js" />
+    <Content Include="UIFun\SampleFun\Ship\PCShip.html" />
+    <Content Include="UIFun\SampleFun\Ship\PCShip.js" />
+    <Content Include="UIFun\SampleFun\Ship\PCShipDetail.html" />
+    <Content Include="UIFun\SampleFun\Ship\PCShipDetail.js" />
     <Content Include="UIFun\SampleFun\Ship\RDSampleShip.html" />
     <Content Include="UIFun\SampleFun\Ship\RDSampleShip.js" />
+    <Content Include="UIFun\SampleFun\Ship\RDShipDetail.html" />
+    <Content Include="UIFun\SampleFun\Ship\RDShipDetail.js" />
     <Content Include="UIFun\SampleFun\TestDetail.html" />
     <Content Include="UIFun\SampleFun\TestDetail.js" />
     <Content Include="UIFun\SampleFun\TestRecord.html" />
@@ -832,6 +864,7 @@
   <ItemGroup>
     <Folder Include="js\controllers\uploads\" />
     <Folder Include="src\" />
+    <Folder Include="UIFun\SampleFun\Report\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
