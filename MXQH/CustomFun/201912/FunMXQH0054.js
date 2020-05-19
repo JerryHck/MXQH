@@ -13,12 +13,15 @@ function ($scope, $http, AjaxService, toastr, $window) {
     vm.ExportExcel = ExportExcel;
 
     function Search() {
-        var en = {};
-        en.strJson = "[{\"Conn\":\"U9con\",\"Proc\":\"dbo.sp_mes_GetMO\",\"Json\":\"{}\"},{\"shortName\":\"Schedule\",\"planName\":\"MesPlanDetail\",\"Conn\":\"MEScon\",\"Proc\":\"dbo.sp_GetScheduleReport\",\"Json\":\"{\\\"pageSize\\\":12,\\\"pageIndex\\\":1,\\\"SD\\\":\\\"\\\",\\\"ED\\\":\\\"\\\"}\"}]";
+        //var en = {};
+        //en.strJson = "[{\"Conn\":\"U9con\",\"Proc\":\"dbo.sp_mes_GetMO\",\"Json\":\"{}\"},{\"shortName\":\"Schedule\",\"planName\":\"MesPlanDetail\",\"Conn\":\"MEScon\",\"Proc\":\"dbo.sp_GetScheduleReport\",\"Json\":\"{\\\"pageSize\\\":12,\\\"pageIndex\\\":1,\\\"SD\\\":\\\"\\\",\\\"ED\\\":\\\"\\\"}\"}]";
 
-        AjaxService.BasicCustom("ExecProcMultiExcel", en)
+        //AjaxService.BasicCustom("ExecProcMultiExcel", en)
 
+        AjaxService.CallDll('SourceHelper', 'SourceHelper.SQLHelper', 'TestDll', { planName: "MesMxWOrder" }).then(function (data) {
 
+            console.log(data);
+        })
     }
 
     function PageChange() {

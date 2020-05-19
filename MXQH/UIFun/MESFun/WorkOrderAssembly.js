@@ -143,6 +143,7 @@ function ($rootScope, $scope, $timeout, Dialog, toastr, AjaxService, MyPop) {
         }
         en.InternalCode = vm.Item.NgInCode;
         en.ProcedureID = vm.ProcedureItem.boProcedureID;
+        en.IsHH = false;
         AjaxService.ExecPlan("MesMxWOrder", "checkNg", en).then(function (data) {
             if (data.data[0].MsgType == 'Success') {
                     //打开窗体 WoAssNgDialog
@@ -199,7 +200,6 @@ function ($rootScope, $scope, $timeout, Dialog, toastr, AjaxService, MyPop) {
         en.SecondPoor = vm.DialogItem.Ng || 0;
         en.ThridPoor = 0;
         en.PoorReason = vm.DialogItem.Reason;
-
         vm.promise = AjaxService.ExecPlan("MesMxWOrder", "saveNg", en).then(function (data) {
             if (data.data[0].MsgType == 'Success') {
                 toastr.success('储存成功');

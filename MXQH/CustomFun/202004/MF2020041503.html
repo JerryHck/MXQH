@@ -4,6 +4,14 @@
         <div class="wrapper-xs">
             <div class="form-inline">
                 <div class="form-group">
+                    <ui-select ng-model="ho.Ser.DataType" theme="bootstrap">
+                        <ui-select-match placeholder="申报类型">{{ $select.selected.Name }}</ui-select-match>
+                        <ui-select-choices repeat="item.value as item in ho.TypeList | filter: $select.search">
+                            <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="form-group">
                     <div config-select ng-model="ho.Ser.aState" tb="UnusualHour" col="State" placeholder="状态"></div>
                 </div>
                 <button class= "btn btn-sm btn-info " ng-click= "ho.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
@@ -16,6 +24,7 @@
                     <thead>
                         <tr>
                             <td style="width:60px" ng-if="ho.Ser.aState == '0'">审核</td>
+                            <td style="width:100px ">日期</td>
                             <td title="线别" style= "width:100px ">线别</td>
                             <td title="申报类型" style="width:100px ">申报类型</td>
                             <td title="异常工时" style= "width:100px ">数值</td>
@@ -33,6 +42,7 @@
                             <button class="btn btn-xs btn-success" title="核准" ng-confirm="{text:'确定核准吗'}" ng-click="ho.Sign(item, '1')"><i class="glyphicon glyphicon-ok-sign"></i></button>
                             <button class="btn btn-xs btn-danger" title="作废" ng-confirm="{text:'确定作废吗'}" ng-click="ho.Sign(item,'2')"><i class="glyphicon glyphicon-remove-sign"></i></button>
                         </td>
+                        <td>{{ item.ApplyDate | date:'yyyy-MM-dd' }}</td>
                         <td title="{{ item.Line.Name }}">{{ item.Line.Name }}</td>
                         <td title="申报类型">{{ item.DataType =='U'?'异常工时':'维修费用' }}</td>
                         <td title="{{ item.UnusualHour }}">{{ item.UnusualHour }}</td>

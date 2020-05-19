@@ -6,12 +6,16 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
-    vm.Ser = { aState: "0" };
+    vm.TypeList = [{ value: "U", Name: "异常工时" }, { value: "R", Name: "维修费用" }]
+    vm.Ser = { aState: "0", DataType:"U" };
 
     vm.PageChange = PageChange;
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
     vm.Sign = Sign;
+
+    
+
 
     $scope.$watch(function () { return vm.Ser.aState; }, Search);
 
@@ -49,6 +53,9 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         var list = [];
         if (vm.Ser.aState) {
             list.push({ name: "State", value: vm.Ser.aState, tableAs:"a" });
+        }
+        if (vm.Ser.aState) {
+            list.push({ name: "DataType", value: vm.Ser.DataType, tableAs: "a" });
         }
         return list;
     }

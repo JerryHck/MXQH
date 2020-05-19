@@ -9,6 +9,9 @@
         //重复呼叫socket服务
         var interval = undefined;
         var obj = {
+
+            //呼叫外部dll方法
+            CallDll:CallDll,
             //登录前服务
             DoBefore: DoBefore,
             //同步执行方法
@@ -130,6 +133,17 @@
             var d = $q.defer(),
                 url = appUrl + 'Data/' + data + "?v=" + (new Date()).toString();
             return Ajax(d, url, undefined, undefined, "GET");
+        }
+
+        //执行外部方法
+        function CallDll(dll, space, method, json) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            var en = {};
+            en.dllName = dll;
+            en.spaceName = space;
+            en.methodName = method;
+            en.strJson = JSON.stringify(json) || '{}';
+            return Ajax(d, url, en, "CallDll");
         }
 
         //获得计划资料

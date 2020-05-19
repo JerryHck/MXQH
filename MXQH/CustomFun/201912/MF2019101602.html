@@ -23,10 +23,12 @@
             </div>
         </div>
         <div class= "padder-xs ">
+            <span class="text-danger">注:重算只能在该工单没有生产作业的情况下，否则将导致数据错误。</span>
             <div class="col-md-12 scroll-x no-padder">
                 <table class= "table " >
                     <thead>
                         <tr>
+                            <!--<td title="操作" style="width:60px ">操作</td>-->
                             <td title="生产日期" style= "width:100px ">生产日期</td>
                             <td title="星期" style= "width:70px ">星期</td>
                             <td title="工单" style= "width:100px ">工单</td>
@@ -48,6 +50,11 @@
                         </tr>
                     </thead>
                     <tr ng-repeat= "item in dr.List ">
+                        <!--<td title="操作">
+                            <button type="button" title="重新计算" class="btn btn-xs btn-success">
+                                <i class="glyphicon glyphicon-refresh"></i> 
+                            </button>
+                        </td>-->
                         <td title="{{ item.ComDate }}">{{ item.ComDate }}</td>
                         <td title="{{ item.ComWeek }}">{{ item.ComWeek }}</td>
                         <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
@@ -61,7 +68,12 @@
                         <td title="{{ item.PlanCount }}">{{ item.PlanCount }}</td>
                         <td title="{{ item.StandCount }}">{{ item.StandCount }}</td>
                         <td title="{{ item.InSum }}">{{ item.InSum }}</td>
-                        <td title="{{ item.FinishSum }}">{{ item.FinishSum }}</td>
+                        <td title="{{ item.FinishSum }}">
+                            <a class="text-success" title="重新计算" ng-click="dr.ReCal(item)">
+                                <!--<i class="glyphicon glyphicon-refresh"></i>-->
+                                {{ item.FinishSum }}
+                            </a>
+                        </td>
                         <td title="{{ item.RcvQty }}">{{ item.RcvQty }}</td>
                         <td title="{{ item.OverCount }}">{{ item.OverCount }}</td>
                         <td title="{{ item.OverRate }}">{{ item.OverRate }}</td>
