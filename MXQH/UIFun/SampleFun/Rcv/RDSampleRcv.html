@@ -1,0 +1,217 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="rdsrc.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">样机入库</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs">
+                <div class="form-inline">
+                    <button class="btn btn-sm btn-success " ng-click="rdsrc.Add() "><i class="glyphicon glyphicon-plus "></i>新增</button>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" class="form-control" ng-model="rdsrc.page.DocNo" placeholder="单号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="rdsrc.page.DocNo = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" class="form-control" ng-model="rdsrc.page.Project" placeholder="项目编码/名称">
+                            <span class="input-group-addon">
+                                <a><i ng-click="rdsrc.page.Project = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group">
+                                <input autocomplete="off" type="text" date-time-picker class="form-control" name="SD" placeholder="开始日期" option="rdsrc.dt1"
+                                       ng-model="rdsrc.page.SD">
+                                <span class="input-group-addon">
+                                    <a><i ng-click="rdsrc.page.SD = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" date-time-picker class="form-control" name="ED" placeholder="结束日期" option="rdsrc.dt2"
+                                   ng-model="rdsrc.page.ED">
+                            <span class="input-group-addon">
+                                <a><i ng-click="rdsrc.page.ED = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-info " ng-click="rdsrc.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                    <!--<button class="btn btn-sm btn-success " ng-click="rdsrc.Export() "><i class="glyphicon glyphicon-export "></i>导出</button>-->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 scroll-x" style="min-height:300px;">
+            <table class="table pad-xs" >
+                <thead>
+                    <tr>
+                        <td style="width:60px ">编辑</td>
+                        <td style="width:60px ">序号</td>
+                        <td style="width:120px ">单号</td>
+                        <td style="width:120px ">单据类型</td>
+                        <td style="width:60px ">数量</td>
+                        <td style="width:100px ">入库人</td>
+                        <td style="width:110px ">入库日期</td>
+                        <td style="width:140px ">项目号</td>
+                        <td style="width:140px ">项目名称</td>
+                        <td style="width:100px ">归还部门</td>
+                        <td style="width:100px ">领借人</td>
+                        <td style="width:100px ">客户</td>
+                        <td style="width:200px ">备注</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-if="rdsrc.IsInsert" ng-form="rdsrc.InsertForm">
+                        <td>
+                            <button class="btn btn-xs btn-success" ng-disabled="rdsrc.InsertForm.$invalid" ng-click="rdsrc.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="rdsrc.IsInsert=false"><i class="fa fa-undo"></i></button>
+                        </td>
+                        <td></td>
+                        <td>
+                            {{rdsrc.NewItem.DocNo}}
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': rdsrc.InsertForm.DocType.$invalid }">
+                                <div config-select ng-model="rdsrc.NewItem.DocType" config-option="rdsrc.DocTypeList" auto-first="false" ng-name="DocType" placeholder="单据类型"></div>
+                            </div>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': rdsrc.InsertForm.Operator.$invalid }">
+                                <input type="text" name="Operator" class="form-control" placeholder="入库人" ng-model="rdsrc.NewItem.Operator" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': rdsrc.InsertForm.RcvDate.$invalid }">
+                                <input type="text" date-picker name="RcvDate" class="form-control" placeholder="入库日期" ng-model="rdsrc.NewItem.RcvDate" option="rdsrc.DateOption" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': rdsrc.InsertForm.Project.$invalid }">
+                                <div basic-select="PLMProject" name="Project" placeholder="PLM项目号"
+                                     ng-model="rdsrc.Project" ng-change="rdsrc.ValueChange()" required>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            {{rdsrc.Project.WorkName}}
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': rdsrc.InsertForm.Dept.$invalid }">
+                                <div basic-select="TPDicRDDept" name="Dept" placeholder="归还部门"
+                                     ng-model="rdsrc.Dept" required>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': rdsrc.InsertForm.Borrower.$invalid }">
+                                <div basic-select="TPDicRDUser" name="Borrower" placeholder="领借人"
+                                     ng-model="rdsrc.Borrower" required>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': rdsrc.InsertForm.Customer.$invalid }">
+                                <div basic-select="TPDicRDCustomer" name="Customer" placeholder="客户"
+                                     ng-model="rdsrc.Customer" required>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <textarea class="form-control" name="Remark" placeholder="备注" ng-model="rdsrc.NewItem.Remark" rows="3"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="item in rdsrc.List " ng-form="EditForm">
+                        <td style="white-space:normal;word-break:normal;">
+                            <span ng-if="!item.IsEdit">
+                                <button class="btn btn-xs btn-success" ng-click="rdsrc.OpenScan(item)"><i class="fa fa-th"></i>扫码</button>
+                                <button class="btn btn-xs btn-primary" title="编辑" ng-click="rdsrc.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除['+item.DocNo+']及其明细数据吗'}" ng-click="rdsrc.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </span>
+                            <span ng-if="item.IsEdit">
+                                <button class="btn btn-xs btn-success" ng-disabled="rdsrc.EditForm.$invalid" ng-click="rdsrc.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                                <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=!item.IsEdit"><i class="fa fa-undo"></i></button>
+                            </span>
+                        </td>
+                        <td>
+                            {{item.RN}}
+                        </td>
+                        <td title="{{ item.DocNo }}">
+                            <span>{{ item.DocNo }}</span>
+                        </td>
+                        <td title="{{ item.DocType }}">
+                            <div ng-if="!item.IsEdit" ng-disabled="true" config-select ng-model="item.DocType" config-option="rdsrc.DocTypeList" auto-first="false" ng-name="DocType" placeholder="单据类型"></div>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': rdsrc.EditForm.e_DocType.$invalid }">
+                                <div config-select ng-model="rdsrc.EditItem.DocType" config-option="rdsrc.DocTypeList" auto-first="false" ng-name="e_DocType" placeholder="单据类型"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <span>{{ item.Count }}</span>
+                        </td>
+                        <td title="{{ item.Operator }}">
+                            <span ng-if="!item.IsEdit">{{ item.Operator }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': rdsrc.EditForm.e_Operator.$invalid }">
+                                <input type="text" name="e_Operator" class="form-control" placeholder="入库人" ng-model="rdsrc.EditItem.Operator" required />
+                            </div>
+                        </td>
+                        <td title="{{ item.RcvDate }}">
+                            <span ng-if="!item.IsEdit">{{ item.RcvDate|date:'yyyy-MM-dd' }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': rdsrc.EditForm.e_RcvDate.$invalid }">
+                                <input type="text" date-picker name="e_RcvDate" class="form-control" placeholder="测试日期" ng-model="rdsrc.EditItem.RcvDate" option="rdsrc.DateOption" required />
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.ProjectCode }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': rdsrc.EditForm.e_Project.$invalid }">
+                                <div basic-select="PLMProject" name="e_Project" placeholder="PLM项目号"
+                                     ng-model="rdsrc.Project" ng-change="rdsrc.ValueChange()" required>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="white-space:normal;word-break:normal;">
+                            <span ng-if="!item.IsEdit">{{ item.ProjectName }}</span>
+                            <span ng-if="item.IsEdit">{{ rdsrc.Project.WorkName }}</span>
+                        </td>
+                        <td title="{{ item.DeptName }}">
+                            <span ng-if="!item.IsEdit">{{ item.DeptName }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': rdsrc.EditForm.e_Dept.$invalid }">
+                                <div basic-select="TPDicRDDept" name="e_Dept" placeholder="归还部门"
+                                     ng-model="rdsrc.Dept">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.Borrower }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': rdsrc.EditForm.e_Borrower.$invalid }">
+                                <div basic-select="TPDicRDUser" name="e_Borrower" placeholder="领借人"
+                                     ng-model="rdsrc.Borrower">
+                                </div>
+                            </div>
+                        </td>
+                        <td title="{{ item.CustomerName }}">
+                            <span ng-if="!item.IsEdit">{{ item.CustomerName }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': rdsrc.EditForm.e_CustomerName.$invalid }">
+                                <div basic-select="TPDicRDCustomer" name="e_CustomerName" placeholder="客户"
+                                     ng-model="rdsrc.Customer">
+                                </div>
+                            </div>
+                        </td>
+                        <td title="{{ item.Remark }}" style="white-space:normal;word-break:normal;">
+                            <span ng-if="!item.IsEdit">{{ item.Remark }}</span>
+                            <div ng-if="item.IsEdit">
+                                <input type="text" name="e_Remark" class="form-control" placeholder="备注" ng-model="rdsrc.EditItem.Remark" />
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12 text-center " ng-if="rdsrc.page.total>rdsrc.page.pageSize ">
+            <div uib-pagination total-items="rdsrc.page.total " ng-model="rdsrc.page.pageIndex " items-per-page="rdsrc.page.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                 ng-change="rdsrc.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

@@ -3,7 +3,6 @@ angular.module('appData', []);
 angular.module('appData')
 //APP URL
 .constant('appUrl', '../')
-<<<<<<< HEAD
 //.constant('FileUrl', 'http://localhost:8080/File/')
     .constant('FileUrl', 'http://192.168.30.9:8080/File/')
     .constant('serviceUrl', 'http://192.168.30.9:9090/MXQHService/')
@@ -11,18 +10,6 @@ angular.module('appData')
 //        .constant('FileUrl', 'http://192.168.1.226:8080/File/')
 //    .constant('serviceUrl', 'http://192.168.1.226:9090/MXQHService/')
 //.constant('FileServiceUrl', 'http://192.168.1.226:9090/FileService/')
-=======
-.constant('FileUrl', 'http://localhost:8080/File/')
-//    .constant('FileUrl', 'http://192.168.30.9:8080/File/')
-//    .constant('serviceUrl', 'http://192.168.30.9:9090/MXQHService/')
-//.constant('FileServiceUrl', 'http://192.168.30.9:9090/FileService/')
->>>>>>> b65272c4cb4b7b2c32ef1ca428f513fde3544f49
-//        .constant('FileUrl', 'http://192.168.30.8:8080/File/')
-//    .constant('serviceUrl', 'http://192.168.30.8:9090/MXQHService/')
-//.constant('FileServiceUrl', 'http://192.168.30.8:9090/FileService/')
-    //.constant('FileUrl', 'http://192.168.1.226:8080/File/')
-    //.constant('serviceUrl', 'http://192.168.1.226:9090/MXQHService/')
-    //.constant('FileServiceUrl', 'http://192.168.1.226:9090/FileService/')
 
 //.constant('FileUrl', 'http://192.168.11.75:8080/File/')
 //Service URL

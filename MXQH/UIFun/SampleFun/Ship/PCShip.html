@@ -1,0 +1,227 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="ship.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">样机出库</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs">
+                <div class="form-inline">
+                    <button class="btn btn-sm btn-success " ng-click="ship.Add() "><i class="glyphicon glyphicon-plus "></i>新增</button>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" class="form-control" ng-model="ship.page.DocNo" placeholder="单号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="ship.page.DocNo = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" class="form-control" ng-model="ship.page.Project" placeholder="项目编码/名称">
+                            <span class="input-group-addon">
+                                <a><i ng-click="ship.page.Project = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group">
+                                <input autocomplete="off" type="text" date-time-picker class="form-control" name="SD" placeholder="开始日期" option="ship.dt1"
+                                       ng-model="ship.page.SD">
+                                <span class="input-group-addon">
+                                    <a><i ng-click="ship.page.SD = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" date-time-picker class="form-control" name="ED" placeholder="结束日期" option="ship.dt2"
+                                   ng-model="ship.page.ED">
+                            <span class="input-group-addon">
+                                <a><i ng-click="ship.page.ED = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-info " ng-click="ship.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                    <!--<button class="btn btn-sm btn-success " ng-click="ship.Export() "><i class="glyphicon glyphicon-export "></i>导出</button>-->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 scroll-x" style="min-height:300px;">
+            <table class="table pad-xs">
+                <thead>
+                    <tr>
+                        <td style="width:60px ">编辑</td>
+                        <td style="width:60px ">序号</td>
+                        <td style="width:120px ">单号</td>
+                        <td style="width:120px ">单据类型</td>
+                        <td style="width:60px ">数量</td>
+                        <td style="width:100px ">出库人</td>
+                        <td style="width:110px ">出库日期</td>
+                        <td style="width:110px ">计划归还日</td>
+                        <!--<td style="width:140px ">项目号</td>
+                        <td style="width:140px ">项目名称</td>-->
+                        <td style="width:100px ">领借部门</td>
+                        <td style="width:100px ">领借人</td>
+                        <td style="width:100px ">客户</td>
+                        <td style="width:200px ">备注</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-if="ship.IsInsert" ng-form="ship.InsertForm">
+                        <td>
+                            <button class="btn btn-xs btn-success" ng-disabled="ship.InsertForm.$invalid" ng-click="ship.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="ship.IsInsert=false"><i class="fa fa-undo"></i></button>
+                        </td>
+                        <td></td>
+                        <td>
+                            {{ship.NewItem.DocNo}}
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': ship.InsertForm.DocType.$invalid }">
+                                <div config-select ng-model="ship.NewItem.DocType" config-option="ship.DocTypeList" auto-first="false" ng-name="DocType" placeholder="单据类型"></div>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td>
+                            <div ng-class="{ 'has-error': ship.InsertForm.Operator.$invalid }">
+                                <input type="text" name="Operator" class="form-control" placeholder="出库人" ng-model="ship.NewItem.Operator" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': ship.InsertForm.DeliverDate.$invalid }">
+                                <input type="text" date-picker name="DeliverDate" class="form-control" placeholder="出库日期" ng-model="ship.NewItem.DeliverDate" option="ship.DateOption" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': ship.InsertForm.PlanReturnDate.$invalid }">
+                                <input type="text" date-picker name="PlanReturnDate" class="form-control" placeholder="计划归还日" ng-model="ship.NewItem.PlanReturnDate" option="ship.DateOption" required />
+                            </div>
+                        </td>
+                        <!--<td>
+                            <div ng-class="{ 'has-error': ship.InsertForm.Project.$invalid }">
+                                <div basic-select="PLMProject" name="Project" placeholder="PLM项目号"
+                                     ng-model="ship.Project" ng-change="ship.ValueChange()" required>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            {{ship.Project.WorkName}}
+                        </td>-->
+                        <td>
+                            <div ng-class="{ 'has-error': ship.InsertForm.Dept.$invalid }">
+                                <div basic-select="TPDicPCDept" name="Dept" placeholder="领借部门"
+                                     ng-model="ship.Dept" required>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': ship.InsertForm.Borrower.$invalid }">
+                                <input type="text" name="Borrower" class="form-control" placeholder="领借人" ng-model="ship.NewItem.Borrower" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <div basic-select="TPDicPCCustomer" name="Customer" placeholder="客户"
+                                     ng-model="ship.Customer">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <textarea class="form-control" name="Remark" placeholder="备注" ng-model="ship.NewItem.Remark" rows="3"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="item in ship.List " ng-form="EditForm">
+                        <td style="white-space:normal;word-break:normal;">
+                            <span ng-if="!item.IsEdit">
+                                <button class="btn btn-xs btn-success" ng-click="ship.OpenScan(item)"><i class="fa fa-th"></i>扫码</button>
+                                <button class="btn btn-xs btn-primary" title="编辑" ng-click="ship.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除['+item.DocNo+']及其明细数据吗'}" ng-click="ship.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </span>
+                            <span ng-if="item.IsEdit">
+                                <button class="btn btn-xs btn-success" ng-disabled="ship.EditForm.$invalid" ng-click="ship.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                                <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=!item.IsEdit"><i class="fa fa-undo"></i></button>
+                            </span>
+                        </td>
+                        <td>
+                            {{item.RN}}
+                        </td>
+                        <td title="{{ item.DocNo }}">
+                            <span>{{ item.DocNo }}</span>
+                        </td>
+                        <td title="{{ item.DocType }}">
+                            <div ng-if="!item.IsEdit" ng-disabled="true" config-select ng-model="item.DocType" config-option="ship.DocTypeList" auto-first="false" ng-name="DocType" placeholder="单据类型"></div>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': ship.EditForm.e_DocType.$invalid }">
+                                <div config-select ng-model="ship.EditItem.DocType" config-option="ship.DocTypeList" auto-first="false" ng-name="e_DocType" placeholder="单据类型"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <span>{{ item.Count }}</span>
+                        </td>
+                        <td title="{{ item.Operator }}">
+                            <span ng-if="!item.IsEdit">{{ item.Operator }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': ship.EditForm.e_Operator.$invalid }">
+                                <input type="text" name="e_Operator" class="form-control" placeholder="出库人" ng-model="ship.EditItem.Operator" required />
+                            </div>
+                        </td>
+                        <td title="{{ item.DeliverDate }}">
+                            <span ng-if="!item.IsEdit">{{ item.DeliverDate|date:'yyyy-MM-dd' }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': ship.EditForm.e_DeliverDate.$invalid }">
+                                <input type="text" date-picker name="e_DeliverDate" class="form-control" placeholder="出库日期" ng-model="ship.EditItem.DeliverDate" option="ship.DateOption" required />
+                            </div>
+                        </td>
+                        <td title="{{ item.PlanReturnDate }}">
+                            <span ng-if="!item.IsEdit">{{ item.PlanReturnDate|date:'yyyy-MM-dd' }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': ship.EditForm.e_PlanReturnDate.$invalid }">
+                                <input type="text" date-picker name="e_PlanReturnDate" class="form-control" placeholder="计划归还日" ng-model="ship.EditItem.PlanReturnDate" option="ship.DateOption" required />
+                            </div>
+                        </td>
+                        <!--<td>
+                            <span ng-if="!item.IsEdit">{{ item.ProjectCode }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': ship.EditForm.e_Project.$invalid }">
+                                <div basic-select="PLMProject" name="e_Project" placeholder="PLM项目号"
+                                     ng-model="ship.Project" ng-change="ship.ValueChange()" required>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="white-space:normal;word-break:normal;">
+                            <span ng-if="!item.IsEdit">{{ item.ProjectName }}</span>
+                            <span ng-if="item.IsEdit">{{ ship.Project.WorkName }}</span>
+                        </td>-->
+                        <td title="{{ item.DeptName }}">
+                            <span ng-if="!item.IsEdit">{{ item.DeptName }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': ship.EditForm.e_Dept.$invalid }">
+                                <div basic-select="TPDicPCDept" name="e_Dept" placeholder="领借部门"
+                                     ng-model="ship.Dept">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.Borrower }}</span>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': ship.EditForm.e_Borrower.$invalid }">
+                                <input type="text" name="e_Remark" class="form-control" placeholder="备注" ng-model="ship.EditItem.Borrower" />
+                                <!--<div basic-select="TPDicPCUser" name="e_Borrower" placeholder="领借人"
+                                     ng-model="ship.Borrower">
+                                </div>-->
+                            </div>
+                        </td>
+                        <td title="{{ item.CustomerName }}">
+                            <span ng-if="!item.IsEdit">{{ item.CustomerName }}</span>
+                            <div ng-if="item.IsEdit">
+                                <div basic-select="TPDicPCCustomer" name="e_CustomerName" placeholder="客户"
+                                     ng-model="ship.Customer">
+                                </div>
+                            </div>
+                        </td>
+                        <td title="{{ item.Remark }}" style="white-space:normal;word-break:normal;">
+                            <span ng-if="!item.IsEdit">{{ item.Remark }}</span>
+                            <div ng-if="item.IsEdit">
+                                <input type="text" name="e_Remark" class="form-control" placeholder="备注" ng-model="ship.EditItem.Remark" />
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12 text-center " ng-if="ship.page.total>ship.page.pageSize ">
+            <div uib-pagination total-items="ship.page.total " ng-model="ship.page.pageIndex " items-per-page="ship.page.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                 ng-change="ship.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

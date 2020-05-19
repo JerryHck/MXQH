@@ -1,0 +1,198 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="trc.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">测试记录</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs">
+                <div class="form-inline">
+                    <button class="btn btn-sm btn-success " ng-click="trc.Add() "><i class="glyphicon glyphicon-plus "></i>新增</button>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" class="form-control" ng-model="trc.page.DocNo" placeholder="单号">
+                            <span class="input-group-addon">
+                                <a><i ng-click="trc.page.DocNo = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" class="form-control" ng-model="trc.page.TestedBy" placeholder="测试人">
+                            <span class="input-group-addon">
+                                <a><i ng-click="trc.page.TestedBy = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group">
+                                <input autocomplete="off" type="text" date-picker class="form-control" name="StartDate" placeholder="开始日期" option="trc.dt1"
+                                       ng-model="trc.page.SD">
+                                <span class="input-group-addon">
+                                    <a><i ng-click="trc.page.SD = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input autocomplete="off" type="text" date-picker class="form-control" name="EndDate" placeholder="结束日期" option="trc.dt2"
+                                   ng-model="trc.page.ED">
+                            <span class="input-group-addon">
+                                <a><i ng-click="trc.page.ED = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-info " ng-click="trc.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                    <!--<button class="btn btn-sm btn-success " ng-click="trc.Export() "><i class="glyphicon glyphicon-export "></i>导出</button>-->
+                </div>
+            </div>
+        </div>
+        <div class="padder-md table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td style="width:90px ">编辑</td>
+                        <td style="width:100px ">单号</td>
+                        <td style="width:100px ">测试人</td>
+                        <td style="width:140px ">测试日期</td>
+                        <td style="width:100px ">测试数量</td>
+                        <td style="width:100px ">不合格数</td>
+                        <td style="width:100px ">附件</td>
+                        <td style="width:200px ">备注</td>
+                    </tr>
+                </thead>
+                <tr ng-if="trc.IsInsert" ng-form="trc.InsertForm">
+                    <td>
+                        <button class="btn btn-xs btn-success" ng-disabled="trc.InsertForm.$invalid" ng-click="trc.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                        <button class="btn btn-xs btn-warning" ng-click="trc.IsInsert=false"><i class="fa fa-undo"></i></button>
+                    </td>
+                    <td>
+                        {{trc.NewItem.DocNo}}
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': trc.InsertForm.TestedBy.$invalid }">
+                            <input type="text" name="TestedBy" class="form-control" placeholder="测试人" ng-model="trc.NewItem.TestedBy" required />
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-class="{ 'has-error': trc.InsertForm.TestedDate.$invalid }">
+                            <input type="text" date-picker name="TestedDate" class="form-control" placeholder="测试日期" ng-model="trc.NewItem.TestedDate" option="TestedDate.DateOption" required />
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <div>
+                            <textarea name="Remark" placeholder="备注" class="form-control" ng-model="trc.NewItem.Remark"></textarea>
+                            <!--<input type="text" name="Remark" class="form-control" placeholder="备注" ng-model="trc.NewItem.Remark" />-->
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-repeat="item in trc.List " ng-form="EditForm">
+                    <td>
+                        <span ng-if="!item.IsEdit">
+                            <button class="btn btn-xs btn-success" ng-click="trc.OpenScan(item)"><i class="fa fa-th"></i>扫码</button>
+                            <button class="btn btn-xs btn-primary" title="编辑" ng-click="trc.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                            <button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除['+item.DocNo+']及其明细数据吗'}" ng-click="trc.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                        </span>
+                        <span ng-if="item.IsEdit">
+                            <button class="btn btn-xs btn-success" ng-disabled="trc.EditForm.$invalid" ng-click="trc.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=!item.IsEdit"><i class="fa fa-undo"></i></button>
+                        </span>
+                        
+                    </td>
+                    <td title="{{ item.DocNo }}">
+                        <span>{{ item.DocNo }}</span>                        
+                    </td>
+
+                    <td title="{{ item.TestedBy }}">
+                        <span ng-if="!item.IsEdit">{{ item.TestedBy }}</span>
+                        <div ng-if="item.IsEdit" ng-class="{ 'has-error': trc.EditForm.e_TestedBy.$invalid }">
+                            <input type="text" name="e_TestedBy" class="form-control" placeholder="测试人" ng-model="trc.EditItem.TestedBy" required />
+                        </div>
+                    </td>
+                    <td title="{{ item.TestedBy }}">
+                        <span ng-if="!item.IsEdit">{{ item.TestedDate|date:'yyyy-MM-dd' }}</span>
+                        <div ng-if="item.IsEdit" ng-class="{ 'has-error': trc.EditForm.e_TedtedDate.$invalid }">
+                            <input type="text" date-picker name="e_TedtedDate" class="form-control" placeholder="测试日期" ng-model="trc.EditItem.TestedDate" option="trc.DateOption" required />
+                        </div>
+                    </td>
+                    <td title="{{ item.TestCount }}">{{ item.TestCount }}</td>
+                    <td title="{{ item.UnPassCount }}">{{ item.UnPassCount }}</td>
+                    <td ><a class="h3 center thumb-sm text-warning" ng-click="trc.ProFile(item)" title="打开文件列表"><i class="fa fa-folder-open"></i></a></td>
+                    <td title="{{ item.Remark }}" style="white-space:normal;word-break:normal;">
+                        <span ng-if="!item.IsEdit">{{ item.Remark }}</span>
+                        <div ng-if="item.IsEdit" >
+                            <input type="text" name="e_Remark" class="form-control" placeholder="测试日期" ng-model="trc.EditItem.Remark" />
+                        </div>
+                        
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-12 text-center " ng-if="trc.page.total>trc.page.pageSize ">
+            <div uib-pagination total-items="trc.page.total " ng-model="trc.page.pageIndex " items-per-page="trc.page.pageSize " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                 ng-change="trc.DataBind() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true ">
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+
+
+
+<div class="pro-file d-r lg bg-light dk wrapper-md padder-md scroll-y">
+    <!--<div class="blur-close" ui-remove-class="active" target=".pro-file"></div>-->
+    <div class="b-b wrapper-md text-center">
+        <a href class="text-danger pull-left" ui-remove-class="active" target=".pro-file"><i class="glyphicon glyphicon-remove"></i></a>
+        <h3 class="m-n font-thin h3">[ <strong>{{ trc.FileItem.DocNo }}</strong>]相关文件</h3>
+        <!--<span class="pull-down pull-right">发布日期：<strong class="text-info">{{ trc.FileItem.PublishTime | date:'yyyy-MM-dd HH:mm:ss' }}</strong></span>-->
+    </div>
+    <div class="padder-md wrapper">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        <button class="btn btn-success" type="button" ng-click="trc.ProFileSave()" title="保存文件信息到服务器">
+                            <i class="glyphicon glyphicon-save"></i>
+                            保存
+                        </button>
+                    </label>
+                    <div class="col-md-10 scroll-y" style="max-height:500px">
+                        <p class="h6 text-danger" style="padding-left:20px">注：已打开文件浏览按钮时，请不要使用拖曳文件方式，否则可能引起浏览器卡死。</p>
+                        <div file-upload-multi file-data="trc.UploadFile" able-drag="true"></div>
+                    </div>
+                    <div class="line"></div>
+                    <div ng-repeat="f in trc.ProFileList">
+                        <div class="form-group col-md-12 has-feedback  m-b-none">
+                            <div class="col-md-12 input-group">
+                                <span class="input-group-addon" ng-click="trc.DeleteProFile($index, f)">
+                                    <a class="text-danger"><i class="glyphicon glyphicon-trash"></i></a>
+                                </span>
+                                <span class="input-group-addon" title="所在服务器文件夹">
+                                    {{ f.File.FormalDir }}
+                                </span>
+                                <input autocomplete="off" class="form-control" ng-disabled="ngDisabled == 'true'" type="text" ng-model="f.File.OriginalName">
+                                <span class="input-group-addon text-success">{{ f.File.FileType }}</span>
+                                <span class="input-group-addon text-success">{{ f.File.SizeDesc }}</span>
+                                <span class="input-group-addon">
+                                    <a ng-click="trc.DownLoad(f.File.FileUrl)" title="下载文件" class="text-success"><i class="glyphicon glyphicon-download"></i></a>
+                                    <!--<a href="{{ f.FileUrl }}" download="{{ f.OriginalName }}{{ f.FileType }}" class="text-success"><i class="glyphicon glyphicon-download"></i></a>-->
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="line b-b wrapper-md"></div>
+                <div class="form-group col-md-12">
+                    <label class="control-label col-md-2 text-right">版本说明：</label>
+                    <div class="col-md-10">
+                        <span class="form-control-static" replace-enter="trc.FileItem.VersionDesc"></span>
+                    </div>
+                </div>
+                <div class="form-group col-xs-12">
+                    <label class="control-label col-md-2 text-right">注意事项：</label>
+                    <div class="col-md-10">
+                        <span class="form-control-static" replace-enter="trc.FileItem.Note"></span>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+
+    </div>
+
+</div>
