@@ -54,7 +54,7 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
                 CreateBy: $rootScope.User.Name,
                 Operator: $rootScope.User.Name,
                 RcvDate: new Date().toLocaleDateString(),
-                DocType:'0'
+                DocType:'入库'
                 //Status: 0
             };
             //PK生成设定
@@ -82,7 +82,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
         if (!vm.NewItem.Remark) {
             vm.NewItem.Remark = '';
         }
-        console.log(2, vm.NewItem);
         vm.promise = AjaxService.PlanInsert("RDReceivement", vm.NewItem).then(function (data) {
             DataBind();
             toastr.success('新增成功');
@@ -106,8 +105,8 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
         var en = {};
         en.ID = vm.EditItem.ID;
         en.DocNo = vm.EditItem.DocNo;
-        en.TestedBy = vm.EditItem.TestedBy;
-        en.TestedDate = vm.EditItem.TestedDate;
+        en.RcvDate = vm.EditItem.RcvDate;
+        en.Operator = vm.EditItem.Operator;
         en.DocType = vm.EditItem.DocType;
         en.ProjectID = vm.Project.WorkId;
         en.ProjectCode = vm.Project.WorkCode;

@@ -178,7 +178,7 @@
                             <span ng-if="!item.IsEdit">{{ item.DeptName }}</span>
                             <div ng-if="item.IsEdit" ng-class="{ 'has-error': rdsrc.EditForm.e_Dept.$invalid }">
                                 <div basic-select="TPDicRDDept" name="e_Dept" placeholder="归还部门"
-                                     ng-model="rdsrc.Dept">
+                                     ng-model="rdsrc.Dept" required>
                                 </div>
                             </div>
                         </td>

@@ -87,8 +87,8 @@
                             </div>
                         </td>
                         <td>
-                            <div ng-class="{ 'has-error': rdssc.InsertForm.PlanReturnDate.$invalid }">
-                                <input type="text" date-picker name="PlanReturnDate" class="form-control" placeholder="计划归还日" ng-model="rdssc.NewItem.PlanReturnDate" option="rdssc.DateOption" required />
+                            <div>
+                                <input type="text" date-picker name="PlanReturnDate" class="form-control" placeholder="计划归还日" ng-model="rdssc.NewItem.PlanReturnDate" option="rdssc.DateOption" />
                             </div>
                         </td>
                         <!--<td>
@@ -169,8 +169,8 @@
                         </td>
                         <td title="{{ item.PlanReturnDate }}">
                             <span ng-if="!item.IsEdit">{{ item.PlanReturnDate|date:'yyyy-MM-dd' }}</span>
-                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': rdssc.EditForm.e_PlanReturnDate.$invalid }">
-                                <input type="text" date-picker name="e_PlanReturnDate" class="form-control" placeholder="计划归还日" ng-model="rdssc.EditItem.PlanReturnDate" option="rdssc.DateOption" required />
+                            <div ng-if="item.IsEdit" >
+                                <input type="text" date-picker name="e_PlanReturnDate" class="form-control" placeholder="计划归还日" ng-model="rdssc.EditItem.PlanReturnDate" option="rdssc.DateOption" />
                             </div>
                         </td>
                         <!--<td>

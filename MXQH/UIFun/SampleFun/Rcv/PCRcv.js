@@ -67,7 +67,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     }
     //保存新增信息
     function SaveInsert() {
-        console.log(1, vm.NewItem);
         vm.NewItem.ProjectID = vm.Project.WorkId;
         vm.NewItem.ProjectCode = vm.Project.WorkCode;
         vm.NewItem.ProjectName = vm.Project.WorkName;
@@ -89,7 +88,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
         if (!vm.NewItem.Remark) {
             vm.NewItem.Remark = '';
         }
-        console.log(2, vm.NewItem);
         vm.promise = AjaxService.PlanInsert("PCReceivement", vm.NewItem).then(function (data) {
             DataBind();
             toastr.success('新增成功');
@@ -113,8 +111,8 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
         var en = {};
         en.ID = vm.EditItem.ID;
         en.DocNo = vm.EditItem.DocNo;
-        en.TestedBy = vm.EditItem.TestedBy;
-        en.TestedDate = vm.EditItem.TestedDate;
+        en.Operator = vm.EditItem.Operator;
+        en.RcvDate = vm.EditItem.RcvDate;
         en.DocType = vm.EditItem.DocType;
         en.ProjectID = vm.Project.WorkId;
         en.ProjectCode = vm.Project.WorkCode;
@@ -125,7 +123,7 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
         en.ReturnDeptID = vm.Dept.ID;
         en.DeptCode = vm.Dept.Code;
         en.DeptName = vm.Dept.Name;
-        en.Borrower = vm.Borrower;
+        en.Borrower = vm.EditItem.Borrower;
         if (!vm.EditItem.Remark) {
             en.Remark = '';
         } else {

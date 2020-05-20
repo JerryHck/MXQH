@@ -106,8 +106,8 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
         var en = {};
         en.ID = vm.EditItem.ID;
         en.DocNo = vm.EditItem.DocNo;
-        en.TestedBy = vm.EditItem.TestedBy;
-        en.TestedDate = vm.EditItem.TestedDate;
+        en.Operator = vm.EditItem.Operator;
+        en.RcvDate = vm.EditItem.RcvDate;
         en.DocType = vm.EditItem.DocType;
         en.ProjectID = vm.Project.WorkId;
         en.ProjectCode = vm.Project.WorkCode;

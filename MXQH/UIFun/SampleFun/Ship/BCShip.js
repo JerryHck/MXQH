@@ -16,7 +16,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     vm.ValueChange = ValueChange;
 
     function ValueChange() {
-        console.log('project', vm.Project);
     }
     Init();
     //初始化
@@ -55,7 +54,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
                 Operator: $rootScope.User.Name,
                 DeliverDate: new Date().toLocaleDateString(),
                 DocType: '领用'
-                //Status: 0
             };
             //PK生成设定
             var snList = [{ name: "BCShip", col: "DocNo", parm: "DocNo" }];
@@ -67,18 +65,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     }
     //保存新增信息
     function SaveInsert() {
-        console.log(1, vm.NewItem);
-        //vm.NewItem.Borrower = vm.Borrower;
-        //vm.NewItem.ProjectID = vm.Project.WorkId;
-        //vm.NewItem.ProjectCode = vm.Project.WorkCode;
-        //vm.NewItem.ProjectName = vm.Project.WorkName;
-        //vm.NewItem.ReturnDeptID = vm.Dept.ID;
-        //vm.NewItem.DeptCode = vm.Dept.Code;
-        //vm.NewItem.DeptName = vm.Dept.Name;
-        //vm.NewItem.CustomerID = vm.Customer.ID;
-        //vm.NewItem.CustomerCode = vm.Customer.Code;
-        //vm.NewItem.CustomerName = vm.Customer.Name;
-
         if (!vm.NewItem.Remark) {
             vm.NewItem.Remark = '';
         }
@@ -95,7 +81,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
             vm.List[i].IsEdit = false;
         }
         vm.EditItem = angular.copy(item);
-        //vm.Project = { WorkID: vm.EditItem.ProjectID, WorkCode: vm.EditItem.ProjectCode, WorkName: vm.EditItem.ProjectName };
         vm.Dept = { ID: vm.EditItem.ReturnDeptID, Code: vm.EditItem.DeptCode, Name: vm.EditItem.DeptName };
         vm.Customer = { ID: vm.EditItem.CustomerID, Code: vm.EditItem.CustomerCode, Name: vm.EditItem.CustomerName };
         vm.Borrower = vm.EditItem.Borrower;
@@ -106,16 +91,11 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
         var en = {};
         en.ID = vm.EditItem.ID;
         en.DocNo = vm.EditItem.DocNo;
-        en.TestedBy = vm.EditItem.TestedBy;
-        en.TestedDate = vm.EditItem.TestedDate;
+        en.Operator = vm.EditItem.Operator;
+        en.DeliverDate = vm.EditItem.DeliverDate;
+        en.PlanReturnDate = vm.EditItem.PlanReturnDate;
         en.DocType = vm.EditItem.DocType;
-        //en.ProjectID = vm.Project.WorkId;
-        //en.ProjectCode = vm.Project.WorkCode;
-        //en.ProjectName = vm.Project.WorkName;
         en.CustomerName = vm.EditItem.CustomerName;
-        //en.ReturnDeptID = vm.Dept.ID;
-        //en.DeptCode = vm.Dept.Code;
-        //en.DeptName = vm.Dept.Name;
         en.Borrower = vm.EditItem.Borrower;
         if (!vm.EditItem.Remark) {
             en.Remark = '';
