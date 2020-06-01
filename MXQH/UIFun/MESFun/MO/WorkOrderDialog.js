@@ -215,7 +215,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     function AddPack() {
         var resolve = {
             ItemData: function () {
-                return { MaterialID: vm.Item.MaterialID ,MoID:vm.Item.ID};
+                return { MaterialID: vm.Item.MaterialID ,MoID:vm.Item.ID,SendPlaceID:vm.Item.SendPlaceID};
             }
         }
         Open(resolve);
