@@ -1,6 +1,6 @@
 ﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="rdssc.promise">
     <uib-tab index="0">
-        <uib-tab-heading class="h5">样机入库</uib-tab-heading>
+        <uib-tab-heading class="h5">样机出库</uib-tab-heading>
         <div class="wrapper-md">
             <div class="input-group m-b-xxs">
                 <div class="form-inline">
@@ -13,9 +13,9 @@
                             </span>
                         </div>
                         <div class="input-group">
-                            <input autocomplete="off" type="text" class="form-control" ng-model="rdssc.page.Project" placeholder="项目编码/名称">
+                            <input autocomplete="off" type="text" class="form-control" ng-model="rdssc.page.Borrower" placeholder="领借人">
                             <span class="input-group-addon">
-                                <a><i ng-click="rdssc.page.Project = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                                <a><i ng-click="rdssc.page.Borrower = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
                             </span>
                         </div>
                         <div class="input-group">
@@ -48,12 +48,15 @@
                         <td style="width:60px ">序号</td>
                         <td style="width:120px ">单号</td>
                         <td style="width:120px ">单据类型</td>
+                        <td style="width:120px ">料号</td>
+                        <td style="width:120px ">品名</td>
+                        <td style="width:60px ">阶段</td>
                         <td style="width:60px ">数量</td>
                         <td style="width:100px ">出库人</td>
                         <td style="width:110px ">出库日期</td>
                         <td style="width:110px ">计划归还日</td>
-                        <!--<td style="width:140px ">项目号</td>
-                        <td style="width:140px ">项目名称</td>-->
+                        <td style="width:140px ">项目号</td>
+                        <td style="width:140px ">项目名称</td>
                         <td style="width:100px ">领借部门</td>
                         <td style="width:100px ">领借人</td>
                         <td style="width:100px ">客户</td>
@@ -76,6 +79,9 @@
                             </div>
                         </td>
                         <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td>
                             <div ng-class="{ 'has-error': rdssc.InsertForm.Operator.$invalid }">
                                 <input type="text" name="Operator" class="form-control" placeholder="出库人" ng-model="rdssc.NewItem.Operator" required />
@@ -91,16 +97,16 @@
                                 <input type="text" date-picker name="PlanReturnDate" class="form-control" placeholder="计划归还日" ng-model="rdssc.NewItem.PlanReturnDate" option="rdssc.DateOption" />
                             </div>
                         </td>
-                        <!--<td>
-                            <div ng-class="{ 'has-error': rdssc.InsertForm.Project.$invalid }">
+                        <td>
+                            <div>
                                 <div basic-select="PLMProject" name="Project" placeholder="PLM项目号"
-                                     ng-model="rdssc.Project" ng-change="rdssc.ValueChange()" required>
+                                     ng-model="rdssc.Project" >
                                 </div>
                             </div>
                         </td>
                         <td>
                             {{rdssc.Project.WorkName}}
-                        </td>-->
+                        </td>
                         <td>
                             <div ng-class="{ 'has-error': rdssc.InsertForm.Dept.$invalid }">
                                 <div basic-select="TPDicRDDept" name="Dept" placeholder="领借部门"
@@ -110,15 +116,16 @@
                         </td>
                         <td>
                             <div ng-class="{ 'has-error': rdssc.InsertForm.Borrower.$invalid }">
-                                <div basic-select="TPDicRDUser" name="Borrower" placeholder="领借人"
+                                <input type="text" name="Borrower" class="form-control" placeholder="领借人" ng-model="rdssc.Borrower" required />
+                                <!--<div basic-select="TPDicRDUser" name="Borrower" placeholder="领借人"
                                      ng-model="rdssc.Borrower" required>
-                                </div>
+                                </div>-->
                             </div>
                         </td>
                         <td>
-                            <div ng-class="{ 'has-error': rdssc.InsertForm.Customer.$invalid }">
+                            <div>
                                 <div basic-select="TPDicRDCustomer" name="Customer" placeholder="客户"
-                                     ng-model="rdssc.Customer" required>
+                                     ng-model="rdssc.Customer">
                                 </div>
                             </div>
                         </td>
@@ -152,6 +159,9 @@
                                 <div config-select ng-model="rdssc.EditItem.DocType" config-option="rdssc.DocTypeList" auto-first="false" ng-name="e_DocType" placeholder="单据类型"></div>
                             </div>
                         </td>
+                        <td style="white-space:normal;word-break:normal;">{{item.MaterialCode}}</td>
+                        <td style="white-space:normal;word-break:normal;">{{item.MaterialName}}</td>
+                        <td>{{item.Progress}}</td>
                         <td>
                             <span>{{ item.Count }}</span>
                         </td>
@@ -173,18 +183,18 @@
                                 <input type="text" date-picker name="e_PlanReturnDate" class="form-control" placeholder="计划归还日" ng-model="rdssc.EditItem.PlanReturnDate" option="rdssc.DateOption" />
                             </div>
                         </td>
-                        <!--<td>
+                        <td>
                             <span ng-if="!item.IsEdit">{{ item.ProjectCode }}</span>
-                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': rdssc.EditForm.e_Project.$invalid }">
+                            <div ng-if="item.IsEdit">
                                 <div basic-select="PLMProject" name="e_Project" placeholder="PLM项目号"
-                                     ng-model="rdssc.Project" ng-change="rdssc.ValueChange()" required>
+                                     ng-model="rdssc.Project" >
                                 </div>
                             </div>
                         </td>
                         <td style="white-space:normal;word-break:normal;">
                             <span ng-if="!item.IsEdit">{{ item.ProjectName }}</span>
                             <span ng-if="item.IsEdit">{{ rdssc.Project.WorkName }}</span>
-                        </td>-->
+                        </td>
                         <td title="{{ item.DeptName }}">
                             <span ng-if="!item.IsEdit">{{ item.DeptName }}</span>
                             <div ng-if="item.IsEdit" ng-class="{ 'has-error': rdssc.EditForm.e_Dept.$invalid }">
@@ -196,14 +206,15 @@
                         <td>
                             <span ng-if="!item.IsEdit">{{ item.Borrower }}</span>
                             <div ng-if="item.IsEdit" ng-class="{ 'has-error': rdssc.EditForm.e_Borrower.$invalid }">
-                                <div basic-select="TPDicRDUser" name="e_Borrower" placeholder="领借人"
+                                <input type="text" name="e_Borrower" class="form-control" placeholder="领借人" ng-model="rdssc.Borrower" required />
+                                <!--<div basic-select="TPDicRDUser" name="e_Borrower" placeholder="领借人"
                                      ng-model="rdssc.Borrower">
-                                </div>
+                                </div>-->
                             </div>
                         </td>
                         <td title="{{ item.CustomerName }}">
                             <span ng-if="!item.IsEdit">{{ item.CustomerName }}</span>
-                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': rdssc.EditForm.e_CustomerName.$invalid }">
+                            <div ng-if="item.IsEdit">
                                 <div basic-select="TPDicRDCustomer" name="e_CustomerName" placeholder="客户"
                                      ng-model="rdssc.Customer">
                                 </div>

@@ -67,7 +67,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     }
     //保存新增信息
     function SaveInsert() {
-        console.log(1,vm.NewItem);
         vm.NewItem.Borrower = vm.Borrower;
         vm.NewItem.ProjectID = vm.Project.WorkId;
         vm.NewItem.ProjectCode = vm.Project.WorkCode;
@@ -75,9 +74,11 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
         vm.NewItem.ReturnDeptID = vm.Dept.ID;
         vm.NewItem.DeptCode = vm.Dept.Code;
         vm.NewItem.DeptName = vm.Dept.Name;
-        vm.NewItem.CustomerID = vm.Customer.ID;
-        vm.NewItem.CustomerCode  = vm.Customer.Code;
-        vm.NewItem.CustomerName = vm.Customer.Name;
+        if (vm.Customer) {
+            vm.NewItem.CustomerID = vm.Customer.ID;
+            vm.NewItem.CustomerCode = vm.Customer.Code;
+            vm.NewItem.CustomerName = vm.Customer.Name;
+        }    
         
         if (!vm.NewItem.Remark) {
             vm.NewItem.Remark = '';

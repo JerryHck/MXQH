@@ -67,24 +67,28 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     }
     //保存新增信息
     function SaveInsert() {
-        console.log(1, vm.NewItem);
+        
         vm.NewItem.Borrower = vm.Borrower;
-        //vm.NewItem.ProjectID = vm.Project.WorkId;
-        //vm.NewItem.ProjectCode = vm.Project.WorkCode;
-        //vm.NewItem.ProjectName = vm.Project.WorkName;
+        if (vm.Project) {
+            vm.NewItem.ProjectID = vm.Project.WorkId;
+            vm.NewItem.ProjectCode = vm.Project.WorkCode;
+            vm.NewItem.ProjectName = vm.Project.WorkName;
+        }        
         vm.NewItem.ReturnDeptID = vm.Dept.ID;
         vm.NewItem.DeptCode = vm.Dept.Code;
         vm.NewItem.DeptName = vm.Dept.Name;
-        vm.NewItem.CustomerID = vm.Customer.ID;
-        vm.NewItem.CustomerCode = vm.Customer.Code;
-        vm.NewItem.CustomerName = vm.Customer.Name;
+        if (vm.NewItem.Customer) {
+            vm.NewItem.CustomerID = vm.Customer.ID;
+            vm.NewItem.CustomerCode = vm.Customer.Code;
+            vm.NewItem.CustomerName = vm.Customer.Name;
+        }        
 
         if (!vm.NewItem.Remark) {
             vm.NewItem.Remark = '';
         }
-        console.log(2, vm.NewItem);
         vm.promise = AjaxService.PlanInsert("RDShip", vm.NewItem).then(function (data) {
             DataBind();
+            vm.Project = undefined;
             toastr.success('新增成功');
             vm.IsInsert = false;
         });
@@ -95,7 +99,7 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
             vm.List[i].IsEdit = false;
         }
         vm.EditItem = angular.copy(item);
-        //vm.Project = { WorkID: vm.EditItem.ProjectID, WorkCode: vm.EditItem.ProjectCode, WorkName: vm.EditItem.ProjectName };
+        vm.Project = { WorkID: vm.EditItem.ProjectID, WorkCode: vm.EditItem.ProjectCode, WorkName: vm.EditItem.ProjectName };
         vm.Dept = { ID: vm.EditItem.ReturnDeptID, Code: vm.EditItem.DeptCode, Name: vm.EditItem.DeptName };
         vm.Customer = { ID: vm.EditItem.CustomerID, Code: vm.EditItem.CustomerCode, Name: vm.EditItem.CustomerName };
         vm.Borrower = vm.EditItem.Borrower;
@@ -110,9 +114,11 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
         en.DeliverDate = vm.EditItem.DeliverDate;
         en.DocType = vm.EditItem.DocType;
         en.PlanReturnDate = vm.EditItem.PlanReturnDate;
-        //en.ProjectID = vm.Project.WorkId;
-        //en.ProjectCode = vm.Project.WorkCode;
-        //en.ProjectName = vm.Project.WorkName;
+        if (vm.Project) {
+            en.ProjectID = vm.Project.WorkId;
+            en.ProjectCode = vm.Project.WorkCode;
+            en.ProjectName = vm.Project.WorkName;
+        }        
         en.CustomerID = vm.Customer.ID;
         en.CustomerCode = vm.Customer.Code;
         en.CustomerName = vm.Customer.Name;
@@ -128,6 +134,7 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
 
         vm.promise = AjaxService.PlanUpdate("RDShip", en).then(function (data) {
             DataBind();
+            vm.Project = undefined;
             toastr.success('更新成功');
         });
     }

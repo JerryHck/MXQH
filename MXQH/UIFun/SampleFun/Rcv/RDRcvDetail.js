@@ -14,6 +14,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     vm.ClearBSN = ClearBSN;
     vm.SNList = [];
     vm.MesList = [];
+    vm.IsSN = 1;
     Init();
     //Init
     function Init() {
@@ -26,6 +27,11 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.SNCode) {
             ScanCode(false);
+        }
+        if (vm.IsSN=='0') {
+            AjaxService.GetPlan("MesPlanDetail", { name: "WorkOrder", value: vm.SNCode }).then(function (data) {
+                vm.WorkOrder = data;
+            });
         }
     }
     //编辑
@@ -51,7 +57,16 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     //BSN扫描
     function ScanCode(isForce) {
         var en = {};
+        if (vm.Item.DocType=='旧料入库') {
+            if (vm.Item.MaterialID) {
+                en.MaterialID = vm.Item.MaterialID;
+            } else {
+                toastr.error("请选择料号！");
+                return;
+            }
+        }
         en.RcvID = vm.Item.ID;
+        en.IsSN = vm.IsSN;
         en.pageIndex = vm.page.pageIndex;
         en.pageSize = vm.page.pageSize;
         en.SNCode = vm.SNCode;
@@ -60,8 +75,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
         en.Progress = vm.Progress;
         en.DocType=vm.Item.DocType
         en.CreateBy = $rootScope.User.Name;
-        vm.promise = AjaxService.ExecPlan("RDRcvDetail", "Scan", en).then(function (data) {
-            console.log(data);
+        vm.promise = AjaxService.ExecPlan("RDRcvDetail", "Scan", en).then(function (data) {            
             if (data.data[0].MsgType == '0') {//Error
                 toastr.error(data.data[0].Msg);
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: data.data[0].Msg });
@@ -82,10 +96,11 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
 
     //明细
     function GetDetail() {
-        vm.promise = AjaxService.GetPlansPage("RDRcvDetail", GetCondition(), vm.page.pageIndex, vm.page.pageSize).then(function (data) {
-            vm.SNList = data.List;
-            vm.page.total = data.Count;
-            vm.Item.RcvCount = data.Count;
+        vm.promise = AjaxService.ExecPlan("RDRcvDetail", "GetList", GetCondition()).then(function (data) {
+            console.log(data);
+            vm.SNList = data.data;
+            vm.page.total = data.data1[0].Count;
+            vm.Item.RcvCount = data.data1[0].Count;
         });
     }
     //查询
@@ -95,12 +110,15 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     }
     //查询条件
     function GetCondition() {
-        var list = [];
-        list.push({ name: "RcvID", value: vm.Item.ID });
+        var en = {};
+        en.RcvID = vm.Item.ID;
+        //list.push({ name: "RcvID", value: vm.Item.ID });
         if (vm.SerSNCode) {
-            list.push({ name: "SNCode", value: vm.SerSNCode });
+            en.SNCode=vm.SerSNCode
         }
-        return list;
+        en.pageIndex = vm.page.pageIndex;
+        en.pageSize = vm.page.pageSize;
+        return en;
     }
     //删除SN编码
     function ClearBSN(sncode) {
