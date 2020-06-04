@@ -13,6 +13,7 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form,$window) {
     vm.Edit = Edit;//查看
     vm.Save = Save;
     vm.Insert = Insert;
+    vm.Delete = Delete;
     vm.Cancel = Cancel;
     vm.Search = Search;
     vm.Export = Export;
@@ -258,6 +259,23 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form,$window) {
     //切换tab页
     function changeTab(index) {
         vm.tabIndex = index;
+    }
+
+    function Delete() {        
+        if (vm.MouldInfo) {
+            var en = {};
+            en.MouldID = vm.MouldInfo.ID;
+            console.log(en);
+            vm.promise = AjaxService.ExecPlan("MouldRelation", "Delete", {MouldID:vm.MouldInfo.ID}).then(function (data) {
+                vm.MouldInfo = {};
+                vm.Lines = [];
+                DataBind();
+                toastr.success('删除成功');
+            });
+        } else {
+            toastr.error('请选择要删除的模具！');
+        }
+        
     }
 }
 ])
