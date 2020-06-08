@@ -38,9 +38,9 @@
                             </div>
 
                             <div class="form-group-xs col-md-12">
-                                <label class="col-lg-3 control-label padder-xxs">SN码/箱号:</label>
+                                <label class="col-lg-3 control-label padder-xxs">SN码:</label>
                                 <div class="col-lg-9" ng-class="{ 'has-error' : tdc.OrderForm.SNCode.$invalid }">
-                                    <input autocomplete="off" type="text" class="form-control" name="SNCode" ng-model="tdc.SNCode" placeholder="SN/箱号"
+                                    <input autocomplete="off" type="text" class="form-control" name="SNCode" ng-model="tdc.SNCode" placeholder="SN/研发出库单"
                                            ng-keypress="tdc.KeyDonwSnCode($event)" required>
                                     <div class="h6 text-danger">注:扫描枪请设定自动回车功能，如果手动输入则需按回车键。</div>
                                 </div>
@@ -111,15 +111,15 @@
                                     <thead>
                                         <tr>
                                             <td style="width:60px;">删除</td>
-                                            <td style="width:80px;">SN编码</td>
+                                            <td style="width:100px;">SN编码</td>
                                             <td style="width:60px;">是否合格</td>
-                                            <td style="width:60px;">料号</td>
+                                            <td style="width:100px;">料号</td>
                                             <td style="width:120px;">品名</td>
                                             <td style="width:120px;">备注</td>
                                         </tr>
                                     </thead>
                                     <tr ng-repeat="sn in tdc.SNList">
-                                        <td>
+                                        <td style="white-space:normal;word-break:normal;">
                                             <span ng-if="!sn.IsEdit">                                                
                                                 <button class="btn btn-xs btn-success" ng-click="tdc.Edit(sn)"><i class="glyphicon glyphicon-edit"></i></button>
                                                 <button class="btn btn-xs btn-danger" ng-click="tdc.ClearBSN(sn.SNCode)" ng-confirm="{text:'确定移除该SN吗'}"><i class="glyphicon glyphicon-remove"></i></button>
@@ -136,9 +136,9 @@
                                             <span ng-if="!sn.IsPass&&!sn.IsEdit" class="text-danger">否</span>
                                             <div ng-if="sn.IsEdit" config-select ng-model="tdc.EditItem.IsPass" config-option="tdc.IsOK" auto-first="false" ng-name="IsOK" placeholder="是否显示"></div>
                                         </td>
-                                        <td>{{sn.MaterialCode}}</td>
-                                        <td title="{{sn.MaterialName}}">{{sn.MaterialName}}</td>
-                                        <td>
+                                        <td style="white-space:normal;word-break:normal;">{{sn.MaterialCode}}</td>
+                                        <td style="white-space:normal;word-break:normal;" title="{{sn.MaterialName}}">{{sn.MaterialName}}</td>
+                                        <td style="white-space:normal;word-break:normal;">
                                             <span ng-if="!sn.IsEdit">{{sn.Remark}}</span>
                                             <textarea ng-if="sn.IsEdit" ng-model="tdc.EditItem.Remark" rows="5" class="form-control"></textarea>
                                         </td>
