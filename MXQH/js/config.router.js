@@ -51,7 +51,12 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
                     if (item.FunLoad) {
                         var loadJs = [];
                         angular.forEach(item.FunLoad, function (l) {
-                            loadJs.push(l.LoadName + "?v=" + Version);
+                            if (l.LoadName.substr(l.LoadName.length - 3, 3).toLowerCase() == 'css' || l.LoadName.substr(l.LoadName.length - 3, 3).toLowerCase() == '.js') {
+                                loadJs.push(l.LoadName + "?v=" + Version);
+                            }
+                            else {
+                                loadJs.push(l.LoadName);
+                            }
                         });
                         route.LazyLoad = loadJs;
                     }

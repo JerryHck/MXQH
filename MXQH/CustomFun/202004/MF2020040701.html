@@ -10,7 +10,7 @@
         <button class="btn btn-sm btn-success " ng-click="wo.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>
     </div>
 </div>-->
-<div class="padder-xs" cg-busy="mo.promise">
+<div class="padder-xs" cg-busy="wo.promise">
     <div class="col-sm-3 padder-xs">
         <div class="panel panel-success m-t-xxs">
             <div class="panel-heading text-center h4">
@@ -71,6 +71,42 @@
                         <label class="col-sm-3 padder-xs control-label text-info">累计开工:</label>
                         <div class="col-sm-9 padder-xs">
                             <input type="text" disabled class="form-control" ng-model="wo.OrderData.StartQuantity" />
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12 padder-xs">
+                        <label class="col-sm-3 padder-xs control-label text-info">已完工:</label>
+                        <div class="col-sm-9 padder-xs">
+                            <input type="text" disabled class="form-control" ng-model="wo.OrderData.FinishNum" />
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12 padder-xs">
+                        <label class="col-sm-3 padder-xs control-label text-info">未完工:</label>
+                        <div class="col-sm-9 padder-xs">
+                            <input type="text" disabled class="form-control" ng-model="wo.OrderData.NotFinishNum" />
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12 padder-xs">
+                        <label class="col-sm-3 padder-xs control-label text-info">在产不良数:</label>
+                        <div class="col-sm-9 padder-xs">
+                            <input type="text" disabled class="form-control" ng-model="wo.OrderData.NgNum" />
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12 padder-xs">
+                        <label class="col-sm-3 padder-xs control-label text-info">在产已维修:</label>
+                        <div class="col-sm-9 padder-xs">
+                            <input type="text" disabled class="form-control" ng-model="wo.OrderData.RepairNum" />
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12 padder-xs">
+                        <label class="col-sm-3 padder-xs control-label text-info">在产待维修:</label>
+                        <div class="col-sm-9 padder-xs">
+                            <input type="text" disabled class="form-control" ng-model="wo.OrderData.NotRepairNum" />
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-md-12 padder-xs">
+                        <label class="col-sm-3 padder-xs control-label text-info">报废数:</label>
+                        <div class="col-sm-9 padder-xs">
+                            <input type="text" disabled class="form-control" ng-model="wo.OrderData.DumpNum" />
                         </div>
                     </div>
                 </div>

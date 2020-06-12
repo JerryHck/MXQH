@@ -43,6 +43,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
 
     vm.FunctionFile = FunctionFile;
     vm.OpenHtmlJs = OpenHtmlJs;
+    vm.OpenFormDialog = OpenFormDialog;
 
     //选择系统
     vm.ChangeSys = ChangeSys;
@@ -253,7 +254,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
             vm.SelectedFun.FunImge = 'fa fa-hand-o-right text-primary';
             vm.SelectedFun.SysNo = vm.SelectedRoot.SysNo;
             vm.SelectedFun.ParFunNo = vm.SelectedRoot.FunNo;
-            vm.SelectedFun.IsSystem = false;
+            vm.SelectedFun.IsSystem = 0;
             vm.SelectedFun.FunLoad = [];
             vm.FunList.push(vm.SelectedFun);
             FunctionFile();
@@ -426,7 +427,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
         var dir = vm.SelectedFun.FunNo == '-1' ? (new Date()).Format("yyyyMM") : new Date(vm.SelectedFun.CreateDate).Format("yyyyMM");
      
         //添加文件
-        if (vm.SelectedFun.IsSystem) {
+        if (vm.SelectedFun.IsSystem == 1) {
             var have = false, index = -1;
             vm.SelectedFun.FunHtml = vm.OriHtml;
             var js = "CustomFun\\" + dir + "\\" + vm.SelectedFun.FunNo + '.js';
@@ -462,29 +463,24 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
 
     //打开html 编辑窗口
     function OpenHtmlJs() {
-        //if (!vm.SelectedFun.Content) {
-        //    //获取js， html文件
-        //    AjaxService.AjaxHandle("GetFileText", vm.SelectedFun.FunNo).then(function (data) {
-        //        vm.SelectedFun.Content = {};
-        //        vm.SelectedFun.Content.Html = (data.Html || "").replace(/ControlNew/g, vm.SelectedFun.ControllerAs);
-        //        vm.SelectedFun.Content.Js = (data.Js || "").replace(/NewJsCtrl/g, vm.SelectedFun.Controller);
-        //        OpenConten();
-        //    })
-        //}
-        //else {
-        //    OpenConten();
-        //}
-
-        OpenConten();
+        OpenConten("FunFileContenDialog");
     }
     
-    function OpenConten() {
+    function OpenFormDialog() {
+        if (vm.SelectedFun.FunNo == -1) {
+            MyPop.Show(true, '请先保存信息，再进行表单设定！')
+        } else {
+            OpenConten("SysFormDialog");
+        }
+    }
+
+    function OpenConten(name) {
         var resolve = {
             ItemData: function () {
                 return vm.SelectedFun;
             }
         };
-        Dialog.open("FunFileContenDialog", resolve).then(function (data) {
+        Dialog.open(name, resolve).then(function (data) {
             vm.SelectedFun.Content = data.Content;
             vm.FunCodeSetting = data.FunSetting;
         }).catch(function (reason) {

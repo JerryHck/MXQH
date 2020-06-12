@@ -14,6 +14,7 @@ function ($scope, Dialog, AjaxService, toastr, $window) {
     vm.OpenDtl = OpenDtl;
     vm.OpenUser = OpenUser;
     vm.EditUPPH = EditUPPH;
+    vm.SaveUpph = SaveUpph;
 
     function Search() {
         vm.page.index = 1;
@@ -69,6 +70,19 @@ function ($scope, Dialog, AjaxService, toastr, $window) {
             list.push({ name: "WorkOrder", value: vm.Ser.aWorkOrder, tableAs:"a" });
         }
         return list;
+    }
+
+    function SaveUpph() {
+        var en = angular.copy(vm.UPItem.Change);
+        en.WorkDate = vm.UPItem.WorkDate;
+        en.WorkOrder = vm.UPItem.WorkOrder;
+        en.ArrangeDate = vm.UPItem.ArrangeDate;
+
+        vm.promise = AjaxService.ExecPlan("bcMODoneChange", 'save', en).then(function (data) {
+            toastr.success("保存成功");
+            $(".new-upph").removeClass("active");
+            PageChange();
+        })
     }
 
 }]);

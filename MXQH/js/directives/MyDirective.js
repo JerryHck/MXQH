@@ -346,7 +346,7 @@ angular.module('AppSet')
         });
     }
 }])
-.directive('funFileSelect', ['AjaxService', function (AjaxService) {
+.directive('funFileSelect', ['AjaxService', 'LoadModules', function (AjaxService, LoadModules) {
     return {
         restrict: 'A',
         require: 'ngModel',
@@ -380,7 +380,19 @@ angular.module('AppSet')
     function link(scope, element, attrs) {
         scope.data = undefined;
         //组织
-        AjaxService.HandleFile(scope.fileType).then(function (data) { scope.data = data; });
+        AjaxService.HandleFile(scope.fileType).then(function (data) {
+            if (scope.fileType == '2') {
+                scope.data = data;
+                scope.data = scope.data || [];
+                for (var i = 0, len = LoadModules.length; i<len; i++){
+                    scope.data.push(LoadModules[i].name);
+                }
+            }
+            else {
+                scope.data = data;
+            }
+            //scope.data = data;
+        });
 
     }
 }])

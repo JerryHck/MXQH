@@ -170,3 +170,27 @@ var data = {
     }
   ]
 }
+
+var Nodes = [
+    { "blockId": "Start", "positionX": 150, "positionY": 50 },
+    { "blockId": "Announce", "positionX": 131, "positionY": 178 },
+    { "blockId": "WorkTime", "positionX": 85, "positionY": 305 },
+    { "blockId": "Menu", "positionX": 281, "positionY": 499 },
+    { "blockId": "Menu2", "positionX": 503, "positionY": 330 },
+    { "blockId": "Exit", "positionX": 883, "positionY": 829 }
+]
+var Connects = [
+    { "connectionId": "con_37", "pageSourceId": "Start", "pageTargetId": "Announce" },
+    { "connectionId": "con_39", "pageSourceId": "Announce", "pageTargetId": "WorkTime" },
+    { "connectionId": "con_41", "pageSourceId": "WorkTime-onWorkTime", "pageTargetId": "Menu" },
+    { "connectionId": "con_43", "pageSourceId": "WorkTime-offWorkTime", "pageTargetId": "Menu2" },
+    { "connectionId": "con_45", "pageSourceId": "Menu-noinput", "pageTargetId": "Exit" },
+    { "connectionId": "con_47", "pageSourceId": "Menu-nomatch", "pageTargetId": "Exit" },
+    { "connectionId": "con_49", "pageSourceId": "Menu-key-1", "pageTargetId": "Exit" },
+    { "connectionId": "con_51", "pageSourceId": "Menu-key-2", "pageTargetId": "Exit" },
+    { "connectionId": "con_53", "pageSourceId": "Menu-key-3", "pageTargetId": "Exit" },
+    { "connectionId": "con_55", "pageSourceId": "Menu2-noinput", "pageTargetId": "Exit" },
+    { "connectionId": "con_57", "pageSourceId": "Menu2-nomatch", "pageTargetId": "Exit" },
+    { "connectionId": "con_59", "pageSourceId": "Menu2-key-1", "pageTargetId": "Exit" },
+    { "connectionId": "con_61", "pageSourceId": "Menu2-key-2", "pageTargetId": "Announce" }
+]

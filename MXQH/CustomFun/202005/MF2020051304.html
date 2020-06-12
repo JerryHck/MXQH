@@ -7,6 +7,12 @@
                 <div class="form-group">
                     <div config-select ng-model="re.Ser1.aState" tb="UnusualHour" col="State" placeholder="状态"></div>
                 </div>
+                <div class="form-group">
+                    <div basic-select="AssemblyLine" placeholder="选择线别" ng-model="ho.Ser.LineID" clear="true"></div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="选择日期" date-picker ng-model="ho.Ser.ApplyDate" format="Y-m-d" option="ho.DaOption" />
+                </div>
                 <button class="btn btn-sm btn-info " ng-click="re.Search1() "><i class="glyphicon glyphicon-search "></i>查询</button>
             </div>
         </div>

@@ -21,6 +21,7 @@
         </div>
         <div class="padder-xs ">
             <div class="col-md-12 scroll-x no-padder">
+                <span class="text-danger h6">注：UPPH、标配人数、实到人数、实际工时 的字体为红色时表示有修改调整过这些属性值，但未进行重计算；当为绿色时表示有调整过并已经进行了重计算。</span>
                 <table class="table ">
                     <thead>
                         <tr>
@@ -58,11 +59,22 @@
                         <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
                         <td title="{{ item.Order.MaterialCode }}">{{ item.Order.MaterialCode }}</td>
                         <td title="{{ item.Order.MaterialName }}">{{ item.Order.MaterialName }}</td>
-                        <td title="{{ item.UPPH }}">
-                            <a class="text-success" ng-click="bc.EditUPPH(item)"><i class="glyphicon glyphicon-edit"></i>{{ item.UPPH }}</a>
+                        <td title="{{ item.UPPH }}" class="text-left">
+                            <a class="text-info-dker" ng-class="{'text-danger':item.Change.UPPH!=item.UPPH&&item.Change.UPPH,
+                               'text-success':item.Change.UPPH==item.UPPH&&item.Arrange.UPPH !=item.Change.UPPH&&item.Change.UPPH}" ng-click="bc.EditUPPH(item)"><i class="glyphicon glyphicon-edit"></i>{{ item.UPPH }}</a>
                         </td>
-                        <td title="{{ item.StandPerson }}">{{ item.StandPerson }}</td>
-                        <td title="{{ item.ActPerson }}">{{ item.ActPerson }}</td>
+                        <td title="{{ item.StandPerson }}">
+                            <span class="text-info-dker" ng-class="{'text-danger':item.Change.StandPerson!=item.StandPerson&&item.Change.StandPerson,
+                               'text-success':item.Change.StandPerson==item.StandPerson&&item.Arrange.StandPerson !=item.Change.StandPerson&&item.Change.StandPerson}">
+                                {{ item.StandPerson }}
+                            </span>
+                        </td>
+                        <td title="{{ item.ActPerson }}">
+                            <span class="text-info-dker" ng-class="{'text-danger':item.Change.ActPerson!=item.ActPerson&&item.Change.ActPerson,
+                               'text-success':item.Change.ActPerson==item.ActPerson&&item.Arrange.ActPerson !=item.Change.ActPerson&&item.Change.ActPerson}">
+                                {{ item.ActPerson }}
+                            </span>
+                        </td>
                         <td title="{{ item.PlanCount }}">{{ item.PlanCount }}</td>
                         <td title="{{ item.StandCount }}">{{ item.StandCount }}</td>
                         <td title="{{ item.OverCount }}">{{ item.OverCount }}</td>
@@ -72,7 +84,12 @@
                         <td title="{{ item.PicesOverPrice }}">{{ item.PicesOverPrice }}</td>
                         <td title="{{ item.StandAmount }}">{{ item.StandAmount }}</td>
                         <td title="{{ item.OverAmount }}">{{ item.OverAmount }}</td>
-                        <td title="{{ item.ActHour }}">{{ item.ActHour }}</td>
+                        <td title="{{ item.ActHour }}">
+                            <span class="text-info-dker" ng-class="{'text-danger':item.Change.ActHour!=item.ActHour&&item.Change.ActHour,
+                               'text-success':item.Change.ActHour==item.ActHour&&item.Arrange.ActHour !=item.Change.ActHour&&item.Change.ActHour}">
+                                {{ item.ActHour }}
+                            </span>
+                        </td>
                         <td title="{{ item.SrcDocNo }}">{{ item.SrcDocNo }}</td>
                         <td title="{{ item.Arrange.Remark }}">{{ item.Arrange.Remark }}</td>
                     </tr>
@@ -85,23 +102,92 @@
         </div>
     </uib-tab>
 </uib-tabset>
-<div class="new-upph dialog dialog-md">
+<div class="new-upph dialog dialog-lg">
     <div class="padder-xs scroll-y">
         <div class="panel panel-info">
             <div class="panel-heading h3 text-center">
-                修改UPPH
-                <button ui-remove-class="active" target=".new-upph" class="btn btn-md btn-warning h1 pull-left m-t-n-xs" type="button" ng-click="bc.cancel()">关闭</button>
+                调整排班属性值
+                <button  class="btn btn-md btn-success h1 pull-left m-t-n-xs" ng-disabled="bc.UpphForm.$invalid" type="button" ng-click="bc.SaveUpph()"><i class="glyphicon glyphicon-save"></i>确定</button>
+                <button ui-remove-class="active" target=".new-upph" class="btn btn-md btn-warning h1 pull-right m-t-n-xs" type="button" ng-click="bc.cancel()">关闭</button>
             </div>
-            <div class="panel-body wrapper-xs padder-v-xxs" ng-form="UpphForm">
+            <div class="panel-body wrapper-xs padder-v-xxs" ng-form="bc.UpphForm">
                 <div class="col-md-12 no-padder">
                     <div class="panel panel-default">
-                        <div class="panel-body scroll-y padder-xs padder-v-xs" style="max-height:600px">
-                            <pre>{{ bc.UPItem | json }}</pre>
+                        <div class="panel-body scroll-y padder-xs padder-v-xs" >
+                            <div class="form-horizontal">
+                                <div class="form-group-xs  padder-xxs col-md-6">
+                                    <label class="control-label col-md-5 wrapper-xs">UPPH:</label>
+                                    <div class="col-md-7 no-padder" title="UPPH" ng-class="{ 'has-error' : bc.UpphForm.CUPPH.$invalid }">
+                                        <input autocomplete="off" type="number" class="form-control" name="CUPPH" placeholder="修改后UPPH" ng-model="bc.UPItem.Change.UPPH" required>
+                                    </div>
+                                </div>
+                                <div class="form-group-xs  padder-xxs col-md-6">
+                                    <label class="control-label col-md-5 wrapper-xs">排班UPPH:</label>
+                                    <div class="col-md-7 no-padder">
+                                        <input autocomplete="off" type="text" class="form-control" disabled placeholder="排班UPPH" ng-model="bc.UPItem.Arrange.UPPH">
+                                    </div>
+                                </div>
+                                <div class="form-group-xs  padder-xxs col-md-6">
+                                    <label class="control-label col-md-5 wrapper-xs">标配人数:</label>
+                                    <div class="col-md-7 no-padder">
+                                        <input autocomplete="off" type="number" class="form-control" name="StandPerson" placeholder="修改后标配人数" ng-model="bc.UPItem.Change.StandPerson">
+                                    </div>
+                                </div>
+                                <div class="form-group-xs  padder-xxs col-md-6">
+                                    <label class="control-label col-md-5 wrapper-xs">排班标配人数:</label>
+                                    <div class="col-md-7 no-padder">
+                                        <input autocomplete="off" type="text" class="form-control" disabled placeholder="排班标配人数" ng-model="bc.UPItem.Arrange.StandPerson">
+                                    </div>
+                                </div>
+                                <!--<div class="form-group-xs  padder-xxs col-md-6">
+                                    <label class="control-label col-md-5 wrapper-xs">排班需求人数:</label>
+                                    <div class="col-md-7 no-padder">
+                                        <input autocomplete="off" type="text" class="form-control" disabled placeholder="排班需求人数" ng-model="bc.UPItem.Arrange.NeedPerson" required>
+                                    </div>
+                                </div>
+                                <div class="form-group-xs  padder-xxs col-md-6">
+                                    <label class="control-label col-md-5 wrapper-xs">修改后需求人数:</label>
+                                    <div class="col-md-7 no-padder">
+                                        <input autocomplete="off" type="text" class="form-control" name="StandPerson" placeholder="修改后需求人数" ng-model="bc.UPItem.Change.NeedPerson" required>
+                                    </div>
+                                </div>
+                                <div class="form-group-xs  padder-xxs col-md-6">
+                                    <label class="control-label col-md-5 wrapper-xs">排班实到人数:</label>
+                                    <div class="col-md-7 no-padder">
+                                        <input autocomplete="off" type="text" class="form-control" disabled placeholder="排班实到人数" ng-model="bc.UPItem.Arrange.ActPerson" required>
+                                    </div>
+                                </div>
+                                <div class="form-group-xs  padder-xxs col-md-6">
+                                    <label class="control-label col-md-5 wrapper-xs">修改后实到人数:</label>
+                                    <div class="col-md-7 no-padder">
+                                        <input autocomplete="off" type="text" class="form-control" name="StandPerson" placeholder="修改后实到人数" ng-model="bc.UPItem.Change.ActPerson" required>
+                                    </div>
+                                </div>-->
+                                <div class="form-group-xs  padder-xxs col-md-6">
+                                    <label class="control-label col-md-5 wrapper-xs">实际工时:</label>
+                                    <div class="col-md-7 no-padder">
+                                        <input autocomplete="off" type="number" class="form-control" name="ActHour" placeholder="修改后实际工时" ng-model="bc.UPItem.Change.ActHour">
+                                    </div>
+                                </div>
+                                <div class="form-group-xs  padder-xxs col-md-6">
+                                    <label class="control-label col-md-5 wrapper-xs">排班实际工时:</label>
+                                    <div class="col-md-7 no-padder">
+                                        <input autocomplete="off" type="text" class="form-control" disabled placeholder="排班实际工时" ng-model="bc.UPItem.Arrange.ActHour">
+                                    </div>
+                                </div>
+                                <div class="form-group-xs  padder-xxs col-md-6">
+                                    <label class="control-label col-md-5 wrapper-xs">备注:</label>
+                                    <div class="col-md-7 no-padder">
+                                        <textarea class="form-control" name="Remark" ng-model="bc.UPItem.Change.ActHour"></textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12 text-center">
                 </div><br />
+                <!--<pre>{{ bc.UPItem.Arrange | json }}</pre>-->
             </div>
         </div>
     </div>
