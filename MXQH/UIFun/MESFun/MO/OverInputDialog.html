@@ -1,0 +1,116 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">工单信息</h3>
+</div>
+<div class="modal-body wrapper-sm" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body wrapper-xs">
+            <div class="form-group">
+                <button ng-if="!oicd.Item.IsComplete" class="btn btn-success" type="button" ng-disabled="DialogForm.$invalid||oicd.Item.Status!=0" ng-click="oicd.Save('0')">储存</button>
+                <button ng-if="!oicd.Item.IsComplete" class="btn btn-success" type="button" ng-disabled="DialogForm.$invalid||oicd.Item.Status!=0" ng-click="oicd.Save('1')">储存并提交到OA审批</button>
+                <button class="btn btn-warning" type="button" ng-click="oicd.Cancel()">取消</button>
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">超投单号</label>
+                        <div class="col-sm-8 padder-xs">
+                            <input autocomplete="off" type="text" disabled="disabled" name="ListNo" class="form-control" placeholder="超投单号" ng-model="oicd.Item.DocNo" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">工单号：</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.WorkOrderID.$invalid }">
+                            <div ng-disabled="oicd.IsEdit" ng-change="oicd.GetMoInfo(oicd.Item.WorkOrderID)"
+                                 ng-name="WorkOrderID" ng-required="true" basic-select="WorkOrderSelect"
+                                 placeholder="工单号" ng-model="oicd.Item.WorkOrderID" select-class="text-xs"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">超投数量</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.OverInputQty.$invalid }">
+                            <input ng-disabled="oicd.Item.Status!=0" type="number" class="form-control SnFocus" name="OverInputQty" ng-model="oicd.Item.OverInputQty" placeholder="超投数量" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">料号</label>
+                        <div class="col-sm-8 padder-xs">
+                            <p class="form-control-static font-bold">{{oicd.Item.MaterialCode}}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">品名</label>
+                        <div class="col-sm-8 padder-xs">
+                            <p class="form-control-static font-bold">{{oicd.Item.MaterialName}}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">工单数量</label>
+                        <div class="input-group padder-xs col-sm-8">
+                            <p class="form-control-static font-bold">{{oicd.Item.Quantity}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">累计超投</label>
+                        <div class="col-sm-8 padder-xs">
+                            <p class="form-control-static font-bold">{{oicd.Item.OverInputQty}}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">完工数量</label>
+                        <div class="col-sm-8 padder-xs">
+                            <p class="form-control-static font-bold">{{oicd.Item.CompleteQty}}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">开工数量</label>
+                        <div class="col-sm-8 padder-xs">
+                            <p class="form-control-static font-bold">{{oicd.Item.TotalStartQty}}</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">投入数量</label>
+                        <div class="input-group padder-xs col-sm-8">
+                            <p class="form-control-static font-bold">{{oicd.Item.TotalOnLineQty}}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">报废数量</label>
+                        <div class="input-group padder-xs col-sm-8">
+                            <p class="form-control-static font-bold">{{oicd.Item.DumpQty}}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">状态</label>
+                        <div class="input-group padder-xs col-sm-8">
+                            <p class="form-control-static font-bold" ng-if="oicd.Item.Status==0">开立</p>
+                            <p class="form-control-static font-bold" ng-if="oicd.Item.Status==1">核准中</p>
+                            <p class="form-control-static font-bold" ng-if="oicd.Item.Status==2">已审核</p>
+                        </div>
+                    </div>
+             
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">有效投入</label>
+                        <div class="input-group padder-xs col-sm-8">
+                            <p class="form-control-static font-bold">{{oicd.Item.OnLineQty}}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">超投原因</label>
+                        <div class="input-group padder-xs col-sm-8">
+                            <textarea ng-disabled="oicd.Item.Status!=0" class="form-control" rows="2" ng-model="oicd.Item.Reason" placeholder="输入备注信息"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
