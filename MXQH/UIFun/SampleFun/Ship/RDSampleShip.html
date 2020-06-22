@@ -13,6 +13,12 @@
                             </span>
                         </div>
                         <div class="input-group">
+                            <input autocomplete="off" type="text" class="form-control" ng-model="rdssc.page.Project" placeholder="项目编码/名称">
+                            <span class="input-group-addon">
+                                <a><i ng-click="rdssc.page.Project = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
+                            </span>
+                        </div>
+                        <div class="input-group">
                             <input autocomplete="off" type="text" class="form-control" ng-model="rdssc.page.Borrower" placeholder="领借人">
                             <span class="input-group-addon">
                                 <a><i ng-click="rdssc.page.Borrower = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
@@ -36,7 +42,7 @@
                         </div>
                     </div>
                     <button class="btn btn-sm btn-info " ng-click="rdssc.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
-                    <!--<button class="btn btn-sm btn-success " ng-click="rdssc.Export() "><i class="glyphicon glyphicon-export "></i>导出</button>-->
+                    <button class="btn btn-sm btn-success " ng-click="rdssc.Export() "><i class="glyphicon glyphicon-export "></i>导出</button>
                 </div>
             </div>
         </div>

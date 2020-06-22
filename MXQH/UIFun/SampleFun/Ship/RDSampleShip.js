@@ -13,11 +13,8 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     vm.OpenScan = OpenScan;
     vm.Delete = Delete;
     vm.Search = Search;
-    vm.ValueChange = ValueChange;
+    vm.Export = Export;
 
-    function ValueChange() {
-        console.log('project', vm.Project);
-    }
     Init();
     //初始化
     function Init() {
@@ -166,6 +163,15 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
             } else {
                 toastr.error('删除失败');
             }
+        });
+    }
+
+    //导出
+    function Export() {
+        vm.page.pageSize = 100000;
+        vm.promise = AjaxService.GetPlanExcel("RDShip", "GetList", vm.page).then(function (data) {
+            vm.page.pageSize = 10;
+            $window.location.href = data.File;
         });
     }
 }

@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <button class="btn btn-sm btn-info " ng-click="rdsrc.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
-                    <!--<button class="btn btn-sm btn-success " ng-click="rdsrc.Export() "><i class="glyphicon glyphicon-export "></i>导出</button>-->
+                    <button class="btn btn-sm btn-success " ng-click="rdsrc.Export() "><i class="glyphicon glyphicon-export "></i>导出</button>
                 </div>
             </div>
         </div>
@@ -94,7 +94,7 @@
                         <td>
                             <div ng-class="{ 'has-error': rdsrc.InsertForm.Project.$invalid }">
                                 <div basic-select="PLMProject" name="Project" placeholder="PLM项目号"
-                                     ng-model="rdsrc.Project" ng-change="rdsrc.ValueChange()" required>
+                                     ng-model="rdsrc.Project"  required>
                                 </div>
                             </div>
                         </td>
