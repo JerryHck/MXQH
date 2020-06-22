@@ -68,6 +68,7 @@
                         <td style="width:100px ">计划序号</td>
                         <td style="width:135px ">工单号</td>
                         <td style="width:90px ">状态</td>
+                        <td style="width:90px ">完工类型</td>
                         <td style="width:100px ">到货地</td>
                         <td style="width:100px ">编码规则</td>
                         <td style="width:130px ">产品编号</td>
@@ -104,6 +105,8 @@
                     <td ng-if="item.Status==2">开工</td>
                     <td ng-if="item.Status==3">返工</td>
                     <td ng-if="item.Status==4">完工</td>
+                    <td ng-if="item.CompleteType==0"><span class="text-danger">非完工报告</span></td>
+                    <td ng-if="item.CompleteType==1"><span class="text-success">完工报告</span></td>
                     <td ng-if="item.TemplateCount!=0" title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
                     <td ng-if="item.TemplateCount==0" class="bg-warning" title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
                     <td ng-if="item.ClName!=''" class="bg-warning" title="{{ item.ClName }}">{{ item.ClName }}</td>
@@ -112,8 +115,8 @@
                     <td title="{{ item.MaterialName }}" style="white-space:normal;word-break:normal;">{{ item.MaterialName }}</td>
                     <td title="{{ item.CustomerItemName }}" style="white-space:normal;word-break:normal;">{{ item.CustomerItemName }}</td>
                     <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
-                    <td title="{{ item.OnlineQty }}">{{ item.OnlineQty }}</td>
-                    <td title="{{ item.FinishQty }}">{{ item.FinishQty }}</td>
+                    <td title="{{ item.OnLineQty }}">{{ item.OnLineQty }}</td>
+                    <td title="{{ item.CompleteQty }}">{{ item.CompleteQty }}</td>
                     <td title="{{ item.CustomerOrder }}">{{ item.CustomerOrder }}</td>
                     <td title="{{ item.DeliveryDate }}">{{ item.DeliveryDate }}</td>
                     <td title="{{ item.CustomerCode }}">{{ item.CustomerCode }}</td>
