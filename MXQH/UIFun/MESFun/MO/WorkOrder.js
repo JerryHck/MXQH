@@ -31,6 +31,8 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
     function DataBindCom() {
         GetConditionCom();
         vm.promise = AjaxService.ExecPlan("MesPlanDetail", "GetList", vm.pageCom).then(function (data) {
+            console.log(vm.pageCom);
+            console.log(data);
             vm.CompleteList = data.data;
             vm.pageCom.total = data.data1[0].TotalCount;
         });

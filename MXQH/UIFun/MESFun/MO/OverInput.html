@@ -53,15 +53,13 @@
                         <td style="width:100px ">工单数量</td>
                         <td style="width:100px ">超投数量</td>
                         <td style="width:100px ">超投原因</td>
-                        <!--<td style="width:100px ">累计完工数量</td>-->
-
                     </tr>
                 </thead>
                 <tr ng-repeat="item in oic.List ">
                     <td>
-                        <button ng-disabled="item.Status!=0" class="btn btn-xs btn-success" title="提交" ng-click="oic.Approve(item)">提交</button>
+                        <button ng-disabled="item.Status!=0||item.CreateBy!=oic.UserNo" class="btn btn-xs btn-success" title="提交" ng-click="oic.Approve(item)">提交</button>
                         <button class="btn btn-xs btn-primary" title="编辑" ng-click="oic.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
-                        <button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除吗'}" ng-click="oic.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                        <button ng-disabled="item.Status!=0" class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除吗'}" ng-click="oic.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
                     </td>
                     <td title="{{ item.RowNum }}">{{ item.RowNum }}</td>
                     <td title="{{ item.DocNo }}">{{ item.DocNo }}</td>

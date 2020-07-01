@@ -133,11 +133,34 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window, $uibMo
                 oaItem.DumpQty = data.data[0].DumpQty;
                 oaItem.TotalStartQty = data.data[0].TotalStartQty;
                 oaItem.OnLineQty = data.data[0].OnLineQty;
-                console.log(JSON.stringify(oaItem));
-                //vm.promise = AjaxService.CallDll('Mes4OA', 'Mes4OA.OAWorkFlow', 'CreateWorkFlowByJson', { planName: "OverInput4OA", json: JSON.stringify(oaItem) }).then(function (data) {
-                //    console.log(data);
-                //})
-                $uibModalInstance.close('1');
+
+                vm.promise = AjaxService.CallDll('Mes4OA', 'Mes4OA.OAWorkFlow', 'CreateWorkFlowByJson', { planName: "OverInput4OA", json: JSON.stringify(oaItem) }).then(function (data) {
+                    console.log(data);
+                    var jsonData = JSON.parse(JSON.parse(data));
+                    if (jsonData.type == "1") {
+                        toastr.error(jsonData.backmsg);
+                    } else {
+                        let flag = true;
+                        for (var i = 0; i < jsonData.resultlist.length; i++) {
+                            if (jsonData.resultlist[i].status=="1") {
+                                flag = false;
+                                toastr.error("提交至OA流程失败："+jsonData.resultlist[i].msg);
+                                break;
+                            }
+                        }
+                        if (flag) {
+                            AjaxService.ExecPlan("OverInput4OA", "Approve", { DocNo: jsonData.resultlist[0].fpkid, OAFlowID: jsonData.resultlist[0].requestid, Modify: $rootScope.User.Name, Status: "提交" }).then(function (data) {
+                                if (data.data[0].StatusCode == "0") {
+                                    $uibModalInstance.close('1');
+                                    toastr.success(data.data[0].ErrorMsg);
+                                } else {
+                                    toastr.error("提交失败！");
+                                }
+                            });
+                        }                   
+                    }
+
+                });
             }
         });
 

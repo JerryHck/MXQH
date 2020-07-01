@@ -13,6 +13,8 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     vm.Search = Search;
     DataBind();
     vm.Status = { Table: 'OverInput', Column: 'Status' };
+    //vm.UserNo = $rootScope.User.UserNo;
+    vm.UserNo = '1619';
 
     //function Search() {
     //    //1、SourceHelper DLL文件名
@@ -26,7 +28,7 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
 
 
     function DataBind() {
-        vm.promise = AjaxService.ExecPlan("OverInput","GetList",vm.page).then(function (data) {
+        vm.promise = AjaxService.ExecPlan("OverInput", "GetList", vm.page).then(function (data) {
             vm.List = data.data;
             vm.page.total = data.data1[0].Count;
         });
@@ -101,7 +103,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
         //})
 
         AjaxService.ExecPlan("MesPlanDetail", "GetMO", { WorkOrderID: item.WorkOrderID }).then(function (data) {
-            console.log(data);
             if (data.data.length > 0) {
                 var oaItem = {};
                 oaItem.CreateBy = item.CreateBy;
@@ -124,9 +125,33 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
                 //        console.log(data);
                 //    })
                 vm.promise = AjaxService.CallDll('Mes4OA', 'Mes4OA.OAWorkFlow', 'CreateWorkFlowByJson', { planName: "OverInput4OA", json: JSON.stringify(oaItem) }).then(function (data) {
-                    console.log(data);
-                })
-     
+                    var jsonData = JSON.parse(JSON.parse(data));
+                    if (jsonData.type == "1") {
+                        toastr.error(jsonData.backmsg);
+                    } else {
+                        let flag = true;
+                        for (var i = 0; i < jsonData.resultlist.length; i++) {
+                            if (jsonData.resultlist[i].status == "1") {
+                                flag = false;
+                                toastr.error("提交至OA流程失败：" + jsonData.resultlist[i].msg);
+                                break;
+                            }
+                        }
+                        if (flag) {
+                            AjaxService.ExecPlan("OverInput4OA", "Approve", { DocNo: jsonData.resultlist[0].fpkid, OAFlowID: jsonData.resultlist[0].requestid, Modify: $rootScope.User.Name, Status: "提交" }).then(function (data) {
+                                if (data.data[0].StatusCode == "0") {
+                                    toastr.success(data.data[0].ErrorMsg);
+                                    DataBind();
+                                } else {
+                                    toastr.error("提交失败！");
+                                }
+                            });
+                        }
+
+                    }
+
+                });
+
             }
         });
 
