@@ -11,7 +11,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window, $uibMo
     vm.Item = ItemData.ID ? ItemData : { Status: 0 };
     vm.IsEdit = ItemData.ID ? true : false;
     Init();
-    console.log($rootScope.User);
     function Init() {
         if (ItemData.ID) {
             GetMoInfo(ItemData.WorkOrderID);
@@ -19,15 +18,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window, $uibMo
             GetDocNo();
         }
     }
-    //function Search() {
-    //    //1、SourceHelper DLL文件名
-    //    //2、SourceHelper.SQLHelper Class全名
-    //    //3、TestDll 调用的函数
-    //    //4、参数        
-    //    AjaxService.CallDll('Mes4OA', 'Mes4OA.Test4OA', 'TestFun', { json: "jsons" }).then(function (data) {         
-    //        console.log(data);
-    //    })
-    //}
 
     function GetMoInfo(id) {
         AjaxService.ExecPlan("MesPlanDetail", "GetMO", { WorkOrderID: id }).then(function (data) {
@@ -135,12 +125,11 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window, $uibMo
                 oaItem.OnLineQty = data.data[0].OnLineQty;
 
                 vm.promise = AjaxService.CallDll('Mes4OA', 'Mes4OA.OAWorkFlow', 'CreateWorkFlowByJson', { planName: "OverInput4OA", json: JSON.stringify(oaItem) }).then(function (data) {
-                    console.log(data);
                     var jsonData = JSON.parse(JSON.parse(data));
                     if (jsonData.type == "1") {
                         toastr.error(jsonData.backmsg);
                     } else {
-                        let flag = true;
+                        var flag = true;
                         for (var i = 0; i < jsonData.resultlist.length; i++) {
                             if (jsonData.resultlist[i].status=="1") {
                                 flag = false;
