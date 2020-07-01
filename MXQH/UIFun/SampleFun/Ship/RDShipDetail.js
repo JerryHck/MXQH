@@ -73,8 +73,8 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
                 toastr.success(data.data[0].Msg);
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
                 vm.SNList = data.data1;
-                vm.page.total = data.data2[0].RcvCount;
-                vm.Item.RcvCount = data.data2[0].RcvCount;
+                vm.page.total = data.data2[0].ShipCount;
+                vm.Item.RcvCount = data.data2[0].ShipCount;
             }
 
         });

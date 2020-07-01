@@ -50,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">                 
+                <div class="form-group">
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">卡通箱3S4S零件号</label>
                         <div class="col-sm-8 padder-xs">
@@ -79,6 +79,24 @@
                         <div class="col-sm-8  padder-xs" ng-class="{ 'has-error' : DialogForm.Ean.$invalid }">
                             <input type="text" class="form-control" name="Ean" placeholder="Ean"
                                    ng-model="packDialog.Item.Ean" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">到货地</label>
+                        <div class="col-sm-8 padder-xs">
+                            <div class="py-xl-0 pt-xl-0" ng-class="{ 'input-group' : clear }">
+                                <ui-select ng-model="packDialog.Item.SendPlaceID" theme="bootstrap" ng-class="{'has-error': DialogForm.SendPlaceID.$invalid }" ng-disabled="ngDisabled" name="SendPlaceID" required>
+                                    <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>
+                                    <ui-select-choices repeat="item.ID as item in packDialog.Places | filter: $select.search" refresh="refresh($select.search)">
+                                        <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-btn" ng-if="clear">
+                                    <button ng-click="$parent.ngModel= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+                                        <span class="glyphicon glyphicon-trash text-danger"></span>
+                                    </button>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -27,6 +27,7 @@ function ($rootScope, $scope, ItemData, $http, $uibModalInstance, AjaxService, t
     function GetContition() {
         var list = [];
         // list.push({ name: "State", value: '1' });
+        list.push({ name: "CompleteType", value: 1 });
         if (vm.Ser.MaterialCode) {
             list.push({ name: "MaterialCode", value: '%' + vm.Ser.MaterialCode + '%' });
         }

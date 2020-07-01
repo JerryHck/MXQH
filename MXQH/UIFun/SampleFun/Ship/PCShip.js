@@ -55,7 +55,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
                 Operator: $rootScope.User.Name,
                 DeliverDate: new Date().toLocaleDateString(),
                 DocType: '领用'
-                //Status: 0
             };
             //PK生成设定
             var snList = [{ name: "PCShip", col: "DocNo", parm: "DocNo" }];
@@ -67,10 +66,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     }
     //保存新增信息
     function SaveInsert() {
-        console.log(1, vm.NewItem);
-        //vm.NewItem.ProjectID = vm.Project.WorkId;
-        //vm.NewItem.ProjectCode = vm.Project.WorkCode;
-        //vm.NewItem.ProjectName = vm.Project.WorkName;
         vm.NewItem.ReturnDeptID = vm.Dept.ID;
         vm.NewItem.DeptCode = vm.Dept.Code;
         vm.NewItem.DeptName = vm.Dept.Name;
@@ -102,7 +97,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
             vm.List[i].IsEdit = false;
         }
         vm.EditItem = angular.copy(item);
-        //vm.Project = { WorkID: vm.EditItem.ProjectID, WorkCode: vm.EditItem.ProjectCode, WorkName: vm.EditItem.ProjectName };
         vm.Dept = { ID: vm.EditItem.ReturnDeptID, Code: vm.EditItem.DeptCode, Name: vm.EditItem.DeptName };
         vm.Customer = { ID: vm.EditItem.CustomerID, Code: vm.EditItem.CustomerCode, Name: vm.EditItem.CustomerName };
         vm.Borrower = vm.EditItem.Borrower;
@@ -113,19 +107,17 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
         var en = {};
         en.ID = vm.EditItem.ID;
         en.DocNo = vm.EditItem.DocNo;
-        en.TestedBy = vm.EditItem.TestedBy;
-        en.TestedDate = vm.EditItem.TestedDate;
+        en.Operator = vm.EditItem.Operator;
+        en.DeliverDate = vm.EditItem.DeliverDate;
+        en.PlanReturnDate = vm.EditItem.PlanReturnDate;
         en.DocType = vm.EditItem.DocType;
-        //en.ProjectID = vm.Project.WorkId;
-        //en.ProjectCode = vm.Project.WorkCode;
-        //en.ProjectName = vm.Project.WorkName;
         en.CustomerID = vm.Customer.ID;
         en.CustomerCode = vm.Customer.Code;
         en.CustomerName = vm.Customer.Name;
         en.ReturnDeptID = vm.Dept.ID;
         en.DeptCode = vm.Dept.Code;
         en.DeptName = vm.Dept.Name;
-        en.Borrower = vm.Borrower;
+        en.Borrower = vm.EditItem.Borrower;
         if (!vm.EditItem.Remark) {
             en.Remark = '';
         } else {

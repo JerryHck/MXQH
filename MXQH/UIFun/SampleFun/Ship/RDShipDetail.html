@@ -107,11 +107,11 @@
                                 <table class="table one-line no-padder">
                                     <thead>
                                         <tr>
-                                            <td style="width:60px;">删除</td>
-                                            <td style="width:80px;">SN编码</td>
-                                            <td style="width:60px;">阶段</td>
-                                            <td style="width:60px;">状态</td>
-                                            <td style="width:60px;">料号</td>
+                                            <td style="width:80px;">删除</td>
+                                            <td style="width:120px;">SN编码</td>
+                                            <td style="width:80px;">阶段</td>
+                                            <td style="width:80px;">状态</td>
+                                            <td style="width:100px;">料号</td>
                                             <td style="width:120px;">品名</td>
                                             <td style="width:120px;">备注</td>
                                         </tr>
@@ -127,7 +127,7 @@
                                                 <button class="btn btn-xs btn-warning" ng-click="sn.IsEdit=!sn.IsEdit"><i class="fa fa-undo"></i></button>
                                             </span>
                                         </td>
-                                        <td>{{sn.SNCode}}</td>
+                                        <td style="white-space:normal;word-break:normal;">{{sn.SNCode}}</td>
                                         <td>
                                             <span ng-if="!sn.IsEdit">{{sn.Progress}}</span>
                                             <div ng-if="sn.IsEdit">
@@ -149,9 +149,9 @@
                                             </div>
                                         </td>
                                         <td>{{sn.MaterialCode}}</td>
-                                        <td title="{{sn.MaterialName}}">{{sn.MaterialName}}</td>
+                                        <td style="white-space:normal;word-break:normal;" title="{{sn.MaterialName}}">{{sn.MaterialName}}</td>
                                         <td>
-                                            <span ng-if="!sn.IsEdit">{{sn.Remark}}</span>
+                                            <span style="white-space:normal;word-break:normal;" ng-if="!sn.IsEdit">{{sn.Remark}}</span>
                                             <textarea ng-if="sn.IsEdit" ng-model="ship.EditItem.Remark" rows="5" class="form-control"></textarea>
                                         </td>
                                     </tr>

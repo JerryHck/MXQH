@@ -13,11 +13,8 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     vm.OpenScan = OpenScan;
     vm.Delete = Delete;
     vm.Search = Search;
-    vm.ValueChange = ValueChange;
+    vm.Export = Export;
 
-    function ValueChange() {
-        console.log('project', vm.Project);
-    }
     Init();
     //初始化
     function Init() {
@@ -67,24 +64,28 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     }
     //保存新增信息
     function SaveInsert() {
-        console.log(1, vm.NewItem);
+        
         vm.NewItem.Borrower = vm.Borrower;
-        //vm.NewItem.ProjectID = vm.Project.WorkId;
-        //vm.NewItem.ProjectCode = vm.Project.WorkCode;
-        //vm.NewItem.ProjectName = vm.Project.WorkName;
+        if (vm.Project) {
+            vm.NewItem.ProjectID = vm.Project.WorkId;
+            vm.NewItem.ProjectCode = vm.Project.WorkCode;
+            vm.NewItem.ProjectName = vm.Project.WorkName;
+        }        
         vm.NewItem.ReturnDeptID = vm.Dept.ID;
         vm.NewItem.DeptCode = vm.Dept.Code;
         vm.NewItem.DeptName = vm.Dept.Name;
-        vm.NewItem.CustomerID = vm.Customer.ID;
-        vm.NewItem.CustomerCode = vm.Customer.Code;
-        vm.NewItem.CustomerName = vm.Customer.Name;
+        if (vm.NewItem.Customer) {
+            vm.NewItem.CustomerID = vm.Customer.ID;
+            vm.NewItem.CustomerCode = vm.Customer.Code;
+            vm.NewItem.CustomerName = vm.Customer.Name;
+        }        
 
         if (!vm.NewItem.Remark) {
             vm.NewItem.Remark = '';
         }
-        console.log(2, vm.NewItem);
         vm.promise = AjaxService.PlanInsert("RDShip", vm.NewItem).then(function (data) {
             DataBind();
+            vm.Project = undefined;
             toastr.success('新增成功');
             vm.IsInsert = false;
         });
@@ -95,7 +96,7 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
             vm.List[i].IsEdit = false;
         }
         vm.EditItem = angular.copy(item);
-        //vm.Project = { WorkID: vm.EditItem.ProjectID, WorkCode: vm.EditItem.ProjectCode, WorkName: vm.EditItem.ProjectName };
+        vm.Project = { WorkID: vm.EditItem.ProjectID, WorkCode: vm.EditItem.ProjectCode, WorkName: vm.EditItem.ProjectName };
         vm.Dept = { ID: vm.EditItem.ReturnDeptID, Code: vm.EditItem.DeptCode, Name: vm.EditItem.DeptName };
         vm.Customer = { ID: vm.EditItem.CustomerID, Code: vm.EditItem.CustomerCode, Name: vm.EditItem.CustomerName };
         vm.Borrower = vm.EditItem.Borrower;
@@ -106,12 +107,15 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
         var en = {};
         en.ID = vm.EditItem.ID;
         en.DocNo = vm.EditItem.DocNo;
-        en.TestedBy = vm.EditItem.TestedBy;
-        en.TestedDate = vm.EditItem.TestedDate;
+        en.Operator = vm.EditItem.Operator;
+        en.DeliverDate = vm.EditItem.DeliverDate;
         en.DocType = vm.EditItem.DocType;
-        //en.ProjectID = vm.Project.WorkId;
-        //en.ProjectCode = vm.Project.WorkCode;
-        //en.ProjectName = vm.Project.WorkName;
+        en.PlanReturnDate = vm.EditItem.PlanReturnDate;
+        if (vm.Project) {
+            en.ProjectID = vm.Project.WorkId;
+            en.ProjectCode = vm.Project.WorkCode;
+            en.ProjectName = vm.Project.WorkName;
+        }        
         en.CustomerID = vm.Customer.ID;
         en.CustomerCode = vm.Customer.Code;
         en.CustomerName = vm.Customer.Name;
@@ -127,6 +131,7 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
 
         vm.promise = AjaxService.PlanUpdate("RDShip", en).then(function (data) {
             DataBind();
+            vm.Project = undefined;
             toastr.success('更新成功');
         });
     }
@@ -158,6 +163,15 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
             } else {
                 toastr.error('删除失败');
             }
+        });
+    }
+
+    //导出
+    function Export() {
+        vm.page.pageSize = 100000;
+        vm.promise = AjaxService.GetPlanExcel("RDShip", "GetList", vm.page).then(function (data) {
+            vm.page.pageSize = 10;
+            $window.location.href = data.File;
         });
     }
 }

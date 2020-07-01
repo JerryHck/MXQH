@@ -17,7 +17,7 @@
                         </span>
                     </div>
                     <div class="input-group">
-                        <input autocomplete="off" type="text" class="form-control" ng-model="rpt.page.SNCode" placeholder="SN编码">
+                        <input autocomplete="off" type="text" class="form-control" ng-model="rpt.page.SNCode" placeholder="SN编码/内控码">
                         <span class="input-group-addon">
                             <a><i ng-click="rpt.page.SNCode = undefined" class="glyphicon glyphicon-trash text-danger"></i></a>
                         </span>
@@ -38,6 +38,7 @@
                             <td title="单号" style="width:100px ">单号</td>
                             <td title="单据类型" style="width:100px ">单据类型</td>
                             <td title="SN码" style="width:100px ">SN码</td>
+                            <td title="是否在库" style="width:100px ">是否在库</td>
                             <td title="出入库日期" style="width:100px ">出入库日期</td>
                             <td title="计划归还日" style="width:100px ">计划归还日</td>
                             <td title="状态" style="width:100px ">状态</td>
@@ -55,6 +56,8 @@
                         <td title="{{ item.DocNo }}">{{ item.DocNo }}</td>
                         <td title="{{ item.DocType }}">{{ item.DocType }}</td>
                         <td title="{{ item.SNCode }}">{{ item.SNCode }}</td>
+                        <td ng-if="item.IsRcv=='1'" ><span class="text-success">在库</span></td>
+                        <td ng-if="item.IsRcv=='0'" ><span class="text-danger">出库</span></td>
                         <td title="{{ item.OpDate|date:'yyyy-MM-dd HH:mm' }}">{{ item.OpDate|date:'yyyy-MM-dd HH:mm' }}</td>
                         <td title="{{ item.PlanReturnDate|date:'yyyy-MM-dd HH:mm' }}">{{ item.PlanReturnDate|date:'yyyy-MM-dd HH:mm' }}</td>
                         <td title="{{ item.Status }}">{{ item.Status }}</td>

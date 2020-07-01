@@ -12,12 +12,8 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     vm.SaveEdit = SaveEdit;
     vm.OpenScan = OpenScan;
     vm.Delete = Delete;
+    vm.Export = Export;
     vm.Search = Search;
-    vm.ValueChange = ValueChange;
-
-    function ValueChange() {
-        console.log('project',vm.Project);
-    }
     Init();
     //初始化
     function Init() {
@@ -54,7 +50,7 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
                 CreateBy: $rootScope.User.Name,
                 Operator: $rootScope.User.Name,
                 RcvDate: new Date().toLocaleDateString(),
-                DocType:'0'
+                DocType:'入库'
                 //Status: 0
             };
             //PK生成设定
@@ -67,7 +63,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     }
     //保存新增信息
     function SaveInsert() {
-        console.log(1,vm.NewItem);
         vm.NewItem.Borrower = vm.Borrower;
         vm.NewItem.ProjectID = vm.Project.WorkId;
         vm.NewItem.ProjectCode = vm.Project.WorkCode;
@@ -75,14 +70,15 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
         vm.NewItem.ReturnDeptID = vm.Dept.ID;
         vm.NewItem.DeptCode = vm.Dept.Code;
         vm.NewItem.DeptName = vm.Dept.Name;
-        vm.NewItem.CustomerID = vm.Customer.ID;
-        vm.NewItem.CustomerCode  = vm.Customer.Code;
-        vm.NewItem.CustomerName = vm.Customer.Name;
+        if (vm.Customer) {
+            vm.NewItem.CustomerID = vm.Customer.ID;
+            vm.NewItem.CustomerCode = vm.Customer.Code;
+            vm.NewItem.CustomerName = vm.Customer.Name;
+        }    
         
         if (!vm.NewItem.Remark) {
             vm.NewItem.Remark = '';
         }
-        console.log(2, vm.NewItem);
         vm.promise = AjaxService.PlanInsert("RDReceivement", vm.NewItem).then(function (data) {
             DataBind();
             toastr.success('新增成功');
@@ -106,8 +102,8 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
         var en = {};
         en.ID = vm.EditItem.ID;
         en.DocNo = vm.EditItem.DocNo;
-        en.TestedBy = vm.EditItem.TestedBy;
-        en.TestedDate = vm.EditItem.TestedDate;
+        en.RcvDate = vm.EditItem.RcvDate;
+        en.Operator = vm.EditItem.Operator;
         en.DocType = vm.EditItem.DocType;
         en.ProjectID = vm.Project.WorkId;
         en.ProjectCode = vm.Project.WorkCode;
@@ -158,6 +154,14 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
             } else {
                 toastr.error('删除失败');
             }
+        });
+    }
+    //导出
+    function Export() {
+        vm.page.pageSize = 100000;
+        vm.promise = AjaxService.GetPlanExcel("RDReceivement", "GetList", vm.page).then(function (data) {
+            vm.page.pageSize = 10;
+            $window.location.href = data.File;
         });
     }
 }

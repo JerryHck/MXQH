@@ -49,11 +49,21 @@
                                 <div class="col-lg-3 form-control-static">
                                     {{ rrdc.Item.RcvCount }}
                                 </div>
+                                <label ng-if="rrdc.IsSN=='0'" class="col-lg-3 control-label padder-xxs">工单数量:</label>
+                                <div ng-if="rrdc.IsSN=='0'" class="col-lg-3 form-control-static">
+                                    {{ rrdc.WorkOrder.Quantity }}
+                                </div>
+                            </div>
+                            <div ng-if="rrdc.Item.DocType=='旧料入库'" class="form-group-xs col-md-12">
+                                <label class="col-lg-3 control-label padder-xxs">料号:</label>
+                                <div class="col-lg-6 form-control-static" ng-class="{ 'has-error' : rrdc.OrderForm.MaterialID.$invalid }">
+                                    <div basic-select="MaterialName" placeholder="料号" ng-model="rrdc.Item.MaterialID" ng-name="MaterialID" ng-required="true" select-class="text-xs"></div>
+                                </div>
                             </div>
                             <div class="form-group-xs col-md-12">
                                 <label class="col-lg-3 control-label padder-xxs">SN码:</label>
                                 <div class="col-lg-9" ng-class="{ 'has-error' : rrdc.OrderForm.SNCode.$invalid }">
-                                    <input autocomplete="off" type="text" class="form-control" name="SNCode" ng-model="rrdc.SNCode" placeholder="SN"
+                                    <input autocomplete="off" type="text" class="form-control" name="SNCode" ng-model="rrdc.SNCode" placeholder="SN码/内控码/工单"
                                            ng-keypress="rrdc.KeyDonwSnCode($event)" required>
                                     <div class="h6 text-danger">注:扫描枪请设定自动回车功能，如果手动输入则需按回车键。</div>
                                 </div>
@@ -63,6 +73,12 @@
                                 <div class="col-lg-9 form-control-static h4 text-success">
                                     <textarea name="Remark" rows="2" ng-model="rrdc.Remark" class="form-control col-lg-12"></textarea>
                                 </div>
+                            </div>
+                            <div class="form-group-xs col-md-12">
+                                <span class="btn-group col-lg-offset-3 padder">
+                                    <label class="btn btn-default btn-success reset" ng-model="rrdc.IsSN" uib-btn-radio="1">SN码录入</label>
+                                    <label class="btn btn-default btn-success reset" ng-model="rrdc.IsSN" uib-btn-radio="0">整单录入</label>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -107,13 +123,14 @@
                                 <table class="table one-line no-padder">
                                     <thead>
                                         <tr>
-                                            <td style="width:60px;">删除</td>
-                                            <td style="width:80px;">SN编码</td>
-                                            <td style="width:60px;">阶段</td>
-                                            <td style="width:60px;">状态</td>
-                                            <td style="width:60px;">料号</td>
+                                            <td style="width:80px;">删除</td>
+                                            <td style="width:120px;">SN编码</td>
+                                            <td style="width:80px;">阶段</td>
+                                            <td style="width:80px;">状态</td>
+                                            <td style="width:100px;">料号</td>
                                             <td style="width:120px;">品名</td>
-                                            <td style="width:120px;">备注</td>
+                                            <td style="width:220px;">规格</td>
+                                            <td style="width:220px;">备注</td>
                                         </tr>
                                     </thead>
                                     <tr ng-repeat="sn in rrdc.SNList">
@@ -128,7 +145,7 @@
                                             </span>
 
                                         </td>
-                                        <td>{{sn.SNCode}}</td>
+                                        <td style="white-space:normal;word-break:normal;">{{sn.SNCode}}</td>
                                         <td>
                                             <span ng-if="!sn.IsEdit" >{{sn.Progress}}</span>
                                             <div ng-if="sn.IsEdit">
@@ -150,8 +167,9 @@
                                             </div>
                                         </td>
                                         <td>{{sn.MaterialCode}}</td>
-                                        <td title="{{sn.MaterialName}}">{{sn.MaterialName}}</td>
-                                        <td>
+                                        <td style="white-space:normal;word-break:normal;" title="{{sn.MaterialName}}">{{sn.MaterialName}}</td>
+                                        <td style="white-space:normal;word-break:normal;" title="{{sn.Spec}}">{{sn.Spec}}</td>
+                                        <td style="white-space:normal;word-break:normal;">
                                             <span ng-if="!sn.IsEdit">{{sn.Remark}}</span>
                                             <textarea ng-if="sn.IsEdit" ng-model="rrdc.EditItem.Remark" rows="5" class="form-control"></textarea>
                                         </td>

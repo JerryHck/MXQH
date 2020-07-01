@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <button class="btn btn-sm btn-info " ng-click="rdsrc.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
-                    <!--<button class="btn btn-sm btn-success " ng-click="rdsrc.Export() "><i class="glyphicon glyphicon-export "></i>导出</button>-->
+                    <button class="btn btn-sm btn-success " ng-click="rdsrc.Export() "><i class="glyphicon glyphicon-export "></i>导出</button>
                 </div>
             </div>
         </div>
@@ -48,6 +48,9 @@
                         <td style="width:60px ">序号</td>
                         <td style="width:120px ">单号</td>
                         <td style="width:120px ">单据类型</td>
+                        <td style="width:120px ">料号</td>
+                        <td style="width:120px ">品名</td>
+                        <td style="width:60px ">阶段</td>
                         <td style="width:60px ">数量</td>
                         <td style="width:100px ">入库人</td>
                         <td style="width:110px ">入库日期</td>
@@ -74,8 +77,10 @@
                                 <div config-select ng-model="rdsrc.NewItem.DocType" config-option="rdsrc.DocTypeList" auto-first="false" ng-name="DocType" placeholder="单据类型"></div>
                             </div>
                         </td>
-                        <td>
-                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td>
                             <div ng-class="{ 'has-error': rdsrc.InsertForm.Operator.$invalid }">
                                 <input type="text" name="Operator" class="form-control" placeholder="入库人" ng-model="rdsrc.NewItem.Operator" required />
@@ -89,7 +94,7 @@
                         <td>
                             <div ng-class="{ 'has-error': rdsrc.InsertForm.Project.$invalid }">
                                 <div basic-select="PLMProject" name="Project" placeholder="PLM项目号"
-                                     ng-model="rdsrc.Project" ng-change="rdsrc.ValueChange()" required>
+                                     ng-model="rdsrc.Project"  required>
                                 </div>
                             </div>
                         </td>
@@ -105,15 +110,16 @@
                         </td>
                         <td>
                             <div ng-class="{ 'has-error': rdsrc.InsertForm.Borrower.$invalid }">
-                                <div basic-select="TPDicRDUser" name="Borrower" placeholder="领借人"
+                                <input type="text" name="Borrower" class="form-control" placeholder="领借人" ng-model="rdsrc.Borrower" required />
+                                <!--<div basic-select="TPDicRDUser" name="Borrower" placeholder="领借人"
                                      ng-model="rdsrc.Borrower" required>
-                                </div>
+                                </div>-->
                             </div>
                         </td>
                         <td>
-                            <div ng-class="{ 'has-error': rdsrc.InsertForm.Customer.$invalid }">
+                            <div>
                                 <div basic-select="TPDicRDCustomer" name="Customer" placeholder="客户"
-                                     ng-model="rdsrc.Customer" required>
+                                     ng-model="rdsrc.Customer">
                                 </div>
                             </div>
                         </td>
@@ -147,6 +153,15 @@
                                 <div config-select ng-model="rdsrc.EditItem.DocType" config-option="rdsrc.DocTypeList" auto-first="false" ng-name="e_DocType" placeholder="单据类型"></div>
                             </div>
                         </td>
+                        <td style="white-space:normal;word-break:normal;">
+                            <span>{{ item.MaterialCode }}</span>
+                        </td>
+                        <td style="white-space:normal;word-break:normal;">
+                            <span>{{ item.MaterialName }}</span>
+                        </td>
+                        <td>
+                            <span>{{ item.Progress }}</span>
+                        </td>
                         <td>
                             <span>{{ item.Count }}</span>
                         </td>
@@ -178,21 +193,22 @@
                             <span ng-if="!item.IsEdit">{{ item.DeptName }}</span>
                             <div ng-if="item.IsEdit" ng-class="{ 'has-error': rdsrc.EditForm.e_Dept.$invalid }">
                                 <div basic-select="TPDicRDDept" name="e_Dept" placeholder="归还部门"
-                                     ng-model="rdsrc.Dept">
+                                     ng-model="rdsrc.Dept" required>
                                 </div>
                             </div>
                         </td>
                         <td>
                             <span ng-if="!item.IsEdit">{{ item.Borrower }}</span>
                             <div ng-if="item.IsEdit" ng-class="{ 'has-error': rdsrc.EditForm.e_Borrower.$invalid }">
-                                <div basic-select="TPDicRDUser" name="e_Borrower" placeholder="领借人"
+                                <input type="text" name="e_Borrower" class="form-control" placeholder="领借人" ng-model="rdsrc.Borrower" required />
+                                <!--<div basic-select="TPDicRDUser" name="e_Borrower" placeholder="领借人"
                                      ng-model="rdsrc.Borrower">
-                                </div>
+                                </div>-->
                             </div>
                         </td>
                         <td title="{{ item.CustomerName }}">
                             <span ng-if="!item.IsEdit">{{ item.CustomerName }}</span>
-                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': rdsrc.EditForm.e_CustomerName.$invalid }">
+                            <div ng-if="item.IsEdit">
                                 <div basic-select="TPDicRDCustomer" name="e_CustomerName" placeholder="客户"
                                      ng-model="rdsrc.Customer">
                                 </div>

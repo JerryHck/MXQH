@@ -7,6 +7,8 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     vm.Save = Save;
     vm.Cancel = Cancel;
     vm.Item.PackListNo = vm.Item.PackListNo == undefined ? GetListNo() : vm.Item.PackListNo;
+    console.log(1,vm.Item);
+    GetPlaces();
     if (vm.Item.MaterialID) {//新增操作才会有
         vm.Item.CountryCode = 'CN';//默认CN
         vm.promise = AjaxService.GetPlan("MesMXMaterial", { name: "Id", value: vm.Item.MaterialID }).then(function (data) {
@@ -15,8 +17,6 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
         });
         //Tanapa会有多条，多条时，以出货地为条件
         vm.promise = AjaxService.ExecPlan("MESbaTanapa", "Get", {MaterialID:vm.Item.MaterialID,MoID:vm.Item.MoID}).then(function (data) {
-            //vm.Item.MaxWeight = parseFloat(data.data[0].MaxWeight);
-            //vm.Item.MinWeight = parseFloat(data.data[0].MinWeight);
             vm.Item.Ean = data.data[0].Ean;
             vm.Item.Model = data.data[0].Model;
             vm.Item.RadioKit = data.data[0].RadioKit;
@@ -42,10 +42,6 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     function Save() {
         var en = {};
         var li = [];
-        //if (parseFloat(vm.Item.MaxWeight) < parseFloat(vm.Item.MinWeight)) {
-        //    toastr.error('数据有误，“最大重量”小于“最小重量”！');
-        //    return;
-        //}
         vm.Item.MaxWeight = 0;
         vm.Item.MinWeight = 0;
         vm.Item.ShipForm = vm.Item.ShipForm == undefined ? '' : vm.Item.ShipForm;
@@ -95,6 +91,13 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     //退出弹出框
     function Cancel(item) {
         $uibModalInstance.close(item);
+    }
+
+    //获取线别数据
+    function GetPlaces() {
+        vm.promise = AjaxService.GetPlans("baSendPlace", [{ name: "IsDefault", value: 1 }]).then(function (data) {
+            vm.Places = data;
+        });
     }
 }
 ])

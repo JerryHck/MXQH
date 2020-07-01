@@ -1,7 +1,7 @@
 ﻿'use strict';
 angular.module('app')
-.controller('MouldInfoCtrl', ['$rootScope', '$scope', 'Dialog', 'toastr', 'AjaxService', 'Form',
-function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
+.controller('MouldInfoCtrl', ['$rootScope', '$scope', 'Dialog', 'toastr', 'AjaxService', 'Form', '$window',
+function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     var vm = this;
     vm.page = { pageSize: 10, pageIndex: 1, maxSize: 10 };
     vm.Ser = {};

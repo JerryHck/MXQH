@@ -82,41 +82,10 @@
                             </div>
                         </td>
                         <td>
-                            <div ng-class="{ 'has-error': ship.InsertForm.PlanReturnDate.$invalid }">
-                                <input type="text" date-picker name="PlanReturnDate" class="form-control" placeholder="计划归还日" ng-model="ship.NewItem.PlanReturnDate" option="ship.DateOption" required />
+                            <div>
+                                <input type="text" date-picker name="PlanReturnDate" class="form-control" placeholder="计划归还日" ng-model="ship.NewItem.PlanReturnDate" option="ship.DateOption" />
                             </div>
                         </td>
-                        <!--<td>
-                            <div ng-class="{ 'has-error': ship.InsertForm.Project.$invalid }">
-                                <div basic-select="PLMProject" name="Project" placeholder="PLM项目号"
-                                     ng-model="ship.Project" ng-change="ship.ValueChange()" required>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            {{ship.Project.WorkName}}
-                        </td>
-                        <td>
-                            <div ng-class="{ 'has-error': ship.InsertForm.Dept.$invalid }">
-                                <div basic-select="TPDicRDDept" name="Dept" placeholder="归还部门"
-                                     ng-model="ship.Dept" required>
-                                </div>
-                            </div>
-                        </td>-->
-                        <!--<td>
-                            <div ng-class="{ 'has-error': ship.InsertForm.Borrower.$invalid }">
-                                <div basic-select="TPDicRDUser" name="Borrower" placeholder="领借人"
-                                     ng-model="ship.Borrower" required>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div ng-class="{ 'has-error': ship.InsertForm.Customer.$invalid }">
-                                <div basic-select="TPDicRDCustomer" name="Customer" placeholder="客户"
-                                     ng-model="ship.Customer" required>
-                                </div>
-                            </div>
-                        </td>-->
                         <td>
                             <div ng-class="{ 'has-error': ship.InsertForm.Borrower.$invalid }">
                                 <input type="text" name="Borrower" class="form-control" placeholder="领借人" ng-model="ship.NewItem.Borrower" required />
@@ -174,8 +143,8 @@
                         </td>
                         <td title="{{ item.PlanReturnDate }}">
                             <span ng-if="!item.IsEdit">{{ item.PlanReturnDate|date:'yyyy-MM-dd' }}</span>
-                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': ship.EditForm.e_PlanReturnDate.$invalid }">
-                                <input type="text" date-picker name="e_PlanReturnDate" class="form-control" placeholder="计划归还日" ng-model="ship.EditItem.PlanReturnDate" option="ship.DateOption" required />
+                            <div ng-if="item.IsEdit" >
+                                <input type="text" date-picker name="e_PlanReturnDate" class="form-control" placeholder="计划归还日" ng-model="ship.EditItem.PlanReturnDate" option="ship.DateOption" />
                             </div>
                         </td>
                         <td>
@@ -189,27 +158,7 @@
                             <div ng-if="item.IsEdit" ng-class="{ 'has-error': ship.EditForm.e_CustomerName.$invalid }">
                                 <input type="text" name="e_CustomerName" class="form-control" placeholder="领借人" ng-model="ship.EditItem.CustomerName" />
                             </div>
-                        </td>
-                        <!--<td>
-                            <span ng-if="!item.IsEdit">{{ item.ProjectCode }}</span>
-                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': ship.EditForm.e_Project.$invalid }">
-                                <div basic-select="PLMProject" name="e_Project" placeholder="PLM项目号"
-                                     ng-model="ship.Project" ng-change="ship.ValueChange()" required>
-                                </div>
-                            </div>
-                        </td>
-                        <td style="white-space:normal;word-break:normal;">
-                            <span ng-if="!item.IsEdit">{{ item.ProjectName }}</span>
-                            <span ng-if="item.IsEdit">{{ ship.Project.WorkName }}</span>
-                        </td>
-                        <td title="{{ item.DeptName }}">
-                            <span ng-if="!item.IsEdit">{{ item.DeptName }}</span>
-                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': ship.EditForm.e_Dept.$invalid }">
-                                <div basic-select="TPDicRDDept" name="e_Dept" placeholder="归还部门"
-                                     ng-model="ship.Dept">
-                                </div>
-                            </div>
-                        </td>-->
+                        </td>                       
                         <td title="{{ item.Remark }}" style="white-space:normal;word-break:normal;">
                             <span ng-if="!item.IsEdit">{{ item.Remark }}</span>
                             <div ng-if="item.IsEdit">
