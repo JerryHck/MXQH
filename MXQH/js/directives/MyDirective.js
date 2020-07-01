@@ -346,7 +346,7 @@ angular.module('AppSet')
         });
     }
 }])
-.directive('funFileSelect', ['AjaxService', function (AjaxService) {
+.directive('funFileSelect', ['AjaxService', 'LoadModules', function (AjaxService, LoadModules) {
     return {
         restrict: 'A',
         require: 'ngModel',
@@ -380,7 +380,19 @@ angular.module('AppSet')
     function link(scope, element, attrs) {
         scope.data = undefined;
         //组织
-        AjaxService.HandleFile(scope.fileType).then(function (data) { scope.data = data; });
+        AjaxService.HandleFile(scope.fileType).then(function (data) {
+            if (scope.fileType == '2') {
+                scope.data = data;
+                scope.data = scope.data || [];
+                for (var i = 0, len = LoadModules.length; i<len; i++){
+                    scope.data.push(LoadModules[i].name);
+                }
+            }
+            else {
+                scope.data = data;
+            }
+            //scope.data = data;
+        });
 
     }
 }])
@@ -401,8 +413,8 @@ angular.module('AppSet')
         },
         template:  '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">'
                   + '         <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>'
-                  + '          <ui-select-choices class="pl-1" repeat="item in data | filter: $select.search track by item.Name" refresh="refresh($select.search)" refresh-delay="0">'
-                  + '             <small><span ng-bind-html="item.DbSchema | highlight: $select.search"></span>.<span ng-bind-html="item.Name | highlight: $select.search"</span></small>'
+                  + '          <ui-select-choices  repeat="item in data | filter: $select.search track by item.Name" refresh="refresh($select.search)" refresh-delay="0">'
+                  + '             <small title="{{ item.Name }}"><span class="h6"><span ng-bind-html="item.DbSchema | highlight: $select.search"></span>.</span><span ng-bind-html="item.Name | highlight: $select.search"</span></small>'
                   + '         </ui-select-choices>'
                   + '     </ui-select>'
         ,

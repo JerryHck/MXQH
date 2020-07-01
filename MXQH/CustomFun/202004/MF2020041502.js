@@ -90,6 +90,12 @@ function ($scope, $http, AjaxService, toastr, $window) {
         if (vm.Ser.aState) {
             list.push({ name: "State", value: vm.Ser.aState, tableAs:"a" });
         }
+        if (vm.Ser.LineID) {
+            list.push({ name: "LineID", value: vm.Ser.LineID, tableAs: "a" });
+        }
+        if (vm.Ser.ApplyDate) {
+            list.push({ name: "ApplyDate", value: vm.Ser.ApplyDate, tableAs: "a" });
+        }
         list.push({ name: "DataType", value: "U", tableAs: "a" });
 
         return list;

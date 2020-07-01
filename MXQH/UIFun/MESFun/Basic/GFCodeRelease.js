@@ -44,10 +44,12 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
 
     //物料选择改变--获取料号信息
     function ChangeMate() {
-        console.log(vm.MateItem)
         if (!vm.MateItem.TbName || vm.MateItem.TbName == "") {
             toastr.error("该料品还未设置编码规则");
             vm.MateItem = undefined;
+        }
+        else {
+            SerThisDate();
         }
     }
 
@@ -116,14 +118,10 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     }
 
     function SerThisDate() {
-        //vm.Ser.ReleaseDate = vm.ReleaseItem.ToDay;
-        //var enfrom = { TbName: vm.MateItem.TbName, ClName: vm.MateItem.ClName, CharName: "" };
-        //AjaxService.ExecPlan("SerialNumberSet", "preview", enfrom).then(function (data) {
-        //    vm.PKData = data.data[0];
-        //    vm.PKData.HaveCount = parseInt(vm.PKData.SerialSN) - 1;
-        //    vm.PKData.CanCount = parseInt(('100000000000').substr(0, vm.PKData.SerialLenth + 1)) - vm.PKData.HaveCount;
-        //})
-        //Search();
+        var enfrom = { TbName: vm.MateItem.TbName, ClName: vm.MateItem.ClName, CharName: "" };
+        AjaxService.ExecPlan("SerialNumberSet", "preview", enfrom).then(function (data) {
+            vm.PKData = data.data[0];
+        })
     }
 
     function Search() {

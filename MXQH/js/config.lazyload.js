@@ -37,15 +37,8 @@ angular.module('AppSet')
                           'Scripts/jquery/jvectormap/jquery-jvectormap.css'],
       footable:       ['Scripts/jquery/footable/footable.all.min.js',
                           'Scripts/jquery/footable/footable.core.css']
-      }
-  )
-  // oclazyload config
-  .config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
-      // We configure ocLazyLoad to use the lib script.js as the async loader
-      $ocLazyLoadProvider.config({
-          debug:  false,
-          events: true,
-          modules: [
+  })
+  .constant('LoadModules', [
               {
                   name: 'uiGrid',
                   files: [
@@ -65,6 +58,17 @@ angular.module('AppSet')
                   name: 'fileLoad',
                   files: [
                       'Scripts/SheetJs/xlsx.full.min.js',
+                  ]
+              },
+              {
+                  name: 'JsPlump',
+                  files: [
+                      'Scripts/jsPlump/jquery-ui.min.css',
+                      'Scripts/jsPlump/jquery-ui.min.js',
+                      'Scripts/jsPlump/uuid.js',
+                      'Scripts/jsPlump/graphlib.min.js',
+                      'Scripts/jsPlump/mustache.min.js',
+                      'Scripts/jsPlump/jquery.jsPlumb.min.js',
                   ]
               },
               {
@@ -170,7 +174,14 @@ angular.module('AppSet')
                       'Scripts/modules/videogular/plugins/ima-ads.min.js'
                   ]
               }
-          ]
+  ])
+  // oclazyload config
+  .config(['$ocLazyLoadProvider', 'LoadModules', function($ocLazyLoadProvider, LoadModules) {
+      // We configure ocLazyLoad to use the lib script.js as the async loader
+      $ocLazyLoadProvider.config({
+          debug:  false,
+          events: true,
+          modules: LoadModules,
       });
   }])
 ;

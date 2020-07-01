@@ -82,6 +82,13 @@ function ($rootScope, $scope, $timeout, Dialog, toastr, AjaxService, MyPop) {
                 vm.OrderData = data.data1[0];
                 vm.ProcedureList = data.data2;
                 vm.ProcedureItem = vm.ThisWo == vm.OrderData.ID ? vm.ProcedureItem : undefined;
+                if (vm.ProcedureItem) {
+                    for (var i = 0, len = vm.ProcedureList.length; i < len; i++) {
+                        if (vm.ProcedureItem.boProcedureID == vm.ProcedureList[i].boProcedureID) {
+                            vm.ProcedureItem = vm.ProcedureList[i];
+                        }
+                    }
+                }
                 vm.ThisWo = vm.OrderData.ID;
                 ChangePro(vm.ProcedureItem);
                 if (vm.IsAuto) {

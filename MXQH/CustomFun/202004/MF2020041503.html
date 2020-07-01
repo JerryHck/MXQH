@@ -12,7 +12,13 @@
                     </ui-select>
                 </div>
                 <div class="form-group">
-                    <div config-select ng-model="ho.Ser.aState" tb="UnusualHour" col="State" placeholder="状态"></div>
+                    <div config-select ng-model="ho.Ser.aState" tb="UnusualHour" col="State" placeholder="选择状态" clear="true"></div>
+                </div>
+                <div class="form-group">
+                    <div basic-select="AssemblyLine" placeholder="选择线别" ng-model="ho.Ser.LineID" clear="true"></div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="选择日期" date-picker ng-model="ho.Ser.ApplyDate" format="Y-m-d" option="ho.DaOption" />
                 </div>
                 <button class= "btn btn-sm btn-info " ng-click= "ho.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
                 <!--<button class= "btn btn-sm btn-success " ng-click= "ho.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>-->
@@ -23,7 +29,7 @@
                 <table class= "table " >
                     <thead>
                         <tr>
-                            <td style="width:60px" ng-if="ho.Ser.aState == '0'">审核</td>
+                            <td style="width:60px">审核</td>
                             <td style="width:100px ">日期</td>
                             <td title="线别" style= "width:100px ">线别</td>
                             <td title="申报类型" style="width:100px ">申报类型</td>
@@ -38,9 +44,10 @@
                         </tr>
                     </thead>
                     <tr ng-repeat= "item in ho.List ">
-                        <td ng-if="ho.Ser.aState == '0'">
-                            <button class="btn btn-xs btn-success" title="核准" ng-confirm="{text:'确定核准吗'}" ng-click="ho.Sign(item, '1')"><i class="glyphicon glyphicon-ok-sign"></i></button>
-                            <button class="btn btn-xs btn-danger" title="作废" ng-confirm="{text:'确定作废吗'}" ng-click="ho.Sign(item,'2')"><i class="glyphicon glyphicon-remove-sign"></i></button>
+                        <td>
+                            <button class="btn btn-xs btn-success" ng-if="ho.Ser.aState != '0'" title="反审" ng-confirm="{text:'确定反审吗'}" ng-click="ho.Sign(item, '0')"><i class="fa fa-undo"></i></button>
+                            <button class="btn btn-xs btn-success" ng-if="ho.Ser.aState == '0'" title="核准" ng-confirm="{text:'确定核准吗'}" ng-click="ho.Sign(item, '1')"><i class="glyphicon glyphicon-ok-sign"></i></button>
+                            <button class="btn btn-xs btn-danger" ng-if="ho.Ser.aState == '0'" title="作废" ng-confirm="{text:'确定作废吗'}" ng-click="ho.Sign(item,'2')"><i class="glyphicon glyphicon-remove-sign"></i></button>
                         </td>
                         <td>{{ item.ApplyDate | date:'yyyy-MM-dd' }}</td>
                         <td title="{{ item.Line.Name }}">{{ item.Line.Name }}</td>

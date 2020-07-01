@@ -520,7 +520,7 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
 
     function Convert(item) {
         var en = item;
-        en.ColumnText = en.ColumnText || en.ColumnName;
+        en.ColumnText = en.ColumnNameDesc || en.ColumnName;
         en.Width = "100px";
         en.EnNameDiv = en.EnNameDiv || '';
         en.EditCol = en.ColumnName;
@@ -722,7 +722,7 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
         sbHtml += '</div>\n';
         sbHtml += '<div class="modal-body wrapper-xs">\n';
         sbHtml += '    <div class="panel panel-default scroll-y" ng-form=\"' + vm.NewItem.controllerAs + '.DialogForm\">\n';
-        sbHtml += '        <div class="panel-body  padder-xs padder-v-xxs">\n';
+        sbHtml += '        <div class="panel-body  padder-xs padder-v-xs">\n';
         sbHtml += '            <div class="form-horizontal no-padder">\n';
 
         //是否有下拉选择框
@@ -732,17 +732,30 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
                 have += 1;
             }
         });
-        var colwidth = vm.NewItem.size == 'sm' || !vm.NewItem.size || vm.NewItem.size == "" ? "col-xs-12 " : "col-xs-6 ";
+        var colwidth = vm.NewItem.size == 'sm' || !vm.NewItem.size || vm.NewItem.size == "" ? "col-xs-12 " : "col-xs-12 ";
+
+        var collabel = vm.NewItem.size == 'sm' || !vm.NewItem.size || vm.NewItem.size == "" ? "4" : "2";
+        var collcontrol = collabel == "4" ? "8" : "4";
+        //个数
+        var CelCount = collabel == "4" ? 1 : 2;;
+
         var formwidth = fun.ColList.length >= 12 ? "form-group-xs " : "form-group ";
+        var Cindex = 0;
         //栏位添加
         fun.ColList.forEach(function (row) {
             if (row.ABleNull != "4") {
+                //新的form-group
+                if (Cindex == 0) {
+                    sbHtml += '                <div class="' + formwidth + ' ' + colwidth + 'padder-xs">\n';
+                }
                 
-                sbHtml += '                <div class="' + formwidth + ' ' + colwidth + 'no-padder">\n';
-                sbHtml += '                    <label class="col-xs-4 control-label">' + row.ColumnText + '</label>\n';
-                sbHtml = getHtmlRowEdit(fun, sbHtml, row);
-
-                sbHtml += '                </div>\n';
+                sbHtml += '                    <label class="col-xs-' + collabel + ' control-label">' + row.ColumnText + '</label>\n';
+                sbHtml = getHtmlRowEdit(fun, sbHtml, row, collcontrol);
+                Cindex++;
+                if (Cindex == CelCount) {
+                    sbHtml += '                </div>\n';
+                    Cindex = 0;
+                }
             }
         })
         sbHtml += '            </div>\n';
@@ -758,12 +771,12 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
         return sbHtml;
     }
 
-    function getHtmlRowEdit(fun, sbHtml, row) {
+    function getHtmlRowEdit(fun, sbHtml, row, collcontrol) {
         var colName = subColName(row.EditCol);
-        sbHtml += '                    <div class="col-xs-8 no-padder" ng-class="{ \'has-error\' : ' + vm.NewItem.controllerAs + '.DialogForm.' + colName + '.$invalid }">\n';
+        sbHtml += '                    <div class="col-xs-' + collcontrol + ' no-padder" ng-class="{ \'has-error\' : ' + vm.NewItem.controllerAs + '.DialogForm.' + colName + '.$invalid }">\n';
 
         //是否可以编辑是修改
-        var ableEdit = row.ABleNull == '0' || row.ABleNull == '1' ? "" + vm.NewItem.controllerAs + ".form.index == 1\" || " + vm.NewItem.controllerAs + ".form.index == 2" : vm.NewItem.controllerAs + ".form.index == 2";
+        var ableEdit = row.ABleNull == '0' || row.ABleNull == '1' ? "" + vm.NewItem.controllerAs + ".form.index == 1 || " + vm.NewItem.controllerAs + ".form.index == 2" : vm.NewItem.controllerAs + ".form.index == 2";
         var strCheckExcist = row.CheckExists ? " ng-blur=\"" + vm.NewItem.controllerAs + ".Is" + colName + "Exists()\" " : "";
         var str = "                        ";
         switch (row.ColType) {
@@ -775,7 +788,7 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
             case "Select": str += "<div basic-select=\"" + row.ColValue + "\"  ng-disabled=\"" + ableEdit + "\"  ng-name=\"{0}\" placeholder=\"{1}\" ng-model=\"{2}.Item.{0}\" " + (row.ABleNull != "3" ? " ng-required =\"true\"" : "") + "></div>"; break;
             case "Config": str += "<div config-select ng-model=\"{2}.Item.{0}\"  ng-disabled=\"" + ableEdit + "\"  ng-name=\"{0}\" placeholder=\"{1}\" tb=\"" + row.ColValue.split(',')[0] + "\" col=\"" + row.ColValue.split(',')[1] + "\"" + (row.ABleNull != "3" ? " ng-required =\"true\"" : "") + "></div>"; break;
             case "Switch":
-                str += "<div toggle-switch ng-model=\"{2}.NewItem.{0}\"  is-disabled=\"" + ableEdit + "\"  class=\"w-xxs switch-success\" on-label=\"是\" off-label=\"否\" on-value = \"1\" off-value =\"0\"></div>";
+                str += "<div toggle-switch ng-model=\"{2}.Item.{0}\"  is-disabled=\"" + ableEdit + "\"  class=\"w-xxs switch-success\" on-label=\"是\" off-label=\"否\" on-value = \"1\" off-value =\"0\"></div>";
                 break;
             case "CheckBox":
                 str += "<label class=\"i-checks i-checks\"><input type =\"checkbox\" ng-disabled=\"" + ableEdit + "\" ng-model = \"{2}.Item.{0}\"><i></i>{2}</label>";

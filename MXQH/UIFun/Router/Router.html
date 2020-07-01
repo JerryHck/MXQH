@@ -1,4 +1,5 @@
-﻿<style>
+﻿
+<style>
     .min-height {
         height: 2000px;
     }
@@ -35,6 +36,9 @@
 
 <div id="RouterApp">
     <div class="container-fluid">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-success" ng-click="ro.Show()">显示</button>
+        </div>
         <div class="row">
             <div id="side-buttons" class="col-md-1 bg-light min-height">
                 <div>
@@ -50,7 +54,12 @@
                 </div>
             </div>
             <div class="col-md-11 bg-green-light min-height" id="drop-bg">
-
+                <!--<div class='pa' id='{{item.blockId}}' style='top:{{item.positionX}}px;left:{{item.positionY}}px' ng-repeat="item in ro.Nodes">
+                    <a class='btn btn-default' href='#' role='button'>
+                        {{item.blockId}}
+                        <span class="pull-right m-l-xs text-danger"><i data-type="deleteNode" data-id="{{item.blockId}}" class="glyphicon glyphicon-remove-circle"></i></span>
+                    </a>
+                </div>-->
             </div>
         </div>
     </div>
@@ -89,7 +98,8 @@
     <div class="pa" id='{{id}}' style='top:{{top}}px;left:{{left}}px'>
         <div class="panel panel-default panel-node panel-info">
             <div id='{{id}}-heading' data-id="{{id}}" class="panel-heading">
-                菜单
+                cai
+                <input type="text" class="form-control" value="" />
                 <span class="pull-right m-l-xs text-danger" data-type="deleteNode" data-id="{{id}}"><i class="glyphicon glyphicon-remove-circle"></i></span>
             </div>
             <ul class="list-group">
@@ -104,15 +114,16 @@
     </div>
 </script>
 
-<div id="tpl-Root">
-    <div class='pa' id='{{id}}' style='top:{{top}}px;left:{{left}}px'>
-        <a class='btn btn-success' href='#' role='button'>
-            {{name}}
-            <span class="pull-right m-l-xs text-danger"><i data-type="deleteNode" data-id="{{id}}" class="glyphicon glyphicon-remove-circle"></i></span>
-        </a>
+<script type="text/html">
+    <div id="tpl-Root">
+        <div class='pa' id='{{id}}' style='top:{{top}}px;left:{{left}}px'>
+            <a class='btn btn-success' href='#' role='button'>
+                {{name}}
+                <span class="pull-right m-l-xs text-danger"><i data-type="deleteNode" data-id="{{id}}" class="glyphicon glyphicon-remove-circle"></i></span>
+            </a>
+        </div>
     </div>
-</div>
-
+</script>
 
 <script type="text/html">
     <div class='pa' id='{{id}}' style='top:{{top}}px;left:{{left}}px'>

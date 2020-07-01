@@ -38,7 +38,7 @@ function ($scope, $http, AjaxService, toastr, $window) {
 
     function Edit1(item) {
         for (var i = 0, len = vm.List1.length; i < len; i++) {
-            vm.List[i].IsEdit = false;
+            vm.List1[i].IsEdit = false;
         }
         vm.EditItem1 = angular.copy(item);
         vm.EditItem1.ApplyDate = (new Date(vm.EditItem1.ApplyDate)).Format('yyyy-MM-dd');
@@ -81,6 +81,12 @@ function ($scope, $http, AjaxService, toastr, $window) {
         var list = [];
         if (vm.Ser1.aState) {
             list.push({ name: "State", value: vm.Ser1.aState, tableAs: "a" });
+        }
+        if (vm.Ser1.LineID) {
+            list.push({ name: "LineID", value: vm.Ser1.LineID, tableAs: "a" });
+        }
+        if (vm.Ser1.ApplyDate) {
+            list.push({ name: "ApplyDate", value: vm.Ser1.ApplyDate, tableAs: "a" });
         }
         list.push({ name: "DataType", value: "R", tableAs: "a" });
         return list;

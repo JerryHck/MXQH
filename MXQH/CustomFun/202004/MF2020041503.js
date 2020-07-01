@@ -57,6 +57,12 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         if (vm.Ser.aState) {
             list.push({ name: "DataType", value: vm.Ser.DataType, tableAs: "a" });
         }
+        if (vm.Ser.LineID) {
+            list.push({ name: "LineID", value: vm.Ser.LineID, tableAs: "a" });
+        }
+        if (vm.Ser.ApplyDate) {
+            list.push({ name: "ApplyDate", value: vm.Ser.ApplyDate, tableAs: "a" });
+        }
         return list;
     }
 

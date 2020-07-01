@@ -1,0 +1,293 @@
+﻿<div class="panel panel-default m-t-none">
+    <div class="panel-body padder-xs bg-light h5 padder-v-xs" ng-form="sys.Form">
+        <span class="pull-right">
+            <button class="btn btn-success m-r-md m-t-xs" ng-if="!sys.IsEdit" ng-click="sys.IsEdit = !sys.IsEdit"><i class="glyphicon glyphicon-edit"></i>编辑</button>
+            <button class="btn btn-success m-t-xs m-r-lg" ng-if="sys.IsEdit" ng-disabled="!sys.IsEdit" ng-click="sys.Save()"><i class="glyphicon glyphicon-save"></i>储存</button>
+            <button class="btn btn-warning m-r-md  m-t-xs" ng-if="sys.IsEdit" ng-click="sys.IsEdit = !sys.IsEdit">取消</button>
+        </span>
+
+        <uib-tabset active="active" type="tabs">
+            <uib-tab index="0">
+                <uib-tab-heading class="h5">系统平台配置</uib-tab-heading>
+                <div class="panel panel-success m-t-xxs">
+                    <!--<div class="panel-heading text-center h4">系统平台配置</div>-->
+                    <div class="panel-body padder-v-xs">
+                        <div class="form-horizontal">
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">系统平台名称:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.SystemName.$invalid}">
+                                        <input type="text" ng-disabled="!sys.IsEdit" name="SystemName" class="form-control" ng-model="sys.Setting.AppSet.SystemName" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">Session时间:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.SessionMinute.$invalid}">
+                                        <input type="text" min="20" step="1" ng-disabled="!sys.IsEdit" name="SessionMinute" class="form-control" ng-model="sys.Setting.AppSet.SessionMinute" required />
+                                        <span class="input-group-addon">分钟</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">任务计划:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.EnableJob.$invalid}">
+                                        <div toggle-switch ng-model="sys.Setting.AppSet.EnableJob" is-disabled="!sys.IsEdit" class="w-xxs switch-bool" on-label="启用" off-label="停用" on-value="true" off-value="false"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">APP网页地址:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.MXQHUrl.$invalid}">
+                                        <input type="text" ng-disabled="!sys.IsEdit" name="MXQHUrl" class="form-control" ng-model="sys.Setting.AppSet.MXQHUrl" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">文件物理地址:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.File.$invalid}">
+                                        <input type="text" ng-disabled="!sys.IsEdit" name="File" class="form-control" ng-model="sys.Setting.AppSet.File" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">文件下载地址:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.FileUrl.$invalid}">
+                                        <input type="text" ng-disabled="!sys.IsEdit" name="FileUrl" class="form-control" ng-model="sys.Setting.AppSet.FileUrl" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">文件服务下载地址:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.FileServiceUrl.$invalid}">
+                                        <input type="text" ng-disabled="!sys.IsEdit" name="FileServiceUrl" class="form-control" ng-model="sys.Setting.AppSet.FileServiceUrl" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">文件服务路径:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.FileServicePath.$invalid}">
+                                        <input type="text" ng-disabled="!sys.IsEdit" name="FileServicePath" class="form-control" ng-model="sys.Setting.AppSet.FileServicePath" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">Socket服务物理地址:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.SocketServerPath.$invalid}">
+                                        <input type="text" ng-disabled="!sys.IsEdit" name="SocketServerPath" class="form-control" ng-model="sys.Setting.AppSet.SocketServerPath" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">外部DLL引用物理地址:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.DLLPath.$invalid}">
+                                        <input type="text" ng-disabled="!sys.IsEdit" name="DLLPath" class="form-control" ng-model="sys.Setting.AppSet.DLLPath" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab index="1">
+                <uib-tab-heading class="h5">插件配置</uib-tab-heading>
+                <div class="panel panel-success m-t-xxs">
+                    <!--<div class="panel-heading text-center h4">插件配置</div>-->
+                    <div class="panel-body padder-v-xs">
+                        <div class="form-horizontal col-xs-12">
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">标签设计插件版本:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-sm-12 input-group" ng-class="{'has-error': sys.Form.LabelCodeVersion.$invalid}">
+                                        <input type="text" ng-disabled="!sys.IsEdit" name="LabelCodeVersion" class="form-control" ng-model="sys.Setting.AppSet.LabelCodeVersion" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">标签设计下载地址:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.LabelCodeUrl.$invalid}">
+                                        <input type="text" ng-disabled="!sys.IsEdit" name="LabelCodeUrl" class="form-control" ng-model="sys.Setting.AppSet.LabelCodeUrl" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">打印插件版本:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.PrinterVersion.$invalid}">
+                                        <input type="text" ng-disabled="!sys.IsEdit" name="PrinterVersion" class="form-control" ng-model="sys.Setting.AppSet.PrinterVersion" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">打印插件下载地址:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.PrinterCodeUrl.$invalid}">
+                                        <input type="text" ng-disabled="!sys.IsEdit" name="PrinterCodeUrl" class="form-control" ng-model="sys.Setting.AppSet.PrinterCodeUrl" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab index="2">
+                <uib-tab-heading class="h5">邮件系统配置</uib-tab-heading>
+                <div class="panel panel-success m-t-xxs">
+                    <!--<div class="panel-heading text-center h4">邮件系统配置</div>-->
+                    <div class="panel-body padder-v-xs">
+                        <div class="form-horizontal">
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">邮件主标题:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.Display.$invalid}">
+                                        <input type="text" min="20" step="1" ng-disabled="!sys.IsEdit" name="Display" class="form-control" ng-model="sys.Setting.AppSet.Mail.Display" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">是否开启SSL验证:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.Ssl.$invalid}">
+                                        <div toggle-switch ng-model="sys.Setting.AppSet.Mail.Ssl" is-disabled="!sys.IsEdit" class="w-xxs switch-bool" on-label="是" off-label="否" on-value="true" off-value="false"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">系统发件邮箱:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.From.$invalid}">
+                                        <input type="email" ng-disabled="!sys.IsEdit" name="From" class="form-control" ng-model="sys.Setting.AppSet.Mail.From" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">发件邮箱密码:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.Pswd.$invalid}">
+                                        <input type="text" ng-disabled="!sys.IsEdit" name="Pswd" class="form-control" ng-model="sys.Setting.AppSet.Mail.Pswd" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">发件端口:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.Port.$invalid}">
+                                        <input type="text" ng-disabled="!sys.IsEdit" name="Port" class="form-control" ng-model="sys.Setting.AppSet.Mail.Port" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">SMTP服务:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.Smtp.$invalid}">
+                                        <input type="text" ng-disabled="!sys.IsEdit" name="Smtp" class="form-control" ng-model="sys.Setting.AppSet.Mail.Smtp" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">邮件签名链接文件:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.Footer.$invalid}">
+                                        <input type="text" ng-disabled="!sys.IsEdit" name="Footer" class="form-control" ng-model="sys.Setting.AppSet.Mail.Footer" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab index="3">
+                <uib-tab-heading class="h5">链接数据库配置</uib-tab-heading>
+                <div class="panel panel-success">
+                    <table class="table pad-xs">
+                        <thead>
+                            <tr>
+                                <td style="width:60px">
+                                    <button class="btn btn-xs btn-success" ng-disabled="!sys.IsEdit" ng-click="sys.AddCon()"><i class="glyphicon glyphicon-plus"></i>新增</button>
+                                </td>
+                                <td style="width:100px ">简称</td>
+                                <td style="width:600px ">链接字符串</td>
+                                <td style="width:150px ">链接类型</td>
+                                <td style="width:100px ">同步写库</td>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in sys.Setting.Connects.Connects">
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-disabled="!sys.IsEdit" ng-click="sys.DeleteCon(item, $index)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </td>
+                            <td>
+                                <div ng-class="{ 'has-error': sys.Form.connetname.$invalid }">
+                                    <input ng-disabled="!sys.IsEdit" type="text" class="form-control" name="connetname" ng-model="item.name" required />
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-class="{ 'has-error': sys.Form.connectionString.$invalid }">
+                                    <textarea rows="2" ng-disabled="!sys.IsEdit" type="text" class="form-control" name="connectionString" ng-model="item.connectionString" required></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-class="{ 'has-error': sys.Form.providerName.$invalid }">
+                                    <div ng-disabled="!sys.IsEdit" config-select ng-name="providerName" tb="System" col="ConnetType" ng-required="true" ng-model="item.providerName"></div>
+                                    <!--<input ng-disabled="!sys.IsEdit" type="text" class="form-control" name="providerName" ng-model="item.providerName" required />-->
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-class="{ 'has-error': sys.Form.restoreName.$invalid }">
+                                    <input ng-disabled="!sys.IsEdit" type="text" class="form-control" name="restoreName" ng-model="item.restoreName" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </uib-tab>
+            <uib-tab index="4">
+                <uib-tab-heading class="h5">自定义参数配置</uib-tab-heading>
+                <div class="panel panel-success">
+                    <table class="table pad-xs">
+                        <thead>
+                            <tr>
+                                <td style="width:60px">
+                                    <button class="btn btn-xs btn-success" ng-disabled="!sys.IsEdit" ng-click="sys.AddCustom()"><i class="glyphicon glyphicon-plus"></i>新增</button>
+                                </td>
+                                <td style="width:100px ">属性名</td>
+                                <td style="width:500px ">属性值</td>
+                                <td style="width:300px ">备注</td>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in sys.Setting.CustomSets.CustomSets">
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-disabled="!sys.IsEdit" ng-click="sys.DeleteCustom(item, $index)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </td>
+                            <td>
+                                <div ng-class="{ 'has-error': sys.Form.customname.$invalid }">
+                                    <input ng-disabled="!sys.IsEdit" type="text" class="form-control" name="customname" ng-model="item.name" required />
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-class="{ 'has-error': sys.Form.customvalue.$invalid }">
+                                    <input ng-disabled="!sys.IsEdit" type="text" class="form-control" name="customvalue" ng-model="item.value" required />
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-class="{ 'has-error': sys.Form.customRemark.$invalid }">
+                                    <input ng-disabled="!sys.IsEdit" type="text" class="form-control" name="customRemark" ng-model="item.remark" required />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>
+<!--<pre>{{ sys.Setting | json }}</pre>-->

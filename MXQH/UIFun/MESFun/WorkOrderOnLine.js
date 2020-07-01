@@ -94,17 +94,18 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         //    vm.Item.InCode = undefined;
         //    return false;
         //}
-        if (vm.OrderData.Quantity - vm.OrderCount.ToTalCount == 0) {
-            AjaxService.PlayVoice('error.mp3');
-            MyPop.ngConfirm({ text: "投入数量已达到U9开工量, 是否继续投入?" }).then(function (data) {
-                if (vm.IsAuto) {
-                    Save();
-                }
-            });
-        }
-        else if (vm.IsAuto) {
-            Save();
-        }
+        //if (vm.OrderData.Quantity - vm.OrderCount.ToTalCount == 0) {
+        //    AjaxService.PlayVoice('error.mp3');
+        //    MyPop.ngConfirm({ text: "投入数量已达到U9开工量, 是否继续投入?" }).then(function (data) {
+        //        if (vm.IsAuto) {
+        //            Save();
+        //        }
+        //    });
+        //}
+        //else if (vm.IsAuto) {
+        //    Save();
+        //}
+        Save();
     }
 
     function showError(mes)

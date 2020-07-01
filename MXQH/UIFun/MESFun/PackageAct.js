@@ -213,7 +213,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             else if (data.data3[0].MsgType == "Success") {
                 var postData = {}, list = [];
                 postData.ParaData = JSON.stringify(data.data[0]);
-                vm.PrintSnNum
+
                 for (var i = 0, len = vm.PrintSnNum || data.data2.length; i < len; i++) {
                     list.push(data.data2[i].SNCode);
                 }

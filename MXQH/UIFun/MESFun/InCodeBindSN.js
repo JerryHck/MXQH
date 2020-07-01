@@ -5,9 +5,9 @@ angular.module('app')
 function ($scope, $http, AjaxService, toastr, $window, MyPop) {
 
     var vm = this;
-    vm.NewBind = { Action: "I", Customer:"U" };
+    vm.NewBind = { Action: "I", Customer: "U" };
     vm.MesList = [];
-    vm.Focus = { InCode: true, SnCode: false};
+    vm.Focus = { InCode: true, SnCode: false };
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
     vm.NewItemType = { IsPKGen: 1 };
@@ -238,9 +238,10 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
                 var Msg = { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].MsgText };
                 vm.MesList.splice(0, 0, Msg);
                 vm.NewBind = {};
-                vm.OrderCount = data.data3[0];
-                vm.AssOrderCount = data.data4[0];
                 AjaxService.PlayVoice('success.mp3');
+
+                GetOrder();
+
                 //一般打印
                 if (vm.PrintType == 'G') {
                     PrintCode(data.data2[0], data.data1[0]);

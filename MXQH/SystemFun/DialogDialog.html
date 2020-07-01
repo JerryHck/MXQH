@@ -98,7 +98,7 @@
                                                         <a ng-repeat="load in dialog.NewItem.LoadFiles | orderBy:'load.Orderby'"
                                                            class="list-group-item"
                                                            ng-drop="true" ng-drop-success="dialog.LoadDrop($data,$index)">
-                                                            <span ng-if="dialog.editFun" ng-click='dialog.DeleteLoad($index)' class="pull-right text-danger">
+                                                            <span ng-click='dialog.DeleteLoad($index)' class="pull-right text-danger">
                                                                 <i class="fa fa-times"></i>
                                                             </span>
                                                             <span class="block m-l-n bg-transparent">
@@ -306,7 +306,7 @@
                                         <input autocomplete="off"  type="checkbox" ng-change="dialog.IsColChange(col)" ng-model="col.IsShow"><i></i>
                                     </label>
                                 </td>
-                                <td title="{{ col.ColumnName }}" ng-class="{'bg-warning':col.ColumnType == '3'}">{{ col.ColumnName }}</td>
+                                <td title="{{ col.ColumnNameDesc }}" ng-class="{'bg-warning':col.ColumnType == '3'}">{{ col.ColumnName }}</td>
                             </tr>
                         </table>
                     </div>

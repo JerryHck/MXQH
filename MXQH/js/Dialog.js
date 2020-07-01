@@ -43,7 +43,14 @@ function ($rootScope, $ocLazyLoad, $uibModal, $q, AjaxService, Version) {
         if (dialog.LoadFiles) {
             var loadList = [];
             for (var i = 0, len = dialog.LoadFiles.length; i < len; i++) {
-                loadList.push(dialog.LoadFiles[i].LoadName+ "?v=" + Version);
+                var l = dialog.LoadFiles[i];
+                if (l.LoadName.substr(l.LoadName.length - 3, 3).toLowerCase() == 'css' || l.LoadName.substr(l.LoadName.length - 3, 3).toLowerCase() == '.js') {
+                    loadList.push(l.LoadName + "?v=" + Version);
+                }
+                else {
+                    loadList.push(l.LoadName);
+                }
+                //loadList.push(dialog.LoadFiles[i].LoadName+ "?v=" + Version);
             }
             $ocLazyLoad.load(loadList).then(function () {
                 d.resolve($uibModal.open(config).result);

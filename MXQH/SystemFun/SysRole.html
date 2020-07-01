@@ -22,31 +22,29 @@
                 </div>
                 <div class="row-row no-padder">
                     <div class="cell scrollable hover">
-                        <div class="cell-inner">
-                            <div class="list-group">
-                                <a ng-repeat="r in role.ListRole" class="list-group-item b-l-3x hover-anchor cl"
-                                   ng-class="{'hover': r.RoleSn == role.SelectedRole.RoleNo, ' b-l-success':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="role.SelectRole(r)">
-                                    <span class="pull-left">
-                                        <i class="btn btn-xs glyphicon glyphicon-edit text-success" ng-click="role.EditRole(r)"></i>
+                        <div class="cell-inner text-center">
+                            <a ng-repeat="r in role.ListRole" class="list-group-item text-left b-l-3x hover-anchor cl"
+                                ng-class="{'hover': r.RoleSn == role.SelectedRole.RoleNo, ' b-l-success':$index%2==0, 'b-l-primary':$index%2==1}" ng-click="role.SelectRole(r)">
+                                <span class="pull-left">
+                                    <i class="btn btn-xs glyphicon glyphicon-edit text-success" ng-click="role.EditRole(r)"></i>
+                                </span>
+                                <div class="clear">
+                                    <span class="pull-rigth">
+                                        <i class="pull-right btn btn-xs glyphicon glyphicon-trash text-danger" ng-click="role.DeleteRole(r)"></i>
                                     </span>
-                                    <div class="clear">
-                                        <span class="pull-rigth">
-                                            <i class="pull-right btn btn-xs glyphicon glyphicon-trash text-danger" ng-click="role.DeleteRole(r)"></i>
+                                    <span class="text-info h5 font-bold" ng-bind-html="r.RoleName | highlight: role.EntityQuery"></span><br />
+                                    <small class="text-muted">
+                                        <span class="h5">{{ r.RoleSn }}</span>
+                                        <br />
+                                        <span class="h6">{{ r.RoleDesc }}</span>
+                                        <span class="pull-right">
+                                            <i class="glyphicon btn btn-xs disabled" ng-class="{ 'glyphicon-ok-circle text-success': r.State=='S', 'glyphicon-remove-circle  text-danger': r.State=='E' }"></i>
                                         </span>
-                                        <span class="text-info h5 font-bold" ng-bind-html="r.RoleName | highlight: role.EntityQuery"></span><br />
-                                        <small class="text-muted">
-                                            <span class="h5">{{ r.RoleSn }}</span>
-                                            <br />
-                                            <span class="h6">{{ r.RoleDesc }}</span>
-                                            <span class="pull-right">
-                                                <i class="glyphicon" ng-class="{ 'glyphicon-ok-circle text-success': r.State=='S', 'glyphicon-remove-circle  text-danger': r.State=='E' }"></i>
-                                            </span>
-                                        </small>
-                                    </div>
-                                </a>
-                                <div uib-pagination total-items="role.page.total " ng-model="role.page.index " items-per-page="role.page.size " max-size="5" first-text="<<" previous-text="<"
-                                     ng-change="role.getListRole()" next-text=">" last-text=">> " boundary-links="false" boundary-link-numbers="false"></div>
-                            </div>
+                                    </small>
+                                </div>
+                            </a>
+                            <div uib-pagination ng-if="role.page.total>role.page.size" total-items="role.page.total " ng-model="role.page.index " items-per-page="role.page.size " max-size="5" first-text="<<" previous-text="<"
+                                    ng-change="role.getListRole()" next-text=">" last-text=">> " boundary-links="false" boundary-link-numbers="false"></div>
                         </div>
                     </div>
                 </div>
@@ -134,7 +132,7 @@
                 </div>
             </div>
         </div>
-        <div class="col w-xl padder-xs">
+        <div class="col w-md padder-xs">
             <div class="vbox" ng-if="role.SelectedRole">
                 <div class="wrapper-xs">
                     <div class="panel panel-default">
