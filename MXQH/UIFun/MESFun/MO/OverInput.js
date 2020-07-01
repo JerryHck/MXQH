@@ -13,18 +13,9 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     vm.Search = Search;
     DataBind();
     vm.Status = { Table: 'OverInput', Column: 'Status' };
-    //vm.UserNo = $rootScope.User.UserNo;
-    vm.UserNo = '1619';
+    vm.UserNo = $rootScope.User.UserNo;
+    //vm.UserNo = '1619';
 
-    //function Search() {
-    //    //1、SourceHelper DLL文件名
-    //    //2、SourceHelper.SQLHelper Class全名
-    //    //3、TestDll 调用的函数
-    //    //4、参数        
-    //    AjaxService.CallDll('Mes4OA', 'Mes4OA.Test4OA', 'TestFun', { json: "jsons" }).then(function (data) {         
-    //        console.log(data);
-    //    })
-    //}
 
 
     function DataBind() {
@@ -39,15 +30,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
         vm.page.pageIndex = 1;
         DataBind();
     }
-
-    ////导出
-    //function Export() {
-    //    vm.page.pageSize = 100000;
-    //    vm.promise = AjaxService.GetPlanExcel("OverInput", 'GetList', vm.page).then(function (data) {
-    //        $window.location.href = data.File;
-    //        vm.page.pageSize = 10;
-    //    });
-    //}
 
     //编辑
     function Edit(item) {
@@ -93,14 +75,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
     }
     //提交流程到OA
     function Approve(item) {
-        //    //1、SourceHelper DLL文件名
-        //    //2、SourceHelper.SQLHelper Class全名
-        //    //3、TestDll 调用的函数
-        //    //4、参数  
-
-        //AjaxService.ExecPlan("OverInput4OA", "Approve", { DocNo: "123" }).then(function (data) {
-        //    console.log(data);
-        //})
 
         AjaxService.ExecPlan("MesPlanDetail", "GetMO", { WorkOrderID: item.WorkOrderID }).then(function (data) {
             if (data.data.length > 0) {
@@ -121,15 +95,12 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form, $window) {
                 oaItem.OnLineQty = data.data[0].OnLineQty;
 
 
-                //vm.promise = AjaxService.CallDll('Mes4OA', 'Mes4OA.OAWorkFlow', 'CreateWorkFlow', { planName: "OverInput4OA", condition: JSON.stringify([{ name: "DocNo", value: item.DocNo }]) }).then(function (data) {
-                //        console.log(data);
-                //    })
                 vm.promise = AjaxService.CallDll('Mes4OA', 'Mes4OA.OAWorkFlow', 'CreateWorkFlowByJson', { planName: "OverInput4OA", json: JSON.stringify(oaItem) }).then(function (data) {
                     var jsonData = JSON.parse(JSON.parse(data));
                     if (jsonData.type == "1") {
                         toastr.error(jsonData.backmsg);
                     } else {
-                        let flag = true;
+                        var flag = true;
                         for (var i = 0; i < jsonData.resultlist.length; i++) {
                             if (jsonData.resultlist[i].status == "1") {
                                 flag = false;
