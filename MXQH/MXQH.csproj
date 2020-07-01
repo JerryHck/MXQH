@@ -188,6 +188,14 @@
     <Content Include="js\doboard.min.js" />
     <Content Include="Scripts\bootstrap-treeview.js" />
     <Content Include="Scripts\bootstrap-treeview.min.js" />
+    <Content Include="Scripts\jsPlump\graphlib.min.js" />
+    <Content Include="Scripts\jsPlump\jquery-ui.min.css" />
+    <Content Include="Scripts\jsPlump\jquery-ui.min.js" />
+    <Content Include="Scripts\jsPlump\jquery.jsPlumb.min.js" />
+    <Content Include="Scripts\jsPlump\mustache.min.js" />
+    <Content Include="Scripts\jsPlump\uuid.js" />
+    <Content Include="SystemFun\FormFlow.html" />
+    <Content Include="SystemFun\FormFlow.js" />
     <Content Include="SystemFun\ResetPswDialog.html" />
     <Content Include="SystemFun\ResetPswDialog.js" />
     <Content Include="SystemFun\SerialNumber.html" />

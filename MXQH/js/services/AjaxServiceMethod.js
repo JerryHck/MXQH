@@ -109,7 +109,8 @@
             sleep: sleep,
             convertArray: convertArray,
             //Ajax 方法
-            httpFun: httpFun
+            httpFun: httpFun,
+            uuid: uuid
 
         };
         var conect = 0;

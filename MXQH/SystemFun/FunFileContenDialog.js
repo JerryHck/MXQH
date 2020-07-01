@@ -330,7 +330,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
 
     function Convert(item) {
         var en = item;
-        en.ColumnText = en.ColumnText || en.ColumnName;
+        en.ColumnText = en.ColumnNameDesc || en.ColumnName;
         en.Width = "100px";
         en.EnNameDiv = en.EnNameDiv || '';
         en.EditCol = en.ColumnName;

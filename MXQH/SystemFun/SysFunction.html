@@ -211,8 +211,14 @@
                                             </div>
                                             <div class="col-sm-10" ng-if="fun.SelectedFun.IsSystem == 2">
                                                 <div class="input-group col-md-12 no-padder">
+
                                                     <span class="input-group-addon" ng-if="fun.editFun" title="设定表单信息"><a class="text-success" ng-click="fun.OpenFormDialog()"><i class="fa fa-file-text-o"></i></a></span>
+                                                    <span class="input-group-addon" ng-if="fun.editFun" title="设定表单流程节点信息"><a class="text-success" ng-click="fun.OpenFormFlowDialog()"><i class="fa fa-tree"></i></a></span>
                                                     <input autocomplete="off" class="form-control" ng-model="fun.SelectedFun.FunHtml" disabled />
+
+                                                    <!--<span class="input-group-addon" ng-if="fun.editFun" title="设定表单信息"><a class="text-success" ng-click="fun.OpenFormDialog()"><i class="fa fa-file-text-o"></i></a></span>
+                                                    <input autocomplete="off" class="form-control" ng-model="fun.SelectedFun.FunHtml" disabled />
+                                                    <span class="input-group-addon" ng-if="fun.editFun" title="设定表单流程"><a class="text-success" ng-click="fun.OpenFormFlowDialog()"><i class="fa fa-tree"></i></a></span>-->
                                                 </div>
                                             </div>
                                         </div>

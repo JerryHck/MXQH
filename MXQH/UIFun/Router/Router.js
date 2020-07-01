@@ -413,7 +413,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop, $ocLa
 
                     //console.log(data)
                     var template = me.getTemplate(item)
-
+                    console.log(Mustache.render(template, data))
                     $container.append(Mustache.render(template, data))
 
                     if (me['addEndpointOf' + item.type]) {

@@ -4,7 +4,10 @@
         <div class="wrapper-xs">
             <div class="form-inline">
                 <div class="form-group">
-                    <input autocomplete="off"  type="text" date-time-picker class="form-control"  ng-model="t.Ser.aFunNo" placeholder="1234" format="Y/m/d H:i" step="30" option="t.DateTimeOption">
+                    <input autocomplete="off"  type="text" class="form-control"  ng-model="t.Ser.aWORKCODE" placeholder="a_WORKCODE">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" class="form-control"  ng-model="t.Ser.aLASTNAME" placeholder="a_LASTNAME">
                 </div>
                 <button class= "btn btn-sm btn-info " ng-click= "t.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
                 <button class= "btn btn-sm btn-success " ng-click= "t.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
@@ -15,25 +18,27 @@
                 <table class= "table " >
                     <thead>
                         <tr>
-                            <td title="a_FunNo" style= "width:100px ">a_FunNo</td>
-                            <td title="a_ParFunNo" style= "width:100px ">a_ParFunNo</td>
-                            <td title="a_OrderBy" style= "width:100px ">a_OrderBy</td>
-                            <td title="a_FunName" style= "width:100px ">a_FunName</td>
-                            <td title="b_Id" style= "width:100px ">b_Id</td>
-                            <td title="b_LoadName" style= "width:100px ">b_LoadName</td>
-                            <td title="b_SortNo" style= "width:100px ">b_SortNo</td>
-                            <td title="b_FunNo" style= "width:100px ">b_FunNo</td>
+                            <td title="a_ID" style= "width:100px ">a_ID</td>
+                            <td title="a_WORKCODE" style= "width:100px ">a_WORKCODE</td>
+                            <td title="a_LASTNAME" style= "width:100px ">a_LASTNAME</td>
+                            <td title="a_SUBCOMPANYID1" style= "width:100px ">a_SUBCOMPANYID1</td>
+                            <td title="a_DEPARTMENTID" style= "width:100px ">a_DEPARTMENTID</td>
+                            <td title="a_SUBCOMPANYNAME" style= "width:100px ">a_SUBCOMPANYNAME</td>
+                            <td title="a_DEPARTMENTNAME" style= "width:100px ">a_DEPARTMENTNAME</td>
+                            <td title="a_SIGNDATE" style= "width:100px ">a_SIGNDATE</td>
+                            <td title="a_SIGNTIME" style= "width:100px ">a_SIGNTIME</td>
                         </tr>
                     </thead>
                     <tr ng-repeat= "item in t.List ">
-                        <td title="{{ item.FunNo }}">{{ item.FunNo }}</td>
-                        <td title="{{ item.ParFunNo }}">{{ item.ParFunNo }}</td>
-                        <td title="{{ item.OrderBy }}">{{ item.OrderBy }}</td>
-                        <td title="{{ item.FunName }}">{{ item.FunName }}</td>
-                        <td title="{{ item.FunLoad.Id }}">{{ item.FunLoad.Id }}</td>
-                        <td title="{{ item.FunLoad.LoadName }}">{{ item.FunLoad.LoadName }}</td>
-                        <td title="{{ item.FunLoad.SortNo }}">{{ item.FunLoad.SortNo }}</td>
-                        <td title="{{ item.FunLoad.FunNo }}">{{ item.FunLoad.FunNo }}</td>
+                        <td title="{{ item.ID }}">{{ item.ID }}</td>
+                        <td title="{{ item.WORKCODE }}">{{ item.WORKCODE }}</td>
+                        <td title="{{ item.LASTNAME }}">{{ item.LASTNAME }}</td>
+                        <td title="{{ item.SUBCOMPANYID1 }}">{{ item.SUBCOMPANYID1 }}</td>
+                        <td title="{{ item.DEPARTMENTID }}">{{ item.DEPARTMENTID }}</td>
+                        <td title="{{ item.SUBCOMPANYNAME }}">{{ item.SUBCOMPANYNAME }}</td>
+                        <td title="{{ item.DEPARTMENTNAME }}">{{ item.DEPARTMENTNAME }}</td>
+                        <td title="{{ item.SIGNDATE }}">{{ item.SIGNDATE }}</td>
+                        <td title="{{ item.SIGNTIME }}">{{ item.SIGNTIME }}</td>
                     </tr>
                 </table>
             </div>
@@ -42,7 +47,5 @@
                      ng-change= "t.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
             </div>
         </div>
-        <font color="#FF0000">（2020-04-13）开始，所有条码发放以系统邮件为准，我司IT将不另行发送邮件!</font>
-
     </uib-tab>
 </uib-tabset>

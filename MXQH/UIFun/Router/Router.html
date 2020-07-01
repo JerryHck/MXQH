@@ -1,4 +1,5 @@
-﻿<style>
+﻿
+<style>
     .min-height {
         height: 2000px;
     }
@@ -113,15 +114,16 @@
     </div>
 </script>
 
-<div id="tpl-Root">
-    <div class='pa' id='{{id}}' style='top:{{top}}px;left:{{left}}px'>
-        <a class='btn btn-success' href='#' role='button'>
-            {{name}}
-            <span class="pull-right m-l-xs text-danger"><i data-type="deleteNode" data-id="{{id}}" class="glyphicon glyphicon-remove-circle"></i></span>
-        </a>
+<script type="text/html">
+    <div id="tpl-Root">
+        <div class='pa' id='{{id}}' style='top:{{top}}px;left:{{left}}px'>
+            <a class='btn btn-success' href='#' role='button'>
+                {{name}}
+                <span class="pull-right m-l-xs text-danger"><i data-type="deleteNode" data-id="{{id}}" class="glyphicon glyphicon-remove-circle"></i></span>
+            </a>
+        </div>
     </div>
-</div>
-
+</script>
 
 <script type="text/html">
     <div class='pa' id='{{id}}' style='top:{{top}}px;left:{{left}}px'>

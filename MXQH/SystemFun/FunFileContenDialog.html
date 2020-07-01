@@ -181,7 +181,7 @@
                                             <input autocomplete="off"  type="checkbox" ng-change="fun.IsColChange(col)" ng-model="col.IsShow"><i></i>
                                         </label>
                                     </td>
-                                    <td title="{{ col.ColumnName }}" ng-class="{'bg-warning':col.ColumnType == '3'}">{{ col.ColumnName }}</td>
+                                    <td title="{{ col.ColumnNameDesc }}" ng-class="{'bg-warning':col.ColumnType == '3'}">{{ col.ColumnName }}</td>
                                 </tr>
                             </table>
                         </div>
@@ -250,7 +250,7 @@
                         </div>
                     </div>
                 </div>
-                <!--<pre>{{ fun.ThisFun |json }}</pre>-->
+                <!--<pre>{{ fun.EnColList |json }}</pre>-->
             </div>
         </uib-tab>
     </uib-tabset>

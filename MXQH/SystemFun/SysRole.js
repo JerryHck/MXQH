@@ -100,7 +100,9 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
     }
 
     function getListRoleUser() {
-        var en = { name: "RoleSn", value: vm.SelectedRole.RoleSn };
+        var en = [{ name: "RoleSn", value: vm.SelectedRole.RoleSn },
+            { name: "State", value: "S" }
+        ];
         AjaxService.GetPlans("UserRole", en).then(function (data) {
             vm.RoleUserList = data;
         });

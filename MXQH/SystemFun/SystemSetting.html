@@ -237,7 +237,8 @@
                             </td>
                             <td>
                                 <div ng-class="{ 'has-error': sys.Form.providerName.$invalid }">
-                                    <input ng-disabled="!sys.IsEdit" type="text" class="form-control" name="providerName" ng-model="item.providerName" required />
+                                    <div ng-disabled="!sys.IsEdit" config-select ng-name="providerName" tb="System" col="ConnetType" ng-required="true" ng-model="item.providerName"></div>
+                                    <!--<input ng-disabled="!sys.IsEdit" type="text" class="form-control" name="providerName" ng-model="item.providerName" required />-->
                                 </div>
                             </td>
                             <td>

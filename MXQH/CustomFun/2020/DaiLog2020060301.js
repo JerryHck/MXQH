@@ -6,52 +6,40 @@ function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window, Dia
     var vm = this;
     vm.NewItem = ItemData;
     vm.Index = 0;
-    vm.ThisFun = {
-        FunNo: ItemData.FunNo,
-        FunName: "新自定义功能",
-        FunType: "B",
-        DataType: "E",
+    vm.ThisForm = {
+        FlowNo: ItemData.FunNo,
+        FlowName: ItemData.FunName,
         Controller: vm.NewItem.Controller,
         ControllerAs: vm.NewItem.ControllerAs,
-        SerList: [],
-        ColList: [],
+        State: 1,
+        IsMail:false
     };
-    vm.SerTypeConfig = { Table: "BasicData", Column: "SerType" };
-    vm.SerAssConfig = { Table: "BasicData", Column: "SerAss" };
-    vm.ColTypeConfig = { Table: "FunCodeColSet", Column: "ColType" };
-    vm.AbleNullConfig = { Table: "FunCodeColSet", Column: "ABleNull" };
 
     vm.ChangeEntity = ChangeEntity;
-    vm.ChangeProc = ChangeProc;
-    vm.Drop = Drop;
-    vm.Drag = Drag;
-    vm.IsColChange = IsColChange;
-    vm.FunType = FunType;
-    vm.DeleteFunCol = DeleteFunCol;
-    vm.AddSer = AddSer;
-    vm.DeleteSer = DeleteSer;
-    vm.IsColAll = IsColAll;
     vm.GenCode = GenCode;
 
     vm.AddArea = AddArea;
     vm.DropArea = DropArea;
     vm.DragArea = DragArea;
     vm.OpenArea = OpenArea;
+    vm.SaveForm = SaveForm;
+
+    //取消
+    vm.cancel = cancel;
+    vm.Ok = Ok;
 
     //中间文件夹
     var dir = ItemData.FunNo == '-1' ? (new Date()).Format("yyyyMM") : new Date(ItemData.CreateDate).Format("yyyyMM");
 
-    InitSer();
     //获取数据设定
-    AjaxService.GetPlan("FunCodeSet", [{ name: "FunNo", value: ItemData.FunNo }]).then(function (data) {
-        if (data.FunNo) {
-            //console.log(data);
-            vm.ThisFun = data;
-            vm.ThisFun.FunNo = ItemData.FunNo;
-            vm.ThisFun.Controller = vm.NewItem.Controller;
-            vm.ThisFun.ControllerAs = vm.NewItem.ControllerAs;
+    AjaxService.GetPlan("foFormFlowData", [{ name: "FlowNo", value: ItemData.FunNo }]).then(function (data) {
+        if (data.FlowNo) {
+            vm.ThisForm = data;
+            vm.ThisForm.Controller = vm.NewItem.Controller;
+            vm.ThisForm.ControllerAs = vm.NewItem.ControllerAs;
+            vm.AreaData = data.Area || [];
+            vm.FormSerialNum = { TbName: data.TbName, ClName: data.ClName };
             GetColList(true);
-            GetEnProcList();
         }
     });
 
@@ -62,6 +50,7 @@ function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window, Dia
     //添加区域
     function AddArea() {
         var en = angular.copy(vm.NewArea);
+        en.Id = AjaxService.uuid();
         en.IsShowName = en.IsShowName || true;
         en.AreaType = "HForm1";
         en.Width = 12;
@@ -85,111 +74,67 @@ function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window, Dia
     }
 
     function OpenArea(item) {
-
         var en = {};
         en.ThisArea = item;
-        en.ColumnList = vm.List[item.SourceName];
-
+        en.ColumnList = angular.copy(vm.List[item.SourceName]);
         Dialog.OpenDialog("FormAreaColumns", en).then(function (data) {
-
-
+            item.Columns = data;
         }, function (data2) { });
     }
 
-    //取消
-    vm.cancel = cancel;
-    vm.Ok = Ok;
+    //保存表单
+    function SaveForm() {
 
+        var en = angular.copy(vm.ThisForm);
+        en.TbName = vm.FormSerialNum.TbName;
+        en.ClName = vm.FormSerialNum.ClName;
+        var listArea = [], listCol = [];
+
+        vm.AreaData = vm.AreaData || [];
+
+        for (var i = 0, len = vm.AreaData.length; i < len; i++) {
+            var a = angular.copy(vm.AreaData[i]);
+            console.log(a)
+            if (a.Columns && a.Columns.length > 0) {
+                for (var j = 0, lenj = a.Columns.length; j < lenj; j++) {
+                    var col = a.Columns[j];
+                    col.AreaId = a.Id;
+                    col.SortNo = j + 1;
+                    listCol.push(col);
+                }
+            }
+            a.Columns = undefined;
+            a.SortNo = i + 1;
+            listArea.push(a);
+        }
+        en.listArea = JSON.stringify(listArea);
+        en.listCol = JSON.stringify(listCol);
+        en.TempColumns = "listArea,listCol";
+        vm.promise = AjaxService.ExecPlan("foFormFlowData", "save", en).then(function (data) {
+            toastr.success("存储成功");
+        })
+    }
+
+    //获取文件信息
     if (!vm.NewItem.Content) {
         //获取js， html文件
         AjaxService.AjaxHandle("GetFileText", dir + "\\" + ItemData.FunNo).then(function (data) {
             vm.NewItem.Content = {};
             vm.NewItem.Content.Html = (data.Html || "").replace(/ControlNew/g, vm.NewItem.ControllerAs);
-            vm.NewItem.Content.Js = (data.Js || "").replace(/NewJsCtrl/g, vm.NewItem.Controller);
+            vm.NewItem.Content.Js = (data.Js || "").replace(/undefined/g, vm.NewItem.Controller);
         })
     }
 
-    function FunType() {
-        vm.ThisFun.ColList = [];
-        vm.EnColList = [];
-        GetColList();
-    }
-
     function ChangeEntity() {
-        vm.ThisFun.ColList = [];
-        vm.EnColList = [];
-        if (vm.ThisFun.DataType == 'P') {
-            vm.ThisFun.ShortName = undefined;
-            GetEnProcList();
-        }
-        if (vm.ThisFun.DataType == 'E') {
-            GetColList();
-        }
-    }
-
-    function GetEnProcList() {
-        var en = {};
-        en.name = "EntityName";
-        en.value = vm.ThisFun.EntityName;
-        AjaxService.GetPlans("EntityProcedure", en).then(function (data) {
-            vm.ProcList = data;
-        });
-    }
-
-    function MergeEnColList() {
-        vm.ThisFun.ColList = vm.ThisFun.ColList || [];
-        var count = 0;
-        for (var i = 0, len = vm.EnColList.length; i < len; i++) {
-            if (!vm.EnColList[i]) continue;
-            for (var j = 0, len2 = vm.ThisFun.ColList.length; j < len2; j++) {
-                if (vm.EnColList[i].ColumnName == vm.ThisFun.ColList[j].ColumnName) {
-                    vm.EnColList[i].IsShow = true;
-                    vm.ThisFun.ColList[j].ColumnType = vm.EnColList[i].ColumnType;
-                    vm.ThisFun.ColList[j].TableAs = vm.ThisFun.ColList[j].ColumnName.substr(0, 1);
-                    count++;
-                }
-            }
-        }
-        if (count == vm.EnColList.length) {
-            vm.IsAll = true;
-        }
-    }
-
-    function ChangeProc() {
-        vm.ThisFun.ColList = [];
+        vm.ThisForm.ColList = [];
         vm.EnColList = [];
         GetColList();
-
-        var en = {};
-        en.planName = vm.ThisFun.EntityName;
-        en.shortName = vm.ThisFun.ShortName;
-
-        //获取存储过程查询条件
-        AjaxService.Custom("GetProcPara", en).then(function (data) {
-            vm.ThisFun.SerList = [];
-            for (var i = 0, len = data.length; i < len; i++) {
-                var Ser = {};
-                Ser.ColumnName = data[i].ColumnName;
-                Ser.SerName = data[i].SerName;
-                Ser.SerType = data[i].SerType;
-                vm.ThisFun.SerList.push(Ser);
-            }
-        });
     }
 
     function GetColList(isLoad) {
         var en = {};
-        en.planName = vm.ThisFun.EntityName;
-        //实体自身的栏位取值
-        if (vm.ThisFun.DataType == 'E' && vm.ThisFun.EntityName) {
-            en.shortName = '--';
-        }
-        else if (vm.ThisFun.DataType == 'P' && vm.ThisFun.ShortName) {
-            en.shortName = vm.ThisFun.ShortName;
-        }
-        else {
-            return;
-        }
+        en.planName = vm.ThisForm.EntityName;
+        en.shortName = '--';
         vm.promise = AjaxService.BasicCustom("GetFormColumns", en).then(function (data) {
 
             vm.ColDataType = [];
@@ -207,8 +152,6 @@ function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window, Dia
             enList.push({ name: "ProcName", value: ItemData.ProcName });
             AjaxService.GetPlans("EnProcExcel", enList).then(function (data2) {
                 vm.DataList = data2;
-                //for (var i = 0, len = vm.List.length; i < len; i++) {
-                    //初始化
                 for (var a = 0, l = data.MainColumn.length; a < l; a++) {
                     var col = data.MainColumn[a];
                         col.ColumnText = col.ColumnText || col.ColumnName;
@@ -229,118 +172,26 @@ function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window, Dia
                             }
                         }
                     }
-                //}
                     vm.EnColList = data.MainColumn;
-                if (isLoad) {
-                    MergeEnColList();
-                }
             })
         })
     }
 
-    //添加条件
-    function AddSer() {
-        var have = false;
-        vm.ThisFun.SerList = vm.ThisFun.SerList || [];
-        //if (!checkHaveCol(vm.ThisFun.SerList, vm.newSer.ColumnName)) {
-        //    vm.ThisFun.SerList.push(vm.newSer);
-        //}
-        vm.ThisFun.SerList.push(vm.newSer);
-        InitSer();
-    }
-
-    function DeleteSer(index) {
-        vm.ThisFun.SerList.splice(index, 1);
-    }
-
-    //显示栏位改变
-    function IsColChange(col) {
-        vm.ThisFun.ColList = vm.ThisFun.ColList || []
-        if (col.IsShow) {
-            if (!checkHaveCol(vm.ThisFun.ColList, col.ColumnName)) {
-                vm.ThisFun.ColList.push(Convert(col));
-            }
-        }
-        else {
-            var index = -1;
-            for (var i = 0, len = vm.ThisFun.ColList.length; i < len; i++) {
-                if (vm.ThisFun.ColList[i].ColumnName == col.ColumnName) {
-                    index = i; break;
-                }
-            }
-            vm.IsAll = false;
-            vm.ThisFun.ColList.splice(index, 1);
-        }
-    }
-
-    function IsColAll() {
-        if (!vm.EnColList) { return; }
-        if (vm.IsAll) {
-            for (var i = 0, len = vm.EnColList.length; i < len; i++) {
-                if (!checkHaveCol(vm.ThisFun.ColList, vm.EnColList[i].ColumnName)) {
-                    vm.ThisFun.ColList.push(Convert(vm.EnColList[i]));
-                }
-            }
-        }
-        else {
-            vm.ThisFun.ColList = [];
-            for (var i = 0, len = vm.EnColList.length; i < len; i++) {
-                vm.EnColList[i].IsShow = false;
-            }
-        }
-    }
-
-    // drop
-    function Drop(rol, index) {
-        var en = angular.copy(rol);
-        vm.ThisFun.ColList.splice(vm.DragIndex, 1);
-        vm.ThisFun.ColList.splice(index, 0, en);
-    }
-
-    //检查是否已经存在
-    function checkHaveCol(List, colName) {
-        var have = false;
-        for (var j = 0, len2 = List.length; j < len2; j++) {
-            if (List[j].ColumnName == colName) {
-                have = true; break;
-            }
-        }
-        return have;
-    }
-
-    //
-    function Drag(rol, index) {
-        vm.DragIndex = index;
-    }
-
-    function DeleteFunCol(col, index) {
-        col.IsShow = false;
-        vm.IsAll = false;
-        vm.ThisFun.ColList.splice(index, 1);
-    }
-
     //生成代码
     function GenCode() {
-        //var en = {};
-        //en.strJson = JSON.stringify(vm.ThisFun);
-        //AjaxService.Custom("GenFuntionCode", en).then(function (data) {
-        //    vm.NewItem.Content = data;
-        //    toastr.success('生成成功');
-        //    vm.Index = 0;
-        //})
-        if (!vm.ThisFun.ColList || vm.ThisFun.ColList.length == 0) {
+        if (!vm.ThisForm.ColList || vm.ThisForm.ColList.length == 0) {
             toastr.error("还未配置栏目， 不允许生成");
             return;
         }
-        vm.NewItem.Content = GenFuntionCode(vm.ThisFun);
+        vm.NewItem.Content = GenFuntionCode(vm.ThisForm);
         toastr.success('生成成功');
     }
 
     //关闭
     function Ok() {
-        vm.NewItem.FunSetting = angular.copy(vm.ThisFun);
+        vm.NewItem.FunSetting = angular.copy(vm.ThisForm);
 
-        var SerList = vm.ThisFun.SerList || [];
+        var SerList = vm.ThisForm.SerList || [];
         for (var i = 0, len1 = SerList.length; i < len1; i++) {
             SerList[i].SerValue = SerList[i].SerValue || '';
             SerList[i].SerTName = SerList[i].SerTName || '';
@@ -352,18 +203,18 @@ function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window, Dia
         vm.NewItem.FunSetting.SerList = JSON.stringify(SerList);
 
         var ColList = [];
-        for (var j = 0, len2 = vm.ThisFun.ColList.length; j < len2; j++) {
+        for (var j = 0, len2 = vm.ThisForm.ColList.length; j < len2; j++) {
             var col = {};
-            col.ColumnName = vm.ThisFun.ColList[j].ColumnName;
-            col.ColumnText = vm.ThisFun.ColList[j].ColumnText;
-            col.Width = vm.ThisFun.ColList[j].Width;
-            col.EnNameDiv = vm.ThisFun.ColList[j].EnNameDiv || '';
-            col.EditCol = vm.ThisFun.ColList[j].EditCol || '';
-            col.EditColDiv = vm.ThisFun.ColList[j].EditColDiv || '';
-            col.ColType = vm.ThisFun.ColList[j].ColType || '';
-            col.ColValue = vm.ThisFun.ColList[j].ColValue || '';
-            col.ABleNull = vm.ThisFun.ColList[j].ABleNull || '1';
-            col.CheckExists = vm.ThisFun.ColList[j].CheckExists || false;
+            col.ColumnName = vm.ThisForm.ColList[j].ColumnName;
+            col.ColumnText = vm.ThisForm.ColList[j].ColumnText;
+            col.Width = vm.ThisForm.ColList[j].Width;
+            col.EnNameDiv = vm.ThisForm.ColList[j].EnNameDiv || '';
+            col.EditCol = vm.ThisForm.ColList[j].EditCol || '';
+            col.EditColDiv = vm.ThisForm.ColList[j].EditColDiv || '';
+            col.ColType = vm.ThisForm.ColList[j].ColType || '';
+            col.ColValue = vm.ThisForm.ColList[j].ColValue || '';
+            col.ABleNull = vm.ThisForm.ColList[j].ABleNull || '1';
+            col.CheckExists = vm.ThisForm.ColList[j].CheckExists || false;
             col.SortNo = j + 1;
             ColList.push(col);
         }
@@ -371,28 +222,6 @@ function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window, Dia
         vm.NewItem.FunSetting.TempColumns = "ColList,SerList";
         $uibModalInstance.close(vm.NewItem);
     };
-
-    function Convert(item) {
-        var en = item;
-        en.ColumnText = en.ColumnText || en.ColumnName;
-        en.Width = "100px";
-        en.EnNameDiv = en.EnNameDiv || '';
-        en.EditCol = en.ColumnName;
-        en.EditColDiv = en.EnNameDiv;
-        en.ColType = 'Text';
-        en.TableAs = en.ColumnName.substr(0, 1);
-        en.ABleNull = en.TableAs != 'a' || en.ColumnType == "3" ? "0" : "1";
-        en.CheckExists = false;
-        return en;
-    }
-
-    function InitSer() {
-        vm.newSer = {
-            SerType: "Text",
-            SerAss: "=",
-            IsHide: false
-        };
-    }
 
     //关闭
     function cancel() {
@@ -938,6 +767,4 @@ function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window, Dia
     function subColName(colName) {
         return colName.substr(2, colName.length - 2);
     }
-    
-
 }]);

@@ -23,7 +23,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function Insert() {
-        vm.NewItem = { TbName: vm.Ser.a_TbName, ClName: vm.Ser.a_ClName };
+        vm.NewItem = { TbName: vm.Ser.a_TbName, ClName: vm.Ser.a_ClName,   ClSts: 'S'};
         vm.IsInsert = true;
     }
 

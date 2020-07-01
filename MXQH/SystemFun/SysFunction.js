@@ -44,6 +44,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
     vm.FunctionFile = FunctionFile;
     vm.OpenHtmlJs = OpenHtmlJs;
     vm.OpenFormDialog = OpenFormDialog;
+    vm.OpenFormFlowDialog = OpenFormFlowDialog;
 
     //选择系统
     vm.ChangeSys = ChangeSys;
@@ -471,6 +472,14 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
             MyPop.Show(true, '请先保存信息，再进行表单设定！')
         } else {
             OpenConten("SysFormDialog");
+        }
+    }
+
+    function OpenFormFlowDialog() {
+        if (vm.SelectedFun.FunNo == -1) {
+            MyPop.Show(true, '请先保存信息，再进行表单节点设定！')
+        } else {
+            OpenConten("FormFlowDialog");
         }
     }
 
