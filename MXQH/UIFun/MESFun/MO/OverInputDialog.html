@@ -105,8 +105,8 @@
                     </div>
                     <div class="col-sm-4 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">超投原因</label>
-                        <div class="input-group padder-xs col-sm-8">
-                            <textarea ng-disabled="oicd.Item.Status!=0" class="form-control" rows="2" ng-model="oicd.Item.Reason" placeholder="输入备注信息"></textarea>
+                        <div class="input-group padder-xs col-sm-8" ng-class="{ 'has-error' : DialogForm.Reason.$invalid }">
+                            <textarea ng-disabled="oicd.Item.Status!=0" class="form-control" name="Reason" rows="2" ng-model="oicd.Item.Reason" placeholder="输入备注信息" required></textarea>
                         </div>
                     </div>
                 </div>
