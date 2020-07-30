@@ -1,12 +1,7 @@
 ﻿<uib-tabset ng-attr-active="riskPre.tabIndex" type="tabs" class="h-100" cg-busy="riskPre.promise">
     <!--预测订单列表-->
-    <uib-tab index="1">
+    <uib-tab index="0">
         <uib-tab-heading class="h5">风险备料列表</uib-tab-heading>
-        <!--<div class="bg-light lter b-b wrapper-md">
-            <h3 class="m-n font-thin h3 text-center font-bold">
-                风险备料预测订单列表
-            </h3>
-        </div>-->
         <div class="wrapper-md">
             <div class="input-group m-b-xxs" style="padding-bottom:10px;">
                 <form name="SForm">
@@ -85,8 +80,71 @@
                 <div uib-pagination total-items="riskPre.page.total" ng-model="riskPre.page.pageIndex" items-per-page="riskPre.page.pageSize" max-size="riskPre.page.maxSize" first-text="第一页" previous-text="上一页"
                      ng-change="riskPre.DataBind()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
             </div>
+        </div>        
+    </uib-tab>
+    <!--预测订单列表-->
+    <uib-tab index="1">
+        <uib-tab-heading class="h5">风险备料批量查询</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="input-group m-b-xxs" style="padding-bottom:10px;">
+                <form name="SForm">
+                    <div class="form-inline" ng-form="SSForm">
+                        <!--<div class="form-group" ng-class="{ 'has-error': riskPre.SForm.DocNo.$invalid }">
+                            <input type="text" class="form-control" ng-model="riskPre.page.DocNo" name="DocNo" placeholder="订单号" required>
+                        </div>-->
+                        <div class="form-group"  ng-class="{ 'has-error': riskPre.SSForm.Codes.$invalid }">
+                            <textarea type="text" rows="4" class="form-control" ng-model="riskPre.Codes" placeholder="料号"></textarea>
+                        </div>
+                        <button class="btn btn-sm btn-info" ng-click="riskPre.Search2(SForm)"><i class="glyphicon glyphicon-search"></i>查询</button>
+                        <button class="btn btn-sm btn-success" ng-click="riskPre.Export2()"><i class="glyphicon glyphicon-export"></i>导出</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-md-12 table-responsive">
+                    <table class="table   one-line" style="word-break:break-all; word-wrap:break-word;">
+                        <tr class="text-center bg-gd-dk h4">
+                            <td style="width:60px;" class="">序号</td>
+                            <td style="width:100px;" class="">料号</td>
+                            <td style="width:140px;" class="">品名</td>
+                            <td style="width:200px;" class="">规格</td>
+                            <td style="width:100px;" class="">采购周期</td>
+                            <td style="width:100px;" class="">开发采购</td>
+                            <td style="width:100px;" class="">执行采购</td>
+                            <td style="width:100px;" class="">MC责任人</td>
+                            <td style="width:100px;" class="">MRP分类</td>
+                            <td style="width:140px;" class="">供应商交叉表</td>
+                            <td style="width:100px;" class="">厂商价表</td>
+                            <td style="width:80px;" class="">货源表</td>
+                            <td style="width:100px;" class="">是否承认</td>
+                            <td style="width:100px;" class="">内部价表</td>
+                            <td style="width:100px;" class="">内部货源</td>
+                        </tr>
+                        <tr ng-repeat="item in riskPre.List2">
+                            <td>{{ item.RN }}</td>
+                            <td>{{ item.Code }}</td>
+                            <td style="white-space:normal;word-break:normal;">{{ item.Name }}</td>
+                            <td style="white-space:normal;word-break:normal;">{{ item.SPECS }}</td>                  
+                            <td>{{ item.SumLT }}</td>
+                            <td>{{ item.Purchaser }}</td>
+                            <td>{{ item.Buyer }}</td>
+                            <td>{{ item.MCName }}</td>
+                            <td>{{ item.MRPCategory }}</td>
+                            <td>{{ item.IsItemSupplier }}</td>
+                            <td>{{ item.IsExistsPrice }}</td>
+                            <td>{{ item.IsSupplySource }}</td>
+                            <td>{{ item.IsRecognize }}</td>
+                            <td>{{ item.IsInnerExistsPrice }}</td>
+                            <td>{{ item.IsInnerSupplySource }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12 text-center" ng-if="riskPre.page2.total>riskPre.page2.pageSize">
+                <div uib-pagination total-items="riskPre.page2.total" ng-model="riskPre.page2.pageIndex" items-per-page="riskPre.page2.pageSize" max-size="riskPre.page2.maxSize" first-text="第一页" previous-text="上一页"
+                     ng-change="riskPre.DataBind2()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
+            </div>
         </div>
-        <!--销售订单列表 End-->
     </uib-tab>
 </uib-tabset>
 

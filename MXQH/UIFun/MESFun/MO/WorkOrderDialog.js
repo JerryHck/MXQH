@@ -43,6 +43,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
         vm.Item.MinWeight = 100;
         vm.Item.MaxWeight = 200;
     }
+    console.log(ItemData);
     // #region 工单信息
 
     //自动生成计划序号
@@ -89,6 +90,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
             toastr.error('最大重量不能小于最小重量');
             return;
         }
+        console.log(vm.Item.boRoutingID);
         var en = {};
         var li = [];
         li.push(vm.Item);

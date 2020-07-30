@@ -3,11 +3,16 @@ angular.module('app')
 .controller('RiskPreCtrl', ['$rootScope', '$scope', 'Dialog', 'toastr', 'AjaxService', 'MyPop', '$window',
 function ($rootScope, $scope, Dialog, toastr, AjaxService, MyPop, $window) {
     var vm = this;
-    vm.page = { pageIndex: 1, pageSize:10, maxSize: 10 };
+    vm.page = { pageIndex: 1, pageSize: 10, maxSize: 10 };
+    vm.page2 = { pageIndex: 1, pageSize: 10, maxSize: 10 };
     vm.Search = Search;
     vm.DataBind = DataBind;
     vm.SelectDocNo = SelectDocNo;//打开单据选择列表
     vm.Export = Export;
+    vm.Search2 = Search2;
+    vm.DataBind2 = DataBind2;
+    vm.Export2 = Export2;
+    
     Init();
     //DataBind();
     //初始化
@@ -54,6 +59,30 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, MyPop, $window) {
         }).catch(function (reason) {
 
         });
+    }
+
+    function Search2() {
+        var uidArr = vm.Codes.split(/[(\r\n)\r\n]+/);
+        vm.page2.Code = '';
+        for (var i = 0; i < uidArr.length; i++) {
+            vm.page2.Code += ','+uidArr[i];       
+        }
+        DataBind2();
+    }
+
+    function DataBind2() {
+        vm.promise = AjaxService.ExecPlan("AuctusForecast", "RiskListByCodes", vm.page2).then(function (data) {
+            console.log(data);
+            vm.List2 = data.data;
+            vm.page2.total = data.data1[0].Count;
+        });
+    }
+    function Export2() {
+        vm.page2.pageSize = 1000000;
+        vm.promise = AjaxService.GetPlanExcel("AuctusForecast", "RiskListByCodes", vm.page2).then(function (data) {
+            $window.location.href = data.File;
+        });
+        vm.page2.pageSize = 10;
     }
 }
 ])

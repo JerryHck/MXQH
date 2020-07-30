@@ -51,7 +51,10 @@
                         <td style="width:140px ">品名</td>
                         <td style="width:100px ">状态</td>
                         <td style="width:100px ">工单数量</td>
-                        <td style="width:100px ">超投数量</td>
+                        <td style="width:100px ">工单累计超投</td>
+                        <td style="width:100px ">超投申请数量</td>
+                        <td style="width:100px ">已超投数量</td>                        
+                        <td style="width:100px ">提交人</td>
                         <td style="width:100px ">超投原因</td>
                     </tr>
                 </thead>
@@ -70,7 +73,10 @@
                     <td ng-if="item.Status==1">核准中</td>
                     <td ng-if="item.Status==2">已审核</td>
                     <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
+                    <td title="{{ item.TotalOverInputedQty }}">{{ item.TotalOverInputedQty }}</td>
                     <td title="{{ item.OverInputQty }}">{{ item.OverInputQty }}</td>
+                    <td title="{{ item.OverInputedQty }}">{{ item.OverInputedQty }}</td>
+                    <td title="{{ item.Submiter }}">{{ item.Submiter }}</td>
                     <td title="{{ item.Reason }}">{{ item.Reason }}</td>
                 </tr>
             </table>
