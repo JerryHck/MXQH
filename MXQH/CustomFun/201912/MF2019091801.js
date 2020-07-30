@@ -1,13 +1,13 @@
 ﻿'use strict';
 
-angular.module('app')
-.controller('Procedurectrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
+angular.module('AppSet')
+.controller('Procedurectrl', ['$scope', '$http', 'AjaxService', 'toastr', '$window',
+function ($scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
-    vm.Ser.a_IsUse = "1";
+    vm.Ser.aIsUse = '1';
 
     vm.Insert = Insert;
     vm.SaveInsert = SaveInsert;
@@ -91,14 +91,14 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     function IsAddCodeExists() {
         var list = [];
         list.push({ name: "Code", value: vm.NewItem.Code });
-        vm.promise = AjaxService.GetPlan("MESBoProcedure", list).then(function (data) {
+        AjaxService.GetPlan("MESBoProcedure", list).then(function (data) {
             vm.InsertForm.Code.$setValidity('unique', !data.Code);
         });
     }
     function IsAddNameExists() {
         var list = [];
         list.push({ name: "Name", value: vm.NewItem.Name });
-        vm.promise = AjaxService.GetPlan("MESBoProcedure", list).then(function (data) {
+        AjaxService.GetPlan("MESBoProcedure", list).then(function (data) {
             vm.InsertForm.Name.$setValidity('unique', !data.Name);
         });
     }
@@ -113,11 +113,11 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
     function GetContition() {
         var list = [];
-        if (vm.Ser.a_Name) {
-            list.push({ name: "Name", value: vm.Ser.a_Name, tableAs:"a" });
+        if (vm.Ser.aName) {
+            list.push({ name: "Name", value: vm.Ser.aName, tableAs:"a" });
         }
-        if (vm.Ser.a_IsUse) {
-            list.push({ name: "IsUse", value: vm.Ser.a_IsUse, tableAs:"a" });
+        if (vm.Ser.aIsUse) {
+            list.push({ name: "IsUse", value: vm.Ser.aIsUse, tableAs:"a" });
         }
         return list;
     }

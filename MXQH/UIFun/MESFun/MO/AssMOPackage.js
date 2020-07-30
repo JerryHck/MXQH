@@ -7,8 +7,8 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
     var vm = this;
     //vm.currentRouterName = angular.copy($state.current.name);
     vm.page = { index: 1, size: 10 };
-
-    vm.PrintType = 'N';
+    vm.PrintType = 'G';
+    vm.PackPrintType = 'G';
 
     vm.Ser = {};
     vm.Item = { PackId : -1};
@@ -24,6 +24,7 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
     vm.CheckLock = CheckLock;
 
     vm.KeyDonwOrder = KeyDonwOrder;
+    vm.KeyDonwColorRePrint = KeyDonwColorRePrint;
 
     vm.PrintPackId = 1;
     vm.NumIndex = 0;
@@ -116,7 +117,7 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
     }
 
     function PackInCode() {
-        var en = { InternalCode: vm.Item.BSN, WorkOrder: vm.Item.WorkOrder, IsLock: vm.Item.IsLock };
+        var en = { InternalCode: vm.Item.BSN, WorkOrder: vm.Item.WorkOrder, IsLock: vm.Item.IsLock, IsColorPrint: vm.PrintType == 'G' || vm.PrintType == 'L' };
         AjaxService.ExecPlan("opAssPackageMain", "check", en, false).then(function (data) {
             vm.Item.BSN = undefined;
             if (data.data[0].MsgType == "Error") {
@@ -140,6 +141,7 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
                 var en = {};
                 en.InCode = data.data1[0].InCode;
                 en.SnCode = data.data1[0].SnCode;
+                en.PrintColor = data.data1[0].PrintColor;
                 vm.StaticBSN = en.InCode;
                 PackSave(en);
             }
@@ -178,11 +180,16 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
                 var parkid = data.data1[0].PackId;
                 vm.Item.PackId = parkid;
                 vm.PrintPackId = data.data1[0].OriPackId;
+                //打印彩盒码
+                if (en.PrintColor) {
+                    PrintColor(en.SnCode);
+                }
+
                 //判断打印,包装完成需要打印
                 if (parkid == -1) {
                     MyPop.ngConfirm({ text: "包装箱已经完成，是否要打印标签" }).then(function () {
                         //打印
-                        if (vm.PrintType == 'G') { Print(vm.PrintPackId); }
+                        if (vm.PackPrintType == 'G') { Print(vm.PrintPackId); }
                     })
                     GetNoPack();
                     vm.NumIndex = 0;
@@ -206,6 +213,21 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
         });
     }
 
+    function PrintColor(sn){
+        //获取彩盒打印数据
+        var en2 = { SNCode: sn, TypeId: 3 };
+        AjaxService.ExecPlan("MESSNCode", 'colorPrint', en2).then(function (data) {
+            //一般打印
+            if (vm.PrintType == 'G') {
+                PrintCode(data.data1[0], data.data[0]);
+            }
+                //镭雕打印
+            else if (vm.PrintType == 'L') {
+                LightPrintCode(data.data1[0], data.data0[0]);
+            }
+        })
+    }
+
     function KeyDonwPackSn(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.PrintItem.WorkOrder) {
@@ -214,6 +236,45 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
             })
         }
     }
+
+    //内部码验证
+    function KeyDonwColorRePrint(e) {
+        var keycode = window.event ? e.keyCode : e.which;
+        if (keycode == 13 && vm.ColorSnCode) {
+            var en = {};
+            en.Code = vm.ColorSnCode;
+            en.Action = vm.IsReprint;
+            CheckPrint(en);
+        }
+    }
+
+    function CheckPrint(en) {
+        if (en.Code.length == 9) {
+            vm.ColorSnCode = undefined;
+            return;
+        }
+        AjaxService.ExecPlan("MESSNCode", 'snprint', en).then(function (data) {
+            if (data.data[0].MsgType == "Error") {
+                toastr.error(data.data[0].MsgText);
+                AjaxService.PlayVoice('error.mp3');
+            }
+            else if (data.data[0].MsgType == "Success") {
+                AjaxService.PlayVoice('success.mp3');
+                toastr.success(data.data[0].MsgText);
+                PrintCode(data.data2[0], data.data1[0]);
+                //一般打印
+                if (vm.PrintType == 'G') {
+                    PrintCode(data.data2[0], data.data1[0]);
+                }
+                    //镭雕打印
+                else if (vm.PrintType == 'L') {
+                    LightPrintCode(data.data2[0], data.data1[0]);
+                }
+            }
+            vm.ColorSnCode = undefined;
+        });
+    }
+
 
     function RePrint() {
         Print(vm.PrintForm.PackID);
@@ -231,7 +292,7 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
                 //打印
                 vm.PrintPackId = angular.copy(vm.Item.PackId);
                 //打印
-                if (vm.PrintType == 'G') { Print(vm.PrintPackId); }
+                if (vm.PackPrintType == 'G') { Print(vm.PrintPackId); }
                 vm.Item.PackId = -1;
                 vm.NumIndex = 0;
                 vm.SelectPack = undefined;
@@ -265,6 +326,46 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
                     console.log(err);
                 })
             }
+        })
+    }
+
+    function PrintCode(temData, data) {
+        var postData = {}, list = [];
+        list.push(data.SnCode);
+        postData.ParaData = JSON.stringify(data);
+        postData.OutList = list;
+        //console.log(data)
+        var printNum = data.ColorBoxPrintNum || 1;
+        for (var i = 0; i < printNum; i++) {
+            AjaxService.Print(temData.TemplateId, temData.TemplateTime, postData, vm.PrinterName).then(function (data) {
+                console.log(data);
+            }, function (err) {
+                console.log(err);
+            })
+        }
+    }
+
+    //镭雕
+    function LightPrintCode(teData, data) {
+        if (!data || !data.SNCode || data.SNCode == null) {
+            toastr.error("SN不存在或还未生成");
+            AjaxService.PlayVoice('error.mp3');
+            return;
+        }
+        if (!teData || !teData.TemplateId || teData.TemplateId == null) {
+            toastr.error("打印模版获取失败");
+            AjaxService.PlayVoice('error.mp3');
+            return;
+        }
+        var postData = {}, list = [];
+        list.push(data.SNCode)
+        postData.ParaData = JSON.stringify(data);
+        postData.OutList = list;
+        //console.log(postData.ParaData);
+        AjaxService.LightPrint(teData.TemplateId, teData.TemplateTime, postData).then(function (data) {
+            //console.log(data);
+        }, function (err) {
+            //console.log(err);
         })
     }
 

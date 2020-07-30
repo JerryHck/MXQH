@@ -10,7 +10,7 @@
 </div>
 <div class="col-md-12 padder-xs">
     <div class="h4 text-center">
-        <strong class="text-info">工单信息</strong>
+        <strong class="text-info">SN绑定工单信息</strong>
     </div>
     <div class="padder-xs  m-t-xxs">
         <table class="table ">
@@ -47,13 +47,15 @@
 </div>
 <div class="col-md-12 padder-xs">
     <div class="h4 text-center">
-        <strong class="text-info">组装信息</strong>
+        <strong class="text-info">生产工序信息</strong>
     </div>
     <div class="padder-xs m-t-xxs">
         <table class="table pad-xs">
             <thead>
                 <tr>
                     <td style="width:70px ">序号</td>
+                    <td style="width:100px ">工单</td>
+                    <td style="width:100px ">料号</td>
                     <td style="width:100px ">组装线</td>
                     <td style="width:100px ">工位名称</td>
                     <td style="width:100px ">是否合格</td>
@@ -65,6 +67,8 @@
             </thead>
             <tr ng-repeat="item in sn.Data.data">
                 <td>{{ $index + 1 }}</td>
+                <td>{{ item.WorkOrder }}</td>
+                <td>{{ item.MaterialCode }}</td>
                 <td>{{ item.AssemblyLineName }}</td>
                 <td class="text-left">{{ item.WorkPartName }}</td>
                 <td>

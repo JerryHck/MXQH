@@ -414,7 +414,7 @@ angular.module('AppSet')
         template:  '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">'
                   + '         <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>'
                   + '          <ui-select-choices  repeat="item in data | filter: $select.search track by item.Name" refresh="refresh($select.search)" refresh-delay="0">'
-                  + '             <small title="{{ item.Name }}"><span class="h6"><span ng-bind-html="item.DbSchema | highlight: $select.search"></span>.</span><span ng-bind-html="item.Name | highlight: $select.search"</span></small>'
+                  + '             <small title="{{ item.DbSchema }}.{{ item.Name }}"><span ng-bind-html="item.Name | highlight: $select.search"</span></small>'
                   + '         </ui-select-choices>'
                   + '     </ui-select>'
         ,
@@ -548,7 +548,7 @@ angular.module('AppSet')
         }
         scope.OnChange = function () {
             if (scope.ngChange) {
-                AjaxService.AjaxHandle("GetFileText", "123").then(function (data) {
+                AjaxService.doAysc().then(function (data) {
                     scope.ngChange();
                 })
             }
@@ -596,6 +596,120 @@ angular.module('AppSet')
                         }
                     }
                 });
+            }
+        }
+}])
+.directive('configCheck', ['AjaxService', function (AjaxService) {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            scope: {
+                ngModel: '=',
+                ngDisabled: '=',
+                configOption: '=',
+                tb: '@',
+                col: '@',
+                ngRequired: '@',
+                size:'@',
+                ngName: '@',
+                ngChange: '&'
+            },
+            //template: '<ui-select name="{{ ngName }}" ng-change="OnChange()" class="{{ selectClass }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="ngRequired">'
+            //          + ' <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.ClDesc }}</ui-select-match>       '
+            //          + ' <ui-select-choices repeat="item.ClInf as item in data | propsFilter: {ClInf: $select.search, ClDesc: $select.search}">                          '
+            //          + '      <div ng-bind-html="item.ClDesc | highlight: $select.search"></div>'
+            //          + '  </ui-select-choices>'
+            //          + '</ui-select>'
+            template: function (element, attrs) {
+                if (attrs.horiz && attrs.horiz.toLowerCase() == 'true') {
+                    return '   <label class="i-checks i-checks-sm padder-r-{{ size }}" ng-repeat="item in data">'
+                           + '      <input autocomplete="off" name="{{ ngName }}" type="checkbox" ng-change="ngChecked(item)" '
+                           + '          ng-required="checkReq()"  ng-disabled="ngDisabled" ng-model="item.Check"><i></i>{{ item.ClDesc }}'
+                           + '  </label>'+ '</div>';
+                }
+                else {
+                    return  '  <label class="i-checks i-checks-sm padder-r-sm col-xs-12" ng-repeat="item in data">'
+                           + '      <input autocomplete="off" name="{{ ngName }}" type="checkbox" ng-change="ngChecked(item)" '
+                           + '          ng-required="checkReq()" ng-disabled="ngDisabled"  ng-model="item.Check"><i></i>{{ item.ClDesc }}'
+                           + '  </label>';
+                }
+            },
+            link: link
+        };
+
+        function link(scope, element, attrs) {
+            scope.size = scope.size || 'sm';
+            scope.data = undefined;
+            if (scope.configOption || (scope.tb && scope.col)) {
+                var tb = (scope.configOption && scope.configOption.Table) ? scope.configOption.Table : scope.tb;
+                var col = scope.configOption && scope.configOption.Column ? scope.configOption.Column : scope.col;
+                //组织
+                AjaxService.GetTableConfig(tb, col).then(function (data) {
+                    scope.data = angular.copy(data);
+                    scope.$watch('ngModel', Set);
+                });
+            }
+
+            function Set() {
+                if (scope.ngModel) {
+                    var cList = [];
+                    if (attrs.multi && attrs.multi.toLowerCase() == 'true') {
+                        cList = scope.ngModel || [];
+                    }
+                    else {
+                        cList.push(scope.ngModel)
+                    }
+                    for (var i = 0, len = scope.data.length; i < len; i++) {
+                        for (var j = 0, len1 = cList.length; j < len1; j++) {
+                            scope.data[i].Check = scope.data[i].ClInf == cList[j];
+                        }
+                    }
+                }
+            }
+
+            //选中
+            scope.ngChecked = function (item) {
+                scope.data = scope.data || [];
+                if (attrs.multi && attrs.multi.toLowerCase() == 'true') {
+                    scope.ngModel = [];
+                }
+                for (var i = 0, len = scope.data.length; i < len; i++) {
+                    if (attrs.multi && attrs.multi.toLowerCase() == 'true') {
+                        if (scope.data[i].Check) {
+                            scope.ngModel.push(scope.data[i].ClInf);
+                        }
+                    }
+                    else {
+                        if (scope.data[i].ClInf == item.ClInf && item.Check) {
+                            scope.ngModel = scope.data[i].ClInf;
+                        }
+                        else if (scope.data[i].ClInf == item.ClInf && !item.Check) {
+                            scope.ngModel = undefined;
+                        }
+                        else {
+                            scope.data[i].Check = false;
+                        }
+                    }
+                }
+                if (scope.ngChange) {
+                    AjaxService.doAysc().then(function (data) {
+                        scope.ngChange();
+                    })
+                }
+            }
+            //验证必填
+            scope.checkReq = function () {
+                var b = false;
+                if (attrs.ngRequired && attrs.ngRequired.toLowerCase() == 'true') {
+                    b = true;
+                    scope.data = scope.data || [];
+                    for (var i = 0, len = scope.data.length; i < len; i++) {
+                        if (scope.data[i].Check) {
+                            b = false; break;
+                        }
+                    }
+                }
+                return b;
             }
         }
     }])

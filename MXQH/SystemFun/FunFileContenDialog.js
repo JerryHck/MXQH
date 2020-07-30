@@ -602,6 +602,8 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
                     break;
                     //隐藏
                 case "4": break;
+                //自增显示
+                case "5": sbHtml += "                        <td title=\"{{ item." + row.EditColDiv + subColName(row.ColumnName) + " }}\">{{ item." + row.EditColDiv + subColName(row.ColumnName) + " }}</td>\n"; break;
             }
         });
         sbHtml += "                    </tr>\n";
@@ -620,7 +622,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
 
     function getHtmlInsert(fun, sbHtml, row) {
         //不是非编辑
-        if (row.ABleNull != "0") {
+        if (row.ABleNull != "0" && row.ABleNull != "5" && row.ABleNull != "4") {
             var colName = subColName(row.EditCol);
 
             var strCheckExcist = row.CheckExists ? " ng-blur=\"" + fun.ControllerAs + ".IsAdd" + colName + "Exists()\" " : "";
@@ -761,12 +763,22 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
         sbJS += "    var vm = this;\n";
         sbJS += "    vm.page = { index: 1, size: 12 };\n";
         sbJS += "    vm.Ser = {};\n";
+
+        var listHave = [];
         //隐藏条件 -- 默认值
         for (var i = 0, len = fun.SerList.length; i < len; i++) {
             var ser = fun.SerList[i];
-            if (ser.IsHide || !ser.SerValue) {
+            var have = 0;
+            listHave.forEach(function (h) {
+                if (h == ser.ColumnName) {
+                    have += 1;
+                }
+            });
+            var name = have == 0 ? ser.ColumnName : ser.ColumnName + have;
+            if (ser.SerValue) {
+                name = name.ToPinYin();
                 var s = ser.SerType == "Num" ? ser.SerValue + ";" : "'" + ser.SerValue + "';";
-                sbJS += "    vm.Ser." + ser.ColumnName + " = " + s + "\n";
+                sbJS += "    vm.Ser." + name + " = " + s + "\n";
             }
         }
 

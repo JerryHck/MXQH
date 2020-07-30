@@ -1,33 +1,29 @@
-﻿<div class="modal-header">
-    <h3 class="modal-title">检验维修模板</h3>
+﻿<div class="modal-header text-center">
+    <button class="btn btn-success pull-left" type="button" ng-disabled="DialogForm.$invalid" ng-click="qtdc.Save()">保存</button>
+    <span class="h3">检验维修模板</span>
+    <button class="btn btn-warning pull-right" type="button" ng-click="qtdc.Cancel()">取消</button>
 </div>
 <div class="modal-body wrapper-sm" ng-form="DialogForm">
     <div class="panel panel-default">
         <div class="panel-body wrapper-xs">
-            <div class="form-group">
-                <button class="btn btn-success" type="button" ng-disabled="DialogForm.$invalid" ng-click="qtdc.Save()">保存</button>
-                <button class="btn btn-warning" type="button" ng-click="qtdc.Cancel()">取消</button>
-            </div>
             <div class="form-horizontal">
                 <div class="form-group">
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">编码</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Code.$invalid }">
-                            <input autocomplete="off"  type="text" class="form-control" name="Code" placeholder="编码"
-                                   ng-model="qtdc.Item.Code" required>
-                        </div>
+                    <label class="control-label col-sm-2 padder-xs">编码</label>
+                    <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Code.$invalid }">
+                        <input autocomplete="off" type="text" class="form-control" name="Code" placeholder="编码"
+                               ng-model="qtdc.Item.Code" ng-disabled="qtdc.Item.ID > 0" required>
                     </div>
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">名称</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Name.$invalid }">
-                            <input autocomplete="off"  type="text" name="Name" class="form-control" placeholder="名称" ng-model="qtdc.Item.Name" required>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2 padder-xs">名称</label>
+                    <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Name.$invalid }">
+                        <input autocomplete="off" type="text" name="Name" class="form-control" placeholder="名称" ng-model="qtdc.Item.Name" required>
                     </div>
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">排序</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.OrderNo.$invalid }">
-                            <input autocomplete="off"  type="number" name="OrderNo" class="form-control" placeholder="排序" ng-model="qtdc.Item.OrderNo" required>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2 padder-xs">排序</label>
+                    <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.OrderNo.$invalid }">
+                        <input autocomplete="off" type="number" name="OrderNo" class="form-control" placeholder="排序" ng-model="qtdc.Item.OrderNo" required>
                     </div>
                 </div>
             </div>

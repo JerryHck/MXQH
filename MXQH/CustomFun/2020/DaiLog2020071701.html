@@ -1,0 +1,295 @@
+﻿<div class="modal-header text-center">
+    <span class="modal-title h3">OQC报告</span>
+    <button class="btn btn-warning pull-left" type="button" ng-click="oqc.Cancel()">关闭</button>
+</div>
+<div class="modal-body wrapper-xs">
+    <div class="panel panel-default scroll-y" ng-form="oqc.DialogForm">
+        <div class="panel-body  padder-xs padder-v-xs">
+            <table class="table pad-xs">
+                <thead>
+                    <tr>
+                        <td class="h4 bg-light text-center padder-r-md" colspan="10">入库检验报告</td>
+                    </tr>
+                </thead>
+                <tr>
+                    <td  class="bg-light" title="产品型号">Product Model <br />产品型号</td>
+                    <td >{{ oqc.MainData.MaterialName }} </td>
+                    <td  class="bg-light">Part NO.<br />产品编码</td>
+                    <td >{{ oqc.MainData.MaterialCode }}</td>
+                    <td class="bg-light">P/O No.<br />订单号</td>
+                    <td ng-class="{ 'has-error' : oqc.DialogForm.PO.$invalid }">
+                        <input type="text" name="PO" ng-disabled="oqc.form.index == 2" class="form-control" placeholder="订单号" ng-model="oqc.OQCData.PO" required />
+                    </td>
+                    <td class="bg-light" colspan="2">Customer Part Number<br />客户物料编码</td>
+                    <td colspan="2" ng-class="{ 'has-error' : oqc.DialogForm.CustomerPN.$invalid }">
+                        <input type="text" name="CustomerPN" ng-disabled="oqc.form.index == 2" class="form-control" placeholder="客户物料编码" ng-model="oqc.OQCData.CustomerPN" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-light" title="客户产品型号">Customer Model<br />客户产品型号</td>
+                    <td ng-class="{ 'has-error' : oqc.DialogForm.CustomerModel.$invalid }">
+                        <input type="text" name="CustomerModel" ng-disabled="oqc.form.index == 2" class="form-control" placeholder="客户产品型号" ng-model="oqc.OQCData.CustomerModel" required />
+                    </td>
+                    <td class="bg-light">Inspect Batch No<br />报检批次</td>
+                    <td colspan="2" ng-class="{ 'has-error' : oqc.DialogForm.BetchNo.$invalid }">
+                        <input type="text" name="BetchNo" ng-disabled="oqc.form.index == 2" class="form-control" placeholder="报检批次" ng-model="oqc.OQCData.BetchNo" required />
+                    </td>
+                    <td class="bg-light">Carton No.<br />箱号</td>
+                    <td ng-class="{ 'has-error' : oqc.DialogForm.MinPackNo.$invalid }">
+                        <input type="text" name="MinPackNo" ng-disabled="oqc.form.index == 2" class="form-control" placeholder="最小箱号" ng-model="oqc.OQCData.MinPackNo" required/>
+                    </td>
+                    <td class="bg-light" colspan="2">TO<br />至</td>
+                    <td ng-class="{ 'has-error' : oqc.DialogForm.MaxPackNo.$invalid }">
+                        <input type="text" name="MaxPackNo" ng-disabled="oqc.form.index == 2" class="form-control" placeholder="最大箱号" ng-model="oqc.OQCData.MaxPackNo" required/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-light" title="订单数量">P/O Size<br />订单数量</td>
+                    <td>{{ oqc.MainData.Quantity }} </td>
+                    <td class="bg-light">Lot Size<br />检验批数量</td>
+                    <td>{{ oqc.OQCData.BetchNum }}</td>
+                    <td class="bg-light">Samp. Size(Fun/Cos)<br />抽样数量</td>
+                    <td>{{ oqc.MainData.CheckNum }}</td>
+                    <td class="bg-light" colspan="2">ATE Test Size<br />ATE测试数量</td>
+                    <td colspan="2" ng-class="{ 'has-error' : oqc.DialogForm.AteTestNum.$invalid }">
+                        <input type="text" name="AteTestNum" ng-disabled="oqc.form.index == 2" class="form-control" placeholder="ATE测试数量" ng-model="oqc.OQCData.AteTestNum" required/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-light" title="功能抽样计划">Fun.Sampling Plan<br />功能抽样计划</td>
+                    <td colspan="2">
+                        <div class="col-xs-12 no-padder checkbox"  ng-class="{ 'has-error' : oqc.DialogForm.AQLData.$invalid }">
+                            <div config-check tb="OQCReport" ng-disabled="oqc.form.index == 2" ng-name="AQLData" col="FunSamPlan" ng-model="oqc.OQCData.FunSamPlan" multi="false" horiz="true" ng-required="true"></div>
+                        </div>
+                    </td>
+                    <td class="bg-light" colspan="2">Cosmetic Sampling Plan<br />外观抽样计划</td>
+                    <td colspan="5">
+                        <div class="col-xs-12 no-padder checkbox text-left" ng-class="{ 'has-error' : oqc.DialogForm.CosSamPlan.$invalid }">
+                            正常一次Ⅱ级
+                            <span config-check tb="OQCReport" ng-disabled="oqc.form.index == 2" ng-name="CosSamPlan" col="CosSamPlan" ng-model="oqc.OQCData.CosSamPlan" multi="false" horiz="true" ng-required="true"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-light" title="允收水准">AQL<br />允收水准</td>
+                    <td class="bg-light" title="功能缺陷">Function Defect<br />功能缺陷</td>
+                    <td colspan="2">
+                        <div class="col-xs-12 no-padder checkbox" ng-class="{ 'has-error' : oqc.DialogForm.AQLFun.$invalid }">
+                            <div config-check tb="OQCReport" ng-disabled="oqc.form.index == 2" ng-name="AQLFun" col="AQLFun" ng-model="oqc.OQCData.AQLFun" multi="false" horiz="true" ng-required="true"></div>
+                        </div>
+                    </td>
+                    <td class="bg-light">Cos. MAJ Defect<br />外观主要缺陷</td>
+                    <td>
+                        <div class="col-xs-12 no-padder checkbox" ng-class="{ 'has-error' : oqc.DialogForm.AQLCosMain.$invalid }">
+                            <div config-check tb="OQCReport" ng-disabled="oqc.form.index == 2" ng-name="AQLCosMain" col="AQLCosMain" ng-model="oqc.OQCData.AQLCosMain" multi="false" horiz="true" ng-required="true"></div>
+                        </div>
+                    </td>
+                    <td class="bg-light" colspan="2">Cos.Minor Defect<br />外观次要缺陷</td>
+                    <td colspan="2">
+                        <div class="col-xs-12 no-padder checkbox" ng-class="{ 'has-error' : oqc.DialogForm.AQLCosMin.$invalid }">
+                            <div config-check tb="OQCReport" ng-disabled="oqc.form.index == 2" ng-name="AQLCosMin" col="AQLCosMin" ng-model="oqc.OQCData.AQLCosMin" multi="false" horiz="true" ng-required="true"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-light" title="检验日期">Inspection Date<br />检验日期</td>
+                    <td>
+                        <div class="col-xs-12 no-padder" ng-class="{ 'has-error' : oqc.DialogForm.InspectedDate.$invalid }">
+                            <input type="text" date-picker format="Y-m-d" option="op" name="InspectedDate" ng-disabled="oqc.form.index == 2" class="form-control" placeholder="检验日期" ng-model="oqc.OQCData.InspectedDate" required />
+                        </div>
+                    </td>
+                    <td class="bg-light">CR<br />致命缺陷</td>
+                    <td ng-class="{ 'has-error' : oqc.DialogForm.CR.$invalid }">
+                        <input type="text" name="CR" ng-disabled="oqc.form.index == 2" class="form-control" placeholder="致命缺陷" ng-model="oqc.OQCData.CR" required/>
+                    </td>
+                    <td class="bg-light">Cos.MAJ AC/RE<br />外观主缺允收/拒收</td>
+                    <td>
+                        <div class="col-xs-12 no-padder checkbox" ng-class="{ 'has-error' : oqc.DialogForm.CosMAJ.$invalid }">
+                            <div config-check tb="OQCReport" ng-disabled="oqc.form.index == 2" ng-name="CosMAJ" col="ACRE" ng-model="oqc.OQCData.CosMAJ" multi="false" horiz="true" ng-required="true"></div>
+                        </div>
+                    </td>
+                    <td class="bg-light" colspan="2">Cos.MIN AC/RE<br />外观次缺允收/拒收</td>
+                    <td colspan="2">
+                        <div class="col-xs-12 no-padder checkbox" ng-class="{ 'has-error' : oqc.DialogForm.CosMin.$invalid }">
+                            <div config-check tb="OQCReport" ng-disabled="oqc.form.index == 2" ng-name="CosMin" col="ACRE" ng-model="oqc.OQCData.CosMin" multi="false" horiz="true" ng-required="true"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-warning" title="检验日期">Production phase<br />生产阶段</td>
+                    <td colspan="9" class="text-left">
+                        <div class="col-xs-12  checkbox" ng-class="{ 'has-error' : oqc.DialogForm.ProPhase.$invalid }">
+                            <div config-check tb="OQCReport" ng-disabled="oqc.form.index == 2" ng-name="ProPhase" col="ProPhase" ng-model="oqc.OQCData.ProPhase" multi="false" horiz="true" ng-required="true"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border:none;height:0px; width:100px;"></td>
+                    <td style="border:none;height:0px; width:90px"></td>
+                    <td style="border:none;height:0px; width:100px"></td>
+                    <td style="border:none;height:0px; width:90px"></td>
+                    <td style="border:none;height:0px; width:100px"></td>
+                    <td style="border:none;height:0px; width:100px"></td>
+                    <td style="border:none;height:0px; width:50px"></td>
+                    <td style="border:none;height:0px; width:40px"></td>
+                    <td style="border:none;height:0px; width:40px"></td>
+                    <td style="border:none;height:0px; width:50px"></td>
+                </tr>
+            </table>
+
+            <table class="table pad-xs h6">
+                <thead>
+                    <tr>
+                        <td class="h4 bg-light text-center" colspan="10">检查内容</td>
+                    </tr>
+                </thead>
+                <tr>
+                    <td rowspan="3" class="bg-light" >{{ oqc.OQCBJJC.PropertyName }}</td>
+                    <td class="bg-light" >项目</td>
+                    <td class="bg-light" ng-repeat="col in oqc.OQCBJJC.List">{{ col.text }}</td>
+                </tr>
+                <tr>
+                    <td class="bg-light">标签内容</td>
+                    <td ng-repeat="col in oqc.OQCBJJC.List" ng-class="{ 'has-error' : !col.QCValue }">
+                        <input type="text" ng-disabled="oqc.form.index == 2" class="form-control" ng-model="col.QCValue" required/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-light">粘贴位置</td>
+                    <td ng-repeat="col in oqc.OQCBJJC.List" ng-class="{ 'has-error' : !col.QCValue1 }">
+                        <input type="text" ng-disabled="oqc.form.index == 2" class="form-control" ng-model="col.QCValue1" required/>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2" class="bg-light">{{ oqc.OQCPJJC.PropertyName }}</td>
+                    <td class="bg-light">配件</td>
+                    <td class="bg-light" ng-repeat="col in oqc.OQCPJJC.List">{{ col.text }}</td>
+                </tr>
+                <tr>
+                    <td class="bg-light">确认结果</td>
+                    <td ng-repeat="col in oqc.OQCPJJC.List" ng-class="{ 'has-error' : !col.QCValue }">
+                        <input type="text" ng-disabled="oqc.form.index == 2" class="form-control" ng-model="col.QCValue" required/>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2" class="bg-light">{{ oqc.OQCPZJC.PropertyName }}</td>
+                    <td class="bg-light">彩盒/卡通箱</td>
+                    <td class="bg-light" ng-repeat="col in oqc.OQCPZJC.List" colspan="{{ col.Code == 'OQCPZJC1' ? 2:1 }}">{{ col.text }}</td>
+                </tr>
+                <tr>
+                    <td class="bg-light">确认结果</td>
+                    <td ng-repeat="col in oqc.OQCPZJC.List" class="text-left" colspan="{{ col.Code == 'OQCPZJC1' ? 2:1 }}" ng-class="{ 'has-error' : !col.QCValue }">
+                        <div class="col-xs-12 no-padder checkbox" ng-if="col.Code == 'OQCPZJC1'">
+                            <div config-check tb="OQCReport" ng-disabled="oqc.form.index == 2" col="PackWay" ng-model="col.QCValue" multi="false" horiz="true" ng-required="true"></div>
+                        </div>
+                        <input type="text" ng-if="col.Code != 'OQCPZJC1'" ng-disabled="oqc.form.index == 2" class="form-control" ng-model="col.QCValue" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2" class="bg-light">{{ oqc.OQCZXJC.PropertyName }}</td>
+                    <td class="bg-light">装箱方式</td>
+                    <td class="bg-light" ng-repeat="col in oqc.OQCZXJC.List">{{ col.text }}</td>
+                </tr>
+                <tr>
+                    <td class="bg-light">确认结果</td>
+                    <td ng-repeat="col in oqc.OQCZXJC.List" ng-class="{ 'has-error' : !col.QCValue }">
+                        <input type="text" ng-disabled="oqc.form.index == 2" class="form-control" ng-model="col.QCValue" required/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border:none;height:0px; width:70px;"></td>
+                    <td style="border:none;height:0px; width:70px"></td>
+                    <td style="border:none;height:0px; width:70px" ng-repeat="c in oqc.ColList"></td>
+                </tr>
+            </table>
+
+            <table class="table pad-xs h6">
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>项目</td>
+                        <td>检验结果</td>
+                        <td>CR/致命</td>
+                        <td>MA/主缺</td>
+                        <td>MI/次缺</td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="col in oqc.ItemList">
+                    <td rowspan="{{ col.ItemCount }}" ng-if="col.ItemCount >0" class="bg-light">{{ col.PropertyName }}</td>
+                    <td class="text-left">{{ col.text }}</td>
+                    <td ng-class="{ 'has-error' : !col.QCValue }">
+                        <div config-check tb="OQCReport" size="xxs" horiz="true" ng-disabled="oqc.form.index == 2" col="Result" auto-first="true" ng-model="col.QCValue" ng-required="true"></div>
+                    </td>
+                    <td ng-class="{ 'has-error' : !col.QCValue1 }">
+                        <input type="text" ng-disabled="oqc.form.index == 2" class="form-control" ng-model="col.QCValue1" required/>
+                    </td>
+                    <td ng-class="{ 'has-error' : !col.QCValue2 }">
+                        <input type="text" ng-disabled="oqc.form.index == 2" class="form-control" ng-model="col.QCValue2" required/>
+                    </td>
+                    <td ng-class="{ 'has-error' : !col.QCValue3 }">
+                        <input type="text" ng-disabled="oqc.form.index == 2" class="form-control" ng-model="col.QCValue3" required/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border:none;height:0px; width:70px;"></td>
+                    <td style="border:none;height:0px; width:420px"></td>
+                    <td style="border:none;height:0px; width:100px"></td>
+                    <td style="border:none;height:0px; width:23px"></td>
+                    <td style="border:none;height:0px; width:23px"></td>
+                    <td style="border:none;height:0px; width:23px"></td>
+                </tr>
+            </table>
+
+            <table class="table pad-xs">
+                <thead>
+                    <tr>
+                        <td class="h4 bg-light text-center" colspan="10">INSPECTION RESULTS 检验结果</td>
+                    </tr>
+                </thead>
+                <tr>
+                    <td class="bg-light" title="缺陷统计" colspan="2">Total Quantity Of Defects<br />缺陷统计</td>
+                    <td class="bg-light">CR<br />致命缺陷</td>
+                    <td ng-class="{ 'has-error' : oqc.DialogForm.TotalCR.$invalid }">
+                        <input type="text" name="TotalCR" ng-disabled="oqc.form.index == 2" class="form-control" placeholder="致命缺陷" ng-model="oqc.OQCData.TotalCR" required />
+                    </td>
+                    <td class="bg-light">Functional Defective<br />功能缺陷</td>
+                    <td ng-class="{ 'has-error' : oqc.DialogForm.TotalFun.$invalid }">
+                        <input type="text" name="TotalFun" ng-disabled="oqc.form.index == 2" class="form-control" placeholder="功能缺陷" ng-model="oqc.OQCData.TotalFun" required />
+                    </td>
+                    <td class="bg-light" colspan="2">Cosmetic MAJ/MIN<br />外观主缺/次缺</td>
+                    <td colspan="2" ng-class="{ 'has-error' : oqc.DialogForm.TotalCos.$invalid }">
+                        <input type="text" name="TotalCos" ng-disabled="oqc.form.index == 2" class="form-control" placeholder="外观主缺/次缺" ng-model="oqc.OQCData.TotalCos" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-light" title="缺陷统计" colspan="2">Decision 判定</td>
+                    <td colspan="8">
+                        <div class="col-xs-12 checkbox text-left" ng-class="{ 'has-error' : oqc.DialogForm.Decision.$invalid }">
+                            <div config-check tb="OQCReport" size="xl" ng-disabled="oqc.form.index == 2" ng-name="Decision" col="Decision" ng-model="oqc.OQCData.Decision" multi="false" horiz="true" ng-required="true"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border:none;height:0px; width:100px;"></td>
+                    <td style="border:none;height:0px; width:90px"></td>
+                    <td style="border:none;height:0px; width:100px"></td>
+                    <td style="border:none;height:0px; width:90px"></td>
+                    <td style="border:none;height:0px; width:100px"></td>
+                    <td style="border:none;height:0px; width:100px"></td>
+                    <td style="border:none;height:0px; width:50px"></td>
+                    <td style="border:none;height:0px; width:40px"></td>
+                    <td style="border:none;height:0px; width:40px"></td>
+                    <td style="border:none;height:0px; width:50px"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="col-md-12 text-center">
+        <button class="btn btn-success pull-none" ng-if="oqc.form.index != 2" type="button" ng-disabled="oqc.DialogForm.$invalid" ng-click="oqc.Save()">储存</button>
+        <button class="btn btn-success pull-none" ng-if="oqc.form.index != 2" type="button" ng-disabled="oqc.DialogForm.$invalid" ng-click="oqc.Save(true)">储存并退出</button>
+        <button class="btn btn-warning pull-none" type="button" ng-click="oqc.Cancel()">关闭</button>
+    </div>
+</div>
+<!--<pre>{{ oqc.PerValList | json }}</pre>-->
