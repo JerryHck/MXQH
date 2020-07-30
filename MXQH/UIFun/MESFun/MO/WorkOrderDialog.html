@@ -82,8 +82,9 @@
                                 <input autocomplete="off"  type="text" ng-disabled="moDialog.Item.IsComplete" class="form-control" name="RoutingName" placeholder="产品工艺"
                                        ng-model="moDialog.Routing.RoutingName">
                                 <span class="input-group-addon">
-                                    <a class="" ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-search"></i></a>
-                                    <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.SelectRouting()"><i class="glyphicon glyphicon-search"></i></a>
+                                    <!--<a class="" ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-search"></i></a>
+                                    <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.SelectRouting()"><i class="glyphicon glyphicon-search"></i></a>-->                                    
+                                    <a class=""  ng-click="moDialog.SelectRouting()"><i class="glyphicon glyphicon-search"></i></a>
                                 </span>
                             </div>
                         </div>
