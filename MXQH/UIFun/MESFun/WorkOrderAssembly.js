@@ -96,6 +96,7 @@ function ($rootScope, $scope, $timeout, Dialog, toastr, AjaxService, MyPop) {
                 }
             }
         });
+        GetStep(vm.InCodeControl);
     }
 
     function Save() {
@@ -120,10 +121,31 @@ function ($rootScope, $scope, $timeout, Dialog, toastr, AjaxService, MyPop) {
             }
             else if (data.data[0].MsgType == 'Error') {
                 showError(data.data[0].Msg);
-                console.log(data)
                 vm.InCodeControl = undefined;
             }
             vm.IsFisnish = true;
+        })
+    }
+
+    function GetStep(bsn) {
+        //流程
+        vm.ProStep = { BSN: bsn };
+        vm.ProStep.steps = [];
+        AjaxService.GetPlans("vwOpPlanExecut", { name: "InternalCode", value: bsn }).then(function (data) {
+            for (var i = 0, len = data.length; i < len; i++) {
+                var en = {};
+                en.title = data[i].ProcedureName;
+                en.content = "";
+                if (data[i].IsPass == 1) {
+                    en.content = data[i].OpUser + '  操作时间：' + data[i].OperatorDate;
+                    vm.ProStep.now = i + 1;
+                }
+                else if (data[i].IsPass == 0 && data[i].IsRepair == 1) {
+                    en.content = data[i].OpUser + '  操作时间：' + data[i].OperatorDate;
+                    vm.ProStep.reject = i + 1;
+                }
+                vm.ProStep.steps.push(en);
+            }
         })
     }
 
@@ -153,20 +175,20 @@ function ($rootScope, $scope, $timeout, Dialog, toastr, AjaxService, MyPop) {
         en.IsHH = false;
         AjaxService.ExecPlan("MesMxWOrder", "checkNg", en).then(function (data) {
             if (data.data[0].MsgType == 'Success') {
-                    //打开窗体 WoAssNgDialog
+                //打开窗体 WoAssNgDialog
                 var item = { InCode: vm.Item.NgInCode, ProcedureItem: vm.ProcedureItem, OrderData: vm.OrderData };
                 vm.NgItem = item;
                 $(".bsn-ng").addClass("active");
-                    //Dialog.OpenDialog("WoAssNgDialog", item).then(function (data) {
-                    //    //$scope.$applyAsync();
-                    //    ChangePro(vm.ProcedureItem);
-                    //    vm.Item.InCode = undefined;
-                    //    vm.InCodeControl = undefined;
-                    //    vm.Item.NgInCode = undefined;
-                    //}).catch(function (reason) {
-                    //    vm.Item.NgInCode = undefined
-                    //    //console.log(reason);
-                    //});
+                //Dialog.OpenDialog("WoAssNgDialog", item).then(function (data) {
+                //    //$scope.$applyAsync();
+                //    ChangePro(vm.ProcedureItem);
+                //    vm.Item.InCode = undefined;
+                //    vm.InCodeControl = undefined;
+                //    vm.Item.NgInCode = undefined;
+                //}).catch(function (reason) {
+                //    vm.Item.NgInCode = undefined
+                //    //console.log(reason);
+                //});
             }
             else if (data.data[0].MsgType == 'Error') {
                 showError(data.data[0].Msg);
@@ -174,7 +196,8 @@ function ($rootScope, $scope, $timeout, Dialog, toastr, AjaxService, MyPop) {
                 vm.Item.NgInCode = undefined;
                 vm.InCodeControl = undefined;
             }
-        })
+        });
+        GetStep(vm.Item.NgInCode);
     }
 
     //============================================================不良登记

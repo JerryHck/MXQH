@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="list-group">
                                     <!--树状控件内容-->
-                                    <div id="tree">
+                                    <div id="tree" class="h6">
 
                                     </div>
                                 </div>
@@ -47,8 +47,8 @@
                                     <table class="table table-striped b-2x table-responsive" style="word-break:break-all; word-wrap:break-word;">
                                         <tr class="text-center bg-gd-dk h4">
                                             <td style="width:7%;">编辑</td>
-                                            <td style="width:10%;" class="">编码</td>
-                                            <td style="width:7%;" class="">名称</td>
+                                            <td style="width:7%;" class="">编码</td>
+                                            <td style="width:17%;">名称</td>
                                             <td style="width:7%;" class="">排序</td>
                                         </tr>
                                         <!--filter: auctusSO.search-->
@@ -59,7 +59,7 @@
                                                 <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除此分类以及下阶所有数据吗'}" ng-click="qti.Delete(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>
                                             </td>
                                             <td>{{ item.Code }}</td>
-                                            <td>{{ item.text }}</td>
+                                            <td class="text-left">{{ item.text }}</td>
                                             <td>{{ item.OrderNo }}</td>
                                         </tr>
                                     </table>
@@ -77,7 +77,7 @@
     </div>
 </div>
 <!--右侧弹出框-->
-<div class="pro-file d-r lg bg-light dk wrapper-md padder-md scroll-y" ng-form="DialogForm">
+<div class="pro-file d-r md bg-light dk wrapper-md padder-md scroll-y" ng-form="DialogForm">
     <div class="b-b wrapper-md text-center">
         <a href class="text-danger pull-left" ui-remove-class="active" target=".pro-file"><i class="glyphicon glyphicon-remove"></i></a>
         <h3>检验维修项</h3>
@@ -94,17 +94,19 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-2">编码</label>
-                        <div class="col-md-4" ng-class="{ 'has-error' : DialogForm.Code.$invalid }">
-                            <input autocomplete="off"  type="text" name="Code" ng-model="qti.ItemData.Code" class="form-control" required/>
+                        <div class="col-md-10" ng-class="{ 'has-error' : DialogForm.Code.$invalid }">
+                            <input autocomplete="off"  type="text" name="Code" ng-disabled="qti.ItemData.ID>0" ng-model="qti.ItemData.Code" class="form-control" required/>
                         </div>
-                        <label class="control-label col-md-2" >名称</label>
-                        <div class="col-md-4" ng-class="{ 'has-error' : DialogForm.text.$invalid }">
-                            <input autocomplete="off"  type="text" name="text" ng-model="qti.ItemData.text" class="form-control" required />
+                        </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">名称</label>
+                        <div class="col-md-10" ng-class="{ 'has-error' : DialogForm.text.$invalid }">
+                            <input autocomplete="off" type="text" name="text" ng-model="qti.ItemData.text" class="form-control" required />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-2">排序</label>
-                        <div class="col-md-4" ng-class="{ 'has-error' : DialogForm.OrderNo.$invalid }">
+                        <div class="col-md-10" ng-class="{ 'has-error' : DialogForm.OrderNo.$invalid }">
                             <input autocomplete="off"  type="number" name="OrderNo" ng-model="qti.ItemData.OrderNo" class="form-control" required/>
                         </div>
                     </div>

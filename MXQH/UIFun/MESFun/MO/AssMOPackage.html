@@ -1,10 +1,10 @@
 ﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="ass.promise">
     <uib-tab index="0" select="ass.SelectTab(0)" deselect="ass.SelectTab(-1)">
-        <uib-tab-heading class="h5">组装包装</uib-tab-heading>
+        <uib-tab-heading class="h5">组装彩盒打印与包装</uib-tab-heading>
         <div class="wrapper-xs">
             <div class="col-sm-4 padder-xs">
                 <div class="panel panel-default" ng-form="ass.OrderForm">
-                    <div class="panel-heading font-bold  text-center">组装包装</div>
+                    <div class="panel-heading font-bold  text-center">组装彩盒打印与包装</div>
                     <div class="panel-body">
                         <div class="form-horizontal">
                             <div class="form-group">
@@ -31,16 +31,26 @@
                                 </div>
                                 <div class="col-sm-6 form-control-static">
                                     <label class="i-checks i-checks-sm" title="锁定工单包装信息">
-                                        <input type="checkbox" ng-disabled="!ass.Item.WorkOrder" ng-change="ass.CheckLock()" ng-model="ass.Item.IsLock" /><i class="fa fa-lock"></i>锁定工单
+                                        <input type="checkbox" ng-disabled="!ass.Item.WorkOrder" ng-model="ass.Item.IsLock" /><i class="fa fa-lock"></i>锁定工单
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label padder-xs ">打印方式</label>
+                                <label class="col-sm-3 control-label padder-xs ">彩盒打印方式</label>
                                 <div class="col-sm-8 padder-xs ">
                                     <span class="btn-group">
                                         <label class="btn btn-default btn-success reset" ng-model="ass.PrintType" uib-btn-radio="'N'">不打印</label>
                                         <label class="btn btn-default btn-success reset" ng-model="ass.PrintType" uib-btn-radio="'G'">一般打印</label>
+                                        <label class="btn btn-default btn-success reset" ng-model="ass.PrintType" uib-btn-radio="'L'">镭雕打印</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label padder-xs ">包装打印方式</label>
+                                <div class="col-sm-8 padder-xs ">
+                                    <span class="btn-group">
+                                        <label class="btn btn-default btn-success reset" ng-model="ass.PackPrintType" uib-btn-radio="'N'">不打印</label>
+                                        <label class="btn btn-default btn-success reset" ng-model="ass.PackPrintType" uib-btn-radio="'G'">一般打印</label>
                                     </span>
                                 </div>
                             </div>
@@ -50,7 +60,7 @@
                                     <input autocomplete="off" type="text" class="form-control" ng-disabled="!ass.Item.PackNum && ass.Item.WorkOrder" name="BSN" ng-model="ass.Item.BSN" placeholder="SN码/内控码" ng-keypress="ass.KeyDonwSnCode($event)">
                                     <div class="h6 text-danger"><br />
                                         注:扫描枪请设定自动回车功能，如果手动输入则需按回车进行包装。<br />
-                                        需先扫码带出工单信息，设定好包装数量后勾选锁定，才可进行包装扫码。
+                                        需先扫码带出工单信息，设定好包装数量后勾选锁定，才可扫码打印彩盒与包装。
                                     </div>
                                 </div>
                             </div>
@@ -275,6 +285,37 @@
                         </div>
 
                         <!--<pre>{{ ass.PackList | json }}</pre>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="2">
+        <uib-tab-heading class="h5">彩盒码补打印</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading font-bold">
+                       彩盒码补打印
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label padder-xs ">彩盒打印方式</label>
+                                <div class="col-sm-8 padder-xs ">
+                                    <span class="btn-group">
+                                        <label class="btn btn-default btn-success reset" ng-model="ass.PrintType" uib-btn-radio="'G'">一般打印</label>
+                                        <label class="btn btn-default btn-success reset" ng-model="ass.PrintType" uib-btn-radio="'L'">镭雕打印</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label  padder-xs">内部码/SN码</label>
+                                <div class="col-sm-8  padder-xs">
+                                    <input type="text" class="form-control" name="InSn" ng-model="ass.ColorSnCode" placeholder="扫描内部码/SN码" ng-keyup="ass.KeyDonwColorRePrint($event)">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

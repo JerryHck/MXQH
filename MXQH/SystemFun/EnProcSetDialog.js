@@ -32,7 +32,6 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
         }
         vm.promise = AjaxService.BasicCustom(method, en).then(function (data) {
             vm.List = data;
-
             var enList = [];
             //获取数据库记录
             enList.push({ name: "EntityName", value: ItemData.EntityName });
@@ -48,7 +47,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
                     //初始化
                     for (var a = 0, l = ex.Columns.length; a < l; a++) {
                         var col = ex.Columns[a];
-                        col.ColumnText = col.ColumnText || col.ColumnName;
+                        col.ColumnText = col.ColumnText || col.ColumnNameDesc || col.ColumnName;
                         col.ReadIndex = ex.ReadIndex;
 
                         //双方数据匹配

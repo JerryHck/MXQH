@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('InCodeBindSNCtrl', ['$scope', '$http', 'AjaxService', 'toastr', '$window', 'MyPop',
+.controller('PackInCodeBindSNCtrl', ['$scope', '$http', 'AjaxService', 'toastr', '$window', 'MyPop',
 function ($scope, $http, AjaxService, toastr, $window, MyPop) {
 
     var vm = this;
@@ -14,6 +14,8 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     vm.IsAuto = true;
     vm.PrintType = 'G';
     vm.isFinist = true;
+    vm.Item = {};
+    vm.OrderData = {};
 
     vm.KeyDonwOrder = KeyDonwOrder;
     vm.KeyDonwInCode = KeyDonwInCode;
@@ -23,7 +25,6 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     vm.PageChange = PageChange;
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
-    vm.KeyDonwInCodeNg = KeyDonwInCodeNg;
 
     //PageChange();
     //未完工工单
@@ -48,6 +49,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     function GetOrder() {
         var en = {};
         en.WorkOrder = vm.Item.WorkOrder;
+        en.ProType = 1;
         AjaxService.ExecPlan("BindCode", "getOrder", en, false).then(function (data) {
             var mss = "工单 [" + vm.Item.WorkOrder + '] ';
             if (!data.data[0] || !data.data[0].WorkOrder) {
@@ -66,6 +68,28 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
                 $("input.SnFocus").focus();
             }
         });
+    }
+
+    function GetStep(bsn) {
+        //流程
+        vm.ProStep = { BSN: bsn };
+        vm.ProStep.steps = [];
+        AjaxService.GetPlans("vwOpPlanExecutPK", { name: "InternalCode", value: bsn }).then(function (data) {
+            for (var i = 0, len = data.length; i < len; i++) {
+                var en = {};
+                en.title = data[i].ProcedureName;
+                en.content = "";
+                if (data[i].IsPass == 1) {
+                    en.content = data[i].OpUser + '  操作时间：' + data[i].OperatorDate;
+                    vm.ProStep.now = i + 1;
+                }
+                else if (data[i].IsPass == 0 && data[i].IsRepair == 1) {
+                    en.content = data[i].OpUser + '  操作时间：' + data[i].OperatorDate;
+                    vm.ProStep.reject = i + 1;
+                }
+                vm.ProStep.steps.push(en);
+            }
+        })
     }
 
     function Search() {
@@ -99,74 +123,12 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
             vm.KeyInCode = angular.copy(vm.NewBind.InternalCode);
             if (vm.isFinist) {
                 vm.isFinist = false;
+                GetStep(vm.NewBind.InternalCode);
                 Action();
             }
         }
     }
-    
-    function GetStep(bsn) {
-        //流程
-        vm.ProStep = { BSN: bsn };
-        vm.ProStep.steps = [];
-        AjaxService.GetPlans("vwOpPlanExecut", { name: "InternalCode", value: bsn }).then(function (data) {
-            for (var i = 0, len = data.length; i < len; i++) {
-                var en = {};
-                en.title = data[i].ProcedureName;
-                en.content = "";
-                if (data[i].IsPass == 1) {
-                    en.content = data[i].OpUser + '  操作时间：' + data[i].OperatorDate;
-                    vm.ProStep.now = i + 1;
-                }
-                else if (data[i].IsPass == 0 && data[i].IsRepair == 1) {
-                    en.content = data[i].OpUser + '  操作时间：' + data[i].OperatorDate;
-                    vm.ProStep.reject = i + 1;
-                }
-                vm.ProStep.steps.push(en);
-            }
-        })
-    }
-
-    //不良条码扫描
-    function KeyDonwInCodeNg(e) {
-        $scope.$applyAsync(function () {
-            var keycode = window.event ? e.keyCode : e.which;
-            if (keycode == 13 && vm.Item.NgInCode) {
-                var en = {};
-                en.InternalCode = vm.Item.NgInCode;
-                AjaxService.ExecPlan("MesMxWOrder", 'ass', en, false).then(function (data) {
-                    if (data.data[0].MsgType == 'Error') {
-                        vm.Item.NgInCode = undefined;
-                        showError(data.data[0].Msg);
-                    }
-                    else if (data.data[0].MsgType == 'Success') {
-                        vm.OrderDataNg = data.data1[0];
-                        NgSave();
-                    }
-                });
-            }
-        });
-    }
-
-    //不良
-    function NgSave() {
-        var en = {};
-        en.InternalCode = vm.Item.NgInCode;
-        //SN工序ID
-        en.ProcedureID = 588;
-        AjaxService.ExecPlan("MesMxWOrder", "checkNg", en).then(function (data) {
-            if (data.data[0].MsgType == 'Success') {
-                //打开窗体 WoAssNgDialog
-                var item = { InCode: vm.Item.NgInCode, ProcedureItem: vm.ProcedureItem, OrderDataNg: vm.OrderDataNg };
-                vm.NgItem = item;
-                $(".bsn-ng").addClass("active");
-            }
-            else if (data.data[0].MsgType == 'Error') {
-                showError(data.data[0].Msg);
-                vm.Item.NgInCode = undefined;
-            }
-        })
-        GetStep(vm.Item.NgInCode);
-    }
+   
 
     //补打印
     function KeyDonwPrint(e) {
@@ -195,33 +157,36 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     }
 
     function Action() {
-        if (!vm.OrderData) {
-            vm.isFinist = true;
-            showError('请先选择工单');
-            return;
-        }
         vm.KeySn = undefined;
         vm.CharName = undefined;
-        var en = { InternalCode: vm.KeyInCode, WorkOrder: vm.OrderData.WorkOrder, TbName: vm.OrderData.TbName, ClName: vm.OrderData.ClName };
-        AjaxService.ExecPlan("BindCode", "checkSn", en, false).then(function (data) {
+        var en = { InternalCode: vm.KeyInCode, WorkOrder: vm.Item.WorkOrder, TbName: vm.OrderData.TbName, ClName: vm.OrderData.ClName, IsLock: vm.Item.IsLock };
+       vm.promise =  AjaxService.ExecPlan("BindCode", "packCheck", en, false).then(function (data) {
             if (data.data[0].MsgType == "Error") {
                 showError(data.data[0].MsgText);
                 vm.NewBind.InternalCode = undefined;
                 vm.isFinist = true;
             }
-            else if (data.data[0].MsgType == "Success") {
+            else if (data.data[0].MsgType == "Success" && vm.Item.IsLock) {
                 vm.CharName = data.data1[0] && data.data1[0].CharName ? data.data1[0].CharName : "";
                 GetSnCode(data.data1[0].InternalCode);
                 vm.NewBind.InternalCode = undefined;
             }
+            else if (data.data[0].MsgType == "Success" && !vm.Item.IsLock) {
+                //获取工单信息
+                vm.Item.WorkOrder = data.data1[0].WorkOrder;
+                vm.NewBind.InternalCode = undefined;
+                GetOrder();
+                vm.isFinist = true;
+                console.log(12314)
+            }
         }, function (data) {
             vm.isFinist = true;
         })
-        GetStep(vm.KeyInCode);
     }
 
     //生成内部码 
     function GetSnCode(inCode) {
+        
         //平台生成方式-预览
         if (!vm.IsAuto) {
             var en = { TbName: vm.OrderData.TbName, ClName: vm.OrderData.ClName, CharName: vm.CharName };
@@ -251,7 +216,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
             SNList.push({ name: vm.OrderData.IMEI_TbName, col: vm.OrderData.IMEI_ClName, parm: "IMEICode" });
         }
         vm.ThisBind.SNColumns = JSON.stringify(SNList);
-        vm.promise = AjaxService.ExecPlan("BindCode", 'saveBind', vm.ThisBind).then(function (data) {
+        vm.promise = AjaxService.ExecPlan("BindCode", 'packSnSave', vm.ThisBind).then(function (data) {
             vm.isFinist = true;
             if (data.data[0].MsgType == "Error") {
                 showError(data.data[0].MsgText);
@@ -263,7 +228,9 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
                 vm.MesList.splice(0, 0, Msg);
                 vm.NewBind = {};
                 AjaxService.PlayVoice('success.mp3');
+
                 GetOrder();
+
                 //获取打印数据
                 var en = { SNCode: data.data1[0].SNCode };
                 AjaxService.ExecPlan("MESSNCode", "printsn", en).then(function (data2) {
@@ -277,7 +244,6 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
                     }
                 })
             }
-
         }, function (data) {
             vm.isFinist = true;
         });
@@ -337,60 +303,6 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
             $window.location.href = data.File;
         });
     }
-
-    //============================================================不良登记
-    //储存
-    vm.BSNngSave = BSNngSave;
-    vm.ChangeMonitor = ChangeMonitor;
-    //获取组织信息
-    function ChangeMonitor() {
-        vm.DialogItem.Ng = undefined;
-        AjaxService.GetPlans("syQpoor", [{ name: "Layer", value: 2 }, { name: "IsMonitor", value: 1 }, { name: "PID", value: vm.DialogItem.NgType }]).then(function (data) {
-            vm.QpoorList = data;
-            BSNngSave();
-        });
-    }
-    AjaxService.GetPlans("syQpoor", [{ name: "Layer", value: 1 }, { name: "IsMonitor", value: 1 }]).then(function (data) {
-        vm.TypeList = data;
-    });
-
-    //储存
-    function BSNngSave() {
-        if (!vm.DialogItem || !vm.DialogItem.NgType) {
-            toastr.error("还没有选择不良项");
-            return;
-        }
-
-        var en = {};
-        en.InternalCode = vm.NgItem.InCode;
-        en.ProcedureID = 588;
-        en.FirstPoor = vm.DialogItem.NgType;
-        en.SecondPoor = vm.DialogItem.Ng || 0;
-        en.ThridPoor = 0;
-        en.PoorReason = vm.DialogItem.Reason;
-
-        vm.promise = AjaxService.ExecPlan("MesMxWOrder", "saveNg", en).then(function (data) {
-            if (data.data[0].MsgType == 'Success') {
-                toastr.success('储存成功');
-                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: "编码[" + en.InternalCode + "]录入不良成功" });
-                //$uibModalInstance.close(en);
-                GetOrder();
-            }
-            else if (data.data[0].MsgType == 'Error') {
-                showError(data.data[0].Msg);
-                toastr.error(data.data[0].Msg);
-            }
-            vm.Item.NgInCode = undefined;
-            vm.DialogItem.NgType = undefined;
-            $(".bsn-ng").removeClass("active");
-        })
-    };
-
-    //取消
-    vm.cancel = function () {
-        vm.Item.NgInCode = undefined;
-        //$uibModalInstance.dismiss('cancel');
-    };
 
 }
 ]);

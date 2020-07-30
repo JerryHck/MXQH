@@ -3,7 +3,7 @@ angular.module('app')
 .controller('QualityTestItemCtrl', ['$rootScope', '$scope', '$http', 'Dialog', 'toastr', 'AjaxService', 'Form', 'MyPop', '$window',
 function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $window) {
     var vm = this;
-    vm.page = { pageIndex: 1, pageSize: 2, maxSize: 10 };
+    vm.page = { pageIndex: 1, pageSize: 12, maxSize: 10 };
     vm.ItemData = {};
     vm.GetTreeData = GetTreeData;
     vm.Add = Add;//新增弹出框    
@@ -23,25 +23,26 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
             var topNode = [{ID:-1,PID:-1,text:'所有分类',nodes:poorType}]
             $('#tree').treeview({
                 data: topNode,
-                levels: 5,
+                levels: 3,
                 emptyIcon: "glyphicon",
-                showTags: true,                
+                showTags: true,
+                highlightSelected: true,
+                highlightSearchResults: false,
+                //selectedBackColor: "#8D9CAA",
                 onNodeSelected: function (event, data) {//节点选中事件
                     vm.ItemData = {};
-                    vm.selectedNode = data.nodeId;
+                    vm.selectedNode = data;
                     $(this).treeview("expandNode", [data.nodeId]);
                     vm.PID = data.ID;
                     vm.page.pageIndex = 1;
                     DataBind();
                 }
             });
-            if (!vm.selectedNode) {
-                $("#tree").treeview("selectNode", [0]);
-            }
-            else {
-                $("#tree").treeview("selectNode", [vm.selectedNode]);
-            }
             $('#tree').treeview('collapseAll', { silent: true });
+            $('#tree').treeview('expandNode', [0, { levels: 1, silent: true }]);
+            var nodeid = !vm.selectedNode ? 0 : vm.selectedNode.nodeId;
+            $('#tree').treeview('expandNode', [nodeid, { levels: 1, silent: true }]);
+            $("#tree").treeview("selectNode", [nodeid, { silent: true }]);
         })
     }
 
@@ -92,6 +93,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
                     toastr.success(data.data[0].Msg);
                     $(".pro-file").removeClass("active");
                     GetTreeData();
+                    DataBind();
                 } else {
                     toastr.error(data.data[0].Msg);
                 }
@@ -102,6 +104,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
                     toastr.success(data.data[0].Msg);
                     $(".pro-file").removeClass("active");
                     GetTreeData();
+                    DataBind();
                 } else {
                     toastr.error(data.data[0].Msg);
                 }
@@ -115,6 +118,7 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
             if (data.data[0].MsgType == "1") {
                 toastr.success(data.data[0].Msg);
                 GetTreeData();
+                DataBind();
             } else {
                 toastr.error(data.data[0].Msg);
             }

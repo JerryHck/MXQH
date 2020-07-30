@@ -76,6 +76,7 @@
     <Content Include="css\font-awesome.min.css" />
     <Content Include="CustomFun\201912\qlBadDialog.html" />
     <Content Include="CustomFun\201912\qlBadDialog.js" />
+    <Content Include="CustomFun\2020\DaiLog2020071701.html" />
     <Content Include="Data\Handler\New.html" />
     <Content Include="Data\Handler\New.js" />
     <Content Include="index.html" />
@@ -268,10 +269,14 @@
     <Content Include="UIFun\MESFun\PackageAct.js" />
     <Content Include="UIFun\MESFun\PackageActPower.html" />
     <Content Include="UIFun\MESFun\PackageActPower.js" />
+    <Content Include="UIFun\MESFun\PackInCodeBindSN.html" />
+    <Content Include="UIFun\MESFun\PackInCodeBindSN.js" />
     <Content Include="UIFun\MESFun\Print\BodyLabelPrint.html" />
     <Content Include="UIFun\MESFun\Print\BodyLabelPrint.js" />
     <Content Include="UIFun\MESFun\Quality\AQLCheckPara.html" />
     <Content Include="UIFun\MESFun\Quality\AQLCheckPara.js" />
+    <Content Include="UIFun\MESFun\Quality\QCMateTemplate.html" />
+    <Content Include="UIFun\MESFun\Quality\QCMateTemplate.js" />
     <Content Include="UIFun\MESFun\Quality\QualityTemplate.html" />
     <Content Include="UIFun\MESFun\Quality\QualityTemplate.js" />
     <Content Include="UIFun\MESFun\Quality\QualityTemplateDialog.html" />

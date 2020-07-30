@@ -1,5 +1,5 @@
 ﻿<div class="wrapper-xs">
-    <div class="col-sm-5 padder-xs">
+    <div class="col-xs-5 padder-xs">
         <div class="panel panel-default" ng-form="wo.OrderForm">
             <div class="panel-heading font-bold text-center">工单装配</div>
             <div class="panel-body">
@@ -63,103 +63,113 @@
             <div class="panel-body">
                 <div class="form-horizontal">
                     <div class="form-group-xs col-md-12">
-                        <label class="control-label col-sm-2 padder-xs">上站过站数:</label>
-                        <div class="col-sm-4">
+                        <label class="control-label col-xs-2 padder-xs">上站过站数:</label>
+                        <div class="col-xs-4">
                             <p class="form-control-static font-bold  h4 text-success">{{wo.CalData.LagProOKSum}}</p>
                         </div>
-                        <label class="control-label col-sm-2 padder-xs">本站过站数:</label>
-                        <div class="col-sm-4">
+                        <label class="control-label col-xs-2 padder-xs">本站过站数:</label>
+                        <div class="col-xs-4">
                             <p class="form-control-static font-bold  h4 text-success">{{wo.CalData.ProOKSum}}</p>
                         </div>
                     </div>
                     <div class="form-group-xs col-md-12 h2 text-danger">
-                        <label class="control-label col-sm-6 padder-xs">本站留存数:</label>
-                        <div class="col-sm-6">
+                        <label class="control-label col-xs-6 padder-xs">本站留存数:</label>
+                        <div class="col-xs-6">
                             <p class="form-control-static font-bold">{{ wo.CalData.NotDoneNum }}</p>
                         </div>
                     </div>
                     <div class="form-group-xs col-md-12 h1 text-warning">
-                        <label class="control-label col-sm-offset-2 padder-xs">请注意把握速度！</label>
+                        <label class="control-label col-xs-offset-2 padder-xs">请注意把握速度！</label>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-7 padder-xxs" ng-form="wo.UpdateForm">
+    <div class="col-xs-7 padder-xxs" ng-form="wo.UpdateForm">
         <div class="panel panel-default scroll-y" style="max-height:600px">
             <div class="panel-heading font-bold text-center">
                 工单 <span class="h4 font-bold text-info">{{ wo.OrderData.WorkOrder }}</span>信息
             </div>
-            <div class="panel-body h5">
+            <div class="panel-body h5 padder-xxs">
                 <div class="form-horizontal" ng-show="wo.OrderData">
                     <div class="form-group-xs col-md-12">
-                        <label class="control-label col-sm-2 padder-xs">产品编号:</label>
-                        <div class="col-sm-4">
+                        <label class="control-label col-xs-2 padder-xs">产品编号:</label>
+                        <div class="col-xs-4">
                             <p class="form-control-static font-bold">{{wo.OrderData.MaterialCode}}</p>
                         </div>
-                        <label class="control-label col-sm-2 padder-xs">产品名称:</label>
-                        <div class="col-sm-4">
+                        <label class="control-label col-xs-2 padder-xs">产品名称:</label>
+                        <div class="col-xs-4">
                             <p class="form-control-static font-bold">{{wo.OrderData.MaterialName}}</p>
                         </div>
                     </div>
                     <div class="form-group-xs col-md-12">
-                        <label class="control-label col-sm-2 padder-xs">计划日期:</label>
-                        <div class="col-sm-4">
+                        <label class="control-label col-xs-2 padder-xs">计划日期:</label>
+                        <div class="col-xs-4">
                             <p class="form-control-static font-bold">{{wo.OrderData.AssemblyDate}}</p>
                         </div>
-                        <label class="control-label col-sm-2 padder-xs">产线名称:</label>
-                        <div class="col-sm-4">
+                        <label class="control-label col-xs-2 padder-xs">产线名称:</label>
+                        <div class="col-xs-4">
                             <p class="form-control-static font-bold">{{wo.OrderData.AssemblyLineName}}</p>
                         </div>
                     </div>
                     <div class="form-group-xs col-md-12">
-                        <label class="control-label col-sm-2 padder-xs">出货地:</label>
-                        <div class="col-sm-4">
+                        <label class="control-label col-xs-2 padder-xs">出货地:</label>
+                        <div class="col-xs-4">
                             <p class="form-control-static font-bold">{{wo.OrderData.SendPlaceName}}</p>
                         </div>
-                        <label class="control-label col-sm-2 padder-xs">ERP销售单:</label>
-                        <div class="col-sm-4">
+                        <label class="control-label col-xs-2 padder-xs">ERP销售单:</label>
+                        <div class="col-xs-4">
                             <p class="form-control-static font-bold">{{wo.OrderData.ERPSO}}</p>
                         </div>
                     </div>
                     <div class="form-group-xs col-md-12">
-                        <label class="control-label col-sm-2 padder-xs">工单数量:</label>
-                        <div class="col-sm-4">
+                        <label class="control-label col-xs-2 padder-xs">工单数量:</label>
+                        <div class="col-xs-4">
                             <p class="form-control-static font-bold h4 text-success">{{wo.OrderData.Quantity}}</p>
                         </div>
-                        <label class="control-label col-sm-2 padder-xs">ERP订单数:</label>
-                        <div class="col-sm-4">
+                        <label class="control-label col-xs-2 padder-xs">ERP订单数:</label>
+                        <div class="col-xs-4">
                             <p class="form-control-static font-bold">{{wo.OrderData.ERPQuantity}}</p>
                         </div>
                     </div>
                     <div class="form-group-xs col-md-12">
-                        <label class="control-label col-sm-2 padder-xs">总合格数:</label>
-                        <div class="col-sm-4">
+                        <label class="control-label col-xs-2 padder-xs">总合格数:</label>
+                        <div class="col-xs-4">
                             <p class="form-control-static font-bold  h4 text-success">{{wo.CalData.ProOKSum}}</p>
                         </div>
-                        <label class="control-label col-sm-2 padder-xs">总不良数:</label>
-                        <div class="col-sm-4">
+                        <label class="control-label col-xs-2 padder-xs">总不良数:</label>
+                        <div class="col-xs-4">
                             <p class="form-control-static font-bold  h4 text-success">{{wo.CalData.ProNgSum}}</p>
                         </div>
                     </div>
                     <div class="form-group-xs col-md-12">
-                        <label class="control-label col-sm-2 padder-xs">今日合格:</label>
-                        <div class="col-sm-4">
+                        <label class="control-label col-xs-2 padder-xs">今日合格:</label>
+                        <div class="col-xs-4">
                             <p class="form-control-static font-bold  h4 text-success">{{wo.CalData.TodayOKSum}}</p>
                         </div>
-                        <label class="control-label col-sm-2 padder-xs">今日不良:</label>
-                        <div class="col-sm-4">
+                        <label class="control-label col-xs-2 padder-xs">今日不良:</label>
+                        <div class="col-xs-4">
                             <p class="form-control-static font-bold  h4 text-success">{{wo.CalData.TodayNgSum}}</p>
                         </div>
                     </div>
                     <div class="form-group-xs col-md-12">
-                        <label class="control-label col-sm-2 padder-xs">总维修数:</label>
-                        <div class="col-sm-4">
+                        <label class="control-label col-xs-2 padder-xs">总维修数:</label>
+                        <div class="col-xs-4">
                             <p class="form-control-static font-bold  h4 text-success">{{wo.CalData.ProRepairSum}}</p>
                         </div>
-                        <label class="control-label col-sm-2 padder-xs">今日维修:</label>
-                        <div class="col-sm-4">
+                        <label class="control-label col-xs-2 padder-xs">今日维修:</label>
+                        <div class="col-xs-4">
                             <p class="form-control-static font-bold  h4 text-success">{{wo.CalData.TodayRepairSum}}</p>
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in m-t-lg"></div>
+                    <div class="form-group-xs col-md-12" ng-if="wo.ProStep.now">
+                        <label class="control-label col-xs-2 padder-xs"><span class="text-success">{{ wo.ProStep.BSN }}</span> 过站:</label>
+                        <div class="col-xs-10 h6">
+                            <div ng-step opts="wo.ProStep"></div><br />
+                            <span style="color:rgb(207, 205, 205)"><i class="fa fa-circle"></i></span>-未过站
+                            <span style="color:rgb(129, 165, 86)"><i class="fa fa-circle"></i></span>-已过站
+                            <span style="color:rgb(234, 65, 19)"><i class="fa fa-circle"></i></span>-不良
                         </div>
                     </div>
                 </div>
@@ -197,7 +207,7 @@
                 <div class="col-md-12 no-padder">
                     <div class="panel panel-default">
                         <div class="panel-body scroll-y padder-xs padder-v-xs" style="max-height:600px">
-                            <div class="col-md-4 col-sm-4 col-xs-4 m-t-md padder-lg" ng-repeat="item in wo.TypeList">
+                            <div class="col-md-4 col-xs-4 col-xs-4 m-t-md padder-lg" ng-repeat="item in wo.TypeList">
                                 <button style="height:90px" class="btn-group-vertical h2 btn-lg w-full btn-primary"
                                         ng-click="wo.DialogItem.NgType=item.ID; wo.ChangeMonitor()"
                                         ng-class="{'btn-outline-primary':$index%2==0, 'btn-outline-success':$index%2==1, 'btn-success':wo.DialogItem.NgType==item.ID}">

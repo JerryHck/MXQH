@@ -196,9 +196,21 @@
                     <!--执行自定义后端方法时-->
                     <div class="form-group-xs pull-in clearfix" ng-if="job.Item.MethodType=='Custom'">
                         <div class="col-sm-12 no-padder">
+                            <label class="control-label m-l-n-lg padder-xs col-md-2">DLL文件名称</label>
+                            <div class="col-md-10 padder-xs" ng-class="{ 'has-error' : job.JobForm.JobExecMethod.$invalid }" title="DLL文件名称">
+                                <input autocomplete="off"  type="text" class="form-control" name="JobExecMethod" placeholder="DLL文件名称" ng-model="job.Item.JobExecMethod" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 no-padder m-t-xs">
+                            <label class="control-label m-l-n-lg padder-xs col-md-2">域名空间.类名</label>
+                            <div class="col-md-10 padder-xs" ng-class="{ 'has-error' : job.JobForm.ToPlanNameMail.$invalid }" title="域名空间.类名">
+                                <input autocomplete="off" type="text" class="form-control" name="ToPlanNameMail" placeholder="域名空间.类名" ng-model="job.Item.ToPlanName" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 no-padder m-t-xs">
                             <label class="control-label m-l-n-lg padder-xs col-md-2">方法名</label>
-                            <div class="col-md-10 padder-xs" ng-class="{ 'has-error' : job.JobForm.JobExecMethod.$invalid }" title="方法名">
-                                <input autocomplete="off"  type="text" class="form-control" name="JobExecMethod" placeholder="方法名" ng-model="job.Item.JobExecMethod" required>
+                            <div class="col-md-10 padder-xs" ng-class="{ 'has-error' : job.JobForm.ToPlanShortMail.$invalid }" title="方法名">
+                                <input autocomplete="off" type="text" class="form-control" name="ToPlanShortMail" placeholder="方法名" ng-model="job.Item.ToPlanShort" required>
                             </div>
                         </div>
                         <div class="col-sm-12 no-padder m-t-xs">

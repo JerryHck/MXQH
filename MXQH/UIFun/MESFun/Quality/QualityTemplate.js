@@ -3,23 +3,17 @@ angular.module('app')
 .controller('QualityTemplatesCtrl', ['$rootScope', '$scope', '$http', 'Dialog', 'toastr', 'AjaxService', 'Form', 'MyPop', '$window',
 function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $window) {
     var vm = this;
-    vm.pageDetail = { pageIndex: 1, pageSize: 10, maxSize: 10 };
     vm.templagePage = { pageIndex: 1, pageSize: 30, maxSize: 10 };
     vm.SelectedTemplate = {};
     vm.ItemData = {};
     vm.Detail = {};
     vm.EditItem = {};
-    vm.AddTemplate = AddTemplate;//新增弹出框    
-    vm.AddDetail = AddDetail;//新增模板明细
-    vm.EditDetail = EditDetail;//新增模板明细
-    vm.DeleteDetail = DeleteDetail;//新增模板明细
-    vm.Save = Save;
+    vm.AddTemplate = AddTemplate;//新增弹出框   
     vm.Edit = Edit;
     vm.Delete = Delete;
     vm.DataBind = DataBind;
     vm.SelectTemplate = SelectTemplate;
     vm.SearchTemplate = SearchTemplate;
-    vm.ValueChange = ValueChange;//下拉框change事件
     //初始化
     Init();
     function Init() {
@@ -47,21 +41,11 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
     }
     //新增 检测模板
     function AddTemplate() {
-        var resolve = {
-            ItemData: function () {
-                return {};
-            }
-        }
-        Open(resolve);
+        Open({})
     }
     //编辑 检测模板
     function Edit(item) {
-        var resolve = {
-            ItemData: function () {
-                return item;
-            }
-        }
-        Open(resolve);
+        Open(item);
     }
     //删除 模板
     function Delete(id) {
@@ -74,125 +58,140 @@ function ($rootScope, $scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $
         });
     }
     //弹出框
-    function Open(resolve) {
-        Dialog.open("QualityTemplateDialog", resolve).then(function (data) {
+    function Open(item) {
+        Dialog.OpenDialog("QualityTemplateDialog", item).then(function (data) {
             DataBind();
         }).catch(function (reason) {
-
         });
     }
 
     //选择模板
     function SelectTemplate(item) {
-        DataBindDetail();
         vm.SelectedTemplate = item;
-        vm.pageDetail.pageIndex = 1;
+        Search()
         vm.ItemData = {};
-        $(".pro-file").removeClass("active");
     }
 
-    // #endregion
-    //获取模板列表
 
-    //#region 模板详情
-    function DataBindDetail() {
-        var condition = [];
-        vm.promise = AjaxService.GetPlansPage("QualityTemplateRelation", condition, vm.pageDetail.pageIndex, vm.pageDetail.pageSize).then(function (data) {
-            vm.DetailList = data.List;
-            vm.pageDetail.total = data.Count;
-        })
-    }
-    //新增 模板明细
-    function AddDetail() {
-        if (!vm.SelectedTemplate.ID) {
-            toastr.error('请先选择模板！');
-            return;
+    //获取第一层模版
+    AjaxService.GetPlans("QualityProperty", [{ name: "PID", value: -1 }]).then(function (data) {
+        vm.TopLevels = data;
+    });
+
+    vm.page = { index: 1, size: 12 };
+    vm.Ser = {};
+    vm.InsertDtl = InsertDtl;
+    vm.SaveInsert = SaveInsert;
+    vm.EditDtl = EditDtl;
+    vm.DeleteDtl = DeleteDtl;
+    vm.SaveEdit = SaveEdit;
+    vm.PageChange = PageChange;
+    vm.Search = Search;
+    vm.ProChange = ProChange;
+    vm.IsAddPropertyCodeExists = IsAddPropertyCodeExists;
+    vm.IsEditPropertyCodeExists = IsEditPropertyCodeExists;
+
+    function ProChange(item, t) {
+        item.PropertyID = item.SelProperty.ID;
+        item.PropertyCode = item.SelProperty.Code;
+        item.PropertyName = item.SelProperty.text;
+        if (t == 'I') {
+            IsAddPropertyCodeExists();
         }
-        $(".pro-file").addClass("active");
-        vm.promise = AjaxService.GetPlans("QualityProperty", [{ name: "PID", value: -1 }]).then(function (data) {
-            vm.TopLevels = data;
-        });
-        vm.OrderNo = 0;
-        vm.IsEditDetail = false;
+        else {
+            IsEditPropertyCodeExists();
+        }
     }
-    //编辑模板明细
-    function EditDetail(item) {
-        $(".pro-file").addClass("active");
-        //获取检验大项下拉框数据
-        vm.promise = AjaxService.GetPlans("QualityProperty", [{ name: "PID", value: -1 }]).then(function (data) {
-            vm.TopLevels = data;
-        });
-        //获取检验项下拉框数据
-        vm.promise = AjaxService.GetPlans("QualityProperty", [{ name: "PID", value: item.TopLevel.PID }]).then(function (data) {
-            vm.TestItems = data;
-        });
-        $(".pro-file").addClass("active");
-        vm.EditID = item.ID;
-        vm.OrderNo = item.OrderNo;
-        vm.TopLevel = item.TopLevel.PID;
-        vm.Detail.PropertyID = item.PropertyID;
-        vm.IsEditDetail = true;
+
+    function Search() {
+        vm.page.index = 1;
+        PageChange();
     }
-    //删除模板明细
-    function DeleteDetail(id) {
-        vm.promise = AjaxService.ExecPlan("QualityTemplateRelation", "Delete", { ID: id }).then(function (data) {
-            if (data.data[0].MsgType == "1") {
-                toastr.success(data.data[0].Msg);
-                DataBindDetail(vm.SelectedTemplate);
-            } else {
-                toastr.error(data.data[0].Msg);
+
+    function InsertDtl() {
+        vm.NewItem = { TemplateID: vm.SelectedTemplate.ID, TemplateCode: vm.SelectedTemplate.Code, TemplateName: vm.SelectedTemplate.Name };
+        vm.IsInsert = true;
+    }
+
+    function SaveInsert() {
+        vm.promise = AjaxService.PlanInsert("QualityTemplateRelation", vm.NewItem).then(function (data) {
+            PageChange();
+            toastr.success('新增成功');
+            vm.IsInsert = false;
+        });
+    }
+
+    function EditDtl(item) {
+        for (var i = 0, len = vm.List.length; i < len; i++) {
+            vm.List[i].IsEdit = false;
+        }
+        vm.EditItem = angular.copy(item);
+        for (var j = 0, len1 = vm.TopLevels.length; j < len1; j++) {
+            if (vm.TopLevels[j].ID == item.PropertyID) {
+                vm.EditItem.SelProperty = angular.copy(vm.TopLevels[j]);
             }
+        }
+        vm.NowItem = item;
+        item.IsEdit = true;
+    }
+
+    function DeleteDtl(item) {
+        var en = angular.copy(item);
+        en.ItemForm = undefined;
+        vm.promise = AjaxService.PlanDelete("QualityTemplateRelation", en).then(function (data) {
+            PageChange();
+            toastr.success('删除成功');
         });
     }
-    //保存 检测模板
-    function Save() {
+
+    function SaveEdit(index) {
         var en = {};
-        var li = [];        
-        if (!vm.IsEditDetail) {//新增   
-            vm.Detail.TemplateID = vm.SelectedTemplate.ID;
-            vm.Detail.OrderNo = vm.OrderNo;
-            li.push(vm.Detail);
-            en.TempColumns = "List";
-            en.List = JSON.stringify(li);
-            vm.promise = AjaxService.ExecPlan("QualityTemplateRelation", "Add", en).then(function (data) {
-                if (data.data[0].MsgType == "1") {
-                    toastr.success(data.data[0].Msg);
-                    $(".pro-file").removeClass("active");
-                    DataBindDetail(vm.SelectedTemplate);
-                } else {
-                    toastr.error(data.data[0].Msg);
-                }
-            });
-        } else {//修改
-            vm.Detail.ID = vm.EditID;
-            vm.Detail.TemplateID = vm.SelectedTemplate.ID;
-            vm.Detail.OrderNo = vm.OrderNo;
-            li.push(vm.Detail);
-            en.TempColumns = "List";
-            en.List = JSON.stringify(li);
-            vm.promise = AjaxService.ExecPlan("QualityTemplateRelation", "Update", en).then(function (data) {
-                if (data.data[0].MsgType == "1") {
-                    toastr.success(data.data[0].Msg);
-                    $(".pro-file").removeClass("active");
-                    DataBindDetail(vm.SelectedTemplate);
-                } else {
-                    toastr.error(data.data[0].Msg);
-                }
+        en.ID = vm.EditItem.ID;
+        en.PropertyID = vm.EditItem.PropertyID;
+        en.PropertyCode = vm.EditItem.PropertyCode;
+        en.PropertyName = vm.EditItem.PropertyName;
+        en.OrderNo = vm.EditItem.OrderNo;
+        vm.promise = AjaxService.PlanUpdate("QualityTemplateRelation", en).then(function (data) {
+            PageChange();
+            toastr.success('更新成功');
+        });
+    }
+
+    function PageChange() {
+        AjaxService.GetPlansPage("QualityTemplateRelation", GetContition(), vm.page.index, vm.page.size).then(function (data) {
+            vm.DtlList = data.List;
+            vm.page.total = data.Count;
+        });
+
+    }
+
+
+    function IsAddPropertyCodeExists() {
+        var list = [];
+        list.push({ name: "PropertyCode", value: vm.NewItem.PropertyCode });
+        list.push({ name: "TemplateID", value: vm.SelectedTemplate.ID });
+        AjaxService.GetPlan("QualityTemplateRelation", list).then(function (data) {
+            vm.InsertForm.PropertyCode.$setValidity('unique', !data.PropertyCode);
+        });
+    }
+    function IsEditPropertyCodeExists() {
+        if (vm.NowItem.PropertyCode != vm.EditItem.PropertyCode) {
+            var list = [];
+            list.push({ name: "PropertyCode", value: vm.EditItem.PropertyCode });
+            list.push({ name: "TemplateID", value: vm.SelectedTemplate.ID });
+            vm.promise = AjaxService.GetPlan("QualityTemplateRelation", list).then(function (data) {
+                vm.NowItem.ItemForm.item_PropertyCode.$setValidity('unique', !data.PropertyCode);
             });
         }
     }
-    //下拉框change事件
-    function ValueChange() {
-        vm.TestItems = [];
-        vm.Detail = {};
-        vm.promise = AjaxService.GetPlans("QualityProperty", [{ name: "PID", value: vm.TopLevel }]).then(function (data) {
-            vm.TestItems = data;
-        });
+    function GetContition() {
+        var list = [];
+        list.push({ name: "TemplateID", value: vm.SelectedTemplate.ID || -1 })
+        if (vm.Ser.aPropertyName) {
+            list.push({ name: "PropertyName", value: vm.Ser.aPropertyName, tableAs: "a" });
+        }
+        return list;
     }
-    //#endregion
-    //获取模板详情
-
-
 
 
 }

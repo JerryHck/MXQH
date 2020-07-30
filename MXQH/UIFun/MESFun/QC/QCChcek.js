@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('QCCheckCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window', 'MyPop',
-function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
+.controller('QCCheckCtrl', ['$rootScope', '$scope', 'Dialog', 'AjaxService', 'toastr', '$window', 'MyPop',
+function ($rootScope, $scope, Dialog, AjaxService, toastr, $window, MyPop) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
@@ -22,11 +22,57 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
     vm.CheckSNCode = CheckSNCode;
     vm.SNConfirm = SNConfirm;
     vm.SNDelete = SNDelete;
+    vm.OpenOQC = OpenOQC;
+    vm.PrintPDF = PrintPDF;
+
+    vm.CheckPalletCode = CheckPalletCode;
     Init();
     PageChange();
+
+    //OQC窗口
+    //OpenOQC(-1);
+    function OpenOQC(id) {
+        if (!id || id == -1) {
+            MyPop.Show(true, "没有保存OQC，不允许编辑OQC报告");
+        } else {
+            Dialog.OpenDialog("OQCReport", { ID: id }).then(function (data) {
+            }, function (data2) { })
+        }
+    }
+
+    function PrintPDF(id) {
+
+        //var en = {};
+        //en.conn = "SKTcon";
+        //en.proc = "sp_GetIqcData";
+        //en.strJson = JSON.stringify({ InspectionId: 10144 });
+        //en.XmlName = "IQCReportFile.xml";
+        //AjaxService.BasicCustom("ExecProcPDF", en).then(function (data) {
+
+        var en = {};
+        en.planName = "OQCReport";
+        en.shortName = "getPdf";
+        en.strJson = JSON.stringify({ ID: id });
+        en.XmlName = "AuctusOQCReport.xml";
+        AjaxService.BasicCustom("ExecPlanPDF", en).then(function (data) {
+            //$window.location.href = data.File;
+            $window.open(data.File);
+            ////打印PDF
+            //AjaxService.PrintPdf(data.File);
+        });
+    }
+
     function FnEnter(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13) {
+            vm.IsMI = true;//手否手动输入
+            vm.PalletCode = vm.Item.PalletCode;
+            pageDetailChange();
+        }
+    }
+
+    function CheckPalletCode() {
+        if (vm.Item.PalletCode) {
             vm.IsMI = true;//手否手动输入
             vm.PalletCode = vm.Item.PalletCode;
             pageDetailChange();
@@ -128,6 +174,8 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, MyPop) {
             var flag = false;
             if (vm.IsMI) {//手动输入栈板号
                 if (data.data[0].MsgType == "0") {
+                    vm.Item.PalletCode = undefined;
+                    vm.PalletCode = undefined;
                     toastr.error(data.data[0].Msg);
                 } else if (data.data[0].MsgType == "2") {
                     MyPop.ngConfirm({ text: data.data[0].Msg }).then(function (result) {

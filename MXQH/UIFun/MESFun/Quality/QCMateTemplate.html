@@ -1,0 +1,149 @@
+﻿<div class="app-content-full" cg-busy="qc.promise">
+    <div class="hbox bg-white">
+        <div class="col w-md padder b-r h-100">
+            <div class="vbox">
+                <div class="wrapper">
+                    <div class="h4 text-center">检验类型</div>
+                </div>
+                <div>
+                    <div class="list-group-lg h5">
+                        <a ng-repeat="item in qc.CodeList" class="list-group-item b-l-3x hover-anchor cl"
+                           ng-class="{'hover': item.SendCode, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1, 'select': qc.SelectId == item.ID}" ng-click="qc.SendCode(item)">
+                            <span class="pull-left"><i class="glyphicon glyphicon-tree-conifer"></i></span>
+                            <span class="text-info font-bold">{{ item.ClDesc }}({{ item.ClDesc }})</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col w-auto padder w-tab-full">
+            <uib-tabset active="active" type="tabs" class="h-100">
+                <uib-tab index="0">
+                    <uib-tab-heading class="h5">产品模板关联</uib-tab-heading>
+                    <div class="wrapper-md">
+                        <div class="form-inline">
+                            <button class="btn btn-sm btn-success " ng-click="qc.Insert() " ng-disabled="qc.SelectId==-1"><i class="glyphicon glyphicon-plus "></i>新增</button>
+                            <div class="form-group">
+                                <input type="text" class="form-control" ng-model="qc.Ser.e_MaterialCode" placeholder="产品编号">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" ng-model="qc.Ser.TempName" placeholder="模板名称">
+                            </div>
+                            <button class="btn btn-sm btn-info " ng-click="qc.Search() " ng-disabled="qc.SelectId==-1"><i class="glyphicon glyphicon-search "></i>查询</button>
+                        </div>
+                    </div>
+                    <div class="padder-md ">
+                        <table class="table pad-xs">
+                            <thead>
+                                <tr>
+                                    <td style="width:60px">操作</td>
+                                    <td style="width:100px ">类型名称</td>
+                                    <td style="width:100px ">产品编码</td>
+                                    <td style="width:100px ">产品名称</td>
+                                    <td style="width:100px ">到货地编码</td>
+                                    <td style="width:100px ">到货单名称</td>
+                                    <td style="width:100px ">模板名称</td>
+                                    <!--<td style="width:80px ">模板编码</td>-->
+
+                                </tr>
+                            </thead>
+                            <tr ng-if="qc.IsInsert" ng-form="qc.InsertForm">
+                                <td>
+                                    <button class="btn btn-xs btn-success" ng-disabled="qc.InsertForm.$invalid" ng-click="qc.add()"><i class="glyphicon glyphicon-save"></i></button>
+                                    <button class="btn btn-xs btn-warning" ng-click="qc.IsInsert=false"><i class="fa fa-undo"></i></button>
+                                </td>
+                                <td>
+                                    {{ qc.SelectedType.TypeName }}
+                                </td>
+                                <td>
+                                    <div ng-class="{ 'has-error': qc.InsertForm.MaterialCode.$invalid }">
+                                        <!--<input type="text" name="MaterialCode" class="form-control" placeholder="e_MaterialCode" ng-model="qc.NewItem.MaterialCode" required />-->
+                                        <div basic-select="ProductID" ng-name="ProductID" placeholder="产品编码"
+                                             ng-model="qc.ProductID" required>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-class="{ 'has-error': qc.InsertForm.MaterialName.$invalid }">
+                                        <input type="text" name="MaterialName" class="form-control" placeholder="e_MaterialName" ng-model="qc.ProductID.MaterialName" disabled="disabled" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-class="{ 'has-error': qc.InsertForm.Code.$invalid }">
+                                        <!--<input type="text" name="Code" class="form-control" placeholder="d_Code" ng-model="qc.NewItem.Code" required />-->
+                                        <div basic-select="CustomAddrID" ng-name="CustomAddrID" placeholder="到货地编码"
+                                             ng-model="qc.CustomAddrID" required>
+                                        </div>
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-class="{ 'has-error': qc.InsertForm.Name.$invalid }">
+                                        <input type="text" name="Name" class="form-control" placeholder="到货地" ng-model="qc.CustomAddrID.Name" disabled="disabled" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-class="{ 'has-error': qc.InsertForm.Name.$invalid }">
+                                        <ui-select ng-model="qc.TemplateID" theme="bootstrap" ng-required="ngRequired">
+                                            <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>
+                                            <ui-select-choices repeat="item.TemplateId as item in qc.Template | filter: $select.search">
+                                                <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </td>
+                                <!--<td>
+                                    <div ng-class="{ 'has-error': qc.InsertForm.Code.$invalid }">
+                                        <input type="text" name="Code" class="form-control" placeholder="b_Code" ng-model="qc.TemplateID.Code" disabled="disabled" />
+                                    </div>
+                                </td>-->
+
+                            </tr>
+                            <tr ng-repeat="item in qc.List " ng-form="item.ItemForm">
+                                <td>
+                                    <span ng-if="!item.IsEdit">
+                                        <button class="btn btn-xs btn-primary" ng-click="qc.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                        <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="qc.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                                    </span>
+                                    <span ng-if="item.IsEdit">
+                                        <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="qc.alter()"><i class="glyphicon glyphicon-save"></i></button>
+                                        <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                                    </span>
+                                </td>
+                                <td title="{{ item.BarcodeTypeID.TypeName }}">{{ item.BarcodeTypeID.TypeName }}</td>
+                                <td title="{{ item.MaterialProductId.MaterialCode }}">{{ item.MaterialProductId.MaterialCode }}</td>
+                                <td title="{{ item.MaterialProductId.MaterialName }}">{{ item.MaterialProductId.MaterialName }}</td>
+                                <td title="{{ item.baSendPlaceCustomAddr.Code }}">{{ item.baSendPlaceCustomAddr.Code }}</td>
+                                <td title="{{ item.baSendPlaceCustomAddr.Name }}">{{ item.baSendPlaceCustomAddr.Name }}</td>
+                                <td>
+                                    <span ng-if="!item.IsEdit">{{ item.BarcodeTemplateID.Name }}</span>
+                                    <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_Name.$invalid }">
+                                        <ui-select ng-model="qc.EditTemplateID" theme="bootstrap" ng-required="ngRequired">
+                                            <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>
+                                            <ui-select-choices style="font-size:6px" repeat="item.TemplateId as item in qc.Template | filter: $select.search">
+                                                <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </td>
+
+                                <!--<td title="{{ item.BarcodeTemplateID.Code }}">{{ item.BarcodeTemplateID.Code }}</td>-->
+
+                            </tr>
+                        </table>
+                        <div class="col-md-12 text-center " ng-if="qc.page.total>qc.page.size ">
+                            <div uib-pagination total-items="qc.page.total " ng-model="qc.page.index " items-per-page="qc.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                                 ng-change="qc.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+
+            <!--<pre>{{qc.CodeTypeID | json}}</pre>
+            <pre>{{qc.ProductID | json}}</pre>
+            <pre>{{qc.CustomAddrID | json}}</pre>
+            <pre>{{qc.TemplateID | json}}</pre>-->
+        </div>
+    </div>
+</div>

@@ -43,7 +43,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     }
     //关闭弹窗
     function Cancel() {
-        $uibModalInstance.close("1");
+        $uibModalInstance.dismiss('cancel');
     }
     // #endregion
 
