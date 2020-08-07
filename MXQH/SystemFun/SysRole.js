@@ -6,7 +6,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
 
     var vm = this;
 
-    vm.page = { index: 1, size: 7 };
+    vm.page = { index: 1, size: 20 };
 
     vm.getListRole = getListRole;
     //选择角色

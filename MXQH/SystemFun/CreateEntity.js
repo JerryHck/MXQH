@@ -141,6 +141,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
         vm.isAddOpen = false;
         vm.TbColunms = undefined;
         vm.PropertyList = [];
+        vm.ProcList = [];
         vm.isEditing = false;
         vm.isAdd = false;
         vm.isProAdd = false;

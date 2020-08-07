@@ -1,24 +1,25 @@
 ﻿<div class="wrapper-md" uib-collapse="dailog.isAdd" cg-busy="dailog.promise">
     <div class="wrapper-xs">
         <div class="form-inline">
-            <button class="btn btn-sm btn-success pull-left" ng-click="dailog.Insert()" ng-if="!dailog.isAdd"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+            <button class="btn btn-md btn-success" ng-click="dailog.Insert()" ng-if="!dailog.isAdd"><i class="glyphicon glyphicon-plus"></i> 新增</button>
             <div class="form-group">
                 <input autocomplete="off"  type="text" class="form-control" placeholder="查询" ng-model="dailog.Ser.name" ng-keyup="dailog.KeyDonwSer($event)">
             </div>
             <!--<div class="form-group">
                 <input autocomplete="off"  type="text" class="form-control" ng-model="mo.Ser.a_MO" placeholder="生产工单(外协)">
             </div>-->
-            <button class="btn btn-sm btn-info " ng-click="dailog.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+            <button class="btn btn-md btn-info " ng-click="dailog.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
         </div>
     </div>
     <div class="wrapper-xs">
         <table class="table b-2x pad-xs" cg-busy="sys.promise">
             <thead>
-                <tr class="text-center bg-gd-dk h4">
+                <tr>
                     <td style="width:60px">编辑</td>
                     <td style="width:90px">弹窗名称</td>
                     <!--<td style="width:130px">html文件</td>-->
                     <!--<td style="width:60px">依赖js文件</td>-->
+                    <td style="width:100px">备注</td>
                     <td style="width:80px">Controller</td>
                     <td style="width:70px">创建人</td>
                     <td style="width:90px">创建时间</td>
@@ -38,6 +39,7 @@
                         <p class="list-group" href="" ng-repeat="js in item.LoadFiles">{{ js.LoadName }}</p>
                     </div>
                 </td>-->
+                <td class="text-left">{{ item.Remark }}</td>
                 <td class="text-left">{{ item.controller }}</td>
                 <td>
                     {{ item.Creator }}

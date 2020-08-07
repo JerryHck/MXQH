@@ -271,6 +271,8 @@
     <Content Include="UIFun\MESFun\PackageActPower.js" />
     <Content Include="UIFun\MESFun\PackInCodeBindSN.html" />
     <Content Include="UIFun\MESFun\PackInCodeBindSN.js" />
+    <Content Include="UIFun\MESFun\PackOnLineDelete.html" />
+    <Content Include="UIFun\MESFun\PackOnLineDelete.js" />
     <Content Include="UIFun\MESFun\Print\BodyLabelPrint.html" />
     <Content Include="UIFun\MESFun\Print\BodyLabelPrint.js" />
     <Content Include="UIFun\MESFun\Quality\AQLCheckPara.html" />

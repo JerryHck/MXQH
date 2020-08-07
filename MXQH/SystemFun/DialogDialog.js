@@ -546,6 +546,19 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
     //=================================代码生成
     function GenFuntionCode(fun) {
         var en = {};
+        fun.SerList = fun.SerList || [];
+        var listHave = [];
+        fun.SerList.forEach(function (ser) {
+            var have = 0;
+            listHave.forEach(function (h) {
+                if (h == ser.ColumnName) {
+                    have += 1;
+                }
+            });
+            var name = have == 0 ? ser.ColumnName : ser.ColumnName + have;
+            ser.ActColName = name.ToPinYin();
+        });
+
         //基本功能
         if (fun.FunType == "B") {
             en.Html = genHtmlForBasicFun(fun);
@@ -614,7 +627,6 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
 
     function genJsForReport(fun) {
         var sbJs = "";
-        fun.SerList = fun.SerList || [];
         sbJs += "'use strict';\n";
         sbJs += "\n";
         sbJs += "angular.module('AppSet')\n";
@@ -626,9 +638,9 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
         sbJs += "    vm.Ser = {};\n";
         //隐藏条件 -- 默认值
         fun.SerList.forEach(function (ser) {
-            if (ser.IsHide && !ser.SerValue) {
+            if (ser.SerValue && ser.SerValue != "") {
                 var s = ser.SerType == "Num" ? ser.SerValue + ";" : "\"" + ser.SerValue + "\";";
-                sbJs += "    vm.Ser." + ser.ColumnName + " = " + s + "\n";
+                sbJs += "    vm.Ser." + ser.ActColName + " = " + s + "\n";
             }
         });
 
@@ -693,22 +705,12 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
     function getEnJsSer(fun, sbJs) {
         sbJs += "        var list = [];\n";
         if (fun.SerList.length == 0) return sbJs;
-        var listHave = [];
         //条件加入
         fun.SerList.forEach(function (ser) {
-            var have = 0;
-            listHave.forEach(function (h) {
-                if (h == ser.ColumnName) {
-                    have += 1;
-                }
-            });
-            var name = have == 0 ? ser.ColumnName : ser.ColumnName + have;
-            name = name.ToPinYin();
-            sbJs += "        if (vm.Ser." + name + ") {\n";
-            sbJs += "            list.push({ name: \"" + subColName(ser.ColumnName) + "\", value: vm.Ser." + name +
+            sbJs += "        if (vm.Ser." + ser.ActColName + ") {\n";
+            sbJs += "            list.push({ name: \"" + subColName(ser.ColumnName) + "\", value: vm.Ser." + ser.ActColName +
                 ", tableAs:\"" + ser.ColumnName.substring(0, 1) + "\"" + (ser.SerAss == "=" ? "" : ", type:\"" + ser.SerAss + "\"") + " });\n";
             sbJs += "        }\n";
-            listHave.push(ser.ColumnName);
         });
         return sbJs;
     }
@@ -808,19 +810,10 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
 
     function genHtmlSer(fun, sbHtml) {
         if (!fun.SerList || fun.SerList.length == 0) { return sbHtml; }
-        var listHave = [];
         //条件加入
         for (var i = 0, len = fun.SerList.length; i < len; i++) {
             var ser = fun.SerList[i];
             if (!ser.IsHide) {
-                var have = 0;
-                listHave.forEach(function (h) {
-                    if (h == ser.ColumnName) {
-                        have += 1;
-                    }
-                });
-                var name = have == 0 ? ser.ColumnName : ser.ColumnName + have;
-                name = name.ToPinYin();
                 sbHtml += "                    <div class=\"form-group\">\n";
                 var str = "";
                 switch (ser.SerType) {
@@ -834,9 +827,8 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
                     case "Switch": str += "<div toggle-switch ng-model=\"{0}.Ser.{1}\" class=\"w-xxs switch-success\" on-label=\"是\" off-label=\"否\" on-value = \"1\" off-value =\"0\"></div >"; break;
                     case "CheckBox": str += "<label class=\"i-checks i-checks\"><input type =\"checkbox\" ng-model = \"{0}.Ser.{1}\" ><i></i>{2}</label>"; break;
                 }
-                sbHtml += "                        " + str.Format(vm.NewItem.controllerAs, name, ser.SerName, ser.SerTName || '', ser.ColumnName) + "\n";
+                sbHtml += "                        " + str.Format(vm.NewItem.controllerAs, ser.ActColName, ser.SerName, ser.SerTName || '', ser.ColumnName) + "\n";
                 sbHtml += "                    </div>\n";
-                listHave.push(ser.ColumnName);
             }
         }
         return sbHtml;
