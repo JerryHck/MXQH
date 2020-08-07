@@ -41,7 +41,7 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
         }
         
         var en = { FlowNo: ItemData.FunNo }, ListNode = [], ListRel = [];
-        
+        var haveStart = false;
         //值获取
         for (var i = 0, len = vm.Data.length; i < len; i++) {
             var node = angular.copy(vm.Data[i]);
@@ -49,9 +49,19 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
             for (var j = 0, len2 = node.Relate.length; j < len2; j++) {
                 ListRel.push(node.Relate[j]);
             }
+            //判断是否有开始节点
+            if (node.NodeType == 'A') {
+                haveStart = true;
+            }
             node.Relate = undefined;
             ListNode.push(node);
         }
+        if (!haveStart) {
+            toastr.error("没有配置开始节点，无法保存");
+            return;
+        }
+
+
         en.ListNode = JSON.stringify(ListNode);
         en.listRel = JSON.stringify(ListRel);
         en.TempColumns = "ListNode,listRel";

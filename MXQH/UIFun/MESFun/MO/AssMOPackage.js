@@ -25,6 +25,8 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
 
     vm.KeyDonwOrder = KeyDonwOrder;
     vm.KeyDonwColorRePrint = KeyDonwColorRePrint;
+    vm.KeyDonwPackSn = KeyDonwPackSn;
+    vm.KeyDonwBSNCode = KeyDonwBSNCode;
 
     vm.PrintPackId = 1;
     vm.NumIndex = 0;
@@ -231,8 +233,29 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
     function KeyDonwPackSn(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.PrintItem.WorkOrder) {
-           vm.promise = AjaxService.GetPlans("opAssNoPackage", [{ name: "State", value: 1 }, { name: "WorkOrder", value: vm.PrintItem.WorkOrder }]).then(function (data) {
+           vm.promise = AjaxService.GetPlans("opAssNoPackage", [{ name: "State", value: 1 }, { name: "WorkOrder", value: vm.PrintItem.WorkOrder }]).then(function (data) {              
                vm.PackList = data;
+            })
+        }
+    }
+
+    function KeyDonwBSNCode(e) {
+        var keycode = window.event ? e.keyCode : e.which;
+        if (keycode == 13 && vm.PrintItem.BSNCode) {
+            var list=[
+                { name: "InternalCode", value: vm.PrintItem.BSNCode },
+                { name: "SNCode", value: vm.PrintItem.BSNCode, action: 'OR' }];
+            vm.promise = AjaxService.GetPlan("MESPackData", list).then(function (data) {
+                if (data.Main.State == 0) {
+                    toastr.error('箱号[' + data.Main.WorkOrder + '-' + data.Main.PackNo + ']还没有完成包装');
+                    vm.PrintItem.BSNCode = undefined;
+                } else {
+                    vm.PrintItem.WorkOrder = data.Main.WorkOrder;
+                    vm.PrintForm.PackID = data.Main.ID;
+                    vm.promise = AjaxService.GetPlans("opAssNoPackage", [{ name: "State", value: 1 }, { name: "WorkOrder", value: vm.PrintItem.WorkOrder }]).then(function (data) {
+                        vm.PackList = data;
+                    })
+                }
             })
         }
     }

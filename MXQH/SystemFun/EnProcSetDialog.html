@@ -34,7 +34,7 @@
 
                         <div class="col-xs-7 b-r pt-2 padder-xxs text-xs scroll-y bar-xs" style="max-height:400px">
                             <div class="b bg-light list-group-item" ng-repeat="col in t.Columns">
-                                <div class="row v-middle">
+                                <div class="row v-middle" title="{{ col.EnNameDiv }}">
                                     <div class="col-xs-3">
                                         <label class="i-checks">
                                             <input autocomplete="off"  type="checkbox" ng-model="col.IsConvert"><i></i>转换
@@ -74,7 +74,6 @@
                         </div>
                     </div>
                 </div>
-                <!--<pre>{{ t.Columns | json }}</pre>-->
             </div>
         </uib-tab>
     </uib-tabset>

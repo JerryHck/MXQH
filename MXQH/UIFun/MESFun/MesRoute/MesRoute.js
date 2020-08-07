@@ -213,11 +213,10 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         en.Procedure = undefined;
         en.ProList = JSON.stringify(list);
         en.TempColumns = "ProList";
-        console.log(en);
         vm.promise = AjaxService.ExecPlan("MESboRoute", "save", en).then(function (data) {
             toastr.success("工艺保存成功");
-            console.log(data);
             vm.editRoute = false;
+            vm.SelectedRo = {};
             vm.NewRoute = {};
             GetRouterList();
         })

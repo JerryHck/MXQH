@@ -1137,4 +1137,52 @@ angular.module('AppSet')
                  }
              }
          };
-     })
+})
+
+.directive('inputDialog', ['AjaxService', 'Dialog', function (AjaxService, Dialog) {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        scope: {
+            ngModel: '=',
+            ngDisabled: '=',
+            ableEnter:'@',
+            ngName: '@',
+            text: '@',  //显示的栏位
+            value:'@',  //值的栏位
+            ngRequired: '@',
+            ngName: '@',
+            ngChange: '&'
+        },
+        template: '<div class="form-group col-md-12 padder-xxs has-feedback m-b-none">'
+                  +'    <div class="col-md-12 no-padder input-group">'
+                  + '        <input autocomplete="off" class="form-control" type="text" ng-disabled="able" ng-model="ngModel" name="{{ ngName }}" ng-required="ngRequired">'
+                  + '        <span class="input-group-addon text-info-dk" title="打开窗口" ng-click="Open($event)" style="cursor: pointer; background-color: #e7e7e7">'
+                  +'            <a><i class="glyphicon glyphicon-search"></i></a>'
+                  +'        </span>'
+                  +'    </div>'
+                  +'</div>'
+        ,
+        link: link
+    };
+    function link(scope, element, attrs) {
+        scope.ableEnter = scope.ableEnter == undefined ? 'true' : scope.ableEnter;
+        if (scope.ngDisabled) {
+            scope.ngDisabled = scope.ngDisabled || 'false';
+        }
+        else {
+            scope.ngDisable = 'false';
+        }
+        scope.able = scope.ableEnter == 'false' || scope.ngDisabled == 'true';
+        if (attrs.inputDialog && scope.ngDisable == 'false') {
+            scope.Open = function (e) {
+                Dialog.OpenDialog(attrs.inputDialog, {}).then(function (data) {
+                    scope.ngModel = data;
+                    if (scope.ngChange) {
+                        scope.ngChange({ data: data });
+                    }
+                })
+            }
+        }
+    }
+}])

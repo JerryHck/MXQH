@@ -88,8 +88,27 @@
         </div>
     </div>
 
+    <table class="table">
+        <thead>
+            <tr>
+                <td class="col-md-5">组织</td>
+                <td class="col-md-4">部门</td>
+                <td class="col-md-2">姓名</td>
+                <td class="col-md-1">日期</td>
+            </tr>
+        </thead>
+        <tr>
+            <td>#[SUBCOMPANYNAME]#</td>
+            <td>#[DEPARTMENTNAME]#</td>
+            <td>#[LASTNAME]#</td>
+            <td>#[SIGNDATE]#</td>
+        </tr>
+    </table>
 
     <pre><span class="h2">{{ file.Weigth }}</span></pre>
+
+    <div input-dialog="SystemUser" ng-model="file.df" able-enter="true" ng-change="file.UserChange(data)"></div>
+    <pre>{{ file.Nald | json }}</pre>
 
     <!--<div id="file2" import-sheet-js opts="file.FileData2" ng-complete="file.Do2()"></div>-->
     <!--<div import-sheet-js opts="file.FileData3" ng-complete="file.Do()"></div>-->

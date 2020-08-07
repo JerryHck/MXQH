@@ -256,6 +256,14 @@
                                     <!--{{ ass.PrintList|json }}-->
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">BSN/SN</label>
+                                <div class="col-sm-8" ng-class="{ 'has-error' : ass.PrintForm.BSNCode.$invalid }">
+                                    <input autocomplete="off" type="text" class="form-control" name="BSNCode" ng-model="ass.PrintItem.BSNCode" placeholder="内控码/SN码" ng-keyup="ass.KeyDonwBSNCode($event)" required>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">工单号</label>
                                 <div class="col-sm-8" ng-class="{ 'has-error' : ass.PrintForm.WorkOrder.$invalid }">
@@ -263,8 +271,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">箱号</label>
+                                <label class="col-sm-3 control-label">第几箱</label>
                                 <div class="col-sm-8" ng-class="{ 'has-error' : ass.PrintForm.PrintPackID.$invalid }">
+                                    <!--<input type="text" class="form-control" ng-model="ass.PrintForm.PackID" name="PrintPackID" uib-typeahead="item.PackNo as item.ID for item in ass.PackList | filter:$viewValue | limitTo:8" required/>-->
                                     <ui-select ng-model="ass.PrintForm.PackID" name="PrintPackID" theme="bootstrap" ng-required="true">
                                         <ui-select-match placeholder="完成包装箱">{{ $select.selected.PackNo }}</ui-select-match>
                                         <ui-select-choices repeat="item.ID as item in ass.PackList | filter: $select.search">

@@ -176,7 +176,7 @@
                                 </thead>
                                 <tr class="text-left" ng-repeat="col in fun.EnColList">
                                     <!--<td>{{ col.ColumnText }}</td>-->
-                                    <td class="text-left">
+                                    <td class="text-left" title="{{ col.EnNameDiv }}">
                                         <label class="i-checks i-checks-sm">
                                             <input autocomplete="off"  type="checkbox" ng-change="fun.IsColChange(col)" ng-model="col.IsShow"><i></i>
                                         </label>

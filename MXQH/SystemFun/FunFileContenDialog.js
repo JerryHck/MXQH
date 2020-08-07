@@ -362,6 +362,18 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
         var en = {};
         fun.SerList = fun.SerList || [];
         fun.ColList = fun.ColList || [];
+        var listHave = [];
+        fun.SerList.forEach(function (ser) {
+            var have = 0;
+            listHave.forEach(function (h) {
+                if (h == ser.ColumnName) {
+                    have += 1;
+                }
+            });
+            var name = have == 0 ? ser.ColumnName : ser.ColumnName + have;
+            ser.ActColName = name.ToPinYin();
+        });
+
         //基本功能
         if (fun.FunType == "B") {
             en.Html = genHtmlForBasicFun(fun);
@@ -438,9 +450,9 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
         sbJs += "    vm.Ser = {};\n";
         //隐藏条件 -- 默认值
         fun.SerList.forEach(function (ser) {
-            if (ser.IsHide && !ser.SerValue) {
+            if (ser.SerValue && ser.SerValue != "") {
                 var s = ser.SerType == "Num" ? ser.SerValue + ";" : "\"" + ser.SerValue + "\";";
-                sbJs += "    vm.Ser." + ser.ColumnName + " = " + s + "\n";
+                sbJs += "    vm.Ser." + ser.ActColName + " = " + s + "\n";
             }
         });
 
@@ -501,22 +513,12 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
     function getEnJsSer(fun, sbJs) {
         sbJs += "        var list = [];\n";
         if (fun.SerList.length == 0) return sbJs;
-        var listHave = [];
         //条件加入
         fun.SerList.forEach(function (ser) {
-            var have = 0;
-            listHave.forEach(function (h) {
-                if (h == ser.ColumnName) {
-                    have += 1;
-                }
-            });
-            var name = have == 0 ? ser.ColumnName : ser.ColumnName + have;
-            name = name.ToPinYin();
-            sbJs += "        if (vm.Ser." + name + ") {\n";
-            sbJs += "            list.push({ name: \"" + subColName(ser.ColumnName) + "\", value: vm.Ser." + name +
+            sbJs += "        if (vm.Ser." + ser.ActColName + ") {\n";
+            sbJs += "            list.push({ name: \"" + subColName(ser.ColumnName) + "\", value: vm.Ser." + ser.ActColName +
                 ", tableAs:\"" + ser.ColumnName.substring(0, 1) + "\"" + (ser.SerAss == "=" ? "" : ", type:\"" + ser.SerAss + "\"") + " });\n";
             sbJs += "        }\n";
-            listHave.push(ser.ColumnName);
         });
         return sbJs;
     }
@@ -715,19 +717,10 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
 
     function genHtmlSer(fun, sbHtml) {
         if (!fun.SerList || fun.SerList.length == 0) { return sbHtml; }
-        var listHave = [];
         //条件加入
         for (var i = 0, len = fun.SerList.length; i < len; i++) {
             var ser = fun.SerList[i];
             if (!ser.IsHide) {
-                var have = 0;
-                listHave.forEach(function (h) {
-                    if (h == ser.ColumnName) {
-                        have += 1;
-                    }
-                });
-                var name = have == 0 ? ser.ColumnName : ser.ColumnName + have;
-                name = name.ToPinYin();
                 sbHtml += "                <div class=\"form-group\">\n";
                 var str = "";
                 switch (ser.SerType) {
@@ -742,9 +735,8 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
                     case "CheckBox": str += "<label class=\"i-checks i-checks\"><input autocomplete=\"off\"  type =\"checkbox\" ng-model = \"{0}.Ser.{1}\" ><i></i>{2}</label>"; break;
                 }
 
-                sbHtml += "                    " + str.Format(fun.ControllerAs, name, ser.SerName, ser.SerTName || '', ser.ColumnName) + "\n";
+                sbHtml += "                    " + str.Format(fun.ControllerAs, ser.ActColName, ser.SerName, ser.SerTName || '', ser.ColumnName) + "\n";
                 sbHtml += "                </div>\n";
-                listHave.push(ser.ColumnName);
             }
         }
         return sbHtml;
@@ -764,21 +756,12 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
         sbJS += "    vm.page = { index: 1, size: 12 };\n";
         sbJS += "    vm.Ser = {};\n";
 
-        var listHave = [];
         //隐藏条件 -- 默认值
         for (var i = 0, len = fun.SerList.length; i < len; i++) {
             var ser = fun.SerList[i];
-            var have = 0;
-            listHave.forEach(function (h) {
-                if (h == ser.ColumnName) {
-                    have += 1;
-                }
-            });
-            var name = have == 0 ? ser.ColumnName : ser.ColumnName + have;
-            if (ser.SerValue) {
-                name = name.ToPinYin();
+            if (ser.SerValue && ser.SerValue != '') {
                 var s = ser.SerType == "Num" ? ser.SerValue + ";" : "'" + ser.SerValue + "';";
-                sbJS += "    vm.Ser." + name + " = " + s + "\n";
+                sbJS += "    vm.Ser." + ser.ActColName + " = " + s + "\n";
             }
         }
 
