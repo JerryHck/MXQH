@@ -55,7 +55,9 @@
                         <td title="{{ item.SendPlace }}">{{ item.SendPlace }}</td>
                         <td title="{{ item.Department }}" style="white-space:normal;word-break:break-all;">{{ item.Department }}</td>
 
-                        <td ng-class="{'bg-warning':item.IsCode}" title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                        <td ng-if="item.IsCode==2" class="bg-danger" title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                        <td ng-if="item.IsCode==1" class="bg-warning" title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                        <td ng-if="item.IsCode==0" title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
                         <td title="{{ item.MaterialName }}" style="white-space:normal;word-break:break-all;">{{ item.MaterialName }}</td>
                         <td title="{{ item.CustomerItemName }}" style="white-space:normal;word-break:break-all;">{{ item.CustomerItemName }}</td>
                         <td ng-class="{'bg-warning':item.IsQuantity}" title="{{ item.ProductQty }}">{{ item.ProductQty }}</td>
@@ -77,6 +79,7 @@
                 <ol>
                     <li>“工单号”列中背景色为<div class="bg-success inline" style="width:20px;">&nbsp;</div>时，代表U9和MES都有此工单</li>
                     <li>背景色为<div class="bg-warning inline" style="width:20px;">&nbsp;</div>时，代表此U9工单和MES工单的内容不一样</li>
+                    <li>背景色为<div class="bg-danger inline" style="width:20px;">&nbsp;</div>时，代表MES未建立料号档案</li>
 
                 </ol>
             </div>
