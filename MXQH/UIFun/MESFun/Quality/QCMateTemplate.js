@@ -26,20 +26,13 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     //获取类型
     AjaxService.GetTableConfig("MateTemplate", "QCType").then(function (data) {
         vm.CodeList = data;
-        console.log(data)
     });
 
 
     function SendCode(item) {    
-        vm.SelectId = item.ID;
+        vm.SelectId = item.ClInf;
         vm.SelectedType = angular.copy(item);
-        vm.page.index = 1;
-        vm.promise = AjaxService.GetPlansPage("MesProductTemplate", GetContition2(), vm.page.index, vm.page.size).then(function (data) {
-            vm.List = data.List;
-            vm.page.total = data.Count;
-        });
-        //console.log(vm.EditItem.TypeID);
-        CodeTypeSelect(item.ID);
+        CodeTypeSelect();
     }
 
     function Search() {
@@ -123,35 +116,28 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function PageChange() {
-        vm.promise = AjaxService.GetPlansPage("MesProductTemplate", GetContition2(), vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("QcMateTemplate", GetContition(), vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
 
     }
-    //根据标签类型查询模板编码
-    function CodeTypeSelect(TypeID) {
-        vm.TemplateID = {};
-        vm.promise = AjaxService.GetPlans("MESbaBarcodeTemplate", GetContition4(TypeID)).then(function (data) {
-            //console.log(data);
+    //获取模板列表
+    function CodeTypeSelect() {
+        var en = { name: "QCType", value: vm.SelectId };
+        vm.promise = AjaxService.GetPlans("QualityTemplate", en).then(function (data) {
             vm.Template = data;
-            //vm.page.total = data.Count;
         });
 
     }
-    function GetContition4(TypeID) {
-        var list = [];
-        list.push({ name: "TypeID", value: TypeID });
-        return list;
-    }
   
-    function GetContition2() {
+    function GetContition() {
         var list = [];
        
         if (vm.Ser.e_MaterialCode) {
             list.push({ name: "MaterialCode", value: vm.Ser.e_MaterialCode });
         }
-        list.push({ name: "TypeID", value: vm.SelectId }, { name: "State", value: 1 });
+        list.push({ name: "QCType", value: vm.SelectId });
         if (vm.Ser.TempName) {
             list.push({ name: "Name", value: vm.Ser.TempName, tableAs: 'c' });
         }

@@ -177,7 +177,6 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
                 vm.NewBind.InternalCode = undefined;
                 GetOrder();
                 vm.isFinist = true;
-                console.log(12314)
             }
         }, function (data) {
             vm.isFinist = true;

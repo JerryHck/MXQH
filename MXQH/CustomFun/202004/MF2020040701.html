@@ -1,16 +1,4 @@
-﻿<!--<div class="wrapper-sm">
-    <div class="form-inline">
-        <div class="form-group">
-            <input autocomplete="off" type="text" class="form-control" ng-model="wo.Ser.WorkOrder" placeholder="工单号">
-        </div>
-        <div class="form-group">
-            <label class="i-checks i-checks"><input autocomplete="off" type="checkbox" ng-model="wo.Ser.IsNow"><i></i>只显示未完工</label>
-        </div>
-        <button class="btn btn-sm btn-info " ng-click="wo.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
-        <button class="btn btn-sm btn-success " ng-click="wo.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>
-    </div>
-</div>-->
-<div class="padder-xs" cg-busy="wo.promise">
+﻿<div class="padder-xs" cg-busy="wo.promise">
     <div class="col-sm-3 padder-xs">
         <div class="panel panel-success m-t-xxs">
             <div class="panel-heading text-center h4">
@@ -31,11 +19,6 @@
                             <label class="i-checks i-checks"><input autocomplete="off" type="checkbox" ng-model="wo.Ser.IsNow"><i></i>只显示未完工</label>
                         </div>
                     </div>
-                    <!--<div class="form-group-xs col-md-12 padder-xs">
-                        <div class="col-sm-3 col-sm-offset-9">
-                            <button class="btn btn-sm btn-info " ng-click="wo.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
-                        </div>
-                    </div>-->
                 </div>
             </div>
         </div>
@@ -154,7 +137,7 @@
                         </tr>
                     </table>
                 </div>
-                <div class="col-md-12 m-t-n-md text-center " ng-if="wo.page.total>wo.page.size ">
+                <div class="col-md-12 text-center " ng-if="wo.page.total>wo.page.size ">
                     <div uib-pagination total-items="wo.page.total " ng-model="wo.page.index " items-per-page="wo.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
                          ng-change="wo.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
                 </div>

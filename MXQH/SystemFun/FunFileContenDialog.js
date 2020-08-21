@@ -442,8 +442,8 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
         sbJs += "'use strict';\n";
         sbJs += "\n";
         sbJs += "angular.module('AppSet')\n";
-        sbJs += ".controller('" + fun.Controller + "', ['$scope', '$http', 'AjaxService', 'toastr', '$window',\n";
-        sbJs += "function ($scope, $http, AjaxService, toastr, $window) {\n";
+        sbJs += ".controller('" + fun.Controller + "', ['$scope', 'Dialog', 'AjaxService', 'toastr', '$window',\n";
+        sbJs += "function ($scope, Dialog, AjaxService, toastr, $window) {\n";
         sbJs += "\n";
         sbJs += "    var vm = this;\n";
         sbJs += "    vm.page = { index: 1, size: 12 };\n";

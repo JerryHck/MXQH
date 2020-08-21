@@ -26,6 +26,12 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, Dialog) {
         if (vm.Ser.SelectName) {
             list.push({ name: "SelectName", value: vm.Ser.SelectName });
         }
+        if (vm.Ser.EntityName) {
+            list.push({ name: "EntityName", value: vm.Ser.EntityName });
+        }
+        if (vm.Ser.ConnectName) {
+            list.push({ name: "ConnectName", value: vm.Ser.ConnectName });
+        }
         vm.promise = AjaxService.GetPlansPage("SysUISelect", list, vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;

@@ -38,7 +38,8 @@
                             <thead>
                                 <tr>
                                     <td style="width:60px">操作</td>
-                                    <td style="width:100px ">类型名称</td>
+                                    <td style="width:100px ">模板类型</td>
+                                    <td style="width:100px ">模板</td>
                                     <td style="width:100px ">产品编码</td>
                                     <td style="width:100px ">产品名称</td>
                                     <td style="width:100px ">到货地编码</td>
@@ -54,7 +55,17 @@
                                     <button class="btn btn-xs btn-warning" ng-click="qc.IsInsert=false"><i class="fa fa-undo"></i></button>
                                 </td>
                                 <td>
-                                    {{ qc.SelectedType.TypeName }}
+                                    {{ qc.SelectedType.IQC }}
+                                </td>
+                                <td>
+                                    <div ng-class="{ 'has-error': qc.InsertForm.Name.$invalid }">
+                                        <ui-select ng-model="qc.TemplateID" theme="bootstrap" ng-required="ngRequired">
+                                            <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>
+                                            <ui-select-choices repeat="item.TemplateId as item in qc.Template | filter: $select.search">
+                                                <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
                                 </td>
                                 <td>
                                     <div ng-class="{ 'has-error': qc.InsertForm.MaterialCode.$invalid }">
@@ -93,12 +104,6 @@
                                         </ui-select>
                                     </div>
                                 </td>
-                                <!--<td>
-                                    <div ng-class="{ 'has-error': qc.InsertForm.Code.$invalid }">
-                                        <input type="text" name="Code" class="form-control" placeholder="b_Code" ng-model="qc.TemplateID.Code" disabled="disabled" />
-                                    </div>
-                                </td>-->
-
                             </tr>
                             <tr ng-repeat="item in qc.List " ng-form="item.ItemForm">
                                 <td>
@@ -139,11 +144,7 @@
                     </div>
                 </uib-tab>
             </uib-tabset>
-
-            <!--<pre>{{qc.CodeTypeID | json}}</pre>
-            <pre>{{qc.ProductID | json}}</pre>
-            <pre>{{qc.CustomAddrID | json}}</pre>
-            <pre>{{qc.TemplateID | json}}</pre>-->
+            <pre>{{ qc.Template | json }}</pre>
         </div>
     </div>
 </div>
