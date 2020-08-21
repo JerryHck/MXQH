@@ -8,6 +8,12 @@
         <div class="panel-body wrapper-xs">
             <div class="form-horizontal">
                 <div class="form-group">
+                    <label class="control-label col-sm-2 padder-xs">模版类型</label>
+                    <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.QCType.$invalid }">
+                        <div config-select tb="MateTemplate" col="QCType" ng-disabled="qtdc.Item.ID > 0" ng-name="QCType" ng-model="qtdc.Item.QCType" auto-first="true" ng-required="true"></div>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="control-label col-sm-2 padder-xs">编码</label>
                     <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Code.$invalid }">
                         <input autocomplete="off" type="text" class="form-control" name="Code" placeholder="编码"

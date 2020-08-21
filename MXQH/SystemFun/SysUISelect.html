@@ -6,6 +6,12 @@
             <div class="form-group">
                 <input autocomplete="off"  type="text" class="form-control"  ng-model="u.Ser.SelectName" placeholder="UISelect名">
             </div>
+            <div class="form-group">
+                <input autocomplete="off" type="text" class="form-control" ng-model="u.Ser.EntityName" placeholder="实体名称">
+            </div>
+            <div class="form-group">
+                <input autocomplete="off" type="text" class="form-control" ng-model="u.Ser.ConnectName" placeholder="连接对象">
+            </div>
             <button class= "btn btn-sm btn-info " ng-click= "u.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
             <button class= "btn btn-sm btn-success " ng-click= "u.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
         </div>
@@ -16,6 +22,7 @@
                 <tr>
                     <td style="width:70px ">操作</td>
                     <td style="width:100px ">UISelect名</td>
+                    <td style="width:100px ">连接对象</td>
                     <td style="width:100px ">实体名</td>
                     <td style="width:100px ">下拉显示</td>
                     <td style="width:120px ">下拉显示(small)</td>
@@ -31,8 +38,9 @@
                     <button class="btn btn-xs btn-primary" ng-click="u.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
                     <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="u.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
                 </td>
-                <td>{{ item.SelectName }}</td>
-                <td>{{ item.EntityName }}</td>
+                <td class="text-left">{{ item.SelectName }}</td>
+                <td class="text-left">{{ item.ENdata.ConnectName }}</td>
+                <td class="text-left">{{ item.EntityName }}</td>
                 <td>{{ item.ShowColumn }}</td>
                 <td>{{ item.ShowSmallColumn }}</td>
                 <td>{{ item.ReturnColumn }}</td>

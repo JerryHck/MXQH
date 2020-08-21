@@ -29,10 +29,11 @@
                                     <a ng-repeat="item in qtsc.List| filter:qtsc.KeyWord" class="list-group-item b-l-3x hover-anchor cl" ng-class="{'hover':item.ID==qtsc.SelectedTemplate.ID,'b-l-info':$index%2==0,'b-l-primary':$index%2==1}" ng-click="qtsc.SelectTemplate(item)">
                                         <span class="pull-left"><i class="fa fa-tree"></i></span>
                                         <btn class="pull-right text-primary" title="编辑" ng-click="qtsc.Edit(item)"><i class="fa fa-edit"></i></btn>
-                                        <small class="h4">
-                                            <span class="text-info-dk">{{ item.Code }}</span><span>({{ item.Name }})</span>
+                                        <small class="h4 text-center">
+                                            <span class="text-info-dk pull-left">{{ item.QCType }}</span>[{{ item.Code }}]
                                         </small>
-                                        <div class="clear ml-3 text-info">
+                                        <div class="clear ml-3">
+                                            {{ item.Name }}
                                             <btn class="pull-right text-danger" ng-confirm="{text:'确定要删除此模板？'}" title="删除模板" ng-click="qtsc.Delete(item.ID)"><i class="fa fa-remove"></i></btn>
                                         </div>
                                     </a>

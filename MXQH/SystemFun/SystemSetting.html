@@ -232,7 +232,8 @@
                             </td>
                             <td>
                                 <div ng-class="{ 'has-error': sys.Form.connectionString.$invalid }">
-                                    <textarea rows="2" ng-disabled="!sys.IsEdit" type="text" class="form-control" name="connectionString" ng-model="item.connectionString" required></textarea>
+                                    <textarea rows="2" ng-if="!sys.IsEdit" ng-disabled="!sys.IsEdit" type="text" class="form-control" name="connectionString" ng-model="item.connectionStringEncode" required></textarea>
+                                    <textarea rows="2" ng-if="sys.IsEdit" ng-disabled="!sys.IsEdit" type="text" class="form-control" name="connectionString" ng-model="item.connectionString" required></textarea>
                                 </div>
                             </td>
                             <td>
