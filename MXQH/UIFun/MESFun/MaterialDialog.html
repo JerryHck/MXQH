@@ -88,8 +88,8 @@
                     </div>
                     <div class="col-md-6 padder-xs">
                         <label class="control-label col-sm-4 padder-xs">重量（g）：</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Weight.$invalid }">
-                            <input onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" name="Weight" class="form-control" placeholder="重量（必填）" ng-model="ma.Item.Weight" required>
+                        <div class="col-sm-8 padder-xs">
+                            <input onkeyup="this.value=this.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3')" type="number" name="Weight" class="form-control" placeholder="重量" ng-model="ma.Item.Weight">
                         </div>
                     </div>
                 </div>
