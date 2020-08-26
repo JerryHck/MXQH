@@ -36,7 +36,7 @@ function (Dialog, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function Insert() {
-        Open({});  
+        Open({ LowerFPY: 96, PalletRoughWeight: 1, Unit: 'PCS', ColorBoxPrintNum: 1, PersonCount: 12, ProductSwitch: 96, PassSwitch: 96 });
     }
 
     function Edit(item) {
