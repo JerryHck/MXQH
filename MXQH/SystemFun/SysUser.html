@@ -77,225 +77,236 @@
                                 <uib-tabset active="active" type="tabs" class="h-100">
                                     <uib-tab index="0">
                                         <uib-tab-heading class="h5">{{ use.GetData() }}信息</uib-tab-heading>
-                                        <div class="padder-md" ng-if="use.SelectedUser">
-                                            <div class="row">
-                                                <div class="col-md-6 b-r m-t-xs" ng-if="use.UserType=='E'">
-                                                    <div class="row">
-                                                        <div class="m-l-md m-r-md">
-                                                            <button class="btn btn-sm btn-success" ng-click="use.EditEmp()" ng-if="!use.isEditEmp">
-                                                                <i class="glyphicon glyphicon-edit">编辑</i>
-                                                            </button>
-                                                            <button class="btn btn-sm btn-success" ng-if="use.isEditEmp" ng-click="use.SaveEmp()" ng-disabled="use.EmpForm.$invalid">
-                                                                <i class="glyphicon glyphicon-edit">确定</i>
-                                                            </button>
-                                                            <button class="btn btn-sm btn-warning m-l-xs m-r-lg" ng-if="use.isEditEmp" ng-click="use.CancelEmp()"> 取消</button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form form-horizontal b m-t-md" ng-form="use.EmpForm">
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="员工编号">
-                                                            <label class="col-md-4 control-label font-bold">员工编号:</label>
-                                                            <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.EmpNo.$invalid }">
-                                                                <input autocomplete="off"  type="text" class="form-control text-xs" name="EmpNo" placeholder="属性名" ng-model="use.EmpItem.EmpNo" disabled required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="姓名">
-                                                            <label class="col-md-4 control-label font-bold">姓名:</label>
-                                                            <!--<div class="col-md-3" ng-class="{ 'has-error' : use.EmpForm.ChLastName.$invalid }">
-                                                                <input autocomplete="off"  type="text" name="ChLastName" class="form-control" ng-maxlength="10" ng-disabled="!use.isEditEmp" placeholder="姓" ng-model="use.EmpItem.ChiLastName" required>
-                                                            </div>-->
-                                                            <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.ChiFirstName.$invalid }">
-                                                                <input autocomplete="off"  type="text" class="form-control" name="ChiFirstName" ng-maxlength="50" ng-disabled="!use.isEditEmp" placeholder="姓名" ng-model="use.EmpItem.ChiFirstName" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="英文名">
-                                                            <label class="col-md-4 control-label font-bold">英文名</label>
-                                                            <div class="col-md-8">
-                                                                <input autocomplete="off"  type="text" class="form-control text-xs" name="Pro" placeholder="属性名" ng-disabled="!use.isEditEmp" ng-model="en.EmpItem.EngName">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="性别">
-                                                            <label class="col-md-4 control-label font-bold">性别:</label>
-                                                            <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.Sex.$invalid }">
-                                                                <div config-select ng-model="use.EmpItem.Sex" config-option="use.ConfigSex" ng-name="Sex" ng-disabled="!use.isEditEmp" ng-required="true"></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="邮箱">
-                                                            <label class="col-md-4 control-label font-bold">邮箱:</label>
-                                                            <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.Email.$invalid }">
-                                                                <input autocomplete="off"  type="email" class="form-control text-xs" name="Email" placeholder="邮箱" ng-disabled="!use.isEditEmp" ng-model="use.EmpItem.Email" required>
-                                                                <div ng-messages="use.EmpForm.Email.$error" class="help-block" role="alert">
-                                                                    <div ng-message="email">邮箱格式错误</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="职位">
-                                                            <label class="col-md-4 control-label font-bold">职位:</label>
-                                                            <div class="col-md-8">
-                                                                <input autocomplete="off"  type="text" class="form-control text-xs" name="Mail" placeholder="职位" ng-model="use.EmpItem.Position" ng-disabled="!use.isEditEmp">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="固定电话">
-                                                            <label class="col-md-4 control-label font-bold">固定电话:</label>
-                                                            <div class="col-md-8">
-                                                                <input autocomplete="off"  type="text" class="form-control text-xs" name="Tel" placeholder="固定电话" ng-disabled="!use.isEditEmp" ng-model="use.EmpItem.Tel">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="手机号码">
-                                                            <label class="col-md-4 control-label font-bold">手机号码:</label>
-                                                            <div class="col-md-8">
-                                                                <input autocomplete="off"  type="tel" class="form-control text-xs" name="Mail" placeholder="手机号码" ng-disabled="!use.isEditEmp" ng-model="use.EmpItem.Phone">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="使用状态">
-                                                            <label class="col-md-4 control-label font-bold">使用状态:</label>
-                                                            <div class="col-md-8">
-                                                                <div toggle-switch ng-model="use.SelectedUser.State" class="w-xxs switch-success" on-label="启用" off-label="停用"
-                                                                     on-value="S" off-value="E" ng-change="use.change()" is-disabled="!use.isEditEmp"></div>
-                                                            </div>
-                                                        </div>
-                                                        <!--<div class="form-group pull-in clearfix  m-t-xs" title="电子签核">
-                                                            <label class="col-md-4 control-label font-bold">电子签核:</label>
-                                                            <div class="col-md-8">
-                                                                <div file-upload file-data="use.Card" placeholder="名片正面" file-type=".jpeg,.jpg,.png,.bmp"></div>
-                                                                <img ng-if="use.Card.FileUrl" class="img-responsive center-block" ng-src="{{ use.Card.FileUrl }}" alt="电子签核" />
-                                                            </div>
-                                                        </div>-->
+                                        <div class="row" ng-if="use.SelectedUser">
+                                            <div class="col-md-6 b-r m-t-xs" ng-if="use.UserType=='E'">
+                                                <div class="row">
+                                                    <div class="m-l-md m-r-md">
+                                                        <button class="btn btn-sm btn-success" ng-click="use.EditEmp()" ng-if="!use.isEditEmp">
+                                                            <i class="glyphicon glyphicon-edit">编辑</i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success" ng-if="use.isEditEmp" ng-click="use.SaveEmp()" ng-disabled="use.EmpForm.$invalid">
+                                                            <i class="glyphicon glyphicon-edit">确定</i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-warning m-l-xs m-r-lg" ng-if="use.isEditEmp" ng-click="use.CancelEmp()"> 取消</button>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 b-r m-t-xs" ng-if="use.UserType=='S'">
-                                                    <div class="row">
-                                                        <span class="m-l-md">
-                                                            <button class="btn btn-sm btn-success" ng-click="use.EditEmp()" ng-if="!use.isEditEmp">
-                                                                <i class="glyphicon glyphicon-edit">编辑</i>
-                                                            </button>
-                                                            <button class="btn btn-sm btn-success" ng-if="use.isEditEmp" ng-click="use.SaveEmp()" ng-disabled="use.EmpForm.$invalid">
-                                                                <i class="glyphicon glyphicon-edit">确定</i>
-                                                            </button>
-                                                            <button class="btn btn-sm btn-warning m-l-xs m-r-lg" ng-if="use.isEditEmp" ng-click="use.CancelEmp()"> 取消</button>
-                                                        </span>
+                                                <div class="form form-horizontal b m-t-md" ng-form="use.EmpForm">
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="员工编号">
+                                                        <label class="col-md-4 control-label font-bold">员工编号:</label>
+                                                        <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.EmpNo.$invalid }">
+                                                            <input autocomplete="off" type="text" class="form-control text-xs" name="EmpNo" placeholder="属性名" ng-model="use.EmpItem.EmpNo" disabled required>
+                                                        </div>
                                                     </div>
-                                                    <div class="form form-horizontal b m-t-md" ng-form="use.EmpForm">
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="供应商编号">
-                                                            <label class="col-md-4 control-label font-bold">供应商编号:</label>
-                                                            <div class="col-md-8" ng-class="{ 'has-error' : use.UserNo.$invalid }">
-                                                                <input autocomplete="off"  type="text" class="form-control text-xs" name="UserNo" ng-model="use.EmpItem.EmpNo" disabled required>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="姓名">
+                                                        <label class="col-md-4 control-label font-bold">姓名:</label>
+                                                        <!--<div class="col-md-3" ng-class="{ 'has-error' : use.EmpForm.ChLastName.$invalid }">
+                        <input autocomplete="off"  type="text" name="ChLastName" class="form-control" ng-maxlength="10" ng-disabled="!use.isEditEmp" placeholder="姓" ng-model="use.EmpItem.ChiLastName" required>
+                    </div>-->
+                                                        <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.ChiFirstName.$invalid }">
+                                                            <input autocomplete="off" type="text" class="form-control" name="ChiFirstName" ng-maxlength="50" ng-disabled="!use.isEditEmp" placeholder="姓名" ng-model="use.EmpItem.ChiFirstName" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="英文名">
+                                                        <label class="col-md-4 control-label font-bold">英文名</label>
+                                                        <div class="col-md-8">
+                                                            <input autocomplete="off" type="text" class="form-control text-xs" name="Pro" placeholder="属性名" ng-disabled="!use.isEditEmp" ng-model="en.EmpItem.EngName">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="性别">
+                                                        <label class="col-md-4 control-label font-bold">性别:</label>
+                                                        <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.Sex.$invalid }">
+                                                            <div config-select ng-model="use.EmpItem.Sex" config-option="use.ConfigSex" ng-name="Sex" ng-disabled="!use.isEditEmp" ng-required="true"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="邮箱">
+                                                        <label class="col-md-4 control-label font-bold">邮箱:</label>
+                                                        <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.Email.$invalid }">
+                                                            <input autocomplete="off" type="email" class="form-control text-xs" name="Email" placeholder="邮箱" ng-disabled="!use.isEditEmp" ng-model="use.EmpItem.Email">
+                                                            <div ng-messages="use.EmpForm.Email.$error" class="help-block" role="alert">
+                                                                <div ng-message="email">邮箱格式错误</div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="姓名">
-                                                            <label class="col-md-4 control-label font-bold">姓名:</label>
-                                                            <!--<div class="col-md-3" ng-class="{ 'has-error' : use.EmpForm.ChLastName.$invalid }">
-                                                                <input autocomplete="off"  type="text" name="ChLastName" class="form-control" ng-maxlength="10" ng-disabled="!use.isEditEmp" placeholder="姓" ng-model="use.EmpItem.ChiLastName" required>
-                                                            </div>-->
-                                                            <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.ChiFirstName.$invalid }">
-                                                                <input autocomplete="off"  type="text" class="form-control" name="ChiFirstName" ng-maxlength="10" ng-disabled="!use.isEditEmp" placeholder="名" ng-model="use.EmpItem.ChiFirstName" required>
+                                                    </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="职位">
+                                                        <label class="col-md-4 control-label font-bold">职位:</label>
+                                                        <div class="col-md-8">
+                                                            <input autocomplete="off" type="text" class="form-control text-xs" name="Mail" placeholder="职位" ng-model="use.EmpItem.Position" ng-disabled="!use.isEditEmp">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="固定电话">
+                                                        <label class="col-md-4 control-label font-bold">固定电话:</label>
+                                                        <div class="col-md-8">
+                                                            <input autocomplete="off" type="text" class="form-control text-xs" name="Tel" placeholder="固定电话" ng-disabled="!use.isEditEmp" ng-model="use.EmpItem.Tel">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="手机号码">
+                                                        <label class="col-md-4 control-label font-bold">手机号码:</label>
+                                                        <div class="col-md-8">
+                                                            <input autocomplete="off" type="tel" class="form-control text-xs" name="Mail" placeholder="手机号码" ng-disabled="!use.isEditEmp" ng-model="use.EmpItem.Phone">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="使用状态">
+                                                        <label class="col-md-4 control-label font-bold">使用状态:</label>
+                                                        <div class="col-md-8">
+                                                            <div toggle-switch ng-model="use.SelectedUser.State" class="w-xxs switch-success" on-label="启用" off-label="停用"
+                                                                 on-value="S" off-value="E" is-disabled="!use.isEditEmp"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="可同时登录数">
+                                                        <label class="col-md-4 control-label font-bold">同时登录数:</label>
+                                                        <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.SyncLogin.$invalid }">
+                                                            <input autocomplete="off" type="number" min="1" max="5" name="SyncLogin" class="form-control text-xs" placeholder="同时登录数" ng-disabled="!use.isEditEmp" ng-model="use.SelectedUser.SyncLogin" required>
+                                                        </div>
+                                                    </div>
+                                                    <!--<div class="form-group pull-in clearfix  m-t-xs" title="电子签核">
+                    <label class="col-md-4 control-label font-bold">电子签核:</label>
+                    <div class="col-md-8">
+                        <div file-upload file-data="use.Card" placeholder="名片正面" file-type=".jpeg,.jpg,.png,.bmp"></div>
+                        <img ng-if="use.Card.FileUrl" class="img-responsive center-block" ng-src="{{ use.Card.FileUrl }}" alt="电子签核" />
+                    </div>
+                </div>-->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 b-r m-t-xs" ng-if="use.UserType=='S'">
+                                                <div class="row">
+                                                    <span class="m-l-md">
+                                                        <button class="btn btn-sm btn-success" ng-click="use.EditEmp()" ng-if="!use.isEditEmp">
+                                                            e.
+                                                            <i class="glyphicon glyphicon-edit">编辑</i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success" ng-if="use.isEditEmp" ng-click="use.SaveEmp()" ng-disabled="use.EmpForm.$invalid">
+                                                            <i class="glyphicon glyphicon-edit">确定</i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-warning m-l-xs m-r-lg" ng-if="use.isEditEmp" ng-click="use.CancelEmp()"> 取消</button>
+                                                    </span>
+                                                </div>
+                                                <div class="form form-horizontal b m-t-md" ng-form="use.EmpForm">
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="供应商编号">
+                                                        <label class="col-md-4 control-label font-bold">供应商编号:</label>
+                                                        <div class="col-md-8" ng-class="{ 'has-error' : use.UserNo.$invalid }">
+                                                            <input autocomplete="off" type="text" class="form-control text-xs" name="UserNo" ng-model="use.EmpItem.EmpNo" disabled required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="姓名">
+                                                        <label class="col-md-4 control-label font-bold">姓名:</label>
+                                                        <!--<div class="col-md-3" ng-class="{ 'has-error' : use.EmpForm.ChLastName.$invalid }">
+                        <input autocomplete="off"  type="text" name="ChLastName" class="form-control" ng-maxlength="10" ng-disabled="!use.isEditEmp" placeholder="姓" ng-model="use.EmpItem.ChiLastName" required>
+                    </div>-->
+                                                        <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.ChiFirstName.$invalid }">
+                                                            <input autocomplete="off" type="text" class="form-control" name="ChiFirstName" ng-maxlength="10" ng-disabled="!use.isEditEmp" placeholder="名" ng-model="use.EmpItem.ChiFirstName" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="英文名">
+                                                        <label class="col-md-4 control-label font-bold">英文名</label>
+                                                        <div class="col-md-8">
+                                                            <input autocomplete="off" type="text" class="form-control text-xs" name="Pro" placeholder="属性名" ng-disabled="!use.isEditEmp" ng-model="en.EmpItem.EngName">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="性别">
+                                                        <label class="col-md-4 control-label font-bold">性别:</label>
+                                                        <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.Sex.$invalid }">
+                                                            <div config-select ng-model="use.EmpItem.Sex" config-option="use.ConfigSex" ng-name="Sex" ng-disabled="!use.isEditEmp" ng-required="true"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="邮箱">
+                                                        <label class="col-md-4 control-label font-bold">邮箱:</label>
+                                                        <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.Email.$invalid }">
+                                                            <input autocomplete="off" type="email" class="form-control text-xs" name="Email" placeholder="邮箱" ng-disabled="!use.isEditEmp" ng-model="use.EmpItem.Email" required>
+                                                            <div ng-messages="use.EmpForm.Email.$error" class="help-block" role="alert">
+                                                                <div ng-message="email">邮箱格式错误</div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="英文名">
-                                                            <label class="col-md-4 control-label font-bold">英文名</label>
-                                                            <div class="col-md-8">
-                                                                <input autocomplete="off"  type="text" class="form-control text-xs" name="Pro" placeholder="属性名" ng-disabled="!use.isEditEmp" ng-model="en.EmpItem.EngName">
-                                                            </div>
+                                                    </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="所属供应商">
+                                                        <label class="col-md-4 control-label font-bold">所属供应商:</label>
+                                                        <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.OrgSn.$invalid }">
+                                                            <div basic-select="VerderSelect" placeholder="选择所属供应商" ng-disabled="!use.isEditEmp" ng-name="OrgSn" ng-required="true" ng-model="use.EmpItem.OrgSn"></div>
                                                         </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="性别">
-                                                            <label class="col-md-4 control-label font-bold">性别:</label>
-                                                            <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.Sex.$invalid }">
-                                                                <div config-select ng-model="use.EmpItem.Sex" config-option="use.ConfigSex" ng-name="Sex" ng-disabled="!use.isEditEmp" ng-required="true"></div>
-                                                            </div>
+                                                    </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="固定电话">
+                                                        <label class="col-md-4 control-label font-bold">固定电话:</label>
+                                                        <div class="col-md-8">
+                                                            <input autocomplete="off" type="text" class="form-control text-xs" name="Tel" placeholder="固定电话" ng-disabled="!use.isEditEmp" ng-model="use.EmpItem.Tel">
                                                         </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="邮箱">
-                                                            <label class="col-md-4 control-label font-bold">邮箱:</label>
-                                                            <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.Email.$invalid }">
-                                                                <input autocomplete="off"  type="email" class="form-control text-xs" name="Email" placeholder="邮箱" ng-disabled="!use.isEditEmp" ng-model="use.EmpItem.Email" required>
-                                                                <div ng-messages="use.EmpForm.Email.$error" class="help-block" role="alert">
-                                                                    <div ng-message="email">邮箱格式错误</div>
-                                                                </div>
-                                                            </div>
+                                                    </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="手机号码">
+                                                        <label class="col-md-4 control-label font-bold">手机号码:</label>
+                                                        <div class="col-md-8">
+                                                            <input autocomplete="off" type="tel" class="form-control text-xs" name="Mail" placeholder="手机号码" ng-disabled="!use.isEditEmp" ng-model="use.EmpItem.Phone">
                                                         </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="所属供应商">
-                                                            <label class="col-md-4 control-label font-bold">所属供应商:</label>
-                                                            <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.OrgSn.$invalid }">
-                                                                <div basic-select="VerderSelect" placeholder="选择所属供应商" ng-disabled="!use.isEditEmp" ng-name="OrgSn" ng-required="true" ng-model="use.EmpItem.OrgSn"></div>
-                                                            </div>
+                                                    </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="使用状态">
+                                                        <label class="col-md-4 control-label font-bold">使用状态:</label>
+                                                        <div class="col-md-8">
+                                                            <div toggle-switch ng-model="use.SelectedUser.State" class="w-xxs switch-success" on-label="启用" off-label="停用"
+                                                                 on-value="S" off-value="E" is-disabled="!use.isEditEmp"></div>
                                                         </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="固定电话">
-                                                            <label class="col-md-4 control-label font-bold">固定电话:</label>
-                                                            <div class="col-md-8">
-                                                                <input autocomplete="off"  type="text" class="form-control text-xs" name="Tel" placeholder="固定电话" ng-disabled="!use.isEditEmp" ng-model="use.EmpItem.Tel">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="手机号码">
-                                                            <label class="col-md-4 control-label font-bold">手机号码:</label>
-                                                            <div class="col-md-8">
-                                                                <input autocomplete="off"  type="tel" class="form-control text-xs" name="Mail" placeholder="手机号码" ng-disabled="!use.isEditEmp" ng-model="use.EmpItem.Phone">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group pull-in clearfix  m-t-xs" title="使用状态">
-                                                            <label class="col-md-4 control-label font-bold">使用状态:</label>
-                                                            <div class="col-md-8">
-                                                                <div toggle-switch ng-model="use.SelectedUser.State" class="w-xxs switch-success" on-label="启用" off-label="停用"
-                                                                     on-value="S" off-value="E" ng-change="use.change()" is-disabled="!use.isEditEmp"></div>
-                                                            </div>
+                                                    </div>
+                                                    <div class="form-group pull-in clearfix  m-t-xs" title="可同时登录数">
+                                                        <label class="col-md-4 control-label font-bold">同时登录数:</label>
+                                                        <div class="col-md-8" ng-class="{ 'has-error' : use.EmpForm.VenSyncLogin.$invalid }">
+                                                            <input autocomplete="off" type="number" min="1" max="5" name="VenSyncLogin" class="form-control text-xs" placeholder="同时登录数" ng-disabled="!use.isEditEmp" ng-model="use.SelectedUser.SyncLogin" required>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <div class="row">
-                                                        <div class="bg-light wrapper-md lter b-b text-center">
-                                                            <h3 class="m-n font-thin h5 font-bold">已分配给{{ use.SelectedUser.ChiLastName }}{{ use.SelectedUser.ChiFirstName }}的角色</h3>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="row">
+                                                    <div class="bg-light wrapper-md lter b-b text-center">
+                                                        <h3 class="m-n font-thin h5 font-bold">已分配给{{ use.SelectedUser.ChiLastName }}{{ use.SelectedUser.ChiFirstName }}的角色</h3>
+                                                    </div>
+                                                    <div class="padder m-t-xs">
+                                                        <div class="form-group" uib-collapse="!use.isAddUserRole">
+                                                            <div class="input-group col-md-12">
+                                                                <span class="input-group-btn">
+                                                                    <button class="btn btn-default" ng-click="use.InsertUserRole()" ng-disabled="!use.newUserRole">
+                                                                        <i class="glyphicon glyphicon-plus text-success"></i>
+                                                                    </button>
+                                                                </span>
+                                                                <ui-select ng-model="use.newUserRole" theme="bootstrap" search-enabled="true" ng-change="use.SelectUserRole()">
+                                                                    <ui-select-match placeholder="选择角色...">{{ $select.selected.RoleName }}</ui-select-match>
+                                                                    <ui-select-choices repeat="item.RoleSn as item in use.ListRole | filter: $select.search track by item.RoleSn">
+                                                                        <div ng-bind-html="item.RoleSn | highlight: $select.search"></div>
+                                                                        <small ng-bind-html="item.RoleName | highlight: $select.search"></small>
+                                                                    </ui-select-choices>
+                                                                </ui-select>
+                                                                <span class="input-group-btn">
+                                                                    <button class="btn btn-default" ng-click="use.isAddUserRole=!use.isAddUserRole">
+                                                                        <i class="glyphicon glyphicon-search text-success"></i>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
                                                         </div>
-                                                        <div class="padder m-t-xs">
-                                                            <div class="form-group" uib-collapse="!use.isAddUserRole">
-                                                                <div class="input-group col-md-12">
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn btn-default" ng-click="use.InsertUserRole()" ng-disabled="!use.newUserRole">
-                                                                            <i class="glyphicon glyphicon-plus text-success"></i>
-                                                                        </button>
-                                                                    </span>
-                                                                    <ui-select ng-model="use.newUserRole" theme="bootstrap" search-enabled="true" ng-change="use.SelectUserRole()">
-                                                                        <ui-select-match placeholder="选择角色...">{{ $select.selected.RoleName }}</ui-select-match>
-                                                                        <ui-select-choices repeat="item.RoleSn as item in use.ListRole | filter: $select.search track by item.RoleSn">
-                                                                            <div ng-bind-html="item.RoleSn | highlight: $select.search"></div>
-                                                                            <small ng-bind-html="item.RoleName | highlight: $select.search"></small>
-                                                                        </ui-select-choices>
-                                                                    </ui-select>
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn btn-default" ng-click="use.isAddUserRole=!use.isAddUserRole">
-                                                                            <i class="glyphicon glyphicon-search text-success"></i>
-                                                                        </button>
-                                                                    </span>
-                                                                </div>
+                                                        <div class="form-group" uib-collapse="use.isAddUserRole">
+                                                            <div class="input-group">
+                                                                <span class="input-group-btn">
+                                                                    <button class="btn btn-success" ng-click="use.isAddUserRole=!use.isAddUserRole">
+                                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                                    </button>
+                                                                </span>
+                                                                <input autocomplete="off" type="text" class="form-control" placeholder="查询" ng-model="use.UserRoleQuery">
+                                                                <span class="input-group-btn">
+                                                                    <button class="btn btn-default" disabled>
+                                                                        <i class="glyphicon glyphicon-search text-success"></i>
+                                                                    </button>
+                                                                </span>
                                                             </div>
-                                                            <div class="form-group" uib-collapse="use.isAddUserRole">
-                                                                <div class="input-group">
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn btn-success" ng-click="use.isAddUserRole=!use.isAddUserRole">
-                                                                            <i class="glyphicon glyphicon-plus"></i>
-                                                                        </button>
-                                                                    </span>
-                                                                    <input autocomplete="off"  type="text" class="form-control" placeholder="查询" ng-model="use.UserRoleQuery">
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn btn-default" disabled>
-                                                                            <i class="glyphicon glyphicon-search text-success"></i>
-                                                                        </button>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="list-group">
-                                                                <ul class="list-group bg-white">
-                                                                    <li class="list-group-item" ng-repeat="ur in use.UserHaveRole | filter:use.UserRoleQuery ">
-                                                                        <a herf class="pull-left">
-                                                                            <b class="badge bg-success h2"><i class="glyphicon glyphicon-lock text-white"></i></b>
-                                                                        </a>
-                                                                        <div class="clear">
-                                                                            <div>
-                                                                                <a ng-click='use.DeleteUserRole(ur)' class="pull-right hover text-muted h4"><i class="fa fa-times text-danger"></i></a>
-                                                                                <div class="text-info h4">{{ ur.RoleSn }}</div>
-                                                                            </div>
-                                                                            <small class="text-muted">{{ ur.Role.RoleName }}</small>
+                                                        </div>
+                                                        <div class="list-group">
+                                                            <ul class="list-group bg-white">
+                                                                <li class="list-group-item" ng-repeat="ur in use.UserHaveRole | filter:use.UserRoleQuery ">
+                                                                    <a herf class="pull-left">
+                                                                        <b class="badge bg-success h2"><i class="glyphicon glyphicon-lock text-white"></i></b>
+                                                                    </a>
+                                                                    <div class="clear">
+                                                                        <div>
+                                                                            <a ng-click='use.DeleteUserRole(ur)' class="pull-right hover text-muted h4"><i class="fa fa-times text-danger"></i></a>
+                                                                            <div class="text-info h4">{{ ur.RoleSn }}</div>
                                                                         </div>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
+                                                                        <small class="text-muted">{{ ur.Role.RoleName }}</small>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -67,7 +67,7 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
         vm.EmpItem.OrgSn = vm.EmpItem.OrgSn || "1";
         vm.EmpItem.ChiLastName = undefined;
         vm.promise = AjaxService.PlanUpdate("Employee", vm.EmpItem).then(function (data) {
-            toastr.success('保存成功');
+            change();
             vm.isEditEmp = !vm.isEditEmp;
         });
     }
@@ -88,8 +88,9 @@ function ($scope, $http, Dialog, AjaxService, toastr, MyPop, $rootScope) {
         var en = {};
         en.UserNo = vm.SelectedUser.UserNo;
         en.State = vm.SelectedUser.State;
+        en.SyncLogin = vm.SelectedUser.SyncLogin;
         vm.promise = AjaxService.PlanUpdate("UserBasic", en).then(function (data) {
-            toastr.success('成功');
+            toastr.success('保存成功');
         });
     }
 
