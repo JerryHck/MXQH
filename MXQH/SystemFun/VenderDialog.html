@@ -38,8 +38,9 @@
                     <div class="col-md-12 padder-xs">
                         <label class="col-md-3 control-label">邮件</label>
                         <div class="col-md-8 no-padder" title="邮件" ng-class="{ 'has-error' : v.DialogForm.Email.$invalid }">
-                            <input autocomplete="off"  type="email" class="form-control" name="Email" placeholder="邮件"
+                            <input autocomplete="off"  type="text" ng-pattern="/^((([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6}\,))*(([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})))$/" class="form-control" name="Email" placeholder="邮件"
                                    ng-model="v.Item.EMail" required>
+                            <span class="h6 text-danger">注：多个邮箱时用英文逗号<span class="bg-light">,</span>隔开</span>
                         </div>
                     </div>
                 </div>

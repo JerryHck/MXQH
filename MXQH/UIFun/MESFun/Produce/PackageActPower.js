@@ -98,7 +98,6 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             //en.name = "WorkOrder";
             //en.value = vm.Item.WorkOrder;
             AjaxService.ExecPlan("MESPackageMain", "GetItem", { WorkOrder: vm.Item.WorkOrder }).then(function (data) {
-                console.log(data);
                 if (data.data[0].MsgType == '0') {
                     showErr(data.data[0].Msg);
                 } else {

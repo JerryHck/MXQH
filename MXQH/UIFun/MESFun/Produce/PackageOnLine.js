@@ -83,7 +83,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             showError(mss);
             vm.RoutingData = undefined;
         }
-        else if (vm.OrderData.TbName == "MesSnCode" && (vm.OrderData.ClName == "RT49" || vm.OrderData.ClName == "RT649") &&
+        else if (vm.OrderData.TbName == "MesSnCode" && (vm.OrderData.ClName == "RT49" || vm.OrderData.ClName == "RT649" || vm.OrderData.ClName == "RT49P") &&
             (vm.OrderData.CharName == null || vm.OrderData.CharName == "")) {
             var mss = '工单 【' + vm.Item.WorkOrder + '】未设置销售单【' + vm.OrderData.ERPSO + '】批次号'
                 + ',请联系业务部门设定批次号';
@@ -145,7 +145,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 }
                 enSave.SNColumns = JSON.stringify(SNList);
             }
-            console.log(enSave);
+            //console.log(enSave);
             //同步执行方式
             var data = AjaxService.ExecPlanWait("MesMxWOrder", "savePK", enSave);
             //vm.promise = AjaxService.ExecPlan("MesMxWOrder", "savePK", en).then(function (data) {
