@@ -1,0 +1,70 @@
+﻿<div class="modal-header text-center" cg-busy="pl.promise">
+    <button class="btn btn-sm btn-success pull-left" ng-disabled="!pl.List || pl.List.length ==0" type="button" ng-click="pl.Save()"><i class="glyphicon glyphicon-save"></i>保存</button>
+    <button class="btn btn-sm btn-warning pull-right" type="button" ng-click="pl.Cancel()">取消</button>
+    <h3 class="modal-title">排产计划导入</h3>
+</div>
+<div class="modal-body wrapper-xs h6" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body padder-xs padder-v-xxs">
+            <div class="form-horizontal">
+                <div class="form-group col-xs-6 col-xs-offset-3">
+                    <div id="file1" import-sheet-js file-type=".xls,.xlsx" opts="pl.Op" ng-model="pl.FileName" ng-complete="pl.Import(data)"></div>
+                </div>
+            </div>
+            <div class="padder-sm col-xs-12 no-padder scroll-x scroll-y" style="max-height:500px;">
+                <div class="panel panel-danger" ng-if="pl.ErrList.length>0">
+                    <div class="panel-heading text-center">错误信息</div>
+                    <div class="panel-body">
+                        <pre> {{ pl.ErrList|json }} </pre>
+                    </div>
+                </div>
+                <table class="table" style="min-width:2000px" ng-if="pl.ErrList.length==0">
+                    <thead>
+                        <tr>
+                            <td title="序号" style="width:40px ">序号</td>
+                            <td title="客户订单号" style="width:100px ">客户订单号</td>
+                            <td title="需求分类号" style="width:100px ">需求分类号</td>
+                            <td title="MRP分类" style="width:100px ">MRP分类</td>
+                            <td title="单据类型" style="width:100px ">单据类型</td>
+                            <td title="生产订单号" style="width:100px ">生产订单号</td>
+                            <td title="料号" style="width:100px ">料号</td>
+                            <td title="品名" style="width:100px ">品名</td>
+                            <td title="车间" style="width:100px ">车间</td>
+                            <td title="生产线别" style="width:100px ">生产线别</td>
+                            <td title="状态" style="width:100px ">状态</td>
+                            <td title="工单数量" style="width:100px ">工单数量</td>
+                            <td title="已完工数量" style="width:100px ">已完工数量</td>
+                            <td title="未完工数量" style="width:100px ">未完工数量</td>
+                            <td title="计划开工日期" style="width:100px ">计划开工日期</td>
+                            <td title="计划完工日期" style="width:100px ">计划完工日期</td>
+                            <td title="需求日期" style="width:100px ">需求日期</td>
+                            <td title="排产日期" style="width:100px ">排产日期</td>
+                            <td title="备注" style="width:100px ">备注</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in pl.List ">
+                        <td title="{{ item.RowNo }}">{{ item.RowNo }}</td>
+                        <td title="{{ item.CustomOrder }}">{{ item.CustomOrder }}</td>
+                        <td title="{{ item.DemandCode }}">{{ item.DemandCode }}</td>
+                        <td title="{{ item.MRPType }}">{{ item.MRPType }}</td>
+                        <td title="{{ item.FormType }}">{{ item.FormType }}</td>
+                        <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                        <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                        <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
+                        <td title="{{ item.WorkShop }}">{{ item.WorkShop }}</td>
+                        <td title="{{ item.Line }}">{{ item.Line }}</td>
+                        <td title="{{ item.State }}">{{ item.State }}</td>
+                        <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
+                        <td title="{{ item.FinishQty }}">{{ item.FinishQty }}</td>
+                        <td title="{{ item.NotFinishQty }}">{{ item.NotFinishQty }}</td>
+                        <td title="{{ item.PlanStDate }}">{{ item.PlanStDate }}</td>
+                        <td title="{{ item.PlanEdDate }}">{{ item.PlanEdDate }}</td>
+                        <td title="{{ item.NeedDate }}">{{ item.NeedDate }}</td>
+                        <td title="{{ item.ProduceDate }}">{{ item.ProduceDate }}</td>
+                        <td title="{{ item.Remark }}">{{ item.Remark }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

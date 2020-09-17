@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('PackageActCtrl', ['$rootScope', '$scope', 'MyPop', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
+.controller('PackageActCtrl', ['$rootScope', '$scope', 'MyPop', 'AjaxService', 'toastr', '$window', 'FileUrl',
+function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
 
     var vm = this;
     vm.Item = { };
@@ -20,7 +20,9 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     vm.NewPaletCode = NewPaletCode;
     vm.DeleteSn = DeleteSn;
     vm.Print = Print;
-   
+    vm.PrintOSLabel = PrintOSLabel;
+    vm.KeyDonwOSLabelPrint = KeyDonwOSLabelPrint;
+
     //获取包装信息-未完工的资料
     AjaxService.GetPlans("MesMxWOrder", [{ name: "Status", value: 4, type: "!=" }
         , { name: "WorkOrder", value: "AMO%", type: "not like", action: "and" }
@@ -124,6 +126,9 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                     $("input.SnFocus").focus();
                 }
             });
+            AjaxService.GetPlan("BlMOPackOSLabel", en).then(function (data) {
+                vm.OSLabelData = data;
+            })
         }
     }
 
@@ -191,6 +196,43 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 //}, function () {
                 //    getBoxList();
                 //});
+            }
+        })
+    }
+
+    //补打印
+    function KeyDonwOSLabelPrint(e) {
+        var keycode = window.event ? e.keyCode : e.which;
+        if (keycode == 13 && vm.PrintItem.OSNCode) {
+            //获取打印数据
+            var en = { OSNCode: vm.PrintItem.OSNCode };
+            AjaxService.ExecPlan("BlMOOSLabelDtl", "reprint", en).then(function (data) {
+                
+                if (data.data[0].MsgType == "Error") {
+                    showErr(data.data[0].MsgText);
+                }
+                else if (data.data[0].MsgType == "Success") {
+                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].MsgText });
+                    AjaxService.PrintPdf(FileUrl + data.data1[0].UrlPath);
+                }
+                vm.PrintItem.OSNCode = undefined;
+            })
+        }
+    }
+
+    //打印外箱标签
+    function PrintOSLabel() {
+        var en = { PackID: vm.PackDetail.ID };
+        vm.promise = AjaxService.ExecPlan("BlMOOSLabelDtl", "print", en).then(function (data) {
+            if (data.data[0].MsgType == "Error") {
+                showErr(data.data[0].MsgText);
+            }
+            else if (data.data[0].MsgType == "Success") {
+                vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].MsgText });
+                for (var i = 0; i < vm.OSLabelData.PrintNum; i++) {
+                    AjaxService.PrintPdf(FileUrl + data.data1[0].UrlPath);
+                }
+                getBoxList();
             }
         })
     }

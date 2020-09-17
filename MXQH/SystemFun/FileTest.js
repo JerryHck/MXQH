@@ -9,6 +9,24 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
     vm.Do = Do;
     vm.save = save;
     vm.Vioce = Vioce;
+    vm.Import = Import;
+
+    vm.Op = [
+        {
+            //标题列
+            header: ['RowNo', 'CustomOrder', 'DemandCode', 'MRPType', 'FormType', 'WorkOrder', 'MaterialCode', 'MaterialName', 'WorkShop', 'Line', 'State', 'Quantity', 'FinishQty', 'NotFinishQty', 'PlanStDate', 'PlanEdDate', 'NeedDate', 'ProduceDate', 'Remark'],
+            sheet: 0, //excel 的第几张sheet 以0开始
+        },
+        //{
+        //    header: ["Line", "Code", "SPEC", "Name", "Num", "Version", "Cost", "Weight", "BOMUom", "BaseNum", "Waste", "Position", "Remark"],
+        //    sheet: 1,
+        //}
+    ];
+
+    function Import(data) {
+        console.log(data);
+    }
+
 
     vm.UserChange = function (data) {
         vm.df = data.ChiFirstName;
@@ -122,7 +140,6 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
         //})
     }
 
-    //vm.FileData = { header: { header: "A" }, sheetNum: 1 };
 
     //var list = [];
 
@@ -148,7 +165,7 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
     function Do() {
 
         //GetPrintName('127.0.0.1');
-
+        AjaxService.PrintPdf(FileUrl + "OutLabel/FBA15Q63FSQ5U000003.pdf");
         var enCon = { WorkOrder: "AMO-30190506004", StartDate: "2019-07-25 8:30:00", EndDate: '2019-07-25 19:30:00' };
         var en = {};
         en.Method = 'ExecPlan';

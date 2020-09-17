@@ -40,7 +40,7 @@ angular.module('AppSet')
         //    ngModel: '=',
         //},
         link: function (scope, el, attr) {
-            el.on('click', function(e) {
+            el.on('mouseover', function (e) {
                 e.preventDefault();
                 var classes = attr.uiRemoveClass.split(','),
                     targets = (attr.target && attr.target.split(',')) || Array(el),

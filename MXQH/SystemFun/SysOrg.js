@@ -10,15 +10,16 @@ function ($scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $window) {
     vm.Save = Save;
     vm.Edit = Edit;
     vm.Delete = Delete;
+    vm.searchTreeView = searchTreeView;
     GetTreeData();
 
     vm.options = {
         //data: data, //data属性是必须的，是一个对象数组    Array of Objects.
         color: "", //所有节点使用的默认前景色，这个颜色会被节点数据上的backColor属性覆盖.        String
-        backColor: "#000000", //所有节点使用的默认背景色，这个颜色会被节点数据上的backColor属性覆盖.     String
-        borderColor: "#000000", //边框颜色。如果不想要可见的边框，则可以设置showBorder为false。        String
-        nodeIcon: "glyphicon glyphicon-stop", //所有节点的默认图标
-        checkedIcon: "glyphicon glyphicon-check", //节点被选中时显示的图标         String
+        backColor: "#a39b9f", //所有节点使用的默认背景色，这个颜色会被节点数据上的backColor属性覆盖.     String
+        borderColor: "#e85959", //边框颜色。如果不想要可见的边框，则可以设置showBorder为false。        String
+        //nodeIcon: "glyphicon glyphicon-stop", //所有节点的默认图标
+        //checkedIcon: "glyphicon glyphicon-check", //节点被选中时显示的图标         String
         collapseIcon: "glyphicon glyphicon-minus", //节点被折叠时显示的图标        String
         expandIcon: "glyphicon glyphicon-plus", //节点展开时显示的图标        String
         emptyIcon: "glyphicon", //当节点没有子节点的时候显示的图标              String
@@ -26,14 +27,14 @@ function ($scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $window) {
         highlightSearchResults: true, //是否高亮显示被选中的节点        Boolean
         levels: 2, //设置整棵树的层级数  Integer
         multiSelect: false, //是否可以同时选择多个节点      Boolean
-        onhoverColor: "#F5F5F5", //光标停在节点上激活的默认背景色      String
-        selectedIcon: "glyphicon glyphicon-stop", //节点被选中时显示的图标     String
+        onhoverColor: "#ad658a", //光标停在节点上激活的默认背景色      String
+        //selectedIcon: "glyphicon glyphicon-stop", //节点被选中时显示的图标     String
 
         searchResultBackColor: "", //当节点被选中时的背景色
         searchResultColor: "", //当节点被选中时的前景色
 
-        selectedBackColor: "", //当节点被选中时的背景色
-        selectedColor: "#FFFFFF", //当节点被选中时的前景色
+        selectedBackColor: "#413a3e", //当节点被选中时的背景色
+        selectedColor: "#ef9bc7", //当节点被选中时的前景色
 
         showBorder: true, //是否在节点周围显示边框
         showCheckbox: false, //是否在节点上显示复选框
@@ -59,9 +60,15 @@ function ($scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $window) {
             else {
                 $("#tree").treeview("selectNode", [vm.selectedNode]);
             }
-            
+            $('#tree').treeview('collapseAll', { silent: true });
         });
     }
+
+    //查询树状节点
+    function searchTreeView(value, attr) {
+        var arr = $('#tree').treeview('search', [value, attr]);
+    }
+
     //获取所选分类下的子分类
     function DataBind() {
         var condition2 = [{ name: "PID", value: vm.PID }]

@@ -1,15 +1,15 @@
   <!-- navbar -->
-<div data-ng-include="'Basic/blocks/header.html?v=654e94cfca' " class="app-header navbar">
+<div data-ng-include="'Basic/blocks/header.html?v=21c56f8f28' " class="app-header navbar">
 </div>
 <!-- / navbar -->
 <!-- menu -->
 <!--<div data-ng-include="'Basic/blocks/aside.html?v=780e4eaf2f'" class="app-aside hidden-xs maxh-100 {{vm.app.settings.asideColor}}" ng-class="{'scroll-y':!vm.app.settings.asideFolded}">
 </div>-->
-<div data-ng-include="'Basic/blocks/aside.html?v=780e4eaf2f'" ng-class="{'scroll-y bar-xxs': !vm.app.settings.asideFolded}" class="app-aside hidden-xs maxh-100 {{vm.app.settings.asideColor}}">
+<div data-ng-include="'Basic/blocks/aside.html?v=780e4eaf2f'" ui-remove-class="show" data-target=".navbar-collapse" ng-class="{'scroll-y bar-xxs': !vm.app.settings.asideFolded}" class="app-aside hidden-xs maxh-100 {{vm.app.settings.asideColor}}">
 </div>
 <!-- / menu -->
 <!-- content -->
-<div class="app-content">
+<div class="app-content" ui-remove-class="show" data-target=".navbar-collapse">
     <audio autoplay="autoplay" id="autoVoice" src=""></audio>
     <div ui-butterbar></div>
     <a class="off-screen-toggle hide" ui-toggle-class="off-screen" data-target=".app-aside"></a>

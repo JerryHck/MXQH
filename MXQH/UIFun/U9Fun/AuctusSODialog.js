@@ -6,7 +6,7 @@ function AuctusSODialog($rootScope, $scope, $uibModalInstance, ItemData, toastr,
     AuctusSODialog.Import = Import;
     AuctusSODialog.Do = Do;
     AuctusSODialog.Cancel = Cancel;
-    AuctusSODialog.FileData = { header: { header: ["Customer_Name","ProCode","ProQty","Code", "Name", "Qty", "RequireDate", "U9_DocNo", "Customer_DocNo", "HK_DocNo", "Remark", "LineRemark"] }, sheetNum: 1, data: [] };
+    AuctusSODialog.FileData = [{ header: ["Customer_Name","ProCode","ProQty","Code", "Name", "Qty", "RequireDate", "U9_DocNo", "Customer_DocNo", "HK_DocNo", "Remark", "LineRemark"] , sheet: 0, data: [] }];
 
     function Import() {
         //导入时将表头也包含在内，表头的行号为1，在存储过程中导入时自动删除表头这一行
