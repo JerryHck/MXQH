@@ -1,15 +1,15 @@
 ﻿<div cg-busy="file.promise">
     <div class="wrapper"></div>
     <div class="row">
-        <input autocomplete="off"  type="file" accept="image/*" capture="camera">
-        <input autocomplete="off"  type="file" accept="video/*" capture="camcorder">
-        <input autocomplete="off"  type="file" accept="audio/*" capture="microphone">
+        <input  type="file" accept="image/*" capture="camera">
+        <input  type="file" accept="video/*" capture="camcorder">
+        <input  type="file" accept="audio/*" capture="microphone">
         <!--input:file标签还有一个属性multiple 用来支持多选 直接呼出原生选项-->
         <input autocomplete="off"  type="file" accept="image/*" multiple>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <div id="file1" import-sheet-js file-type=".xls,.xlsx" opts="file.FileData" ng-model="name" ng-complete="file.Do()"></div>
+            <div id="file1" import-sheet-js file-type=".xls,.xlsx" opts="file.Op" ng-model="name" ng-complete="file.Import(data)"></div>
         </div>
     </div>
     <div class="row wrapper-sm">
@@ -20,6 +20,7 @@
     <div class="row wrapper-sm">
         <div class="col-md-8">
             <div file-upload file-data="file.UploadFile2" file-type=".xls,.xlsx"></div>
+            <!--<div file-upload file-data="file.UploadFile2" file-type="*"></div>-->
         </div>
     </div>
 
@@ -46,9 +47,9 @@
     <button class="btn btn-success" ng-click="file.PageChange()">保存</button>
     <button class="btn btn-success" ng-click="file.Vioce()">声音</button>
     <button class="btn btn-success" ng-click="file.Do()">Do</button>
-    
+    <div file-upload ng-disabled="bl.DialogForm.$invalid" file-data="bl.FileData" file-type=".pdf" ng-complete="bl.ImportFile(fileData)"></div>
     <div>
-        <pre>{{ file.Select | json }}</pre>
+        <pre>{{ file.Op.data | json }}</pre>
         <pre>{{ file.UploadFile | json }}</pre>
         <pre>{{ file.List | json }}</pre>
     </div>
@@ -87,23 +88,6 @@
             </div>
         </div>
     </div>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <td class="col-md-5">组织</td>
-                <td class="col-md-4">部门</td>
-                <td class="col-md-2">姓名</td>
-                <td class="col-md-1">日期</td>
-            </tr>
-        </thead>
-        <tr>
-            <td>#[SUBCOMPANYNAME]#</td>
-            <td>#[DEPARTMENTNAME]#</td>
-            <td>#[LASTNAME]#</td>
-            <td>#[SIGNDATE]#</td>
-        </tr>
-    </table>
 
     <pre><span class="h2">{{ file.Weigth }}</span></pre>
 

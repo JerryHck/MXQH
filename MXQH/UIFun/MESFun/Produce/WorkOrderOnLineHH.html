@@ -46,21 +46,21 @@
                         </div>
                         <div class="form-group-xs col-xs-12 padder-xxs">
                             <div class="col-xs-12">
-                                <div class="checkbox col-md-2 col-md-offset-1 padder-xxs ">
+                                <div class="checkbox col-xs-2 col-xs-offset-1 padder-xxs ">
                                     <label class="i-checks">
                                         <input autocomplete="off"  type="checkbox" ng-model="woHH.IsAuto"><i></i> 合格
                                     </label>
                                 </div> 
-                                <div class="checkbox col-md-4  padder-xxs " >
+                                <div class="checkbox col-xs-4  padder-xxs " >
                                     <label class="i-checks">
                                         <input autocomplete="off"  type="checkbox" ng-model="woHH.IsPrint"><i></i> 打印内控码
                                     </label>
                                 </div>
-                                <div class="col-md-2 padder-xxs " >
+                                <div class="col-xs-2 padder-xxs " >
                                     <span><button   type="submit"   class="btn btn-sm btn-success" ng-click="woHH.InCodeToDbcClick()" ng-disabled="woHH.OrderForm.$invalid || woHH.IsAuto">合格</button></span>
                                     <!--<span class="pl-md-1"><button type="submit" class="btn btn-sm btn-success" ng-click="woHH.NgSave()" ng-disabled="woHH.OrderForm.$invalid || woHH.IsAuto">不良</button></span>-->
                                 </div>
-                                <div class="col-md-2 padder-xxs " >
+                                <div class="col-xs-2 padder-xxs " >
                                     <span ><button type="submit" class="btn btn-sm btn-success" ng-click="woHH.NgSave()" ng-disabled="woHH.OrderForm.$invalid || woHH.IsAuto">不良</button></span>
                                 </div>
                             </div>
@@ -102,88 +102,88 @@
                 <div class="panel-body h5 padder-md">
                     <div class="form-horizontal" ng-show="woHH.OrderData">
                         <div class="form-group">
-                            <label class="control-label col-sm-2 padder-xs">产品编号:</label>
-                            <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-xs-2 padder-xs">产品编号:</label>
+                            <div class="col-xs-4 padder-xs">
                                 <p class="form-control-static font-bold">{{woHH.OrderData.MaterialCode}}</p>
                             </div>
-                            <label class="control-label col-sm-2 padder-xs">产品名称:</label>
-                            <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-xs-2 padder-xs">产品名称:</label>
+                            <div class="col-xs-4 padder-xs">
                                 <p class="form-control-static font-bold">{{woHH.OrderData.MaterialName}}</p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2 padder-xs">计划日期:</label>
-                            <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-xs-2 padder-xs">计划日期:</label>
+                            <div class="col-xs-4 padder-xs">
                                 <p class="form-control-static font-bold">{{woHH.OrderData.AssemblyDate | date:'yyyy-MM-dd'}}</p>
                             </div>
-                            <label class="control-label col-sm-2 padder-xs">产线名称:</label>
-                            <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-xs-2 padder-xs">产线名称:</label>
+                            <div class="col-xs-4 padder-xs">
                                 <p class="form-control-static font-bold">{{woHH.OrderData.AssemblyLineName}}</p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2 padder-xs">出货地:</label>
-                            <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-xs-2 padder-xs">出货地:</label>
+                            <div class="col-xs-4 padder-xs">
                                 <p class="form-control-static font-bold">{{woHH.OrderData.SendPlaceName}}</p>
                             </div>
-                            <label class="control-label col-sm-2 padder-xs">ERP销售单:</label>
-                            <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-xs-2 padder-xs">ERP销售单:</label>
+                            <div class="col-xs-4 padder-xs">
                                 <p class="form-control-static font-bold">{{woHH.OrderData.ERPSO}}</p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2 padder-xs">工单数量:</label>
-                            <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-xs-2 padder-xs">工单数量:</label>
+                            <div class="col-xs-4 padder-xs">
                                 <p class="form-control-static font-bold h4 text-success">{{woHH.OrderData.Quantity}}</p>
                             </div>
-                            <label class="control-label col-sm-2 padder-xs">ERP订单数:</label>
-                            <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-xs-2 padder-xs">ERP订单数:</label>
+                            <div class="col-xs-4 padder-xs">
                                 <p class="form-control-static font-bold">{{woHH.OrderData.ERPQuantity}}</p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2">U9开工数量:</label>
-                            <div class="col-sm-4">
+                            <label class="control-label col-xs-2">U9开工数量:</label>
+                            <div class="col-xs-4">
                                 <p class="form-control-static font-bold h4 text-danger">{{woHH.OrderData.TotalStartQty}}</p>
                             </div>
-                            <label class="control-label col-sm-2">最大可投量:</label>
-                            <div class="col-sm-4">
+                            <label class="control-label col-xs-2">最大可投量:</label>
+                            <div class="col-xs-4">
                                 <p class="form-control-static font-bold  h4 text-success">{{woHH.OrderData.MaxOverCount}}</p>
                             </div>
                         </div>
                         <!--<div class="form-group">
-                            <label class="control-label col-sm-2 padder-xs">最大可投量:</label>
-                            <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-xs-2 padder-xs">最大可投量:</label>
+                            <div class="col-xs-4 padder-xs">
                                 <p class="form-control-static font-bold  h4 text-success">{{woHH.OrderData.MaxOverCount}}</p>
                             </div>
-                            <label class="control-label col-sm-2 padder-xs">最低直通率:</label>
-                            <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-xs-2 padder-xs">最低直通率:</label>
+                            <div class="col-xs-4 padder-xs">
                                 <p class="form-control-static font-bold  h4 text-success">{{woHH.RoutingData.LowerFPY}}%</p>
                             </div>
                         </div>-->
                         <div class="form-group">
-                            <label class="control-label col-sm-2">有效总投入:</label>
-                            <div class="col-sm-4">
+                            <label class="control-label col-xs-2">有效总投入:</label>
+                            <div class="col-xs-4">
                                 <p class="form-control-static font-bold  h4 text-success">{{woHH.OrderCount.ToTalCount}}</p>
                             </div>
-                            <label class="control-label col-sm-2">今日投入:</label>
-                            <div class="col-sm-4">
+                            <label class="control-label col-xs-2">今日投入:</label>
+                            <div class="col-xs-4">
                                 <p class="form-control-static font-bold  h4 text-success">{{woHH.OrderCount.ToDayCount}}</p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2">全部投入:</label>
-                            <div class="col-sm-4">
+                            <label class="control-label col-xs-2">全部投入:</label>
+                            <div class="col-xs-4">
                                 <p class="form-control-static font-bold  h4 text-success">{{woHH.OrderCount.InNum}}</p>
                             </div>
-                            <label class="control-label col-sm-2">报废数:</label>
-                            <div class="col-sm-4">
+                            <label class="control-label col-xs-2">报废数:</label>
+                            <div class="col-xs-4">
                                 <p class="form-control-static font-bold  h4 text-success">{{woHH.OrderCount.DumpNum}}</p>
                             </div>
                         </div>
                         <div class="form-group" ng-if="woHH.OrderCount.ToTalCount>woHH.OrderData.ERPQuantity">
-                            <label class="control-label col-sm-2  padder-xs">警告:</label>
-                            <div class="col-sm-10  padder-xs">
+                            <label class="control-label col-xs-2  padder-xs">警告:</label>
+                            <div class="col-xs-10  padder-xs">
                                 <p class="form-control-static font-bold text-danger"> 当前工单投入量已大于工单计划量</p>
                             </div>
                         </div>

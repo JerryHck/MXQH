@@ -819,16 +819,15 @@ angular.module('AppSet')
             //templateUrl: 'js/directives/ImportSheetJs.html',
             templateUrl: 'js/directives/ImportSheetJs.html?v=' + Version,
             link: function ($scope, elm) {
-                $scope.opts = $scope.opts || {};
+                $scope.opts = $scope.opts == undefined || $scope.opts == [] ? [{ sheet: 0 }] : $scope.opts;
                 $scope.fileType = $scope.fileType || "*";
                 $scope.isImport = $scope.isImport || 'false';
                 $scope.ngModel = $scope.ngModel || '';
                 var op = $scope.opts;
-                op.sheetNum = op.sheetNum || 1;
-
+                op[0].sheet = op[0].sheet || 0;
 
                 $scope.Open = function (e) {
-                    e.target.parentNode.parentElement.firstElementChild.click();
+                    e.target.parentNode.parentElement.parentElement.firstElementChild.click();
                 }
                 var fileInput = elm[0].firstElementChild.firstElementChild.firstElementChild;
                 var circle = elm[0].lastElementChild;
@@ -836,6 +835,7 @@ angular.module('AppSet')
 
                 //事件添加
                 fileInput.onchange = function (changeEvent) {
+                    $scope.show = true;
                     //圆形进度条
                     //$(circle).circleChart({
                     //    size: 20,
@@ -875,9 +875,11 @@ angular.module('AppSet')
                     option.onComplete = function (data) {
                         ToJsonWorker.onmessage = function (evt) {
                             $scope.$apply(function () {
-                                $scope.opts.data = evt.data;
-                                $scope.ngComplete();
                                 $scope.Progress = 0;
+                                $scope.show = false;
+                                $scope.opts.data = evt.data;
+                                $scope.ngComplete({ data: evt.data });
+                                fileInput.value = "";
                             });
                         };
                         ToJsonWorker.postMessage({ data: data, op: op });
@@ -917,7 +919,7 @@ angular.module('AppSet')
         return {
             restrict: 'A',
             scope: {
-                ngDisabled: '@',
+                ngDisabled: '=',
                 fileType: '@',
                 ngName: '@',
                 ngRequired: '@',
@@ -951,7 +953,6 @@ angular.module('AppSet')
             link: function ($scope, elm) {
                 $scope.fileType = $scope.fileType || "*";
                 $scope.opts = $scope.opts || {};
-                $scope.ngDisabled = $scope.ngDisabled || 'false';
                 var op = $scope.opts;
 
                 $scope.Open = function (e) {
@@ -971,7 +972,7 @@ angular.module('AppSet')
         return {
             restrict: 'A',
             scope: {
-                ngDisabled: '@',
+                ngDisabled: '=',
                 fileType: '@',
                 ngName: '@',
                 ngRequired: '@',
@@ -985,7 +986,7 @@ angular.module('AppSet')
                 $scope.fileData = $scope.fileData || {};
                 option.onComplete = function (data) {
                     if ($scope.ngComplete) {
-                        $scope.ngComplete();
+                        $scope.ngComplete({ fileData: data[0] });
                     }
                     $scope.isUploaded = true;
                 }
@@ -1002,7 +1003,6 @@ angular.module('AppSet')
             }],
             link: function ($scope, elm) {
                 $scope.fileType = $scope.fileType || "*";
-                $scope.ngDisabled = $scope.ngDisabled || 'false';
                 $scope.Open = function (e) {
                     $scope.uploader.clearQueue();
                     e.target.parentNode.parentElement.parentElement.lastElementChild.click();
@@ -1186,3 +1186,18 @@ angular.module('AppSet')
         }
     }
 }])
+.directive('embedSrc', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var current = element;
+            scope.$watch(function () { return attrs.embedSrc; }, function () {
+                var clone = element
+                  .clone()
+                  .attr('src', attrs.embedSrc);
+                current.replaceWith(clone);
+                current = clone;
+            });
+        }
+    }
+})

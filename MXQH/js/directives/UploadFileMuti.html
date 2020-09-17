@@ -1,4 +1,4 @@
-﻿<div class="form-group col-md-12 has-feedback m-b-xxs" ng-if="ngDisabled=='false'">
+﻿<div class="form-group col-md-12 has-feedback m-b-xxs no-padder" ng-if="!ngDisabled">
     <div class="col-md-12 input-group">
         <span class="input-group-addon">
             <a class="pull-left" ng-click="Open($event)"><i class="fa fa-folder-open">浏览</i></a>
@@ -19,10 +19,10 @@
 <div ng-repeat="f in fileData">
     <div class="form-group col-md-12 has-feedback  m-b-none">
         <div class="col-md-12 input-group">
-            <span class="input-group-addon" ng-if="ngDisabled=='false'" ng-click="Delete($index)">
+            <span class="input-group-addon" ng-if="!ngDisabled" ng-click="Delete($index)">
                 <a class="text-danger"><i class="glyphicon glyphicon-trash"></i></a>
             </span>
-            <input autocomplete="off"  class="form-control" ng-disabled="ngDisabled == 'true'" type="text" ng-model="f.OriginalName">
+            <input autocomplete="off"  class="form-control" ng-disabled="ngDisabled" type="text" ng-model="f.OriginalName">
             <span class="input-group-addon text-success">{{ f.FileType }}</span>
             <span class="input-group-addon">
                 <a ng-click="DownLoad(f.FileUrl)" class="text-success"><i class="glyphicon glyphicon-download"></i></a>

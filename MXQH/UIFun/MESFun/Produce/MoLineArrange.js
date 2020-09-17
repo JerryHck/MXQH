@@ -136,6 +136,14 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $timeout, Dialog) {
                 vm.SelectedArrange.PlanCount = data.PlanCount;
             });
         }
+        else if (vm.SelectedArrange.Remark == "清尾工单") {
+            AjaxService.GetPlan("PlAssPlanAbleOnLine", [{ name: "WorkOrder", value: vm.SelectedArrange.WorkOrder }]).then(function (data) {
+                if (!data.ID) {
+                    toastr.error("该请尾工单[" + vm.SelectedArrange.ArrangeDate + "]可再排产量计算失败");
+                }
+                vm.SelectedArrange.PlanCount = data.PlanCount;
+            });
+        }
     }
 
     function ChangeArrEnd(item) {

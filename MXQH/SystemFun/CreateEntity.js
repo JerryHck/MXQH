@@ -259,7 +259,6 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
             en.value = vm.SelectedEn.EntityName;
             vm.promise = AjaxService.GetPlans("PlanProperty", en).then(function (data) {
                 vm.PropertyList = data;
-                console.log(data)
                 isProEmpty();
             });
 

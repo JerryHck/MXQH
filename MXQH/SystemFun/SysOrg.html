@@ -3,12 +3,22 @@
         <div class="col w-md padder b-r h-100">
             <div class="vbox">
                 <div class="wrapper">
-                    <div class="h4 text-center">部门组织</div>
+                    <div class="h4 text-center" style="color:#a39b9f">部门组织</div>
                 </div>
                 <div class="row-row">
                     <div class="cell scrollable hover">
                         <div class="cell-inner">
-                            <div class="wrapper-xs">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm ng-pristine ng-untouched ng-valid ng-empty" placeholder="查询" ng-model="org.SerName">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-sm btn-default" ng-click="org.searchTreeView(org.SerName)">
+                                            <i class="glyphicon glyphicon-search text-success">查询</i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="padder-xxs">
                                 <!--树状控件内容-->
                                 <div id="tree" class="text-info"></div>
                             </div>
@@ -21,7 +31,7 @@
             <div class="row-row">
                 <div class="cell scrollable hover">
                     <div class="cell-inner">
-                        
+                        <pre>{{ org.PID }}</pre>
                     </div>
                 </div>
             </div>

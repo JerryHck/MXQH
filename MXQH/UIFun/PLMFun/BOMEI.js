@@ -8,7 +8,7 @@ function ($scope, $http, $q, AjaxService,$window) {
     bomei.Import = ImportExcel;
     bomei.Export = ExportExcel;
     bomei.Do = Do;
-    bomei.FileData = { header: { header: ["Line", "Code", "SPEC", "Name", "Num", "Version", "Cost", "Weight", "BOMUom", "BaseNum", "Waste", "Position", "Remark"] }, sheetNum: 1, data: [] };
+    bomei.FileData = [{ header: ["Line", "Code", "SPEC", "Name", "Num", "Version", "Cost", "Weight", "BOMUom", "BaseNum", "Waste", "Position", "Remark"], sheet: 0 }];
     
     //导入excel数据
     function ImportExcel() {

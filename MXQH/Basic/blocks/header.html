@@ -1,23 +1,23 @@
       <!-- navbar header -->
-<div class="navbar-header {{vm.app.settings.navbarHeaderColor}}">
-    <button class="pull-right visible-xs " ui-toggle-class="show" data-target=".navbar-collapse">
-        <i class="glyphicon glyphicon-cog"></i>设置
-    </button>
+<div class="navbar-header {{vm.app.settings.navbarHeaderColor}} text-center">
     <button class="pull-right visible-xs" ui-toggle-class="off-screen" data-target=".app-aside" ui-scroll="app">
         <i class="glyphicon glyphicon-align-justify"></i>
     </button>
     <!-- brand -->
-    <a href="#/" class="navbar-brand text-lt">
+    
+    <a href="#/" class="navbar-brand text-lt pull-left">
         <!--<img src="Content/images/logo4.png?v=66fb0802fa" alt=".">-->
         <i class="glyphicon glyphicon-home"></i>
         <span class="hidden-folded m-l-n-sm hidden-xs"><img style="max-width:150px" src="Content/images/logo4.png?v=66fb0802fa" alt="."></span>
         <!--<span class="hidden-folded m-l-xs" style="width:65%">{{vm.app.name}}</span>-->
     </a>
-    <!-- / brand -->
+    <a class="navbar-brand text-lt visible-xs" ui-toggle-class="show" data-target=".navbar-collapse">
+        {{ vm.SelectedSys.SysName }}
+    </a>
 </div>
 <!-- / navbar header -->
 <!-- navbar collapse -->
-<div class="collapse pos-rlt navbar-collapse box-shadow {{vm.app.settings.navbarCollapseColor}}">
+<div class="collapse pos-rlt navbar-collapse box-shadow {{vm.app.settings.navbarCollapseColor}}" >
     <!-- buttons -->
     <div class="nav navbar-nav hidden-xs">
         <a href class="btn no-shadow navbar-btn" ng-click="vm.app.settings.asideFolded = !vm.app.settings.asideFolded">
@@ -27,17 +27,17 @@
     </div>
     
     <!-- / buttons -->
-    <ul class="nav navbar-nav hidden-sm">
+    <ul class="nav navbar-nav">
         <li class="dropdown" dropdown>
             <a class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-fw fa-plus visible-xs-inline-block"></i>
+                <!--<i class="fa fa-fw fa-plus visible-xs-inline-block"></i>-->
                 <span>{{ vm.SelectedSys.SysName }}</span> <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu">
                 <li ng-repeat="item in vm.SysList"><a ng-click="vm.ChangeSys(item)">{{ item.SysName }}</a></li>
             </ul>
         </li>
-        <li class="dropdown pos-stc" dropdown>
+        <li class="dropdown pos-stc hidden-xs" dropdown>
             <a href class="dropdown-toggle" data-toggle="dropdown">
                 <span>所有功能</span>
                 <span class="caret"></span>
@@ -89,7 +89,7 @@
         </li>
     </ul>
     <!-- search form -->
-    <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" target=".navbar-collapse" role="search">
+    <form class="navbar-form navbar-form-sm navbar-left shift hidden-xs" ui-shift="prependTo" target=".navbar-collapse" role="search">
         <div class="form-group">
             <input autocomplete="off"  type="text" ng-model="vm.SelectedFun" uib-typeahead="fun as fun.FunName for fun in vm.FunctionList | filter:$viewValue | limitTo:8"
                    class="form-control input-sm bg-light no-border rounded padder" placeholder="查找功能..." ng-keypress="vm.Go(vm.SelectedFun)">

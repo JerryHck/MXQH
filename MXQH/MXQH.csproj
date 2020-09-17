@@ -860,6 +860,8 @@
     <Content Include="UIFun\WPOFun\WPOFun.js" />
     <Content Include="UIFun\WPOFun\WPOFunDialog.html" />
     <Content Include="UIFun\WPOFun\WPOFunDialog.js" />
+    <Content Include="UIFun\WPOFun\WPOInCodePrint.html" />
+    <Content Include="UIFun\WPOFun\WPOInCodePrint.js" />
     <Content Include="UIFun\WPOFun\WPOIQCDtlDialog.html" />
     <Content Include="UIFun\WPOFun\WPOIQCDtlDialog.js" />
     <Content Include="UIFun\WPOFun\WPOPackage.html" />

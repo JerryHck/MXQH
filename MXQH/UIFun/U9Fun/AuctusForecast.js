@@ -25,7 +25,7 @@ function ($rootScope, $scope, $http,  toastr, AjaxService, Form, MyPop, $window,
     vm.OpenImport = OpenImport;
     vm.Export = Export;//导出
     vm.CloseImport = CloseImport;
-    vm.FileData = { header: { header: ["DocType","Customer_Name", "BusinessDate", "Remark", "Code", "Qty", "DemandDate", "DeliveryDate", "LineRemark"] }, sheetNum: 1, data: [] };
+    vm.FileData = [ {header: ["DocType","Customer_Name", "BusinessDate", "Remark", "Code", "Qty", "DemandDate", "DeliveryDate", "LineRemark"] , sheet: 0 }];
     vm.Do = Do;//导入控件Do方法
     vm.Import = Import;//导入
     //日期控件参数

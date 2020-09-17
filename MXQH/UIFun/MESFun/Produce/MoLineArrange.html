@@ -264,7 +264,7 @@
                                                     <div class="col-md-4 padder-xxs">
                                                         <label class="col-sm-5 padder-xxs control-label text-info">计划排产量:</label>
                                                         <div class="col-sm-7  padder-xxs text-xs" ng-class="{ 'has-error' : line.MainForm.PlanCount.$invalid }">
-                                                            <input type="number" ng-disabled="!line.editArrange || line.SelectedArrange.Remark == '正常工单'" class="form-control" name="PlanCount" placeholder="计划排产量" ng-model="line.SelectedArrange.PlanCount" required />
+                                                            <input type="number" ng-disabled="!line.editArrange || line.SelectedArrange.Remark != '返工工单'" class="form-control" name="PlanCount" placeholder="计划排产量" ng-model="line.SelectedArrange.PlanCount" required />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4 padder-xxs">

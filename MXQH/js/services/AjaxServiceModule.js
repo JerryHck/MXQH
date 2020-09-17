@@ -75,6 +75,16 @@
             return str.slice(0, i + 1);
         }
     }
+
+    String.prototype.trim = function () {
+        var str = this,
+        str = str.replace(/^\s\s*/, ''),
+        ws = /\s/,
+        i = str.length;
+        while (ws.test(str.charAt(--i)));
+        return str.slice(0, i + 1);
+    }
+
     //去除字符串头部空格或指定字符  
     String.prototype.TrimStart = function (c) {
         if (c == null || c == "") {
@@ -131,6 +141,40 @@
         else {
             return this;
         }
+    }
+
+    //判断是否为 'yyyy-MM-DD yyyy/MM/dd'
+    String.prototype.IsDate=function()
+    {
+        var dateString = this;
+        if (dateString.trim() == "") return true;
+        var r = dateString.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
+        var b = false;
+        if (r != null) {
+            //判断是否为 'yyyy-MM-DD yyyy/MM/dd'
+            var d = new Date(r[1], r[3] - 1, r[4]);
+            var num = (d.getFullYear() == r[1] && (d.getMonth() + 1) == r[3] && d.getDate() == r[4]);
+            b = (num != 0);
+            //判断是否为 'MM-DD-YY' 'MM/DD/YY'
+            if (!b) {
+                d = new Date(r[4], r[1] - 1, r[3]);
+                num = (d.Format('yy') == r[4] && (d.getMonth() + 1) == r[1] && d.getDate() == r[3]);
+                b = (num != 0);
+            }
+        }
+        //判断是否为 'MM-DD-YYYY' 'MM/DD/YYYY'
+        if (!b) {
+            r = dateString.match(/^(\d{1,2})(-|\/)(\d{1,2})\2(\d{1,4})$/);
+            if (r == null) {
+                return false;
+            }
+            d = new Date(r[4], r[1] - 1, r[3]);
+            num = (d.Format('yyyy') == r[4] && (d.getMonth() + 1) == r[1] && d.getDate() == r[3]);
+            b = (num != 0);
+        }
+        return b;
+        //返回为false则是日期格式;isNaN(data)排除data为纯数字的情况（此处不考虑只有年份的日期，如‘2020’）
+        //return !isNaN(dateString) || isNaN(Date.parse(dateString));
     }
 
     //Base64 编码

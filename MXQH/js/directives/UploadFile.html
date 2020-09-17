@@ -1,17 +1,17 @@
-﻿<div class="form-group col-md-12 has-feedback m-b-xxs">
-    <div class="col-md-12 input-group">
-        <span class="input-group-addon" ng-if="ngDisabled=='false'">
-            <a class="pull-left" ng-click="Open($event)"><i class="fa fa-folder-open">浏览</i></a>
+﻿<div class="col-md-12 has-feedback m-b-xxs no-padder">
+    <div class="input-group">
+        <span class="input-group-addon" ng-if="!ngDisabled">
+            <a class="pull-left" ng-click="Open($event)"><i class="fa fa-folder-open"></i></a>
         </span>
-        <input autocomplete="off"  class="form-control" ng-disabled="ngDisabled == 'true'" placeholder="{{ placeholder }}" type="text" ng-model="fileData.OriginalName">
+        <input autocomplete="off" class="form-control padder-xxs" ng-disabled="ngDisabled" placeholder="{{ placeholder }}" type="text" ng-model="fileData.OriginalName">
         <span class="input-group-addon text-success" ng-if="isUploaded">{{ fileData.FileType }}</span>
         <span class="input-group-addon" ng-if="isUploaded">
             <a ng-click="DownLoad(fileData.FileUrl)" class="text-success"><i class="glyphicon glyphicon-download"></i></a>
         </span>
-        <input autocomplete="off"  type="file" class="fileType" name="{{ ngName }}" ng-required="ngRequired" nv-file-select="" uploader="uploader" style="display: none" accept="{{ fileType }}">
+        <input autocomplete="off"  type="file" class="fileType" name="{{ ngName }}" ng-required="ngRequired" nv-file-select="" uploader="uploader" style="display: none; width:0px" accept="{{ fileType }}">
     </div>
 </div>
-<div class="form-group-sm col-md-12  m-t-none" ng-if="uploader.progress<100 && uploader.progress>0">
+<div class="col-md-12 m-t-none no-padder" ng-if="uploader.progress<100 && uploader.progress>0">
     <div class="progress progress-striped progress-xs m-t-none">
         <div class="progress-bar progress-bar-success " role="progressbar"
              aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
