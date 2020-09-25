@@ -16,8 +16,10 @@ function ($scope, Dialog, AjaxService, toastr, $window) {
     GetLatestVer();
     function GetLatestVer() {
         AjaxService.GetPlansTop("WorkOrderPlanImport", {}, 1).then(function (data) {
-            vm.MainId = data[0].ID;
-            Search();
+            if (data[0]) {
+                vm.MainId = data[0].ID;
+                Search();
+            }
         })
     }
 

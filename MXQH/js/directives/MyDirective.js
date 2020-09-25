@@ -986,7 +986,8 @@ angular.module('AppSet')
                 $scope.fileData = $scope.fileData || {};
                 option.onComplete = function (data) {
                     if ($scope.ngComplete) {
-                        $scope.ngComplete({ fileData: data[0] });
+                        var index = data.length > 0 ? data.length - 1 : 0;
+                        $scope.ngComplete({ fileData: data[index] });
                     }
                     $scope.isUploaded = true;
                 }

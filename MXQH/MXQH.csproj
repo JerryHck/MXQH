@@ -265,6 +265,8 @@
     <Content Include="UIFun\MESFun\MO\WorkOrderDialog.js" />
     <Content Include="UIFun\MESFun\MO\WorkOrderSer.html" />
     <Content Include="UIFun\MESFun\MO\WorkOrderSer.js" />
+    <Content Include="UIFun\MESFun\Produce\MoPlanCount.html" />
+    <Content Include="UIFun\MESFun\Produce\MoPlanCount.js" />
     <Content Include="UIFun\MESFun\Produce\PackageAct.html" />
     <Content Include="UIFun\MESFun\Produce\PackageAct.js" />
     <Content Include="UIFun\MESFun\Produce\PackageActPower.html" />
