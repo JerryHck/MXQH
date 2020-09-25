@@ -7,7 +7,7 @@
                     <div class="panel-heading font-bold  text-center">组装彩盒打印与包装</div>
                     <div class="panel-body">
                         <div class="form-horizontal">
-                            <div class="form-group">
+                            <div class="form-group-md col-xs-12 no-padder">
                                 <label class="col-sm-3 padder-xxs control-label">未完成包装箱</label>
                                 <div class="col-sm-8 padder-xs">
                                     <ui-select ng-model="ass.SelectPack" ng-change="ass.ChangePack()" theme="bootstrap">
@@ -18,24 +18,24 @@
                                     </ui-select>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group-md col-xs-12 no-padder">
                                 <label class="col-sm-3  padder-xxs control-label">生产工单</label>
                                 <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : ass.OrderForm.WorkOrder.$invalid }">
                                     <input autocomplete="off" type="text" class="form-control" ng-disabled="ass.Item.IsLock" ng-keypress="ass.KeyDonwOrder($event)" name="WorkOrder" ng-model="ass.Item.WorkOrder" placeholder="生产工单" required>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group-md col-xs-12 no-padder">
                                 <label class="col-sm-3 padder-xxs control-label">包装数量/箱</label>
                                 <div class="col-sm-3 padder-xs" ng-class="{ 'has-error' : ass.OrderForm.PackNum.$invalid }">
                                     <input autocomplete="off" type="number" min="0" ng-disabled="ass.Item.IsLock" class="form-control" name="PackNum" ng-model="ass.Item.PackNum" placeholder="包装数量" required>
                                 </div>
                                 <div class="col-sm-6 form-control-static">
                                     <label class="i-checks i-checks-sm" title="锁定工单包装信息">
-                                        <input type="checkbox" ng-disabled="!ass.Item.WorkOrder" ng-model="ass.Item.IsLock" /><i class="fa fa-lock"></i>锁定工单
+                                        <input type="checkbox" ng-disabled="!ass.OrderData.WorkOrder" ng-model="ass.Item.IsLock" /><i class="fa fa-lock"></i>锁定工单
                                     </label>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group-md col-xs-12 no-padder">
                                 <label class="col-sm-3 control-label padder-xs ">彩盒打印方式</label>
                                 <div class="col-sm-8 padder-xs ">
                                     <span class="btn-group">
@@ -45,7 +45,13 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group-md col-xs-12 no-padder">
+                                <label class="col-sm-3 control-label padder-xs ">彩盒标签</label>
+                                <div class="col-sm-8 padder-xs ">
+                                    <p class="form-control-static font-bold  h4 text-danger">{{ass.BarData.Template.Name || '没有绑定模版'}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group-md col-xs-12 no-padder">
                                 <label class="col-sm-3 control-label padder-xs ">包装打印方式</label>
                                 <div class="col-sm-8 padder-xs ">
                                     <span class="btn-group">
@@ -54,17 +60,18 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group-md col-xs-12 no-padder">
                                 <label class="col-sm-3  padder-xxs control-label">生产条码</label>
                                 <div class="col-sm-8 padder-xs">
                                     <input autocomplete="off" type="text" class="form-control" ng-disabled="!ass.Item.PackNum && ass.Item.WorkOrder" name="BSN" ng-model="ass.Item.BSN" placeholder="SN码/内控码" ng-keypress="ass.KeyDonwSnCode($event)">
-                                    <div class="h6 text-danger"><br />
+                                    <div class="h6 text-danger">
+                                        <br />
                                         注:扫描枪请设定自动回车功能，如果手动输入则需按回车进行包装。<br />
                                         需先扫码带出工单信息，设定好包装数量后勾选锁定，才可扫码打印彩盒与包装。
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group-md col-xs-12 no-padder">
                                 <div class="col-sm-offset-4 col-sm-8 padder-xs">
                                     <div class="checkbox col-md-5  padder-xxs">
 
@@ -81,7 +88,7 @@
                     <!--<div class="panel-heading font-bold text-center">信息显示</div>-->
                     <div class="panel-body">
                         <div class="form-horizontal">
-                            <div class="form-group-xs col-md-12">
+                            <div class="form-group-md col-md-12">
                                 <label class="control-label col-sm-2 padder-xs">上站过站数:</label>
                                 <div class="col-sm-4">
                                     <p class="form-control-static font-bold  h4 text-success">{{ass.CalData.LagProOKSum}}</p>
@@ -91,13 +98,13 @@
                                     <p class="form-control-static font-bold  h4 text-success">{{ass.CalData.ProOKSum}}</p>
                                 </div>
                             </div>
-                            <div class="form-group-xs col-md-12 h2 text-danger">
+                            <div class="form-group-md col-md-12 h2 text-danger">
                                 <label class="control-label col-sm-6 padder-xs">本站留存数:</label>
                                 <div class="col-sm-6">
                                     <p class="form-control-static font-bold">{{ ass.CalData.NotDoneNum }}</p>
                                 </div>
                             </div>
-                            <div class="form-group-xs col-md-12 h1 text-warning">
+                            <div class="form-group-md col-md-12 h1 text-warning">
                                 <label class="control-label col-sm-offset-2 padder-xs">请注意把握速度！</label>
                             </div>
                         </div>
@@ -111,7 +118,7 @@
                     </div>
                     <div class="panel-body h5 padder-v-xs padder-xs">
                         <div class="form-horizontal">
-                            <div class="form-group-xs col-md-12">
+                            <div class="form-group-md col-md-12">
                                 <label class="control-label col-sm-2 padder-xs">产品编号:</label>
                                 <div class="col-sm-4">
                                     <p class="form-control-static font-bold">{{ass.OrderData.MaterialCode}}</p>
@@ -121,17 +128,17 @@
                                     <p class="form-control-static font-bold">{{ass.OrderData.MaterialName}}</p>
                                 </div>
                             </div>
-                            <div class="form-group-xs col-md-12">
-                                <label class="control-label col-sm-2 padder-xs">计划日期:</label>
+                            <div class="form-group-md col-md-12">
+                                <label class="control-label col-sm-2 padder-xs">客户品号:</label>
                                 <div class="col-sm-4">
-                                    <p class="form-control-static font-bold">{{ass.OrderData.AssemblyDate}}</p>
+                                    <p class="form-control-static font-bold">{{ass.OrderData.CustomerItemName}}</p>
                                 </div>
                                 <label class="control-label col-sm-2 padder-xs">产线名称:</label>
                                 <div class="col-sm-4">
-                                    <p class="form-control-static font-bold">{{ass.OrderData.AssemblyLineName}}</p>
+                                    <p class="form-control-static font-bold">{{ass.OrderData.Plan.Line.Name || ass.OrderData.AssemblyLineName}}</p>
                                 </div>
                             </div>
-                            <div class="form-group-xs col-md-12">
+                            <div class="form-group-md col-md-12">
                                 <label class="control-label col-sm-2 padder-xs">出货地:</label>
                                 <div class="col-sm-4">
                                     <p class="form-control-static font-bold">{{ass.OrderData.SendPlaceName}}</p>
@@ -141,7 +148,7 @@
                                     <p class="form-control-static font-bold">{{ass.OrderData.ERPSO}}</p>
                                 </div>
                             </div>
-                            <div class="form-group-xs col-md-12">
+                            <div class="form-group-md col-md-12">
                                 <label class="control-label col-sm-2 padder-xs">工单数量:</label>
                                 <div class="col-sm-4">
                                     <p class="form-control-static font-bold h4 text-success">{{ass.OrderData.Quantity}}</p>
@@ -151,7 +158,7 @@
                                     <p class="form-control-static font-bold">{{ass.OrderData.ERPQuantity}}</p>
                                 </div>
                             </div>
-                            <div class="form-group-xs col-md-12">
+                            <div class="form-group-md col-md-12">
                                 <label class="control-label col-sm-2 padder-xs">总合格数:</label>
                                 <div class="col-sm-4">
                                     <p class="form-control-static font-bold  h4 text-success">{{ass.CalData.ProOKSum}}</p>
@@ -161,7 +168,7 @@
                                     <p class="form-control-static font-bold  h4 text-success">{{ass.CalData.ProNgSum}}</p>
                                 </div>
                             </div>
-                            <div class="form-group-xs col-md-12">
+                            <div class="form-group-md col-md-12">
                                 <label class="control-label col-sm-2 padder-xs">今日合格:</label>
                                 <div class="col-sm-4">
                                     <p class="form-control-static font-bold  h4 text-success">{{ass.CalData.TodayOKSum}}</p>
@@ -171,7 +178,7 @@
                                     <p class="form-control-static font-bold  h4 text-success">{{ass.CalData.TodayNgSum}}</p>
                                 </div>
                             </div>
-                            <div class="form-group-xs col-md-12">
+                            <div class="form-group-md col-md-12">
                                 <label class="control-label col-sm-2 padder-xs">总维修数:</label>
                                 <div class="col-sm-4">
                                     <p class="form-control-static font-bold  h4 text-success">{{ass.CalData.ProRepairSum}}</p>
@@ -186,11 +193,15 @@
                     <!--<pre>{{ ass.CalData | json }}</pre>-->
 
                 </div>
-
-                <div class="panel panel-default">
+                <div class="panel panel-default panel-body m-t-n-sm padder-v-xxs">
+                    <p class="h2 text-info text-center">
+                        本箱已包数量 <span class="text-danger">{{ ass.SNList.length }}</span> PCS
+                    </p>
+                </div>
+                <div class="panel panel-default m-t-n-sm">
                     <div class="panel-heading font-bold text-center">
                         信息显示
-                        <span class="pull-right text-danger h6">已包:{{ ass.SNList.length }}</span>
+                        <!--<span class="pull-right text-danger h6">已包:{{ ass.SNList.length }}</span>-->
                     </div>
                     <div class="panel-body scroll-y" style="max-height:550px">
                         <div class="list-group">
@@ -292,7 +303,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <!--<pre>{{ ass.PackList | json }}</pre>-->
                     </div>
                 </div>
@@ -305,7 +315,7 @@
             <div class="col-sm-6">
                 <div class="panel panel-default">
                     <div class="panel-heading font-bold">
-                       彩盒码补打印
+                        彩盒码补打印
                     </div>
                     <div class="panel-body">
                         <div class="form-horizontal">

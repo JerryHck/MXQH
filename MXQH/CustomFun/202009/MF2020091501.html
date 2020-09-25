@@ -31,7 +31,7 @@
             </div>
             <div class="padder-xs ">
                 <div class="col-md-12 scroll-x no-padder">
-                    <table class="table " style="width:2000px">
+                    <table class="table " style="width:2600px">
                         <thead>
                             <tr>
                                 <td title="导入日期" style="width:100px ">导入日期</td>
@@ -50,6 +50,7 @@
                                 <td title="工单数量" style="width:100px ">工单数量</td>
                                 <td title="已完工数量" style="width:100px ">已完工数量</td>
                                 <td title="未完工数量" style="width:100px ">未完工数量</td>
+                                <td title="本次排产数量" style="width:100px ">本次排产数量</td>
                                 <td title="计划开工日期" style="width:100px ">计划开工日期</td>
                                 <td title="计划完工日期" style="width:100px ">计划完工日期</td>
                                 <td title="需求日期" style="width:100px ">需求日期</td>
@@ -74,6 +75,7 @@
                             <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
                             <td title="{{ item.FinishQty }}">{{ item.FinishQty }}</td>
                             <td title="{{ item.NotFinishQty }}">{{ item.NotFinishQty }}</td>
+                            <td title="{{ item.ThisPlanQty }}">{{ item.ThisPlanQty }}</td>
                             <td title="{{ item.PlanStDate }}">{{ item.PlanStDate | date:'yyyy-MM-dd' }}</td>
                             <td title="{{ item.PlanEdDate }}">{{ item.PlanEdDate | date:'yyyy-MM-dd' }}</td>
                             <td title="{{ item.NeedDate }}">{{ item.NeedDate | date:'yyyy-MM-dd' }}</td>

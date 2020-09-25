@@ -15,7 +15,7 @@ function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window) {
     vm.Op = [
         {
             //标题列
-            header: ['RowNo', 'CustomOrder', 'DemandCode', 'MRPType', 'FormType', 'WorkOrder', 'MaterialCode', 'MaterialName', 'WorkShop', 'Line', 'State', 'Quantity', 'FinishQty', 'NotFinishQty', 'PlanStDate', 'PlanEdDate', 'NeedDate', 'ProduceDate', 'Remark'],
+            header: ['RowNo', 'CustomOrder', 'DemandCode', 'MRPType', 'FormType', 'WorkOrder', 'MaterialCode', 'MaterialName', 'WorkShop', 'Line', 'State', 'Quantity', 'FinishQty', 'NotFinishQty', 'ThisPlanQty', 'PlanStDate', 'PlanEdDate', 'NeedDate', 'ProduceDate', 'Remark'],
             sheet: 0, //excel 的第几张sheet 以0开始
         },
     ];
@@ -59,6 +59,10 @@ function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window) {
             }
             en.NotFinishQty = en.NotFinishQty || '';
 
+            if (en.ThisPlanQty && isNaN(en.ThisPlanQty)) {
+                vm.ErrList.push('Excel表中的第【' + (i + 1).toString() + '】行,序号为【' + en.RowNo + '】的【本次排产数量】列【' + en.ThisPlanQty + '】 填写错误，需为数字');
+            }
+            en.ThisPlanQty = en.ThisPlanQty || '';
 
             en.PlanStDate = (en.PlanStDate || '').toString().trim();
             en.PlanEdDate = (en.PlanEdDate || '').toString().trim();

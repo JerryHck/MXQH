@@ -36,11 +36,12 @@ angular.module('AppSet')
 .directive('uiRemoveClass', ['$timeout', '$document', function ($timeout, $document) {
     return {
         restrict: 'AC',
-        //scope: {
-        //    ngModel: '=',
-        //},
+        scope: {
+            event: '@',
+        },
         link: function (scope, el, attr) {
-            el.on('mouseover', function (e) {
+            var event = scope.event || 'click'; //js ÊÂ¼þ mouseover
+            el.on(event, function (e) {
                 e.preventDefault();
                 var classes = attr.uiRemoveClass.split(','),
                     targets = (attr.target && attr.target.split(',')) || Array(el),
