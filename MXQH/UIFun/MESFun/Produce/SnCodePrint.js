@@ -60,7 +60,6 @@ function ( $scope, FileUrl, AjaxService, toastr, $window) {
         list.push(data.SnCode);
         postData.ParaData = JSON.stringify(data);
         postData.OutList =list;
-        //console.log(data)
         var printNum = data.ColorBoxPrintNum || 1;
         for (var i = 0; i < printNum; i++) {
             AjaxService.Print(temData.TemplateId, temData.TemplateTime, postData, vm.PrinterName).then(function (data) {

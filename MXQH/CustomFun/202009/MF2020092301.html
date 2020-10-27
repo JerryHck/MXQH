@@ -36,9 +36,11 @@
                         <td title="{{ item.LineName }}">{{ item.LineName }}</td>
                         <td title="{{ item.Name }}">{{ item.Name }}</td>
                         <td title="{{ item.PlanDate }}">{{ item.PlanDate }}</td>
+                        <td ng-class="{'bg-danger-light':item.TotalPlanCount>item.StartedQty&&item.StartedQty<item.Quantity}">
+                            <span class="text-warning" ng-if="item.TotalPlanCount>item.StartedQty&&item.StartedQty<item.Quantity">不齐套</span>
+                            <span class="text-success" ng-if="item.TotalPlanCount<=item.StartedQty">齐套</span>
+                        </td>
                         <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
-                        <td ng-if="item.TotalPlanCount>item.StartedQty&&item.StartedQty<item.Quantity" class="text-danger"><span class="text-success">不齐套</span></td>
-                        <td ng-if="item.TotalPlanCount<=item.StartedQty" ><span class="text-success">齐套</span></td>
                         <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
                         <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
                         <td title="{{ item.Spec }}">{{ item.Spec }}</td>

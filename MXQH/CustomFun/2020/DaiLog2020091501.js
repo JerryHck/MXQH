@@ -15,7 +15,7 @@ function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window) {
     vm.Op = [
         {
             //标题列
-            header: ['RowNo', 'CustomOrder', 'DemandCode', 'MRPType', 'FormType', 'WorkOrder', 'MaterialCode', 'MaterialName', 'WorkShop', 'Line', 'State', 'Quantity', 'FinishQty', 'NotFinishQty', 'ThisPlanQty', 'PlanStDate', 'PlanEdDate', 'NeedDate', 'ProduceDate', 'Remark'],
+            header: ['RowNo', 'MRPType', 'CustomOrder', 'PanName', 'DemandCode', 'FormType', 'WorkOrder', 'MaterialCode', 'MaterialName', 'WorkShop', 'Line', 'State', 'Quantity', 'FinishQty', 'NotFinishQty', 'ThisPlanQty', 'PlanStDate', 'PlanEdDate', 'NeedDate', 'ProduceDate', 'Remark'],
             sheet: 0, //excel 的第几张sheet 以0开始
         },
     ];
@@ -33,6 +33,7 @@ function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window) {
                 vm.ErrList.push('Excel表中的第' + (i + 1).toString() + '行的【序号】列【' + en.RowNo + '】 填写错误，需为数字');
             }
             en.CustomOrder = en.CustomOrder || '';
+            en.PanName = en.PanName || '';
             en.DemandCode = en.DemandCode || '';
             en.MRPType = en.MRPType || '';
             en.FormType = en.FormType || '';
@@ -62,6 +63,12 @@ function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window) {
             if (en.ThisPlanQty && isNaN(en.ThisPlanQty)) {
                 vm.ErrList.push('Excel表中的第【' + (i + 1).toString() + '】行,序号为【' + en.RowNo + '】的【本次排产数量】列【' + en.ThisPlanQty + '】 填写错误，需为数字');
             }
+
+            if (parseInt(en.ThisPlanQty || 0) > parseInt(en.NotFinishQty || 0)) {
+                vm.ErrList.push('Excel表中的第【' + (i + 1).toString() + '】行,序号为【' + en.RowNo + '】的【本次排产数量】列【' + en.ThisPlanQty + '】 大于【未完工数量】');
+            }
+
+
             en.ThisPlanQty = en.ThisPlanQty || '';
 
             en.PlanStDate = (en.PlanStDate || '').toString().trim();

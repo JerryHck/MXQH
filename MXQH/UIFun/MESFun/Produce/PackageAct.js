@@ -11,6 +11,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
     vm.IsPrint = true;
+    vm.PrintType = 'COTTONCODE';
 
     vm.KeyDonwSnCode = KeyDonwSnCode;
     vm.KeyDonwOrder = KeyDonwOrder;
@@ -22,6 +23,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
     vm.Print = Print;
     vm.PrintOSLabel = PrintOSLabel;
     vm.KeyDonwOSLabelPrint = KeyDonwOSLabelPrint;
+    vm.KeyDonwRePrint = KeyDonwRePrint;
 
     //获取包装信息-未完工的资料
     AjaxService.GetPlans("MesMxWOrder", [{ name: "Status", value: 4, type: "!=" }
@@ -201,6 +203,46 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
     }
 
     //补打印
+    function KeyDonwRePrint(e) {
+        var keycode = window.event ? e.keyCode : e.which;
+        if (keycode == 13 && vm.PrintItem.PrintSNCode) {
+            //获取打印数据
+            var en2 = { SNCode: vm.PrintItem.PrintSNCode };
+            AjaxService.ExecPlan("MESPackChi", "reprint", en2).then(function (data2) {
+                if (data2.data[0].MsgType == "Error") {
+                    showErr(data2.data[0].Msg);
+                }
+                else if (data2.data[0].MsgType == "Success") {
+                    var en = {};
+                    en.PackDetailID = data2.data1[0].PackDtlID;
+                    en.TypeCode = vm.PrintType;
+                    AjaxService.ExecPlan("MESPackChi", "print", en).then(function (data) {
+                        if (data.data3[0].MsgType == "Error") {
+                            MyPop.Show(true, data.data3[0].MsgText);
+                        }
+                        else if (data.data3[0].MsgType == "Success") {
+                            var postData = {}, list = [];
+                            postData.ParaData = JSON.stringify(data.data[0]);
+
+                            for (var i = 0, len = vm.PrintSnNum || data.data2.length; i < len; i++) {
+                                list.push(data.data2[i].SNCode);
+                            }
+                            postData.OutList = list;
+                            var temp = data.data1[0];
+                            AjaxService.Print(temp.TemplateId, temp.TS, postData, vm.PrintName).then(function (data2) {
+                                console.log(data2);
+                            }, function (err) {
+                                console.log(err);
+                            })
+                        }
+                    })
+                }
+                vm.PrintItem.PrintSNCode = undefined;
+            })
+        }
+    }
+
+    //外箱补打印
     function KeyDonwOSLabelPrint(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.PrintItem.OSNCode) {

@@ -4,246 +4,291 @@
 <div class="modal-body wrapper-sm" ng-form="DialogForm">
     <div class="panel panel-default">
         <div class="panel-body wrapper-xs">
-            <div class="form-group">
+            <div class="col-sm-12">
                 <button ng-if="!moDialog.Item.IsComplete" class="btn btn-success" type="button" ng-disabled="DialogForm.$invalid" ng-click="moDialog.Save()">储存</button>
                 <button class="btn btn-warning" type="button" ng-click="moDialog.Cancel()">取消</button>
                 <button ng-if="moDialog.Item.Status!=4&&!moDialog.Item.IsNotAdmin" class="btn btn-sm btn-success " ng-click="moDialog.SyncMO() "><i class="glyphicon glyphicon-copyright-mark "></i>从U9同步工单</button>
             </div>
-            <div class="form-horizontal">
-                <div class="form-group">
-                    <div class="col-sm-4 padder-xs" ng-show="!moDialog.Item.IsNotAdmin">
-                        <label class="control-label col-sm-4 padder-xs">计划编制日期</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.AssemblyDate.$invalid }">
-                            <input autocomplete="off"  ng-disabled="moDialog.Item.IsComplete" date-picker type="text" class="form-control" name="AssemblyDate" placeholder="计划日期"
-                                   ng-model="moDialog.Item.AssemblyDate" required option="moDialog.DateOption">
-                        </div>
-                    </div>
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">工单号：</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.WorkOrder.$invalid }">
-                            <input autocomplete="off"  type="text" name="WorkOrder" ng-disabled="moDialog.IsEdit" class="form-control" placeholder="工单号" ng-model="moDialog.Item.WorkOrder" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 padder-xs" ng-show="!moDialog.Item.IsNotAdmin">
-                        <label class="control-label col-sm-4 padder-xs">计划序号</label>
-                        <div class="col-sm-8 padder-xs">
-                            <input autocomplete="off"  type="text" disabled="disabled" name="ListNo" class="form-control" placeholder="计划序号" ng-model="moDialog.Item.ListNo" required>
-                            <!--<div class="input-group">
-                                <input autocomplete="off"  type="text" name="ListNo" class="form-control" placeholder="计划序号" ng-model="moDialog.Item.ListNo" required>
-                                <span class="input-group-addon">
-                                    <a class="" ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-plus"></i></a>
-                                    <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.GetListNo()"><i class="glyphicon glyphicon-plus"></i></a>
-                                </span>
-                            </div>-->
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">生产线名称：</label>
-                        <div class="col-sm-8 padder-xs">
-                            <div ng-disabled="moDialog.Item.IsComplete" 
-                                 ng-class="{ 'has-error' : DialogForm.AssemblyLineID.$invalid }" 
-                                 ng-name="AssemblyLineID" ng-required="true" basic-select="AssemblyLine"
-                                  placeholder="线别" ng-model="moDialog.Item.AssemblyLineID"
-                                  select-class="text-xs"></div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 padder-xs" ng-show="!moDialog.Item.IsNotAdmin">
-                        <label class="control-label col-sm-4 padder-xs">产品编号：</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaterialCode.$invalid }">
-                            <div class="input-group">
-                                <input autocomplete="off"  type="text" ng-disabled="moDialog.Item.IsComplete" name="MaterialCode" disabled="disabled" class="form-control" placeholder="产品编号" ng-model="moDialog.Item.MaterialCode" required>
-                                <span class="input-group-addon">
-                                    <a class="" ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-search"></i></a>
-                                    <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.SelectProduct()"><i class="glyphicon glyphicon-search"></i></a>
-                                </span>
+            <div class="col-sm-12">
+                <div class="form-horizontal" ng-if="!moDialog.Item.IsNotAdmin">
+                    <div class="form-group">
+                        <div class="col-sm-4 padder-xs" ng-show="!moDialog.Item.IsNotAdmin">
+                            <label class="control-label col-sm-4 padder-xs">计划编制日期</label>
+                            <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.AssemblyDate.$invalid }">
+                                <input autocomplete="off" ng-disabled="moDialog.Item.IsComplete" date-picker type="text" class="form-control" name="AssemblyDate" placeholder="计划日期"
+                                       ng-model="moDialog.Item.AssemblyDate" required option="moDialog.DateOption">
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-4 padder-xs" ng-show="!moDialog.Item.IsNotAdmin">
-                        <label class="control-label col-sm-4 padder-xs" >产品名称</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaterialName.$invalid }">
-                            <div class="input-group">
-                                <input autocomplete="off"  type="text" name="MaterialName" disabled="disabled" class="form-control" placeholder="产品名称" ng-model="moDialog.Item.MaterialName" required>
-                                <span class="input-group-addon">
-                                    <a class="" ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-search"></i></a>
-                                    <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.SelectProduct()"><i class="glyphicon glyphicon-search"></i></a>
-                                </span>
+                        <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">工单号：</label>
+                            <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.WorkOrder.$invalid }">
+                                <input autocomplete="off" type="text" name="WorkOrder" ng-disabled="moDialog.IsEdit" class="form-control" placeholder="工单号" ng-model="moDialog.Item.WorkOrder" required>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="form-group" ng-show="!moDialog.Item.IsNotAdmin">
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">产品工艺：</label>
-                        <div class="col-sm-8 padder-xs">
-                            <div class="input-group">
-                                <input autocomplete="off"  type="text" ng-disabled="moDialog.Item.IsComplete" class="form-control" name="RoutingName" placeholder="产品工艺"
-                                       ng-model="moDialog.Routing.RoutingName">                                
-                                <span class="input-group-addon">
-                                    <!--<a class="" ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-search"></i></a>
-                                    <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.SelectRouting()"><i class="glyphicon glyphicon-search"></i></a>-->                                    
-                                    <a><i ng-click="moDialog.Routing = {}" class="glyphicon glyphicon-trash text-danger"></i></a>
-                                    <!--<a class=""  ng-click="moDialog.SelectRouting()"><i class="glyphicon glyphicon-search"></i></a>-->
-                                </span>
-                                <span class="input-group-addon">
-                                    <a class="" ng-click="moDialog.SelectRouting()"><i class="glyphicon glyphicon-search"></i></a>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">交货日期：</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.DeliveryDate.$invalid }">
-                            <input autocomplete="off"  type="text" ng-disabled="moDialog.Item.IsComplete" date-picker option="moDialog.DateOption" name="DeliveryDate" class="form-control" placeholder="交货日期" ng-model="moDialog.Item.DeliveryDate" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">工单数量</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Quantity.$invalid }">
-                            <input autocomplete="off"  type="number" ng-disabled="moDialog.Item.IsComplete||moDialog.Item.Status==2" name="Quantity" class="form-control" placeholder="数量" ng-model="moDialog.Item.Quantity" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group" ng-show="!moDialog.Item.IsNotAdmin">
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">客户编号：</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.CustomerCode.$invalid }">
-                            <div class="input-group">
-                                <input autocomplete="off"  type="text" class="form-control" disabled="disabled" name="CustomerCode" placeholder="客户编号"
-                                       ng-model="moDialog.Item.CustomerCode" required>
-                                <span class="input-group-addon">
-                                    <a class="" ng-click="moDialog.SelectCustomer()"><i class="glyphicon glyphicon-search"></i></a>
-                                    <!--<a class="" ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-search"></i></a>
-                                    <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.SelectCustomer()"><i class="glyphicon glyphicon-search"></i></a>-->
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">客户名称：</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.CustomerName.$invalid }">
-                            <div class="input-group">
-                                <input autocomplete="off"  type="text" ng-disabled="moDialog.Item.IsComplete" name="CustomerName" disabled="disabled" class="form-control" placeholder="客户名称" ng-model="moDialog.Item.CustomerName" required>
-                                <span class="input-group-addon">
-                                    <a class=""  ng-click="moDialog.SelectCustomer()"><i class="glyphicon glyphicon-search"></i></a>
-                                    <!--<a ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-search"></i></a>
-                                    <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.SelectCustomer()"><i class="glyphicon glyphicon-search"></i></a>-->
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">客户订单号</label>
-                        <div class="col-sm-8 padder-xs">
-                            <input autocomplete="off"  type="text" name="CustomerOrder" class="form-control" placeholder="客户订单号" ng-model="moDialog.Item.CustomerOrder">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group" ng-show="!moDialog.Item.IsNotAdmin">
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">到货地</label>
-                        <!--<div ng-class="{ 'has-error' : DialogForm.SendPlaceID.$invalid }" ng-disabled="moDialog.Item.IsComplete" ng-name="SendPlaceID" class="col-sm-8 padder-xs" basic-select="MesSendPlace" placeholder="到货地" ng-model="moDialog.Item.SendPlaceID" select-class="text-xs" ng-required="true"></div>-->
-                        <div class="col-sm-8 padder-xs">
-                            <!--<select class="form-control" ng-model="moDialog.Item.SendPlaceID">
-                                <option ng-selected="x.ID==moDialog.Item.SendPlaceID" ng-repeat="x in moDialog.Places" value="{{x.ID}}">{{x.Name}}</option>
-                            </select>-->
-                            <div class="py-xl-0 pt-xl-0" ng-class="{ 'input-group' : clear }">
-                                <ui-select ng-model="moDialog.Item.SendPlaceID" ng-change="ValueChange()" theme="bootstrap" ng-class="{'has-error': DialogForm.SendPlaceID.$invalid }" ng-disabled="ngDisabled" name="SendPlaceID" required>
-                                    <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>
-                                    <ui-select-choices repeat="item.ID as item in moDialog.Places | filter: $select.search" refresh="refresh($select.search)">
-                                        <div ng-bind-html="item.Name | highlight: $select.search"></div>
-                                    </ui-select-choices>
-                                </ui-select>
-                                <span class="input-group-btn" ng-if="clear">
-                                    <button ng-click="$parent.ngModel= undefined" class="btn btn-default" ng-disabled="ngDisabled">
-                                        <span class="glyphicon glyphicon-trash text-danger"></span>
-                                    </button>
-                                </span>
-                            </div>
-                        </div>                       
-                    </div>
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">ERP销售单号</label>
-                        <div class="col-sm-8 padder-xs">
-                            <input autocomplete="off"  type="text" class="form-control" ng-disabled="moDialog.Item.IsComplete" name="ERPSO" placeholder="ERP销售单号"
-                                   ng-model="moDialog.Item.ERPSO">
-                        </div>
-                    </div>
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">ERP数量</label>
-                        <div class="col-sm-8 padder-xs">
-                            <input autocomplete="off"  type="text" name="ERPQuantity" ng-disabled="moDialog.Item.IsComplete||moDialog.Item.Status==2" class="form-control" placeholder="ERP数量" ng-model="moDialog.Item.ERPQuantity">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">最小重量</label>
-                        <div class="col-sm-8 padder-xs"  ng-class="{ 'has-error' : DialogForm.MinWeight.$invalid }">
-                            <input autocomplete="off"  type="number" name="MinWeight" class="form-control" placeholder="最小重量" ng-model="moDialog.Item.MinWeight" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">最大重量</label>
-                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaxWeight.$invalid }">
-                            <input autocomplete="off"  type="number" name="MaxWeight" class="form-control" placeholder="最大重量" ng-model="moDialog.Item.MaxWeight" required>
-                        </div>
-                    </div>
-                    <!--外协厂使用-->
-                    <!--<div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">力同单号</label>
-                        <div class="input-group padder-xs col-sm-8" ng-class="{ 'has-error' : DialogForm.Remark.$invalid }">
-                            <textarea class="form-control" name="Remark" ng-disabled="moDialog.Item.IsComplete" rows="1" ng-model="moDialog.Item.Remark" placeholder="输入力同单号" required></textarea>
-                        </div>
-                    </div>-->
-                    <!--内部工厂使用-->
-                    <div class="col-sm-4 padder-xs" ng-show="!moDialog.Item.IsNotAdmin">
-                        <label class="control-label col-sm-4 padder-xs">备注</label>
-                        <div class="input-group padder-xs col-sm-8">
-                            <textarea class="form-control" ng-disabled="moDialog.Item.IsComplete" rows="1" ng-model="moDialog.Item.SysDesc" placeholder="输入备注信息"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group" ng-show="!moDialog.Item.IsNotAdmin">
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">完工类型</label>
-                        <div class="col-sm-8">
-                            <div class="radio">
-                                <label class="i-checks">
-                                    <input type="radio" name="g1" value="0" ng-model="moDialog.Item.CompleteType">
-                                    <i></i>
-                                    非完工报告
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label class="i-checks">
-                                    <input type="radio" name="g1" value="1" ng-model="moDialog.Item.CompleteType">
-                                    <i></i>
-                                    完工报告
-                                </label>
-                            </div>
-                        </div>
-                    </div>  
-                    <div class="col-sm-8 padder-xs" ng-show="!moDialog.Item.IsNotAdmin">
-                        <label class="control-label col-sm-2 padder-xs">编码规则</label>
-                        <div class="input-group">
-                            <div class="padder-xs " ng-disabled="!moDialog.IsEditSNRule" basic-select="SNCodeRule" placeholder="编码规则" ng-model="moDialog.SNRule" select-class="text-xs"></div>
+                        <div class="col-sm-4 padder-xs" ng-show="!moDialog.Item.IsNotAdmin">
+                            <label class="control-label col-sm-4 padder-xs">计划序号</label>
+                            <div class="col-sm-8 padder-xs">
+                                <input autocomplete="off" type="text" disabled="disabled" name="ListNo" class="form-control" placeholder="计划序号" ng-model="moDialog.Item.ListNo" required>
+                                <!--<div class="input-group">
+                            <input autocomplete="off"  type="text" name="ListNo" class="form-control" placeholder="计划序号" ng-model="moDialog.Item.ListNo" required>
                             <span class="input-group-addon">
-                                <label class="i-checks i-checks-sm">
-                                    <input autocomplete="off"  type="checkbox" ng-disabled="moDialog.Item.IsComplete" ng-model="moDialog.IsEditSNRule" class="ng-pristine ng-untouched ng-valid ng-not-empty"><i></i>
-                                </label>
+                                <a class="" ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-plus"></i></a>
+                                <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.GetListNo()"><i class="glyphicon glyphicon-plus"></i></a>
                             </span>
+                        </div>-->
+                            </div>
                         </div>
-                    </div>                 
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">生产线名称：</label>
+                            <div class="col-sm-8 padder-xs">
+                                <div ng-disabled="moDialog.Item.IsComplete"
+                                     ng-class="{ 'has-error' : DialogForm.AssemblyLineID.$invalid }"
+                                     ng-name="AssemblyLineID" ng-required="true" basic-select="AssemblyLine"
+                                     placeholder="线别" ng-model="moDialog.Item.AssemblyLineID"
+                                     select-class="text-xs"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 padder-xs" ng-show="!moDialog.Item.IsNotAdmin">
+                            <label class="control-label col-sm-4 padder-xs">产品编号：</label>
+                            <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaterialCode.$invalid }">
+                                <div class="input-group">
+                                    <input autocomplete="off" type="text" ng-disabled="moDialog.Item.IsComplete" name="MaterialCode" disabled="disabled" class="form-control" placeholder="产品编号" ng-model="moDialog.Item.MaterialCode" required>
+                                    <span class="input-group-addon">
+                                        <a class="" ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-search"></i></a>
+                                        <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.SelectProduct()"><i class="glyphicon glyphicon-search"></i></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 padder-xs" ng-show="!moDialog.Item.IsNotAdmin">
+                            <label class="control-label col-sm-4 padder-xs">产品名称</label>
+                            <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaterialName.$invalid }">
+                                <div class="input-group">
+                                    <input autocomplete="off" type="text" name="MaterialName" disabled="disabled" class="form-control" placeholder="产品名称" ng-model="moDialog.Item.MaterialName" required>
+                                    <span class="input-group-addon">
+                                        <a class="" ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-search"></i></a>
+                                        <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.SelectProduct()"><i class="glyphicon glyphicon-search"></i></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="!moDialog.Item.IsNotAdmin">
+                        <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">产品工艺：</label>
+                            <div class="col-sm-8 padder-xs">
+                                <div class="input-group">
+                                    <input autocomplete="off" type="text" ng-disabled="moDialog.Item.IsComplete" class="form-control" name="RoutingName" placeholder="产品工艺"
+                                           ng-model="moDialog.Routing.RoutingName">
+                                    <span class="input-group-addon">
+                                        <!--<a class="" ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-search"></i></a>
+                                <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.SelectRouting()"><i class="glyphicon glyphicon-search"></i></a>-->
+                                        <a><i ng-click="moDialog.Routing = {}" class="glyphicon glyphicon-trash text-danger"></i></a>
+                                        <!--<a class=""  ng-click="moDialog.SelectRouting()"><i class="glyphicon glyphicon-search"></i></a>-->
+                                    </span>
+                                    <span class="input-group-addon">
+                                        <a class="" ng-click="moDialog.SelectRouting()"><i class="glyphicon glyphicon-search"></i></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">交货日期：</label>
+                            <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.DeliveryDate.$invalid }">
+                                <input autocomplete="off" type="text" ng-disabled="moDialog.Item.IsComplete" date-picker option="moDialog.DateOption" name="DeliveryDate" class="form-control" placeholder="交货日期" ng-model="moDialog.Item.DeliveryDate" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">工单数量</label>
+                            <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.Quantity.$invalid }">
+                                <input autocomplete="off" type="number" ng-disabled="moDialog.Item.IsComplete||moDialog.Item.Status==2" name="Quantity" class="form-control" placeholder="数量" ng-model="moDialog.Item.Quantity" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="!moDialog.Item.IsNotAdmin">
+                        <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">客户编号：</label>
+                            <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.CustomerCode.$invalid }">
+                                <div class="input-group">
+                                    <input autocomplete="off" type="text" class="form-control" disabled="disabled" name="CustomerCode" placeholder="客户编号"
+                                           ng-model="moDialog.Item.CustomerCode" required>
+                                    <span class="input-group-addon">
+                                        <a class="" ng-click="moDialog.SelectCustomer()"><i class="glyphicon glyphicon-search"></i></a>
+                                        <!--<a class="" ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-search"></i></a>
+                                <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.SelectCustomer()"><i class="glyphicon glyphicon-search"></i></a>-->
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">客户名称：</label>
+                            <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.CustomerName.$invalid }">
+                                <div class="input-group">
+                                    <input autocomplete="off" type="text" ng-disabled="moDialog.Item.IsComplete" name="CustomerName" disabled="disabled" class="form-control" placeholder="客户名称" ng-model="moDialog.Item.CustomerName" required>
+                                    <span class="input-group-addon">
+                                        <a class="" ng-click="moDialog.SelectCustomer()"><i class="glyphicon glyphicon-search"></i></a>
+                                        <!--<a ng-if="moDialog.IsEdit" style="cursor:not-allowed;"><i class="glyphicon glyphicon-search"></i></a>
+                                <a class="" ng-if="moDialog.IsEdit==false" ng-click="moDialog.SelectCustomer()"><i class="glyphicon glyphicon-search"></i></a>-->
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">客户订单号</label>
+                            <div class="col-sm-8 padder-xs">
+                                <input autocomplete="off" type="text" name="CustomerOrder" class="form-control" placeholder="客户订单号" ng-model="moDialog.Item.CustomerOrder">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="!moDialog.Item.IsNotAdmin">
+                        <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">到货地</label>
+                            <!--<div ng-class="{ 'has-error' : DialogForm.SendPlaceID.$invalid }" ng-disabled="moDialog.Item.IsComplete" ng-name="SendPlaceID" class="col-sm-8 padder-xs" basic-select="MesSendPlace" placeholder="到货地" ng-model="moDialog.Item.SendPlaceID" select-class="text-xs" ng-required="true"></div>-->
+                            <div class="col-sm-8 padder-xs">
+                                <!--<select class="form-control" ng-model="moDialog.Item.SendPlaceID">
+                            <option ng-selected="x.ID==moDialog.Item.SendPlaceID" ng-repeat="x in moDialog.Places" value="{{x.ID}}">{{x.Name}}</option>
+                        </select>-->
+                                <div class="py-xl-0 pt-xl-0" ng-class="{ 'input-group' : clear }">
+                                    <ui-select ng-model="moDialog.Item.SendPlaceID" ng-change="ValueChange()" theme="bootstrap" ng-class="{'has-error': DialogForm.SendPlaceID.$invalid }" ng-disabled="ngDisabled" name="SendPlaceID" required>
+                                        <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>
+                                        <ui-select-choices repeat="item.ID as item in moDialog.Places | filter: $select.search" refresh="refresh($select.search)">
+                                            <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-btn" ng-if="clear">
+                                        <button ng-click="$parent.ngModel= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+                                            <span class="glyphicon glyphicon-trash text-danger"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">ERP销售单号</label>
+                            <div class="col-sm-8 padder-xs">
+                                <input autocomplete="off" type="text" class="form-control" ng-disabled="moDialog.Item.IsComplete" name="ERPSO" placeholder="ERP销售单号"
+                                       ng-model="moDialog.Item.ERPSO">
+                            </div>
+                        </div>
+                        <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">ERP数量</label>
+                            <div class="col-sm-8 padder-xs">
+                                <input autocomplete="off" type="text" name="ERPQuantity" ng-disabled="moDialog.Item.IsComplete||moDialog.Item.Status==2" class="form-control" placeholder="ERP数量" ng-model="moDialog.Item.ERPQuantity">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">最小重量</label>
+                            <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MinWeight.$invalid }">
+                                <input autocomplete="off" type="number" name="MinWeight" class="form-control" placeholder="最小重量" ng-model="moDialog.Item.MinWeight" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">最大重量</label>
+                            <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaxWeight.$invalid }">
+                                <input autocomplete="off" type="number" name="MaxWeight" class="form-control" placeholder="最大重量" ng-model="moDialog.Item.MaxWeight" required>
+                            </div>
+                        </div>
+                        <!--外协厂使用-->
+                        <!--<div class="col-sm-4 padder-xs">
+                    <label class="control-label col-sm-4 padder-xs">力同单号</label>
+                    <div class="input-group padder-xs col-sm-8" ng-class="{ 'has-error' : DialogForm.Remark.$invalid }">
+                        <textarea class="form-control" name="Remark" ng-disabled="moDialog.Item.IsComplete" rows="1" ng-model="moDialog.Item.Remark" placeholder="输入力同单号" required></textarea>
+                    </div>
+                </div>-->
+                        <!--内部工厂使用-->
+                        <div class="col-sm-4 padder-xs" ng-show="!moDialog.Item.IsNotAdmin">
+                            <label class="control-label col-sm-4 padder-xs">备注</label>
+                            <div class="input-group padder-xs col-sm-8">
+                                <textarea class="form-control" ng-disabled="moDialog.Item.IsComplete" rows="1" ng-model="moDialog.Item.Remark" placeholder="输入备注信息"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="!moDialog.Item.IsNotAdmin">
+                        <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">完工类型</label>
+                            <div class="col-sm-8">
+                                <div class="radio">
+                                    <label class="i-checks">
+                                        <input type="radio" name="g1" value="0" ng-model="moDialog.Item.CompleteType">
+                                        <i></i>
+                                        非完工报告
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label class="i-checks">
+                                        <input type="radio" name="g1" value="1" ng-model="moDialog.Item.CompleteType">
+                                        <i></i>
+                                        完工报告
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8 padder-xs" ng-show="!moDialog.Item.IsNotAdmin">
+                            <label class="control-label col-sm-2 padder-xs">编码规则</label>
+                            <div class="input-group">
+                                <div class="padder-xs " ng-disabled="!moDialog.IsEditSNRule" basic-select="SNCodeRule" placeholder="编码规则" ng-model="moDialog.SNRule" select-class="text-xs"></div>
+                                <span class="input-group-addon">
+                                    <label class="i-checks i-checks-sm">
+                                        <input autocomplete="off" type="checkbox" ng-disabled="moDialog.Item.IsComplete" ng-model="moDialog.IsEditSNRule" class="ng-pristine ng-untouched ng-valid ng-not-empty"><i></i>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="!moDialog.Item.IsNotAdmin">
+                        <div class="col-sm-4 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">客户品名</label>
+                            <div class="col-sm-8 padder-xs">
+                                <input type="text" class="form-control" ng-disabled="moDialog.Item.IsComplete" name="CustomerItemName" placeholder="客户品名"
+                                       ng-model="moDialog.Item.CustomerItemName">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group" ng-show="!moDialog.Item.IsNotAdmin">
-                    <div class="col-sm-4 padder-xs">
-                        <label class="control-label col-sm-4 padder-xs">客户品名</label>
-                        <div class="col-sm-8 padder-xs">
-                            <input type="text" class="form-control" ng-disabled="moDialog.Item.IsComplete" name="CustomerItemName" placeholder="客户品名"
-                                   ng-model="moDialog.Item.CustomerItemName">
+                <div class="form-horizontal" ng-if="moDialog.Item.IsNotAdmin">
+                    <div class="form-group">
+                        <div class="col-sm-6 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">工单号：</label>
+                            <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.WorkOrder.$invalid }">
+                                <input autocomplete="off" type="text" name="WorkOrder" ng-disabled="moDialog.IsEdit" class="form-control" placeholder="工单号" ng-model="moDialog.Item.WorkOrder" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">生产线名称：</label>
+                            <div class="col-sm-8 padder-xs">
+                                <div ng-disabled="moDialog.Item.IsComplete"
+                                     ng-class="{ 'has-error' : DialogForm.AssemblyLineID.$invalid }"
+                                     ng-name="AssemblyLineID" ng-required="true" basic-select="AssemblyLine"
+                                     placeholder="线别" ng-model="moDialog.Item.AssemblyLineID"
+                                     select-class="text-xs"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-6 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">最小重量</label>
+                            <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MinWeight.$invalid }">
+                                <input autocomplete="off" type="number" name="MinWeight" class="form-control" placeholder="最小重量" ng-model="moDialog.Item.MinWeight" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 padder-xs">
+                            <label class="control-label col-sm-4 padder-xs">最大重量</label>
+                            <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.MaxWeight.$invalid }">
+                                <input autocomplete="off" type="number" name="MaxWeight" class="form-control" placeholder="最大重量" ng-model="moDialog.Item.MaxWeight" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12 padder-xs">
+                            <label class="control-label col-sm-2 padder-xs">备注</label>
+                            <div class="input-group padder-xs col-sm-10">
+                                <textarea class="form-control" ng-disabled="moDialog.Item.IsComplete" rows="3" ng-model="moDialog.Item.Remark" placeholder="输入备注信息"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>

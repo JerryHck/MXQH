@@ -336,6 +336,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $timeout, Dialog) {
         }
         console.log(en);
         vm.promise = AjaxService.ExecPlan("MESMoLineArrange", "save", en).then(function (data) {
+            //console.log(data)
             if (data.data[0].MsgType == "Seccuss") {
                 toastr.success("排班保存成功");
                 vm.editArrange = false;
