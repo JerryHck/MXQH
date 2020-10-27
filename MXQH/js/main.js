@@ -78,7 +78,7 @@ angular.module('app')
         }, true);
 
         function GetList() {
-            vm.promise = AjaxService.GetPlans("System").then(function (dataSys) {
+            $rootScope.promise = AjaxService.GetPlans("System").then(function (dataSys) {
                 AjaxService.LoginAction("GetUserRoot").then(function (data) {
                     vm.FunData = data;
                     //console.log(data);

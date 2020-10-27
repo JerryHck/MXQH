@@ -43,7 +43,6 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
         vm.PrintList = data;
         vm.PrinterName = data[0];
     }, function (err) {
-        console.log(err);
     });
 
     function PageChange() {
@@ -80,8 +79,11 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
             vm.promise = AjaxService.GetPlan("MesMxWOrder", { name: "WorkOrder", value: vm.Item.WorkOrder }).then(function (data) {
                 vm.OrderData = data;
             })
-            vm.promise = AjaxService.GetPlan("MESMateTemplate", [{ name: "WorkOrder", value: vm.Ser.bWorkOrder }, { name: "TypeID", value: 3 }]).then(function (data) {
+            vm.promise = AjaxService.GetPlan("MESMateTemplate", [{ name: "WorkOrder", value: vm.Item.WorkOrder }, { name: "TypeID", value: 3 }]).then(function (data) {
                 vm.BarData = data;
+                if (!data.Template || !data.Template.Name) {
+                    vm.PrintType = 'N';
+                }
             })
 
             GetNoPack();
@@ -126,17 +128,17 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
         AjaxService.ExecPlan("opAssPackageMain", "check", en, false).then(function (data) {
             vm.Item.BSN = undefined;
             vm.NotPackList = data.data2;
-            vm.OrderData = data.data3[0];
             if (!vm.Item.IsLock) {
+                vm.OrderData = data.data3[0];
+                vm.Item.WorkOrder = (vm.OrderData || {}).WorkOrder;
                 vm.CalData = data.data4[0];
             }
+
             if (data.data[0].MsgType == "Error") {
                 showMsg(data.data[0].MsgText, false);
-                vm.Item.WorkOrder = (vm.OrderData || {}).WorkOrder;
             }
             //取工单信息时
             else if (data.data[0].MsgType == "Success" && !vm.Item.IsLock) {
-                vm.Item.WorkOrder = vm.OrderData.WorkOrder;
                 if (vm.NotPackList.length > 0) {
                     vm.SelectPack = vm.NotPackList[0];
                     //获取包装列表信息

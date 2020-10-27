@@ -121,7 +121,7 @@
                                                                             <div config-select ng-model="pro.OrderWay" config-option="en.ConfigOrderWay" ng-disabled="!en.isEditing"></div>
                                                                         </div>
                                                                         <div class="col-lg-4 col-md-12 col-sm-12 padder-xs">
-                                                                            <input autocomplete="off" type="number" class="form-control" ng-model="pro.OrderNum" ng-disabled="!en.isEditing" maxlength="2" min="0" max="20" />
+                                                                            <input autocomplete="off" type="number" class="form-control" ng-model="pro.OrderNum" ng-disabled="!en.isEditing" maxlength="2" min="-9" max="20" />
                                                                             <!--<input autocomplete="off"  ui-jq="TouchSpin" type="text" ng-model="pro.OrderNum" class="form-control-sm input-sm" data-min='0' data-max="20" ng-disabled="!en.isEditing"
                                                                                    data-verticalbuttons="false" data-verticalupclass="btn-xs fa fa-caret-up" data-verticaldownclass="btn-xs btn-sm fa fa-caret-down">-->
                                                                         </div>
@@ -150,7 +150,7 @@
                                                         <div class="panel-body">
                                                             <div class="form form-horizontal col-md-offset-1 col-md-10" ng-form="en.ClassForm">
                                                                 <div class="form-group pull-in clearfix">
-                                                                    <div class="col-md-5" title="属性类别">
+                                                                    <div class="col-md-5 padder-xs" title="属性类别">
                                                                         <label class="sr-only">属性类别:</label>
                                                                         <div ng-class="{ 'has-error' : en.ClassForm.enType.$invalid }">
                                                                             <div config-select ng-model="en.ProItem.ColumnType" ng-name="enType" selectClass="text-danger text-xs" config-option="en.ConfigColumnType" ng-disabled="!en.isEditing" ng-required="true"></div>
@@ -159,7 +159,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-7" title="属性名">
+                                                                    <div class="col-md-7 padder-xs" title="属性名">
                                                                         <label class="sr-only">属性名:</label>
                                                                         <div ng-class="{ 'has-error' : en.ClassForm.Pro.$invalid }">
                                                                             <input autocomplete="off" type="text" class="form-control text-xs" name="Pro" placeholder="属性名"
@@ -173,7 +173,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group pull-in clearfix">
-                                                                    <div class="col-md-6" title="关联实体" ng-if="en.ProItem.ColumnType!='3'">
+                                                                    <div class="col-md-6 padder-xs" title="关联实体" ng-if="en.ProItem.ColumnType!='3'">
                                                                         <label class="sr-only">关联实体</label>
                                                                         <div ng-class="{ 'has-error' : en.ClassForm.conEn.$invalid }">
                                                                             <div entity-select ng-model="en.ProItem.RelateEntity" select-class="'text-xs'" connect-name="en.ConnectName" ng-name="conEn" ng-disabled="!en.isEditing" ng-required="true"></div>
@@ -182,7 +182,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-5" title="关联方式" ng-if="en.ProItem.ColumnType!='3'">
+                                                                    <div class="col-md-5 padder-xs" title="关联方式" ng-if="en.ProItem.ColumnType!='3'">
                                                                         <label class="sr-only">关联方式</label>
                                                                         <div ng-class="{ 'has-error' : en.ClassForm.conRelType.$invalid }">
                                                                             <div config-select ng-model="en.ProItem.RelationType" select-class="text-xs" ng-name="conRelType" config-option="en.ConfigRelationType" ng-disabled="!en.isEditing" ng-required="true"></div>
@@ -193,7 +193,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group pull-in clearfix" ng-if="en.ProItem.ColumnType=='3'">
-                                                                    <div class="col-md-5" title="对应属性">
+                                                                    <div class="col-md-5 padder-xs" title="对应属性">
                                                                         <label class="sr-only">对应属性</label>
                                                                         <div ng-class="{ 'has-error' : en.ClassForm.BasicPro.$invalid }">
                                                                             <ui-select name="BasicPro" ng-model="en.ProItem.BasicNamePro" theme="bootstrap" ng-disabled="!en.isEditing" search-enabled="true" required>
@@ -208,7 +208,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-7" title="选择公共件">
+                                                                    <div class="col-md-7 padder-xs" title="选择公共件">
                                                                         <label class="sr-only">选择公共件</label>
                                                                         <div ng-class="{ 'has-error' : en.ClassForm.BasicData.$invalid }">
                                                                             <div basic-select="CommonData" ng-model="en.ProItem.BasicName" select-class="text-xs" ng-disabled="!en.isEditing" ng-name="BasicData" ng-required="true"></div>
@@ -219,7 +219,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group" ng-if="en.ProItem.ColumnType=='3'">
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-9 padder-xs">
                                                                         <span class="pull-right">
                                                                             <button class="btn btn-sm btn-success" ng-if="en.isEditing" ng-click="en.SaveProBasic()" ng-disabled="en.ClassForm.$invalid">
                                                                                 <i class="glyphicon glyphicon-edit">确定</i>
@@ -229,7 +229,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form form-horizontal col-md-offset-1 col-md-10" ng-if="en.isEditing && en.ProItem.ColumnType!='3'">
+                                                            <div class="form form-horizontal col-md-offset-1 col-md-10 padder-xs" ng-if="en.isEditing && en.ProItem.ColumnType!='3'">
                                                                 <div class="form-group pull-in clearfix" ng-form="en.RelateForm">
                                                                     <div class="col-md-1 control-label" title="增加关联条件">
                                                                         <span class="btn btn-default" ng-click="en.AddProRelCon()" ng-disabled="en.RelateForm.$invalid">
@@ -280,7 +280,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-offset-1 col-md-9" ng-if="en.ProItem.ColumnType!='3'">
+                                                            <div class="col-md-offset-1 col-md-9 padder-xs" ng-if="en.ProItem.ColumnType!='3'">
                                                                 <div class="panel panel-success">
                                                                     <ul class="list-group alt h4">
                                                                         <li class="list-group-item" ng-repeat="rel in en.ProItem.RelateList ">
@@ -315,65 +315,61 @@
                                                 <div class="form form-horizontal m-t-md" ng-form="en.ProcedureForm">
                                                     <div class="form-group" ng-if="en.isEditing">
                                                         <div class="col-sm-12">
-                                                            <div class="row">
-                                                                <div class="col-sm-2 m-l-none pl-md-0 pr-md-0" ng-class="{ 'has-error' : en.ProcedureForm.ShortName1.$invalid }">
-                                                                    <input autocomplete="off" class="form-control" name="ShortName1" placeholder="存储过程简称" type="text" ng-blur="en.isProcExists(en.NewProc.ShortName)" ng-model="en.NewProc.ShortName" required />
-                                                                    <div ng-messages="en.ProcedureForm.ShortName1.$error" class="help-block" role="alert">
-                                                                        <div ng-message="unique">简称重复</div>
-                                                                    </div>
+                                                            <div class="col-sm-2 m-l-none pl-md-0 pr-md-0  padder-xxs" ng-class="{ 'has-error' : en.ProcedureForm.ShortName1.$invalid }">
+                                                                <input autocomplete="off" class="form-control" name="ShortName1" placeholder="存储过程简称" type="text" ng-blur="en.isProcExists(en.NewProc.ShortName)" ng-model="en.NewProc.ShortName" required />
+                                                                <div ng-messages="en.ProcedureForm.ShortName1.$error" class="help-block" role="alert">
+                                                                    <div ng-message="unique">简称重复</div>
                                                                 </div>
-                                                                <div class="col-sm-5 m-l-none pl-md-0 pr-md-0" ng-class="{ 'has-error' : en.ProcedureForm.Proc.$invalid }">
-                                                                    <div object-select ob-type="'P'" ng-name="Proc" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.ConnectName" ng-model="en.NewProc.EnProcedure" ng-required="true"></div>
-                                                                </div>
-                                                                <div class="col-sm-2" ng-class="{ 'has-error' : en.ProcedureForm.ActionType.$invalid }">
-                                                                    <div config-select ng-model="en.NewProc.ActionType" ng-name="ActionType" ng-required="true" config-option="en.ActionType"></div>
-                                                                </div>
-                                                                <div class="col-sm-2" ng-class="{ 'has-error' : en.ProcedureForm.RoleItem.$invalid }">
-                                                                    <ui-select ng-model="en.NewProc.RoleSn" name="RoleItem" class="h6" theme="bootstrap" search-enabled="true" required>
-                                                                        <ui-select-match class="h5" placeholder="选择角色...">{{ $select.selected.RoleName }}</ui-select-match>
-                                                                        <ui-select-choices class="h5" repeat="item.RoleSn as item in en.ListRole | filter: $select.search track by item.RoleSn">
-                                                                            <div ng-bind-html="item.RoleSn | highlight: $select.search"></div>
-                                                                            <small ng-bind-html="item.RoleName | highlight: $select.search"></small>
-                                                                        </ui-select-choices>
-                                                                    </ui-select>
-                                                                </div>
-                                                                <div class="col-sm-1" ng-if="en.isEditing">
-                                                                    <span class="btn btn-default" ng-click="en.AddProc()" ng-disabled="en.ProcedureForm.$invalid" title="增加关联存储过程">
-                                                                        <i class="glyphicon glyphicon-plus text-success"></i>
-                                                                    </span>
-                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-5 m-l-none pl-md-0 pr-md-0 padder-xxs" ng-class="{ 'has-error' : en.ProcedureForm.Proc.$invalid }">
+                                                                <div object-select ob-type="'P'" ng-name="Proc" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.ConnectName" ng-model="en.NewProc.EnProcedure" ng-required="true"></div>
+                                                            </div>
+                                                            <div class="col-sm-2 padder-xxs" ng-class="{ 'has-error' : en.ProcedureForm.ActionType.$invalid }">
+                                                                <div config-select ng-model="en.NewProc.ActionType" ng-name="ActionType" ng-required="true" config-option="en.ActionType"></div>
+                                                            </div>
+                                                            <div class="col-sm-2 padder-xxs" ng-class="{ 'has-error' : en.ProcedureForm.RoleItem.$invalid }">
+                                                                <ui-select ng-model="en.NewProc.RoleSn" name="RoleItem" class="h6" theme="bootstrap" search-enabled="true" required>
+                                                                    <ui-select-match class="h5" placeholder="选择角色...">{{ $select.selected.RoleName }}</ui-select-match>
+                                                                    <ui-select-choices class="h5" repeat="item.RoleSn as item in en.ListRole | filter: $select.search track by item.RoleSn">
+                                                                        <div ng-bind-html="item.RoleSn | highlight: $select.search"></div>
+                                                                        <small ng-bind-html="item.RoleName | highlight: $select.search"></small>
+                                                                    </ui-select-choices>
+                                                                </ui-select>
+                                                            </div>
+                                                            <div class="col-sm-1 padder-xxs" ng-if="en.isEditing">
+                                                                <span class="btn btn-default" ng-click="en.AddProc()" ng-disabled="en.ProcedureForm.$invalid" title="增加关联存储过程">
+                                                                    <i class="glyphicon glyphicon-plus text-success"></i>
+                                                                </span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="line line-dashed b-b line-lg pull-in"></div>
                                                     <div class="form-group" ng-repeat="proc in en.ProcList">
                                                         <div class="col-sm-12">
-                                                            <div class="row">
-                                                                <div class="col-sm-2 m-l-none pl-md-0">
-                                                                    <label class="control-label h4">
-                                                                        <a class="text-success mr-2" ng-click="en.OpenProc(proc)"><i class="icon icon-settings"></i></a>
-                                                                        <span>{{ proc.ShortName }}</span>
-                                                                    </label>
-                                                                </div>
-                                                                <div class="col-sm-5 m-l-none">
-                                                                    <div object-select ob-type="'P'" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.ConnectName" ng-disabled="!en.isEditing"
-                                                                         ng-model="proc.EnProcedure" ng-name="obProc" ng-required="true"></div>
-                                                                </div>
-                                                                <div class="col-sm-2" ng-class="{ 'has-error' : en.ProcedureForm.ActionTypeItem.$invalid }">
-                                                                    <div config-select ng-model="proc.ActionType" ng-name="ActionTypeItem" ng-required="true" config-option="en.ActionType" ng-disabled="!en.isEditing"></div>
-                                                                </div>
-                                                                <div class="col-sm-2" ng-class="{ 'has-error' : en.ProcedureForm.roleSn.$invalid }">
-                                                                    <ui-select name="roleSn" class="h6" ng-model="proc.RoleSn" theme="bootstrap" search-enabled="true" required ng-disabled="!en.isEditing">
-                                                                        <ui-select-match placeholder="选择角色...">{{ $select.selected.RoleName }}</ui-select-match>
-                                                                        <ui-select-choices repeat="item.RoleSn as item in en.ListRole | filter: $select.search track by item.RoleSn">
-                                                                            <div ng-bind-html="item.RoleSn | highlight: $select.search"></div>
-                                                                            <small ng-bind-html="item.RoleName | highlight: $select.search"></small>
-                                                                        </ui-select-choices>
-                                                                    </ui-select>
-                                                                </div>
-                                                                <div class="col-sm-1" ng-if="en.isEditing">
-                                                                    <span class="btn btn-default" ng-click="en.DeleteProc($index)"><i class="glyphicon glyphicon-remove text-danger"></i></span>
-                                                                </div>
+                                                            <div class="col-sm-2 m-l-none pl-md-0 padder-xxs">
+                                                                <label class="control-label h4">
+                                                                    <a class="text-success mr-2" ng-click="en.OpenProc(proc)"><i class="icon icon-settings"></i></a>
+                                                                    <span>{{ proc.ShortName }}</span>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-sm-5 m-l-none padder-xxs">
+                                                                <div object-select ob-type="'P'" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.ConnectName" ng-disabled="!en.isEditing"
+                                                                        ng-model="proc.EnProcedure" ng-name="obProc" ng-required="true"></div>
+                                                            </div>
+                                                            <div class="col-sm-2 padder-xxs" ng-class="{ 'has-error' : en.ProcedureForm.ActionTypeItem.$invalid }">
+                                                                <div config-select ng-model="proc.ActionType" ng-name="ActionTypeItem" ng-required="true" config-option="en.ActionType" ng-disabled="!en.isEditing"></div>
+                                                            </div>
+                                                            <div class="col-sm-2 padder-xxs" ng-class="{ 'has-error' : en.ProcedureForm.roleSn.$invalid }">
+                                                                <ui-select name="roleSn" class="h6" ng-model="proc.RoleSn" theme="bootstrap" search-enabled="true" required ng-disabled="!en.isEditing">
+                                                                    <ui-select-match placeholder="选择角色...">{{ $select.selected.RoleName }}</ui-select-match>
+                                                                    <ui-select-choices repeat="item.RoleSn as item in en.ListRole | filter: $select.search track by item.RoleSn">
+                                                                        <div ng-bind-html="item.RoleSn | highlight: $select.search"></div>
+                                                                        <small ng-bind-html="item.RoleName | highlight: $select.search"></small>
+                                                                    </ui-select-choices>
+                                                                </ui-select>
+                                                            </div>
+                                                            <div class="col-sm-1 padder-xxs" ng-if="en.isEditing">
+                                                                <span class="btn btn-default" ng-click="en.DeleteProc($index)"><i class="glyphicon glyphicon-remove text-danger"></i></span>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -22,9 +22,10 @@
                     <thead>
                         <tr>
                             <td title="序号" style="width:40px ">序号</td>
-                            <td title="客户订单号" style="width:100px ">客户订单号</td>
-                            <td title="需求分类号" style="width:100px ">需求分类号</td>
                             <td title="MRP分类" style="width:100px ">MRP分类</td>
+                            <td title="客户订单号" style="width:100px ">客户订单号</td>
+                            <td title="番号" style="width:100px ">番号</td>
+                            <td title="需求分类号" style="width:100px ">需求分类号</td>
                             <td title="单据类型" style="width:100px ">单据类型</td>
                             <td title="生产订单号" style="width:100px ">生产订单号</td>
                             <td title="料号" style="width:100px ">料号</td>
@@ -45,9 +46,11 @@
                     </thead>
                     <tr ng-repeat="item in pl.List ">
                         <td title="{{ item.RowNo }}">{{ item.RowNo }}</td>
-                        <td title="{{ item.CustomOrder }}">{{ item.CustomOrder }}</td>
-                        <td title="{{ item.DemandCode }}">{{ item.DemandCode }}</td>
                         <td title="{{ item.MRPType }}">{{ item.MRPType }}</td>
+                        <td title="{{ item.CustomOrder }}">{{ item.CustomOrder }}</td>
+                        <td title="{{ item.PanName }}">{{ item.PanName }}</td>
+                        <td title="{{ item.DemandCode }}">{{ item.DemandCode }}</td>
+                        
                         <td title="{{ item.FormType }}">{{ item.FormType }}</td>
                         <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
                         <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>

@@ -1,0 +1,78 @@
+﻿<div class="modal-header text-center">
+    <button class="btn btn-sm btn-warning pull-left" type="button" ng-click="pl.Cancel()">取消</button>
+    <h3 class="modal-title">计划版本比对</h3>
+</div>
+<div class="modal-body padder-xxs padder-v-xxs h6" ng-form="DialogForm">
+    <div class="panel panel-danger panel-body no-padder padder-v-xxs" cg-busy="pl.promise">
+        <div class="col-xs-4 padder-xxs" >
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">计划版本</div>
+                <div class="panel-body padder-xs padder-v-xxs" style="min-height:400px">
+                    <div class="wrapper-sm">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <input type="text" date-picker format="Y-m-d" class="form-control" ng-model="pl.Ser.aCreateDate" placeholder="导入日期" option="pl.DateOption">
+                            </div>
+                            <button class="btn btn-sm btn-info " ng-click="pl.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                        </div>
+                    </div>
+                    <div class="padder-sm table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td title="导入日期" style="width:100px ">导入日期</td>
+                                    <td title="版本号" style="width:100px ">版本号</td>
+                                    <td title="导入人" style="width:100px ">导入人</td>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in pl.List " ng-click="pl.VerData.Import = item;pl.Search1()" ng-class="{'bg-active': item.ID==pl.VerData.Import.ID}">
+                                <td title="{{ item.ImportDate }}">{{ item.ImportDate }}</td>
+                                <td title="{{ item.VerNo }}">{{ item.VerNo }}</td>
+                                <td title="{{ item.Creator }}">{{ item.Creator }}</td>
+                            </tr>
+                        </table>
+                        <div class="col-md-12 text-center " ng-if="pl.page.total>pl.page.size ">
+                            <div uib-pagination total-items="pl.page.total " ng-model="pl.page.index " items-per-page="pl.page.size " max-size="10 " first-text="<< " previous-text="< "
+                                 ng-change="pl.PageChange() " next-text="> " last-text=">> " boundary-links="true " boundary-link-numbers="true "></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-8 padder-xxs">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">比对版本</div>
+                <div class="panel-body padder-xs padder-v-xxs" style="min-height:400px">
+                    <div class="wrapper-sm">
+                        <div class="form-inline">
+                            <button class="btn btn-sm btn-success m-t-sm m-r-xs pull-right" ng-click="pl.Compare() "><i class="glyphicon glyphicon-import "></i>差异比对</button>
+                        </div>
+                    </div>
+                    <div class="padder-sm table-responsive col-xs-12 no-padder">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td title="导入日期" style="width:100px ">比对日期</td>
+                                    <td title="版本号" style="width:100px ">版本号</td>
+                                    <td title="导入人" style="width:100px ">比对人</td>
+                                    <td title="比对时间" style="width:100px ">比对时间</td>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in pl.List1 " ng-click="pl.OK(item)" ng-class="{'bg-active': item.ID==pl.VerData.ID}">
+                                <td title="{{ item.CreateDate }}">{{ item.CreateDate|date:'yyyy-MM-dd' }} <span ng-if="!item.IsCompare" class="h6 font-v3 pull-up">temp</span></td>
+                                <td title="{{ item.VerNo }}">{{ item.VerNo }}</td>
+                                <td title="{{ item.Creator }}">{{ item.Creator }}</td>
+                                <td title="{{ item.CreateDate }}">{{ item.CreateDate|date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                            </tr>
+                        </table>
+                        <div class="col-md-12 text-center " ng-if="pl.page1.total>pl.page1.size ">
+                            <div uib-pagination total-items="pl.page1.total " ng-model="pl.page1.index " items-per-page="pl.page1.size " max-size="10 " first-text="<< " previous-text="< "
+                                 ng-change="pl.PageChange1() " next-text="> " last-text=">> " boundary-links="true " boundary-link-numbers="true "></div>
+                        </div>
+                        <!--<pre>{{ pl.List1 | json }}</pre>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
