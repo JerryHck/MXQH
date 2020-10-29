@@ -70,11 +70,13 @@
                 </div>
                 <!--<pre>{{ crc.Detail | json }}</pre>-->
             </div>
+          
             <div class="panel panel-default scroll-y" style="max-height:600px">
                 <div class="panel-heading font-bold text-center">
                     工单 <span class="h4 font-bold text-info">{{ crc.Detail.WorkOrder }}</span><span class="text-danger">U9完工报告列表</span>
+                    <a ng-click="crc.IsShowCompleteList=!crc.IsShowCompleteList" class="pull-right"><span class="text-primary glyphicon glyphicon-chevron-up"></span></a>
                 </div>
-                <table class="table">
+                <table class="table" ng-show="!crc.IsShowCompleteList">
                     <thead>
                         <tr>
                             <td>完工报告单号</td>
@@ -94,6 +96,35 @@
                         <td ng-if="item.DocState==4">核准中</td>
                         <td title="{{ item.CompleteDate }}">{{ item.CompleteDate|date:'yyyy-MM-dd HH:mm:ss' }}</td>
                         <td title="{{ item.ApproveOn }}">{{ item.ApproveOn|date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel panel-default scroll-y" style="max-height:600px">
+                <div class="panel-heading font-bold text-center">
+                    工单 <span class="h4 font-bold text-info">{{ crc.Detail.WorkOrder }}</span><span class="text-danger">U9开返工列表</span>
+                    <a ng-click="crc.IsShowStartInfo=!crc.IsShowStartInfo" class="pull-right"><span class="text-primary glyphicon glyphicon-chevron-up"></span></a>
+                </div>
+                <table class="table" ng-show="!crc.IsShowStartInfo">
+                    <thead>
+                        <tr>
+                            <td>时间</td>
+                            <td>开工人</td>
+                            <td>实际开工/返工数量</td>
+                            <td>开工/返工数量</td>
+                            <td>累计开工数量</td>
+                            <td>类型</td>
+                            <td>序号</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in crc.StartInfoList">
+                        <td title="{{ item.CreatedOn }}">{{ item.CreatedOn|date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                        <td title="{{ item.CreatedBy }}">{{ item.CreatedBy }}</td>
+                        <td title="{{ item.ActualStartQty }}">{{ item.ActualStartQty }}</td>
+                        <td title="{{ item.StartQty }}">{{ item.StartQty }}</td>
+                        <td title="{{ item.TotalStartQty }}">{{ item.TotalStartQty }}</td>
+                        <td ng-if="item.BusinessDirection==0">开工</td>
+                        <td ng-if="item.BusinessDirection==1">反开工</td>
+                        <td title="{{ item.StartSeq }}">{{ item.StartSeq }}</td>
                     </tr>
                 </table>
             </div>
