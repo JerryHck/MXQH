@@ -63,8 +63,9 @@
                         <td title="{{ item.TotalStartQty }}">{{ item.TotalStartQty }}</td>
                         <td title="{{ item.CompleteQty }}">{{ item.CompleteQty }}</td>
                         <td title="{{ item.U9_TotalCompleteQty }}">{{ item.U9_TotalCompleteQty }}</td>
-                        <td title="{{ item.UnRcvQty }}">{{ item.UnRcvQty }}</td>
-                        <td title="{{ item.ApprovingQty }}">{{ item.ApprovingQty }}</td>                        
+                        <td ng-if="item.UnRcvQty==item.ApprovingQty" title="{{ item.UnRcvQty }}">{{ item.UnRcvQty }}</td>
+                        <td ng-if="item.UnRcvQty!=item.ApprovingQty" title="{{ item.UnRcvQty }}"><span class="text-danger" >{{ item.UnRcvQty }}</span></td>
+                        <td title="{{ item.ApprovingQty }}">{{ item.ApprovingQty }}</td>
                     </tr>
                 </table>
             </div>
