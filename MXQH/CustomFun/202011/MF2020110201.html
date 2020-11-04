@@ -47,7 +47,8 @@
                             <td title="累计开工数" style= "width:100px ">累计开工数</td>
                             <td title="MES累计完工数" style= "width:100px ">MES累计完工数</td>
                             <td title="U9累计完工入库数" style= "width:100px ">U9累计完工入库数</td>
-                            <td title="U9未及时入库数" style= "width:100px ">U9未及时入库数</td>
+                            <td title="U9未及时入库数" style="width:100px ">U9未及时入库数</td>
+                            <td title="U9核准中数量" style= "width:100px ">U9核准中数量</td>
                         </tr>
                     </thead>
                     <tr ng-repeat= "item in ctrl.List ">
@@ -63,6 +64,7 @@
                         <td title="{{ item.CompleteQty }}">{{ item.CompleteQty }}</td>
                         <td title="{{ item.U9_TotalCompleteQty }}">{{ item.U9_TotalCompleteQty }}</td>
                         <td title="{{ item.UnRcvQty }}">{{ item.UnRcvQty }}</td>
+                        <td title="{{ item.ApprovingQty }}">{{ item.ApprovingQty }}</td>                        
                     </tr>
                 </table>
             </div>
