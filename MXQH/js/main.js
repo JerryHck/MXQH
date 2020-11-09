@@ -111,7 +111,10 @@ angular.module('app')
                             var en = {};
                             en.RouteName = data[i].FunList[j].RouteName;
                             en.FunName = data[i].FunName + '/' + data[i].FunList[j].FunName;
-                            vm.FunctionList.push(en);
+                            //添加非表单
+                            if (data[i].FunList[j].IsSystem != 2) {
+                                vm.FunctionList.push(en);
+                            }
                             if ($cookieStore.get('active-router') == en.RouteName) {
                                 vm.DefaultSys = sysEn;
                             }
@@ -216,23 +219,3 @@ angular.module('app')
             $window.location.href = FileUrl + "DownLoad/" + path;
         }
     }]);
-
-
-var signs =$('.font-x');
-
-var randomIn = function randomIn(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-};
-
-var mixupInterval = function mixupInterval(el) {
-    var ms = randomIn(2000, 4000);
-    el.style.setProperty('--interval', "".concat(ms, "ms"));
-};
-if (signs && signs.length > 0) {
-    signs.forEach(function (el) {
-        mixupInterval(el);
-        el.addEventListener('webkitAnimationIteration', function () {
-            mixupInterval(el);
-        });
-    });
-}

@@ -27,6 +27,7 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
         console.log(data);
     }
 
+   
 
     vm.UserChange = function (data) {
         vm.df = data.ChiFirstName;
@@ -162,8 +163,22 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
     //    //$window.location.href = data.File;
     //})
 
-    function Do() {
+    var html = '<script>function DDD(item){alert(item.Text)};<\/script>';
+    $('#Test2').html(html);
 
+
+    //获取url
+    var searchParams = new URLSearchParams(window.location.href);
+    console.log(searchParams)
+    //创建并初始化变量
+    var b1 = parseInt(searchParams.get("v"));
+    console.log(b1)
+    //var b2 = parseInt(searchParams.get("b2"));
+
+
+    function Do() {
+        DDD({ Text: "sdfasgadf" });
+        vm.Dbo = "的开了房间奥斯卡的感觉啊";
         //GetPrintName('127.0.0.1');
         AjaxService.PrintPdf(FileUrl + "OutLabel/FBA15Q63FSQ5U000003.pdf");
         var enCon = { WorkOrder: "AMO-30190506004", StartDate: "2019-07-25 8:30:00", EndDate: '2019-07-25 19:30:00' };

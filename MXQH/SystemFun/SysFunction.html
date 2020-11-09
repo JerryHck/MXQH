@@ -90,10 +90,11 @@
                                         <span ng-if="!fun.editFun" ng-confirm="{text:'确定要删除该功能吗'}" ng-click='fun.Delete(f.FunNo)' class="pull-right text-danger">
                                             <i class="fa fa-times"></i>
                                         </span>
-                                        <span class="block m-l-n bg-transparent" ng-class="{'m-n': f.selected }">
+                                        <span class="block m-l-n bg-transparent" ng-class="{'m-n': f.selected, 'font-v3':f.IsSystem == 2, 'text-danger':f.IsUsed=='0' }">
                                             <i ng-class="f.FunImge" ng-drag="!fun.editFun" ng-drag-data="f" ng-drag-success="fun.FunDrag($data,$index)"></i>{{ f.FunName }}
                                         </span>
                                         <span ng-show="!f.FunNo">没有功能</span>
+                                        <!--{{ f | json }}-->
                                     </a>
                                 </div>
                             </div>

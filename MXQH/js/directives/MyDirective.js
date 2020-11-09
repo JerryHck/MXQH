@@ -414,7 +414,7 @@ angular.module('AppSet')
         template:  '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()" class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">'
                   + '         <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.Name }}</ui-select-match>'
                   + '          <ui-select-choices  repeat="item in data | filter: $select.search track by item.Name" refresh="refresh($select.search)" refresh-delay="0">'
-                  + '             <small title="{{ item.DbSchema }}.{{ item.Name }}"><span ng-bind-html="item.Name | highlight: $select.search"</span></small>'
+                  + '             <small title="{{ item.DbSchema }}.{{ item.Name }} {{ item.TbDesc }}"><span ng-bind-html="item.Name | highlight: $select.search"</span></small>'
                   + '         </ui-select-choices>'
                   + '     </ui-select>'
         ,

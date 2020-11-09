@@ -1,6 +1,6 @@
 ﻿'use strict'
 //angular.module('Routing', ['ui.router', 'oc.lazyLoad'])
-angular.module('app')
+angular.module('AppSet')
 .provider('router', function ($stateProvider) {
     var urlCollection;
 
@@ -16,7 +16,7 @@ angular.module('app')
                   });
               },
               //配置路由
-              setDataRouters: function (route) {
+              setDataRouters: function (route, flow) {
                   if (!$state.get(route.Name)) {
                       var item = {};
                       item.url = route.Url;
@@ -54,14 +54,23 @@ angular.module('app')
                               }
                           }
                       }
-
+                      //记录当前路由状态
                       item.resolve = angular.extend(item.resolve || {}, {
                           Fun: ['$cookieStore', function ($cookieStore) {
-                              $cookieStore.put('active-function', route.FunNo);
-                              $cookieStore.put('active-router', route.Name)
+                              if (!flow) {
+                                  $cookieStore.put('active-function', route.FunNo);
+                                  $cookieStore.put('active-router', route.Name);
+                              }
+                              else {
+                                  if (!flow) {
+                                      $cookieStore.put('active-flow', route.FunNo);
+                                      $cookieStore.put('active-flow-router', route.Name);
+                                  }
+                              }
                               return route.FunNo;
                           }]
                       });
+                      
                       $stateProvider.state(route.Name, item);
                   }
               },
