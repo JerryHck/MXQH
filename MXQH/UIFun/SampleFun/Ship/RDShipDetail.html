@@ -127,7 +127,8 @@
                                                 <button class="btn btn-xs btn-warning" ng-click="sn.IsEdit=!sn.IsEdit"><i class="fa fa-undo"></i></button>
                                             </span>
                                         </td>
-                                        <td style="white-space:normal;word-break:normal;">{{sn.SNCode}}</td>
+                                        <td style="white-space:normal;word-break:normal;" ng-if="sn.SNCode">{{sn.SNCode}}</td>
+                                        <td style="white-space:normal;word-break:normal;" ng-if="!sn.SNCode">{{sn.InternalCode}}</td>
                                         <td>
                                             <span ng-if="!sn.IsEdit">{{sn.Progress}}</span>
                                             <div ng-if="sn.IsEdit">
