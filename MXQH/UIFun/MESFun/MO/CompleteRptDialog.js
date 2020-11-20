@@ -36,6 +36,10 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
         //    toastr.error('完工数量不能小于实际入库数量');
         //    return;
         //}
+        if (vm.Item.CompleteQty>vm.TotalStartQty) {
+            toastr.error('完工数量不能大于U9累计开工数！');
+            return;
+        }
         vm.Item.Quantity = undefined;
         li.push(vm.Item);
         en.EntityInfo = JSON.stringify(li);

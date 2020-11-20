@@ -83,6 +83,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     //明细
     function GetDetail() {
         vm.promise = AjaxService.GetPlansPage("RDShipDetail", GetCondition(), vm.page.pageIndex, vm.page.pageSize).then(function (data) {
+            console.log(data);
             vm.SNList = data.List;
             vm.page.total = data.Count;
             vm.Item.RcvCount = data.Count;

@@ -25,6 +25,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window,Form) {
         AjaxService.GetPlan("U9MO", { name: "DocNo", value: vm.Ser.WorkOrder }).then(function (data) {
             console.log(data);
             vm.CompleteList = data.CompleteRpt;
+            vm.StartInfoList = data.StartInfo;
         });
     }
 

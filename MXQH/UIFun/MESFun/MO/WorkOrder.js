@@ -3,17 +3,21 @@ angular.module('app')
 .controller('MESMOCtrl', ['$rootScope', '$scope', 'Dialog', 'toastr', 'AjaxService', 'Form', 
 function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
     var vm = this;
-    vm.page = { pageSize: 10, pageIndex: 1, maxSize: 10 };
-    vm.pageCom = { pageSize: 10, pageIndex: 1, maxSize: 10 };
-    vm.DataBind = DataBind;
+    vm.page = { pageSize: 10, pageIndex: 1, maxSize: 10, IsCanceled: false };
+    vm.pageCom = { pageSize: 10, pageIndex: 1, maxSize: 10 ,IsCanceled:false};
+    vm.pageCanceled = { pageSize: 10, pageIndex: 1, maxSize: 10 ,IsCanceled:true};
+    vm.DataBind = DataBind; 
     vm.Ser = {};
     vm.Ser2 = {};
+    vm.Ser3 = {};
     vm.Search = Search;
     vm.Add = Add;
     vm.Edit = Edit;
     vm.DataBindCom = DataBindCom;
     vm.EditCom = EditCom;
     vm.SearchCom = SearchCom;
+    vm.DataBindCanceled = DataBindCanceled;
+    vm.SearchCanceled = SearchCanceled;
     vm.Complete = Complete;
     vm.StartMo = StartMo;//开工
     //vm.Delete = Delete;
@@ -31,13 +35,20 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
     function DataBindCom() {
         GetConditionCom();
         vm.promise = AjaxService.ExecPlan("MesPlanDetail", "GetList", vm.pageCom).then(function (data) {
-            console.log(vm.pageCom);
-            console.log(data);
             vm.CompleteList = data.data;
             vm.pageCom.total = data.data1[0].TotalCount;
         });
     }
-
+    //绑定数据完工工单
+    function DataBindCanceled() {
+        GetConditionCanceled();
+        vm.promise = AjaxService.ExecPlan("MesPlanDetail", "GetList", vm.pageCanceled).then(function (data) {
+            console.log(vm.pageCanceled);
+            console.log(data);
+            vm.CanceledList = data.data;
+            vm.pageCanceled.total = data.data1[0].TotalCount;
+        });
+    }
     //查询功能
     function Search() {
         vm.page.pageIndex = 1;
@@ -49,7 +60,11 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
         vm.pageCom.pageIndex = 1;
         DataBindCom();
     }
-
+    //查寻完工工单
+    function SearchCanceled() {
+        vm.pageCanceled.pageIndex = 1;
+        DataBindCanceled();
+    }
     //查询条件
     function GetCondition() {
         vm.page.DocNo = vm.Ser.DocNo == '' ? undefined : vm.Ser.DocNo;
@@ -70,6 +85,16 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
         vm.pageCom.CustomerOrder = vm.Ser2.CustomerOrder == '' ? undefined : vm.Ser2.CustomerOrder;
         vm.pageCom.ERPSo = vm.Ser2.ERPSo == '' ? undefined : vm.Ser2.ERPSo;
     }
+    //查询完工工单条件
+    function GetConditionCanceled() {
+        vm.pageCanceled.DocNo = vm.Ser3.DocNo == '' ? undefined : vm.Ser3.DocNo;
+        vm.pageCanceled.LineID = vm.Ser3.LineID == '' ? undefined : vm.Ser3.LineID;
+        vm.pageCanceled.MaterialID = vm.Ser3.MaterialID == '' ? undefined : vm.Ser3.MaterialID;
+        vm.pageCanceled.AssemblyDate = vm.Ser3.AssemblyDate == '' ? undefined : vm.Ser3.AssemblyDate;
+        vm.pageCanceled.Status = 4;
+        vm.pageCanceled.CustomerOrder = vm.Ser3.CustomerOrder == '' ? undefined : vm.Ser3.CustomerOrder;
+        vm.pageCanceled.ERPSo = vm.Ser3.ERPSo == '' ? undefined : vm.Ser3.ERPSo;
+    }
     //编辑
     function Edit(item) {
         var resolve = {
@@ -82,7 +107,7 @@ function ($rootScope, $scope,  Dialog, toastr, AjaxService, Form) {
 
     //编辑
     function EditCom(item) {
-        item.IsComplete = true;//完工列表不允许编辑
+        item.IsComplete = true;//完工、作废列表不允许编辑
         var resolve = {
             ItemData: function () {
                 return item;

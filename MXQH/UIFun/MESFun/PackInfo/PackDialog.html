@@ -99,6 +99,26 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">箱号从头计数</label>
+                        <div class="col-sm-8  padder-xs" ng-class="{ 'has-error' : DialogForm.IsStartAt0.$invalid }">
+                            <label class="i-checks i-checks-sm control-label">
+                                <input ng-change="packDialog.GetListNo()" type="checkbox" ng-model="packDialog.IsStartAt0" name="IsStartAt0" class="ng-pristine ng-untouched ng-valid ng-not-empty"><i></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">起始箱号</label>
+                        <div class="col-sm-8  padder-xs" ng-class="{ 'has-error' : DialogForm.StartNum.$invalid }">
+                            <input ng-disabled="!packDialog.SpecifyNum" type="number" class="form-control" name="StartNum" placeholder="起始箱号"
+                                   ng-model="packDialog.StartNum">
+                            <label class="i-checks i-checks-sm control-label">
+                                <input type="checkbox" ng-model="packDialog.SpecifyNum" name="SpecifyNum" class="ng-pristine ng-untouched ng-valid ng-not-empty"><i></i>
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
