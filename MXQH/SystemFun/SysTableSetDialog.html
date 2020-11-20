@@ -1,0 +1,311 @@
+﻿<div class="modal-body padder-xs padder-v-xs h6" ng-form="DialogForm" cg-busy="tb.promise">
+    <div class="panel panel-default">
+        <div class="panel-body padder-xxs padder-v-xxs">
+            <div class="col-md-2 no-padder">
+                <div class="panel panel-info" ng-form="tb.MainForm">
+                    <div class="panel-heading h4 text-center">
+                        表信息
+                    </div>
+                    <div class="panel-body padder-xs">
+                        <div class="form form-horizontal col-xs-12 padder-xxs">
+                            <div class="form-group-xs" ng-class="{'has-error':tb.MainForm.obConnect.$invalid}">
+                                <label class="font-v3">来源链接数据库</label>
+                                <div connect-select ng-disabled="tb.Item.TableName" ng-model="tb.Item.ConnectName" ng-name="obConnect" ng-required="true"></div>
+                            </div>
+                            <div class="form-group-xs" ng-if="!tb.Item.TableName">
+                                <label class="font-v3">操作方式</label>
+                                <div class="col-xs-12 no-padder">
+                                    <div toggle-switch ng-model="tb.Way" class="i-switch i-switch-lg switch-success" on-label="新建表" off-label="选择表"
+                                         on-value="N" off-value="O" is-disabled="tb.Item.Name" ng-change="tb.ChangeWay()"></div>
+                                </div>
+                                <div class="col-xs-12 m-t-xs no-padder" ng-if="tb.Way == 'O'">
+                                    <div object-select ob-type="'U'" ob-connect="tb.Item.ConnectName" ng-model="tb.SelectedTable" ng-name="obTable"></div>
+                                </div>
+                            </div>
+                            <div class="form-group-xs" ng-class="{'has-error':tb.MainForm.DbSchema.$invalid}">
+                                <label class="font-v3">表结构</label>
+                                <input autocomplete="off" type="text" class="form-control padder-xxs" name="DbSchema" placeholder="表结构"
+                                       ng-model="tb.TableData.DbSchema" ng-disabled="tb.Item.Name || tb.Way == 'O'" required>
+                            </div>
+                            <div class="form-group-xs" ng-class="{'has-error':tb.MainForm.Name.$invalid}">
+                                <label class="font-v3">表名称</label>
+                                <input autocomplete="off" type="text" class="form-control padder-xxs" name="Name" placeholder="表名称"
+                                       ng-pattern="/^[a-zA-Z]{1}([a-zA-Z0-9]|[_-]){0,200}$/"
+                                       ng-model="tb.TableData.Name" maxlength="200" ng-disabled="tb.Item.Name || tb.Way == 'O'" required>
+                                <div ng-messages="tb.MainForm.Name.$error" class="help-block" role="alert">
+                                    <div ng-message="pattern">表名：首位需为字母,由字母，数字，- _ 组成</div>
+                                    <div ng-message="maxlength">表名最多200位长度</div>
+                                </div>
+                            </div>
+                            <div class="form-group-xs">
+                                <label class="font-v3">表说明</label>
+                                <textarea autocomplete="off" type="text" rows="3" class="form-control padder-xxs" name="TbDesc" placeholder="表说明"
+                                          ng-model="tb.TableData.TbDesc"></textarea>
+                            </div>
+                            <div class="form-group-xs m-t">
+                                <button class="btn btn-sm btn-warning pull-right" type="button" ng-click="tb.Cancel()">取消</button>
+                                <button class="btn btn-sm btn-info m-r-lg pull-right" type="button" ng-disabled="tb.MainForm.$invalid || tb.TableData.Columns.length == 0" ng-click="tb.Compare()">
+                                    <i class="glyphicon glyphicon-dashboard"></i>比对数据库
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-danger" ng-form="tb.MainForm">
+                    <div class="panel-heading h4 text-center">
+                        同步数据库
+                    </div>
+                    <div class="panel-body padder-xs">
+                        <div class="form form-horizontal col-xs-12 padder-xxs">
+                            <div class="form-group-xs" ng-class="{'has-error':tb.MainForm.ToobConnect.$invalid}">
+                                <label class="text-danger">目标数据库</label>
+                                <div connect-select ng-model="tb.Item.ToConnectName" ng-name="ToobConnect" ng-required="true"></div>
+                            </div>
+                            <div class="form-group-xs m-t">
+                                <button class="btn btn-sm btn-danger pull-right" type="button" ng-disabled="tb.MainForm.$invalid || tb.TableData.Columns.length == 0" ng-click="tb.SyncCompare()">
+                                    <i class="glyphicon glyphicon-dashboard"></i>同步至目标数据库
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10 padder-xxs">
+                <uib-tabset active="tb.Index" type="tabs">
+                    <uib-tab index="0">
+                        <uib-tab-heading class="h5">
+                            表栏位信息
+                        </uib-tab-heading>
+                        <div class="panel panel-default" ng-form="tb.ColForm">
+                            <div class="panel-body padder-xs padder-v-xxs">
+                                <div class="w-100 scroll-x scroll-y no-padder" style="min-height:600px; max-height:800px">
+                                    <table class="table pad-xs" style="min-width:1200px">
+                                        <colgroup>
+                                            <col style="width:30px" />
+                                            <col style="width:40px" />
+                                            <col style="width:20px" />
+                                            <col style="width:120px " />
+                                            <col style="width:80px " />
+                                            <col style="width:30px " />
+                                            <col style="width:35px " />
+                                            <col style="width:30px " />
+                                            <col style="width:70px " />
+                                            <col style="width:100px " />
+                                            <col style="width:250px " />
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <td title="查询" colspan="11">
+                                                    <div class="col-xs-8 no-padder">
+                                                        <div class="input-group col-md-12">
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-success" type="button" ng-disabled="tb.MainForm.$invalid" ng-click="tb.Insert()">
+                                                                    <i class="glyphicon glyphicon-plus"></i>表栏位
+                                                                </button>
+                                                            </span>
+                                                            <input autocomplete="off" type="text" name="DocNo" class="form-control" ng-model="tb.DtlSer" placeholder="查询" />
+                                                            <span class="input-group-addon">
+                                                                <i class="glyphicon glyphicon-search"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-4 no-padder">
+                                                        <button class="btn btn-success pull-right" type="button" ng-disabled="tb.MainForm.$invalid" ng-click="tb.Copy()">
+                                                            <i class="icon icon-copy"></i>复制表
+                                                        </button>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:30px">移动</td>
+                                                <td style="width:40px">操作</td>
+                                                <td style="width:20px">序号</td>
+                                                <td style="width:120px ">栏位名</td>
+                                                <td style="width:80px ">栏位类型</td>
+                                                <td style="width:70px ">长度</td>
+                                                <td style="width:30px ">主键</td>
+                                                <td style="width:35px ">自增1</td>
+                                                <td style="width:30px ">可空</td>
+                                                <td style="width:100px ">默认值</td>
+                                                <td style="width:250px ">栏位描述</td>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-if="tb.IsInsert" ng-form="tb.InsertForm">
+                                            <td></td>
+                                            <td>
+                                                <button class="btn btn-xs btn-success" ng-disabled="tb.InsertForm.$invalid" ng-click="tb.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                                                <button class="btn btn-xs btn-warning" ng-click="tb.IsInsert=false"><i class="fa fa-undo"></i></button>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <div ng-class="{ 'has-error': tb.InsertForm.ColumnName.$invalid }">
+                                                    <input autocomplete="off" type="text" name="ColumnName" class="form-control padder-xxs" placeholder="栏位名"
+                                                           ng-pattern="/^[a-zA-Z]{1}([a-zA-Z0-9]|[_-]){0,100}$/" maxlength="100" ng-model="tb.NewItem.ColumnName" required />
+                                                    <div ng-messages="tb.InsertForm.ColumnName.$error" class="help-block" role="alert">
+                                                        <div ng-message="pattern">栏位：首位需为字母,由字母，数字，- _ 组成</div>
+                                                        <div ng-message="maxlength">栏位最多100长度</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div ng-class="{ 'has-error': tb.InsertForm.DataType.$invalid }">
+                                                    <div config-select tb="TableColSet" col="DataType" ng-name="DataType" ng-model="tb.NewItem.DataType" placeholder="栏位类型" ng-required="true"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div ng-if="tb.CheckDataType(tb.NewItem.DataType, '')" ng-class="{ 'has-error': tb.InsertForm.CharLen.$invalid }">
+                                                    <input autocomplete="off" type="number" min="-1" max="8000" name="CharLen" class="form-control padder-xxs" placeholder="栏位长度" ng-model="tb.NewItem.CharLen" required />
+                                                    <span class="text-danger h6">注：-1为MAX</span>
+                                                </div>
+                                                <div ng-if="tb.CheckDataType(tb.NewItem.DataType, 'F')">
+                                                    <div class="col-xs-12 no-padder" title="整数长度" ng-class="{ 'has-error': tb.InsertForm.PrecLen.$invalid }">
+                                                        <input autocomplete="off" type="number" min="0" max="32" name="PrecLen" class="form-control padder-xxs" placeholder="整数长度" ng-model="tb.NewItem.PrecLen" required />
+                                                    </div>
+                                                    <div class="col-xs-12 no-padder m-t-xs" title="小数长度" ng-class="{ 'has-error': tb.InsertForm.PointLen.$invalid }">
+                                                        <input autocomplete="off" type="number" min="0" max="32" name="PointLen" class="form-control padder-xxs" placeholder="小数长度" ng-model="tb.NewItem.PointLen" required />
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <label class="i-checks i-checks"><input autocomplete="off" type="checkbox" ng-model="tb.NewItem.IsKey"><i></i></label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <label class="i-checks i-checks"><input autocomplete="off" type="checkbox" ng-model="tb.NewItem.Flag"><i></i></label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <label class="i-checks i-checks"><input autocomplete="off" type="checkbox" ng-model="tb.NewItem.AbleNull"><i></i></label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <input autocomplete="off" type="text" name="DefualtText" class="form-control padder-xxs" placeholder="默认值" ng-model="tb.NewItem.DefualtText" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <textarea rows="2" autocomplete="off" type="text" name="ColumnDes" class="form-control padder-xxs" placeholder="栏位描述" ng-model="tb.NewItem.ColumnDes" ></textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="item in tb.TableData.Columns |filter:tb.DtlSer" ng-form="item.ItemForm" ng-drop="true" ng-drop-success="tb.Drop($data,$index)">
+                                            <td title="移动" ng-drag="true" ng-drag-data="item" ng-drag-success="tb.Drag($data,$index)">
+                                                <a class="text-info h4">
+                                                    <i class="glyphicon glyphicon-move text-info"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <span ng-if="!item.IsEdit">
+                                                    <a class="text-success h4" ng-click="tb.Edit(item)"><i class="glyphicon glyphicon-edit"></i></a>
+                                                    <a class="text-danger h4" ng-confirm="{text:'确定要删除吗'}" ng-click="tb.Delete($index)"><i class="glyphicon glyphicon-remove"></i></a>
+                                                </span>
+                                                <span ng-if="item.IsEdit">
+                                                    <a class="text-success h4" ng-disabled="item.ItemForm.$invalid" ng-click="tb.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></a>
+                                                    <a class="text-warning h4" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></a>
+                                                </span>
+                                            </td>
+                                            <td title="序号">{{ $index + 1 }}</td>
+                                            <td class="text-left" ng-class="{  'bg-danger-light':item.OriCol.ColumnName && item.OriCol.ColumnName != item.ColumnName }" title="原值为{{ item.OriCol.ColumnName }}">
+                                                <span ng-if="!item.IsEdit">{{ item.ColumnName }}</span>
+                                                <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_ColumnName.$invalid }">
+                                                    <input autocomplete="off" type="text" name="item_ColumnName" class="form-control padder-xxs" placeholder="栏位名"
+                                                           ng-pattern="/^[a-zA-Z]{1}([a-zA-Z0-9]|[_-]){0,100}$/" maxlength="100" ng-model="tb.EditItem.ColumnName" required />
+                                                    <div ng-messages="item.ItemForm.item_ColumnName.$error" class="help-block" role="alert">
+                                                        <div ng-message="pattern">栏位：首位需为字母,由字母，数字，- _ 组成</div>
+                                                        <div ng-message="maxlength">栏位最多100长度</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td ng-class="{  'bg-danger-light':item.OriCol.ColumnName && item.OriCol.DataType != item.DataType }" title="原值为{{ item.OriCol.DataType }}">
+                                                <span ng-if="!item.IsEdit">{{ item.DataType }}</span>
+                                                <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_DataType.$invalid }">
+                                                    <div config-select tb="TableColSet" col="DataType" ng-name="item_DataType" ng-model="tb.EditItem.DataType" placeholder="栏位类型" ng-required="true"></div>
+                                                </div>
+                                            </td>
+                                            <td title="原值为{{ item.OriCol.CharLen }}" ng-class="{  'bg-danger-light':item.OriCol.ColumnName &&(item.OriCol.CharLen != item.CharLen || item.OriCol.PrecLen != item.PrecLen || item.OriCol.PointLen != item.PointLen ) }">
+                                                <span ng-if="!item.IsEdit && tb.CheckDataType(item.DataType, '')">
+                                                    ({{ item.CharLen == -1 ? 'MAX': item.CharLen }})
+                                                </span>
+                                                <span ng-if="!item.IsEdit && tb.CheckDataType(item.DataType, 'F') ">({{ item.PrecLen }},{{ item.PointLen }})</span>
+
+                                                <div ng-if="item.IsEdit && tb.CheckDataType(tb.EditItem.DataType, '')" ng-class="{ 'has-error': item.ItemForm.item_CharLen.$invalid }">
+                                                    <input autocomplete="off" type="number" min="-1" max="8000" name="item_CharLen" class="form-control padder-xxs" placeholder="栏位长度" ng-model="tb.EditItem.CharLen" required />
+                                                    <span class="text-danger h6">注：-1为MAX</span>
+                                                </div>
+                                                <div ng-if="item.IsEdit && tb.CheckDataType(tb.EditItem.DataType, 'F')">
+                                                    <div class="col-xs-12 no-padder" title="整数长度" ng-class="{ 'has-error': item.ItemForm.item_PrecLen.$invalid }">
+                                                        <input autocomplete="off" type="number" min="0" max="32" name="item_PrecLen" class="form-control padder-xxs" placeholder="整数长度" ng-model="tb.EditItem.PrecLen" required />
+                                                    </div>
+                                                    <div class="col-xs-12 no-padder m-t-xs" title="小数长度" ng-class="{ 'has-error': item.ItemForm.item_PointLen.$invalid }">
+                                                        <input autocomplete="off" type="number" min="0" max="32" name="item_PointLen" class="form-control padder-xxs" placeholder="小数长度" ng-model="tb.EditItem.PointLen" required />
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td ng-class="{  'bg-danger-light':item.OriCol.ColumnName && item.OriCol.IsKey != item.IsKey }" title="原值为{{ item.OriCol.IsKey }}">
+                                                <div ng-if="!item.IsEdit">
+                                                    <label class="i-checks i-checks"><input autocomplete="off" type="checkbox" ng-model="item.IsKey" disabled><i></i></label>
+                                                </div>
+                                                <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_IsKey.$invalid }">
+                                                    <label class="i-checks i-checks"><input autocomplete="off" type="checkbox" ng-model="tb.EditItem.IsKey" ng-disabled="!item.IsEdit"><i></i></label>
+                                                </div>
+
+                                            </td>
+                                            <td ng-class="{  'bg-danger-light':item.OriCol.ColumnName && item.OriCol.Flag != item.Flag }" title="原值为{{ item.OriCol.Flag }}">
+                                                <div ng-if="!item.IsEdit">
+                                                    <label class="i-checks i-checks"><input autocomplete="off" type="checkbox" ng-model="item.Flag" disabled><i></i></label>
+                                                </div>
+                                                <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_Flag.$invalid }">
+                                                    <label class="i-checks i-checks"><input autocomplete="off" type="checkbox" ng-model="tb.EditItem.Flag" ng-disabled="!item.IsEdit"><i></i></label>
+                                                </div>
+
+                                            </td>
+                                            <td ng-class="{  'bg-danger-light':item.OriCol.ColumnName && item.OriCol.AbleNull != item.AbleNull }" title="原值为{{ item.OriCol.AbleNull }}">
+                                                <div ng-if="!item.IsEdit">
+                                                    <label class="i-checks i-checks"><input autocomplete="off" type="checkbox" ng-model="item.AbleNull" disabled><i></i></label>
+                                                </div>
+                                                <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_AbleNull.$invalid }">
+                                                    <label class="i-checks i-checks"><input autocomplete="off" type="checkbox" ng-model="tb.EditItem.AbleNull" ng-disabled="!item.IsEdit"><i></i></label>
+                                                </div>
+                                            </td>
+                                            <td ng-class="{  'bg-danger-light':item.OriCol.ColumnName && item.OriCol.DefualtText != item.DefualtText }">
+                                                <span ng-if="!item.IsEdit">{{ item.DefualtText }}</span>
+                                                <div ng-if="item.IsEdit">
+                                                    <input autocomplete="off" type="text" name="item_DefualtText" class="form-control padder-xxs" placeholder="默认值" ng-model="tb.EditItem.DefualtText" />
+                                                </div>
+                                            </td>
+                                            <td class="text-left" title="原值为{{ item.OriCol.ColumnDes }}" ng-dblclick="tb.Edit(item)" ng-class="{  'bg-danger-light':item.OriCol.ColumnDes != item.ColumnDes }">
+                                                <span ng-if="!item.IsEdit">{{ item.ColumnDes }}</span>
+                                                <div ng-if="item.IsEdit">
+                                                    <textarea rows="2" autocomplete="off" type="text" name="item_DefualtText" class="form-control padder-xxs" placeholder="栏位描述" ng-model="tb.EditItem.ColumnDes" ></textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="1">
+                        <uib-tab-heading class="h5">
+                            <span class="text-danger">{{ tb.ComConn }}</span>更新SQL语句
+                        </uib-tab-heading>
+                        <div class="panel panel-danger panel-body">
+                            <div class="col-xs-12 no-padder scroll-y" style="max-height:600px">
+                                <pre>{{ tb.UpSql }}</pre>
+                            </div>
+                            <button class="btn btn-sm m-t btn-success" type="button" ng-disabled="tb.MainForm.$invalid || tb.TableData.Columns.length == 0 || !tb.UpSql "
+                                    ng-confirm="{text:'确定要执行以上SQL语句更新吗'}" ng-click="tb.SaveToSystem()">
+                                <i class="glyphicon glyphicon-save"></i>更新
+                            </button>
+                        </div>
+                    </uib-tab>
+                </uib-tabset>
+            </div>
+        </div>
+    </div>
+</div>

@@ -369,7 +369,8 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $timeout, Dialog) {
                     vm.NewArrange.Line = { Name: data2.Plan.Line.Name };
                     vm.NewArrange.LineLeader = data2.Plan.Line.UserName.Id;
                     vm.NewArrange.MesUser = { Name: data2.Plan.Line.UserName.Name };
-                    vm.NewArrange.StandPerson = data2.Plan.Line.LineNumber
+                    vm.NewArrange.StandPerson = data2.Plan.Line.LineNumber;
+                    ChangeRemark();
                 })
 
             })
@@ -386,7 +387,8 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $timeout, Dialog) {
             vm.SelectedArrange.Line= { Name: data2.Plan.Line.Name };
             vm.SelectedArrange.LineLeader= data2.Plan.Line.UserName.Id;
             vm.SelectedArrange.MesUser= { Name: data2.Plan.Line.UserName.Name };
-            vm.SelectedArrange.StandPerson= data2.Plan.Line.LineNumber
+            vm.SelectedArrange.StandPerson = data2.Plan.Line.LineNumber;
+            ChangeRemark();
         })
         vm.MesLis = [];
     }

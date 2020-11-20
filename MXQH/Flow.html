@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="flow">
+<head>
+    <meta charset="utf-8" />
+    <title>Auctus | 系统平台</title>
+    <meta name="description" content="Auctus | MES生产管理系统" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="css/plugin.css?v=f572311efd" rel="stylesheet" />
+    <link href="css/app.css?v=785461e3b7" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="app" id="flow" ng-class="{
+         'app-header-fixed':vm.app.settings.headerFixed,
+         'app-aside-fixed':vm.app.settings.asideFixed,
+         'app-aside-folded':vm.app.settings.asideFolded,
+         'app-aside-dock':vm.app.settings.asideDock,
+         'container':vm.app.settings.container}" ui-view></div>
+    <script src="js/plugin.min.js?v=598cc7547c"></script>
+    <script src="appData.js?v=17a10afc7f"></script>
+    <script src="js/formflow.min.js?v=88b752d8ee"></script>
+</body>
+</html>

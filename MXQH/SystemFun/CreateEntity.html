@@ -96,7 +96,6 @@
                                             <div class="panel-body wrapper-xs padder-xs">
                                                 <div uib-collapse="en.isProAdd">
                                                     <div class="col-lg-4 col-md-6 col-xs-12 padder-xs" ng-repeat="pro in en.PropertyList">
-                                                        <!--<div class="col-lg-4 col-md-6 col-xs-12" ng-repeat="pro in en.PropertyList | orderBy:'ColumnType'">-->
                                                         <div class="panel {{ en.setClass(pro.ColumnType) }}">
                                                             <div class="panel-heading h4">
                                                                 {{ pro.ColumnName }}
@@ -117,10 +116,10 @@
                                                                         <span ng-class="{ 'bg-success-lter text-danger' : pro.OrderWay != 'NON' }">排序:</span>
                                                                     </label>
                                                                     <div class="col-sm-8 padder-xs">
-                                                                        <div class="m-b-sm col-lg-8 col-md-12 col-sm-12 padder-xs">
+                                                                        <div class="m-b-sm col-xs-8 col-md-12 col-sm-12 padder-xs">
                                                                             <div config-select ng-model="pro.OrderWay" config-option="en.ConfigOrderWay" ng-disabled="!en.isEditing"></div>
                                                                         </div>
-                                                                        <div class="col-lg-4 col-md-12 col-sm-12 padder-xs">
+                                                                        <div class="col-xs-4 col-md-12 col-sm-12 padder-xs">
                                                                             <input autocomplete="off" type="number" class="form-control" ng-model="pro.OrderNum" ng-disabled="!en.isEditing" maxlength="2" min="-9" max="20" />
                                                                             <!--<input autocomplete="off"  ui-jq="TouchSpin" type="text" ng-model="pro.OrderNum" class="form-control-sm input-sm" data-min='0' data-max="20" ng-disabled="!en.isEditing"
                                                                                    data-verticalbuttons="false" data-verticalupclass="btn-xs fa fa-caret-up" data-verticaldownclass="btn-xs btn-sm fa fa-caret-down">-->
@@ -141,13 +140,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <!--<pre class="col-lg-12">{{ en.PropertyList | json }} </pre>-->
                                                 </div>
                                                 <div uib-collapse="!en.isProAdd">
                                                     <div class="panel panel-info">
                                                         <div class="panel-heading">{{ en.ProItem.ColumnName }} 属性编辑</div>
-                                                        <div class="panel-body">
+                                                        <div class="panel-body padder-xxs">
                                                             <div class="form form-horizontal col-md-offset-1 col-md-10" ng-form="en.ClassForm">
                                                                 <div class="form-group pull-in clearfix">
                                                                     <div class="col-md-5 padder-xs" title="属性类别">
@@ -173,7 +170,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group pull-in clearfix">
-                                                                    <div class="col-md-6 padder-xs" title="关联实体" ng-if="en.ProItem.ColumnType!='3'">
+                                                                    <div class="col-md-5 padder-xs" title="关联实体" ng-if="en.ProItem.ColumnType!='3'">
                                                                         <label class="sr-only">关联实体</label>
                                                                         <div ng-class="{ 'has-error' : en.ClassForm.conEn.$invalid }">
                                                                             <div entity-select ng-model="en.ProItem.RelateEntity" select-class="'text-xs'" connect-name="en.ConnectName" ng-name="conEn" ng-disabled="!en.isEditing" ng-required="true"></div>
@@ -182,7 +179,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-5 padder-xs" title="关联方式" ng-if="en.ProItem.ColumnType!='3'">
+                                                                    <div class="col-md-7 padder-xs" title="关联方式" ng-if="en.ProItem.ColumnType!='3'">
                                                                         <label class="sr-only">关联方式</label>
                                                                         <div ng-class="{ 'has-error' : en.ClassForm.conRelType.$invalid }">
                                                                             <div config-select ng-model="en.ProItem.RelationType" select-class="text-xs" ng-name="conRelType" config-option="en.ConfigRelationType" ng-disabled="!en.isEditing" ng-required="true"></div>
@@ -191,6 +188,18 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                </div>
+                                                                <div class="form-group pull-in clearfix" ng-if="en.ProItem.ColumnType!='3'">
+                                                                    <div class="col-md-4 padder-xs">
+                                                                        <div toggle-switch ng-model="en.ProItem.RelateAdd" class="switch-danger w-100" on-label="联动新增" off-label="不联动新增" is-disabled="!en.isEditing"></div>
+                                                                    </div>
+                                                                    <div class="col-md-4 padder-xs">
+                                                                        <div toggle-switch ng-model="en.ProItem.RelateUpdate" class="switch-danger w-100" on-label="联动更新" off-label="不联动更新" is-disabled="!en.isEditing"></div>
+                                                                    </div>
+                                                                    <div class="col-md-4 padder-xs">
+                                                                        <div toggle-switch ng-model="en.ProItem.RelateDelete" class="switch-danger w-100" on-label="联动刪除" off-label="不联动刪除" is-disabled="!en.isEditing"></div>
+                                                                    </div>
+                                                                    <p class="col-xs-12 no-padder text-danger h6">注：联动设置后 主实体进行增删改时，从实体也会做相应的动作。</p>
                                                                 </div>
                                                                 <div class="form-group pull-in clearfix" ng-if="en.ProItem.ColumnType=='3'">
                                                                     <div class="col-md-5 padder-xs" title="对应属性">
@@ -236,12 +245,12 @@
                                                                             <i class="glyphicon glyphicon-plus text-success"></i>
                                                                         </span>
                                                                     </div>
-                                                                    <div class="col-md-11">
-                                                                        <div class="row">
-                                                                            <div class="col-lg-3" ng-class="{ 'has-error' : en.RelateForm.ParenType.$invalid }" title="母实体条件类型">
+                                                                    <div class="col-md-11 padder-xs">
+                                                                        <div class="col-xs-12 no-padder">
+                                                                            <div class="col-xs-3 padder-xs" ng-class="{ 'has-error' : en.RelateForm.ParenType.$invalid }" title="母实体条件类型">
                                                                                 <div config-select ng-model="en.newRelCon.ParenType" ng-name="ParenType" ng-required="true" config-option="en.EntityRelationType"></div>
                                                                             </div>
-                                                                            <div class="col-lg-5" ng-class="{ 'has-error' : en.RelateForm.ParentKey.$invalid }" title="母实体条件">
+                                                                            <div class="col-xs-5 padder-xs" ng-class="{ 'has-error' : en.RelateForm.ParentKey.$invalid }" title="母实体条件">
                                                                                 <ui-select name="ParentKey" ng-model="en.newRelCon.ParentKey" theme="bootstrap" ng-if="en.newRelCon.ParenType=='0'" ng-required="true">
                                                                                     <ui-select-match placeholder="父实体栏位">{{ $select.selected.ColumnName }}</ui-select-match>
                                                                                     <ui-select-choices repeat="item.ColumnName as item in en.TbColunms | filter: $select.search track by item.ColumnName">
@@ -253,15 +262,15 @@
                                                                                        data-verticalbuttons="true" data-verticalupclass="btn-xs fa fa-caret-up" data-verticaldownclass="btn-xs btn-sm fa fa-caret-down"
                                                                                        data-min='-2147483647' data-max="2147483647" required>
                                                                             </div>
-                                                                            <div class="col-lg-3" ng-class="{ 'has-error' : en.RelateForm.RelExp.$invalid }" title="条件中间表达式">
+                                                                            <div class="col-xs-3 padder-xs" ng-class="{ 'has-error' : en.RelateForm.RelExp.$invalid }" title="条件中间表达式">
                                                                                 <div config-select ng-name="RelExp" ng-required="true" ng-model="en.newRelCon.Expression" select-class="text-xs" config-option="en.EntityRelationExp"></div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="row m-t-xs">
-                                                                            <div class="col-lg-3" ng-class="{ 'has-error' : en.RelateForm.ChildType.$invalid }" title="关联实体条件">
+                                                                        <div class="col-xs-12 no-padder m-t-xs">
+                                                                            <div class="col-xs-3 padder-xs" ng-class="{ 'has-error' : en.RelateForm.ChildType.$invalid }" title="关联实体条件">
                                                                                 <div config-select ng-model="en.newRelCon.ChildType" ng-name="ChildType" ng-required="true" config-option="en.EntityRelationType"></div>
                                                                             </div>
-                                                                            <div class="col-lg-5" ng-class="{ 'has-error' : en.RelateForm.ChildKey.$invalid }" title="关联实体条件">
+                                                                            <div class="col-xs-5 padder-xs" ng-class="{ 'has-error' : en.RelateForm.ChildKey.$invalid }" title="关联实体条件">
                                                                                 <ui-select name="ChildKey" ng-model="en.newRelCon.ChildKey" theme="bootstrap" ng-if="en.newRelCon.ChildType=='0'" ng-required="true">
                                                                                     <ui-select-match placeholder="子实体栏位">{{ $select.selected.ColumnName }}</ui-select-match>
                                                                                     <ui-select-choices repeat="item.ColumnName as item in en.TbChildColunms | filter: $select.search track by item.ColumnName">
@@ -273,7 +282,7 @@
                                                                                        data-verticalbuttons="true" data-verticalupclass="btn-xs fa fa-caret-up" data-verticaldownclass="btn-xs btn-sm fa fa-caret-down"
                                                                                        data-min='-2147483647' data-max="2147483647" required>
                                                                             </div>
-                                                                            <div class="col-lg-3" title="多条件关联方式">
+                                                                            <div class="col-xs-3 padder-xs" title="多条件关联方式">
                                                                                 <div config-select ng-name="Ass" auto-first="true" ng-model="en.newRelCon.Associate" select-class="text-xs" ng-disabled="en.ProItem.RelateList.length==0" config-option="en.EntityRelationAss"></div>
                                                                             </div>
                                                                         </div>
@@ -354,7 +363,7 @@
                                                             </div>
                                                             <div class="col-sm-5 m-l-none padder-xxs">
                                                                 <div object-select ob-type="'P'" placeholder="请选择存储过程..." first-load="en.firstLoad" ob-connect="en.ConnectName" ng-disabled="!en.isEditing"
-                                                                        ng-model="proc.EnProcedure" ng-name="obProc" ng-required="true"></div>
+                                                                     ng-model="proc.EnProcedure" ng-name="obProc" ng-required="true"></div>
                                                             </div>
                                                             <div class="col-sm-2 padder-xxs" ng-class="{ 'has-error' : en.ProcedureForm.ActionTypeItem.$invalid }">
                                                                 <div config-select ng-model="proc.ActionType" ng-name="ActionTypeItem" ng-required="true" config-option="en.ActionType" ng-disabled="!en.isEditing"></div>
@@ -387,20 +396,21 @@
                                                 <div class="panel-body">
                                                     <div class="bs-example form-horizontal">
                                                         <div class="form-group">
-                                                            <label class="col-lg-4 control-label">备份</label>
-                                                            <div class="col-lg-8">
+                                                            <label class="col-xs-4 control-label">备份</label>
+                                                            <div class="col-xs-8">
                                                                 <button class="btn btn-default" ng-click="en.planBak()"><i class="fa fa-save"></i>备份</button>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-lg-4 control-label">下载备份</label>
-                                                            <div class="col-lg-8">
+                                                            <label class="col-xs-4 control-label">下载备份</label>
+                                                            <div class="col-xs-8">
                                                                 <button class="btn btn-default" ng-click="en.DownLoadPlan()"><i class="glyphicon glyphicon-export"></i></button>
+                                                                xp
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-lg-4 control-label">导入</label>
-                                                            <div class="col-lg-8 input-group">
+                                                            <label class="col-xs-4 control-label">导入</label>
+                                                            <div class="col-xs-8 input-group">
                                                                 <input autocomplete="off" id="importPlan" type="file" style="display:none" accept=".json">
                                                                 <input autocomplete="off" class="form-control" type="text" ng-model="en.ImportFile">
                                                                 <span class="input-group-addon " ng-click="en.ImportPlan()" style="cursor: pointer; background-color: #e7e7e7">
@@ -445,13 +455,13 @@
                                             </label>
                                         </div>
                                         <div class="media-body form-group padder-xxs" title="{{ item.ColumnName }}">
-                                            <div class="col-lg-12 padder-xxs">
+                                            <div class="col-xs-12 padder-xxs">
                                                 <span class="h5 text-success">{{ item.ColumnName }}</span>
                                                 <span class="pull-right" ng-if="item.IsKey">
                                                     <i class="font-v5 text-danger">Key</i>
                                                 </span>
                                             </div>
-                                            <div class="col-lg-12 padder-xxs">
+                                            <div class="col-xs-12 padder-xxs">
                                                 <small class="block m-t-xs">{{ item.ColumnDes }}</small>
                                                 <em class="text-xs"><span class="text-info">{{ item.DataType }}</span></em>
                                             </div>

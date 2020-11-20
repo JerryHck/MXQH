@@ -200,6 +200,10 @@
     <Content Include="Scripts\jsPlump\jquery.jsPlumb.min.js" />
     <Content Include="Scripts\jsPlump\mustache.min.js" />
     <Content Include="Scripts\jsPlump\uuid.js" />
+    <Content Include="SystemFun\FormFlowDialog.html" />
+    <Content Include="SystemFun\FormFlowDialog.js" />
+    <Content Include="SystemFun\FlowNodeSetDialog.html" />
+    <Content Include="SystemFun\FlowNodeSetDialog.js" />
     <Content Include="SystemFun\FormFlow.html" />
     <Content Include="SystemFun\FormFlow.js" />
     <Content Include="SystemFun\ResetPswDialog.html" />

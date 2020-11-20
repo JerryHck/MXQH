@@ -10,7 +10,6 @@ angular.module('app')
         isIE && angular.element($window.document.body).addClass('ie');
         isSmartDevice($window) && angular.element($window.document.body).addClass('smart');
         var vm = this;
-
         vm.FunctionList = [];
         vm.SysList = [];
         vm.FunTree = [];
@@ -218,4 +217,7 @@ angular.module('app')
         function DownTool(path) {
             $window.location.href = FileUrl + "DownLoad/" + path;
         }
+
+       
+
     }]);

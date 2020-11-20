@@ -163,7 +163,7 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
     //    //$window.location.href = data.File;
     //})
 
-    var html = '<script>function DDD(item){alert(item.Text)};<\/script>';
+    var html = '<script>function DDD(AjaxService, scope){ AjaxService.GetPlan("MesMxWOrder").then(function(data){ console.log(data); scope.JSData = data; }) };<\/script>';
     $('#Test2').html(html);
 
 
@@ -172,30 +172,50 @@ function ($scope, serviceUrl, $window, AjaxService, FileService, toastr, FileUrl
     console.log(searchParams)
     //创建并初始化变量
     var b1 = parseInt(searchParams.get("v"));
-    console.log(b1)
+    
     //var b2 = parseInt(searchParams.get("b2"));
 
 
     function Do() {
-        DDD({ Text: "sdfasgadf" });
-        vm.Dbo = "的开了房间奥斯卡的感觉啊";
-        //GetPrintName('127.0.0.1');
-        AjaxService.PrintPdf(FileUrl + "OutLabel/FBA15Q63FSQ5U000003.pdf");
-        var enCon = { WorkOrder: "AMO-30190506004", StartDate: "2019-07-25 8:30:00", EndDate: '2019-07-25 19:30:00' };
-        var en = {};
-        en.Method = 'ExecPlan';
-        en.PlanName = "MesMxWOrder";
-        en.ShortName = "board"
-        en.Intervel = 5;
-        //传送的参数字符串
-        en.Json = JSON.stringify(enCon);
-        AjaxService.GetServerSocket(en, function (data) {
-            //console.log(data);
-            $scope.$apply(function () {
-                vm.SocketData = JSON.parse(data);
-            });
-        })
 
+        Insert();
+
+        //DDD(AjaxService, vm);
+        //console.log(vm.JSData);
+        //vm.Dbo = "的开了房间奥斯卡的感觉啊";
+        ////GetPrintName('127.0.0.1');
+        //AjaxService.PrintPdf(FileUrl + "OutLabel/FBA15Q63FSQ5U000003.pdf");
+        //var enCon = { WorkOrder: "AMO-30190506004", StartDate: "2019-07-25 8:30:00", EndDate: '2019-07-25 19:30:00' };
+        //var en = {};
+        //en.Method = 'ExecPlan';
+        //en.PlanName = "MesMxWOrder";
+        //en.ShortName = "board"
+        //en.Intervel = 5;
+        ////传送的参数字符串
+        //en.Json = JSON.stringify(enCon);
+        //AjaxService.GetServerSocket(en, function (data) {
+        //    //console.log(data);
+        //    $scope.$apply(function () {
+        //        vm.SocketData = JSON.parse(data);
+        //    });
+        //})
+
+    }
+
+    function Insert() {
+        var en = { ID:2, Name: "科目112412", Value: "科目1考試答復是德國", sysName: "MXQH" }
+        en.Dtl = JSON.stringify([{ ID: 3, Test: "倒車啊啊啊", value: "還是豆腐乾" }, { ID: 5, Test: "倒車444441", value: "2135發生的" }, { ID: 1, Test: "倒車神的地方", value: "水電費啊啊廣告" }, { ID: 4, Test: "愛的噶說的444441", value: "2135阿斯頓噶說的" }])
+        //AjaxService.PlanInsert("tbMain", en).then(function (data) {
+        //    console.log(data);
+        //})
+        AjaxService.PlanUpdate("tbMain", en).then(function (data) {
+            console.log(data);
+            toastr.success("成功")
+        })
+        //AjaxService.PlanDelete("tbMain", { ID: 1 }).then(function (data) {
+        //    toastr.success("成功")
+        //    console.log(data);
+        //})
     }
 
     vm.change = function () {

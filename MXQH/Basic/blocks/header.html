@@ -58,32 +58,34 @@
                         </div>
                     </div>
                 </div>
-                <div class="row bg-blue-light">
-                    <div class="col-sm-2 b-l" ng-repeat="sys in vm.SysList">
-                        <div class="text-center m-l-xs m-t-xs m-b-xs font-bold h4 text-primary">
-                            <span class="font-bold ml-6">{{ sys.SysName }}</span>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 scroll-y wrapper-xs bar-xs" style="max-height:500px">
-                                <ul class="nav">
-                                    <li ng-repeat="root in sys.FunTree">
-                                        <span class="auto text-primary-dker h5 text-success">
-                                            <span><i ng-class="root.FunImge"></i></span>
-                                            <span class="font-bold ml-1">{{ root.FunName }}</span>
-                                        </span>
-                                        <ul class="list-unstyled l-h-2x m-l-md">
-                                            <li ng-repeat="fun in root.FunList">
-                                                <a ui-sref="{{ fun.RouteName }}">
-                                                    <span><i ng-class="fun.FunImge"></i></span>
-                                                    <span class="text-xs">{{ fun.FunName }}</span>
-                                                </a>
+                <div class="w-100 scroll-x">
+                    <table style="width:{{ vm.SysList.length * 200 }}px">
+                        <tr>
+                            <td class="text-info padder-xxs" style="width:200px; vertical-align: top"  ng-repeat="sys in vm.SysList">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading text-center h4">{{ sys.SysName }}</div>
+                                    <div class="panel-body padder-v-xxs padder-xs scroll-y bar-xs" style="max-height:600px">
+                                        <ul class="nav">
+                                            <li ng-repeat="root in sys.FunTree">
+                                                <span class="auto text-primary-dker h5 text-success">
+                                                    <span><i ng-class="root.FunImge"></i></span>
+                                                    <span class="font-bold ml-1">{{ root.FunName }}</span>
+                                                </span>
+                                                <ul class="list-unstyled l-h-2x m-l-md">
+                                                    <li ng-repeat="fun in root.FunList">
+                                                        <a ui-sref="{{ fun.RouteName }}">
+                                                            <span><i ng-class="fun.FunImge"></i></span>
+                                                            <span class="text-xs">{{ fun.FunName }}</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
                                             </li>
                                         </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </li>
@@ -135,5 +137,9 @@
         </li>
     </ul>
     <!-- / navbar right -->
-    
+    <script>
+        $("div.dropdown-menu").on("click", "[data-stopPropagation]", function (e) {
+            e.stopPropagation();
+        });
+    </script>
 </div>

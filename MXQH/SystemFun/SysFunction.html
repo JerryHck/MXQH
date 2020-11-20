@@ -169,7 +169,10 @@
                                             <div class="form-group" ng-class="{ 'has-error' : fun.FormFun.Route.$invalid }">
                                                 <label class="col-xs-4 control-label text-info">路由</label>
                                                 <div class="col-xs-8">
-                                                    <input autocomplete="off"  class="form-control text-xs" name="Route" type="text" ng-model="fun.SelectedFun.RouteName" ng-disabled="!fun.editFun" required>
+                                                    <input autocomplete="off"  class="form-control text-xs" name="Route" type="text" ng-blur="fun.isRouteExists()" ng-model="fun.SelectedFun.RouteName" ng-disabled="!fun.editFun" required>
+                                                    <div ng-messages="fun.FormFun.Route.$error" class="help-block" role="alert">
+                                                        <div ng-message="unique">和功能[{{ fun.ReErr.FunName }}]的路由重复</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group" ng-class="{ 'has-error' : fun.FormFun.routeUrl.$invalid }">
