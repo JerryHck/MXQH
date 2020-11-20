@@ -9,6 +9,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     vm.Item.PackListNo = vm.Item.PackListNo == undefined ? GenerateListNo() : vm.Item.PackListNo;
     vm.IsStartAt0 = false;
     vm.GetListNo = GetListNo;
+    vm.StartNum = 0;
     GetPlaces();
     if (vm.Item.MaterialID) {//新增操作才会有
         vm.Item.CountryCode = 'CN';//默认CN
@@ -50,6 +51,14 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
     }
     //保存
     function Save() {
+        if (!vm.SpecifyNum) {
+            vm.StartNum = 0;
+        } 
+        if (vm.IsStartAt0 && vm.SpecifyNum > 0) {
+            toastr.error("\"箱号从头计数\"和\"起始箱号\"不能同时启用！");
+            return;
+        }
+        
         var en = {};
         var li = [];
         vm.Item.MaxWeight = 0;
@@ -66,6 +75,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
         li.push(vm.Item);
         en.Entity = JSON.stringify(li);
         en.TempColumns = "Entity";
+        en.StartNum = vm.StartNum;
         if (vm.Item.ID) {//编辑操作
             //vm.Item.Order = undefined;
             vm.promise = AjaxService.ExecPlan("MESPackageMain", "Update", en).then(function (data) {
