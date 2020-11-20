@@ -28,7 +28,6 @@ function ($scope, Dialog, AjaxService, toastr, $window) {
     }
     //Open({ WorkOrder: "MO-30200817007" });
     function Open(item) {
-        console.log(item)
         Dialog.OpenDialog("WorkOrderWaste", item).then(function (data) {
             if (data) {
                 Search();
@@ -44,10 +43,10 @@ function ($scope, Dialog, AjaxService, toastr, $window) {
     function GetContition() {
         var list = [];
         if (vm.Ser.aWorkOrder) {
-            list.push({ name: "WorkOrder", value: vm.Ser.aWorkOrder, tableAs:"a" });
+            list.push({ name: "DocNo", value: vm.Ser.aWorkOrder, tableAs:"b" });
         }
         if (vm.Ser.aProCode) {
-            list.push({ name: "ProCode", value: vm.Ser.aProCode, tableAs:"a" });
+            list.push({ name: "Code", value: vm.Ser.aProCode, tableAs:"c" });
         }
         return list;
     }

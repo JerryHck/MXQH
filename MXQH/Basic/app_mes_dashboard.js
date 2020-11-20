@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-angular.module('app')
+angular.module('AppSet')
 .controller('MesDashboardCtrl', ['$document', '$scope', '$http', 'AjaxService', 'toastr', '$window',
 function ($document, $scope, $http, AjaxService, toastr, $window) {
     var vm = this;

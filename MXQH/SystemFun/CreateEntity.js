@@ -89,6 +89,11 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
             pro.BasicName = vm.PropertyList[i].BasicName || '';
             pro.BasicNamePro = vm.PropertyList[i].BasicNamePro || '';
             pro.RowNum = i + 1;
+
+            pro.RelateDelete = vm.PropertyList[i].RelateDelete || false;
+            pro.RelateAdd = vm.PropertyList[i].RelateAdd || false;
+            pro.RelateUpdate = vm.PropertyList[i].RelateUpdate || false;
+
             ProList.push(pro);
             if (pro.ColumnType == '1' || pro.ColumnType == '2') {
                 var relList = vm.PropertyList[i].RelateList;
@@ -119,6 +124,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
                 ProcList.push(proc);
             }
         }
+
         en.ProList = JSON.stringify(ProList);
         en.RelList = JSON.stringify(RelList);
         en.ProcList = JSON.stringify(ProcList);
@@ -330,6 +336,9 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
             en.OrderWay = "NON";
             en.OrderNum = 0;
             en.IsKey = 0;
+            en.RelateDelete = vm.ProItem.RelateDelete || false;
+            en.RelateAdd = vm.ProItem.RelateAdd || false;
+            en.RelateUpdate = vm.ProItem.RelateUpdate || false;
             en.RelateList = vm.ProItem.RelateList;
             vm.PropertyList.push(en);
         }
@@ -349,6 +358,9 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
             en.OrderWay = "NON";
             en.OrderNum = 0;
             en.IsKey = 0;
+            en.RelateDelete = vm.ProItem.RelateDelete || false;
+            en.RelateAdd = vm.ProItem.RelateAdd || false;
+            en.RelateUpdate = vm.ProItem.RelateUpdate || false;
             en.BasicName = vm.ProItem.BasicName;
             en.BasicNamePro = vm.ProItem.BasicNamePro;
             vm.PropertyList.push(en);

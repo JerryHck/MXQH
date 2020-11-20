@@ -84,7 +84,11 @@
             <div class="wrapper-xs">
                 <div class="form-inline">
                     <div class="form-group">
-                        <div config-select tb="WorkOrderPlanDiffU9" col="ToU9Sate" auto-first="true" ng-model="pl.Ser1.IsToU9" placeholder="状态"></div>
+                        <div class="input-group">
+                            <div config-select tb="WorkOrderPlanDiffU9" col="ToU9Sate" clear="true" ng-model="pl.Ser1.IsToU9" placeholder="状态"></div>
+                            <span class="input-group-addon" ng-click="pl.Ser1.IsToU9 = undefined"><a class="text-danger"><i class="glyphicon glyphicon-trash"></i> </a></span>
+                        </div>
+
                     </div>
                     <div class="form-group">
                         <input autocomplete="off" type="text" class="form-control" ng-model="pl.Ser1.aWorkOrder" placeholder="生产订单">

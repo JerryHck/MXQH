@@ -12,6 +12,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
     vm.Ser = {};
     vm.IsPrint = true;
     vm.PrintType = 'COTTONCODE';
+    vm.PrintNum = 1;
 
     vm.KeyDonwSnCode = KeyDonwSnCode;
     vm.KeyDonwOrder = KeyDonwOrder;
@@ -287,32 +288,37 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
 
     function Print(type) {
         if (!vm.IsPrint) return;
-        var en = {};
-        en.PackDetailID = vm.PrintDtlId;
-        en.TypeCode = type;
-        AjaxService.ExecPlan("MESPackChi", "print", en).then(function (data) {
-            if (data.data3[0].MsgType == "Error") {
-                MyPop.Show(true, data.data3[0].MsgText);
-            }
-            else if (data.data3[0].MsgType == "Success") {
-                var postData = {}, list = [];
-                postData.ParaData = JSON.stringify(data.data[0]);
 
-                for (var i = 0, len = vm.PrintSnNum || data.data2.length; i < len; i++) {
-                    list.push(data.data2[i].SNCode);
+        vm.PrintNum = vm.MultiPrint && vm.PrintNum > 0 ? vm.PrintNum : 1;
+        for (var p = 0; p < vm.PrintNum; p++) {
+            var en = {};
+            en.PackDetailID = vm.PrintDtlId;
+            en.TypeCode = type;
+            var index = p;
+            AjaxService.ExecPlan("MESPackChi", "print", en).then(function (data) {
+                if (data.data3[0].MsgType == "Error") {
+                    MyPop.Show(true, data.data3[0].MsgText);
                 }
-                postData.OutList = list;
-                var temp = data.data1[0];
-                AjaxService.Print(temp.TemplateId, temp.TS, postData, vm.PrintName).then(function (data2) {
-                    console.log(data2);
-                }, function (err) {
-                    console.log(err);
-                })
-                if (type != "COTTONCODE") {
-                    getBoxList();
+                else if (data.data3[0].MsgType == "Success") {
+                    var postData = {}, list = [];
+                    postData.ParaData = JSON.stringify(data.data[0]);
+
+                    for (var i = 0, len = vm.PrintSnNum || data.data2.length; i < len; i++) {
+                        list.push(data.data2[i].SNCode);
+                    }
+                    postData.OutList = list;
+                    var temp = data.data1[0];
+                    AjaxService.Print(temp.TemplateId, temp.TS, postData, vm.PrintName).then(function (data2) {
+                        console.log(data2);
+                    }, function (err) {
+                        console.log(err);
+                    })
+                    if (type != "COTTONCODE" && index == 0) {
+                        getBoxList();
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 }
 ]);

@@ -1,0 +1,68 @@
+﻿  <!-- navbar -->
+<div class="bg-light">
+    <div class="bg-info text-center col-lg-12" style="height:60px; width:100%; position:fixed; top:0; z-index:555">
+        <h3 class="text-white pull-left">表单信息</h3>
+        <button type="button" class="btn btn-info m-l m-t-md pull-right"><i class="glyphicon glyphicon-list"></i></button>
+        <button type="button" class="btn btn-warning m-l m-t-md pull-right">作废</button>
+        <button type="button" class="btn btn-danger m-l m-t-md pull-right">驳回</button>
+        <button type="button" class="btn btn-success m-l m-t-md pull-right" ng-click="fo.FormOkSign()">核准</button>
+        <button type="button" class="btn btn-success m-l m-t-md pull-right">保存</button>
+    </div>
+    <div class="col-lg-8 col-lg-offset-2 bg-white" style="top:61px">
+        <audio autoplay="autoplay" id="autoVoice" src=""></audio>
+        <div ui-butterbar></div>
+        <a class="off-screen-toggle hide" ui-toggle-class="off-screen" data-target=".app-aside"></a>
+        <div class="panel panel-default">
+            <div class="panel-heading h4">基本信息</div>
+            <div class="panel-body no-padder ">
+                <div class="form form-horizontal">
+                    <div class="form-group-xs col-xs-12 padder-xxs padder-v-xs">
+                        <div class="col-xs-6 padder-xxs">
+                            <label class="control-label col-sm-4 padder-xs">流程名称:</label>
+                            <div class="col-sm-8 padder-xs">
+                                <p class="form-control-static font-bold">{{sn.OrderData.MaterialCode}}</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 padder-xxs">
+                            <label class="control-label col-sm-4 padder-xs">流程单号:</label>
+                            <div class="col-sm-8 padder-xs">
+                                <p class="form-control-static font-bold">{{sn.OrderData.MaterialCode}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group-xs  col-xs-12 padder-xxs">
+                        <div class="col-xs-6 padder-xxs">
+                            <label class="control-label col-sm-4 padder-xs">申请人员:</label>
+                            <div class="col-sm-8 padder-xs">
+                                <p class="form-control-static font-bold">{{sn.OrderData.MaterialCode}}</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 padder-xxs">
+                            <label class="control-label col-sm-4 padder-xs">申请日期:</label>
+                            <div class="col-sm-8 padder-xs">
+                                <p class="form-control-static font-bold">{{sn.OrderData.MaterialCode}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-xs-12 padder-xxs">
+                        <div class="col-xs-6 padder-xxs">
+                            <label class="control-label col-sm-4 padder-xs">申请人公司:</label>
+                            <div class="col-sm-8 padder-xs">
+                                <p class="form-control-static font-bold">{{sn.OrderData.MaterialCode}}</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 padder-xxs">
+                            <label class="control-label col-sm-4 padder-xs">申请人部门:</label>
+                            <div class="col-sm-8 padder-xs">
+                                <p class="form-control-static font-bold">{{sn.OrderData.MaterialCode}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="formContent" class="fade-in-up bar-xs" ui-view></div>
+        <!--<pre>{{ vm.app | json }}</pre>-->
+    </div>
+</div>

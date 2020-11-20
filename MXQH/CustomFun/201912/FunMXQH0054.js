@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('AppSet')
-.controller('TestCtrl', ['$scope', '$http', 'AjaxService', 'toastr', '$window',
-function ($scope, $http, AjaxService, toastr, $window) {
+.controller('TestCtrl', ['$scope', '$rootScope', '$http', 'AjaxService', 'toastr', '$window',
+function ($scope, $rootScope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
@@ -16,6 +16,11 @@ function ($scope, $http, AjaxService, toastr, $window) {
     vm.PageChange = PageChange;
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
+
+
+    $rootScope.MainSearch = function () {
+        Search()
+    }
 
     function Search() {
         vm.page.index = 1;

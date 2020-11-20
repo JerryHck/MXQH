@@ -45,6 +45,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
     vm.OpenHtmlJs = OpenHtmlJs;
     vm.OpenFormDialog = OpenFormDialog;
     vm.OpenFormFlowDialog = OpenFormFlowDialog;
+    vm.isRouteExists = isRouteExists;
 
     //选择系统
     vm.ChangeSys = ChangeSys;
@@ -374,6 +375,18 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
             }
             toastr.success('储存成功');
         })
+    }
+
+    //验证路由是否重复
+    function isRouteExists() {
+        if (vm.SelectedFun.RouteName) {
+            var en = [{ name: "RouteName", value: vm.SelectedFun.RouteName }, { name: "FunNo", value: vm.SelectedFun.FunNo, type:"!=" }];
+            AjaxService.GetPlan('Function', en).then(function (data) {
+                vm.ReErr = data;
+                vm.FormFun.Route.$setValidity('unique', !data.FunNo);
+            });
+        }
+
     }
 
     function reflashData() {

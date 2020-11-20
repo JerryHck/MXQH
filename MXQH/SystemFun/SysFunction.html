@@ -90,10 +90,11 @@
                                         <span ng-if="!fun.editFun" ng-confirm="{text:'确定要删除该功能吗'}" ng-click='fun.Delete(f.FunNo)' class="pull-right text-danger">
                                             <i class="fa fa-times"></i>
                                         </span>
-                                        <span class="block m-l-n bg-transparent" ng-class="{'m-n': f.selected }">
+                                        <span class="block m-l-n bg-transparent" ng-class="{'m-n': f.selected, 'font-v3':f.IsSystem == 2, 'text-danger':f.IsUsed=='0' }">
                                             <i ng-class="f.FunImge" ng-drag="!fun.editFun" ng-drag-data="f" ng-drag-success="fun.FunDrag($data,$index)"></i>{{ f.FunName }}
                                         </span>
                                         <span ng-show="!f.FunNo">没有功能</span>
+                                        <!--{{ f | json }}-->
                                     </a>
                                 </div>
                             </div>
@@ -168,7 +169,10 @@
                                             <div class="form-group" ng-class="{ 'has-error' : fun.FormFun.Route.$invalid }">
                                                 <label class="col-xs-4 control-label text-info">路由</label>
                                                 <div class="col-xs-8">
-                                                    <input autocomplete="off"  class="form-control text-xs" name="Route" type="text" ng-model="fun.SelectedFun.RouteName" ng-disabled="!fun.editFun" required>
+                                                    <input autocomplete="off"  class="form-control text-xs" name="Route" type="text" ng-blur="fun.isRouteExists()" ng-model="fun.SelectedFun.RouteName" ng-disabled="!fun.editFun" required>
+                                                    <div ng-messages="fun.FormFun.Route.$error" class="help-block" role="alert">
+                                                        <div ng-message="unique">和功能[{{ fun.ReErr.FunName }}]的路由重复</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group" ng-class="{ 'has-error' : fun.FormFun.routeUrl.$invalid }">
