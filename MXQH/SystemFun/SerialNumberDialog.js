@@ -49,6 +49,11 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
             vm.Item.Compose[i].CTo = "";
             vm.Item.Compose[i].CEx = vm.Item.Compose[i].CValue.length > 2 ? vm.Item.Compose[i].CValue.substr(2) : undefined;
         }
+        else if (vm.Item.Compose[i].CharType == "YearPre3To") {
+            vm.Item.Compose[i].YearPre3 = parseInt(vm.Item.Compose[i].CValue.substr(0, 3));
+            vm.Item.Compose[i].CTo = vm.Item.Compose[i].CValue.substr(3, 1)
+            vm.Item.Compose[i].CEx = vm.Item.Compose[i].CValue.length > 6 ? vm.Item.Compose[i].CValue.substr(6) : undefined;
+        }
     }
 
     function AddCom() {
@@ -157,6 +162,9 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
             }
             else if ((vm.Item.Compose[i].CharType == "CarryUp" || vm.Item.Compose[i].CharType == "CarryDown")) {
                 com.CValue = (com.CEx ? "Ex" : "") + (com.CEx || "");
+            }
+            else if (com.CharType == "YearPre3To") {
+                com.CValue = com.YearPre3 + com.CTo + (com.CEx ? "Ex" : "") + (com.CEx || "");
             }
             com.CValue = com.CValue || "";
             com.PartChar = com.PartChar || "";

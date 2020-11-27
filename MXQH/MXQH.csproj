@@ -80,6 +80,8 @@
     <Content Include="Data\Handler\New.html" />
     <Content Include="Data\Handler\New.js" />
     <Content Include="Flow.html" />
+    <Content Include="Flow\FlowAdd.html" />
+    <Content Include="Flow\FlowAdd.js" />
     <Content Include="Flow\FlowErr.html" />
     <Content Include="Flow\FlowMain.html" />
     <Content Include="js\FlowMain.js" />

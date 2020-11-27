@@ -74,6 +74,7 @@ function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window) {
             //}
             vm.isCopy = false;
             vm.TableData = data;
+            //console.log(data)
         })
     }
 

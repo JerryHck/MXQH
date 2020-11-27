@@ -20,6 +20,7 @@ angular.module('app')
         vm.Reflash = Reflash;
         vm.ChangeSys = ChangeSys;
         vm.DownTool = DownTool;
+        vm.OpFlow = OpFlow;
 
         // config
         vm.app = {
@@ -78,7 +79,7 @@ angular.module('app')
 
         function GetList() {
             $rootScope.promise = AjaxService.GetPlans("System").then(function (dataSys) {
-                AjaxService.LoginAction("GetUserRoot").then(function (data) {
+                AjaxService.LoginAction("GetUserRoot", { RootType:"Fun"}).then(function (data) {
                     vm.FunData = data;
                     //console.log(data);
                     //vm.FunTree = data;
@@ -178,6 +179,12 @@ angular.module('app')
                 $state.go(item.RouteName);
             }
         }
+
+        function OpFlow(name) {
+            $cookieStore.put('active-router', name);
+            $state.go(name);
+        }
+
         function Reflash() {
             //console.log($cookieStore.get('active-router'));
             $state.reload($cookieStore.get('active-router'));

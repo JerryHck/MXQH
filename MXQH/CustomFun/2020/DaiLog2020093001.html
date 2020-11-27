@@ -32,7 +32,7 @@
                             </tr>
                         </table>
                         <div class="col-md-12 text-center " ng-if="pl.page.total>pl.page.size ">
-                            <div uib-pagination total-items="pl.page.total " ng-model="pl.page.index " items-per-page="pl.page.size " max-size="10 " first-text="<< " previous-text="< "
+                            <div class="pagination-sm pagination-custom" uib-pagination total-items="pl.page.total " ng-model="pl.page.index " items-per-page="pl.page.size " max-size="10 " first-text="<< " previous-text="< "
                                  ng-change="pl.PageChange() " next-text="> " last-text=">> " boundary-links="true " boundary-link-numbers="true "></div>
                         </div>
                     </div>

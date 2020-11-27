@@ -159,11 +159,11 @@
                                                     <span class="text-danger h6">注：-1为MAX</span>
                                                 </div>
                                                 <div ng-if="tb.CheckDataType(tb.NewItem.DataType, 'F')">
-                                                    <div class="col-xs-12 no-padder" title="整数长度" ng-class="{ 'has-error': tb.InsertForm.PrecLen.$invalid }">
-                                                        <input autocomplete="off" type="number" min="0" max="32" name="PrecLen" class="form-control padder-xxs" placeholder="整数长度" ng-model="tb.NewItem.PrecLen" required />
+                                                    <div class="col-xs-12 no-padder" title="Pre,长度" ng-class="{ 'has-error': tb.InsertForm.PrecLen.$invalid }">
+                                                        <input autocomplete="off" type="number" min="0" max="32" name="PrecLen" class="form-control padder-xxs" placeholder="Pre,长度" ng-model="tb.NewItem.PrecLen" required />
                                                     </div>
-                                                    <div class="col-xs-12 no-padder m-t-xs" title="小数长度" ng-class="{ 'has-error': tb.InsertForm.PointLen.$invalid }">
-                                                        <input autocomplete="off" type="number" min="0" max="32" name="PointLen" class="form-control padder-xxs" placeholder="小数长度" ng-model="tb.NewItem.PointLen" required />
+                                                    <div class="col-xs-12 no-padder m-t-xs" title="After,长度" ng-class="{ 'has-error': tb.InsertForm.PointLen.$invalid }">
+                                                        <input autocomplete="off" type="number" min="0" max="32" name="PointLen" class="form-control padder-xxs" placeholder="After,长度" ng-model="tb.NewItem.PointLen" required />
                                                     </div>
                                                 </div>
                                             </td>
@@ -238,11 +238,11 @@
                                                     <span class="text-danger h6">注：-1为MAX</span>
                                                 </div>
                                                 <div ng-if="item.IsEdit && tb.CheckDataType(tb.EditItem.DataType, 'F')">
-                                                    <div class="col-xs-12 no-padder" title="整数长度" ng-class="{ 'has-error': item.ItemForm.item_PrecLen.$invalid }">
-                                                        <input autocomplete="off" type="number" min="0" max="32" name="item_PrecLen" class="form-control padder-xxs" placeholder="整数长度" ng-model="tb.EditItem.PrecLen" required />
+                                                    <div class="col-xs-12 no-padder" title="Pre,长度" ng-class="{ 'has-error': item.ItemForm.item_PrecLen.$invalid }">
+                                                        <input autocomplete="off" type="number" min="0" max="32" name="item_PrecLen" class="form-control padder-xxs" placeholder="Pre,长度" ng-model="tb.EditItem.PrecLen" required />
                                                     </div>
-                                                    <div class="col-xs-12 no-padder m-t-xs" title="小数长度" ng-class="{ 'has-error': item.ItemForm.item_PointLen.$invalid }">
-                                                        <input autocomplete="off" type="number" min="0" max="32" name="item_PointLen" class="form-control padder-xxs" placeholder="小数长度" ng-model="tb.EditItem.PointLen" required />
+                                                    <div class="col-xs-12 no-padder m-t-xs" title="After,长度" ng-class="{ 'has-error': item.ItemForm.item_PointLen.$invalid }">
+                                                        <input autocomplete="off" type="number" min="0" max="32" name="item_PointLen" class="form-control padder-xxs" placeholder="After,长度" ng-model="tb.EditItem.PointLen" required />
                                                     </div>
                                                 </div>
                                             </td>
