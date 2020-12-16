@@ -33,7 +33,7 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">重量范围</label>
                                 <div class="col-lg-8 form-control-static">
-                                    <span class="text-danger h4" ng-if="sn.Range.MinWeigth">{{ sn.Range.MinWeigth }}~{{ sn.Range.MaxWeigth }}</span>
+                                    <span class="text-danger h4" ng-if="sn.Range.MinWeigth">{{ sn.Range.MinWeight }}~{{ sn.Range.MaxWeight }}</span>
                                     
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                 <tr ng-repeat="item in sn.DeleteList">
                     <td>{{ item.InternalCode }}</td>
                     <td>{{ item.SNCode }}</td>
-                    <td>{{ item.Weigth }}</td>
+                    <td>{{ item.Weight }}</td>
                     <td>{{ item.Creater }}</td>
                     <td>{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                     <td>{{ item.Modify }}</td>

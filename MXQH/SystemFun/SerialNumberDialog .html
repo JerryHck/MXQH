@@ -98,10 +98,13 @@
                                     <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='YC'" ng-class="{ 'has-error' : pk.InsertForm.YCYear.$invalid }">
                                         <input autocomplete="off"  class="form-control" name="YCYear" title="从哪一年转换" placeholder="年(YYYY)" min="2000" maxlength="4" type="number" ng-model="pk.NewCom.YCYear" required />
                                     </div>
+                                    <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='YearPre3To'" ng-class="{ 'has-error' : pk.InsertForm.NYearPre3.$invalid }">
+                                        <input autocomplete="off" class="form-control" name="NYearPre3" title="从哪一年的前3位转换" placeholder="前3位年(YYY)" min="200" maxlength="3" type="number" ng-model="pk.NewCom.YearPre3" required />
+                                    </div>
                                     <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='MC'" ng-class="{ 'has-error' : pk.InsertForm.MCMonth.$invalid }">
                                         <input autocomplete="off"  class="form-control" name="MCMonth" title="从哪月份开始转换" placeholder="月(MM)" min="01" max="12" maxlength="2" type="text" ng-model="pk.NewCom.MCMonth" required />
                                     </div>
-                                    <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='YC'|| pk.NewCom.CharType =='MC'" ng-class="{ 'has-error' : pk.InsertForm.CTo.$invalid }">
+                                    <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='YC'|| pk.NewCom.CharType =='MC' || pk.NewCom.CharType =='YearPre3To'" ng-class="{ 'has-error' : pk.InsertForm.CTo.$invalid }">
                                         <input autocomplete="off"  class="form-control" name="CTo" title="转成的字母" placeholder="转成" maxlength="1" type="text" ng-model="pk.NewCom.CTo" required />
                                     </div>
                                     <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='SER'">
@@ -111,7 +114,7 @@
                                         <input autocomplete="off"  class="form-control" name="DCTo" title="日期天数大于10时转换成的字母" placeholder="转成" maxlength="1" type="text" ng-model="pk.NewCom.CTo" required/>
                                     </div>
                                     <div class="col-sm-2 padder-xs" ng-if="pk.NewCom.CharType =='YC'|| pk.NewCom.CharType =='MC'|| pk.NewCom.CharType =='DC'
-                                         || pk.NewCom.CharType =='SER'|| pk.NewCom.CharType =='CarryUp'|| pk.NewCom.CharType =='CarryDown'">
+                                         || pk.NewCom.CharType =='SER'|| pk.NewCom.CharType =='CarryUp'|| pk.NewCom.CharType =='CarryDown' || pk.NewCom.CharType =='YearPre3To'">
                                         <input autocomplete="off"  class="form-control" name="CEx" title="需要排除的字母" placeholder="排除" maxlength="10" type="text" ng-model="pk.NewCom.CEx" />
                                     </div>
                                     <div class="col-sm-1 padder-xs">
@@ -141,10 +144,13 @@
                                     <div class="col-sm-2 padder-xs" ng-if="com.CharType =='YC'" ng-class="{ 'has-error' : pk.ListForm.YCYear.$invalid }">
                                         <input autocomplete="off"  class="form-control" name="YCYear" title="从哪一年转换" placeholder="年(YYYY)" min="2000" maxlength="4" type="number" ng-model="com.YCYear" required />
                                     </div>
+                                    <div class="col-sm-2 padder-xs" ng-if="com.CharType =='YearPre3To'" ng-class="{ 'has-error' : pk.ListForm.YearPre3.$invalid }">
+                                        <input autocomplete="off" class="form-control" name="YearPre3" title="从哪一年的前3位转换" placeholder="前3位年(YYY)" min="200" maxlength="3" type="number" ng-model="com.YearPre3" required />
+                                    </div>
                                     <div class="col-sm-2 padder-xs" ng-if="com.CharType =='MC'" ng-class="{ 'has-error' : pk.ListForm.MCMonth.$invalid }">
                                         <input autocomplete="off"  class="form-control" name="MCMonth" title="从哪月份开始转换" placeholder="月(MM)" min="01" max="12" maxlength="2" type="text" ng-model="com.MCMonth" required />
                                     </div>
-                                    <div class="col-sm-1 padder-xs" ng-if="com.CharType =='YC'|| com.CharType =='MC'" ng-class="{ 'has-error' : pk.ListForm.CTo.$invalid }">
+                                    <div class="col-sm-1 padder-xs" ng-if="com.CharType =='YC'|| com.CharType =='MC' || com.CharType =='YearPre3To'" ng-class="{ 'has-error' : pk.ListForm.CTo.$invalid }">
                                         <input autocomplete="off"  class="form-control" name="CTo" title="转成的字母" placeholder="转成" maxlength="1" type="text" ng-model="com.CTo" required />
                                     </div>
                                     <div class="col-sm-2 padder-xs" ng-if="com.CharType =='SER'">
@@ -153,7 +159,7 @@
                                     <div class="col-sm-2 padder-xs" ng-if="com.CharType =='DC'" ng-class="{ 'has-error' : pk.ListForm.DCDay.$invalid }">
                                         <input autocomplete="off"  class="form-control" name="DCDay" title="日期天数大于10时转换成的字母" placeholder="转成" maxlength="1" type="text" ng-model="com.CTo" required/>
                                     </div>
-                                    <div class="col-sm-2 padder-xs" ng-if="com.CharType =='YC'|| com.CharType =='MC'|| com.CharType =='DC' || com.CharType =='SER' || com.CharType =='CarryUp'|| com.CharType =='CarryDown'">
+                                    <div class="col-sm-2 padder-xs" ng-if="com.CharType =='YC'|| com.CharType =='MC'|| com.CharType =='DC' || com.CharType =='SER' || com.CharType =='CarryUp'|| com.CharType =='CarryDown'|| com.CharType =='YearPre3To'">
                                         <input autocomplete="off"  class="form-control" name="CEx" title="需要排除的字母" placeholder="排除" maxlength="10" type="text" ng-model="com.CEx" />
                                     </div>
                                     <div class="col-sm-1 padder-xs">

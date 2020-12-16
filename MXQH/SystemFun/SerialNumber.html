@@ -20,7 +20,7 @@
         <table class="table ">
             <thead>
                 <tr>
-                    <td style="width:80px ">操作</td>
+                    <td style="width:120px ">操作</td>
                     <td style="width:100px ">规则名</td>
                     <td style="width:100px ">规则栏</td>
                     <td style="width:120px ">编号预览</td>
@@ -36,7 +36,7 @@
                 <td>
                     <button class="btn btn-xs btn-primary" title="编辑" ng-click="pk.Open(item)"><i class="glyphicon glyphicon-edit"></i></button>
                     <button class="btn btn-xs btn-success" title="复制" ng-click="pk.Copy(item)"><i class="glyphicon glyphicon-share-alt"></i></button>
-                    <!--<button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="pk.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>-->
+                    <button class="btn btn-xs btn-danger" ng-click="pk.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
                 </td>
                 <td class="text-left">{{ item.TbName }}</td>
                 <td class="text-left">{{ item.ClName }}</td>

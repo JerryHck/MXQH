@@ -34,14 +34,15 @@ function ($scope, $http, AjaxService, toastr, $window) {
     })
 
     function GetWeigth() {
-        AjaxService.GetComWeigth(vm.ComName || "Com1", function (data) {
-            console.log(data);
-            if (data.MesType == "Success") {
-                $scope.$apply(function () {
-                    vm.Weigth = data.Data;
-                });
-            }
-        });
+        if (vm.ComName) {
+            AjaxService.GetComWeight(vm.ComName, function (data) {
+                if (data.MesType == "Success") {
+                    $scope.$apply(function () {
+                        vm.Weigth = data.Data;
+                    });
+                }
+            });
+        }
     }
 
     function PageChange() {
@@ -52,7 +53,7 @@ function ($scope, $http, AjaxService, toastr, $window) {
         if (vm.Ser.SNCode) {
             list.push({ name: "SNCode", value: vm.Ser.SNCode });
         }
-        vm.promise = AjaxService.GetPlansPage("MESSnCodeWeigth", list, vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("MESSnCodeWeight", list, vm.page.index, vm.page.size).then(function (data) {
             vm.DeleteList = data.List;
             vm.page.total = data.Count;
         });
@@ -77,8 +78,8 @@ function ($scope, $http, AjaxService, toastr, $window) {
             toastr.error("重量还未输入");
             return;
         }
-        var en = { SNCode: vm.SNCode, Weigth: vm.Weigth };
-        AjaxService.ExecPlan("MESSnCodeWeigth", "weigth", en).then(function (data) {
+        var en = { SNCode: vm.SNCode, Weight: vm.Weigth };
+        AjaxService.ExecPlan("MESSnCodeWeight", "weight", en).then(function (data) {
             vm.Range = data.data[0];
             if (data.data1[0].MsgType == "Error") {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: data.data1[0].MsgText });
@@ -87,7 +88,6 @@ function ($scope, $http, AjaxService, toastr, $window) {
             else if (data.data1[0].MsgType == "Success") {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data1[0].MsgText });
                 vm.Weigth = undefined;
-                console.log(vm.Range)
                 AjaxService.PlayVoice('success.mp3');
             }
             vm.SNCode = undefined;
@@ -102,7 +102,7 @@ function ($scope, $http, AjaxService, toastr, $window) {
         if (vm.Ser.SNCode) {
             list.push({ name: "SNCode", value: vm.Ser.SNCode });
         }
-        vm.promise = AjaxService.GetPlanOwnExcel("MESSnCodeWeigth", list).then(function (data) {
+        vm.promise = AjaxService.GetPlanOwnExcel("MESSnCodeWeight", list).then(function (data) {
             //console.log(data);
             $window.location.href = data.File;
         });

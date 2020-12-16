@@ -124,6 +124,7 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
             vm.Item.State = 1;
         }
         en.State = vm.Item.State;//是否有效
+        en.IsAssWeigh = vm.Item.IsAssWeigh || false;
 
         if (en.Id != null) {
             vm.promise = AjaxService.ExecPlan("MesMXMaterial", "alter", en).then(function (data) {

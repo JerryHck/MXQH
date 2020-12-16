@@ -76,10 +76,11 @@
     <Content Include="css\font-awesome.min.css" />
     <Content Include="CustomFun\201912\qlBadDialog.html" />
     <Content Include="CustomFun\201912\qlBadDialog.js" />
-    <Content Include="CustomFun\2020\DaiLog2020071701.html" />
     <Content Include="Data\Handler\New.html" />
     <Content Include="Data\Handler\New.js" />
     <Content Include="Flow.html" />
+    <Content Include="Flow\FlowAdd.html" />
+    <Content Include="Flow\FlowAdd.js" />
     <Content Include="Flow\FlowErr.html" />
     <Content Include="Flow\FlowMain.html" />
     <Content Include="js\FlowMain.js" />
@@ -108,7 +109,6 @@
     <Content Include="Basic\blocks\nav.html" />
     <Content Include="Basic\blocks\page_footer.html" />
     <Content Include="Basic\blocks\settings.html" />
-    <Content Include="Basic\docs.html" />
     <Content Include="Basic\layout.html" />
     <Content Include="Content\angular-busy.css" />
     <Content Include="Content\angular-busy.min.css" />
@@ -224,10 +224,10 @@
     <Content Include="SystemFun\SystemSetting.js" />
     <Content Include="SystemFun\ToolManager.html" />
     <Content Include="SystemFun\ToolManager.js" />
+    <Content Include="UIFun\Board\U9IssuedLLMateBoard.html" />
+    <Content Include="UIFun\Board\U9IssuedLLMateBoard.js" />
     <Content Include="UIFun\Board\WorkOrderBoard.html" />
     <Content Include="UIFun\Board\WorkOrderBoard.js" />
-    <Content Include="UIFun\Board\WorkOrderBoardApp.js" />
-    <Content Include="UIFun\Board\WorkOrderBoardAss.js" />
     <Content Include="UIFun\MESFun\Produce\BarCodeList.html" />
     <Content Include="UIFun\MESFun\Produce\BarCodeList.js" />
     <Content Include="UIFun\MESFun\Basic\InCodeRelease.html" />
@@ -902,6 +902,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="CustomFun\2020\" />
     <Folder Include="js\controllers\uploads\" />
     <Folder Include="src\" />
     <Folder Include="UIFun\SampleFun\Report\" />

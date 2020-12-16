@@ -46,6 +46,31 @@
                                 </div>
                             </div>
                             <div class="form-group-md col-xs-12 no-padder">
+                                <label class="col-sm-3 control-label padder-xs ">称重方式</label>
+                                <div class="col-sm-8 padder-xs ">
+                                    <p class="form-control-static font-bold h4 text-danger" ng-if="!ass.OrderData.Mate.IsAssWeigh">
+                                        不需称重
+                                    </p>
+                                    <p class="form-control-static font-bold h4 text-danger" ng-if="ass.OrderData.Mate.IsAssWeigh">
+                                        需要称重 范围({{ ass.OrderData.MinWeight }}~{{ ass.OrderData.MaxWeight }})
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group-md col-xs-12 no-padder" ng-if="ass.OrderData.Mate.IsAssWeigh">
+                                <label class="col-sm-3 control-label padder-xs ">称重信息</label>
+                                <div class="col-sm-3 padder-xs " ng-class="{ 'has-error' : ass.OrderForm.ComName.$invalid }">
+                                    <ui-select name="ComName" ng-model="ass.ComName" ng-required="true" theme="bootstrap" ng-change="ass.GetWeigth()">
+                                        <ui-select-match placeholder="请选择...">{{ $select.selected }}</ui-select-match>
+                                        <ui-select-choices repeat="item in ass.ComList | filter: $select.search">
+                                            <div ng-bind-html="item | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div class="col-sm-5 padder-xs" ng-class="{ 'has-error' : ass.OrderForm.Weight.$invalid }">
+                                    <input autocomplete="off" type="text" class="form-control" name="Weight" ng-model="ass.Item.Weight" placeholder="重量" required>
+                                </div>
+                            </div>
+                            <div class="form-group-md col-xs-12 no-padder">
                                 <label class="col-sm-3 control-label padder-xs ">彩盒标签</label>
                                 <div class="col-sm-8 padder-xs ">
                                     <p class="form-control-static font-bold  h4 text-danger">{{ass.BarData.Template.Name || '没有绑定模版'}}</p>
@@ -63,7 +88,8 @@
                             <div class="form-group-md col-xs-12 no-padder">
                                 <label class="col-sm-3  padder-xxs control-label">生产条码</label>
                                 <div class="col-sm-8 padder-xs">
-                                    <input autocomplete="off" type="text" class="form-control" ng-disabled="!ass.Item.PackNum && ass.Item.WorkOrder" name="BSN" ng-model="ass.Item.BSN" placeholder="SN码/内控码" ng-keypress="ass.KeyDonwSnCode($event)">
+                                    <input autocomplete="off" type="text" class="form-control" ng-disabled="!ass.Item.PackNum && ass.Item.WorkOrder" name="BSN" ng-model="ass.Item.BSN" 
+                                           placeholder="SN码/内控码" ng-keypress="ass.KeyDonwSnCode($event)">
                                     <div class="h6 text-danger">
                                         <br />
                                         注:扫描枪请设定自动回车功能，如果手动输入则需按回车进行包装。<br />
@@ -231,9 +257,9 @@
                         </div>
                         <div class="scroll-y m-t-xs" style="max-height:530px">
                             <div class="list-group">
-                                <div class="list-group-item" ng-repeat="sn in ass.SNList | filter:ass.SerBSN  | limitTo:100 ">
+                                <div class="list-group-item" ng-repeat="item in ass.SNList | filter:ass.SerBSN  | limitTo:100 ">
                                     <span class="col-1 badge badge-sm bg-danger pull-left">{{ $index + 1 }}</span>
-                                    <span class="col-6" ng-class="{ 'font-bold text-success' : sn.InternalCode==ass.StaticBSN }">{{ sn.InternalCode }}   【{{ sn.SNCode }}】</span>
+                                    <span class="col-6" ng-class="{ 'font-bold text-success' : item.InternalCode==ass.StaticBSN }">{{ item.InternalCode }}   【{{ item.SNCode }}】</span>
                                     <!--<span class="pull-right"><a class="text-danger" ng-click="ass.RemoveBSN(sn)" ng-confirm="{text:'确定从包装箱中移除该SN吗'}"><i class="glyphicon glyphicon-remove"></i></a></span>-->
                                 </div>
                             </div>
@@ -337,6 +363,44 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="3">
+        <uib-tab-heading class="h5">称重列表</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input autocomplete="off" type="text" class="form-control" ui-focus="ass.Focus == -1" ng-model="ass.Ser.InternalCode" placeholder="内部码">
+                </div>
+                <button class="btn btn-sm btn-info" ng-click="ass.Search()"><i class="glyphicon glyphicon-search"></i>查询</button>
+                <button class="btn btn-sm btn-success" ng-click="ass.ExportExcel()"><i class="glyphicon glyphicon-export"></i> 导出</button>
+            </div>
+        </div>
+        <div class="padder-md">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td style="width:10%">内部码</td>
+                        <td style="width:13%">重量</td>
+                        <td style="width:8%">建档人</td>
+                        <td style="width:13%">建档时间</td>
+                        <td style="width:12%">更新人</td>
+                        <td style="width:12%">更新时间</td>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in ass.WeightList">
+                    <td>{{ item.InternalCode }}</td>
+                    <td>{{ item.Weight }}</td>
+                    <td>{{ item.Creator }}</td>
+                    <td>{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td>{{ item.Modify }}</td>
+                    <td>{{ item.ModifyDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                </tr>
+            </table>
+            <div class="col-md-12 text-center" ng-if="ass.page.total>ass.page.size">
+                <div uib-pagination total-items="ass.page.total" ng-model="ass.page.index" items-per-page="ass.page.size" max-size="10" first-text="第一页" previous-text="上一页"
+                     ng-change="ass.PageChange()" next-text="下一页" last-text="最后页" boundary-links="true" boundary-link-numbers="true"></div>
             </div>
         </div>
     </uib-tab>

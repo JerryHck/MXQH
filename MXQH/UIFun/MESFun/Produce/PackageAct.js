@@ -288,13 +288,9 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
 
     function Print(type) {
         if (!vm.IsPrint) return;
-
-        vm.PrintNum = vm.MultiPrint && vm.PrintNum > 0 ? vm.PrintNum : 1;
-        for (var p = 0; p < vm.PrintNum; p++) {
             var en = {};
             en.PackDetailID = vm.PrintDtlId;
             en.TypeCode = type;
-            var index = p;
             AjaxService.ExecPlan("MESPackChi", "print", en).then(function (data) {
                 if (data.data3[0].MsgType == "Error") {
                     MyPop.Show(true, data.data3[0].MsgText);
@@ -308,17 +304,19 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
                     }
                     postData.OutList = list;
                     var temp = data.data1[0];
-                    AjaxService.Print(temp.TemplateId, temp.TS, postData, vm.PrintName).then(function (data2) {
-                        console.log(data2);
-                    }, function (err) {
-                        console.log(err);
-                    })
-                    if (type != "COTTONCODE" && index == 0) {
+                    vm.PrintNum = vm.MultiPrint && vm.PrintNum > 0 ? vm.PrintNum : 1;
+                    for (var p = 0; p < vm.PrintNum; p++) {
+                        AjaxService.Print(temp.TemplateId, temp.TS, postData, vm.PrintName).then(function (data2) {
+                            console.log(data2);
+                        }, function (err) {
+                            console.log(err);
+                        })
+                    }
+                    if (type != "COTTONCODE") {
                         getBoxList();
                     }
                 }
             })
-        }
     }
 }
 ]);
