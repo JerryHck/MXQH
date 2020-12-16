@@ -41,7 +41,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
         vm.Item.CompleteType = vm.Item.Mat_CompleteType == undefined ? '0' : vm.Item.Mat_CompleteType.toString();
         vm.IsEdit = false;
         vm.Item.MinWeight = 100;
-        vm.Item.MaxWeight = 200;
+        vm.Item.MaxWeight = 101;
     }
     console.log(ItemData);
     // #region 工单信息
