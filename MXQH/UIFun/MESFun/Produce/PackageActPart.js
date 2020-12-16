@@ -11,6 +11,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     vm.page = { index: 1, size: 12 };
     vm.Ser = {};
     vm.IsAuto = true;
+    vm.PrintNum = 1;
 
     vm.KeyDonwSnCode = KeyDonwSnCode;
     vm.KeyDonwOrder = KeyDonwOrder;
@@ -203,11 +204,15 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 postData.ParaData = JSON.stringify(data.data[0]);
                 postData.OutList = list;
                 var temp = data.data1[0];
-                AjaxService.Print(temp.TemplateId, temp.TS, postData, vm.PrintName).then(function (data2) {
-                    console.log(data2);
-                }, function (err) {
-                    console.log(err);
-                })
+
+                vm.PrintNum = vm.MultiPrint && vm.PrintNum > 0 ? vm.PrintNum : 1;
+                for (var p = 0; p < vm.PrintNum; p++) {
+                    AjaxService.Print(temp.TemplateId, temp.TS, postData, vm.PrintName).then(function (data2) {
+                        console.log(data2);
+                    }, function (err) {
+                        console.log(err);
+                    })
+                }
                 if (type != "COTTONCODE") {
                     getBoxList();
                 }

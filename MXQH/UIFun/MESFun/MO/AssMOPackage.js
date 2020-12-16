@@ -336,7 +336,7 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
             else if (data.data[0].MsgType == "Success") {
                 AjaxService.PlayVoice('success.mp3');
                 toastr.success(data.data[0].MsgText);
-                PrintCode(data.data2[0], data.data1[0]);
+                //PrintCode(data.data2[0], data.data1[0]);
                 //一般打印
                 if (vm.PrintType == 'G') {
                     PrintCode(data.data2[0], data.data1[0]);
@@ -409,7 +409,6 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
         list.push(data.SnCode);
         postData.ParaData = JSON.stringify(data);
         postData.OutList = list;
-        //console.log(data)
         var printNum = data.ColorBoxPrintNum || 1;
         for (var i = 0; i < printNum; i++) {
             AjaxService.Print(temData.TemplateId, temData.TemplateTime, postData, vm.PrinterName).then(function (data) {

@@ -58,8 +58,59 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-100 scroll-x">
-                    <table style="width:{{ vm.SysList.length * 200 }}px">
+                <div class="w-100">
+                    <div style="width:170px; vertical-align:top; float:left">
+                        <div class="panel panel-info">
+                            <div class="panel-heading text-center">系统列表</div>
+                            <div class="panel-body padder-xxs padder-v-xxs">
+                                <div class="list-group">
+                                    <a ng-repeat="sys in vm.SysList" class="list-group-item padder-xs hover-anchor cl"
+                                       ng-class="{'hover': sys.SysNo == vm.SelSys.SysNo, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}"
+                                       ng-mouseover="vm.SelSys = sys">
+                                        {{ sys.SysName }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="vertical-align:top;float:right;width:calc(100% - 170px);" class="scroll-x">
+                        <div class="panel panel-info">
+                            <div class="panel-heading text-center">功能列表</div>
+                            <div class="panel-body padder-xxs padder-v-xxs">
+                                <div class="no-padder scroll-x">
+                                    <table style="width:{{ vm.SelSys.FunTree.length * 200 }}px">
+                                        <tr>
+                                            <td class="text-info padder-xxs" style="width:200px; vertical-align: top" ng-repeat="root in vm.SelSys.FunTree">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading text-center h4">
+                                                        <span class="auto text-primary-dker h5 text-success">
+                                                            <span><i ng-class="root.FunImge"></i></span>
+                                                            <span class="font-bold ml-1">{{ root.FunName }}</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="panel-body padder-v-xxs padder-xs scroll-y bar-xs" style="height:600px">
+                                                        <ul class="list-unstyled l-h-2x m-l-md">
+                                                            <li ng-repeat="fun in root.FunList">
+                                                                <a ui-sref="{{ fun.RouteName }}">
+                                                                    <span><i ng-class="fun.FunImge"></i></span>
+                                                                    <span class="text-xs">{{ fun.FunName }}</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <div style="width:200px;float:left" ng-repeat="root in vm.SelSys.FunTree">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<table style="width:{{ vm.SysList.length * 200 }}px">
                         <tr>
                             <td class="text-info padder-xxs" style="width:200px; vertical-align: top"  ng-repeat="sys in vm.SysList">
                                 <div class="panel panel-default">
@@ -85,7 +136,7 @@
                                 </div>
                             </td>
                         </tr>
-                    </table>
+                    </table>-->
                 </div>
             </div>
         </li>

@@ -79,7 +79,7 @@ function ($scope, Dialog, AjaxService, toastr, $window, MyPop) {
         if (type != 'F') {
             var en = [{ name: "TbName", value: item.TbName }, { name: "ClName", value: item.ClName }];
             AjaxService.GetPlan("SerialNumberSet", en).then(function (data) {
-                if (data.Info.length > 0) {
+                if (data.Info && data.Info.length > 0) {
                     MyPop.ngConfirm({ text: "该编码规则已经有使用记录，确定要删除吗" }).then(function (m) {
                         Delete(item, 'F');
                     })

@@ -1,0 +1,44 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="ll.promise">
+    <uib-tab index="2">
+        <uib-tab-heading class="h5">开始备料</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading font-bold">
+                        开始备料
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">领料单号</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="InSn" ng-model="ll.Item.PickDocNo" placeholder="扫描领料单号" ng-keyup="ll.KeyDonwStart($event)">
+                                    <p class="text-danger">说明：扫描领料单条码正常无需操作直接启动备料；手动输入领料单号需要按回车键【ENTER】确认。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default scroll-y bar-xs" style="max-height:350px">
+                    <div class="panel-heading font-bold text-center">信息展示</div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            <ul class="list-group bg-white">
+                                <li class="list-group-item" ng-repeat="item in ll.MesList track by item.Id" ng-class="{ 'text-danger' : !item.IsOk, 'text-success':item.IsOk }">
+                                    <span herf class="pull-left">
+                                        <i class="glyphicon" ng-class="{ 'glyphicon-remove' : !item.IsOk, 'glyphicon-ok':item.IsOk }"></i>
+                                    </span>
+                                    <div class="clear">
+                                        <div>{{ item.Msg }}</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
