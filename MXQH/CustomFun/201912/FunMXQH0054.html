@@ -1,4 +1,4 @@
-﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="t.promise">
+﻿<uib-tabset active="active" id="FormID" type="tabs" class="h-100" cg-busy="t.promise">
     <uib-tab index="0">
         <uib-tab-heading class="h5">测试查询</uib-tab-heading>
         <div class="wrapper-md">
@@ -93,7 +93,7 @@
                 </table>
             </div>
             <div class= "col-md-12 text-center " ng-if= "t.page.total>t.page.size ">
-                <div uib-pagination total-items= "t.page.total " ng-model= "t.page.index " items-per-page= "t.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                <div uib-pagination class="pagination-sm pagination-custom" total-items= "t.page.total " ng-model= "t.page.index " items-per-page= "t.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
                      ng-change= "t.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
             </div>
         </div>

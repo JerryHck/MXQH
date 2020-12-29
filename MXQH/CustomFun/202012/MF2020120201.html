@@ -1,0 +1,110 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="ll.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">领料单发料管理</uib-tab-heading>
+        <div class="wrapper-xs m-t-xs">
+            <div class="form-inline">
+                <div class="form-group">
+                    <div config-select tb="WMSPicking" col="State" ng-model="ll.Ser.State" placeholder="状态"></div>
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off" type="text" date-picker class="form-control" ng-model="ll.Ser.NeedTime" placeholder="登记日期" option="ll.DateOption">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off" type="text" class="form-control" ng-model="ll.Ser.bDocNo" placeholder="领料单号">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off" type="text" class="form-control" ng-model="ll.Ser.WorkOrder" placeholder="工单号">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off" type="text" class="form-control" ng-model="ll.Ser.MateCode" placeholder="产品编号">
+                </div>
+                <!--<div class="form-group">
+                    <div basic-select="User"  ng-model="ll.Ser.aCreateBy" placeholder="确认人" ></div>
+                </div>-->
+                <button class="btn btn-sm btn-info " ng-click="ll.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                <!--<button class= "btn btn-sm btn-success " ng-click= "ll.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>-->
+            </div>
+        </div>
+        <div class="padder-xs ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class="table " style="min-width:1500px">
+                    <thead>
+                        <tr>
+                            <td style="width:100px ">操作</td>
+                            <td title="需求时间" style="width:100px ">需求时间</td>
+                            <td title="领料单号" style="width:60px ">领料单号</td>
+                            <td title="线别" style="width:90px ">线别</td>
+                            <td title="工单号" style="width:60px ">工单号</td>
+                            <td title="产品号" style="width:60px ">产品号</td>
+                            <td title="产品名称" style="width:150px ">产品名称</td>
+                            <td title="状态" style="width:60px ">状态</td>
+                            <td title="登记人" style="width:60px ">登记人</td>
+                            <td title="登记时间" style="width:90px ">登记时间</td>
+                            <td title="开始备料时间" style="width:100px ">开始备料时间</td>
+                            <td title="完成备料时间" style="width:100px ">完成备料时间</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in ll.List ">
+                        <td>
+                            <button type="button" title="查看变更历史" class="btn btn-xs btn-info" ng-click="ll.OpenHis(item)"><i class="glyphicon glyphicon-search "></i></button>
+                            <button type="button" title="变更" class="btn btn-xs btn-success" ng-disabled="item.State == '4' || item.State == '3'" ng-click="ll.OpenChange(item)"><i class="glyphicon glyphicon-edit "></i></button>
+                            <button type="button" title="挂起" ng-confirm="{text:'确定挂起吗'}" ng-if="item.State != '2'" ng-disabled="item.State == '4'" class="btn btn-xs btn-warning" ng-click="ll.ChangeSate(item, 'H')"><i class="fa fa-pause"></i></button>
+                            <button type="button" title="恢复备料" ng-confirm="{text:'确定恢复备料吗'}" ng-if="item.State == '2'" ng-disabled="item.State == '4'" class="btn btn-xs btn-success" ng-click="ll.ChangeSate(item, 'S')"><i class="fa fa-play-circle"></i></button>
+                            <button type="button" title="中止" ng-confirm="{text:'请再次确认，终止后的领料单无法恢复，确定终止？'}" ng-disabled="item.State == '3' || item.State == '4'" class="btn btn-xs btn-danger" ng-click="ll.ChangeSate(item, 'E')"><i class="glyphicon glyphicon-stop "></i></button>
+                        </td>
+                        <td title="{{ item.NeedTime }}">{{ item.NeedTime | date:'yyyy-MM-dd HH:mm' }}</td>
+                        <td title="{{ item.PickDocNo }}">
+                            <a ng-click="ll.Open(item)" class="font-v3">
+                                {{ item.PickDocNo }}
+                            </a>
+                        </td>
+                        <td title="{{ item.LLDocData.LineName }}">{{ item.LLDocData.LineName}}</td>
+                        <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                        <td title="{{ item.MateCode }}">{{ item.MateCode }}</td>
+                        <td class="text-left" title="{{ item.MateName }}">{{ item.MateName }}</td>
+                        <td title="{{ item.StateDesc }}">
+                            <div style="background-color:#3b72ff" ng-if="item.State == '0'">{{ item.StateDesc }}</div>
+                            <div style="background-color:#00ff00" ng-if="item.State == '1'">{{ item.StateDesc }}</div>
+                            <div style="background-color:#ffff00" ng-if="item.State == '2'">{{ item.StateDesc }}</div>
+                            <div style="background-color:#ff005e" ng-if="item.State == '3'">{{ item.StateDesc }}</div>
+                            <div style="background-color:#32bb35" ng-if="item.State == '4'">{{ item.StateDesc }}</div>
+                        </td>
+                        <td title="{{ item.Creator }}">{{ item.Creator }}</td>
+                        <td title="{{ item.RegTime }}">{{ item.RegTime | date:'yyyy-MM-dd HH:mm' }}</td>
+                        <td title="{{ item.StPreTime }}">{{ item.StPreTime | date:'yyyy-MM-dd HH:mm' }}</td>
+                        <td title="{{ item.EdPreTime }}">{{ item.EdPreTime | date:'yyyy-MM-dd HH:mm' }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-12 text-center " ng-if="ll.page.total>ll.page.size ">
+                <div uib-pagination total-items="ll.page.total " ng-model="ll.page.index " items-per-page="ll.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                     ng-change="ll.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+            </div>
+            <div class="col-lg-12 m-t no-padder">
+                <div class="col-xs-1 no-padder text-danger text-right">注：</div>
+                <div class="col-xs-11 padder-xxs">
+                   <span class="text-danger">1.点击<button type="button" class="btn btn-xs btn-info"><i class="glyphicon glyphicon-search "></i></button>
+                        可查看变更历史
+                     </span><br />
+                    <span class="text-danger">
+                        2.点击<button type="button" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-edit "></i></button>
+                        可对领料单需求时间进行变更
+                    </span><br />
+                    <span class="text-danger">
+                        3.点击<button type="button" class="btn btn-xs btn-warning"><i class="fa fa-pause"></i></button>
+                        把领料单挂起
+                    </span><br />
+                    <span class="text-danger">
+                        4.点击<button type="button" class="btn btn-xs btn-success"><i class="fa fa-play-circle"></i></button>
+                        把领料单从挂起状态恢复到备料状态
+                    </span><br />
+                    <span class="text-danger">
+                        5.点击<button type="button" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-stop"></i></button>
+                        中止领料单
+                    </span>
+                </div>
+            </div>
+            <!--<pre>{{ ll.List | json }}</pre>-->
+        </div>
+    </uib-tab>
+</uib-tabset>

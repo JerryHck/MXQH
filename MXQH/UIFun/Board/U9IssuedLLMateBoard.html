@@ -1,0 +1,77 @@
+﻿<style>
+    .doc-t{
+        background-color:#ff0000 !important;
+        color:white !important;
+    }
+    .doc-w{
+        background-color:#2f75b5 !important;
+        color:white !important;
+    }
+    .doc-j{
+        background-color:#ee4141 !important;
+        color:white !important;
+    }
+    .doc-c{
+        background-color:#ff66ff !important;
+        color:white !important;
+    }
+     .doc-tc{
+        background-color:#e672e6 !important;
+        color:white !important;
+    }
+    .doc-h{
+        background-color:#dddd80 !important
+    }
+    .bg-c{
+        background-color:#75aa7d !important;
+    }
+    .bg-d{
+        background-color:#00b050 !important;
+        color:white !important;
+    }
+</style>
+
+<div class="bg-black-opacity" ng-init="vm.app.settings.asideFolded=true" ng-class="{'app-content-full': !ll.IsAss, 'content-full':ll.IsAss}">
+    <div class="panel panel-default panel-body h-full w-100 padder-v-xxs bg-black-opacity" cg-busy="ll.promise">
+        <button class="btn btn-sm pull-left btn-info m-l-xs" ng-click="ll.Offline()"><i class="glyphicon glyphicon-fullscreen"></i></button>
+        
+        <table class="table-purple col-md-12 m-t-md">
+            <thead>
+                <tr>
+                    <th class="text-center">行号</th>
+                    <th class="text-center">领料单号</th>
+                    <th class="text-center">工单号</th>
+                    <th class="text-center">线别</th>
+                    <th class="text-center">工单数</th>
+                    <th class="text-center">登记时间</th>
+                    <th class="text-center">需求时间</th>
+                    <th class="text-center">开始备料时间</th>
+                    <th class="text-center">发料状况</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="item in ll.MainList" style="height:50px">
+                <td style="background-color:#75aa7d" class="text-center">{{ item.RowNo }}</td>
+                <td style="background-color:#75aa7d" ng-class="{'doc-h':item.State == '2',}">{{ item.PickDocNo }}</td>
+                <td style="background-color:#75aa7d" ng-class="{'doc-h':item.State == '2',}">{{ item.WorkOrder }}</td>
+                <td style="background-color:#75aa7d" ng-class="{'doc-h':item.State == '2',}">{{ item.U9LL.LineName }}</td>
+                <td style="background-color:#75aa7d" ng-class="{'doc-h':item.State == '2',}">{{ item.U9LL.ProductQty }}</td>
+                <td style="background-color:#75aa7d" ng-class="{'doc-h':item.State == '2',}">{{ item.RegTime | date:'MM-dd HH:mm' }}</td>
+                <td style="background-color:#75aa7d" ng-class="{'doc-h':item.State == '2',}">{{ item.NeedTime | date:'MM-dd HH:mm' }}</td>
+                <td style="background-color:#75aa7d" ng-class="{'doc-h':item.State == '2',}">{{ item.StPreTime | date:'MM-dd HH:mm' }}</td>
+                <td style="background-color:#75aa7d" class="text-center" ng-class="{'doc-h':item.State == '2',
+                    'doc-w':item.State == '0' && item.DocType != '特急' && item.DocType != '加急', 
+                    'bg-d':item.State == '1' && item.DocType != '特急' && item.DocType != '加急', 
+                    'doc-t':item.DocType == '特急' && item.State != '0', 
+                    'doc-c':item.DocType == '特急' && item.State == '0', 
+                    'doc-j':item.DocType == '加急' && item.State != '0',
+                    'doc-tc':item.DocType == '加急' && item.State == '0'}">
+                    {{ item.StateName }}
+                    <span ng-if="item.DocType != '普通'">({{ item.DocType }})</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+

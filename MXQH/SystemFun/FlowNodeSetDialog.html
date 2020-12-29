@@ -1,0 +1,201 @@
+﻿<div class="wrapper-xs bg-light">
+    <button class="btn btn-primary pull-right" type="button" ng-click="fo.Cancel()">关闭</button>
+    <button class="btn btn-success pull-right m-r-md" ng-disabled="fo.DialogForm.$invalid || fo.InsertForm.$invalid" type="button" ng-click="fo.Save()">储存</button>
+    <uib-tabset active="fo.Index" type="tabs">
+        <uib-tab index="0">
+            <uib-tab-heading class="h5">流程节点配置</uib-tab-heading>
+            <div class="panel panel-default scroll-y" style="min-height:650px">
+                <div class="panel-body  padder-xs padder-v-xs">
+                    <div class="form-horizontal no-padder" ng-form="fo.DialogForm">
+                        <div class="form-group  col-xs-12 padder-xs">
+                            <label class="col-xs-2 control-label">节点编号</label>
+                            <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : fo.DialogForm.NodeNo.$invalid }">
+                                <input type="text" name="NodeNo" ng-disabled="fo.form.index == 1 || fo.form.index == 2" class="form-control" placeholder="节点编号" ng-model="fo.Item.NodeNo" required />
+                            </div>
+                            <label class="col-xs-2 control-label">节点名称</label>
+                            <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : fo.DialogForm.NodeName.$invalid }">
+                                <input type="text" name="NodeName" ng-disabled="fo.form.index == 2" class="form-control" placeholder="节点名称" ng-model="fo.Item.NodeName" required />
+                            </div>
+                        </div>
+                        <div class="form-group  col-xs-12 padder-xs">
+                            <label class="col-xs-2 control-label">节点类型</label>
+                            <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : fo.DialogForm.NodeType.$invalid }">
+                                <div config-select ng-model="fo.Item.NodeType" ng-disabled="fo.form.index == 2" ng-name="NodeType" placeholder="节点类型" tb="FormFlow" col="NodeType" ng-required="true"></div>
+                            </div>
+                            <label class="col-xs-2 control-label">有入节点</label>
+                            <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : fo.DialogForm.AbleIn.$invalid }">
+                                <div class="col-xs-2 no-padder">
+                                    <label class="i-switch i-switch-md bg-success m-t-xs m-r">
+                                        <input type="checkbox" ng-model="fo.Item.AbleIn">
+                                        <i></i>
+                                    </label>
+                                </div>
+                                <div class="col-xs-10 no-padder form-control-static" ng-if="fo.Item.AbleIn">
+                                    <span class="btn-group pull-left">
+                                        <label class="btn btn-default reset" ng-model="fo.Item.PosIn" uib-btn-radio="'Left'">Left</label>
+                                        <label class="btn btn-default reset" ng-model="fo.Item.PosIn" uib-btn-radio="'Top'">Top</label>
+                                        <label class="btn btn-default reset" ng-model="fo.Item.PosIn" uib-btn-radio="'Right'">Right</label>
+                                        <label class="btn btn-default reset" ng-if="fo.Item.NodeType != 'S'" ng-model="fo.Item.PosIn" uib-btn-radio="'Bottom'">Bottom</label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group  col-xs-12 padder-xs">
+                            <label class="col-xs-2 control-label">有Ok出节点</label>
+                            <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : fo.DialogForm.AbleOkOut.$invalid }">
+                                <div class="col-xs-2 no-padder">
+                                    <label class="i-switch i-switch-md bg-success m-t-xs m-r">
+                                        <input type="checkbox" ng-disabled="fo.Item.NodeType == 'M'" ng-model="fo.Item.AbleOkOut">
+                                        <i></i>
+                                    </label>
+                                </div>
+                                <div class="col-xs-10 no-padder form-control-static" ng-if="fo.Item.AbleOkOut && fo.Item.NodeType != 'M'">
+                                    <span class="btn-group pull-left">
+                                        <label class="btn btn-default reset" ng-model="fo.Item.PosOkOut" uib-btn-radio="'Left'">Left</label>
+                                        <label class="btn btn-default reset" ng-if="fo.Item.NodeType != 'S'" ng-model="fo.Item.PosOkOut" uib-btn-radio="'Top'">Top</label>
+                                        <label class="btn btn-default reset" ng-model="fo.Item.PosOkOut" uib-btn-radio="'Right'">Right</label>
+                                        <label class="btn btn-default reset" ng-if="fo.Item.NodeType != 'S'" ng-model="fo.Item.PosOkOut" uib-btn-radio="'Bottom'">Bottom</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <label class="col-xs-2 control-label">有Ng出节点</label>
+                            <div class="col-xs-4 no-padder " ng-class="{ 'has-error' : fo.DialogForm.AbleNgOut.$invalid }">
+                                <div class="col-xs-2 no-padder">
+                                    <label class="i-switch i-switch-md bg-success m-t-xs m-r">
+                                        <input type="checkbox" ng-disabled="fo.Item.NodeType != 'S' && fo.Item.NodeType != 'M' " ng-model="fo.Item.AbleNgOut">
+                                        <i></i>
+                                    </label>
+                                </div>
+                                <div class="col-xs-10 no-padder form-control-static" ng-if="fo.Item.AbleNgOut && (fo.Item.NodeType == 'S' || fo.Item.NodeType == 'M')">
+                                    <span class="btn-group pull-left">
+                                        <label class="btn btn-default reset" ng-model="fo.Item.PosNgOut" uib-btn-radio="'Left'">Left</label>
+                                        <!--<label class="btn btn-default reset" ng-model="fo.Item.PosNgOut" uib-btn-radio="'Top'">Top</label>-->
+                                        <label class="btn btn-default reset" ng-model="fo.Item.PosNgOut" uib-btn-radio="'Right'">Right</label>
+                                        <label class="btn btn-default reset" ng-model="fo.Item.PosNgOut" uib-btn-radio="'Bottom'">Bottom</label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group  col-xs-12 padder-xs">
+                            <label class="col-xs-2 control-label">签核类型</label>
+                            <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : fo.DialogForm.SignType.$invalid }">
+                                <div config-select ng-model="fo.Item.SignType" ng-disabled="fo.form.index == 2" ng-name="SignType" placeholder="签核类型" tb="FormFlow" col="SignType" ng-required="true"></div>
+                            </div>
+                            <label class="col-xs-2 control-label">签核方式</label>
+                            <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : fo.DialogForm.StageType.$invalid }">
+                                <div config-select ng-model="fo.Item.StageType" ng-disabled="fo.form.index == 2" ng-name="StageType" placeholder="签核方式" tb="FormFlow" col="StageType" ng-required="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group  col-xs-12 padder-xs">
+                            <label class="col-xs-2 control-label">指定签核人</label>
+                            <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : fo.DialogForm.WASignBy.$invalid }">
+                                <div basic-select="User" ng-disabled="fo.form.index == 2" ng-name="WASignBy" placeholder="指定签核人" ng-model="fo.Item.WASignBy"></div>
+                            </div>
+                            <label class="col-xs-2 control-label">位阶层级</label>
+                            <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : fo.DialogForm.OrgLevel.$invalid }">
+                                <input type="number" name="OrgLevel" ng-disabled="fo.form.index == 2" class="form-control" placeholder="位阶层级" ng-model="fo.Item.OrgLevel" />
+                            </div>
+                        </div>
+                        <div class="form-group  col-xs-12 padder-xs">
+                            <label class="col-xs-2 control-label">备注</label>
+                            <div class="col-xs-10 no-padder" ng-class="{ 'has-error' : fo.DialogForm.Remark.$invalid }">
+                                <input type="text" name="Remark" ng-disabled="fo.form.index == 2" class="form-control" placeholder="备注" ng-model="fo.Item.Remark" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-horizontal no-padder" ng-if="fo.Item.NodeType == 'M' ">
+                        <div class="form-group  col-xs-12 padder-xs">
+                            <label class="col-xs-2 control-label">
+                                <button type="button" class="btn btn-sm btn-success" ng-disabled="fo.InsertForm.$invalid" ng-click="fo.AddNodeCon()">
+                                    <i class="glyphicon glyphicon-plus"></i>条件判断
+                                </button>
+                            </label>
+                            <div class="col-xs-10 padder-xs b" ng-form="fo.InsertForm">
+                                <div class="col-xs-12 no-padder m-t-xs b" ng-repeat="item in fo.Item.Contition">
+                                    <div class="col-xs-12 no-padder wrapper-sm" ng-form="item.ItemForm">
+                                        <div class="col-xs-12 no-padder" >
+                                            <div class="col-xs-6 padder-xxs">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" title="删除" ng-confirm="{text:'确定要删除判断吗'}"  class="btn btn-danger" ng-click="fo.DelNodeCon($index)">
+                                                            <i class="glyphicon glyphicon-remove"></i>
+                                                        </button>
+                                                    </span>
+                                                    <span class="input-group-btn" title="添加详细条件">
+                                                        <button type="button" class="btn btn-info" ng-disabled="item.ItemForm.$invalid" ng-click="fo.AddNodeColCon(item)">
+                                                            <i class="glyphicon glyphicon-plus"></i>
+                                                        </button>
+                                                    </span>
+                                                    <input type="text" name="ID" class="form-control" placeholder="ID" ng-model="fo.NewCon.ID" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-4 padder-xxs" ng-class="{ 'has-error' : item.ItemForm.item_ConName.$invalid }">
+                                                <input type="text" name="item_ConName" class="form-control" placeholder="判断名称" ng-model="item.ConName" required />
+                                            </div>
+                                            <div class="col-xs-2" title="节点出位置">
+                                                <span class="btn-group">
+                                                    <label class="btn btn-default reset" ng-model="item.PosOut" uib-btn-radio="'Left'">Left</label>
+                                                    <label class="btn btn-default reset" ng-model="item.PosOut" uib-btn-radio="'Right'">Right</label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-11 no-padder m-t-xs m-l-xl" ng-repeat="col in item.ConList" ng-form="col.ColForm">
+                                            <div class="col-xs-3 padder-xxs" title="条件栏位" ng-class="{ 'has-error' : col.ColForm.ColumnName.$invalid }">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <a class="text-danger" ng-confirm="{text:'确定要删除条件吗'}" ng-click="fo.DelNodeColCon(item,$index)">
+                                                            <i class="glyphicon glyphicon-remove"></i>
+                                                        </a>
+                                                    </span>
+                                                    <ui-select name="ColumnName" ng-model="col.ColumnName" theme="bootstrap" ng-required="true">
+                                                        <ui-select-match placeholder="条件栏位">{{ $select.selected.ColumnName }}</ui-select-match>
+                                                        <ui-select-choices repeat="c.ColumnName as c in fo.Columns | filter: $select.search track by c.ColumnName">
+                                                            <div ng-bind-html="c.ColumnName | highlight: $select.search"></div>
+                                                        </ui-select-choices>
+                                                    </ui-select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-1 padder-xxs" title="关联表达式">
+                                                <div config-select ng-name="item_RelExp" placeholder="关联表达式" auto-first="true" col="Expression" tb="EntityRelation" ng-required="true" ng-model="col.Expression" select-class="text-xs"></div>
+                                            </div>
+                                            <div class="col-xs-1 padder-xxs" title="值栏位类型">
+                                                <div config-select ng-model="col.ValueType" auto-first="true" placeholder="值栏位类型" tb="EntityRelation" col="ColumnType" ng-name="ValueType" ng-required="true"></div>
+                                            </div>
+                                            <div class="col-xs-6 padder-xxs" title="条件值" ng-class="{ 'has-error' : col.ColForm.ColumnValue.$invalid }">
+                                                <ui-select name="ColumnValue" ng-model="col.ColumnValue" ng-if="col.ValueType=='0'" theme="bootstrap" ng-required="true">
+                                                    <ui-select-match placeholder="条件栏位">{{ $select.selected.ColumnName }}</ui-select-match>
+                                                    <ui-select-choices repeat="col.ColumnName as col in fo.Columns | filter: $select.search track by item.ColumnName">
+                                                        <div ng-bind-html="col.ColumnName | highlight: $select.search"></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                                <input autocomplete="off" type="text" name="ColumnValue" class="form-control" ng-model="col.ColumnValue" ng-if="col.ValueType=='2'" required />
+                                                <input autocomplete="off" ui-jq="TouchSpin" name="ColumnValue" type="text" ng-model="col.ColumnValue" ng-if="col.ValueType=='1'" class="form-control"
+                                                       data-verticalbuttons="true" data-verticalupclass="btn-xs fa fa-caret-up" data-verticaldownclass="btn-xs btn-sm fa fa-caret-down"
+                                                       data-min='-2147483647' data-max="2147483647" required>
+                                            </div>
+                                            <div class="col-xs-1 padder-xxs" title="条件之间的关联关系">
+                                                <div config-select ng-name="Ass" tb="EntityRelation" col="Associate" auto-first="true" ng-model="col.Associate" select-class="text-xs"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<pre>  {{ fo.Columns | json }} </pre>-->
+        </uib-tab>
+        <uib-tab index="2">
+            <uib-tab-heading class="h5">节点栏位信息控制</uib-tab-heading>
+            <div ser-data="User" list="fo.UserList">
+                <pre>{{ fo.UserList | json }}</pre>
+            </div>
+        </uib-tab>
+        <uib-tab index="3">
+            <uib-tab-heading class="h5">
+                Js文件代码
+            </uib-tab-heading>
+        </uib-tab>
+    </uib-tabset>
+</div>

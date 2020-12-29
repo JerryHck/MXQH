@@ -45,6 +45,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
     vm.OpenHtmlJs = OpenHtmlJs;
     vm.OpenFormDialog = OpenFormDialog;
     vm.OpenFormFlowDialog = OpenFormFlowDialog;
+    vm.isRouteExists = isRouteExists;
 
     //选择系统
     vm.ChangeSys = ChangeSys;
@@ -235,7 +236,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
             var en = {};
             en.name = "FunNo";
             en.value = fun.FunNo;
-            AjaxService.GetEntity("Function", en).then(function (data) {
+            AjaxService.GetPlan("FunList", en).then(function (data) {
                 vm.SelectedFun = data;
             });
         }
@@ -256,6 +257,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
             vm.SelectedFun.SysNo = vm.SelectedRoot.SysNo;
             vm.SelectedFun.ParFunNo = vm.SelectedRoot.FunNo;
             vm.SelectedFun.IsSystem = 0;
+            vm.SelectedFun.IsBoard = false;
             vm.SelectedFun.FunLoad = [];
             vm.FunList.push(vm.SelectedFun);
             FunctionFile();
@@ -337,6 +339,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
         en.IsUsed = vm.SelectedFun.IsUsed;
         en.OrderBy = vm.FunList.Length || 1;
         en.IsSystem = vm.SelectedFun.IsSystem || 0;
+        en.IsBoard = vm.SelectedFun.IsBoard || false;
         en.TempColumns = 'ListLoad';
         vm.promise = AjaxService.ExecPlan('FunRoot', "save", en).then(function (data) {
             var Content = vm.SelectedFun.Content;
@@ -374,6 +377,18 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
             }
             toastr.success('储存成功');
         })
+    }
+
+    //验证路由是否重复
+    function isRouteExists() {
+        if (vm.SelectedFun.RouteName) {
+            var en = [{ name: "RouteName", value: vm.SelectedFun.RouteName }, { name: "FunNo", value: vm.SelectedFun.FunNo, type:"!=" }];
+            AjaxService.GetPlan('Function', en).then(function (data) {
+                vm.ReErr = data;
+                vm.FormFun.Route.$setValidity('unique', !data.FunNo);
+            });
+        }
+
     }
 
     function reflashData() {

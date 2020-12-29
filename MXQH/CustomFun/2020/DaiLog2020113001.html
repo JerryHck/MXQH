@@ -1,0 +1,146 @@
+﻿<div class="modal-header text-center"  cg-busy="ll.promise">
+    <button class="btn btn-warning pull-left" type="button" ng-click="ll.Cancel()">关闭</button>
+    <h3 class="modal-title">仓库领料单登记</h3>
+</div>
+<div class="modal-body wrapper-xs" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body padder-xs padder-v-xxs">
+            <div class="wrapper-sm padder-xxs">
+                <div class="form-horizontal" ng-form="ll.MainForm">
+                    <div class="form-group-xs col-sm-12">
+                        <label class="col-sm-1 padder-xs control-label text-success">{{ !ll.InItem.DocNo ? '领料单号':'扫描单号' }}：</label>
+                        <div class="col-sm-2 no-padder" ng-class="{ 'has-error' : ll.MainForm.DocNo.$invalid }">
+                            <input autocomplete="off" type="text" ng-disabled="ll.InItem.PickDocNo" name="DocNo" class="form-control" ng-model="ll.ThisForm.DocNo" required placeholder="扫描单号" ng-keyup="ll.KeyDonwOrder($event)" />
+                        </div>
+                        <label class="col-sm-2 padder-xs control-label">以旧换新：</label>
+                        <div class="col-sm-2 no-padder">
+                            <p class="form-control-static font-bold  h4 text-danger-lter">{{ ll.ThisForm.IsOldToNew }}</p>
+                        </div>
+                        <label class="col-sm-1 padder-xs control-label">单据日期：</label>
+                        <div class="col-sm-1 no-padder">
+                            <p class="form-control-static font-bold  text-danger-lter">{{ ll.ThisForm.CreatedOn | date:'yyyy-MM-dd' }}</p>
+                        </div>
+                        <label class="col-sm-2 padder-xs control-label">发料确认日：</label>
+                        <div class="col-sm-1 no-padder">
+                            <p class="form-control-static font-bold text-danger-lter">{{ ll.ThisForm.IssueItemOn | date:'yyyy-MM-dd HH:mm:ss' }}</p>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-sm-12 m-t-xxs">
+                        <label class="col-sm-1 padder-xs control-label">单据线别：</label>
+                        <div class="col-sm-2 no-padder">
+                            <p class="form-control-static font-bold  h4 text-danger-lter">{{ ll.ThisForm.LineName }}</p>
+                        </div>
+                        <label class="col-sm-2 padder-xs control-label">单据类型：</label>
+                        <div class="col-sm-2 no-padder">
+                            <p class="form-control-static font-bold h4 text-danger-lter">{{ ll.ThisForm.DocTypeName }}</p>
+                        </div>
+                        <label class="col-sm-1 padder-xs control-label">超额领料：</label>
+                        <div class="col-sm-1 no-padder">
+                            <p class="form-control-static font-bold  h4 text-danger-lter">{{ ll.ThisForm.IsSpecialIssue ?'是':'否' }}</p>
+                        </div>
+                        <label class="col-sm-2 padder-xs control-label">单据确认人：</label>
+                        <div class="col-sm-1 no-padder">
+                            <p class="form-control-static font-bold h4 text-danger-lter">{{ ll.ThisForm.IssueItemBy }}</p>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-sm-12 m-t-xxs" ng-if="ll.InItem.PickDocNo">
+                        <label class="col-sm-1 padder-xs control-label">生产订单：</label>
+                        <div class="col-sm-2 no-padder">
+                            <p class="form-control-static font-bold  h4 text-danger-lter">{{ ll.ThisForm.WorkOrder }}</p>
+                        </div>
+                        <label class="col-sm-2 padder-xs control-label">产品编号：</label>
+                        <div class="col-sm-2 no-padder">
+                            <p class="form-control-static font-bold h4 text-danger-lter">{{ ll.ThisForm.MOMateCode }}</p>
+                        </div>
+                        <label class="col-sm-1 padder-xs control-label">产品名称：</label>
+                        <div class="col-sm-4 no-padder">
+                            <p class="form-control-static font-bold  h4 text-danger-lter">{{ ll.ThisForm.MOMateName }}</p>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-sm-12 m-t-xxs" ng-if="ll.InItem.PickDocNo">
+                        <label class="col-sm-1 padder-xs control-label">登记人：</label>
+                        <div class="col-sm-2 no-padder">
+                            <p class="form-control-static font-bold  h4 text-danger-lter">{{ ll.InItem.Creator }}</p>
+                        </div>
+                        <label class="col-sm-2 padder-xs control-label">登记时间：</label>
+                        <div class="col-sm-2 no-padder">
+                            <p class="form-control-static font-bold h4 text-danger-lter">{{ ll.InItem.RegTime | date:'yyyy-MM-dd HH:mm' }}</p>
+                        </div>
+                        <label class="col-sm-1 padder-xs control-label">需求时间：</label>
+                        <div class="col-sm-4 no-padder">
+                            <p class="form-control-static font-bold  h4 text-danger-lter">{{ ll.InItem.NeedTime | date:'yyyy-MM-dd HH:mm' }}</p>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-sm-12 m-t-xxs" ng-if="ll.InItem.PickDocNo">
+                        <label class="col-sm-1 padder-xs control-label">备料人：</label>
+                        <div class="col-sm-2 no-padder">
+                            <p class="form-control-static font-bold  h4 text-danger-lter">{{ ll.InItem.PreByName }}</p>
+                        </div>
+                        <label class="col-sm-2 padder-xs control-label">开始备料时间：</label>
+                        <div class="col-sm-2 no-padder">
+                            <p class="form-control-static font-bold h4 text-danger-lter">{{ ll.InItem.StPreTime | date:'yyyy-MM-dd HH:mm' }}</p>
+                        </div>
+                        <label class="col-sm-1 padder-xs control-label">完成时间：</label>
+                        <div class="col-sm-4 no-padder">
+                            <p class="form-control-static font-bold  h4 text-danger-lter">{{ ll.InItem.EdPreTime | date:'yyyy-MM-dd HH:mm'}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-horizontal" ng-form="ll.SaveForm" ng-if="ll.ThisForm.ID && !ll.InItem.DocNo">
+                    <div class="form-group-xs col-sm-12 m-t-sm">
+                        <label class="col-sm-1 padder-xs control-label">需求时间：</label>
+                        <div class="col-sm-2 no-padder" ng-class="{ 'has-error' : ll.SaveForm.NeedTime.$invalid }">
+                            <input autocomplete="off" date-time-picker type="text" option="ll.op" format="Y-m-d H:i" ng-disabled="ll.InItem.NeedTime" step="30" name="NeedTime" class="form-control" ng-model="ll.ThisForm.NeedTime" required placeholder="需求时间" />
+                        </div>
+                        <label class="col-sm-2 padder-xs control-label">备注：</label>
+                        <div class="col-sm-7 ">
+                            <textarea rows="1" autocomplete="off" ng-disabled="ll.InItem.PickDocNo" type="text" class="form-control" ng-model="ll.ThisForm.Remark" placeholder="备注" />
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-sm-12 m-b-lg" ng-if="!ll.InItem.PickDocNo">
+                        <label class="col-sm-1 padder-xs control-label">确认收料：</label>
+                        <div class="col-sm-4 no-padder">
+                            <button type="button"  ng-disabled="ll.SaveForm.$invalid" class="btn btn-lg btn-success m-t-xs" ng-click="ll.Save()">
+                                <i class="glyphicon glyphicon-ok"></i>
+                                确认收到
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 no-padder scroll-y m-t" style="max-height:350px">
+                    <table class="table" ng-if="ll.ThisForm.ID">
+                        <thead>
+                            <tr>
+                                <td title="查询" colspan="6">
+                                    <div class="input-group col-md-12">
+                                        <input autocomplete="off" type="text" name="DocNo" class="form-control" ng-model="ll.DtlSer" placeholder="查询" />
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td title="行号" style="width:40px ">行号</td>
+                                <td title="物料编号" style="width:60px ">品号</td>
+                                <td title="物料名称" style="width:100px ">品名</td>
+                                <td title="物料规格" style="width:200px ">规格</td>
+                                <td title="应发数量" style="width:80px ">应发数量</td>
+                                <td title="实发数量" style="width:80px ">实发数量</td>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in ll.DtlList|filter:ll.DtlSer">
+                            <td>{{ item.LineNum }}</td>
+                            <td>{{ item.MateCode }}</td>
+                            <td class="text-left">{{ item.MateName }}</td>
+                            <td class="text-left">{{ item.SPECS }}</td>
+                            <td>{{ item.IssueQty }}</td>
+                            <td>{{ item.IssuedQty }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <!--<pre>{{ ll.InItem | json }}</pre>-->
+        </div>
+    </div>
+</div>

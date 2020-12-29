@@ -19,7 +19,7 @@
     }
 
     .panel-node {
-        color:#0b6df5;
+        color: #0b6df5;
         min-width: 100px;
         display: inline-block;
         margin: auto 2px;
@@ -49,6 +49,11 @@
                                 审核
                             </a>
                             <br />
+                            <a class="list-group-item btn btn-default btn-controler" href="#" data-name="条件审核" data-template="tpl-M" role="button">
+                                <i class="glyphicon glyphicon-ok-sign" aria-hidden="true"></i>
+                                条件审核
+                            </a>
+                            <br />
                             <a class="list-group-item btn btn-default btn-controler" href="#" data-name="会签" data-template="tpl-H" role="button">
                                 <i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i>
                                 会签
@@ -75,14 +80,14 @@
     <div class='pa' id='{{NodeNo}}' title="{{Remark}}" style='top:{{PosTop}}px;left:{{PosLeft}}px;'>
         <a class='btn btn-default h4 font-bold text-center' href='#' role='button' data-type="OpenSetting" data-id="{{NodeNo}}" style="min-height:50px; padding-top:15px">
             <i class="fa fa-play-circle-o" aria-hidden="true"></i>
-           {{NodeName}}
+            {{NodeName}}
             <span class="pull-right m-l-xs text-danger delete-node" data-type="deleteNode" data-id="{{NodeNo}}">X</span>
         </a>
     </div>
 </script>
 
 <script id="tpl-E" type="text/html">
-    <div class='pa' id='{{NodeNo}}'title="{{Remark}}" style='top:{{PosTop}}px;left:{{PosLeft}}px;'>
+    <div class='pa' id='{{NodeNo}}' title="{{Remark}}" style='top:{{PosTop}}px;left:{{PosLeft}}px;'>
         <a class='btn btn-default h4 font-bold text-center' href='#' role='button' data-type="OpenSetting" data-id="{{NodeNo}}" style="min-height:50px; padding-top:15px">
             <i class="glyphicon glyphicon-off" aria-hidden="true"></i>
             {{NodeName}}
@@ -124,18 +129,43 @@
     </div>
 </script>
 
-<script id="tpl-Menu" type="text/html">
-    <div class="pa" id='{{NodeNo}}' style='top:{{PosTop}}px;left:{{PosLeft}}px'>
+<script id="tpl-M" type="text/html">
+    <div class="pa" id='{{NodeNo}}' title="{{Remark}}" style='top:{{PosTop}}px;left:{{PosLeft}}px'>
         <div class="panel panel-default panel-node panel-info">
-            <div id='{{NodeNo}}-heading' data-id="{{NodeNo}}" class="panel-heading">
-                <i class="fa fa-navicon" aria-hidden="true"></i> {{NodeName}}
+            <div id='{{NodeNo}}-Head' data-id="{{NodeNo}}" class="panel-heading padder-xs text-center font-bold">
+                <i class="fa fa-navicon" data-type="OpenSetting" data-id="{{NodeNo}}"></i>
+                <span class="h5" data-type="OpenSetting" data-id="{{NodeNo}}">
+                    {{NodeName}}
+                </span>
                 <span class="delete-node pull-right" data-type="deleteNode" data-id="{{NodeNo}}">X</span>
             </div>
             <ul class="list-group">
-                {{#choices}}
-                <li id="{{NodeNo}}-key-{{key}}" data-pid="{{NodeNo}}" class="list-group-item panel-node-list">
-                    按{{key}}
-                </li>{{/choices}}
+                {{#Contition}}
+                <li id="{{ID}}" data-pid="{{NodeNo}}" class="list-group-item panel-node-list text-center">
+                    {{ConName}}
+                </li>{{/Contition}}
+                <li id="{{NodeNo}}-NG" data-pid="{{NodeNo}}" class="list-group-item padder-xs text-center text-danger font-bold">
+                    NG
+                </li>
+            </ul>
+        </div>
+    </div>
+</script>
+<script id="tpl-M1" type="text/html">
+    <div class="pa" id='{{NodeNo}}' title="{{Remark}}" style='top:{{PosTop}}px;left:{{PosLeft}}px'>
+        <div class="panel panel-default panel-node panel-info">
+            <div id='{{NodeNo}}-Head' data-id="{{NodeNo}}" class="panel-heading padder-xs text-center font-bold">
+                <i class="fa fa-navicon" data-type="OpenSetting" data-id="{{NodeNo}}"></i>
+                <span class="h5" data-type="OpenSetting" data-id="{{NodeNo}}">
+                    {{NodeName}}
+                </span>
+                <span class="delete-node pull-right" data-type="deleteNode" data-id="{{NodeNo}}">X</span>
+            </div>
+            <ul class="list-group">
+                {{#Contition}}
+                <li id="{{ID}}" data-pid="{{NodeNo}}" class="list-group-item panel-node-list text-center">
+                    {{ConName}}
+                </li>{{/Contition}}
             </ul>
         </div>
     </div>

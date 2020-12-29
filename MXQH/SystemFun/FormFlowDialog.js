@@ -10,6 +10,11 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
     vm.OK = OK;
     var newPlumb = null;
 
+    AjaxService.GetPlan("foFormFlowData", { name: "FlowNo", value: ItemData.FunNo }).then(function (data) {
+        //console.log(data.EntityName);
+        GetColList(data.EntityName);
+    })
+
     //取旧流程
     vm.promise = AjaxService.GetPlans("foFormFlowNode", { name: "FlowNo", value: ItemData.FunNo }).then(function (data) {
         vm.Data = data;
@@ -21,6 +26,14 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
         newPlumb.ready(main)
     })
 
+    function GetColList(entityName) {
+        var en = {};
+        en.planName = entityName;
+        en.shortName = '--';
+        vm.promise = AjaxService.BasicCustom("GetPlanColumnsCon", en).then(function (data) {
+            vm.FlowColumns = data[0].Columns;
+        })
+    }
 
     //初始化节点流程
     function InitPlumb() {
@@ -28,6 +41,7 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
             //移除节点
             newPlumb.remove($(elem).attr('id'))
         });
+
         DataDraw.draw(vm.Data);
     }
 
@@ -40,7 +54,7 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
             return;
         }
         
-        var en = { FlowNo: ItemData.FunNo }, ListNode = [], ListRel = [];
+        var en = { FlowNo: ItemData.FunNo }, ListNode = [], ListRel = [], ListCon = [], ListColCon = [];
         var haveStart = false;
         //值获取
         for (var i = 0, len = vm.Data.length; i < len; i++) {
@@ -53,18 +67,39 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
             if (node.NodeType == 'A') {
                 haveStart = true;
             }
+            //流程节点是条件列表的
+            if (node.NodeType == 'M' && node.Contition) {
+                for (var h = 0, len3 = node.Contition.length; h < len3; h++) {
+                    var con = angular.copy(node.Contition[h]);
+                    if (con.ConList && con.ConList.length > 0) {
+                        for (var g = 0, len4 = con.ConList.length; g < len4; g++) {
+                            var col = angular.copy(con.ConList[g]);
+                            col.ColForm = undefined;
+                            col.ConID = con.ID;
+                            col.FlowNo = ItemData.FunNo;
+                            ListColCon.push(col);
+                        }
+                    }
+                    con.FlowNo = ItemData.FunNo;
+                    con.ItemForm = undefined;
+                    con.ConList = undefined;
+                    ListCon.push(con);
+                }
+            }
+            node.Contition = undefined;
             node.Relate = undefined;
             ListNode.push(node);
         }
-        if (!haveStart) {
-            toastr.error("没有配置开始节点，无法保存");
-            return;
-        }
-
-
+        //if (!haveStart) {
+        //    toastr.error("没有配置开始节点，无法保存");
+        //    return;
+        //}
+        
         en.ListNode = JSON.stringify(ListNode);
         en.listRel = JSON.stringify(ListRel);
-        en.TempColumns = "ListNode,listRel";
+        en.ListCon = JSON.stringify(ListCon);
+        en.ListColCon = JSON.stringify(ListColCon);
+        en.TempColumns = "ListNode,listRel,ListCon,ListColCon";
         vm.promise = AjaxService.ExecPlan("foFormFlowNode", "save", en).then(function (data) {
             toastr.success("存储成功");
             $uibModalInstance.close(en);
@@ -91,13 +126,22 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
                 var con = {
                     RelateNo: connection.sourceId, NextNodeNo: connection.targetId
                 };
-                if (vm.Data[i].NodeNo == connection.sourceId || vm.Data[i].NodeNo + "-OK" == connection.sourceId) {
+                if ((vm.Data[i].NodeNo == connection.sourceId || vm.Data[i].NodeNo + "-OK" == connection.sourceId) && vm.Data[i].NodeType != 'M') {
                     con.RelateType = 'OK';
                 }
-                else if (vm.Data[i].NodeNo + "-NG" == connection.sourceId) {
+                else if (vm.Data[i].NodeNo + "-NG" == connection.sourceId && vm.Data[i].NodeType != 'M') {
                     con.RelateType = 'NG';
                 }
-                if (con.RelateType) {
+                else if (vm.Data[i].NodeNo == connection.source.dataset.pid && vm.Data[i].NodeType == 'M') {
+                    con.RelateType = 'OK';
+                }
+                var have = false;
+                for (var j = 0, len2 = vm.Data[i].Relate.length; j < len2; j++) {
+                    if (vm.Data[i].Relate[j].RelateNo == connection.sourceId) {
+                        have = true; break;
+                    }
+                }
+                if (con.RelateType && !have) {
                     con.FlowNo = ItemData.FunNo;
                     con.NodeNo = vm.Data[i].NodeNo;
                     vm.Data[i].Relate.push(con)
@@ -242,15 +286,25 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
                 node.AbleOkOut = true;
                 node.AbleNgOut = false;
                 break;
+            case 'tpl-M':
+                node.NodeType = "M";
+                node.SignType = "H";
+                node.StageType = 'WA';
+                node.AbleIn = true;
+                node.AbleOkOut = false;
+                node.AbleNgOut = true;
+                break;
+            
             case 'tpl-E': node.NodeType = "E"; node.SignType = "S"; node.StageType = 'WA'; node.AbleIn = true; node.AbleOkOut = false; node.AbleNgOut = false; break;
         }
+        node.Columns = vm.FlowColumns;
         Dialog.OpenDialog("FlowNodeSetDialog", node).then(function (data) {
             vm.Data = vm.Data || [];
             vm.Data.push(data);
             //获取页面上节点数据
             GetNodeData();
             InitPlumb();
-        })
+        }, function () { })
     }
 
     // 设置节点入口点
@@ -341,13 +395,13 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
             for (var i = 0, len = vm.Data.length; i < len; i++) {
                 if (vm.Data[i].NodeNo == data.id) {
                     index = i;
-                    node = vm.Data[i]; break;
+                    node = angular.copy(vm.Data[i]); break;
                 }
             }
+            node.Columns = vm.FlowColumns;
             Dialog.OpenDialog("FlowNodeSetDialog", node).then(function (data) {
                 vm.Data[index] = data;
                 InitPlumb();
-                console.log(vm.Data)
             }, function (data2) { })
         }
     }
@@ -364,7 +418,6 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
         $(areaId).droppable({
             scope: 'ss',
             drop: function (event, ui) {
-                console.log(ui.draggable[0].dataset);
                 dropNode(ui.draggable[0].dataset.template, ui.position, ui.draggable[0].dataset.name)
             }
         })
@@ -460,7 +513,6 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
             })
         },
         setEdge: function name(g, from, to) {
-            console.log(from + ' ---> ' + to)
             g.setEdge(from, to)
         }
     }
@@ -479,7 +531,6 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
                 if (b.NodeType === 'E') return -1
                 return 0
             })
-
             this.computeXY(nodes)
 
             // var template = $('#tpl-demo').html()
@@ -506,6 +557,19 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
                         }
                         if (item.AbleOkOut) {
                             setExitPointOk(item.NodeNo + "-OK", item.PosOkOut);
+                        }
+                        if (item.AbleNgOut) {
+                            setExitPointNG(item.NodeNo + "-NG", item.PosNgOut);
+                        }
+                    case "M":
+                        if (item.AbleIn) {
+                            setEnterPoint(item.NodeNo, item.PosIn);
+                        }
+                        if (item.Contition && item.Contition.length > 0) {
+                            for (var i = 0, len = item.Contition.length; i < len; i++) {
+                                var con = item.Contition[i];
+                                setExitPointOk(con.ID, con.PosOut);
+                            }
                         }
                         if (item.AbleNgOut) {
                             setExitPointNG(item.NodeNo + "-NG", item.PosNgOut);
@@ -539,6 +603,9 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
             //})
         },
         getTemplate: function (node) {
+            if (node.NodeType == "M" && !node.AbleNgOut) {
+                return $('#tpl-' + node.NodeType + "1").html();
+            }
             return $('#tpl-' + node.NodeType).html();
         },
         computeXY: function (nodes) {

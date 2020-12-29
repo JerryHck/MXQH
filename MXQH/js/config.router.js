@@ -61,10 +61,13 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
                         route.LazyLoad = loadJs;
                     }
                     router.setDataRouters(route);
-                    if ($cookieStore.get('active-router') == item.RouteName) {
-                        $state.go(item.RouteName);
-                    }
+                    //if ($cookieStore.get('active-router') == item.RouteName) {
+                    //    $state.go(item.RouteName);
+                    //}
                 }
+            }
+            if ($cookieStore.get('active-router')) {
+                $state.go($cookieStore.get('active-router'));
             }
         });
 
@@ -127,27 +130,39 @@ function Config($stateProvider, $urlRouterProvider, Version) {
             url: '/ui',
             template: '<div ui-view class="fade-in-up"></div>'
         })
-
-        ////a
-        //.state('app.File', {
-        //    url: '/filetest',
-        //    templateUrl: 'SystemFun/FileTest.html' + "?v=" + Version,
-        //    controller: "FileCtrl",
-        //    controllerAs: 'file',
-        //    resolve: {
-        //        deps: ['$ocLazyLoad',
-        //                function ($ocLazyLoad) {
-        //                    return $ocLazyLoad.load([
-        //                        'Scripts/SheetJs/xlsx.full.min.js',
-        //                        //'Scripts/TestAngular/textAngular-rangy.min.js',
-        //                        //'Scripts/modules/textAngular/textAngular-sanitize.min.js',
-        //                        //'Scripts/modules/textAngular/textAngular.min.js'
-        //                    ]).then(
-        //                        function () {
-        //                            return $ocLazyLoad.load('SystemFun/FileTest.js');
-        //                        }
-        //                    );
-        //                }]
-        //    }
-        //})
+        //流程新增
+        .state('app.flowAdd', {
+          url: '/flowAdd',
+          templateUrl: 'Flow/FlowAdd.html' + "?v=" + Version,
+          controller: 'FlowAddCtrl',
+          controllerAs: 'fo',
+          resolve: {
+              deps: ['$ocLazyLoad',
+                function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(['Flow/FlowAdd.js']);
+                }]
+          }
+        })
+    ////a
+    //.state('app.File', {
+    //    url: '/filetest',
+    //    templateUrl: 'SystemFun/FileTest.html' + "?v=" + Version,
+    //    controller: "FileCtrl",
+    //    controllerAs: 'file',
+    //    resolve: {
+    //        deps: ['$ocLazyLoad',
+    //                function ($ocLazyLoad) {
+    //                    return $ocLazyLoad.load([
+    //                        'Scripts/SheetJs/xlsx.full.min.js',
+    //                        //'Scripts/TestAngular/textAngular-rangy.min.js',
+    //                        //'Scripts/modules/textAngular/textAngular-sanitize.min.js',
+    //                        //'Scripts/modules/textAngular/textAngular.min.js'
+    //                    ]).then(
+    //                        function () {
+    //                            return $ocLazyLoad.load('SystemFun/FileTest.js');
+    //                        }
+    //                    );
+    //                }]
+    //    }
+    //})
 }

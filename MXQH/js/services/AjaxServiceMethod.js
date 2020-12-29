@@ -93,7 +93,7 @@
             //
             PrintMulti: PrintMulti,
             GetComPortList: GetComPortList,
-            GetComWeigth: GetComWeigth,
+            GetComWeight: GetComWeight,
             LightPrint: LightPrint,
             //打印PDF
             PrintPdf:PrintPdf,
@@ -642,7 +642,7 @@
         }
 
         //获取com口重量数据
-        function GetComWeigth(com, Do) {
+        function GetComWeight(com, Do) {
             var d = $q.defer();
             SocketSend("GetComWeigth", undefined, undefined, undefined, com, undefined, Do).then(function (data) {
                 d.resolve(data);

@@ -6,13 +6,13 @@
                 <div class="panel-heading font-bold text-center">
                     产品包装
                 </div>
-                <div class="panel-body padder-xs">
+                <div class="panel-body padder-xs padder-v-xs">
                     <div class="form-horizontal no-padder">
-                        <div class="form-group-xs col-md-12 no-padder">
+                        <div class="form-group-xs col-md-12 no-padder m-xxs">
                             <div class="col-sm-6 no-padder">
                                 <label class="col-sm-5 padder-xs control-label padder-xxs">工单号:</label>
                                 <div class="col-sm-7 padder-xs" ng-class="{ 'has-error' : pack.UpdateForm.Order.$invalid }">
-                                    <input autocomplete="off" type="text" name="Order" ng-model="pack.Item.WorkOrder" uib-typeahead="order.WorkOrder as order.WorkOrder for order in pack.OrderList | orderBy: 'FirstChar'| filter:{WorkOrder: $viewValue} | limitTo:8"
+                                    <input autocomplete="off" type="text" name="Order" ng-model="pack.Item.WorkOrder" uib-typeahead="order.WorkOrder as order.WorkOrder for order in pack.OrderList | orderBy: 'FirstChar' | filter:{WorkOrder: $viewValue} | limitTo:8"
                                            class="form-control" placeholder="工单号" ng-keyup="pack.KeyDonwOrder($event)" required>
                                 </div>
                             </div>
@@ -23,7 +23,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group-xs col-md-12">
+                        <div class="form-group-xs col-md-12 m-xxs">
                             <div class="col-sm-6 no-padder">
                                 <label class="control-label padder-xs col-sm-5 padder-xxs">产品编号:</label>
                                 <div class="col-sm-7 padder-xs">
@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group-xs col-md-12">
+                        <div class="form-group-xs col-md-12 m-xxs">
                             <div class="col-sm-6 no-padder">
                                 <label class="control-label padder-xs col-sm-5 padder-xxs">零件号:</label>
                                 <div class="col-sm-7 padder-xs">
@@ -132,9 +132,16 @@
                         </div>
                         <div class="form-group-xs col-md-12 no-padder">
                             <div class="col-sm-6 no-padder">
-                                <label class="control-label padder-xs col-sm-5 padder-xxs">箱号:</label>
+                                <label class="control-label padder-xs col-sm-5 padder-xxs">打印份数:</label>
                                 <div class="col-sm-7 padder-xs">
-                                    <p class="form-control-static font-v3">{{pack.Item.BoxNumber}}</p>
+                                    <div class="input-group">
+                                        <input autocomplete="off" class="form-control" type="number" min="1" max="100" ng-disabled="!pack.MultiPrint" ng-model="pack.PrintNum" placeholder="箱打印份数"/>
+                                        <span class="input-group-addon" title="是否打印多份,默認打印一份">
+                                            <label class="i-checks i-checks-sm">
+                                                <input autocomplete="off" type="checkbox" class="ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="pack.MultiPrint"><i></i>
+                                            </label>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 no-padder">
@@ -215,7 +222,7 @@
         <div class="col-sm-2 no-padder">
             <div class="panel panel-default">
                 <div class="panel-heading font-bold text-center">箱号列表</div>
-                <div class="panel-body scroll-y padder-xxs bar-xs" id="sc" style="max-height:600px">
+                <div class="panel-body scroll-y padder-v-xxs padder-xxs bar-xs" id="sc" style="max-height:600px">
                     <div class="list-group">
                         <a class="list-group-item text-success h5 text-center" ng-class="{ 'bg-danger' : box.BoxNumber==pack.Item.BoxNumber, 'bg-success-light':box.IsHasPrint==1 && box.BoxNumber!=pack.Item.BoxNumber }"
                            ng-repeat="box in pack.BoxList" ng-click="pack.ChangeBoxNum(box.BoxNumber)">
@@ -231,8 +238,11 @@
         </div>
         <div class="col-sm-4 padder-xs">
             <div class="panel panel-default">
-                <div class="panel-heading font-bold text-center">包装SN列表</div>
-                <div class="panel-body scroll-y padder-xxs bar-xs" style="max-height:600px">
+                <div class="panel-heading font-bold text-center">
+                    <span class="pull-left h5 text-black">SN列表</span>
+                    <span class="font-v3 h4 font-bold"> 已扫描：{{ pack.SNList.length }}</span>
+                </div>
+                <div class="panel-body scroll-y padder-v-xxs padder-xxs bar-xs" style="max-height:600px">
                     <div ng-show="pack.PackDetail">
                         <div class="list-group col-md-2 padder-xss bg-light">
                             <a class="list-group-item pad-xss bg-light text-center" ng-repeat="no in pack.NoList|limitTo:200">

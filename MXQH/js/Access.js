@@ -33,8 +33,8 @@ app.config(
 
 app.run(Run);
 
-Run.$inject = ['$rootScope', '$state', '$stateParams', 'AjaxService', 'appUrl', 'toastr', 'Version'];
-function Run($rootScope, $state, $stateParams, AjaxService, appUrl, toastr, Version) { 
+Run.$inject = ['$rootScope', '$state', '$stateParams', 'AjaxService', 'appUrl', 'toastr', 'Version', 'router'];
+function Run($rootScope, $state, $stateParams, AjaxService, appUrl, toastr, Version, router) {
     //获取系统license
     AjaxService.DoBefore("GetSysLic").then(function (data) {
         if (data.Type == "will") {
@@ -55,6 +55,37 @@ function Run($rootScope, $state, $stateParams, AjaxService, appUrl, toastr, Vers
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
     })
+
+    //获取RouteConfig 信息
+    var en = {};
+    en.planName = "FunList";
+    en.strJson = JSON.stringify([{ name: "IsBoard", value: true }]);
+    var data = AjaxService.DoBeforeWait("GetPlans", en);
+    for (var i = 0, len = data.length; i < len; i++) {
+        var item = data[i];
+        var route = {};
+        if (item.RouteName && item.RouteName != '') {
+            route.Name = item.RouteName;
+            route.Url = item.RouteUrl;
+            route.Controller = item.Controller;
+            route.ControllerAs = item.ControllerAs;
+            route.TempleteUrl = item.FunHtml + "?v=" + Version;
+            route.FunNo = item.FunNo;
+            if (item.FunLoad) {
+                var loadJs = [];
+                angular.forEach(item.FunLoad, function (l) {
+                    if (l.LoadName.substr(l.LoadName.length - 3, 3).toLowerCase() == 'css' || l.LoadName.substr(l.LoadName.length - 3, 3).toLowerCase() == '.js') {
+                        loadJs.push(l.LoadName + "?v=" + Version);
+                    }
+                    else {
+                        loadJs.push(l.LoadName);
+                    }
+                });
+                route.LazyLoad = loadJs;
+            }
+            router.setDataRouters(route);
+        }
+    }
 }
 
 app.config(Config);
@@ -87,6 +118,7 @@ function Config($stateProvider, $urlRouterProvider, Version) {
                   }]
             }
         })
+
         //修改密码
         .state('changePsd', {
             url: '/changePsd',
@@ -126,20 +158,18 @@ function Config($stateProvider, $urlRouterProvider, Version) {
                   }]
             }
         })
+         .state('app', {
+             //表明此状态不能被显性激活，只能被子状态隐性激活
+             //abstract: true,
+             url: '/app',
+             templateUrl: 'Basic/blank.html' + "?v=" + Version,
+         })
         //---------------------------------------------MES组装看板
         .state('AssProBoard', {
             url: '/AssProBoard',
             controllerAs: 'wo',
             controller: 'WorkOrderBoardCtrl',
             templateUrl: 'UIFun/Board/WorkOrderBoard.html' + "?v=" + Version,
-            //resolve: {
-            //    deps: ['$ocLazyLoad',
-            //      function ($ocLazyLoad) {
-            //          return $ocLazyLoad.load([
-            //              'UIFun/Board/WorkOrderBoard.js' + "?v=" + Version,
-            //              'UIFun/Board/WorkOrderBoardAss.js' + "?v=" + Version]);
-            //      }]
-            //},
             resolve: {
                 deps: ['$ocLazyLoad',
                         function ($ocLazyLoad) {

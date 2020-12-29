@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('SerialNumberCtrl', ['$scope', 'Dialog', 'AjaxService', 'toastr', '$window',
-function ($scope, Dialog, AjaxService, toastr, $window) {
+.controller('SerialNumberCtrl', ['$scope', 'Dialog', 'AjaxService', 'toastr', '$window', 'MyPop',
+function ($scope, Dialog, AjaxService, toastr, $window, MyPop) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
@@ -75,11 +75,28 @@ function ($scope, Dialog, AjaxService, toastr, $window) {
         })
     }
 
-    function Delete(item) {
-        AjaxService.PlanDelete("Vender", item).then(function (data) {
+    function Delete(item, type) {
+        if (type != 'F') {
+            var en = [{ name: "TbName", value: item.TbName }, { name: "ClName", value: item.ClName }];
+            AjaxService.GetPlan("SerialNumberSet", en).then(function (data) {
+                if (data.Info && data.Info.length > 0) {
+                    MyPop.ngConfirm({ text: "该编码规则已经有使用记录，确定要删除吗" }).then(function (m) {
+                        Delete(item, 'F');
+                    })
+                }
+                else {
+                    MyPop.ngConfirm({ text: '确定删除吗？' }).then(function () {
+                        Delete(item, 'F');
+                    })
+                }
+            });
+            return;
+        }
+        AjaxService.PlanDelete("SerialNumberSet", item).then(function (data) {
             toastr.success('删除成功');
             PageChange();
         });
+
     }
 
 }]);

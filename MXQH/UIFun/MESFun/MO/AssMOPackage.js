@@ -14,6 +14,8 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
     vm.Item = { PackId : -1};
     vm.PageChange = PageChange;
     vm.Search = Search;
+    vm.ExportExcel = ExportExcel;
+
     vm.Print = Print;
     vm.SelectTab = SelectTab;
     vm.KeyDonwSnCode = KeyDonwSnCode;
@@ -27,6 +29,8 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
     vm.KeyDonwColorRePrint = KeyDonwColorRePrint;
     vm.KeyDonwPackSn = KeyDonwPackSn;
     vm.KeyDonwBSNCode = KeyDonwBSNCode;
+
+    vm.GetWeight = GetWeight;
 
     vm.PrintPackId = 1;
     vm.NumIndex = 0;
@@ -47,12 +51,23 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
 
     function PageChange() {
         var list = [];
-        if (vm.Ser.Name) {
-            list.push({ name: "name", value: vm.Ser.InternalCode });
+        if (vm.Ser.InternalCode) {
+            list.push({ name: "InternalCode", value: vm.Ser.InternalCode });
         }
-        vm.promise = AjaxService.GetPlansPage("Dialog", list, vm.page.index, vm.page.size).then(function (data) {
-            vm.List = data.List;
+        vm.promise = AjaxService.GetPlansPage("MESAssBSNWeight", list, vm.page.index, vm.page.size).then(function (data) {
+            vm.WeightList = data.List;
             vm.page.total = data.Count;
+        });
+    }
+
+    function ExportExcel() {
+        var list = [];
+        if (vm.Ser.InternalCode) {
+            list.push({ name: "InternalCode", value: vm.Ser.InternalCode });
+        }
+        vm.promise = AjaxService.GetPlanOwnExcel("MESAssBSNWeight", list).then(function (data) {
+            //console.log(data);
+            $window.location.href = data.File;
         });
     }
 
@@ -75,18 +90,45 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
     function KeyDonwOrder(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.Item.WorkOrder) {
+            GetOrderData();
+        }
+    }
 
-            vm.promise = AjaxService.GetPlan("MesMxWOrder", { name: "WorkOrder", value: vm.Item.WorkOrder }).then(function (data) {
-                vm.OrderData = data;
-            })
-            vm.promise = AjaxService.GetPlan("MESMateTemplate", [{ name: "WorkOrder", value: vm.Item.WorkOrder }, { name: "TypeID", value: 3 }]).then(function (data) {
-                vm.BarData = data;
-                if (!data.Template || !data.Template.Name) {
-                    vm.PrintType = 'N';
+    function GetOrderData() {
+        vm.promise = AjaxService.GetPlan("MesMxWOrder", { name: "WorkOrder", value: vm.Item.WorkOrder }).then(function (data) {
+            vm.OrderData = data;
+            if (data.Mate && data.Mate.IsAssWeigh == true) {
+                GetCom();
+            }
+        })
+        vm.promise = AjaxService.GetPlan("MESMateTemplate", [{ name: "WorkOrder", value: vm.Item.WorkOrder }, { name: "TypeID", value: 3 }]).then(function (data) {
+            vm.BarData = data;
+            if (!data.Template || !data.Template.Name) {
+                vm.PrintType = 'N';
+            }
+        })
+
+        GetNoPack();
+    }
+
+    function GetCom() {
+        //获取kom口信息
+        AjaxService.GetComPortList().then(function (data) {
+            vm.ComList = JSON.parse(data);
+            vm.ComName = vm.ComList[0];
+            GetWeight();
+        })
+    }
+
+    function GetWeight() {
+        if (vm.ComName) {
+            AjaxService.GetComWeight(vm.ComName, function (data) {
+                if (data.MesType == "Success") {
+                    $scope.$apply(function () {
+                        vm.Item.Weight = data.Data;
+                    });
                 }
-            })
-
-            GetNoPack();
+            });
         }
     }
 
@@ -105,6 +147,7 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
         //获取包装SN列表
         AjaxService.GetPlans("opAssPackageDtl", [{ name: "PackID", value: vm.Item.PackId }]).then(function (data) {
             vm.SNList = data;
+            console.log(data)
             vm.NumIndex = data.length % vm.NoticeNum;
             vm.NumIndex = vm.NumIndex || 0;
         });
@@ -124,13 +167,14 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
     }
 
     function PackInCode() {
-        var en = { InternalCode: vm.Item.BSN, WorkOrder: vm.Item.WorkOrder, IsLock: vm.Item.IsLock, IsColorPrint: vm.PrintType == 'G' || vm.PrintType == 'L' };
+        var en = { InternalCode: vm.Item.BSN, WorkOrder: vm.Item.WorkOrder, IsLock: vm.Item.IsLock, IsColorPrint: vm.PrintType == 'G' || vm.PrintType == 'L', Weight: vm.Item.Weight };
         AjaxService.ExecPlan("opAssPackageMain", "check", en, false).then(function (data) {
             vm.Item.BSN = undefined;
             vm.NotPackList = data.data2;
             if (!vm.Item.IsLock) {
-                vm.OrderData = data.data3[0];
-                vm.Item.WorkOrder = (vm.OrderData || {}).WorkOrder;
+                //vm.OrderData = data.data3[0];
+                vm.Item.WorkOrder = (data.data3[0] || {}).WorkOrder;
+                GetOrderData();
                 vm.CalData = data.data4[0];
             }
 
@@ -181,6 +225,7 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
         en.PackNum = vm.Item.PackNum;
         en.Remark = vm.Item.Remark;
         en.IsLock = true;
+        en.Weight = vm.Item.Weight;
         AjaxService.ExecPlan("opAssPackageMain", 'save', en).then(function (data) {
             var msg = data.data[0];
             if (msg.MsgType == 'success') {
@@ -291,7 +336,7 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
             else if (data.data[0].MsgType == "Success") {
                 AjaxService.PlayVoice('success.mp3');
                 toastr.success(data.data[0].MsgText);
-                PrintCode(data.data2[0], data.data1[0]);
+                //PrintCode(data.data2[0], data.data1[0]);
                 //一般打印
                 if (vm.PrintType == 'G') {
                     PrintCode(data.data2[0], data.data1[0]);
@@ -364,7 +409,6 @@ function ($rootScope, $scope, AjaxService, toastr, $window, $state, FileUrl, MyP
         list.push(data.SnCode);
         postData.ParaData = JSON.stringify(data);
         postData.OutList = list;
-        //console.log(data)
         var printNum = data.ColorBoxPrintNum || 1;
         for (var i = 0; i < printNum; i++) {
             AjaxService.Print(temData.TemplateId, temData.TemplateTime, postData, vm.PrinterName).then(function (data) {

@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
                             </a>
-                            <div uib-pagination ng-if="role.page.total>role.page.size" total-items="role.page.total " ng-model="role.page.index " items-per-page="role.page.size " max-size="3" first-text="<<" previous-text="<"
+                            <div uib-pagination class="pagination-sm pagination-custom" ng-if="role.page.total>role.page.size" total-items="role.page.total " ng-model="role.page.index " items-per-page="role.page.size " max-size="3" first-text="<<" previous-text="<"
                                     ng-change="role.getListRole()" next-text=">" last-text=">> " boundary-links="false" boundary-link-numbers="false"></div>
                         </div>
                     </div>

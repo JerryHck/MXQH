@@ -5,18 +5,22 @@
 
     angular.module('AjaxServiceModule').factory('httpWatch', httpWatch);
 
-    //httpWatch.$inject = ['$cookies'];
+    httpWatch.$inject = ['$cookieStore', '$rootScope'];
 
-    function httpWatch($cookieStore) {
+    function httpWatch($cookieStore, $rootScope) {
         var obj = {
             'request': function (config) {
                 if ($cookieStore.get('user-token')) {
                     config.headers['x-session-token'] = $cookieStore.get('user-token');
                    
                 }
-                config.headers['x-function'] = $cookieStore.get('active-function') || '';
+                if ($rootScope.IsFlow) {
+                    config.headers['x-function'] = $cookieStore.get('active-flow') || '';
+                }
+                else {
+                    config.headers['x-function'] = $cookieStore.get('active-function') || '';
+                }
                 return config;
-
             }
         };
         return obj;
@@ -723,6 +727,25 @@
             }
         }
         return false;
+    }
+
+    var signs = $('.font-x');
+
+    var randomIn = function randomIn(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    };
+
+    var mixupInterval = function mixupInterval(el) {
+        var ms = randomIn(2000, 4000);
+        el.style.setProperty('--interval', "".concat(ms, "ms"));
+    };
+    if (signs && signs.length > 0) {
+        signs.forEach(function (el) {
+            mixupInterval(el);
+            el.addEventListener('webkitAnimationIteration', function () {
+                mixupInterval(el);
+            });
+        });
     }
 
 })();

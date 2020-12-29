@@ -10,7 +10,6 @@ angular.module('app')
         isIE && angular.element($window.document.body).addClass('ie');
         isSmartDevice($window) && angular.element($window.document.body).addClass('smart');
         var vm = this;
-
         vm.FunctionList = [];
         vm.SysList = [];
         vm.FunTree = [];
@@ -21,6 +20,7 @@ angular.module('app')
         vm.Reflash = Reflash;
         vm.ChangeSys = ChangeSys;
         vm.DownTool = DownTool;
+        vm.OpFlow = OpFlow;
 
         // config
         vm.app = {
@@ -79,7 +79,7 @@ angular.module('app')
 
         function GetList() {
             $rootScope.promise = AjaxService.GetPlans("System").then(function (dataSys) {
-                AjaxService.LoginAction("GetUserRoot").then(function (data) {
+                AjaxService.LoginAction("GetUserRoot", { RootType:"Fun"}).then(function (data) {
                     vm.FunData = data;
                     //console.log(data);
                     //vm.FunTree = data;
@@ -111,7 +111,10 @@ angular.module('app')
                             var en = {};
                             en.RouteName = data[i].FunList[j].RouteName;
                             en.FunName = data[i].FunName + '/' + data[i].FunList[j].FunName;
-                            vm.FunctionList.push(en);
+                            //添加非表单
+                            if (data[i].FunList[j].IsSystem != 2) {
+                                vm.FunctionList.push(en);
+                            }
                             if ($cookieStore.get('active-router') == en.RouteName) {
                                 vm.DefaultSys = sysEn;
                             }
@@ -176,6 +179,12 @@ angular.module('app')
                 $state.go(item.RouteName);
             }
         }
+
+        function OpFlow(name) {
+            $cookieStore.put('active-router', name);
+            $state.go(name);
+        }
+
         function Reflash() {
             //console.log($cookieStore.get('active-router'));
             $state.reload($cookieStore.get('active-router'));
@@ -215,24 +224,7 @@ angular.module('app')
         function DownTool(path) {
             $window.location.href = FileUrl + "DownLoad/" + path;
         }
+
+       
+
     }]);
-
-
-var signs =$('.font-x');
-
-var randomIn = function randomIn(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-};
-
-var mixupInterval = function mixupInterval(el) {
-    var ms = randomIn(2000, 4000);
-    el.style.setProperty('--interval', "".concat(ms, "ms"));
-};
-if (signs && signs.length > 0) {
-    signs.forEach(function (el) {
-        mixupInterval(el);
-        el.addEventListener('webkitAnimationIteration', function () {
-            mixupInterval(el);
-        });
-    });
-}
