@@ -27,6 +27,8 @@
             GetPlan: GetPlan,
             //获得实体资料-列表
             GetPlans: GetPlans,
+            //从缓存中读取数据
+            GetCachePlans:GetCachePlans,
             //无事务读取存储过程——存储过程内只允许读
             GetProc:GetProc,
             //同步获取数据
@@ -34,9 +36,12 @@
             GetPlansTop:GetPlansTop,
             //分页获取实体资料
             GetPlansPage: GetPlansPage,
+            //分页读取缓存 数据
+            GetCachePlansPage:GetCachePlansPage,
             //实体计划excel导出
             GetPlanExcel: GetPlanExcel,
-            GetPlanOwnExcel:GetPlanOwnExcel,
+            GetPlanOwnExcel: GetPlanOwnExcel,
+            GetCachePlanOwnExcel:GetCachePlanOwnExcel,
             //保存计划实体
             SavePlan: SavePlan,
             //刷新计划实体
@@ -157,6 +162,11 @@
             return plan(name, json, "GetPlans", undefined, undefined, limitCol);
         }
 
+        //获得Cache计划资料-列表
+        function GetCachePlans(name, json, limitCol) {
+            return plan(name, json, "GetCachePlans", undefined, undefined, limitCol);
+        }
+
         //获得计划资料-同步
         function GetPlansWait(name, json, limitCol) {
             var url = serviceUrl + generic;
@@ -175,6 +185,12 @@
         function GetPlansPage(name, json, index, size, limitCol) {
             var s = index <= 1 ? 1 : (index - 1) * size + 1;
             return plan(name, json, "GetPlansPage", s, s + size - 1, limitCol);
+        }
+
+        //获得计划资料-分页
+        function GetCachePlansPage(name, json, index, size, limitCol) {
+            var s = index <= 1 ? 1 : (index - 1) * size + 1;
+            return plan(name, json, "GetCachePlansPage", s, s + size - 1, limitCol);
         }
 
         //执行存储过程， 获取分页数据
@@ -351,6 +367,13 @@
             json = json || [];
             var en = getEn(name, "--", json);
             return Ajax(d, url, en, "GetPlanOwnExcel")
+        }
+
+        function GetCachePlanOwnExcel(name, json) {
+            var d = $q.defer(), url = serviceUrl + generic;
+            json = json || [];
+            var en = getEn(name, "--", json);
+            return Ajax(d, url, en, "GetCachePlanOwnExcel")
         }
 
         function AddUser(json) {

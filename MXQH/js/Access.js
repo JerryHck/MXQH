@@ -35,6 +35,11 @@ app.run(Run);
 
 Run.$inject = ['$rootScope', '$state', '$stateParams', 'AjaxService', 'appUrl', 'toastr', 'Version', 'router'];
 function Run($rootScope, $state, $stateParams, AjaxService, appUrl, toastr, Version, router) {
+
+    //获取URL中的参数 -- 路由名称后缀
+    var thisUrl = window.location.href;
+   
+    var roName = null;
     //获取系统license
     AjaxService.DoBefore("GetSysLic").then(function (data) {
         if (data.Type == "will") {
@@ -60,32 +65,42 @@ function Run($rootScope, $state, $stateParams, AjaxService, appUrl, toastr, Vers
     var en = {};
     en.planName = "FunList";
     en.strJson = JSON.stringify([{ name: "IsBoard", value: true }]);
-    var data = AjaxService.DoBeforeWait("GetPlans", en);
-    for (var i = 0, len = data.length; i < len; i++) {
-        var item = data[i];
-        var route = {};
-        if (item.RouteName && item.RouteName != '') {
-            route.Name = item.RouteName;
-            route.Url = item.RouteUrl;
-            route.Controller = item.Controller;
-            route.ControllerAs = item.ControllerAs;
-            route.TempleteUrl = item.FunHtml + "?v=" + Version;
-            route.FunNo = item.FunNo;
-            if (item.FunLoad) {
-                var loadJs = [];
-                angular.forEach(item.FunLoad, function (l) {
-                    if (l.LoadName.substr(l.LoadName.length - 3, 3).toLowerCase() == 'css' || l.LoadName.substr(l.LoadName.length - 3, 3).toLowerCase() == '.js') {
-                        loadJs.push(l.LoadName + "?v=" + Version);
-                    }
-                    else {
-                        loadJs.push(l.LoadName);
-                    }
-                });
-                route.LazyLoad = loadJs;
+    //var data = AjaxService.DoBeforeWait("GetPlans", en);
+    AjaxService.DoBefore("GetPlans", en).then(function (data) {
+        for (var i = 0, len = data.length; i < len; i++) {
+            var item = data[i];
+            var route = {};
+            if (item.RouteName && item.RouteName != '') {
+                route.Name = item.RouteName;
+                route.Url = item.RouteUrl;
+                route.Controller = item.Controller;
+                route.ControllerAs = item.ControllerAs;
+                route.TempleteUrl = item.FunHtml + "?v=" + Version;
+                route.FunNo = item.FunNo;
+                if (item.FunLoad) {
+                    var loadJs = [];
+                    angular.forEach(item.FunLoad, function (l) {
+                        if (l.LoadName.substr(l.LoadName.length - 3, 3).toLowerCase() == 'css' || l.LoadName.substr(l.LoadName.length - 3, 3).toLowerCase() == '.js') {
+                            loadJs.push(l.LoadName + "?v=" + Version);
+                        }
+                        else {
+                            loadJs.push(l.LoadName);
+                        }
+                    });
+                    route.LazyLoad = loadJs;
+                }
+                //判断地址是否存在
+                if (thisUrl.indexOf(item.RouteName.replace('.', '/')) > 0) {
+                    roName = item.RouteName;
+                }
+
+                router.setDataRouters(route);
             }
-            router.setDataRouters(route);
         }
-    }
+        if (roName) {
+            $state.go(roName);
+        }
+    })
 }
 
 app.config(Config);

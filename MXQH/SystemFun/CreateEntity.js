@@ -624,6 +624,7 @@ function ($scope, $window, Dialog, AjaxService, toastr, $rootScope, FileLoad, se
         en.EntityName = vm.SelectedEn.EntityName;
         en.IsCache = vm.CacheItem.IsCache == "1";
         en.KeyColName = vm.CacheItem.KeyColName;
+        en.FromUrl = vm.CacheItem.FromUrl;
         en.Remark = vm.CacheItem.Remark;
         en.ToList = JSON.stringify(vm.CacheItem.ToList || []);
         en.TempColumns = "ToList";

@@ -37,11 +37,14 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
 
     //初始化节点流程
     function InitPlumb() {
-        $("#drop-bg .pa").each(function (idx, elem) {
-            //移除节点
-            newPlumb.remove($(elem).attr('id'))
-        });
-
+        //$("#drop-bg .pa").each(function (idx, elem) {
+        //    //移除节点
+        //    newPlumb.remove($(elem).attr('id'))
+        //});
+        //newPlumb.reset();
+        //newPlumb.deleteEveryEndpoint();
+        newPlumb.empty("drop-bg");
+        newPlumb.repaintEverything();
         DataDraw.draw(vm.Data);
     }
 
@@ -300,10 +303,9 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
         node.Columns = vm.FlowColumns;
         Dialog.OpenDialog("FlowNodeSetDialog", node).then(function (data) {
             vm.Data = vm.Data || [];
+            DataDraw.addNode(data);
             vm.Data.push(data);
-            //获取页面上节点数据
             GetNodeData();
-            InitPlumb();
         }, function () { })
     }
 
@@ -532,52 +534,12 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
                 return 0
             })
             this.computeXY(nodes)
-
+            var me = this;
             // var template = $('#tpl-demo').html()
-            var $container = $(areaId)
-            var me = this
             //节点初始化
             nodes.forEach(function (item, key) {
-                var template = me.getTemplate(item);
-                $container.append(Mustache.render(template, item));
-                addDraggable(item.NodeNo)
-                switch (item.NodeType) {
-                    case "A":
-                    case "H":
-                    case "E":
-                        if (item.AbleIn) {
-                            setEnterPoint(item.NodeNo, item.PosIn);
-                        }
-                        if (item.AbleOkOut) {
-                            setExitPointOk(item.NodeNo, item.PosOkOut);
-                        } break;
-                    case "S":
-                        if (item.AbleIn) {
-                            setEnterPoint(item.NodeNo, item.PosIn);
-                        }
-                        if (item.AbleOkOut) {
-                            setExitPointOk(item.NodeNo + "-OK", item.PosOkOut);
-                        }
-                        if (item.AbleNgOut) {
-                            setExitPointNG(item.NodeNo + "-NG", item.PosNgOut);
-                        }
-                    case "M":
-                        if (item.AbleIn) {
-                            setEnterPoint(item.NodeNo, item.PosIn);
-                        }
-                        if (item.Contition && item.Contition.length > 0) {
-                            for (var i = 0, len = item.Contition.length; i < len; i++) {
-                                var con = item.Contition[i];
-                                setExitPointOk(con.ID, con.PosOut);
-                            }
-                        }
-                        if (item.AbleNgOut) {
-                            setExitPointNG(item.NodeNo + "-NG", item.PosNgOut);
-                        }
-                        break;
-                }
+                me.addNode(item);
             })
-
             //连线
             nodes.forEach(function (item, key) {
                 //连接连线
@@ -589,7 +551,49 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
                 }
             })
 
-            this.mainConnect(nodes)
+            me.mainConnect(nodes);
+        },
+        addNode: function (item) {
+            var me = this
+            var $container = $(areaId)
+            var template = me.getTemplate(item);
+            $container.append(Mustache.render(template, item));
+            addDraggable(item.NodeNo)
+            switch (item.NodeType) {
+                case "A":
+                case "H":
+                case "E":
+                    if (item.AbleIn) {
+                        setEnterPoint(item.NodeNo, item.PosIn);
+                    }
+                    if (item.AbleOkOut) {
+                        setExitPointOk(item.NodeNo, item.PosOkOut);
+                    } break;
+                case "S":
+                    if (item.AbleIn) {
+                        setEnterPoint(item.NodeNo, item.PosIn);
+                    }
+                    if (item.AbleOkOut) {
+                        setExitPointOk(item.NodeNo + "-OK", item.PosOkOut);
+                    }
+                    if (item.AbleNgOut) {
+                        setExitPointNG(item.NodeNo + "-NG", item.PosNgOut);
+                    }
+                case "M":
+                    if (item.AbleIn) {
+                        setEnterPoint(item.NodeNo, item.PosIn);
+                    }
+                    if (item.Contition && item.Contition.length > 0) {
+                        for (var i = 0, len = item.Contition.length; i < len; i++) {
+                            var con = item.Contition[i];
+                            setExitPointOk(con.ID, con.PosOut);
+                        }
+                    }
+                    if (item.AbleNgOut) {
+                        setExitPointNG(item.NodeNo + "-NG", item.PosNgOut);
+                    }
+                    break;
+            }
         },
         connectEndpoint: function (from, to) {
             newPlumb.connect({ uuids: [from, to] })

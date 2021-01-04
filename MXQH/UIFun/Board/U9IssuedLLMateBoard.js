@@ -47,10 +47,6 @@ function U9IssuedLLMateBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $w
         }
     }
 
-    //vm.promise = AjaxService.ExecPlan("WMSPicking", "board", { TempPlans: "U9vwIssueMain" }).then(function (data) {
-    //    console.log(data);
-    //})
-
     function Begin(index) {
         vm.SerItemList[index].IsHave = '';
         //var enCon = { TempCacheEn: "U9vwIssueMain,U9vwIssueMain", TempPlans:"Funtion,U9Test" };

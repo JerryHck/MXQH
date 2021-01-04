@@ -168,6 +168,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group-xs col-md-12 no-padder" ng-if="pack.OSLabelData.AssemblyPlanDetailID">
+                                <div class="col-sm-6 no-padder">
+                                    <label class="control-label col-sm-5 padder-xxs">箱/外箱数:</label>
+                                    <div class="col-sm-7 padder-xs">
+                                        <p class="form-control-static text-danger h3">{{ pack.OSLabelData.PerPackNum }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 no-padder">
+                                    <label class="control-label col-sm-5 padder-xxs">外箱打印数:</label>
+                                    <div class="col-sm-7 padder-xs">
+                                        <p class="form-control-static font-v3">{{pack.OSLabelData.PrintNum}}</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="panel-footer text-center" ng-if="pack.Item.BoxNumber && pack.PackDetail">
@@ -176,9 +190,9 @@
                         <button class="btn btn-success" type="button" ng-click="pack.Print('COTTONCODE')">打印</button>
                         <button class="btn btn-success" type="button" ng-click="pack.Print('3SCODE')">打印3S</button>
                         <button class="btn btn-success" type="button" ng-click="pack.Print('4SCODE')">打印4S</button>
+                        <button class="btn btn-info" ng-if="pack.OSLabelData.AssemblyPlanDetailID" type="button" ng-click="pack.PrintOSLabel()">包装并打印外部标签</button>
                     </div>
                     <!--<pre>{{ pack.PackMain | json }}</pre>-->
-   </div>
                 </div>
                 <div class="panel panel-default scroll-y" style="max-height:350px">
                     <div class="panel-heading font-bold text-center">信息显示</div>
@@ -199,6 +213,8 @@
                 </div>
             </div>
 
+
+
             <div class="col-sm-2 no-padder">
                 <div class="panel panel-default">
                     <div class="panel-heading font-bold text-center">箱号列表</div>
@@ -207,6 +223,10 @@
                             <a class="list-group-item text-success h5 text-center" ng-class="{ 'bg-danger' : box.BoxNumber==pack.Item.BoxNumber, 'bg-success-light':box.IsHasPrint==1 && box.BoxNumber!=pack.Item.BoxNumber }"
                                ng-repeat="box in pack.BoxList" ng-click="pack.ChangeBoxNum(box.BoxNumber)">
                                 <span class="font-v3 h3">{{ box.BoxNumber }}</span>
+                                <span ng-if="box.OSLabelRelate.OSNCode" title="对应外部标签{{ box.OSLabelRelate.OSNCode }}" class="text-info">
+                                    <br />{{ box.OSLabelRelate.OSNCode }}
+                                    <!--<i class="glyphicon glyphicon-print"></i>-->
+                                </span>
                             </a>
                         </div>
                     </div>

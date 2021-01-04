@@ -31,7 +31,7 @@
     }
 </style>
 
-<div class="bg-black-opacity" ng-init="vm.app.settings.asideFolded=true" ng-class="{'app-content-full': !ll.IsAss, 'content-full':ll.IsAss}">
+<div class="w-full bg-black-opacity h-full" ng-init="vm.app.settings.asideFolded=true" ng-class="{'app-content-body': !ll.IsAss, 'content-full':ll.IsAss}">
     <div class="panel panel-default panel-body h-full w-100 padder-v-xxs bg-black-opacity" cg-busy="ll.promise">
         <button class="btn btn-sm pull-left btn-info m-l-xs" ng-click="ll.Offline()"><i class="glyphicon glyphicon-fullscreen"></i></button>
         

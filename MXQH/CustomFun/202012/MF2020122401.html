@@ -1,0 +1,50 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="ma.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">U9料品BOM状态</uib-tab-heading>
+        <div class="wrapper-xs">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" class="form-control"  ng-model="ma.Ser.aCode" placeholder="料号">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" class="form-control"  ng-model="ma.Ser.aName" placeholder="料名">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "ma.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "ma.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-xs ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table one-line" >
+                    <thead>
+                        <tr>
+                            <td title="组织" style="width:100px ">组织</td>
+                            <td title="料号" style= "width:100px ">料号</td>
+                            <td title="料名" style= "width:100px ">料名</td>
+                            <td title="规格型号" style= "width:100px ">规格型号</td>
+                            <td title="是否有效" style= "width:100px ">是否有效</td>
+                            <td title="创建时间" style= "width:100px ">创建时间</td>
+                            <td title="bom出现次数" style= "width:100px ">bom出现次数</td>
+                            <td title="所属Bom" style= "width:100px ">所属Bom</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in ma.List ">
+                        <td title="{{ item.OrgCode }}">{{ item.OrgCode }}</td>
+                        <td title="{{ item.Code }}">{{ item.Code }}</td>
+                        <td title="{{ item.Name }}">{{ item.Name }}</td>
+                        <td title="{{ item.SPECS }}">{{ item.SPECS }}</td>
+                        <td title="{{ item.Effective_IsEffective }}">{{ item.Effective_IsEffective }}</td>
+                        <td title="{{ item.CreatedOn }}">{{ item.CreatedOn }}</td>
+                        <td title="{{ item.BomTime }}">{{ item.BomTime }}</td>
+                        <td title="{{ item.InBom }}">{{ item.InBom }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "ma.page.total>ma.page.size ">
+                <div uib-pagination total-items= "ma.page.total " ng-model= "ma.page.index " items-per-page= "ma.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "ma.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+        <!--<pre>{{ ma.List | json }}</pre>-->
+    </uib-tab>
+</uib-tabset>

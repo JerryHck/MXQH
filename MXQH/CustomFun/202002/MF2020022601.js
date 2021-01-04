@@ -1,8 +1,8 @@
 ﻿'use strict';
 
-angular.module('app')
-.controller('EntityCacheCtrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
+angular.module('AppSet')
+.controller('EntityCacheCtrl', ['$scope', '$http', 'AjaxService', 'toastr', '$window',
+function ($scope, $http, AjaxService, toastr, $window) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
@@ -57,6 +57,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
         var en = {};
         en.EntityName = vm.EditItem.EntityName;
         en.IsCache = vm.EditItem.IsCache;
+        en.FromUrl = vm.EditItem.FromUrl;
         en.Remark = vm.EditItem.Remark;
         vm.promise = AjaxService.PlanUpdate("EntityCache", en).then(function (data) {
             PageChange();
@@ -78,8 +79,8 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
     function GetContition() {
         var list = [];
-        if (vm.Ser.a_EntityName) {
-            list.push({ name: "EntityName", value: vm.Ser.a_EntityName, tableAs:"a" });
+        if (vm.Ser.aEntityName) {
+            list.push({ name: "EntityName", value: vm.Ser.aEntityName, tableAs:"a" });
         }
         return list;
     }

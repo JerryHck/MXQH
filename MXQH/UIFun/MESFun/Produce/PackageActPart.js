@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('PartPackageCtrl', ['$rootScope', '$scope', 'MyPop', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
+.controller('PartPackageCtrl', ['$rootScope', '$scope', 'MyPop', 'AjaxService', 'toastr', '$window', 'FileUrl',
+function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
 
     var vm = this;
     vm.Item = { };
@@ -21,6 +21,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     vm.NewPaletCode = NewPaletCode;
     vm.DeleteSn = DeleteSn;
     vm.Print = Print;
+    vm.PrintOSLabel = PrintOSLabel;
    
     //获取散件包装信息-未完工的资料
     AjaxService.GetPlans("MESPartOrder", [{ name: "Status", value: 4, type: "!=" }, { name: "MaterialTypeID", value: 4, action: "and" }]).then(function (data) {
@@ -114,6 +115,9 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                     $("input.SnFocus").focus();
                 }
             });
+            AjaxService.GetPlan("BlMOPackOSLabel", en).then(function (data) {
+                vm.OSLabelData = data;
+            })
         }
     }
 
@@ -125,7 +129,6 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 $("#sc").scrollTop(vm.ScTop);
             }, 1000);
         });
-        
     }
 
     function ChangeBoxNum(boxNum) {
@@ -189,6 +192,35 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: false, Msg: msg });
         AjaxService.PlayVoice('error.mp3');
         toastr.error(msg);
+    }
+
+    //打印外箱标签
+    function PrintOSLabel() {
+        var en = {};
+        en.PackDetailID = vm.PackDetail.ID;
+        en.PalletCode = vm.PackDetail.PalletCode;
+        en.Packweight = vm.Weight;
+        vm.promise = AjaxService.ExecPlan("MESPackChi", "partpack", en).then(function (data) {
+            if (data.data[0].MsgType == "Error") {
+                MyPop.Show(true, data.data[0].MsgText);
+            }
+            else if (data.data[0].MsgType == "Success") {
+                vm.PrintDtlId = vm.PackDetail.ID;
+                var en2 = { PackID: vm.PackDetail.ID };
+                vm.promise = AjaxService.ExecPlan("BlMOOSLabelDtl", "print", en2).then(function (data) {
+                    if (data.data[0].MsgType == "Error") {
+                        showErr(data.data[0].MsgText);
+                    }
+                    else if (data.data[0].MsgType == "Success") {
+                        vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].MsgText });
+                        getBoxList();
+                        for (var i = 0; i < vm.OSLabelData.PrintNum; i++) {
+                            AjaxService.PrintPdf(FileUrl + data.data1[0].UrlPath);
+                        }
+                    }
+                })
+            }
+        })
     }
 
     function Print(type) {

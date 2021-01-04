@@ -2,7 +2,7 @@
     <div class="panel-body padder-xs bg-light h5 padder-v-xs" ng-form="sys.Form">
         <span class="pull-right">
             <button class="btn btn-success m-r-md m-t-xs" ng-if="!sys.IsEdit" ng-click="sys.IsEdit = !sys.IsEdit"><i class="glyphicon glyphicon-edit"></i>编辑</button>
-            <button class="btn btn-success m-t-xs m-r-lg" ng-if="sys.IsEdit" ng-disabled="!sys.IsEdit" ng-click="sys.Save()"><i class="glyphicon glyphicon-save"></i>储存</button>
+            <button class="btn btn-success m-t-xs m-r-lg" ng-if="sys.IsEdit" ng-disabled="!sys.IsEdit || sys.Form.$invalid " ng-click="sys.Save()"><i class="glyphicon glyphicon-save"></i>储存</button>
             <button class="btn btn-warning m-r-md  m-t-xs" ng-if="sys.IsEdit" ng-click="sys.IsEdit = !sys.IsEdit">取消</button>
         </span>
 
@@ -35,6 +35,29 @@
                                 <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
                                     <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.EnableJob.$invalid}">
                                         <div toggle-switch ng-model="sys.Setting.AppSet.EnableJob" is-disabled="!sys.IsEdit" class="w-xxs switch-bool" on-label="启用" off-label="停用" on-value="true" off-value="false"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">实体缓存方式:</label>
+                                <div class="col-sm-3 col-md-4 col-lg-4 padder-xs">
+                                    <div class="col-xs-12 input-group">
+                                        <div config-select tb="SystemSet" col="EnCacheType" auto-first="true" ng-model="sys.Setting.AppSet.EnCacheType" ng-disabled="!sys.IsEdit"></div>
+                                    </div>
+                                </div>
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info" ng-if="sys.Setting.AppSet.EnCacheType=='O'">频率(分钟):</label>
+                                <div class="col-sm-3 col-md-3 col-lg-3 padder-xs" ng-if="sys.Setting.AppSet.EnCacheType=='O'">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.CacheInterval.$invalid}">
+                                        <input type="text" min="1" step="1" ng-disabled="!sys.IsEdit" name="CacheInterval" class="form-control" ng-model="sys.Setting.AppSet.CacheInterval" required />
+                                        <span class="input-group-addon">分钟</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 padder-xs" ng-if="sys.Setting.AppSet.EnCacheType == 'O'">
+                                <label class="col-sm-3 col-md-2 col-lg-2 control-label padder-xs text-info">默认缓存来源服务地址:</label>
+                                <div class="col-sm-9 col-md-9 col-lg-9 padder-xs">
+                                    <div class="col-xs-12 input-group" ng-class="{'has-error': sys.Form.EnCacheServiceUrl.$invalid}">
+                                        <input type="text" ng-disabled="!sys.IsEdit" name="EnCacheServiceUrl" class="form-control" ng-model="sys.Setting.AppSet.EnCacheServiceUrl" required />
                                     </div>
                                 </div>
                             </div>
