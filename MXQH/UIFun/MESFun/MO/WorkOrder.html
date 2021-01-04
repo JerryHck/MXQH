@@ -62,14 +62,14 @@
             <table class="table one-line">
                 <thead>
                     <tr>
-                        <td style="width:130px ">编辑</td>
-                        <td style="width:100px ">计划日期</td>
+                        <td style="width:80px ">编辑</td>
+                        <td style="width:90px ">计划日期</td>
                         <td style="width:100px ">生产线</td>
                         <td style="width:100px ">计划序号</td>
-                        <td style="width:135px ">工单号</td>
-                        <td style="width:90px ">状态</td>
+                        <td style="width:150px ">工单号</td>
+                        <td style="width:60px ">状态</td>
                         <td style="width:90px ">完工类型</td>
-                        <td style="width:100px ">到货地</td>
+                        <td style="width:80px ">到货地</td>
                         <td style="width:100px ">编码规则</td>
                         <td style="width:130px ">产品编号</td>
                         <td style="width:160px">产品名称</td>
@@ -99,7 +99,7 @@
                     <td title="{{ item.AssemblyDate }}">{{ item.AssemblyDate }}</td>
                     <td title="{{ item.AssemblyLineName }}" style="white-space:normal;word-break:normal;">{{ item.AssemblyLineName }}</td>
                     <td title="{{ item.ListNo }}">{{ item.ListNo }}</td>
-                    <td ng-if="item.IsPack==1"  title="{{ item.WorkOrder }}"><span class="text-success"><i class="glyphicon glyphicon-ok"></i></span>{{ item.WorkOrder }}</td>
+                    <td ng-if="item.IsPack==1"  title="{{ item.WorkOrder }}"><span class="text-success"><i class="glyphicon glyphicon-ok"></i></span>{{ item.WorkOrder }}<span ng-show="item.IsOut>0" class="text-danger">外</span></td>
                     <td ng-if="item.IsPack!=1" title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
                     <td ng-if="item.Status==0||item.Status==1">开立</td>
                     <td ng-if="item.Status==2">开工</td>
@@ -210,7 +210,7 @@
                         <td style="width:100px ">计划日期</td>
                         <td style="width:100px ">生产线</td>
                         <td style="width:100px ">计划序号</td>
-                        <td style="width:130px ">工单号</td>
+                        <td style="width:150px ">工单号</td>
                         <td style="width:60px ">状态</td>
                         <td style="width:100px ">到货地</td>
                         <td style="width:100px ">编码规则</td>
@@ -234,7 +234,7 @@
                     <td title="{{ item.AssemblyDate }}">{{ item.AssemblyDate }}</td>
                     <td title="{{ item.AssemblyLineName }}">{{ item.AssemblyLineName }}</td>
                     <td title="{{ item.ListNo }}">{{ item.ListNo }}</td>
-                    <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}<span ng-show="item.IsOut>0" class="text-danger">(外)</span></td>
                     <td ng-if="item.Status==0">开立</td>
                     <td ng-if="item.Status==2">开工</td>
                     <td ng-if="item.Status==4">完工</td>
@@ -327,7 +327,7 @@
                         <td style="width:100px ">计划日期</td>
                         <td style="width:100px ">生产线</td>
                         <td style="width:100px ">计划序号</td>
-                        <td style="width:130px ">工单号</td>
+                        <td style="width:150px ">工单号</td>
                         <td style="width:60px ">状态</td>
                         <td style="width:100px ">到货地</td>
                         <td style="width:100px ">编码规则</td>
@@ -351,7 +351,7 @@
                     <td title="{{ item.AssemblyDate }}">{{ item.AssemblyDate }}</td>
                     <td title="{{ item.AssemblyLineName }}">{{ item.AssemblyLineName }}</td>
                     <td title="{{ item.ListNo }}">{{ item.ListNo }}</td>
-                    <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}<span ng-show="item.IsOut>0" class="text-danger">外</span></td>
                     <td ng-if="item.Status==0">开立</td>
                     <td ng-if="item.Status==2">开工</td>
                     <td ng-if="item.Status==4">完工</td>
