@@ -1,4 +1,4 @@
-﻿@import url('demo.css');
+@import url('demo.css');
 @import url('font-awesome.css');
 
 /* GLOBALS */
@@ -273,7 +273,7 @@ a { text-decoration:none; color:#009bd8 }
 .banner .bd li .siteWidth{ width:1000px; position:relative;  margin:0 auto;  height:299px;  }
 .banner .bd li a{ height:299px; display:block;  }
 .banner .bd .txt{ position:absolute; width:415px; top:100px; left:22px;   font:normal 18px/30px "Microsoft YaHei";    }
-.banner-shadow{ height:50px; line-height:50px; background:url(../images/banner-shdow.png) repeat-x;}
+.banner-shadow{ height:50px; line-height:50px; background:url(../images/banner-shdow.png?v=c26469633d) repeat-x;}
 .footer{text-align:center; font-size:12px; color:#999999;}
 .login-aside{position:absolute; width:320px; height:420px; z-index:1000; border-radius:5px; left:58%; top:40px;}
 
