@@ -2,6 +2,17 @@
 angular.module('AppSet', [])
 
 angular.module('AppSet')
+.directive('stopPropagation', function () {
+    return {
+        restrict: 'A',
+        link: link
+    };
+    function link(scope, element, attr) {
+        element.on('click', function (e) {
+            e.stopPropagation();
+        });
+    }
+})
 .directive('ngConfirm', function () {
     return {
         restrict: 'A',

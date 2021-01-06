@@ -753,6 +753,7 @@
                 en.Header = "MXQHServer";
                 en.MsgType = MsgType;
                 en.LoginKey = $cookieStore.get('user-token');
+                en.UserNo = $cookieStore.get('user-no');
                 en.RouteName = $state.current.name;
                 en.GUID = $cookieStore.get('GUID');
                 en.FunName = fun;

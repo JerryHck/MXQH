@@ -88,6 +88,8 @@ function LoginCtrl($rootScope, $scope, AjaxService, toastr, MyPop, appUrl, $cook
         $window.localStorage["IsSave"] = vm.IsSave;
         $cookieStore.remove('user-token');
         $cookieStore.put('user-token', data.Session);
+        $cookieStore.remove('user-no');
+        $cookieStore.put('user-no', vm.UserName);
         //$cookieStore.remove('active-router');
         $window.location.href = appUrl + '/index.html?v=' + (new Date().getSeconds()).toString();
         // 保存唯一标识符
