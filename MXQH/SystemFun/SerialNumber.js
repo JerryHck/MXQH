@@ -25,10 +25,11 @@ function ($scope, Dialog, AjaxService, toastr, $window, MyPop) {
     function PageChange() {
         vm.promise = AjaxService.GetPlansPage("SerialNumberSet", GetContition(), vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
-            for (var i = 0, len = vm.List.length; i < len; i++) {
-                Preview(vm.List[i]);
+            if (vm.Ser.StsInfo == "S") {
+                for (var i = 0, len = vm.List.length; i < len; i++) {
+                    Preview(vm.List[i]);
+                }
             }
-
             vm.page.total = data.Count;
         });
     }

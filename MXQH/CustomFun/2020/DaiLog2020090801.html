@@ -29,6 +29,12 @@
                                 </div>
                             </div>
                             <div class="form-group  col-xs-12 padder-xs">
+                                <label class="col-xs-4 control-label">客户订单号</label>
+                                <div class="col-xs-8 no-padder">
+                                    <input type="text" name="MaterialName" class="form-control" placeholder="客户订单号" ng-model="bl.PackMain.Order.CustomerOrder" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group  col-xs-12 padder-xs">
                                 <label class="col-xs-4 control-label">工单数量</label>
                                 <div class="col-xs-8 no-padder" ng-class="{ 'has-error' : bl.DialogForm.Quantity.$invalid }">
                                     <input type="text" name="Quantity" class="form-control" placeholder="工单数量" ng-model="bl.PackMain.Order.Quantity" disabled />

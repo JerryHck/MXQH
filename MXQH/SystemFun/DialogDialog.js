@@ -555,6 +555,7 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
                     have += 1;
                 }
             });
+            listHave.push(ser.ColumnName);
             var name = have == 0 ? ser.ColumnName : ser.ColumnName + have;
             ser.ActColName = name.ToPinYin();
         });

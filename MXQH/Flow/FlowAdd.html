@@ -1,1 +1,31 @@
-<pre>{{ fo.FlowList | json }}</pre>
+<div class="panel panel-info">
+    <div class="panel-heading text-center">流程列表</div>
+    <div class="panel-body padder-xxs padder-v-xxs">
+        <div class="no-padder scroll-x">
+            <table>
+                <tr>
+                    <td class="text-info padder-xxs" style="width:200px; vertical-align: top" ng-repeat="root in fo.FlowList">
+                        <div class="panel panel-default">
+                            <div class="panel-heading text-center h4">
+                                <span class="auto text-primary-dker h5 text-success">
+                                    <span><i ng-class="root.FunImge"></i></span>
+                                    <span class="font-bold ml-1">{{ root.FunName }}</span>
+                                </span>
+                            </div>
+                            <div class="panel-body padder-v-xxs padder-xs scroll-y bar-xs" style="height:600px">
+                                <ul class="list-unstyled l-h-2x m-l-md">
+                                    <li ng-repeat="fun in root.FunList">
+                                        <a href="">
+                                            <span><i ng-class="fun.FunImge"></i></span>
+                                            <span class="text-xs">{{ fun.FunName }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

@@ -93,10 +93,10 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
             node.Relate = undefined;
             ListNode.push(node);
         }
-        //if (!haveStart) {
-        //    toastr.error("没有配置开始节点，无法保存");
-        //    return;
-        //}
+        if (!haveStart) {
+            toastr.error("没有配置开始节点，无法保存");
+            return;
+        }
         
         en.ListNode = JSON.stringify(ListNode);
         en.listRel = JSON.stringify(ListRel);
@@ -269,7 +269,8 @@ function (MyPop, $scope, ItemData, AjaxService, toastr, $uibModalInstance, Dialo
                 node.NodeType = "A";
                 node.SignType = "A";
                 node.StageType = 'AB';
-                node.AbleIn = false;
+                node.AbleIn = true;
+                node.PosIn = "Top";
                 node.AbleOkOut = true;
                 node.AbleNgOut = false;
                 break;

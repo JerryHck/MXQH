@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Access.html" />
-    <Content Include="Access\login-.html" />
+    <Content Include="Access\login_.html" />
     <Content Include="Basic\blocks\tool.html" />
     <Content Include="Basic\content.html" />
     <Content Include="Board.html" />
@@ -282,8 +282,12 @@
     <Content Include="UIFun\MESFun\MO\WorkOrderSer.js" />
     <Content Include="UIFun\MESFun\Produce\MoPlanCount.html" />
     <Content Include="UIFun\MESFun\Produce\MoPlanCount.js" />
+    <Content Include="UIFun\MESFun\Produce\MultiInCodeBindSN.html" />
+    <Content Include="UIFun\MESFun\Produce\MultiInCodeBindSN.js" />
     <Content Include="UIFun\MESFun\Produce\PackageAct.html" />
     <Content Include="UIFun\MESFun\Produce\PackageAct.js" />
+    <Content Include="UIFun\MESFun\Produce\PackageActMain.html" />
+    <Content Include="UIFun\MESFun\Produce\PackageActMain.js" />
     <Content Include="UIFun\MESFun\Produce\PackageActPower.html" />
     <Content Include="UIFun\MESFun\Produce\PackageActPower.js" />
     <Content Include="UIFun\MESFun\Produce\PackageOnLine.html" />
@@ -294,6 +298,12 @@
     <Content Include="UIFun\MESFun\Produce\PackOnLineDelete.js" />
     <Content Include="UIFun\MESFun\Print\BodyLabelPrint.html" />
     <Content Include="UIFun\MESFun\Print\BodyLabelPrint.js" />
+    <Content Include="UIFun\MESFun\Produce\PNReworkToNewBSN.html" />
+    <Content Include="UIFun\MESFun\Produce\PNReworkToNewBSN.js" />
+    <Content Include="UIFun\MESFun\Produce\SNQCSearch.html" />
+    <Content Include="UIFun\MESFun\Produce\SNQCSearch.js" />
+    <Content Include="UIFun\MESFun\Produce\SNQCSearchAte.html" />
+    <Content Include="UIFun\MESFun\Produce\SNQCSearchAte.js" />
     <Content Include="UIFun\MESFun\Quality\AQLCheckPara.html" />
     <Content Include="UIFun\MESFun\Quality\AQLCheckPara.js" />
     <Content Include="UIFun\MESFun\Quality\QCMateTemplate.html" />

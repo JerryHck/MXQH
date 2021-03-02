@@ -103,14 +103,14 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         //    vm.Item.InCode = undefined;
         //    return false;
         //}
-        if (vm.OrderData.Quantity - vm.OrderCount.ToTalCount == 0) {
-            AjaxService.PlayVoice('error.mp3');
-            MyPop.ngConfirm({ text: "投入数量已达到U9开工量, 是否继续投入?" }).then(function (data) {
-                if (vm.IsAuto) {
-                    Save();
-                }
-            });
-        }
+        //if (vm.OrderData.Quantity - vm.OrderCount.ToTalCount == 0) {
+        //    AjaxService.PlayVoice('error.mp3');
+        //    MyPop.ngConfirm({ text: "投入数量已达到U9开工量, 是否继续投入?" }).then(function (data) {
+        //        if (vm.IsAuto) {
+        //            Save();
+        //        }
+        //    });
+        //}
         else if (vm.IsAuto) {
             Save();
         }
@@ -134,7 +134,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         en.RoutingId = vm.RoutingData.ID;
 
         var dataCheck = AjaxService.ExecPlanWait("MESPlanMainPK", "check", en);
-        if (dataCheck.data[0].MsgType == 'Success') {
+        if (dataCheck.data && dataCheck.data[0].MsgType == 'Success') {
             var enSave = dataCheck.data1[0];
             enSave.SNCode = "";
             enSave.IMEICode = "";
@@ -149,7 +149,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
             //同步执行方式
             var data = AjaxService.ExecPlanWait("MesMxWOrder", "savePK", enSave);
             //vm.promise = AjaxService.ExecPlan("MesMxWOrder", "savePK", en).then(function (data) {
-            if (data.data[0].MsgType == 'Success') {
+            if (data.data && data.data[0].MsgType == 'Success') {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
                 vm.OrderCount = data.data1[0];
                 AjaxService.PlayVoice('success.mp3');
@@ -171,12 +171,12 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
                 vm.InCodeSave = undefined;
 
             }
-            else if (data.data[0].MsgType == 'Error') {
+            else if (data.data && data.data[0].MsgType == 'Error') {
                 showError(data.data[0].Msg);
                 vm.InCodeSave = undefined;
             }
         }
-        else if (dataCheck.data[0].MsgType == 'Error') {
+        else if (dataCheck.data && dataCheck.data[0].MsgType == 'Error') {
             showError(dataCheck.data[0].Msg);
             vm.InCodeSave = undefined;
         }

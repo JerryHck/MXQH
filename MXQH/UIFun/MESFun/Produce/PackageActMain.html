@@ -1,10 +1,10 @@
 <uib-tabset active="active" type="tabs" class="h-100" cg-busy="bl.promise">
     <uib-tab index="0">
-        <uib-tab-heading class="h5">成品包装</uib-tab-heading>
+        <uib-tab-heading class="h5">大成品包装</uib-tab-heading>
         <div class="col-sm-6 padder-xxs" ng-form="pack.UpdateForm">
             <div class="panel panel-default scroll-y">
                 <div class="panel-heading font-bold text-center">
-                    产品包装
+                    大成品包装
                 </div>
                 <div class="panel-body padder-xs padder-v-xs">
                     <div class="form-horizontal no-padder">
@@ -149,7 +149,7 @@
                                 <label class="control-label padder-xs col-sm-5 padder-xxs">打印份数:</label>
                                 <div class="col-sm-7 padder-xs">
                                     <div class="input-group">
-                                        <input autocomplete="off" class="form-control" type="number" min="1" max="100" ng-disabled="!pack.MultiPrint" ng-model="pack.PrintNum" placeholder="箱打印份数"/>
+                                        <input autocomplete="off" class="form-control" type="number" min="1" max="100" ng-disabled="!pack.MultiPrint" ng-model="pack.PrintNum" placeholder="箱打印份数" />
                                         <span class="input-group-addon" title="是否打印多份,默認打印一份">
                                             <label class="i-checks i-checks-sm">
                                                 <input autocomplete="off" type="checkbox" class="ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="pack.MultiPrint"><i></i>
@@ -213,7 +213,7 @@
                     <button class="btn btn-success" type="button" ng-click="pack.Print('4SCODE')">打印4S</button>
                     <button class="btn btn-info" ng-if="pack.OSLabelData.AssemblyPlanDetailID" type="button" ng-click="pack.PrintOSLabel()">打印外部标签</button>
                 </div>
-                <!--<pre>{{ pack.PackMain | json }}</pre>-->
+                <!--<pre>{{ pack.BoxList | json }}</pre>-->
             </div>
             <div class="panel panel-default scroll-y" style="max-height:350px">
                 <div class="panel-heading font-bold text-center">信息显示</div>
@@ -253,20 +253,41 @@
         <div class="col-sm-4 padder-xs">
             <div class="panel panel-default">
                 <div class="panel-heading font-bold text-center">
-                    <span class="pull-left h5 text-black">SN列表</span>
-                    <span class="font-v3 h4 font-bold"> 已扫描：{{ pack.SNList.length }}</span>
+                    <button type="button" class="btn btn-xs btn-success pull-left" ng-disabled="!pack.Item.BoxNumber" ng-click="pack.SaveSPPack()">完成</button>
+                    <span class="h5 text-black">小包SN列表</span>
+                    <button type="button" class="btn btn-xs btn-danger pull-right" ng-disabled="!pack.Item.BoxNumber" ng-click="pack.ClearSPPack()">清空</button>
+                </div>
+                <div class="panel-body scroll-y padder-v-xxs padder-xxs bar-xs" style="max-height:600px">
+                    <div class="list-group col-md-12 padder-xss">
+                        <a class="list-group-item" ng-repeat="sn in pack.MinPackList">
+                            <span ng-class="{ 'font-bold text-danger' : sn.SNCode==pack.ThisSnCode || sn.InternalCode==pack.ThisSnCode }">
+                                {{ sn.RowNo }} :<span class="font-v3">{{ sn.Code }} :</span>
+                                <span ng-if="sn.SNCode">{{ sn.SNCode }}【{{ sn.InternalCode }}】</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading font-bold text-center">
+                    <span class="pull-left h5 text-black">本箱应有 <span class="text-success h3">{{ pack.PackDetail.ProductCount }}</span> 小箱</span>
+                    <span class="font-v3 h4 font-bold"> 已包：{{ pack.PackDetail.PackCount }}</span>
                 </div>
                 <div class="panel-body scroll-y padder-v-xxs padder-xxs bar-xs" style="max-height:600px">
                     <div ng-show="pack.PackDetail">
-                        <div class="list-group col-md-2 padder-xss bg-light">
-                            <a class="list-group-item pad-xss bg-light text-center" ng-repeat="no in pack.NoList|limitTo:200">
-                                <span class="font-v2">{{ no }}</span>
-                            </a>
-                        </div>
-                        <div class="list-group col-md-10 padder-xss">
+                        <div class="list-group col-md-12 padder-xss">
                             <a class="list-group-item" ng-repeat="sn in pack.SNList">
-                                <span ng-class="{ 'font-bold text-danger' : sn.SNCode==pack.ThisSnCode }">{{ sn.SNCode }}</span>
-                                <span ng-class="{ 'font-bold text-danger' : sn.SNCode==pack.ThisSnCode }">【{{ sn.InternalCode }}】</span>
+                                <!--<span ng-class="{ 'font-bold text-danger' : sn.SNCode==pack.ThisSnCode }">
+                                    <span class="font-v3">{{ sn.RowNo }} :</span>
+                                    <span ng-if="sn.SNCode">{{ sn.MaterialCode }}：{{ sn.SNCode }}【{{ sn.InternalCode }}】</span>
+                                </span>-->
+                                <span class="pull-left h4 m-r-sm">
+                                    <span class="font-v3">{{ sn.RowNo }}</span>
+                                </span>
+                                <span class="clear">
+                                    <span class="h5 text-info">{{ sn.CompSNCode }}</span> <br />
+                                    <span style="white-space: pre-line;" ng-bind-html="pack.ReplaceBr(sn.DtlCode)"></span>
+                                </span>
                             </a>
                         </div>
                     </div>

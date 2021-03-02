@@ -125,26 +125,18 @@ function MaterialDialogCtrl($scope, $uibModalInstance, Dialog, Form, ItemData, t
         }
         en.State = vm.Item.State;//是否有效
         en.IsAssWeigh = vm.Item.IsAssWeigh || false;
+        en.IsMainPro = vm.Item.IsMainPro || false;
+        en.BSN_SN = vm.Item.BSN_SN;
 
         if (en.Id != null) {
-            vm.promise = AjaxService.ExecPlan("MesMXMaterial", "alter", en).then(function (data) {
-                if (data.data[0].MsgType == 'Success') {
-                    toastr.success('更新成功');
-                    $uibModalInstance.close(en);
-                }
-                else if (data.data[0].MsgType == 'Error') {
-                    toastr.error(data.data[0].Msg);
-                }
+            vm.promise = AjaxService.PlanUpdate("MesMXMaterial", en).then(function (data) {
+                toastr.success('更新成功');
+                $uibModalInstance.close(en);
             })
         } else if (en.Id == null) {
-            vm.promise = AjaxService.ExecPlan("MesMXMaterial", "add", en).then(function (data) {
-                if (data.data[0].MsgType == 'Success') {
-                    toastr.success('新增成功');
-                    $uibModalInstance.close(en);
-                }
-                else if (data.data[0].MsgType == 'Error') {
-                    toastr.error(data.data[0].Msg);
-                }
+            vm.promise = AjaxService.PlanInsert("MesMXMaterial", en).then(function (data) {
+                toastr.success('新增成功');
+                $uibModalInstance.close(en);
             })
         }
     

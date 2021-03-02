@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('app')
-.controller('PackageActCtrl', ['$rootScope', '$scope', 'MyPop', 'AjaxService', 'toastr', '$window', 'FileUrl',
+.controller('PackageActMainCtrl', ['$rootScope', '$scope', 'MyPop', 'AjaxService', 'toastr', '$window', 'FileUrl',
 function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
 
     var vm = this;
@@ -25,11 +25,15 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
     vm.PrintOSLabel = PrintOSLabel;
     vm.KeyDonwOSLabelPrint = KeyDonwOSLabelPrint;
     vm.KeyDonwRePrint = KeyDonwRePrint;
+    vm.ClearSPPack = ClearSPPack;
+    vm.SaveSPPack = SaveSPPack;
+    vm.ReplaceBr = ReplaceBr;
 
-    //获取包装信息-未完工的资料
+    //获取包装信息-未完工大成品工单
     AjaxService.GetPlans("MesMxWOrder", [{ name: "Status", value: 4, type: "!=" }
         , { name: "WorkOrder", value: "AMO%", type: "not like", action: "and" }
         , { name: "WorkOrder", value: "HMO%", type: "not like", action: "and" }
+        , { name: "IsMainPro", value: "1", type: "=", action: "and" }
     ]).then(function (data) {
         vm.OrderList = data;
         for (var i = 0, len = vm.OrderList.length; i < len; i++) {
@@ -43,15 +47,15 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
         vm.SNList = vm.SNList || [];
         if (keycode == 13 && vm.Item.SNCode) {
             vm.ThisSnCode = vm.Item.SNCode;
-            if (vm.SNList.length == vm.PackDetail.ProductCount) {
+            if (vm.PackDetail.PackCount == vm.PackDetail.ProductCount) {
                 MyPop.Confirm({ text: "包装箱已经包满， 请结束包箱" }, function () { });
                 vm.Item.SNCode = undefined;
                 return;
             }
             
-            for (var i=0, len = vm.SNList.length; i < len; i++) {
-                if (vm.Item.SNCode == vm.SNList[i].SNCode) {
-                    showErr('SN[' + vm.Item.SNCode + ']已经包含在此箱中');
+            for (var i = 0, len = vm.MinPackList.length; i < len; i++) {
+                if (vm.Item.SNCode == vm.MinPackList[i].SNCode || vm.Item.SNCode == vm.MinPackList[i].InternalCode) {
+                    showErr('SN[' + vm.Item.SNCode + ']已经扫描');
                     vm.Item.SNCode = undefined;
                     return;
                 }
@@ -61,22 +65,102 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
             en.Sn = vm.Item.SNCode;
             en.PackDetailID = vm.PackDetail.ID;
             //console.log(en)
-            AjaxService.ExecPlan("MESPackageDtl", 'checkSn', en).then(function (data) {
+            AjaxService.ExecPlan("MESPackageDtl", 'checkSup', en).then(function (data) {
                 if (data.data[0].MsgType == "Error") {
                     showErr(data.data[0].MsgText);
                 }
                 else if (data.data[0].MsgType == "Success") {
-                    vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].MsgText });
-                    AjaxService.GetPlans("vwBSNPackageChild", { name: "PackDetailID", value: vm.PackDetail.ID }).then(function (data2) {
-                        vm.SNList = data2;
-                    })
-                    //vm.SNList = data.data1;
-                    //ChangeBoxNum(vm.Item.BoxNumber);
-                    AjaxService.PlayVoice('success.mp3');
+                    vm.MinPackList = vm.MinPackList || [];
+                    var h = false;
+                    for (var i = 0, len = vm.MinPackList.length; i < len; i++) {
+                        if (vm.MinPackList[i].Code == data.data1[0].Code && !vm.MinPackList[i].SNCode) {
+                            vm.MinPackList[i].SNCode = data.data1[0].SNCode;
+                            vm.MinPackList[i].InternalCode = data.data1[0].InternalCode;
+                            //匹配到值
+                            h = true;
+                            break;
+                        }
+                    }
+                    if (!h) {
+                        showErr(data.data[0].MsgText + ", 但bom不比例不符合，无法添加进此小包");
+                    }
+                    else {
+                        //值满
+                        var full = true;
+                        for (var j = 0, len2 = vm.MinPackList.length; j < len2; j++) {
+                            if (!vm.MinPackList[j].SNCode) {
+                                full = false;
+                                break;
+                            }
+                        }
+                        //小包已满
+                        if (full) {
+                            SPackAction();
+                        }
+                        else {
+                            vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].MsgText });
+                            AjaxService.PlayVoice('success.mp3');
+                        }
+                    }
                 }
                 vm.Item.SNCode = undefined;
             });
         }
+    }
+
+    //清空小包装
+    function ClearSPPack() {
+        for (var i = 0, len = vm.MinPackList.length; i < len; i++) {
+            vm.MinPackList[i].SNCode = null;
+            vm.MinPackList[i].InternalCode = null;
+        }
+    }
+
+    //完成小包装
+    function SaveSPPack() {
+        var full = true;
+        for (var j = 0, len2 = vm.MinPackList.length; j < len2; j++) {
+            if (!vm.MinPackList[j].SNCode) {
+                full = false;
+                break;
+            }
+        }
+        if (!full) {
+            showErr("小包装还未扫码完成");
+        }
+        //小包已满
+         else if (full) {
+            SPackAction();
+        }
+    }
+
+    //小包装动作
+    function SPackAction() {
+        var en = {}
+        en.PackDetailID = vm.PackDetail.ID;
+        vm.promise = AjaxService.ExecPlan("MESPackDtl", 'checkSP', en).then(function (data2) {
+            if (data2.data[0].MsgType == "Error") {
+                showErr(data2.data[0].MsgText);
+            }
+            else if (data2.data[0].MsgType == "Success") {
+                en.SNCode = "";
+                //en.RouteID = data2.data1[0].RouteID;
+                en.SPList = JSON.stringify(vm.MinPackList);
+                var SNList = [{ name: "MESPackComp", col: "SNCoce", parm: "SNCode", charName: vm.CharName }];
+                en.SNColumns = JSON.stringify(SNList);
+                en.TempColumns = "SPList";
+                vm.promise = AjaxService.ExecPlan("MESPackDtl", 'saveSP', en).then(function (data) {
+                    if (data.data[0].MsgType == "Error") {
+                        showErr(data.data[0].MsgText);
+                    }
+                    else if (data.data[0].MsgType == "Success") {
+                        vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].MsgText });
+                        vm.MinPackList = angular.copy(vm.MinPackLst);
+                        ChangeBoxNum(vm.Item.BoxNumber);
+                    }
+                });
+            }
+        });
     }
 
     //生成新卡板号
@@ -120,17 +204,27 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
                     vm.Item.WorkOrder = undefined;
                     showErr(mss + '  不存在或未进行包装登记');
                 }
-                else if (data.Order.Mate.IsMainPro) {
+                else if (!data.Order.Mate.IsMainPro) {
                     vm.Item.WorkOrder = undefined;
-                    showErr(mss + '  是大成品包装工单，不能在此作业');
+                    showErr(mss + '  不是大成品包装工单，不能在此作业');
                 }
                 else {
-                    vm.PackMain = data;
-                    vm.Item.SNCode = undefined;
-                    vm.PackDetail = undefined;
-                    vm.Item.BoxNumber = undefined;
-                    getBoxList();
-                    $("input.SnFocus").focus();
+                    AjaxService.ExecPlan("MESPackageMain", "getMoMin", vm.Item).then(function (data2) {
+                        if (!data2.data || data2.data.length == 0) {
+                            vm.Item.WorkOrder = undefined;
+                            showErr(mss + '  下阶料品获取失败，不能使用');
+                        }
+                        else {
+                            vm.MinPackList = data2.data;
+                            vm.MinPackLst = angular.copy(data2.data);
+                            vm.PackMain = data;
+                            vm.Item.SNCode = undefined;
+                            vm.PackDetail = undefined;
+                            vm.Item.BoxNumber = undefined;
+                            getBoxList();
+                            $("input.SnFocus").focus();
+                        }
+                    })
                 }
             });
             AjaxService.GetPlan("BlMOPackOSLabel", en).then(function (data) {
@@ -143,7 +237,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
         AjaxService.GetPlans("MESPackDtl", { name: "PackMainID", value: vm.PackMain.ID }).then(function (data2) {
             vm.BoxList = data2;
             ChangeBoxNum(vm.Item.BoxNumber + 1);
-            setTimeout(function () {
+            setTimeout(function () {  
                 $("#sc").scrollTop(vm.ScTop);
             }, 1000);
         });
@@ -155,7 +249,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
         vm.Item.BoxNumber = boxNum;
         vm.ScTop = $("#sc")[0].scrollTop + $("#sc a:first").height() + 18;
         var en = { PackMainID: vm.ItemData.ID, BoxNumber: vm.Item.BoxNumber };
-        vm.promise = AjaxService.ExecPlan("MESPackageDtl", 'getdtl', en).then(function (data) {
+        vm.promise = AjaxService.ExecPlan("MESPackageDtl", 'getdtlmain', en).then(function (data) {
             if (data.data[0].MsgType == "Error") {
                 showErr(data.data[0].MsgText);
                 vm.Item.BoxNumber = undefined;
@@ -166,10 +260,10 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
                 vm.PackDetail.ProductCount = vm.PackDetail.ProductCount || 0;
                 vm.PrintSnNum = vm.PackDetail.ProductCount;
                 vm.PrintDtlId = vm.PackDetail.ID;
-                vm.NoList = [];
-                for (var i = 0, len2 = vm.PackDetail.ProductCount > 50 ? 50 : vm.PackDetail.ProductCount; i < vm.PackDetail.ProductCount; i++) {
-                    vm.NoList.push(i + 1);
-                }
+                //vm.NoList = [];
+                //for (var i = 0, len2 = vm.PackDetail.ProductCount > 50 ? 50 : vm.PackDetail.ProductCount; i < vm.PackDetail.ProductCount; i++) {
+                //    vm.NoList.push(i + 1);
+                //}
                 $("input.SnFocus").focus();
                 vm.SNList = data.data2;
             }
@@ -245,6 +339,10 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
                 vm.PrintItem.PrintSNCode = undefined;
             })
         }
+    }
+
+    function ReplaceBr(text) {
+        return text.replace(/,/g, "</br>")
     }
 
     //外箱补打印

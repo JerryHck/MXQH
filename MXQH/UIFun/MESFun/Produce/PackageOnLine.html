@@ -104,7 +104,7 @@
                 </div>
                 <div class="panel-body h5">
                     <div class="form-horizontal" ng-show="pk.OrderData">
-                        <div class="form-group">
+                        <div class="form-group-xs col-xs-12 padder-xs">
                             <label class="control-label col-sm-2 padder-xs">产品编号:</label>
                             <div class="col-sm-4 padder-xs">
                                 <p class="form-control-static font-bold">{{pk.OrderData.MaterialCode}}</p>
@@ -114,7 +114,7 @@
                                 <p class="form-control-static font-bold">{{pk.OrderData.MaterialName}}</p>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group-xs col-xs-12 padder-xs">
                             <label class="control-label col-sm-2 padder-xs">计划日期:</label>
                             <div class="col-sm-4 padder-xs">
                                 <p class="form-control-static font-bold">{{pk.OrderData.AssemblyDate | date:'yyyy-MM-dd'}}</p>
@@ -124,7 +124,7 @@
                                 <p class="form-control-static font-bold">{{pk.OrderData.AssemblyLineName}}</p>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group-xs col-xs-12 padder-xs">
                             <label class="control-label col-sm-2 padder-xs">出货地:</label>
                             <div class="col-sm-4 padder-xs">
                                 <p class="form-control-static font-bold">{{pk.OrderData.SendPlaceName}}</p>
@@ -134,7 +134,7 @@
                                 <p class="form-control-static font-bold">{{pk.OrderData.ERPSO}}</p>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group-xs col-xs-12 padder-xs">
                             <label class="control-label col-sm-2 padder-xs">工单数量:</label>
                             <div class="col-sm-4 padder-xs">
                                 <p class="form-control-static font-bold h4 text-success">{{pk.OrderData.Quantity}}</p>
@@ -144,7 +144,17 @@
                                 <p class="form-control-static font-bold">{{pk.OrderData.ERPQuantity}}</p>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group-xs col-xs-12 padder-xs">
+                            <label class="control-label col-sm-2 padder-xs">客户品名:</label>
+                            <div class="col-sm-4 padder-xs">
+                                <p class="form-control-static font-bold">{{pk.OrderData.CustomerItemName}}</p>
+                            </div>
+                            <label class="control-label col-sm-2 padder-xs">工单备注:</label>
+                            <div class="col-sm-4 padder-xs">
+                                <p class="form-control-static font-bold">{{pk.OrderData.Remark}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group-xs col-xs-12 padder-xs m-t-sm">
                             <label class="control-label col-sm-2 padder-xs">U9开工数量:</label>
                             <div class="col-sm-4 padder-xs">
                                 <p class="form-control-static font-bold h4 text-danger">{{pk.OrderData.TotalStartQty}}</p>
@@ -161,7 +171,7 @@
                                 <p class="form-control-static font-bold  h4 text-success">{{pk.RoutingData.LowerFPY}}%</p>
                             </div>
                         </div>-->
-                        <div class="form-group">
+                        <div class="form-group-xs col-xs-12 padder-xs">
                             <label class="control-label col-sm-2 padder-xs">有效总投入:</label>
                             <div class="col-sm-4 padder-xs">
                                 <p class="form-control-static font-bold  h4 text-success">{{pk.OrderCount.ToTalCount}}</p>
@@ -171,7 +181,7 @@
                                 <p class="form-control-static font-bold  h4 text-success">{{pk.OrderCount.ToDayCount}}</p>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group-xs col-xs-12 padder-xs">
                             <label class="control-label col-sm-2 padder-xs">全部投入:</label>
                             <div class="col-sm-4 padder-xs">
                                 <p class="form-control-static font-bold  h4 text-success">{{pk.OrderCount.InNum}}</p>

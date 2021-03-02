@@ -115,8 +115,9 @@ function SerialNumberDialogCtrl($scope, $uibModalInstance, MyPop, Form, ItemData
     }
 
     function PreView() {
+        var en = GetSaveData();
         AjaxService.ExecPlan("SerialNumberSet", "save", GetSaveData()).then(function (data) {
-            vm.PKData = data.data[0];
+            GetOneSn();
             toastr.success('储存成功');
             vm.form = Form[1];
         })
