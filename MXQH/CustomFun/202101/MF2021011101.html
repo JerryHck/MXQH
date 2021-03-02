@@ -1,0 +1,46 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="PK_WH_CK.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">包装工单重量查询</uib-tab-heading>
+        <div class="wrapper-xs">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" class="form-control"  ng-model="PK_WH_CK.Ser.aWorkOrder" placeholder="工单号">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "PK_WH_CK.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "PK_WH_CK.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-xs ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table " >
+                    <thead>
+                        <tr>
+                            <td title="工单号" style= "width:100px ">工单号</td>
+                            <td title="料号" style= "width:100px ">料号</td>
+                            <td title="品名" style= "width:100px ">品名</td>
+                            <td title="工单数量" style= "width:100px ">工单数量</td>
+                            <td title="单盒最小重量(g)" style= "width:100px ">单盒最小重量(g)</td>
+                            <td title="单盒最大重量(g)" style= "width:100px ">单盒最大重量(g)</td>
+                            <td title="箱号" style= "width:100px ">箱号</td>
+                            <td title="整箱重量(Kg)" style= "width:100px ">整箱重量(Kg)</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in PK_WH_CK.List ">
+                        <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                        <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                        <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
+                        <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
+                        <td title="{{ item.MinWeight }}">{{ item.MinWeight }}</td>
+                        <td title="{{ item.MaxWeight }}">{{ item.MaxWeight }}</td>
+                        <td title="{{ item.BoxNumber }}">{{ item.BoxNumber }}</td>
+                        <td title="{{ item.Packweight }}">{{ item.Packweight }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "PK_WH_CK.page.total>PK_WH_CK.page.size ">
+                <div uib-pagination total-items= "PK_WH_CK.page.total " ng-model= "PK_WH_CK.page.index " items-per-page= "PK_WH_CK.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "PK_WH_CK.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

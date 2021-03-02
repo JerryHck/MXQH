@@ -4,11 +4,11 @@
         <i class="glyphicon glyphicon-align-justify"></i>
     </button>
     <!-- brand -->
-    
+
     <a href="#/" class="navbar-brand text-lt pull-left">
-        <!--<img src="Content/images/logo4.png?v=66fb0802fa" alt=".">-->
+        <!--<img src="Content/images/logo4.png?v=933cda438e" alt=".">-->
         <i class="glyphicon glyphicon-home"></i>
-        <span class="hidden-folded m-l-n-sm hidden-xs"><img style="max-width:150px" src="Content/images/logo4.png?v=66fb0802fa" alt="."></span>
+        <span class="hidden-folded m-l-n-sm hidden-xs"><img style="max-width:150px" src="Content/images/logo4.png?v=933cda438e" alt="."></span>
         <!--<span class="hidden-folded m-l-xs" style="width:65%">{{vm.app.name}}</span>-->
     </a>
     <a class="navbar-brand text-lt visible-xs" ui-toggle-class="show" data-target=".navbar-collapse">
@@ -17,7 +17,7 @@
 </div>
 <!-- / navbar header -->
 <!-- navbar collapse -->
-<div class="collapse pos-rlt navbar-collapse box-shadow {{vm.app.settings.navbarCollapseColor}}" >
+<div class="collapse pos-rlt navbar-collapse box-shadow {{vm.app.settings.navbarCollapseColor}}">
     <!-- buttons -->
     <div class="nav navbar-nav hidden-xs">
         <a href class="btn no-shadow navbar-btn" ng-click="vm.app.settings.asideFolded = !vm.app.settings.asideFolded">
@@ -25,7 +25,7 @@
         </a>
         <!--<pre>{{ vm.app.settings | json }}</pre>-->
     </div>
-    
+
     <!-- / buttons -->
     <ul class="nav navbar-nav">
         <li class="dropdown" dropdown>
@@ -102,41 +102,10 @@
                                             </td>
                                         </tr>
                                     </table>
-
-                                    <div style="width:200px;float:left" ng-repeat="root in vm.SelSys.FunTree">
-                                        
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--<table style="width:{{ vm.SysList.length * 200 }}px">
-                        <tr>
-                            <td class="text-info padder-xxs" style="width:200px; vertical-align: top"  ng-repeat="sys in vm.SysList">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading text-center h4">{{ sys.SysName }}</div>
-                                    <div class="panel-body padder-v-xxs padder-xs scroll-y bar-xs" style="max-height:600px">
-                                        <ul class="nav">
-                                            <li ng-repeat="root in sys.FunTree">
-                                                <span class="auto text-primary-dker h5 text-success">
-                                                    <span><i ng-class="root.FunImge"></i></span>
-                                                    <span class="font-bold ml-1">{{ root.FunName }}</span>
-                                                </span>
-                                                <ul class="list-unstyled l-h-2x m-l-md">
-                                                    <li ng-repeat="fun in root.FunList">
-                                                        <a ui-sref="{{ fun.RouteName }}">
-                                                            <span><i ng-class="fun.FunImge"></i></span>
-                                                            <span class="text-xs">{{ fun.FunName }}</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>-->
                 </div>
             </div>
         </li>
@@ -153,20 +122,60 @@
     <!-- search form -->
     <form class="navbar-form navbar-form-sm navbar-left shift hidden-xs" ui-shift="prependTo" target=".navbar-collapse" role="search">
         <div class="form-group">
-            <input autocomplete="off"  type="text" ng-model="vm.SelectedFun" uib-typeahead="fun as fun.FunName for fun in vm.FunctionList | filter:$viewValue | limitTo:8"
+            <input autocomplete="off" type="text" ng-model="vm.SelectedFun" uib-typeahead="fun as fun.FunName for fun in vm.FunctionList | filter:$viewValue | limitTo:8"
                    class="form-control input-sm bg-light no-border rounded padder" placeholder="查找功能..." ng-keypress="vm.Go(vm.SelectedFun)">
         </div>
     </form>
     <!-- nabar right -->
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-right" id="dpMenus">
         <li class="hidden-xs">
             <a class="h6 text-info-dker pull-down pull-right-xs">{{ vm.SysTime }}</a>
         </li>
         <li class="hidden-xs">
-            <a class="text-success h4" ng-click="vm.Reflash()"><i class="glyphicon glyphicon-refresh"></i></a>
+            <a class="text-success h4" stop-propagation ng-click="vm.Reflash()"><i class="glyphicon glyphicon-refresh"></i></a>
         </li>
         <li class="hidden-xs">
             <a ui-fullscreen></a>
+        </li>
+        <li class="dropdown" dropdown>
+            <a href id="noteID" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-bell fa-fw"></i>
+                <span class="visible-xs-inline">通知栏</span>
+                <span class="badge badge-sm up bg-danger pull-right-xs" ng-if="vm.NewNoteCount>0">{{ vm.NewNoteCount }}</span>
+            </a>
+            <!-- dropdown -->
+            <div class="dropdown-menu w-xxl animated fadeInUp">
+                <div class="panel bg-white">
+                    <div class="panel-heading b-light text-center">
+                        <strong>你有 <span>{{ vm.NewNoteCount }}</span>笔未读通知</strong>
+                        <a class="pull-left" stop-propagation title="全部读" ng-click="vm.ReadAllNote()">
+                            <span class="font-v3 h4"><i class="icon icon-envelope"></i></span>
+                        </a>
+                    </div>
+                    <div class="list-group scroll-y bar-xs" id="nodeDiv" style="max-height:600px">
+                        <a class="list-group-item clearfix" stop-propagation ng-repeat="item in vm.NoteList" ng-click="vm.ReadNote(item)">
+                            <span class="pull-left h4 m-r-sm">
+                                <span class="text-danger" ng-if="!item.IsRead">
+                                    <i class="icon icon-envelope"></i>
+                                </span>
+                                <span class="text-muted" ng-if="item.IsRead">
+                                    <i class="icon icon-envelope-open"></i>
+                                </span>
+                            </span>
+                            <span class="clear">
+                                [<span class="h5 text-info">{{ item.NoteTime }}]</span>{{ item.NoteType }}
+                                <br>
+                                <small class="font-v3" ng-class="{'text-muted': item.IsRead}">{{ item.Note }}</small>
+                            </span>
+                        </a>
+                    </div>
+                    <!--<div class="panel-footer text-sm">
+                        <a class="pull-right"><i class="fa fa-cog"></i></a>
+                        <a data-toggle="class:show animated fadeInRight">查看所有通知</a>
+                    </div>-->
+                </div>
+            </div>
+            <!-- / dropdown -->
         </li>
         <li class="dropdown" dropdown>
             <a class="dropdown-toggle clear" data-toggle="dropdown">
@@ -196,10 +205,4 @@
             <!-- / dropdown -->
         </li>
     </ul>
-    <!-- / navbar right -->
-    <script>
-        $("div.dropdown-menu").on("click", "[data-stopPropagation]", function (e) {
-            e.stopPropagation();
-        });
-    </script>
 </div>

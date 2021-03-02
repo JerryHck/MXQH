@@ -13,6 +13,9 @@ angular.module('app')
         vm.FunctionList = [];
         vm.SysList = [];
         vm.FunTree = [];
+        vm.NoteList = [];
+        vm.NewNoteCount = 0;
+
         //路由状态改变
         vm.Go = Go;
         vm.ChangPsw = ChangPsw;
@@ -61,6 +64,7 @@ angular.module('app')
 
         //显示系统时间
         ShowServerTime();
+        GetTodayNote();
 
         AjaxService.DoBefore("GetSystemData").then(function (data) {
             vm.SysData = data;
@@ -215,16 +219,102 @@ angular.module('app')
         function ShowServerTime() {
             AjaxService.GetServerTime(function (data) {
                 $scope.$apply(function () {
-                    vm.SysTime = data;
-                    $rootScope.SysTime = data;
+                    var dat = JSON.parse(data);
+                    if (dat.Note) {
+                        SetNode(dat.Note);
+                    }
+                    vm.SysTime = dat.Time;
+                    $rootScope.SysTime = dat.Time;
                 });
+            })
+        }
+
+        //取今天的通知信息
+        function GetTodayNote() {
+            var con = [{ name: "NoteTS", value: (new Date()).Format("yyyy-MM-dd"), type: ">" }, { name: "IsRead", value: false, action: "OR" }];
+            AjaxService.GetPlans("UserNote", con, "UserNo").then(function (data) {
+                var bnew = false; var n = 0;
+                
+                //未存在则添加
+                for (var i = 0, len = data.length; i < len; i++) {
+                    var h = false;
+                    for (var j = 0, len2 = vm.NoteList.length; j < len2; j++) {
+                        if (data[i].ID == vm.NoteList[j].ID) {
+                            h = true; break;
+                        }
+                    }
+                    if (!h) {
+                        vm.NoteList.push(data[i]);
+                    }
+                    if (!data[i].IsRead) {
+                        bnew = true;
+                        n++;
+                    }
+                }
+                vm.NewNoteCount = n;
+                if (bnew) {
+                    setTimeout(function () {
+                        $("#noteID")[0].click();
+                        $("#nodeDiv").scrollTop($("#nodeDiv")[0].scrollHeight);
+                    }, 100);
+                }
+            })
+        }
+
+        function SetNode(list){
+            var bnew = false;
+            //未存在则添加
+            for (var i = 0, len = list.length; i < len; i++) {
+                var h = false;
+                for (var j = 0, len2 = vm.NoteList.length; j < len2; j++) {
+                    if (list[i].ID == vm.NoteList[j].ID) {
+                        h = true; break;
+                    }
+                }
+                if (!h) {
+                    bnew = true;
+                    vm.NoteList.push(list[i]);
+                }
+            }
+            var n = 0;
+            for (var j = 0, len2 = vm.NoteList.length; j < len2; j++) {
+                if (!vm.NoteList[j].IsRead) {
+                    n++;
+                }
+            }
+            vm.NewNoteCount = n;
+            if (bnew) {
+                $("#noteID")[0].click();
+                setTimeout(function () {
+                    $("#nodeDiv").scrollTop($("#nodeDiv")[0].scrollHeight);
+                }, 10);
+            }
+        }
+
+        //全部设置未已读
+        vm.ReadAllNote = function () {
+            for (var j = 0, len2 = vm.NoteList.length; j < len2; j++) {
+                if (!vm.NoteList[j].IsRead) {
+                    vm.ReadNote(vm.NoteList[j]);
+                }
+            }
+        }
+
+        //读取
+        vm.ReadNote = function (item) {
+            item.IsRead = true;
+            vm.promise = AjaxService.PlanUpdate("MXUserNote", { ID: item.ID, IsRead: true, ReadTS: vm.SysTime }).then(function (data) {
+                var n = 0;
+                for (var j = 0, len2 = vm.NoteList.length; j < len2; j++) {
+                    if (!vm.NoteList[j].IsRead) {
+                        n++;
+                    }
+                }
+                vm.NewNoteCount = n;
             })
         }
 
         function DownTool(path) {
             $window.location.href = FileUrl + "DownLoad/" + path;
         }
-
-       
-
     }]);

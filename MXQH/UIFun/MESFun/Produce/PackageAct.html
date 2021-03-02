@@ -1,4 +1,4 @@
-﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="bl.promise">
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="bl.promise">
     <uib-tab index="0">
         <uib-tab-heading class="h5">成品包装</uib-tab-heading>
         <div class="col-sm-6 padder-xxs" ng-form="pack.UpdateForm">
@@ -90,6 +90,20 @@
                                 <label class="control-label padder-xs col-sm-5 padder-xxs">到货地名:</label>
                                 <div class="col-sm-7 padder-xs">
                                     <p class="form-control-static font-bold">{{pack.PackMain.SendPlaceName}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group-xs col-md-12 no-padder">
+                            <div class="col-sm-6 no-padder">
+                                <label class="control-label padder-xs col-sm-5 padder-xxs">客户品号:</label>
+                                <div class="col-sm-7 padder-xs">
+                                    <p class="form-control-static font-bold">{{pack.PackMain.Order.CustomerItemName}}</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 no-padder">
+                                <label class="control-label padder-xs col-sm-5 padder-xxs">工单备注:</label>
+                                <div class="col-sm-7 padder-xs">
+                                    <p class="form-control-static font-bold">{{pack.PackMain.Order.Remark}}</p>
                                 </div>
                             </div>
                         </div>
@@ -199,7 +213,7 @@
                     <button class="btn btn-success" type="button" ng-click="pack.Print('4SCODE')">打印4S</button>
                     <button class="btn btn-info" ng-if="pack.OSLabelData.AssemblyPlanDetailID" type="button" ng-click="pack.PrintOSLabel()">打印外部标签</button>
                 </div>
-                <!--<pre>{{ pack.BoxList | json }}</pre>-->
+                <!--<pre>{{ pack.PackMain | json }}</pre>-->
             </div>
             <div class="panel panel-default scroll-y" style="max-height:350px">
                 <div class="panel-heading font-bold text-center">信息显示</div>

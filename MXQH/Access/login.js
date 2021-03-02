@@ -35,7 +35,7 @@ function LoginCtrl($rootScope, $scope, AjaxService, toastr, MyPop, appUrl, $cook
     reflashSecCode();
 
     //登录方法
-    function Login() {
+    function Login(app) {
         if ($rootScope.SysLic.Type == "have") {
             toastr.error($rootScope.SysLic.Msg);
             return;
@@ -45,7 +45,7 @@ function LoginCtrl($rootScope, $scope, AjaxService, toastr, MyPop, appUrl, $cook
         en.User = vm.UserName;
         en.Psw = vm.Pwd;
         en.CusCode = vm.CusCode;
-        en.SecCode = vm.SecCode;
+        en.SecCode = app || vm.SecCode;
         en.Kicking = "N";
         AjaxService.DoBefore("Login", en).then(function (data) {
             if (data.Name == "Error") {
@@ -88,13 +88,22 @@ function LoginCtrl($rootScope, $scope, AjaxService, toastr, MyPop, appUrl, $cook
         $window.localStorage["IsSave"] = vm.IsSave;
         $cookieStore.remove('user-token');
         $cookieStore.put('user-token', data.Session);
+        $cookieStore.remove('user-no');
+        $cookieStore.put('user-no', vm.UserName);
         //$cookieStore.remove('active-router');
-        $window.location.href = appUrl + '/index.html?v=' + (new Date().getSeconds()).toString();
+        //$window.location.href = appUrl + '/index.html?v=' + (new Date().getSeconds()).toString();
+        window.location.href = appUrl + '/index.html?v=' + (new Date().getSeconds()).toString();
         // 保存唯一标识符
         //$cookieStore.remove("GUID")
         if (!$cookieStore.get('GUID') || $cookieStore.get('GUID') == "") {
-            $cookieStore.put("GUID", uuid());
+            var uu = uuid();
+            $cookieStore.put("GUID", uu);
+            //安卓存储
+            SaveAndroid("GUID", uu);
         }
+        //安卓存储
+        SaveAndroid("user-token", data.Session);
+        SaveAndroid("user-no", vm.UserName);
     }
 
     function CheckCode() {
@@ -108,6 +117,19 @@ function LoginCtrl($rootScope, $scope, AjaxService, toastr, MyPop, appUrl, $cook
         }
     }
 
+    function SaveAppUrl() {
+        if (vm.AppUrl) {
+            $cookieStore.remove('appUrl');
+            $cookieStore.put('appUrl', vm.AppUrl);
+            SaveAndroid("appUrl", vm.AppUrl);
+        }
+    }
+
+    //保存安卓APP属性
+    function SaveAndroid(name, val) {
+        window.android.SaveSP(name, val);
+    }
+
     function reflashSecCode() {
         vm.IsOK = undefined;
         var en = {};
@@ -119,10 +141,10 @@ function LoginCtrl($rootScope, $scope, AjaxService, toastr, MyPop, appUrl, $cook
         });
     }
 
-    function KeyDonw(e) {
+    function KeyDonw(e, app) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.SecCode && vm.UserName && vm.Pwd) {
-            Login();
+            Login(app);
         }
     }
     

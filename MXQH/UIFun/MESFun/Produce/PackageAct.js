@@ -120,6 +120,10 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
                     vm.Item.WorkOrder = undefined;
                     showErr(mss + '  不存在或未进行包装登记');
                 }
+                else if (data.Order.Mate.IsMainPro) {
+                    vm.Item.WorkOrder = undefined;
+                    showErr(mss + '  是大成品包装工单，不能在此作业');
+                }
                 else {
                     vm.PackMain = data;
                     vm.Item.SNCode = undefined;

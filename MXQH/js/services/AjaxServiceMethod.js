@@ -489,13 +489,13 @@
                 },
                 function (data) {
                     q.reject();
+                    //console.log(data);
                     if (data.status == 401) {
                         $cookieStore.remove('user-token');
                         if ($window.location.href != appUrl + 'Access.html#!/login') {
                             $window.location.href = appUrl + 'Access.html#!/login';
                         }
                     } else {
-                        //console.log(data);
                         var m = data.data ? data.data.split("。")[0].replace(/System.Exception:/, '') : "错误";
                         toastr.error(m, '服务错误');
                     }
@@ -504,7 +504,7 @@
         }
 
         function HTTPWait(url, postData, type) {
-            var TbData;
+            var TbData = {};
             $.ajax({
                 type: type || 'post',
                 url: url + '?v=' + Math.random(),
@@ -528,8 +528,7 @@
                             $window.location.href = appUrl + 'Access.html#!/login';
                         }
                     } else {
-                        //console.log(data);
-                        var m = data.data ? data.data.split("。")[0].replace(/System.Exception:/, '') : "错误";
+                        var m = data.responseText ? data.responseText.split("。")[0].replace(/System.Exception:/, '') : "错误";
                         toastr.error(m, '服务错误');
                     }
                 }
@@ -753,6 +752,7 @@
                 en.Header = "MXQHServer";
                 en.MsgType = MsgType;
                 en.LoginKey = $cookieStore.get('user-token');
+                en.UserNo = $cookieStore.get('user-no');
                 en.RouteName = $state.current.name;
                 en.GUID = $cookieStore.get('GUID');
                 en.FunName = fun;

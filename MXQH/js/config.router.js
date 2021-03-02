@@ -2,6 +2,11 @@
 angular.module('app').run(Run);
 Run.$inject = ['$rootScope', '$state', '$stateParams', '$cookieStore', '$window', '$q', 'AjaxService', 'router', 'appUrl', 'Version'];
 function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxService, router, appUrl, Version) {
+    //获取地址中的token
+    var token = getQueryString('token');
+    //验证是否登陆
+    checkLogin();
+
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
     $cookieStore.put('active-function', "Main");
@@ -24,9 +29,36 @@ function Run($rootScope, $state, $stateParams, $cookieStore, $window, $q, AjaxSe
     //檢查是否登入
     function onStateChangeStart(e, toState, toParams, fromState, fromParams) {
         if (!$cookieStore.get('user-token')) {
+            checkLogin();
+        }
+    }
+    function checkLogin() {
+        var i = 5; var h = false;
+        
+        while (i > 0) {
+            AjaxService.sleep(10);
+            if ($cookieStore.get('user-token') && $cookieStore.get('user-token') != "") {
+                h = true;
+                break;
+            }
+            i--;
+        }
+        if (!h && token) {
+            $cookieStore.put('user-token', token)
+        }
+        else if (!h) {
             $window.location.href = appUrl + 'Access.html#!/login';
         }
     }
+
+    //获取URL中的参数
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
 
     function onStateChangeSuccess(e, toState, toParams, fromState, fromParams) {
         AjaxService.Custom("LogBrowse");

@@ -1,4 +1,4 @@
-﻿<div class="modal-header">
+<div class="modal-header">
     <h3 class="modal-title">{{ ma.form.title }}物料信息</h3>
 </div>
 <div class="modal-body wrapper-xs" ng-form="DialogForm">
@@ -306,6 +306,23 @@
                             </label>
                         </div>
                     </div>
+                    <div class="col-md-6 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">是否大成品：</label>
+                        <div class="col-sm-1 padder-xs" ng-class="{ 'has-error' : DialogForm.IsMainPro.$invalid }">
+                            <label class="i-checks i-checks-sm control-label">
+                                <input type="checkbox" ng-model="ma.Item.IsMainPro" name="IsMainPro" class="ng-pristine ng-untouched ng-valid ng-not-empty"><i></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group-xs col-md-12">
+                    <div class="col-md-6 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">BSN/SN比：</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.BSNSN.$invalid }">
+                            <input type="number" min="1" max="20" class="form-control" name="BSNSN" placeholder="几个BSN生成1个SN(整数)"
+                                   ng-model="ma.Item.BSN_SN">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -315,9 +332,8 @@
 <div class="modal-footer">
     <div class="text-center">
         <!--<button class="btn btn-success" type="button" ng-disabled="DialogForm.$invalid" ng-click="ma.Save()">保存</button>-->
-        <button class="btn btn-success" type="button" ng-click="ma.Save()">保存</button>
+        <button class="btn btn-success" ng-disabled="DialogForm.$invalid" type="button" ng-click="ma.Save()">保存</button>
         <button class="btn btn-warning" type="button" ng-click="ma.cancel()">取消</button>
     </div>
 </div>
-
 

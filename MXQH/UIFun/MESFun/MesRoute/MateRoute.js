@@ -22,11 +22,6 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
 
     vm.Delete = Delete;
 
-    function Search() {
-        vm.page.index = 1;
-        PageChange();
-    }
-
     ChangeMateType();
 
     function ChangeMateType() {
@@ -112,6 +107,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
         en.RouteID = vm.SelectedRo.Route.ID;
         en.IsDefault = vm.SelectedRo.IsDefault;
         en.IsControl = vm.SelectedRo.IsControl;
+        en.IsShow = vm.SelectedRo.IsShow == undefined ? true : vm.SelectedRo.IsShow;
         vm.promise = AjaxService.ExecPlan("MESRouteMate", "save", en).then(function (data) {
             if (data.data[0].MsgType == "Error") {
                 toastr.error(data.data[0].MsgText);
@@ -128,6 +124,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     //删除该关系
     function Delete(Id) {
         AjaxService.ExecPlan("MESRouteMate", "delete", { ID: Id }).then(function (data) {
+            console.log(data)
             if (data.data[0].MsgType == "Error") {
                 toastr.error(data.data[0].MsgText);
             }

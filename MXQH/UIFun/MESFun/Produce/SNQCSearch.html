@@ -1,11 +1,9 @@
-﻿<div class="wrapper-md col-md-12" cg-busy="sn.promise">
-    <div class="col-md-12">
-        <div class="form-inline">
-            <div class="form-group">
-                <input type="text" class="form-control" ng-model="sn.Ser.SN" placeholder="SN/内控码" ng-keyup="sn.KeyDonwSnCode($event)">
-            </div>
-            <button class="btn btn-sm btn-info " ng-click="sn.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+<div class="col-md-12 padder-sm" cg-busy="sn.promise">
+    <div class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="sn.Ser.SN" placeholder="SN/内控码" ng-keyup="sn.KeyDonwSnCode($event)">
         </div>
+        <button class="btn btn-sm btn-info " ng-click="sn.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
     </div>
 </div>
 <div class="col-md-12 padder-xs">
@@ -179,4 +177,21 @@
         </table>
     </div>
 </div>
-<!--<pre>{{ sn.Data.data3|json }}</pre>-->
+<!--<div class="col-md-12 padder-xs">
+    <div class="h4 text-center">
+        <strong class="text-info">ATE原始测试信息</strong>
+    </div>
+    <div class="padder-xs  m-t-xxs scroll-x">
+        <table class="table ">
+            <thead>
+                <tr>
+                    <td style="width:100px " ng-repeat="k in sn.KeysData">{{ k }}</td>
+                </tr>
+            </thead>
+            <tr ng-repeat="item in sn.ATEData">
+                <td ng-repeat="k in sn.KeysData">{{ item[k] }}</td>
+            </tr>
+        </table>
+    </div>
+</div>-->
+

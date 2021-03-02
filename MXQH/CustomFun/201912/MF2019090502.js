@@ -1,8 +1,8 @@
 ﻿'use strict';
 
-angular.module('app')
-.controller('QcAteCheckctrl', ['$rootScope', '$scope', '$http', 'AjaxService', 'toastr', '$window',
-function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
+angular.module('AppSet')
+.controller('QcAteCheckctrl', ['$scope', 'Dialog', 'AjaxService', 'toastr', '$window',
+function ($scope, Dialog, AjaxService, toastr, $window) {
 
     var vm = this;
     vm.page = { index: 1, size: 12 };
@@ -31,17 +31,17 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
     function GetContition() {
         var list = [];
-        if (vm.Ser.a_BSN) {
-            list.push({ name: "BSN", value: vm.Ser.a_BSN, tableAs:"a" });
+        if (vm.Ser.aBSN) {
+            list.push({ name: "BSN", value: vm.Ser.aBSN, tableAs:"a" });
         }
-        if (vm.Ser.a_MODEL_NAME) {
-            list.push({ name: "MODEL_NAME", value: vm.Ser.a_MODEL_NAME, tableAs:"a" });
+        if (vm.Ser.aMODELNAME) {
+            list.push({ name: "MODEL_NAME", value: vm.Ser.aMODELNAME, tableAs:"a" });
         }
-        if (vm.Ser.a_TS) {
-            list.push({ name: "TS", value: vm.Ser.a_TS, tableAs:"a", type:">=" });
+        if (vm.Ser.aTS) {
+            list.push({ name: "TS", value: vm.Ser.aTS, tableAs:"a", type:">=" });
         }
-        if (vm.Ser.a_TS1) {
-            list.push({ name: "TS", value: vm.Ser.a_TS1, tableAs:"a", type:"<=" });
+        if (vm.Ser.aTS1) {
+            list.push({ name: "TS", value: vm.Ser.aTS1, tableAs:"a", type:"<=" });
         }
         return list;
     }

@@ -1,4 +1,4 @@
-﻿<div class="modal-header text-center" cg-busy="bl.promise">
+<div class="modal-header text-center" cg-busy="bl.promise">
     <span class="modal-title h3">工单外部标签导入</span>
 </div>
 <div class="modal-body wrapper-xs">
@@ -26,6 +26,12 @@
                                 <label class="col-xs-4 control-label">料名</label>
                                 <div class="col-xs-8 no-padder" ng-class="{ 'has-error' : bl.DialogForm.MaterialName.$invalid }">
                                     <input type="text" name="MaterialName" class="form-control" placeholder="料名" ng-model="bl.PackMain.Order.MaterialName" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group  col-xs-12 padder-xs">
+                                <label class="col-xs-4 control-label">客户订单号</label>
+                                <div class="col-xs-8 no-padder">
+                                    <input type="text" name="MaterialName" class="form-control" placeholder="客户订单号" ng-model="bl.PackMain.Order.CustomerOrder" disabled />
                                 </div>
                             </div>
                             <div class="form-group  col-xs-12 padder-xs">

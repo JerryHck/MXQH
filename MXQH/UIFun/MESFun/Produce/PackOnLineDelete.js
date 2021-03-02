@@ -71,6 +71,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
 
     function DeleteCode2() {
         vm.promise = AjaxService.ExecPlan("MESPackOnlineDelete", 'delete', vm.DeleteItem).then(function (data) {
+            console.log(data)
             if (data.data[0].MsgType == "Error") {
                 //toastr.error(mes);
                 var Msg = { Id: vm.MesList.length + 1, IsOk: false, Msg: data.data[0].Msg };

@@ -1,4 +1,4 @@
-﻿<div class="bg-light lter b-b wrapper-md" cg-busy="job.promise">
+<div class="bg-light lter b-b wrapper-md" cg-busy="job.promise">
     <div class="col-md-3 text-center">
         <span class="m-n font-thin h3">任务作业管理</span>
         <button class="btn btn-sm btn-success pull-left" ng-click="job.Insert()" ui-toggle-class="active" target=".insert-job"><i class="glyphicon glyphicon-plus"></i>任务</button>
@@ -190,7 +190,7 @@
                     <div class="form-group-xs m-b-xs pull-in clearfix">
                         <label class="control-label m-l-n-lg padder-xs col-md-2">方法类型</label>
                         <div class="col-md-10 padder-xs" ng-class="{ 'has-error' : job.JobForm.MethodType.$invalid }" title="方法类型">
-                            <div config-select ng-name="MethodType" ng-model="job.Item.MethodType" auto-first="true" placeholder="请选择执行类型" select-class="text-xs" config-option="job.MethodType" ng-required="true"></div>
+                            <div config-select ng-name="MethodType" ng-model="job.Item.MethodType" auto-first="true" placeholder="请选择执行类型" select-class="text-xs" tb="Sys_JobSet" col="MethodType" ng-required="true"></div>
                         </div>
                     </div>
                     <!--执行自定义后端方法时-->

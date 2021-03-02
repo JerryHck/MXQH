@@ -1,4 +1,4 @@
-﻿
+
 <uib-tabset active="active" type="tabs" class="h-100" cg-busy="pack.promise">
     <uib-tab index="0" select="pack.SelectTab(0)" deselect="pack.SelectTab(-1)">
         <uib-tab-heading class="h5">散件包装</uib-tab-heading>
@@ -92,6 +92,20 @@
                                     <label class="control-label padder-xs col-sm-5">到货地名:</label>
                                     <div class="col-sm-7 padder-xs">
                                         <p class="form-control-static font-bold">{{pack.PackMain.SendPlaceName}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group-xs col-md-12 no-padder">
+                                <div class="col-sm-6 no-padder">
+                                    <label class="control-label padder-xs col-sm-5 padder-xxs">客户品号:</label>
+                                    <div class="col-sm-7 padder-xs">
+                                        <p class="form-control-static font-bold">{{pack.PackMain.Order.CustomerItemName}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 no-padder">
+                                    <label class="control-label padder-xs col-sm-5 padder-xxs">工单备注:</label>
+                                    <div class="col-sm-7 padder-xs">
+                                        <p class="form-control-static font-bold">{{pack.PackMain.Order.Remark}}</p>
                                     </div>
                                 </div>
                             </div>

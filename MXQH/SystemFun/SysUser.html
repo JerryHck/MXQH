@@ -1,4 +1,4 @@
-﻿<div class="app-content-full" cg-busy="use.promise">
+<div class="app-content-full" cg-busy="use.promise">
     <div class="hbox hbox-auto-xs hbox-auto-sm bg-light">
         <div class="col w-md lt b-r text-xs">
             <div class="vbox">
@@ -49,10 +49,11 @@
                                                 <span class="text-lg" ng-bind-html="item.UserNo | highlight: use.EntityQuery"></span>
                                                 <span ng-if="item.IsOn" class="pull-right"><i class="text-color h7">在线</i></span>
                                                 <span ng-if="item.State=='E'" class="pull-right"><i class="text-danger h7">停用</i></span>
+                                                <span class="m-l-xs h4 text-black">{{ item.ChiFirstName }}</span>
                                             </span>
                                             <btn class="pull-right text-success" title="重置账号密码" ng-click="use.Reset(item)"><i class="icon-key"></i></btn>
                                             <small class="text-muted">
-                                                <span>{{ item.ChiFirstName }}</span>
+                                                <span>{{ item.Position }}</span>
                                             </small><br />
                                             <small class="text-muted" ng-if="use.UserType!='E'">
                                                 {{ item.CompanyName }}
