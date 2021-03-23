@@ -10,8 +10,19 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">内部码</label>
                                 <div class="col-lg-8" ng-class="{ 'has-error' : inCode.DeleteForm.InCode.$invalid }">
-                                    <input type="text" class="form-control" ui-focus="inCode.Focus == 0" name="InCode" ng-model="inCode.DeleteItem.InternalCode" placeholder="生产条码" ng-keyup="inCode.KeyDonwInCode($event)" required>
+                                    <input type="text" class="form-control" ui-focus="inCode.Focus == 0" name="InCode" ng-model="inCode.DeleteItem.InternalCode" placeholder="生产条码" ng-keyup="inCode.KeyDonwInCode($event)" required autocomplete="off">
 
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="inCode.OrderList">
+                                <label class="col-lg-3 control-label">解绑工单</label>
+                                <div class="col-lg-8" ng-class="{ 'has-error' : inCode.DeleteForm.OrderMain.$invalid }">
+                                    <ui-select name="OrderMain" ng-model="inCode.DeleteItem.AssemblyPlanDetailID" theme="bootstrap" search-enabled="true" ng-required="true">
+                                        <ui-select-match placeholder="选择解绑工单..." class="h6">{{ $select.selected.WorkOrder }}</ui-select-match>
+                                        <ui-select-choices repeat="item.AssemblyPlanDetailID as item in inCode.OrderList | filter: $select.search track by item.MainID">
+                                            <div ng-bind-html="item.WorkOrder | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
                                 </div>
                             </div>
                             <div class="form-group">

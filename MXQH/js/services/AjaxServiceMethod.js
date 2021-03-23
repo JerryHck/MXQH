@@ -735,9 +735,8 @@
             return g.promise;
         }
 
-        function GetServerTime(Do) {
-            var socket = undefined;
-            return CallServerSocket("Time", undefined, undefined,Do);
+        function GetServerTime(Do, socket) {
+            return CallServerSocket("Time", undefined, undefined, Do, socket);
         }
 
         function GetServerSocket(json, fun, Do) {

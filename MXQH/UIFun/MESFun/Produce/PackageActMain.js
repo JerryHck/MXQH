@@ -281,7 +281,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window, FileUrl) {
         en.Packweight = vm.Weight;
         vm.promise = AjaxService.ExecPlan("MESPackChi", "pack", en).then(function (data) {
             if (data.data[0].MsgType == "Error") {
-                MyPop.Show(true, data.data[0].MsgText);
+                showErr(data.data[0].MsgText);
             }
             else if (data.data[0].MsgType == "Success") {
                 toastr.success('包装成功, 打印标签');

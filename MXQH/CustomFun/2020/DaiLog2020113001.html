@@ -10,7 +10,9 @@
                     <div class="form-group-xs col-sm-12">
                         <label class="col-sm-1 padder-xs control-label text-success">{{ !ll.InItem.DocNo ? '领料单号':'扫描单号' }}：</label>
                         <div class="col-sm-2 no-padder" ng-class="{ 'has-error' : ll.MainForm.DocNo.$invalid }">
-                            <input autocomplete="off" type="text" ng-disabled="ll.InItem.PickDocNo" name="DocNo" class="form-control" ng-model="ll.ThisForm.DocNo" required placeholder="扫描单号" ng-keyup="ll.KeyDonwOrder($event)" />
+                            <input autocomplete="off" type="text" ng-disabled="ll.InItem.PickDocNo" name="DocNo"
+                                   uib-typeahead="order.DocNo as order.DocNo for order in ll.LLDocList | filter:{DocNo: $viewValue} | limitTo:8"
+                                    class="form-control" ng-model="ll.ThisForm.DocNo" required placeholder="扫描单号" ng-keyup="ll.KeyDonwOrder($event)" />
                         </div>
                         <label class="col-sm-2 padder-xs control-label">以旧换新：</label>
                         <div class="col-sm-2 no-padder">

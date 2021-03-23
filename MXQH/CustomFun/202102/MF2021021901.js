@@ -47,6 +47,9 @@ function ($scope, Dialog, AjaxService, toastr, $window) {
         if (vm.Ser.aSentTime) {
             list.push({ name: "SentTime", value: vm.Ser.aSentTime1, tableAs:"a", type:"<=" });
         }
+        if (vm.Ser.aMailTo) {
+            list.push({ name: "MailTo", value:  vm.Ser.aMailTo, tableAs: "a" });
+        }
         return list;
     }
 

@@ -217,6 +217,18 @@ angular.module('app')
         }
 
         function ShowServerTime() {
+            getSysTime();
+            //定时计--每3分钟换下一次以防止服务器断开连接
+            vm.timeSocketIntervalId = setInterval(function () {
+                getSysTime()
+            }, 300000);
+        }
+
+        function getSysTime() {
+            //console.log(en);
+            if (vm.timeSocket) {
+                vm.timeSocket.close();
+            }
             AjaxService.GetServerTime(function (data) {
                 $scope.$apply(function () {
                     var dat = JSON.parse(data);
@@ -226,8 +238,9 @@ angular.module('app')
                     vm.SysTime = dat.Time;
                     $rootScope.SysTime = dat.Time;
                 });
-            })
+            }, vm.timeSocket)
         }
+
 
         //取今天的通知信息
         function GetTodayNote() {

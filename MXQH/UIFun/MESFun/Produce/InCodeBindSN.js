@@ -108,7 +108,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
         //流程
         vm.ProStep = { BSN: bsn };
         vm.ProStep.steps = [];
-        AjaxService.GetPlans("vwOpPlanExecut", { name: "InternalCode", value: bsn }).then(function (data) {
+        AjaxService.GetPlans("vwOpPlanExecut", [{ name: "InternalCode", value: bsn }, { name: "AssemblyPlanDetailID", value: vm.OrderData.ID }]).then(function (data) {
             for (var i = 0, len = data.length; i < len; i++) {
                 var en = {};
                 en.title = data[i].ProcedureName;

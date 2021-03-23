@@ -14,6 +14,14 @@ function ($scope, ItemData, $uibModalInstance, AjaxService, toastr, $window) {
     vm.Save = Save;
 
     GetData(vm.InItem.PickDocNo, 'S');
+
+    //获取备料单信息
+    AjaxService.GetPlans("vwLLMOIssueDoc", [{ name: "DocState", value: 2, type: "!=" }
+        , { name: "Cancel_Canceled", value: false, type: "=", action: "and" }
+    ]).then(function (data) {
+        vm.LLDocList = data;
+    })
+
     function KeyDonwOrder(e) {
         var keycode = window.event ? e.keyCode : e.which;
         if (keycode == 13 && vm.ThisForm.DocNo) {
