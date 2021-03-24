@@ -25,6 +25,7 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
     vm.PageChange = PageChange;
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
+    vm.ClearSPList = ClearSPList;
 
     //PageChange();
     //未完工工单
@@ -133,6 +134,10 @@ function ($scope, $http, AjaxService, toastr, $window, MyPop) {
         }
     }
    
+    //清空
+    function ClearSPList() {
+        vm.BSNList = [];
+    }
 
     //补打印
     function KeyDonwPrint(e) {

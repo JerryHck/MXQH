@@ -95,7 +95,7 @@ function ($rootScope, $scope, MyPop, AjaxService, toastr, $window) {
     function InCodeToDb() {
         var IsOk = true;
         if (!vm.OrderData || !vm.RoutingData) {
-            showError('不存在或已完工');
+            showError('工单不存在或已完工');
             return false;
         }
         //if (vm.OrderData.MaxOverCount - vm.OrderCount.ToTalCount <= 0) {

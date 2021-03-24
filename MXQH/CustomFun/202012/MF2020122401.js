@@ -18,14 +18,14 @@ function ($scope, Dialog, AjaxService, toastr, $window) {
     }
 
     function PageChange() {
-        vm.promise = AjaxService.GetCachePlansPage("U9vwMateInBom", GetContition(), vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.GetPlansPage("U9vwMateInBom", GetContition(), vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
 
     }
     function ExportExcel() {
-        vm.promise = AjaxService.GetCachePlanOwnExcel("U9vwMateInBom", GetContition()).then(function (data) {
+        vm.promise = AjaxService.GetPlanOwnExcel("U9vwMateInBom", GetContition()).then(function (data) {
             $window.location.href = data.File;
         });
     }

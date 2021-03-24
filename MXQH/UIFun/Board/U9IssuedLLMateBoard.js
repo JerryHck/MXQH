@@ -6,8 +6,8 @@ if (window.location.href.indexOf("index.html") > 0) {
 if (window.location.href.indexOf("Access.html") > 0) {
     angular.module('access').controller('U9IssuedLLMateBoardCtrl', U9IssuedLLMateBoardCtrl);
 }
-U9IssuedLLMateBoardCtrl.$inject = ['$scope', '$state', 'AjaxService', 'toastr', 'appUrl', '$window', 'Dialog', '$timeout', '$cookieStore'];
-function U9IssuedLLMateBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $window, Dialog, $timeout, $cookieStore) {
+U9IssuedLLMateBoardCtrl.$inject = ['$scope', '$rootScope', '$state', 'AjaxService', 'toastr', 'appUrl', '$window', 'Dialog', '$timeout', '$cookieStore'];
+function U9IssuedLLMateBoardCtrl($scope, $rootScope, $state, AjaxService, toastr, appUrl, $window, Dialog, $timeout, $cookieStore) {
 
     var vm = this;
 
@@ -33,6 +33,28 @@ function U9IssuedLLMateBoardCtrl($scope, $state, AjaxService, toastr, appUrl, $w
     vm.Offline = Offline;
     
     Begin(0);
+
+    if (vm.IsAss) {
+        getSysTime();
+        //定时计--每3分钟换下一次以防止服务器断开连接
+        vm.timeSocketIntervalId = setInterval(function () {
+            getSysTime()
+        }, 300000);
+    }
+
+    function getSysTime() {
+        //console.log(en);
+        if (vm.timeSocket) {
+            vm.timeSocket.close();
+        }
+        AjaxService.GetServerTime(function (data) {
+            $scope.$apply(function () {
+                var dat = JSON.parse(data);
+                vm.NowTime = dat.Time;
+            });
+        }, vm.timeSocket)
+    }
+
 
     function Offline() {
         if (!vm.IsAss) {

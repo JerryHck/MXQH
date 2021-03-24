@@ -33,10 +33,18 @@
 
 <div class="w-full bg-black-opacity h-full" ng-init="vm.app.settings.asideFolded=true" ng-class="{'app-content-body': !ll.IsAss, 'content-full':ll.IsAss}">
     <div class="panel panel-default panel-body h-full w-100 padder-v-xxs bg-black-opacity" cg-busy="ll.promise">
-        <button class="btn btn-sm pull-left btn-info m-l-xs" ng-click="ll.Offline()"><i class="glyphicon glyphicon-fullscreen"></i></button>
-        
         <table class="table-purple col-md-12 m-t-md">
             <thead>
+                <tr style="border: 5px solid  rgba(32, 43, 54, 0.5);background-color: rgba(32, 43, 54, 0.5);">
+                    <th class="text-center v-bottom" colspan="8" style="border-width: 0; border-bottom-width: 0;">
+                        <button class="btn btn-sm pull-left btn-info m-l-xs" ng-click="ll.Offline()"><i class="glyphicon glyphicon-fullscreen"></i></button>
+                        <span style="color:#fffc00; font-size:30px;">仓库发料信息一览表</span>
+                    </th>
+                    <th class="text-center v-bottom" colspan="1" style="border-width: 0; border-bottom-width: 0;">
+                        <span class="pull-right h5" ng-if="ll.IsAss">{{ ll.NowTime | date:'yyyy-MM-dd HH:mm:ss' }}</span>
+                        <span class="pull-right h5" ng-if="!ll.IsAss">{{ vm.SysTime | date:'yyyy-MM-dd HH:mm:ss' }}</span>
+                    </th>
+                </tr>
                 <tr>
                     <th class="text-center">行号</th>
                     <th class="text-center">领料单号</th>

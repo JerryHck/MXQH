@@ -1,4 +1,4 @@
-<div class="col-md-12 padder-sm" cg-busy="sn.promise">
+<div class="col-md-12 padder-sm m-t-sm" cg-busy="sn.promise">
     <div class="form-inline">
         <div class="form-group">
             <input type="text" class="form-control" ng-model="sn.Ser.SN" placeholder="SN/内控码" ng-keyup="sn.KeyDonwSnCode($event)">
@@ -91,6 +91,7 @@
             <thead>
                 <tr>
                     <td style="width:70px ">序号</td>
+                    <td style="width:100px ">工单号</td>
                     <td style="width:100px ">不良种类</td>
                     <td style="width:100px ">不良原因</td>
                     <td style="width:100px ">工位名称</td>
@@ -101,6 +102,7 @@
             </thead>
             <tr ng-repeat="item in sn.Data.data1">
                 <td>{{ $index + 1 }}</td>
+                <td>{{ item.WorOrder }}</td>
                 <td>{{ item.FirstName }}</td>
                 <td class="text-left">{{ item.SecondName }}</td>
                 <td>{{ item.WorkPartName }}</td>
@@ -118,6 +120,7 @@
             <thead>
                 <tr>
                     <td style="width:70px ">序号</td>
+                    <td style="width:100px ">工单号</td>
                     <td style="width:100px ">维修种类</td>
                     <td style="width:100px ">维修项</td>
                     <td style="width:100px ">工位名称</td>
@@ -128,6 +131,7 @@
             </thead>
             <tr ng-repeat="item in sn.Data.data2">
                 <td>{{ $index + 1 }}</td>
+                <td>{{ item.WorOrder }}</td>
                 <td>{{ item.FirstName }}</td>
                 <td class="text-left">{{ item.SecondName }}</td>
                 <td>{{ item.WorkPartName }}</td>
