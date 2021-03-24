@@ -286,11 +286,13 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, Dialog, toastr, AjaxS
                             vm.Item.AssemblyLineID = data.AssemblyLineID;
                             vm.Item.CustomerItemName = data.CustomerItemName;
                             vm.Item.CompleteType = data.CompleteType;
+                            vm.Item.IsMR = 0;
                         });
                     } else if (vm.Item.WorkOrder != data.DocNo) {
                         toastr.error('同步的不是当前工单！');
                     }
                 }
+                console.log(vm.Item);
             });
         });
     }
