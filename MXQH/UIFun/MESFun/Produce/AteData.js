@@ -15,7 +15,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
 
-    PageChange();
+    //PageChange();
 
     function Search() {
         vm.page.index = 1;

@@ -220,6 +220,21 @@
                             </div>
                         </div>
                     </div>
+                    <!--执行EXE程序时-->
+                    <div class="form-group-xs pull-in clearfix" ng-if="job.Item.MethodType=='ExeFile'">
+                        <div class="col-sm-12 no-padder">
+                            <label class="control-label m-l-n-lg padder-xs col-md-2">Exe程序地址</label>
+                            <div class="col-md-10 padder-xs" ng-class="{ 'has-error' : job.JobForm.ExecPath.$invalid }" title="Exe程序地址">
+                                <input autocomplete="off" type="text" class="form-control" name="ExecPath" placeholder="Exe程序地址" ng-model="job.Item.EnProShortName" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 no-padder m-t-xs">
+                            <label class="control-label m-l-n-lg padder-xs col-md-2">程序参数</label>
+                            <div class="col-md-10 padder-xs" title="程序参数">
+                                <textarea class="form-control" rows="2" ng-model="job.Item.JobParameter" placeholder="输入Exe参数, 以空格分开参数 如 A B C"></textarea>
+                            </div>
+                        </div>
+                    </div>
                     <!--执行实体计划时-->
                     <div class="form-group-xs pull-in clearfix" ng-if="job.Item.MethodType.indexOf('SrcExePlan') != -1">
                         <div class="col-sm-6 no-padder">
@@ -288,6 +303,7 @@
                             <label class="control-label m-l-n-lg padder-xs col-md-2">{{ job.Item.MethodType.indexOf('To') == -1?"SQL脚本":"来源SQL" }}</label>
                             <div class="col-md-10 padder-xs" ng-class="{ 'has-error' : job.JobForm.EnProShortName.$invalid }" title="SQL脚本">
                                 <textarea class="form-control" name="EnProShortName" rows="4" ng-model="job.Item.EnProShortName" placeholder="输入要执行的sql脚本" required></textarea>
+                                <span class="h6 text-danger">注：链接对象为Oracle数据库时，以英文分号[ ; ]分割来源SQL，并依次执行</span>
                             </div>
                         </div>
                     </div>

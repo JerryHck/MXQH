@@ -1,4 +1,4 @@
-<div class="wrapper-md" cg-busy="ate.promise">
+<div class="padder-xs m-t-sm" cg-busy="ate.promise">
     <div class="form-inline">
         <div class="form-group">
             <div config-select ng-model="ate.Ser.Table" auto-first="true" placeholder="请选择查询表" select-class="text-xs" config-option="ate.ConfigTable"></div>
@@ -32,8 +32,8 @@
         <button class="btn btn-sm btn-success" ng-click="ate.ExportExcel()"><i class="glyphicon glyphicon-export"></i> 导出</button>
     </div>
 </div>
-<div class="padder-md">
-    <div class="scroll-x col-md-12">
+<div class="padder-xs m-t-sm">
+    <div class="scroll-x col-md-12 no-padder">
         <table class="table">
             <tr>
                 <td class="text-center" style="width:100px; max-width:200px" ng-repeat="col in ate.ColumnList">{{ col.Name }}</td>

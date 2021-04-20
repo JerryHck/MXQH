@@ -14,17 +14,17 @@
         <table class="table ">
             <thead>
                 <tr>
-                    <td style="width:100px ">组装工单</td>
-                    <td style="width:100px ">组装料号</td>
-                    <td style="width:100px ">组装料名</td>
+                    <td style="width:100px ">生成工单</td>
+                    <td style="width:100px ">生成料号</td>
+                    <td style="width:100px ">生成料名</td>
                     <td style="width:100px ">内控码</td>
                     <td style="width:100px ">SN编码</td>
                     <td style="width:100px ">SN生成时间</td>
                     <td style="width:100px ">SN重量</td>
                     <td style="width:100px ">称重时间</td>
-                    <td style="width:100px ">SN生成工单</td>
+                    <!--<td style="width:100px ">SN生成工单</td>
                     <td style="width:100px ">SN生成料号</td>
-                    <td style="width:100px ">SN生成料名</td>
+                    <td style="width:100px ">SN生成料名</td>-->
                 </tr>
             </thead>
             <tr ng-repeat="item in sn.Data.data3">
@@ -36,9 +36,9 @@
                 <td>{{ item.SNTime | date :'yyyy-MM-dd HH:mm:ss' }}</td>
                 <td>{{ item.Weight }}</td>
                 <td>{{ item.WeigthTime | date :'yyyy-MM-dd HH:mm:ss' }}</td>
-                <td>{{ item.PackMO }}</td>
+                <!--<td>{{ item.PackMO }}</td>
                 <td>{{ item.PackItemCode }}</td>
-                <td>{{ item.PackMateName }}</td>
+                <td>{{ item.PackMateName }}</td>-->
             </tr>
         </table>
     </div>

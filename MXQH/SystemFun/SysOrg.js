@@ -50,7 +50,7 @@ function ($scope, $http, Dialog, toastr, AjaxService, Form, MyPop, $window) {
 
     //绑定数据
     function GetTreeData() {
-        var condition = [{ name: "OrgSn", value: "ORG001" }]
+        var condition = [{ name: "OrgSn", value: "C0_C21" }]
         vm.promise = AjaxService.GetPlans("SysOrg", condition).then(function (data) {
             vm.options.data = data;
             $('#tree').treeview(vm.options);
