@@ -1,0 +1,66 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="eq.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">设备报障</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class= "btn btn-sm btn-success " ng-click= "eq.Insert() "><i class= "glyphicon glyphicon-plus "></i>新增</button>
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" class="form-control"  ng-model="eq.Ser.bCode" placeholder="设备编码">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" class="form-control"  ng-model="eq.Ser.bName" placeholder="设备名称">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "eq.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "eq.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <div class="col-md-12 scroll-x no-padder" >
+                <table class= "table pad-xs" >
+                    <thead>
+                        <tr>
+                            <td style= "width:60px">操作</td>
+                            <td style= "width:100px ">设备编码</td>
+                            <td style= "width:100px ">设备名称</td>
+                            <td style= "width:100px ">设备规格</td>
+                            <td style= "width:100px ">故障时间</td>
+                            <td style= "width:100px ">故障描述</td>
+                            <td style= "width:100px ">状态</td>
+                            <td style= "width:100px ">报障人</td>
+                            <td style= "width:100px ">创建时间</td>
+                            <td style="width:100px ">OA单号</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in eq.List " ng-form="item.ItemForm">
+                        <td>
+                            <button class="btn btn-xs btn-primary" ng-click="eq.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                            <button class="btn btn-xs btn-danger" ng-if="item.State == '0'" ng-confirm="{text:'确定要删除吗'}" ng-click="eq.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                        </td>
+                        <td title="{{ item.EqData.Code }}">{{ item.EqData.Code }}</td>
+                        <td title="{{ item.EqData.Name }}">{{ item.EqData.Name }}</td>
+                        <td title="{{ item.EqData.EqSpec }}">{{ item.EqData.EqSpec }}</td>
+                        <td title="{{ item.HitchTime }}">{{ item.HitchTime | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                        <td title="{{ item.HitchDesc }}">{{ item.HitchDesc }}</td>
+                        <td title="{{ item.StateDesc }}">
+                            <div ng-class="{'bg-info':item.State == '1', 'bg-success':item.State == '3', 'bg-danger':item.State == '2'}">
+                                {{ item.StateDesc }}
+                            </div>
+                        </td>
+                        <td title="{{ item.Creator }}">{{ item.Creator }}</td>
+                        <td title="{{ item.CreateDate }}">{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss'  }}</td>
+                        <td>
+                            <a title="点击打开OA流程:{{ item.OAFlowNO }}" ng-if="item.OAFlowID" class="text-info font-v3" ng-click="eq.OpenOAUrl(item)">
+                                <!--{{ item.OAFlowNO }}-->
+                                打开OA流程
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "eq.page.total>eq.page.size ">
+                <div uib-pagination total-items= "eq.page.total " ng-model= "eq.page.index " items-per-page= "eq.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "eq.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

@@ -1,0 +1,48 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="pie.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">价格维护</uib-tab-heading>
+        <div class="padder-xs m-t-md">
+            <div class="col-xs-6" ng-repeat="item in pie.List ">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                        {{ item.Name }}
+                        <a class="h4 pull-right thumb-xs text-success" ng-click="pie.Open(item)" title="查看历史"><i class="glyphicon glyphicon-search"></i></a>
+                    </div>
+                    <div class="panel-body" ng-form="item.ItemForm">
+                        <div class="form-horizontal no-padder">
+                            <div class="form-group  col-xs-12 no-padder">
+                                <label class="col-xs-4 control-label">一般价</label>
+                                <div class="col-xs-8 no-padder" ng-class="{ 'has-error' : item.ItemForm.Price.$invalid }">
+                                    <input type="number" ng-disabled="!item.IsEdit" class="form-control" ng-model="item.Price" name="Price" required />
+                                </div>
+                            </div>
+                            <div class="form-group  col-xs-12 no-padder" ng-if="item.Code == 'Hour' || item.Code == 'Piece'">
+                                <label class="col-xs-4 control-label">{{ item.Code == 'Hour'? '加班价':'超产价' }}</label>
+                                <div class="col-xs-8 no-padder" ng-class="{ 'has-error' : item.ItemForm.OverPrice.$invalid }">
+                                    <input type="number" ng-disabled="!item.IsEdit" class="form-control" ng-model="item.OverPrice" name="OverPrice" required />
+                                </div>
+                            </div>
+                            <div class="form-group  col-xs-12 no-padder">
+                                <label class="col-xs-4 control-label">周末价</label>
+                                <div class="col-xs-8 no-padder" ng-class="{ 'has-error' : item.ItemForm.WeekPrice.$invalid }">
+                                    <input type="number" ng-disabled="!item.IsEdit" class="form-control" ng-model="item.WeekPrice" name="WeekPrice" required />
+                                </div>
+                            </div>
+                            <div class="form-group  col-xs-12 no-padder">
+                                <label class="col-xs-4 control-label">法定价</label>
+                                <div class="col-xs-8 no-padder" ng-class="{ 'has-error' : item.ItemForm.LegalPrice.$invalid }">
+                                    <input type="number" ng-disabled="!item.IsEdit" class="form-control" ng-model="item.LegalPrice" name="LegalPrice" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 text-center">
+                            <button class="btn btn-primary" ng-if="!item.IsEdit" ng-click="item.IsEdit = !item.IsEdit"><i class="glyphicon glyphicon-edit"></i>编辑</button>
+                            <button class="btn btn-success" ng-if="item.IsEdit" ng-click="pie.Save(item)"><i class="glyphicon glyphicon-save"></i>储存</button>
+                            <button class="btn btn-warning" ng-if="item.IsEdit" ng-click="item.IsEdit = !item.IsEdit"><i class="fa fa-undo"></i>取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

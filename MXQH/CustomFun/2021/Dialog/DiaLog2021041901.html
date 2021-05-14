@@ -1,0 +1,88 @@
+<div class="modal-header text-center">
+    <span class="modal-title h3">设备信息管理弹出窗{{ eq.form.title }}</span>
+</div>
+<div class="modal-body wrapper-xs">
+    <div class="panel panel-default scroll-y" ng-form="eq.DialogForm">
+        <div class="panel-body  padder-xs padder-v-xs">
+            <div class="form-horizontal no-padder">
+                <div class="form-group-xs  col-xs-12 padder-xs">
+                    <label class="col-xs-2 control-label">设备编码</label>
+                    <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : eq.DialogForm.Code.$invalid }">
+                        <div class="input-group">
+                            <input type="text" name="Code" ng-disabled="eq.form.index != 0" class="form-control" placeholder="设备编码"  ng-blur="eq.IsCodeExists()"  ng-model="eq.Item.Code" required />
+                            <span class="input-group-addon"><a class="text-success" ng-click="eq.OpenFA()"><i class="glyphicon glyphicon-search"></i> </a></span>
+                        </div>
+                        <div ng-messages="eq.DialogForm.Code.$error" class="help-block" role="alert">
+                            <div ng-message="unique">设备编码重复</div>
+                        </div>
+                    </div>
+                    <label class="col-xs-2 control-label">设备名称</label>
+                    <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : eq.DialogForm.Name.$invalid }">
+                        <input type="text" name="Name" ng-disabled="eq.form.index == 2" class="form-control" placeholder="设备名称" ng-model="eq.Item.Name" required />
+                    </div>
+                </div>
+                <div class="form-group-xs  col-xs-12 padder-xs">
+                    <label class="col-xs-2 control-label">设备类型</label>
+                    <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : eq.DialogForm.TypeCode.$invalid }">
+                        <input type="text" name="TypeCode" ng-disabled="eq.form.index == 2" class="form-control" placeholder="设备类型" ng-model="eq.Item.TypeCode"  />
+                    </div>
+                    <label class="col-xs-2 control-label">设备品牌</label>
+                    <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : eq.DialogForm.Brand.$invalid }">
+                        <input type="text" name="Brand" ng-disabled="eq.form.index == 2" class="form-control" placeholder="设备品牌" ng-model="eq.Item.Brand" required />
+                    </div>
+                </div>
+                <div class="form-group-xs  col-xs-12 padder-xs">
+                    <label class="col-xs-2 control-label">设备规格</label>
+                    <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : eq.DialogForm.EqSpec.$invalid }">
+                        <input type="text" name="EqSpec" ng-disabled="eq.form.index == 2" class="form-control" placeholder="设备规格" ng-model="eq.Item.EqSpec" required />
+                    </div>
+                    <label class="col-xs-2 control-label">购入时间</label>
+                    <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : eq.DialogForm.BuyTime.$invalid }">
+                        <input type="text" date-time-picker ng-disabled="eq.form.index == 2"  name="BuyTime" class="form-control" placeholder="购入时间" ng-model="eq.Item .BuyTime" option="eq.DateOption"  required />
+                    </div>
+                </div>
+                <div class="form-group-xs  col-xs-12 padder-xs">
+                    <label class="col-xs-2 control-label">购入费用</label>
+                    <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : eq.DialogForm.BuyAmount.$invalid }">
+                        <input type="number" name="BuyAmount" ng-disabled="eq.form.index == 2"  class="form-control" placeholder="购入费用" ng-model="eq.Item.BuyAmount" required />
+                    </div>
+                    <label class="col-xs-2 control-label">使用部门</label>
+                    <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : eq.DialogForm.UseDept.$invalid }">
+                        <input type="text" name="UseDept" ng-disabled="eq.form.index == 2" class="form-control" placeholder="使用部门" ng-model="eq.Item.UseDept"  />
+                    </div>
+                </div>
+                <div class="form-group-xs  col-xs-12 padder-xs">
+                    <label class="col-xs-2 control-label">管理部门</label>
+                    <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : eq.DialogForm.Dept.$invalid }">
+                        <input type="text" name="Dept" ng-disabled="eq.form.index == 2" class="form-control" placeholder="管理部门" ng-model="eq.Item.Dept"  />
+                    </div>
+                    <label class="col-xs-2 control-label">存放位置</label>
+                    <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : eq.DialogForm.Location.$invalid }">
+                        <input type="text" name="Location" ng-disabled="eq.form.index == 2" class="form-control" placeholder="存放位置" ng-model="eq.Item.Location" required />
+                    </div>
+                </div>
+                <div class="form-group-xs  col-xs-12 padder-xs">
+                    <label class="col-xs-2 control-label">供应商</label>
+                    <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : eq.DialogForm.VenderName.$invalid }">
+                        <input type="text" name="VenderName" ng-disabled="eq.form.index == 2" class="form-control" placeholder="供应商" ng-model="eq.Item.VenderName" required />
+                    </div>
+                    <label class="col-xs-2 control-label">U9卡片编码</label>
+                    <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : eq.DialogForm.U9CardCode.$invalid }">
+                        <input type="text" name="U9CardCode" ng-disabled="eq.form.index == 2" class="form-control" placeholder="U9卡片编码" ng-model="eq.Item.U9CardCode" required />
+                    </div>
+                </div>
+                <div class="form-group-xs  col-xs-12 padder-xs">
+                    <label class="col-xs-2 control-label">备注</label>
+                    <div class="col-xs-4 no-padder" ng-class="{ 'has-error' : eq.DialogForm.Remark.$invalid }">
+                        <input type="text" name="Remark" ng-disabled="eq.form.index == 2" class="form-control" placeholder="备注" ng-model="eq.Item.Remark"  />
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="col-md-12 text-center">
+        <button class="btn btn-success pull-none" type="button" ng-disabled="eq.DialogForm.$invalid" ng-click="eq.Save()">储存</button>
+        <button class="btn btn-warning pull-none" type="button" ng-click="eq.Cancel()">取消</button>
+    </div>
+</div>

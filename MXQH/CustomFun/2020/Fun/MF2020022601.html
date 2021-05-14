@@ -1,0 +1,105 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="en.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">实体缓存列表</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class= "btn btn-sm btn-success " ng-click= "en.Insert() "><i class= "glyphicon glyphicon-plus "></i>新增</button>
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" class="form-control"  ng-model="en.Ser.aEntityName" placeholder="实体名称">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "en.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "en.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <div class="col-md-12 scroll-x no-padder" >
+                <table class= "table pad-xs" >
+                    <thead>
+                        <tr>
+                            <td style= "width:60px">操作</td>
+                            <td style= "width:100px ">实体名称</td>
+                            <td style= "width:100px ">是否缓存</td>
+                            <td style= "width:100px ">字典主键字段</td>
+                            <td style= "width:100px ">来源服务地址</td>
+                            <td style= "width:100px ">备注</td>
+                            <td style= "width:100px ">配置人</td>
+                            <td style= "width:100px ">配置时间</td>
+                            <td style= "width:100px ">修改人</td>
+                            <td style= "width:100px ">修改时间</td>
+                        </tr>
+                    </thead>
+                    <tr ng-if="en.IsInsert" ng-form="en.InsertForm">
+                        <td>
+                            <button class="btn btn-xs btn-success" ng-disabled="en.InsertForm.$invalid" ng-click="en.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="en.IsInsert=false" ><i class="fa fa-undo"></i></button>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': en.InsertForm.EntityName.$invalid }">
+                                <input autocomplete="off"  type="text" name="EntityName" class="form-control" placeholder="实体名称" ng-model="en.NewItem.EntityName" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': en.InsertForm.IsCache.$invalid }">
+                                <div toggle-switch ng-model="en.NewItem.IsCache" class="w-xxs switch-success" on-label="是" off-label="否" on-value = "1" off-value ="0"></div>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td>
+                            <div ng-class="{ 'has-error': en.InsertForm.FromUrl.$invalid }">
+                                <input autocomplete="off"  type="text" name="FromUrl" class="form-control" placeholder="来源服务地址" ng-model="en.NewItem.FromUrl" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div >
+                                <input autocomplete="off"  type="text" name="Remark" class="form-control" placeholder="备注" ng-model="en.NewItem.Remark"  />
+                            </div>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr ng-repeat= "item in en.List " ng-form="item.ItemForm">
+                        <td>
+                            <span ng-if="!item.IsEdit">
+                                <button class="btn btn-xs btn-primary" ng-click="en.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="en.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </span>
+                            <span ng-if="item.IsEdit">
+                                <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="en.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                                <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                            </span>
+                        </td>
+                        <td title="{{ item.EntityName }}">{{ item.EntityName }}</td>
+                        <td>
+                            <div ng-if="!item.IsEdit">
+                                 <div toggle-switch ng-model="item.IsCache" class="w-xxs switch-success" on-label="是" off-label="否" on-value = "1" off-value ="0" is-disabled="true"></div>
+                            </div>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_IsCache.$invalid }">
+                                 <div toggle-switch ng-model="en.EditItem.IsCache" class="w-xxs switch-success" on-label="是" off-label="否" on-value = "1" off-value ="0" is-disabled="!item.IsEdit"></div>
+                            </div>
+
+                        </td>
+                        <td title="{{ item.KeyColName }}">{{ item.KeyColName }}</td>
+                        <td title="{{ item.FromUrl }}">{{ item.FromUrl }}</td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.Remark }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_Remark.$invalid }">
+                                 <input autocomplete="off"  type="text" name="item_Remark" class="form-control" placeholder="备注" ng-model="en.EditItem.Remark"  />
+                            </div>
+
+                        </td>
+                        <td title="{{ item.Creater }}">{{ item.Creater }}</td>
+                        <td title="{{ item.CreateDate }}">{{ item.CreateDate }}</td>
+                        <td title="{{ item.Modify }}">{{ item.Modify }}</td>
+                        <td title="{{ item.ModifyDate }}">{{ item.ModifyDate }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "en.page.total>en.page.size ">
+                <div uib-pagination total-items= "en.page.total " ng-model= "en.page.index " items-per-page= "en.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "en.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

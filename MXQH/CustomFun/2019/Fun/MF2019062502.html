@@ -1,0 +1,43 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="sn.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">新自定义功能</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class= "btn btn-sm btn-info " ng-click= "sn.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "sn.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <table class= "table " >
+                <thead>
+                    <tr>
+                        <td style= "width:100px ">a_ID</td>
+                        <td style= "width:100px ">a_IsValid</td>
+                        <td style= "width:100px ">a_MaterialID</td>
+                        <td style= "width:100px ">a_PartA</td>
+                        <td style= "width:100px ">a_PartB</td>
+                        <td style= "width:100px ">a_PartC</td>
+                        <td style= "width:100px ">a_PartD</td>
+                        <td style= "width:100px ">a_SerialNoStart</td>
+                        <td style= "width:100px ">a_TS</td>
+                    </tr>
+                </thead>
+                <tr ng-repeat= "item in sn.List ">
+                    <td title="{{ item.ID }}">{{ item.ID }}</td>
+                    <td title="{{ item.IsValid }}">{{ item.IsValid }}</td>
+                    <td title="{{ item.MaterialID }}">{{ item.MaterialID }}</td>
+                    <td title="{{ item.PartA }}">{{ item.PartA }}</td>
+                    <td title="{{ item.PartB }}">{{ item.PartB }}</td>
+                    <td title="{{ item.PartC }}">{{ item.PartC }}</td>
+                    <td title="{{ item.PartD }}">{{ item.PartD }}</td>
+                    <td title="{{ item.SerialNoStart }}">{{ item.SerialNoStart }}</td>
+                    <td title="{{ item.TS }}">{{ item.TS }}</td>
+                </tr>
+            </table>
+            <div class= "col-md-12 text-center " ng-if= "sn.page.total>sn.page.size ">
+                <div uib-pagination total-items= "sn.page.total " ng-model= "sn.page.index " items-per-page= "sn.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "sn.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

@@ -1,0 +1,258 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="o.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">OQC查询报表</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="o.Ser.DocNo" placeholder="OQC单号">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "o.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "o.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table  one-line" >
+                    <thead>
+                        <tr>
+                            <td title="OQC单号" style= "width:200px ">OQC单号</td>
+                            <td title="栈板号" style= "width:100px ">栈板号</td>
+                            <td title="客户订单" style= "width:100px ">客户订单</td>
+                            <td title="品号" style= "width:100px ">品号</td>
+                            <td title="品名" style= "width:200px ">品名</td>
+                            <td title="SN码" style= "width:100px ">SN码</td>
+                            <td title="BSN" style= "width:100px ">BSN</td>
+                            <td title="TS" style= "width:100px ">TS</td>
+                            <td title="STATE" style= "width:100px ">STATE</td>
+                            <td title="ElapsedTime" style= "width:100px ">ElapsedTime</td>
+                            <td title="MODEL_NAME" style= "width:100px ">MODEL_NAME</td>
+                            <td title="TX_Freq1_Lo_Power" style= "width:100px ">TX_Freq1_Lo_Power</td>
+                            <td title="TX_Freq_Error" style= "width:100px ">TX_Freq_Error</td>
+                            <td title="TX_Freq1_Hi_Power" style= "width:100px ">TX_Freq1_Hi_Power</td>
+                            <td title="TX_Freq1_Hi_Power_Current" style= "width:100px ">TX_Freq1_Hi_Power_Current</td>
+                            <td title="TX_Freq1_Lo_Power_Current" style= "width:100px ">TX_Freq1_Lo_Power_Current</td>
+                            <td title="Software_Version" style= "width:100px ">Software_Version</td>
+                            <td title="Standby_Current" style= "width:100px ">Standby_Current</td>
+                            <td title="TX_Modulation_Sensitivity" style= "width:100px ">TX_Modulation_Sensitivity</td>
+                            <td title="TX_Modulation_SNR" style= "width:100px ">TX_Modulation_SNR</td>
+                            <td title="TX_Modulation_Distortion" style= "width:100px ">TX_Modulation_Distortion</td>
+                            <td title="TX_Max_Deviation" style= "width:100px ">TX_Max_Deviation</td>
+                            <td title="TX_Dev_Limit" style= "width:100px ">TX_Dev_Limit</td>
+                            <td title="Call_Dev" style= "width:100px ">Call_Dev</td>
+                            <td title="TX_CTCSS_Deviation" style= "width:100px ">TX_CTCSS_Deviation</td>
+                            <td title="TX_VOX9_Sensitivity" style= "width:100px ">TX_VOX9_Sensitivity</td>
+                            <td title="TX_VOX1_Sensitivity" style= "width:100px ">TX_VOX1_Sensitivity</td>
+                            <td title="RX_Max_Audio_Output" style= "width:100px ">RX_Max_Audio_Output</td>
+                            <td title="RX_Audio_Distortion" style= "width:100px ">RX_Audio_Distortion</td>
+                            <td title="RX_SNR" style= "width:100px ">RX_SNR</td>
+                            <td title="RX_Sensitivity" style= "width:100px ">RX_Sensitivity</td>
+                            <td title="RX_SQ_Sensitivity_Open" style= "width:100px ">RX_SQ_Sensitivity_Open</td>
+                            <td title="RX_SQ_Sensitivity_Close" style= "width:100px ">RX_SQ_Sensitivity_Close</td>
+                            <td title="RX_CTCSS_Sensitivity" style= "width:100px ">RX_CTCSS_Sensitivity</td>
+                            <td title="User_ID" style= "width:100px ">User_ID</td>
+                            <td title="WORK_PROC" style= "width:100px ">WORK_PROC</td>
+                            <td title="PROD_STAGE" style= "width:100px ">PROD_STAGE</td>
+                            <td title="time" style= "width:100px ">time</td>
+                            <td title="TX_462Freq_HiPower" style= "width:100px ">TX_462Freq_HiPower</td>
+                            <td title="TX_462Freq_HiPower_Current" style= "width:100px ">TX_462Freq_HiPower_Current</td>
+                            <td title="TX_462Freq_LowPower" style= "width:100px ">TX_462Freq_LowPower</td>
+                            <td title="TX_462Freq_LowPower_Current" style= "width:100px ">TX_462Freq_LowPower_Current</td>
+                            <td title="TX_467Freq_HiPower" style= "width:100px ">TX_467Freq_HiPower</td>
+                            <td title="TX_467Freq_HiPower_Current" style= "width:100px ">TX_467Freq_HiPower_Current</td>
+                            <td title="TX_467Freq_LowPower" style= "width:100px ">TX_467Freq_LowPower</td>
+                            <td title="TX_467Freq_LowPower_Current" style= "width:100px ">TX_467Freq_LowPower_Current</td>
+                            <td title="TX_VOX3_Sensitivity" style= "width:100px ">TX_VOX3_Sensitivity</td>
+                            <td title="WR_Sensitivity" style= "width:100px ">WR_Sensitivity</td>
+                            <td title="RX_Audio_Output" style= "width:100px ">RX_Audio_Output</td>
+                            <td title="TX_Channel_Power" style= "width:100px ">TX_Channel_Power</td>
+                            <td title="RX_SQ_Sensitivity_SINAD_Close" style= "width:100px ">RX_SQ_Sensitivity_SINAD_Close</td>
+                            <td title="RX_SQ_Sensitivity_SINAD_Open" style= "width:100px ">RX_SQ_Sensitivity_SINAD_Open</td>
+                            <td title="RX_Audio_Distortion_Adj" style= "width:100px ">RX_Audio_Distortion_Adj</td>
+                            <td title="TX_VOX2_Sensitivity" style= "width:100px ">TX_VOX2_Sensitivity</td>
+                            <td title="RX_CTC_SNR" style= "width:100px ">RX_CTC_SNR</td>
+                            <td title="RX_CDC_SNR" style= "width:100px ">RX_CDC_SNR</td>
+                            <td title="TX_CDCSS_Decoder" style= "width:100px ">TX_CDCSS_Decoder</td>
+                            <td title="TX_CTCSS_Decoder" style= "width:100px ">TX_CTCSS_Decoder</td>
+                            <td title="TX_Freq2_Hi_Power" style= "width:100px ">TX_Freq2_Hi_Power</td>
+                            <td title="TX_Freq2_Hi_Power_Current" style= "width:100px ">TX_Freq2_Hi_Power_Current</td>
+                            <td title="TX_Freq3_Hi_Power" style= "width:100px ">TX_Freq3_Hi_Power</td>
+                            <td title="TX_Freq3_Hi_Power_Current" style= "width:100px ">TX_Freq3_Hi_Power_Current</td>
+                            <td title="TX_Freq4_Hi_Power" style= "width:100px ">TX_Freq4_Hi_Power</td>
+                            <td title="TX_Freq4_Hi_Power_Current" style= "width:100px ">TX_Freq4_Hi_Power_Current</td>
+                            <td title="TX_Freq5_Hi_Power" style= "width:100px ">TX_Freq5_Hi_Power</td>
+                            <td title="TX_Freq5_Hi_Power_Current" style= "width:100px ">TX_Freq5_Hi_Power_Current</td>
+                            <td title="TX_Freq2_Lo_Power" style= "width:100px ">TX_Freq2_Lo_Power</td>
+                            <td title="TX_Freq2_Lo_Power_Current" style= "width:100px ">TX_Freq2_Lo_Power_Current</td>
+                            <td title="TX_Freq3_Lo_Power" style= "width:100px ">TX_Freq3_Lo_Power</td>
+                            <td title="TX_Freq3_Lo_Power_Current" style= "width:100px ">TX_Freq3_Lo_Power_Current</td>
+                            <td title="TX_Freq4_Lo_Power" style= "width:100px ">TX_Freq4_Lo_Power</td>
+                            <td title="TX_Freq4_Lo_Power_Current" style= "width:100px ">TX_Freq4_Lo_Power_Current</td>
+                            <td title="TX_Freq5_Lo_Power" style= "width:100px ">TX_Freq5_Lo_Power</td>
+                            <td title="TX_Freq5_Lo_Power_Current" style= "width:100px ">TX_Freq5_Lo_Power_Current</td>
+                            <td title="TX_Freq1_10mW_Power" style= "width:100px ">TX_Freq1_10mW_Power</td>
+                            <td title="TX_Freq1_10mW_Power_Current" style= "width:100px ">TX_Freq1_10mW_Power_Current</td>
+                            <td title="TX_Freq2_10mW_Power" style= "width:100px ">TX_Freq2_10mW_Power</td>
+                            <td title="TX_Freq2_10mW_Power_Current" style= "width:100px ">TX_Freq2_10mW_Power_Current</td>
+                            <td title="TX_Freq3_10mW_Power" style= "width:100px ">TX_Freq3_10mW_Power</td>
+                            <td title="TX_Freq3_10mW_Power_Current" style= "width:100px ">TX_Freq3_10mW_Power_Current</td>
+                            <td title="TX_Freq4_10mW_Power" style= "width:100px ">TX_Freq4_10mW_Power</td>
+                            <td title="TX_Freq4_10mW_Power_Current" style= "width:100px ">TX_Freq4_10mW_Power_Current</td>
+                            <td title="TX_Freq5_10mW_Power" style= "width:100px ">TX_Freq5_10mW_Power</td>
+                            <td title="TX_Freq5_10mW_Power_Current" style= "width:100px ">TX_Freq5_10mW_Power_Current</td>
+                            <td title="TX_CarrierFreq_Tolerance" style= "width:100px ">TX_CarrierFreq_Tolerance</td>
+                            <td title="TX_HiPower" style= "width:100px ">TX_HiPower</td>
+                            <td title="TX_HiPower_Current" style= "width:100px ">TX_HiPower_Current</td>
+                            <td title="RX_Current" style= "width:100px ">RX_Current</td>
+                            <td title="RX_BER" style= "width:100px ">RX_BER</td>
+                            <td title="TX_Channel_Current" style= "width:100px ">TX_Channel_Current</td>
+                            <td title="DateTime" style= "width:100px ">DateTime</td>
+                            <td title="TX_Hi_Volt_Power" style= "width:100px ">TX_Hi_Volt_Power</td>
+                            <td title="TX_Lo_Volt_Power" style= "width:100px ">TX_Lo_Volt_Power</td>
+                            <td title="TX_VOX5_Sensitivity" style= "width:100px ">TX_VOX5_Sensitivity</td>
+                            <td title="TX_U_Power" style= "width:100px ">TX_U_Power</td>
+                            <td title="TX_U_Freq_Error" style= "width:100px ">TX_U_Freq_Error</td>
+                            <td title="TX_Channel_Power_Current" style= "width:100px ">TX_Channel_Power_Current</td>
+                            <td title="TX_Channel_Power_0" style= "width:100px ">TX_Channel_Power_0</td>
+                            <td title="TX_Channel_Power_0_Current" style= "width:100px ">TX_Channel_Power_0_Current</td>
+                            <td title="TX_Channel_Power_1" style= "width:100px ">TX_Channel_Power_1</td>
+                            <td title="TX_Channel_Power_1_Current" style= "width:100px ">TX_Channel_Power_1_Current</td>
+                            <td title="TX_Channel_Power_2" style= "width:100px ">TX_Channel_Power_2</td>
+                            <td title="TX_Channel_Power_2_Current" style= "width:100px ">TX_Channel_Power_2_Current</td>
+                            <td title="TX_Channel_Power_3" style= "width:100px ">TX_Channel_Power_3</td>
+                            <td title="TX_Channel_Power_3_Current" style= "width:100px ">TX_Channel_Power_3_Current</td>
+                            <td title="TX_Channel_Power_4" style= "width:100px ">TX_Channel_Power_4</td>
+                            <td title="TX_Channel_Power_4_Current" style= "width:100px ">TX_Channel_Power_4_Current</td>
+                            <td title="RX_Weather_forecast" style= "width:100px ">RX_Weather_forecast</td>
+                            <td title="TX_Freq1_Lo_Power_3V6" style= "width:100px ">TX_Freq1_Lo_Power_3V6</td>
+                            <td title="TX_Freq1_Lo_Power_Current_3V6" style= "width:100px ">TX_Freq1_Lo_Power_Current_3V6</td>
+                            <td title="BT_TX_Power" style= "width:100px ">BT_TX_Power</td>
+                            <td title="BT_RX_Sensitivity" style= "width:100px ">BT_RX_Sensitivity</td>
+                            <td title="TX_Freq_Power" style= "width:100px ">TX_Freq_Power</td>
+                            <td title="TX_Power_Current" style= "width:100px ">TX_Power_Current</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in o.List ">
+                        <td title="{{ item.DocNo }}">{{ item.DocNo }}</td>
+                        <td title="{{ item.PalletCode }}">{{ item.PalletCode }}</td>
+                        <td title="{{ item.CustomOrder }}">{{ item.CustomOrder }}</td>
+                        <td title="{{ item.ProductCode }}">{{ item.ProductCode }}</td>
+                        <td title="{{ item.ProductName }}">{{ item.ProductName }}</td>
+                        <td title="{{ item.SNCode }}">{{ item.SNCode }}</td>
+                        <td title="{{ item.BSN }}">{{ item.BSN }}</td>
+                        <td title="{{ item.TS }}">{{ item.TS }}</td>
+                        <td title="{{ item.STATE }}">{{ item.STATE }}</td>
+                        <td title="{{ item.ElapsedTime }}">{{ item.ElapsedTime }}</td>
+                        <td title="{{ item.MODEL_NAME }}">{{ item.MODEL_NAME }}</td>
+                        <td title="{{ item.TX_Freq1_Lo_Power }}">{{ item.TX_Freq1_Lo_Power }}</td>
+                        <td title="{{ item.TX_Freq_Error }}">{{ item.TX_Freq_Error }}</td>
+                        <td title="{{ item.TX_Freq1_Hi_Power }}">{{ item.TX_Freq1_Hi_Power }}</td>
+                        <td title="{{ item.TX_Freq1_Hi_Power_Current }}">{{ item.TX_Freq1_Hi_Power_Current }}</td>
+                        <td title="{{ item.TX_Freq1_Lo_Power_Current }}">{{ item.TX_Freq1_Lo_Power_Current }}</td>
+                        <td title="{{ item.Software_Version }}">{{ item.Software_Version }}</td>
+                        <td title="{{ item.Standby_Current }}">{{ item.Standby_Current }}</td>
+                        <td title="{{ item.TX_Modulation_Sensitivity }}">{{ item.TX_Modulation_Sensitivity }}</td>
+                        <td title="{{ item.TX_Modulation_SNR }}">{{ item.TX_Modulation_SNR }}</td>
+                        <td title="{{ item.TX_Modulation_Distortion }}">{{ item.TX_Modulation_Distortion }}</td>
+                        <td title="{{ item.TX_Max_Deviation }}">{{ item.TX_Max_Deviation }}</td>
+                        <td title="{{ item.TX_Dev_Limit }}">{{ item.TX_Dev_Limit }}</td>
+                        <td title="{{ item.Call_Dev }}">{{ item.Call_Dev }}</td>
+                        <td title="{{ item.TX_CTCSS_Deviation }}">{{ item.TX_CTCSS_Deviation }}</td>
+                        <td title="{{ item.TX_VOX9_Sensitivity }}">{{ item.TX_VOX9_Sensitivity }}</td>
+                        <td title="{{ item.TX_VOX1_Sensitivity }}">{{ item.TX_VOX1_Sensitivity }}</td>
+                        <td title="{{ item.RX_Max_Audio_Output }}">{{ item.RX_Max_Audio_Output }}</td>
+                        <td title="{{ item.RX_Audio_Distortion }}">{{ item.RX_Audio_Distortion }}</td>
+                        <td title="{{ item.RX_SNR }}">{{ item.RX_SNR }}</td>
+                        <td title="{{ item.RX_Sensitivity }}">{{ item.RX_Sensitivity }}</td>
+                        <td title="{{ item.RX_SQ_Sensitivity_Open }}">{{ item.RX_SQ_Sensitivity_Open }}</td>
+                        <td title="{{ item.RX_SQ_Sensitivity_Close }}">{{ item.RX_SQ_Sensitivity_Close }}</td>
+                        <td title="{{ item.RX_CTCSS_Sensitivity }}">{{ item.RX_CTCSS_Sensitivity }}</td>
+                        <td title="{{ item.User_ID }}">{{ item.User_ID }}</td>
+                        <td title="{{ item.WORK_PROC }}">{{ item.WORK_PROC }}</td>
+                        <td title="{{ item.PROD_STAGE }}">{{ item.PROD_STAGE }}</td>
+                        <td title="{{ item.time }}">{{ item.time }}</td>
+                        <td title="{{ item.TX_462Freq_HiPower }}">{{ item.TX_462Freq_HiPower }}</td>
+                        <td title="{{ item.TX_462Freq_HiPower_Current }}">{{ item.TX_462Freq_HiPower_Current }}</td>
+                        <td title="{{ item.TX_462Freq_LowPower }}">{{ item.TX_462Freq_LowPower }}</td>
+                        <td title="{{ item.TX_462Freq_LowPower_Current }}">{{ item.TX_462Freq_LowPower_Current }}</td>
+                        <td title="{{ item.TX_467Freq_HiPower }}">{{ item.TX_467Freq_HiPower }}</td>
+                        <td title="{{ item.TX_467Freq_HiPower_Current }}">{{ item.TX_467Freq_HiPower_Current }}</td>
+                        <td title="{{ item.TX_467Freq_LowPower }}">{{ item.TX_467Freq_LowPower }}</td>
+                        <td title="{{ item.TX_467Freq_LowPower_Current }}">{{ item.TX_467Freq_LowPower_Current }}</td>
+                        <td title="{{ item.TX_VOX3_Sensitivity }}">{{ item.TX_VOX3_Sensitivity }}</td>
+                        <td title="{{ item.WR_Sensitivity }}">{{ item.WR_Sensitivity }}</td>
+                        <td title="{{ item.RX_Audio_Output }}">{{ item.RX_Audio_Output }}</td>
+                        <td title="{{ item.TX_Channel_Power }}">{{ item.TX_Channel_Power }}</td>
+                        <td title="{{ item.RX_SQ_Sensitivity_SINAD_Close }}">{{ item.RX_SQ_Sensitivity_SINAD_Close }}</td>
+                        <td title="{{ item.RX_SQ_Sensitivity_SINAD_Open }}">{{ item.RX_SQ_Sensitivity_SINAD_Open }}</td>
+                        <td title="{{ item.RX_Audio_Distortion_Adj }}">{{ item.RX_Audio_Distortion_Adj }}</td>
+                        <td title="{{ item.TX_VOX2_Sensitivity }}">{{ item.TX_VOX2_Sensitivity }}</td>
+                        <td title="{{ item.RX_CTC_SNR }}">{{ item.RX_CTC_SNR }}</td>
+                        <td title="{{ item.RX_CDC_SNR }}">{{ item.RX_CDC_SNR }}</td>
+                        <td title="{{ item.TX_CDCSS_Decoder }}">{{ item.TX_CDCSS_Decoder }}</td>
+                        <td title="{{ item.TX_CTCSS_Decoder }}">{{ item.TX_CTCSS_Decoder }}</td>
+                        <td title="{{ item.TX_Freq2_Hi_Power }}">{{ item.TX_Freq2_Hi_Power }}</td>
+                        <td title="{{ item.TX_Freq2_Hi_Power_Current }}">{{ item.TX_Freq2_Hi_Power_Current }}</td>
+                        <td title="{{ item.TX_Freq3_Hi_Power }}">{{ item.TX_Freq3_Hi_Power }}</td>
+                        <td title="{{ item.TX_Freq3_Hi_Power_Current }}">{{ item.TX_Freq3_Hi_Power_Current }}</td>
+                        <td title="{{ item.TX_Freq4_Hi_Power }}">{{ item.TX_Freq4_Hi_Power }}</td>
+                        <td title="{{ item.TX_Freq4_Hi_Power_Current }}">{{ item.TX_Freq4_Hi_Power_Current }}</td>
+                        <td title="{{ item.TX_Freq5_Hi_Power }}">{{ item.TX_Freq5_Hi_Power }}</td>
+                        <td title="{{ item.TX_Freq5_Hi_Power_Current }}">{{ item.TX_Freq5_Hi_Power_Current }}</td>
+                        <td title="{{ item.TX_Freq2_Lo_Power }}">{{ item.TX_Freq2_Lo_Power }}</td>
+                        <td title="{{ item.TX_Freq2_Lo_Power_Current }}">{{ item.TX_Freq2_Lo_Power_Current }}</td>
+                        <td title="{{ item.TX_Freq3_Lo_Power }}">{{ item.TX_Freq3_Lo_Power }}</td>
+                        <td title="{{ item.TX_Freq3_Lo_Power_Current }}">{{ item.TX_Freq3_Lo_Power_Current }}</td>
+                        <td title="{{ item.TX_Freq4_Lo_Power }}">{{ item.TX_Freq4_Lo_Power }}</td>
+                        <td title="{{ item.TX_Freq4_Lo_Power_Current }}">{{ item.TX_Freq4_Lo_Power_Current }}</td>
+                        <td title="{{ item.TX_Freq5_Lo_Power }}">{{ item.TX_Freq5_Lo_Power }}</td>
+                        <td title="{{ item.TX_Freq5_Lo_Power_Current }}">{{ item.TX_Freq5_Lo_Power_Current }}</td>
+                        <td title="{{ item.TX_Freq1_10mW_Power }}">{{ item.TX_Freq1_10mW_Power }}</td>
+                        <td title="{{ item.TX_Freq1_10mW_Power_Current }}">{{ item.TX_Freq1_10mW_Power_Current }}</td>
+                        <td title="{{ item.TX_Freq2_10mW_Power }}">{{ item.TX_Freq2_10mW_Power }}</td>
+                        <td title="{{ item.TX_Freq2_10mW_Power_Current }}">{{ item.TX_Freq2_10mW_Power_Current }}</td>
+                        <td title="{{ item.TX_Freq3_10mW_Power }}">{{ item.TX_Freq3_10mW_Power }}</td>
+                        <td title="{{ item.TX_Freq3_10mW_Power_Current }}">{{ item.TX_Freq3_10mW_Power_Current }}</td>
+                        <td title="{{ item.TX_Freq4_10mW_Power }}">{{ item.TX_Freq4_10mW_Power }}</td>
+                        <td title="{{ item.TX_Freq4_10mW_Power_Current }}">{{ item.TX_Freq4_10mW_Power_Current }}</td>
+                        <td title="{{ item.TX_Freq5_10mW_Power }}">{{ item.TX_Freq5_10mW_Power }}</td>
+                        <td title="{{ item.TX_Freq5_10mW_Power_Current }}">{{ item.TX_Freq5_10mW_Power_Current }}</td>
+                        <td title="{{ item.TX_CarrierFreq_Tolerance }}">{{ item.TX_CarrierFreq_Tolerance }}</td>
+                        <td title="{{ item.TX_HiPower }}">{{ item.TX_HiPower }}</td>
+                        <td title="{{ item.TX_HiPower_Current }}">{{ item.TX_HiPower_Current }}</td>
+                        <td title="{{ item.RX_Current }}">{{ item.RX_Current }}</td>
+                        <td title="{{ item.RX_BER }}">{{ item.RX_BER }}</td>
+                        <td title="{{ item.TX_Channel_Current }}">{{ item.TX_Channel_Current }}</td>
+                        <td title="{{ item.DateTime }}">{{ item.DateTime }}</td>
+                        <td title="{{ item.TX_Hi_Volt_Power }}">{{ item.TX_Hi_Volt_Power }}</td>
+                        <td title="{{ item.TX_Lo_Volt_Power }}">{{ item.TX_Lo_Volt_Power }}</td>
+                        <td title="{{ item.TX_VOX5_Sensitivity }}">{{ item.TX_VOX5_Sensitivity }}</td>
+                        <td title="{{ item.TX_U_Power }}">{{ item.TX_U_Power }}</td>
+                        <td title="{{ item.TX_U_Freq_Error }}">{{ item.TX_U_Freq_Error }}</td>
+                        <td title="{{ item.TX_Channel_Power_Current }}">{{ item.TX_Channel_Power_Current }}</td>
+                        <td title="{{ item.TX_Channel_Power_0 }}">{{ item.TX_Channel_Power_0 }}</td>
+                        <td title="{{ item.TX_Channel_Power_0_Current }}">{{ item.TX_Channel_Power_0_Current }}</td>
+                        <td title="{{ item.TX_Channel_Power_1 }}">{{ item.TX_Channel_Power_1 }}</td>
+                        <td title="{{ item.TX_Channel_Power_1_Current }}">{{ item.TX_Channel_Power_1_Current }}</td>
+                        <td title="{{ item.TX_Channel_Power_2 }}">{{ item.TX_Channel_Power_2 }}</td>
+                        <td title="{{ item.TX_Channel_Power_2_Current }}">{{ item.TX_Channel_Power_2_Current }}</td>
+                        <td title="{{ item.TX_Channel_Power_3 }}">{{ item.TX_Channel_Power_3 }}</td>
+                        <td title="{{ item.TX_Channel_Power_3_Current }}">{{ item.TX_Channel_Power_3_Current }}</td>
+                        <td title="{{ item.TX_Channel_Power_4 }}">{{ item.TX_Channel_Power_4 }}</td>
+                        <td title="{{ item.TX_Channel_Power_4_Current }}">{{ item.TX_Channel_Power_4_Current }}</td>
+                        <td title="{{ item.RX_Weather_forecast }}">{{ item.RX_Weather_forecast }}</td>
+                        <td title="{{ item.TX_Freq1_Lo_Power_3V6 }}">{{ item.TX_Freq1_Lo_Power_3V6 }}</td>
+                        <td title="{{ item.TX_Freq1_Lo_Power_Current_3V6 }}">{{ item.TX_Freq1_Lo_Power_Current_3V6 }}</td>
+                        <td title="{{ item.BT_TX_Power }}">{{ item.BT_TX_Power }}</td>
+                        <td title="{{ item.BT_RX_Sensitivity }}">{{ item.BT_RX_Sensitivity }}</td>
+                        <td title="{{ item.TX_Freq_Power }}">{{ item.TX_Freq_Power }}</td>
+                        <td title="{{ item.TX_Power_Current }}">{{ item.TX_Power_Current }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "o.page.total>o.page.size ">
+                <div uib-pagination total-items= "o.page.total " ng-model= "o.page.index " items-per-page= "o.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "o.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

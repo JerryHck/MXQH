@@ -1,0 +1,22 @@
+﻿{
+  "LangList": [
+    {
+      "name": "En",
+      "value": "English"
+    },
+    {
+      "name": "Chi",
+      "value": "中文(简)"
+    }
+  ],
+  "LangData": {
+    "Insert": {
+      "En": "New",
+      "Chi": "新增"
+    },
+    "Update": {
+      "En": "Update",
+      "Chi": "更新"
+    }
+  }
+}

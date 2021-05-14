@@ -1,0 +1,166 @@
+<div class="wrapper-xs bg-light">
+    <button class="btn btn-primary pull-right" type="button" ng-click="fo.cancel()">关闭</button>
+    <button class="btn btn-success pull-right m-r-md" ng-disabled="fo.ColForm.$invalid" type="button" ng-click="fo.Ok()">确定</button>
+    <uib-tabset active="fo.Index" type="tabs">
+        <uib-tab index="0">
+            <uib-tab-heading class="h5">表单信息设定</uib-tab-heading>
+            <div class="panel panel-info panel-body padder-xxs padder-v-xs">
+                <div class="panel panel-default">
+                    <div class="panel-body padder-v-xxs padder-xxs" style="min-height:80vh">
+                        <div class="form-horizontal" ng-form="fo.MainForm">
+                            <div class="form-group-xs col-sm-12">
+                                <label class="col-sm-1 padder-xs control-label text-info">表单编号：</label>
+                                <div class="col-sm-2 no-padder" ng-class="{ 'has-error' : fo.MainForm.FlowNo.$invalid }">
+                                    <input autocomplete="off" type="text" name="FlowNo" class="form-control" disabled ng-model="fo.ThisForm.FlowNo" required placeholder="表单编号" />
+                                </div>
+                                <label class="col-sm-1 padder-xs control-label text-info">表单名称：</label>
+                                <div class="col-sm-4 no-padder" ng-class="{ 'has-error' : fo.MainForm.FlowName.$invalid }">
+                                    <input autocomplete="off" type="text" name="FlowName" class="form-control" ng-model="fo.ThisForm.FlowName" placeholder="表单名称" required />
+                                </div>
+                                <label class="col-sm-1 padder-xs control-label text-info">实体对象：</label>
+                                <div class="col-sm-3 no-padder" ng-class="{ 'has-error' : fo.MainForm.EntityName.$invalid }">
+                                    <div entity-select ng-model="fo.ThisForm.EntityName" ng-name="EntityName" select-class="'text-xs'" ng-change="fo.ChangeEntity()" ng-required="true"></div>
+                                </div>
+                            </div>
+                            <div class="form-group-xs col-sm-12">
+                                <label class="col-sm-1 padder-xs control-label text-info">单号规则：</label>
+                                <div class="col-sm-2 no-padder" ng-class="{ 'has-error' : fo.MainForm.FormSerialNum.$invalid }">
+                                    <div basic-select="SerialNum" ng-name="FormSerialNum" ng-model="fo.FormSerialNum" placeholder="单号编码规则" ng-required="true"></div>
+                                </div>
+                                <label class="col-sm-1 padder-xs control-label text-info">邮件提醒：</label>
+                                <div class="col-sm-4 no-padder">
+                                    <label class="i-switch i-switch-md bg-success m-t-xs m-r">
+                                        <input type="checkbox" ng-model="fo.ThisForm.IsMail">
+                                        <i></i>
+                                    </label>
+                                </div>
+                                <label class="col-sm-1 padder-xs control-label text-info">功能状态：</label>
+                                <div class="col-sm-3 no-padder">
+                                    <div toggle-switch ng-model="fo.ThisForm.State" class="w-xxs switch-small switch-danger" on-label="启用" off-label="停用"
+                                         on-value="1" off-value="0"></div>
+                                </div>
+                            </div>
+                            <div class="form-group-xs col-sm-12">
+                                <label class="col-sm-1 padder-xs control-label text-info">表单说明：</label>
+                                <div class="col-sm-11 no-padder">
+                                    <input autocomplete="off" type="text" class="form-control" ng-model="fo.ThisForm.Remark" placeholder="表单说明" />
+                                </div>
+                            </div>
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                        </div>
+                        <div class="form-horizontal" ng-form="fo.AddAreaForm">
+                            <div class="form-group-xs col-sm-12 m-t-xs">
+                                <label class="col-sm-1 padder-xs control-label text-info">添加区域：</label>
+                                <div class="col-sm-3 no-padder">
+                                    <div class="input-group" ng-class="{ 'has-error' : fo.AddAreaForm.AreaName.$invalid }">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-success" ng-click="fo.AddArea()" ng-disabled="fo.AddAreaForm.AreaName.$invalid || fo.MainForm.EntityName.$invalid"><i class="glyphicon glyphicon-plus"></i> </button>
+                                        </span>
+                                        <input autocomplete="off" type="text" name="AreaName" class="form-control" ng-model="fo.NewArea.AreaName" placeholder="区域标题名" required />
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 padder-xs control-label text-info"></label>
+                                <div class="col-sm-7 no-padder">
+                                    <button class="btn btn-success pull-left m-r-lg" ng-disabled="fo.MainForm.$invalid || fo.AForm.$invalid" type="button" ng-click="fo.SaveForm()">保存表单配置信息</button>
+                                    <button class="btn btn-info pull-left m-r-md" ng-disabled="fo.MainForm.$invalid || fo.AForm.$invalid" type="button" ng-click="fo.GenCode()">
+                                        <i class="fa fa-support"></i>生成代码
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group-xs col-sm-12 m-t-xs">
+                                <label class="col-sm-1 padder-xs control-label text-info"></label>
+                                <div class="col-sm-11 no-padder" ng-form="fo.AForm">
+                                    <div class="col-lg-4 col-md-6 col-xs-12 padder-l-none" ng-drop="true" ng-drop-success="fo.DropArea($data,$index)"
+                                         ng-repeat="item in fo.AreaData">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading text-center" ng-drag="true" ng-drag-data="item" ng-drag-success="fo.DragArea($data,$index)">
+                                                <button type="button" class="btn btn-sm m-t-n-xs btn-success pull-left" ng-disabled="fo.AForm.$invalid" ng-click="fo.OpenArea(item)">
+                                                    <i class="icon icon-settings"></i>
+                                                </button>
+                                                {{ item.AreaName }}
+                                            </div>
+                                            <div class="panel-body padder-xs padder-v-xs">
+                                                <div class="form-horizontal">
+                                                    <div class="form-group-xs col-xs-12">
+                                                        <label class="col-sm-3 padder-xs control-label text-info">区域标题：</label>
+                                                        <div class="col-sm-9 no-padder" ng-class="{ 'has-error' : fo.AForm.AAreaName.$invalid }">
+                                                            <input autocomplete="off" type="text" name="AAreaName" class="form-control" ng-model="item.AreaName" placeholder="区域标题" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group-xs col-xs-12">
+                                                        <label class="col-sm-3 padder-xs control-label text-info">显示标题：</label>
+                                                        <div class="col-sm-9 no-padder">
+                                                            <label class="i-switch i-switch-md bg-success m-t-xs m-r">
+                                                                <input type="checkbox" ng-model="item.IsShowName">
+                                                                <i></i>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group-xs col-xs-12">
+                                                        <label class="col-sm-3 padder-xs control-label text-info">数据选择：</label>
+                                                        <div class="col-sm-9 no-padder" ng-class="{ 'has-error' : fo.AForm.SourceName.$invalid }">
+                                                            <ui-select name="SourceName" ng-model="item.SourceName" class="padder-xxs" search-enabled="true" ng-required="true">
+                                                                <ui-select-match class="padder-xxs" placeholder="请选择.."><span>{{ $select.selected }}</span></ui-select-match>
+                                                                <ui-select-choices repeat="ty in fo.ColDataType | filter: $select.search track by ty">
+                                                                    <div><span ng-bind-html="ty | highlight: $select.search"></span></div>
+                                                                </ui-select-choices>
+                                                            </ui-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group-xs col-xs-12">
+                                                        <label class="col-sm-3 padder-xs control-label text-info">区域类型：</label>
+                                                        <div class="col-sm-9 no-padder" ng-class="{ 'has-error' : fo.AForm.AreaType.$invalid }">
+                                                            <div config-select ng-model="item.AreaType" tb="FormShowArea" col="AreaType" ng-name="AreaType" ng-required="true"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group-xs col-xs-12">
+                                                        <label class="col-sm-3 padder-xs control-label text-info">区域宽度：</label>
+                                                        <div class="col-sm-9 no-padder" ng-class="{ 'has-error' : fo.AForm.Width.$invalid }">
+                                                            <input autocomplete="off" type="number" name="Width" max="12" min="1" step="1" class="form-control" ng-model="item.Width" placeholder="表单编号" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group-xs col-xs-12">
+                                                        <label class="col-sm-3 padder-xs control-label text-info">行标题宽度：</label>
+                                                        <div class="col-sm-9 no-padder" ng-class="{ 'has-error' : fo.AForm.LabelWidth.$invalid }">
+                                                            <input autocomplete="off" type="number" name="LabelWidth" max="12" min="1" step="1" class="form-control" ng-model="item.LabelWidth" placeholder="行标题宽度" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group-xs col-xs-12">
+                                                        <label class="col-sm-3 padder-xs control-label text-info">行控件宽度：</label>
+                                                        <div class="col-sm-9 no-padder" ng-class="{ 'has-error' : fo.AForm.ControlWidth.$invalid }">
+                                                            <input autocomplete="off" type="number" name="ControlWidth" max="12" min="1" step="1" class="form-control" ng-model="item.ControlWidth" placeholder="行控件宽度" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<pre>{{ fo.FormSerialNum | json }}</pre>-->
+            </div>
+        </uib-tab>
+        <uib-tab index="2">
+            <uib-tab-heading class="h5">HTML文件代码</uib-tab-heading>
+            <div class="panel">
+                <textarea class="form-control" rows="22" ng-model="fo.NewItem.Content.Html"></textarea>
+                <!--<text-angular ng-model="fo.NewItem.Content.Html"></text-angular>-->
+            </div>
+        </uib-tab>
+        <uib-tab index="3">
+            <uib-tab-heading class="h5">
+                Js文件代码
+            </uib-tab-heading>
+            <div class="panel">
+                <textarea class="form-control" rows="22" ng-model="fo.NewItem.Content.Js"></textarea>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</div>
+<!--<div class="bg-light padder-v text-center m-t-n-md">
+    <button class="btn btn-success" ng-disabled="fo.ColForm.$invalid" type="button" ng-click="fo.Ok()">确定</button>
+    <button class="btn btn-primary" type="button" ng-click="fo.cancel()">关闭</button>
+</div>-->

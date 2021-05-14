@@ -1,0 +1,72 @@
+<div class="modal-header text-center">
+    <button class="btn btn-sm btn-warning pull-right" type="button" ng-click="bc.Cancel()">取消</button>
+    <h3 class="modal-title">工单人员日薪</h3>
+</div>
+<div class="modal-body wrapper-xs h6" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body padder-xs padder-v-xxs">
+            <div class="wrapper-sm">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <input type="text" class="form-control" date-picker format="Y-m-d" option="bc.DateOption" ng-disabled="bc.Item.WorkDate" ng-model="bc.Ser.WorkDate" placeholder="工作日">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="bc.Ser.WorkOrder" ng-disabled="bc.Item.WorkOrder" placeholder="工单">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control"  ng-model="bc.Ser.aHrUserNo" placeholder="工号">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control"  ng-model="bc.Ser.aHrUserName" placeholder="姓名">
+                    </div>
+                    <button class= "btn btn-sm btn-info " ng-click= "bc.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                    <button class="btn btn-sm btn-success " ng-click="bc.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>
+                </div>
+            </div>
+            <div class="padder-sm table-responsive">
+                <table class="table one-line">
+                    <thead>
+                        <tr>
+                            <td title="生产日期" style= "width:80px ">生产日期</td>
+                            <td title="工单号" style= "width:120px ">工单号</td>
+                            <td title="人员类别" style= "width:80px ">人员类别</td>
+                            <td title="工号" style= "width:60px ">工号</td>
+                            <td title="姓名" style= "width:70px ">姓名</td>
+                            <td title="排班日" style= "width:80px ">排班日</td>
+                            <td title="作业工序" style= "width:100px ">作业工序</td>
+                            <td title="开始时间" style= "width:60px ">开始时间</td>
+                            <td title="结束时间" style= "width:60px ">结束时间</td>
+                            <td title="排班工时" style= "width:60px ">排班工时</td>
+                            <td title="绩效系数" style= "width:70px ">绩效系数</td>
+                            <td title="计件定额工资" style= "width:80px ">计件定额工资</td>
+                            <td title="超产奖" style= "width:70px ">超产奖</td>
+                            <td title="备注" style= "width:100px ">备注</td>
+                            <td title="线别" style= "width:100px ">线别</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in bc.List ">
+                        <td title="{{ item.WorkDate }}">{{ item.WorkDate | date:'yyyy-MM-dd' }}</td>
+                        <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                        <td title="{{ item.EmpTypeText }}">{{ item.EmpTypeText }}</td>
+                        <td title="{{ item.HrUserNo }}">{{ item.HrUserNo }}</td>
+                        <td title="{{ item.HrUserName }}">{{ item.HrUserName }}</td>
+                        <td title="{{ item.ArrangeDate }}">{{ item.ArrangeDate }}</td>
+                        <td title="{{ item.Procedure.Name }}">{{ item.Procedure.Name }}</td>
+                        <td title="{{ item.StartTime }}">{{ item.StartTime | date:'HH:mm' }}</td>
+                        <td title="{{ item.EndTime }}">{{ item.EndTime | date:'HH:mm' }}</td>
+                        <td title="{{ item.WorkHour }}">{{ item.WorkHour }}</td>
+                        <td title="{{ item.Merits }}">{{ item.Merits }}</td>
+                        <td title="{{ item.StandAmount }}">{{ item.StandAmount }}</td>
+                        <td title="{{ item.OverAmount }}">{{ item.OverAmount }}</td>
+                        <td title="{{ item.Remark }}">{{ item.Remark }}</td>
+                        <td title="{{ item.Line.Name }}">{{ item.Line.Name }}</td>
+                    </tr>
+                </table>
+                <div class= "col-md-12 text-center " ng-if= "bc.page.total>bc.page.size ">
+                    <div uib-pagination total-items= "bc.page.total " ng-model= "bc.page.index " items-per-page= "bc.page.size " max-size= "10 " first-text= "<< " previous-text= "< "
+                     ng-change= "bc.PageChange() " next-text= "> " last-text= ">> " boundary-links= "true " boundary-link-numbers= "true "></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

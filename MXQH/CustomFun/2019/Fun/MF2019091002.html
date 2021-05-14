@@ -1,0 +1,85 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="ver.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">系统版本</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class="btn btn-sm btn-success " ng-click="ver.Insert() "><i class="glyphicon glyphicon-plus "></i>新增</button>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="ver.Ser.a_Name" placeholder="更新主题">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="ver.Ser.a_Ver" placeholder="版本号">
+                </div>
+                <button class="btn btn-sm btn-info " ng-click="ver.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                <button class="btn btn-sm btn-success " ng-click="ver.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class="padder-md ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class="table pad-xs">
+                    <thead>
+                        <tr>
+                            <td style="width:60px">操作</td>
+                            <td style="width:60px ">版本号</td>
+                            <td style="width:100px ">更新主题</td>
+                            <td style="width:500px ">更新内容</td>
+                            <td style="width:100px ">更新时间</td>
+                        </tr>
+                    </thead>
+                    <tr ng-if="ver.IsInsert" ng-form="ver.InsertForm">
+                        <td>
+                            <button class="btn btn-xs btn-success" ng-disabled="ver.InsertForm.$invalid" ng-click="ver.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="ver.IsInsert=false"><i class="fa fa-undo"></i></button>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': ver.InsertForm.Ver.$invalid }">
+                                <input type="text" name="Ver" class="form-control" placeholder="版本号" ng-model="ver.NewItem.Ver" required ng-blur="ver.IsAddVerExists()" />
+                                <div ng-messages="ver.InsertForm.Ver.$error" class="help-block" role="alert">
+                                    <div ng-message="unique">版本号重复</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': ver.InsertForm.Name.$invalid }">
+                                <input type="text" name="Name" class="form-control" placeholder="更新主题" ng-model="ver.NewItem.Name" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': ver.InsertForm.Remark.$invalid }">
+                                <textarea type="text" name="Remark" rows="6" class="form-control" placeholder="更新内容" ng-model="ver.NewItem.Remark" required ></textarea>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr ng-repeat="item in ver.List " ng-form="item.ItemForm">
+                        <td>
+                            <span ng-if="!item.IsEdit">
+                                <button class="btn btn-xs btn-primary" ng-click="ver.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="ver.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </span>
+                            <span ng-if="item.IsEdit">
+                                <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="ver.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                                <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                            </span>
+                        </td>
+                        <td title="{{ item.Ver }}">{{ item.Ver }}</td>
+                        <td title="{{ item.Name }}">{{ item.Name }}</td>
+                        <td>
+                            <div ng-if="!item.IsEdit" class="text-left pre-text">
+                                {{ item.Remark }}
+                            </div>
+                            <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_Remark.$invalid }">
+                                <textarea type="text" name="item_Remark" rows="6" class="form-control" placeholder="更新内容" ng-model="ver.EditItem.Remark" required ></textarea>
+                            </div>
+                        </td>
+                        <td title="{{ item.CreateDate }}">{{ item.CreateDate }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-12 text-center " ng-if="ver.page.total>ver.page.size ">
+                <div uib-pagination total-items="ver.page.total " ng-model="ver.page.index " items-per-page="ver.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                     ng-change="ver.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

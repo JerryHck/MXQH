@@ -1,0 +1,224 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="Bmw5.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">Bmw5测试查询</uib-tab-heading>
+        <div class="wrapper-xs">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" class="form-control"  ng-model="Bmw5.Ser.aSn" placeholder="输入序列号">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "Bmw5.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "Bmw5.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-xs ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table " >
+                    <thead>
+                        <tr>
+                            <td title="Sn" style= "width:100px ">Sn</td>
+                            <td title="TestResult" style= "width:100px ">TestResult</td>
+                            <td title="Operator" style= "width:100px ">Operator</td>
+                            <td title="TestTime" style= "width:100px ">TestTime</td>
+                            <td title="Reset" style= "width:100px ">Reset</td>
+                            <td title="a_Safety1" style= "width:100px ">a_Safety1</td>
+                            <td title="a_Safety2" style= "width:100px ">a_Safety2</td>
+                            <td title="a_PaTemp" style= "width:100px ">a_PaTemp</td>
+                            <td title="a_PsEnable" style= "width:100px ">a_PsEnable</td>
+                            <td title="a_SoftwareVer" style= "width:100px ">a_SoftwareVer</td>
+                            <td title="a_StuTemp" style= "width:100px ">a_StuTemp</td>
+                            <td title="a_StuSwitch" style= "width:100px ">a_StuSwitch</td>
+                            <td title="a_FwdLoad" style= "width:100px ">a_FwdLoad</td>
+                            <td title="a_RevLoad" style= "width:100px ">a_RevLoad</td>
+                            <td title="a_S11Load" style= "width:100px ">a_S11Load</td>
+                            <td title="a_Im2Load" style= "width:100px ">a_Im2Load</td>
+                            <td title="a_FwdOpen" style= "width:100px ">a_FwdOpen</td>
+                            <td title="a_RevOpen" style= "width:100px ">a_RevOpen</td>
+                            <td title="a_S11Open" style= "width:100px ">a_S11Open</td>
+                            <td title="a_Im2Open" style= "width:100px ">a_Im2Open</td>
+                            <td title="a_FwdShort" style= "width:100px ">a_FwdShort</td>
+                            <td title="a_RevShort" style= "width:100px ">a_RevShort</td>
+                            <td title="a_S11Short" style= "width:100px ">a_S11Short</td>
+                            <td title="a_Im2Short" style= "width:100px ">a_Im2Short</td>
+                            <td title="a_VddPout" style= "width:100px ">a_VddPout</td>
+                            <td title="a_IddPout" style= "width:100px ">a_IddPout</td>
+                            <td title="a_FwdPout" style= "width:100px ">a_FwdPout</td>
+                            <td title="a_RevPout" style= "width:100px ">a_RevPout</td>
+                            <td title="a_S11Pout" style= "width:100px ">a_S11Pout</td>
+                            <td title="a_FreqPout" style= "width:100px ">a_FreqPout</td>
+                            <td title="a_IPout" style= "width:100px ">a_IPout</td>
+                            <td title="a_Pout" style= "width:100px ">a_Pout</td>
+                            <td title="a_EfficiencyPout" style= "width:100px ">a_EfficiencyPout</td>
+                            <td title="a_Im2Pout" style= "width:100px ">a_Im2Pout</td>
+                            <td title="a_Im3Pout" style= "width:100px ">a_Im3Pout</td>
+                            <td title="a_Im4Pout" style= "width:100px ">a_Im4Pout</td>
+                            <td title="a_Cp0Test1" style= "width:100px ">a_Cp0Test1</td>
+                            <td title="a_Cp128Test1" style= "width:100px ">a_Cp128Test1</td>
+                            <td title="a_Cp256Test1" style= "width:100px ">a_Cp256Test1</td>
+                            <td title="a_Cp512Test1" style= "width:100px ">a_Cp512Test1</td>
+                            <td title="a_Cp0Test2" style= "width:100px ">a_Cp0Test2</td>
+                            <td title="a_Cp2Test2" style= "width:100px ">a_Cp2Test2</td>
+                            <td title="a_Cp4Test2" style= "width:100px ">a_Cp4Test2</td>
+                            <td title="a_Cp8Test2" style= "width:100px ">a_Cp8Test2</td>
+                            <td title="a_Cp16Test2" style= "width:100px ">a_Cp16Test2</td>
+                            <td title="a_Cp32Test2" style= "width:100px ">a_Cp32Test2</td>
+                            <td title="a_Cp0Test3" style= "width:100px ">a_Cp0Test3</td>
+                            <td title="a_Cp2Test3" style= "width:100px ">a_Cp2Test3</td>
+                            <td title="a_Cp4Test3" style= "width:100px ">a_Cp4Test3</td>
+                            <td title="a_Cp8Test3" style= "width:100px ">a_Cp8Test3</td>
+                            <td title="a_Cp16Test3" style= "width:100px ">a_Cp16Test3</td>
+                            <td title="a_Cp32Test3" style= "width:100px ">a_Cp32Test3</td>
+                            <td title="a_Cp0FreqTest4" style= "width:100px ">a_Cp0FreqTest4</td>
+                            <td title="a_Cp2FreqTest4" style= "width:100px ">a_Cp2FreqTest4</td>
+                            <td title="a_Cp4FreqTest4" style= "width:100px ">a_Cp4FreqTest4</td>
+                            <td title="a_Cp8FreqTest4" style= "width:100px ">a_Cp8FreqTest4</td>
+                            <td title="a_Cp16FreqTest4" style= "width:100px ">a_Cp16FreqTest4</td>
+                            <td title="a_Cp32FreqTest4" style= "width:100px ">a_Cp32FreqTest4</td>
+                            <td title="a_Cp63FreqTest4" style= "width:100px ">a_Cp63FreqTest4</td>
+                            <td title="a_Cp0AmpTest4" style= "width:100px ">a_Cp0AmpTest4</td>
+                            <td title="a_Cp2AmpTest4" style= "width:100px ">a_Cp2AmpTest4</td>
+                            <td title="a_Cp4AmpTest4" style= "width:100px ">a_Cp4AmpTest4</td>
+                            <td title="a_Cp8AmpTest4" style= "width:100px ">a_Cp8AmpTest4</td>
+                            <td title="a_Cp16AmpTest4" style= "width:100px ">a_Cp16AmpTest4</td>
+                            <td title="a_Cp32AmpTest4" style= "width:100px ">a_Cp32AmpTest4</td>
+                            <td title="a_Cp63AmpTest4" style= "width:100px ">a_Cp63AmpTest4</td>
+                            <td title="a_StuT" style= "width:100px ">a_StuT</td>
+                            <td title="a_Cp0Freq" style= "width:100px ">a_Cp0Freq</td>
+                            <td title="a_Cp2Freq" style= "width:100px ">a_Cp2Freq</td>
+                            <td title="a_Cp4Freq" style= "width:100px ">a_Cp4Freq</td>
+                            <td title="a_Cp8Freq" style= "width:100px ">a_Cp8Freq</td>
+                            <td title="a_Cp16Freq" style= "width:100px ">a_Cp16Freq</td>
+                            <td title="a_Cp32Freq" style= "width:100px ">a_Cp32Freq</td>
+                            <td title="a_Cp63Freq" style= "width:100px ">a_Cp63Freq</td>
+                            <td title="a_Cp0Amp" style= "width:100px ">a_Cp0Amp</td>
+                            <td title="a_Cp2Amp" style= "width:100px ">a_Cp2Amp</td>
+                            <td title="a_Cp4Amp" style= "width:100px ">a_Cp4Amp</td>
+                            <td title="a_Cp8Amp" style= "width:100px ">a_Cp8Amp</td>
+                            <td title="a_Cp16Amp" style= "width:100px ">a_Cp16Amp</td>
+                            <td title="a_Cp32Amp" style= "width:100px ">a_Cp32Amp</td>
+                            <td title="a_Cp63Amp" style= "width:100px ">a_Cp63Amp</td>
+                            <td title="a_Adc1s" style= "width:100px ">a_Adc1s</td>
+                            <td title="a_Adc2s" style= "width:100px ">a_Adc2s</td>
+                            <td title="a_Adc3s" style= "width:100px ">a_Adc3s</td>
+                            <td title="a_Adc4s" style= "width:100px ">a_Adc4s</td>
+                            <td title="a_Adc5s" style= "width:100px ">a_Adc5s</td>
+                            <td title="a_Adc6s" style= "width:100px ">a_Adc6s</td>
+                            <td title="a_Adc7s" style= "width:100px ">a_Adc7s</td>
+                            <td title="a_Adc8s" style= "width:100px ">a_Adc8s</td>
+                            <td title="a_Adc9s" style= "width:100px ">a_Adc9s</td>
+                            <td title="a_Adc10s" style= "width:100px ">a_Adc10s</td>
+                            <td title="a_AvgAdc" style= "width:100px ">a_AvgAdc</td>
+                            <td title="a_Fwd" style= "width:100px ">a_Fwd</td>
+                            <td title="a_Rev" style= "width:100px ">a_Rev</td>
+                            <td title="a_PaCurrent" style= "width:100px ">a_PaCurrent</td>
+                            <td title="a_LoadTemp" style= "width:100px ">a_LoadTemp</td>
+                            <td title="a_PaVdd" style= "width:100px ">a_PaVdd</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in Bmw5.List ">
+                        <td title="{{ item.Sn }}">{{ item.Sn }}</td>
+                        <td title="{{ item.TestResult }}">{{ item.TestResult }}</td>
+                        <td title="{{ item.Operator }}">{{ item.Operator }}</td>
+                        <td title="{{ item.TestTime }}">{{ item.TestTime }}</td>
+                        <td title="{{ item.Reset }}">{{ item.Reset }}</td>
+                        <td title="{{ item.Safety1 }}">{{ item.Safety1 }}</td>
+                        <td title="{{ item.Safety2 }}">{{ item.Safety2 }}</td>
+                        <td title="{{ item.PaTemp }}">{{ item.PaTemp }}</td>
+                        <td title="{{ item.PsEnable }}">{{ item.PsEnable }}</td>
+                        <td title="{{ item.SoftwareVer }}">{{ item.SoftwareVer }}</td>
+                        <td title="{{ item.StuTemp }}">{{ item.StuTemp }}</td>
+                        <td title="{{ item.StuSwitch }}">{{ item.StuSwitch }}</td>
+                        <td title="{{ item.FwdLoad }}">{{ item.FwdLoad }}</td>
+                        <td title="{{ item.RevLoad }}">{{ item.RevLoad }}</td>
+                        <td title="{{ item.S11Load }}">{{ item.S11Load }}</td>
+                        <td title="{{ item.Im2Load }}">{{ item.Im2Load }}</td>
+                        <td title="{{ item.FwdOpen }}">{{ item.FwdOpen }}</td>
+                        <td title="{{ item.RevOpen }}">{{ item.RevOpen }}</td>
+                        <td title="{{ item.S11Open }}">{{ item.S11Open }}</td>
+                        <td title="{{ item.Im2Open }}">{{ item.Im2Open }}</td>
+                        <td title="{{ item.FwdShort }}">{{ item.FwdShort }}</td>
+                        <td title="{{ item.RevShort }}">{{ item.RevShort }}</td>
+                        <td title="{{ item.S11Short }}">{{ item.S11Short }}</td>
+                        <td title="{{ item.Im2Short }}">{{ item.Im2Short }}</td>
+                        <td title="{{ item.VddPout }}">{{ item.VddPout }}</td>
+                        <td title="{{ item.IddPout }}">{{ item.IddPout }}</td>
+                        <td title="{{ item.FwdPout }}">{{ item.FwdPout }}</td>
+                        <td title="{{ item.RevPout }}">{{ item.RevPout }}</td>
+                        <td title="{{ item.S11Pout }}">{{ item.S11Pout }}</td>
+                        <td title="{{ item.FreqPout }}">{{ item.FreqPout }}</td>
+                        <td title="{{ item.IPout }}">{{ item.IPout }}</td>
+                        <td title="{{ item.Pout }}">{{ item.Pout }}</td>
+                        <td title="{{ item.EfficiencyPout }}">{{ item.EfficiencyPout }}</td>
+                        <td title="{{ item.Im2Pout }}">{{ item.Im2Pout }}</td>
+                        <td title="{{ item.Im3Pout }}">{{ item.Im3Pout }}</td>
+                        <td title="{{ item.Im4Pout }}">{{ item.Im4Pout }}</td>
+                        <td title="{{ item.Cp0Test1 }}">{{ item.Cp0Test1 }}</td>
+                        <td title="{{ item.Cp128Test1 }}">{{ item.Cp128Test1 }}</td>
+                        <td title="{{ item.Cp256Test1 }}">{{ item.Cp256Test1 }}</td>
+                        <td title="{{ item.Cp512Test1 }}">{{ item.Cp512Test1 }}</td>
+                        <td title="{{ item.Cp0Test2 }}">{{ item.Cp0Test2 }}</td>
+                        <td title="{{ item.Cp2Test2 }}">{{ item.Cp2Test2 }}</td>
+                        <td title="{{ item.Cp4Test2 }}">{{ item.Cp4Test2 }}</td>
+                        <td title="{{ item.Cp8Test2 }}">{{ item.Cp8Test2 }}</td>
+                        <td title="{{ item.Cp16Test2 }}">{{ item.Cp16Test2 }}</td>
+                        <td title="{{ item.Cp32Test2 }}">{{ item.Cp32Test2 }}</td>
+                        <td title="{{ item.Cp0Test3 }}">{{ item.Cp0Test3 }}</td>
+                        <td title="{{ item.Cp2Test3 }}">{{ item.Cp2Test3 }}</td>
+                        <td title="{{ item.Cp4Test3 }}">{{ item.Cp4Test3 }}</td>
+                        <td title="{{ item.Cp8Test3 }}">{{ item.Cp8Test3 }}</td>
+                        <td title="{{ item.Cp16Test3 }}">{{ item.Cp16Test3 }}</td>
+                        <td title="{{ item.Cp32Test3 }}">{{ item.Cp32Test3 }}</td>
+                        <td title="{{ item.Cp0FreqTest4 }}">{{ item.Cp0FreqTest4 }}</td>
+                        <td title="{{ item.Cp2FreqTest4 }}">{{ item.Cp2FreqTest4 }}</td>
+                        <td title="{{ item.Cp4FreqTest4 }}">{{ item.Cp4FreqTest4 }}</td>
+                        <td title="{{ item.Cp8FreqTest4 }}">{{ item.Cp8FreqTest4 }}</td>
+                        <td title="{{ item.Cp16FreqTest4 }}">{{ item.Cp16FreqTest4 }}</td>
+                        <td title="{{ item.Cp32FreqTest4 }}">{{ item.Cp32FreqTest4 }}</td>
+                        <td title="{{ item.Cp63FreqTest4 }}">{{ item.Cp63FreqTest4 }}</td>
+                        <td title="{{ item.Cp0AmpTest4 }}">{{ item.Cp0AmpTest4 }}</td>
+                        <td title="{{ item.Cp2AmpTest4 }}">{{ item.Cp2AmpTest4 }}</td>
+                        <td title="{{ item.Cp4AmpTest4 }}">{{ item.Cp4AmpTest4 }}</td>
+                        <td title="{{ item.Cp8AmpTest4 }}">{{ item.Cp8AmpTest4 }}</td>
+                        <td title="{{ item.Cp16AmpTest4 }}">{{ item.Cp16AmpTest4 }}</td>
+                        <td title="{{ item.Cp32AmpTest4 }}">{{ item.Cp32AmpTest4 }}</td>
+                        <td title="{{ item.Cp63AmpTest4 }}">{{ item.Cp63AmpTest4 }}</td>
+                        <td title="{{ item.StuT }}">{{ item.StuT }}</td>
+                        <td title="{{ item.Cp0Freq }}">{{ item.Cp0Freq }}</td>
+                        <td title="{{ item.Cp2Freq }}">{{ item.Cp2Freq }}</td>
+                        <td title="{{ item.Cp4Freq }}">{{ item.Cp4Freq }}</td>
+                        <td title="{{ item.Cp8Freq }}">{{ item.Cp8Freq }}</td>
+                        <td title="{{ item.Cp16Freq }}">{{ item.Cp16Freq }}</td>
+                        <td title="{{ item.Cp32Freq }}">{{ item.Cp32Freq }}</td>
+                        <td title="{{ item.Cp63Freq }}">{{ item.Cp63Freq }}</td>
+                        <td title="{{ item.Cp0Amp }}">{{ item.Cp0Amp }}</td>
+                        <td title="{{ item.Cp2Amp }}">{{ item.Cp2Amp }}</td>
+                        <td title="{{ item.Cp4Amp }}">{{ item.Cp4Amp }}</td>
+                        <td title="{{ item.Cp8Amp }}">{{ item.Cp8Amp }}</td>
+                        <td title="{{ item.Cp16Amp }}">{{ item.Cp16Amp }}</td>
+                        <td title="{{ item.Cp32Amp }}">{{ item.Cp32Amp }}</td>
+                        <td title="{{ item.Cp63Amp }}">{{ item.Cp63Amp }}</td>
+                        <td title="{{ item.Adc1s }}">{{ item.Adc1s }}</td>
+                        <td title="{{ item.Adc2s }}">{{ item.Adc2s }}</td>
+                        <td title="{{ item.Adc3s }}">{{ item.Adc3s }}</td>
+                        <td title="{{ item.Adc4s }}">{{ item.Adc4s }}</td>
+                        <td title="{{ item.Adc5s }}">{{ item.Adc5s }}</td>
+                        <td title="{{ item.Adc6s }}">{{ item.Adc6s }}</td>
+                        <td title="{{ item.Adc7s }}">{{ item.Adc7s }}</td>
+                        <td title="{{ item.Adc8s }}">{{ item.Adc8s }}</td>
+                        <td title="{{ item.Adc9s }}">{{ item.Adc9s }}</td>
+                        <td title="{{ item.Adc10s }}">{{ item.Adc10s }}</td>
+                        <td title="{{ item.AvgAdc }}">{{ item.AvgAdc }}</td>
+                        <td title="{{ item.Fwd }}">{{ item.Fwd }}</td>
+                        <td title="{{ item.Rev }}">{{ item.Rev }}</td>
+                        <td title="{{ item.PaCurrent }}">{{ item.PaCurrent }}</td>
+                        <td title="{{ item.LoadTemp }}">{{ item.LoadTemp }}</td>
+                        <td title="{{ item.PaVdd }}">{{ item.PaVdd }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "Bmw5.page.total>Bmw5.page.size ">
+                <div uib-pagination total-items= "Bmw5.page.total " ng-model= "Bmw5.page.index " items-per-page= "Bmw5.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "Bmw5.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

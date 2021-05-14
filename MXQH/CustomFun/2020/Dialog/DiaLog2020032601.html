@@ -1,0 +1,48 @@
+<div class="modal-header text-center">
+    <button class="btn btn-sm btn-warning pull-left" type="button" ng-click="mo.Cancel()">取消</button>
+    <h3 class="modal-title">工单选择</h3>
+</div>
+<div class="modal-body wrapper-xs h6" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body padder-xs padder-v-xxs">
+            <div class="wrapper-sm">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <input type="text" class="form-control"  ng-model="mo.Ser.aWorkOrder" placeholder="工单号">
+                    </div>
+                    <div class="form-group">
+                        <div basic-select="AssemblyLine"  ng-model="mo.Ser.bAssemblyLineID" placeholder="线别" ></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control"  ng-model="mo.Ser.aMaterialCode" placeholder="品号">
+                    </div>
+                    <button class= "btn btn-sm btn-info " ng-click= "mo.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                </div>
+            </div>
+            <div class="padder-sm table-responsive">
+                <table class="table one-line">
+                    <thead>
+                        <tr>
+                            <td title="工单号" style= "width:100px ">工单号</td>
+                            <td title="品号" style= "width:100px ">品号</td>
+                            <td title="产品名称" style= "width:100px ">产品名称</td>
+                            <td title="工单数量" style= "width:100px ">工单数量</td>
+                            <td title="线别" style= "width:100px ">线别</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in mo.List " ng-click="mo.OK(item)">
+                        <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                        <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                        <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
+                        <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
+                        <td title="{{ item.Plan.Line.Name }}">{{ item.Plan.Line.Name }}</td>
+                    </tr>
+                </table>
+                <div class= "col-md-12 text-center " ng-if= "mo.page.total>mo.page.size ">
+                    <div uib-pagination total-items= "mo.page.total " ng-model= "mo.page.index " items-per-page= "mo.page.size " max-size= "10 " first-text= "<< " previous-text= "< "
+                     ng-change= "mo.PageChange() " next-text= "> " last-text= ">> " boundary-links= "true " boundary-link-numbers= "true "></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

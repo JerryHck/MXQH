@@ -1,0 +1,90 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="da.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">节假日维护</uib-tab-heading>
+        <div class="wrapper-xs">
+            <div class="col-xs-12 m-b-xs m-t-md">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <ui-select ng-model="da.Ser.Year" theme="bootstrap" ng-change="da.GetData()">
+                            <ui-select-match placeholder="年">{{ $select.selected.text }}</ui-select-match>
+                            <ui-select-choices repeat="item.value as item in da.YearList | filter: $select.search">
+                                <div ng-bind-html="item.text | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="form-group">
+                        <ui-select ng-model="da.Ser.Month" theme="bootstrap" ng-change="da.GetData()">
+                            <ui-select-match placeholder="月份">{{ $select.selected.text }}</ui-select-match>
+                            <ui-select-choices repeat="item.value as item in da.MonthList | filter: $select.search">
+                                <div ng-bind-html="item.text | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-8 scroll-x no-padder b-r">
+                <div class="col-xs-12">
+                    <table class="table-purple" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th ng-repeat="one in da.DateData.data1" style="height:70px" class="text-center">
+                                    {{ one.WeekText }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="we in da.DateData.data">
+                            <td ng-repeat="one in da.DateData.data1" width="150px" height="80px" class="text-center">
+                                <a class="list-group-item" ng-class="{'bg-info text-dark':da.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1].ThisMon != '0',
+                                   'bg-black text-white':da.SelectItem.WorkDate == da.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1].WorkDate}"
+                                   ng-click="da.SelectDay(da.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1])">
+                                    <small class="text-info-dker pull-left h6" ng-if="da.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1].DateType=='G'">
+                                        班
+                                    </small>
+                                    <small class="text-danger-lter pull-right h6" ng-if="da.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1].DateType=='W'">
+                                        休
+                                    </small>
+                                    <small class="text-danger pull-right h6" ng-if="da.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1].DateType=='L'">
+                                        法定
+                                    </small>
+                                    <span ng-class="{'text-light':da.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1].ThisMon != '0',
+                                          'text-black-50':da.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1].ThisMon == '0'}">
+                                        {{ da.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1].MonDay }}
+                                    </span>
+                                </a>
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-xs-4 scroll-x no-padder">
+                <div class="panel panel-default" ng-if="da.SelectItem">
+                    <div class="panel-heading text-center h1 font-bold text-info">{{ da.SelectItem.WorkDate | date:'yyyy-MM-dd' }}</div>
+                    <div class="panel-body">
+                        <div class="form-c form-horizontal">
+                            <div class="form-group">
+                                <div class="col-xs-12">日期格式:</div>
+                                <div class="col-xs-12">
+                                    <div config-select tb="BasicData" ng-disabled="!da.SelectItem.IsEdit"  col="WorkDate" ng-model="da.SelectItem.DateType" ng-required="true"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">备注:</div>
+                                <div class="col-xs-12">
+                                    <textarea rows="2" ng-disabled="!da.SelectItem.IsEdit" class="form-control" ng-model="da.SelectItem.Remark"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 text-center">
+                            <button class="btn btn-primary" ng-if="!da.SelectItem.IsEdit" ng-disabled="da.SelectItem.IsBefore == '1'" ng-click="da.SelectItem.IsEdit = !da.SelectItem.IsEdit"><i class="glyphicon glyphicon-edit"></i>编辑</button>
+                            <button class="btn btn-success" ng-if="da.SelectItem.IsEdit" ng-click="da.Save()"><i class="glyphicon glyphicon-save"></i>储存</button>
+                            <button class="btn btn-warning" ng-if="da.SelectItem.IsEdit" ng-click="da.SelectItem.IsEdit = !da.SelectItem.IsEdit"><i class="fa fa-undo"></i>取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--<pre>{{ da.YearList | json }}</pre>-->
+    </uib-tab>
+</uib-tabset>

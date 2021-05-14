@@ -1,0 +1,101 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="sa.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">日薪计算</uib-tab-heading>
+        <div class="wrapper-xs">
+            <div class="col-xs-12 m-b-xs m-t-md">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <ui-select ng-model="sa.Ser.Year" theme="bootstrap" ng-change="sa.GetData()">
+                            <ui-select-match placeholder="年">{{ $select.selected.text }}</ui-select-match>
+                            <ui-select-choices repeat="item.value as item in sa.YearList | filter: $select.search">
+                                <div ng-bind-html="item.text | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="form-group">
+                        <ui-select ng-model="sa.Ser.Month" theme="bootstrap" ng-change="sa.GetData()">
+                            <ui-select-match placeholder="月份">{{ $select.selected.text }}</ui-select-match>
+                            <ui-select-choices repeat="item.value as item in sa.MonthList | filter: $select.search">
+                                <div ng-bind-html="item.text | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <button class="btn btn-info pull-right" ng-confirm="{text:'同步考勤会花费一定的时间，确定要同步吗'}" ng-click="sa.ReflashKq()"><i class="glyphicon glyphicon-refresh"></i>同步考勤数据</button>
+                </div>
+            </div>
+            <div class="col-xs-8 scroll-x no-padder b-r">
+                <div class="col-xs-12">
+                    <table class="table-purple" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th ng-repeat="one in sa.DateData.data1" style="height:100px" class="text-center">
+                                    {{ one.WeekText }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="we in sa.DateData.data">
+                            <td ng-repeat="one in sa.DateData.data1" width="200px" height="100px" class="text-center">
+                                <a class="list-group-item" ng-class="{'bg-info text-dark':sa.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1].ThisMon != '0',
+                                   'bg-black text-white':sa.SelectItem.WorkDate == sa.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1].WorkDate}"
+                                   ng-click="sa.SelectDay(sa.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1])">
+                                    <small class="text-info-dker pull-left h6" ng-if="sa.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1].DateType=='G'">
+                                        班
+                                    </small>
+                                    <small class="text-danger-lter pull-right h6" ng-if="sa.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1].DateType=='W'">
+                                        休
+                                    </small>
+                                    <small class="text-danger pull-right h6" ng-if="sa.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1].DateType=='L'">
+                                        法定
+                                    </small>
+                                    <span ng-class="{'text-light':sa.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1].ThisMon != '0',
+                                          'text-black-50':sa.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1].ThisMon == '0'}">
+                                        {{ sa.DateData.data2[(we.RowNum-1)*7+one.WeekDay-1].MonDay }}
+                                    </span>
+                                </a>
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-xs-4 scroll-x no-padder">
+                <div class="panel panel-default" ng-if="sa.SelectItem">
+                    <div class="panel-heading text-center h1 font-bold text-info">{{ sa.SelectItem.WorkDate | date:'yyyy-MM-dd' }}</div>
+                    <div class="panel-body">
+                        <div class="form-c form-horizontal">
+                            <div class="form-group">
+                                <div class="col-xs-12">日期格式:</div>
+                                <div class="col-xs-12">
+                                    <div config-select tb="BasicData" ng-disabled="true" col="WorkDate" ng-model="sa.SelectItem.DateType" ng-required="true"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">备注:</div>
+                                <div class="col-xs-12">
+                                    <textarea rows="2" ng-disabled="true" class="form-control" ng-model="sa.SelectItem.Remark"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">上次计算时间:</div>
+                                <div class="col-xs-12">
+                                    <input type="text" ng-disabled="true" class="form-control" ng-model="sa.SelectItem.CalDate" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">锁定:</div>
+                                <div class="col-xs-12">
+                                    <div toggle-switch is-disabled="!sa.IsLockHave" ng-change="sa.Save(sa.SelectItem.IsLock)" ng-model="sa.SelectItem.IsLock" class="w-md i-switch-lg switch-bool" on-label="是" off-label="否" on-value="1" off-value="0"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 text-center">
+                            <button class="btn btn-success" ng-disabled="sa.SelectItem.IsLock == '1'" ng-click="sa.ReCal()"><i class="glyphicon glyphicon-edit"></i>重算薪资</button>
+                        </div>
+
+                        <!--<pre>{{ sa.SelectItem | json }}</pre>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

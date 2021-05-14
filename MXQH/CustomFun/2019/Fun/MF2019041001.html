@@ -1,0 +1,51 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="mate.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">外协物料信息</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="mate.Ser.a_AucMateCode" placeholder="力同料号">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="mate.Ser.a_MateCode" placeholder="外协料号">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="mate.Ser.a_AucModelName" placeholder="力同型号">
+                </div>
+                <div class="form-group">
+                    <div basic-select="VerderSelect" ng-model="mate.Ser.AuVenSN" clear="true"></div>
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "mate.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "mate.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <table class= "table " >
+                <tr>
+                    <td style="width:100px ">力同料号</td>
+                    <td style="width:100px ">力同料名</td>
+                    <td style="width:100px ">力同规格</td>
+                    <td style="width:100px ">力同型号</td>
+                    <td style="width:100px ">供应商</td>
+                    <td style="width:100px ">传回时间</td>
+                    <td style="width:100px ">料号(外)</td>
+                    <td style="width:100px ">料名(外)</td>
+                </tr>
+                <tr ng-repeat="item in mate.List ">
+                    <td>{{ item.AucMateCode }}</td>
+                    <td>{{ item.AucMateName }}</td>
+                    <td>{{ item.AucMateSpes }}</td>
+                    <td>{{ item.AucModelName }}</td>
+                    <td>{{ item.VenderName}}</td>
+                    <td>{{ item.LogTime | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td>{{ item.MateCode }}</td>
+                    <td>{{ item.MateName }}</td>
+                </tr>
+            </table>
+            <div class= "col-md-12 text-center " ng-if= "mate.page.total>mate.page.size ">
+                <div uib-pagination total-items= "mate.page.total " ng-model= "mate.page.index " items-per-page= "mate.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "mate.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

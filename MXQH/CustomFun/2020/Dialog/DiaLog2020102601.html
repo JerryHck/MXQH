@@ -1,0 +1,125 @@
+<div class="modal-header text-center">
+    <button class="btn btn-sm btn-success pull-left" type="button" ng-if="!wo.IsSer" ng-click="wo.Save()">
+        <i class="glyphicon glyphicon-save"></i>
+        保存
+    </button>
+    <button class="btn btn-sm btn-warning pull-right" type="button" ng-click="wo.Cancel()">关闭</button>
+    <h3 class="modal-title">工单物料损耗</h3>
+</div>
+<div class="modal-body wrapper-xs" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body padder-xs padder-v-xxs">
+            <div class="wrapper-sm padder-xxs">
+                <div class="form-horizontal" ng-form="wo.MainForm">
+                    <div class="form-group-xs col-sm-12">
+                        <label class="col-sm-1 padder-xs control-label text-success">{{ !wo.IsSer ? '生产订单':'扫描单号' }}：</label>
+                        <div class="col-sm-5 no-padder" ng-class="{ 'has-error' : wo.MainForm.WorkOrder.$invalid }">
+                            <input autocomplete="off" type="text" ng-disabled="wo.IsSer" name="WorkOrder" class="form-control" ng-model="wo.ThisForm.DocNo" required placeholder="扫描单号" ng-keyup="wo.KeyDonwOrder($event)" />
+                        </div>
+                        <label class="col-sm-2 padder-xs control-label text-success">报损单号：</label>
+                        <div class="col-sm-4 no-padder" ng-class="{ 'has-error' : wo.MainForm.DocNo.$invalid }">
+                            <p class="form-control-static font-bold h4 text-info">
+                                {{ wo.InItem.DocNo }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-sm-12 m-t-xxs">
+                        <label class="col-sm-1 padder-xs control-label">生产订单：</label>
+                        <div class="col-sm-2 no-padder">
+                            <p class="form-control-static font-bold  h4 text-danger-lter">{{ wo.ThisForm.DocNo }}</p>
+                        </div>
+                        <label class="col-sm-1 padder-xs control-label">产品编号：</label>
+                        <div class="col-sm-2 no-padder">
+                            <p class="form-control-static font-bold h4 text-danger-lter">{{ wo.ThisForm.ProCode }}</p>
+                        </div>
+                        <label class="col-sm-2 padder-xs control-label">产品名称：</label>
+                        <div class="col-sm-4 no-padder">
+                            <p class="form-control-static font-bold  h4 text-danger-lter">{{ wo.ThisForm.ProName }}</p>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-sm-12 m-t-xxs">
+                        <label class="col-sm-1 padder-xs control-label">产品规格：</label>
+                        <div class="col-sm-11 no-padder">
+                            <p class="form-control-static font-bold  h4 text-danger-lter">{{ wo.ThisForm.ProSPES }}</p>
+                        </div>
+                    </div>
+                    <div class="form-group-xs col-sm-12 m-t-xxs">
+                        <label class="col-sm-1 padder-xs control-label">累计完工：</label>
+                        <div class="col-sm-2 no-padder">
+                            <p class="form-control-static font-bold  h4 text-danger-lter">{{ wo.ThisForm.TotalCompleteQty }}</p>
+                        </div>
+                        <label class="col-sm-1 padder-xs control-label">累计入库：</label>
+                        <div class="col-sm-2 no-padder">
+                            <p class="form-control-static font-bold h4 text-danger-lter">{{ wo.ThisForm.TotalRcvQty }}</p>
+                        </div>
+                        <label class="col-sm-2 padder-xs control-label">需求分类：</label>
+                        <div class="col-sm-4 no-padder">
+                            <p class="form-control-static font-bold  h4 text-danger-lter">{{ wo.ThisForm.DemandCode }}</p>
+                        </div>
+                    </div>
+                </div>
+                <table class="table pad-xss padder-v-xxs" style="table-layout:fixed" ng-if="wo.ThisForm.ID">
+                    <colgroup>
+                        <col style="width:40px " />
+                        <col style="width:40px " />
+                        <col style="width:60px " />
+                        <col style="width:100px " />
+                        <col style="width:200px " />
+                        <col style="width:80px " />
+                        <col style="width:80px " />
+                        <col style="width:80px " />
+                        <col style="width:120px " />
+                    </colgroup>
+                    <thead>
+                        <tr ng-if="!wo.IsSer">
+                            <td title="查询" colspan="9">
+                                <div class="input-group col-md-12">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-success pull-left" ng-click="wo.InsertItem()"><i class="glyphicon glyphicon-plus"></i></button>
+                                    </span>
+                                    <ui-select ng-model="wo.selectedMate" theme="bootstrap">
+                                        <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.MateCode }}&nbsp;&nbsp;({{ $select.selected.MateName }})</ui-select-match>
+                                        <ui-select-choices repeat="item in wo.DtlList | filter: $select.search ">
+                                            <span ng-bind-html="item.MateCode | highlight: $select.search"></span>
+                                            &nbsp;&nbsp;(<span ng-bind-html="item.MateName | highlight: $select.search"></span>)
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td title="操作" style="width:40px ">操作</td>
+                            <td title="行号" style="width:40px ">行号</td>
+                            <td title="物料编号" style="width:60px ">品号</td>
+                            <td title="物料名称" style="width:100px ">品名</td>
+                            <td title="物料规格" style="width:200px ">规格</td>
+                            <td title="应发数量" style="width:80px ">应发数量</td>
+                            <td title="实发数量" style="width:80px ">实发数量</td>
+                            <td title="累计报损" style="width:80px ">累计报损</td>
+                            <td title="本次报损" style="width:120px ">本次报损</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in wo.InDtlList|filter:wo.DtlSer" ng-click="wo.SelectItem = item;" ng-class="{'bg-active': item.MateCode==wo.SelectItem.MateCode}">
+                        <td title="操作">
+                            <button type="button" class="btn btn-xs text-danger" ng-confirm="{text:'确定要删除该项吗'}"  ng-disabled="wo.IsSer" ng-click="wo.DeleteItem($index)">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </button>
+                        </td>
+                        <td title="{{ item.RowNo }}">{{ item.RowNo }}</td>
+                        <td>{{ item.MateCode }}</td>
+                        <td class="text-left one-line" title="{{ item.MateName }}">{{ item.MateName }}</td>
+                        <td class="text-left one-line" title="{{ item.MateSPECS }}">{{ item.MateSPECS }}</td>
+                        <td title="{{ item.IssueQty }}">{{ item.IssueQty }}</td>
+                        <td title="{{ item.IssuedQty }}">{{ item.IssuedQty }}</td>
+                        <td title="{{ item.HaveDump }}">{{ item.HaveDump }}</td>
+                        <td title="{{ item.DumpNum }}">
+                            <input type="number" ng-disabled="wo.IsSer" min="0" class="form-control" ng-model="item.DumpNum" />
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <!--<pre>{{ wo.SelectItem | json }}</pre>-->
+        </div>
+    </div>
+</div>

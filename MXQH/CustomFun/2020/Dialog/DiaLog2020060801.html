@@ -1,0 +1,98 @@
+<div class="modal-header text-center">
+    <button class="btn btn-sm btn-warning pull-right" type="button" ng-click="fo.Cancel()">取消</button>
+    <button class="btn btn-sm btn-success pull-left" type="button" ng-click="fo.OK()">确定</button>
+    <h4 class="modal-title text-center"><span class="text-info font-bold">{{ fo.ItemData.ThisArea.AreaName }}</span>栏位编辑设定</h4>
+</div>
+<div class="modal-body wrapper-xs h6" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body padder-xs padder-v-xxs">
+            <div class="col-md-2 text-xs padder-xs scroll-y" style="min-height:80vh">
+                <table class="table pad-xs col-md-12 one-line">
+                    <thead>
+                        <tr>
+                            <td class="col-md-12 pad-xss" style="text-align:left">
+                                <label class="i-checks i-checks-sm">
+                                    <input autocomplete="off" type="checkbox" ng-change="fo.IsColAll()" ng-model="fo.IsAll"><i></i> 栏名
+                                </label>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tr class="text-left" ng-repeat="col in fo.ItemData.ColumnList" title="{{ col.ColumnNameDesc }}">
+                        <!--<td>{{ col.ColumnText }}</td>-->
+                        <td class="text-left">
+                            <label class="i-checks i-checks-sm">
+                                <input autocomplete="off" type="checkbox" ng-change="fo.IsColChange(col)" ng-model="col.IsShow"><i></i>
+                                <span ng-class="{'bg-warning':col.ColumnType == '3'}">{{ col.ColumnName }}</span>
+                            </label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-10 wrapper-xs no-padder scroll-y" ng-form="fo.ColForm" style="min-height:400px">
+                <table class="table pad-xs no-padder">
+                    <thead>
+                        <tr>
+                            <td style="width:30px"></td>
+                            <td style="width:80px">栏名</td>
+                            <td style="width:110px">中文名</td>
+                            <td style="width:40px">标签宽度</td>
+                            <td style="width:40px">控件宽度</td>
+                            <td style="width:80px">类型</td>
+                            <td style="width:80px">属性</td>
+                            <td style="width:50px">验重</td>
+                            <td style="width:30px"></td>
+                        </tr>
+                    </thead>
+                    <tr class="text-left h6" ng-repeat="show in fo.ColList" ng-drop="true" ng-drop-success="fo.Drop($data,$index)">
+                        <td class="text-center h4">
+                            <i class="glyphicon glyphicon-move text-info" ng-drag="true"
+                               ng-drag-data="show" ng-drag-success="fo.Drag($data,$index)"></i>
+                        </td>
+                        <td class="one-line" ng-class="{'bg-warning':show.ColumnType == '3'}" title="{{ show.ColumnName }}">
+                            <div style="width:80px" class="width-fix">{{ show.ColumnName }}</div>
+                        </td>
+                        <td class="multi-line">
+                            <input autocomplete="off" type="text" name="ColumnText" class="form-control padder-xxs" placeholder="中文栏名" ng-model="show.ColumnText" />
+                        </td>
+                        <td class="multi-line">
+                            <div ng-class="{ 'has-error' : fo.ColForm.LabelWidth.$invalid }">
+                                <input autocomplete="off" type="number" name="LabelWidth" min="1" max="12" step="1" required class="form-control padder-xxs" placeholder="标签宽度" ng-model="show.LabelWidth" />
+                            </div>
+                        </td>
+                        <td class="multi-line">
+                            <div ng-class="{ 'has-error' : fo.ColForm.ControlWidth.$invalid }">
+                                <input autocomplete="off" type="number" name="ControlWidth" min="1" max="12" step="1" required class="form-control padder-xxs" placeholder="控件宽度" ng-model="show.ControlWidth" />
+                            </div>
+                        </td>
+                        <td class="text-center multi-line" >
+                            <div config-select ng-model="show.ColType" ng-name="ColType" tb="FunCodeColSet" col="ColType" ng-required="true"></div>
+                            <div ng-if="show.ColType=='Select'" class="m-t-xs" ng-class="{ 'has-error' : fo.ColForm.ColValue.$invalid }">
+                                <ui-select name="ColValue" ng-model="show.ColValue" theme="bootstrap" search-enabled="true" ng-required="true">
+                                    <ui-select-match placeholder="请选择.."><span>{{ $select.selected.SelectName }}</span></ui-select-match>
+                                    <ui-select-choices repeat="item.SelectName as item in fo.SelectList | filter: $select.search track by item.SelectName">
+                                        <div class="h5"><span ng-bind-html="item.SelectName | highlight: $select.search"></span></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div ng-if="show.ColType=='Config'" class="m-t-xs" ng-class="{ 'has-error' : fo.ColForm.TableCofig.$invalid }">
+                                <div basic-select="TableCofig" ng-model="show.ColValue" ng-name="TableCofig" ng-required="true"></div>
+                            </div>
+                        </td>
+                        <td class="text-center multi-line" >
+                            <div config-select ng-model="show.ABleNull" ng-name="ColType" tb="FunCodeColSet" col="ABleNull" ng-required="true"></div>
+                        </td>
+                        <td class="text-center multi-line" >
+                            <label class="i-checks i-checks-sm">
+                                <input autocomplete="off" type="checkbox" ng-model="show.CheckExists" ng-disabled="show.ColumnType == '3'|| show.TableAs != 'a' || show.ColType!='Text'"><i></i>
+                            </label>
+                        </td>
+                        <td class="text-center h4">
+                            <a class="text-danger" ng-click="fo.DeleteFunCol(show, $index)"><i class="glyphicon glyphicon-remove"></i></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!--<pre>{{ fo.ColList | json }}</pre>-->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="pro.promise">
+    <uib-tab index="1" >
+        <uib-tab-heading class="h5">客退登记</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+              <!--  <button class="btn btn-sm btn-success " ng-click="pro.NgSave()"><i class="glyphicon glyphicon-plus "></i>客退登记</button>-->
+                <!--<div class="form-group">
+                    SN码: <input type="text"  class="form-control" ng-model="pro.Ser.SNCode" placeholder="SN码" >
+                </div>
+                <button ng-click="pro.Ser.SNCode= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+                    <span class="glyphicon glyphicon-trash text-danger"></span>
+                </button>
+                <div class="form-group">
+                    内控码: <input type="text"  class="form-control" ng-model="pro.Ser.InternalCode" placeholder="内控码">
+                </div>
+                <button ng-click="pro.Ser.InternalCode= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+                    <span class="glyphicon glyphicon-trash text-danger"></span>
+                </button>-->
+                <div class="form-group">
+                    工单：<input type="text"  class="form-control" ng-model="pro.Ser.WorkOrder" placeholder="工单" >
+                </div>
+                <button ng-click="pro.Ser.WorkOrder= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+                    <span class="glyphicon glyphicon-trash text-danger"></span>
+                </button>
+                <button class="btn btn-sm btn-info " ng-click="pro.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                <!--<button class= "btn btn-sm btn-success " ng-click= "pro.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>-->
+            </div>
+        </div>
+        <div class="padder-md ">
+            <table class="table pad-xs">
+                <thead>
+                    <tr>
+                        <td style="width:60px">操作</td>
+                        <td style="width:100px ">返工单号</td>
+                        <td style="width:100px ">客户订单号</td>
+                        <td style="width:100px ">产品名称</td>
+                        <td style="width:100px ">客户名称</td>
+                        <!--<td style="width:100px ">SN码</td>
+                        <td style="width:100px ">内控码</td>-->
+                        <td style="width:100px ">数量</td>
+                        <td style="width:100px ">出货地</td>
+                    </tr>
+                </thead>
+
+                <tr ng-repeat="item in pro.List " ng-form="item.ItemForm">
+                    <td>
+                        <span ng-if="!item.IsEdit">
+                            <button class="btn btn-xs btn-primary" ng-click="pro.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                            <!--<button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="pro.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>-->
+                        </span>
+                        <!--<span ng-if="item.IsEdit">
+                            <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="pro.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                        </span>-->
+                    </td>
+                    <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td title="{{ item.CustomerOrder }}">{{ item.CustomerOrder }}</td>
+                    <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
+                    <td title="{{ item.CustomerName }}">{{ item.CustomerName }}</td>
+                    <!--<td title="{{ item.SNCode }}">{{ item.SNCode }}</td>
+                    <td title="{{ item.InternalCode }}">{{ item.InternalCode }}</td>-->
+                    <td title="{{ item.Quantity }}">{{ item.Quantity }}</td>
+                    <td title="{{ item.SendPlaceName }}">{{ item.SendPlaceName }}</td>
+                </tr>
+            </table>
+            <div class="col-md-12 text-center " ng-if="pro.page.total>pro.page.size ">
+                <div uib-pagination total-items="pro.page.total " ng-model="pro.page.index " items-per-page="pro.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                     ng-change="pro.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+            </div>
+        </div>
+    </uib-tab>
+  
+</uib-tabset>

@@ -1,0 +1,156 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="aql.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">AQL检查标准</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class= "btn btn-sm btn-success " ng-click= "aql.Insert() "><i class= "glyphicon glyphicon-plus "></i>新增</button>
+                <div class="form-group">
+                    <input type="number" class="form-control"  ng-model="aql.Ser.a_BacthMax" placeholder="最大值">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "aql.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "aql.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table pad-xs" >
+                    <thead>
+                        <tr>
+                            <td style= "width:60px">操作</td>
+                            <td style= "width:100px ">最小值</td>
+                            <td style= "width:100px ">最大值</td>
+                            <td style= "width:100px ">特殊S-1</td>
+                            <td style= "width:100px ">特殊S-2</td>
+                            <td style= "width:100px ">特殊S-3</td>
+                            <td style= "width:100px ">特殊S-4</td>
+                            <td style= "width:100px ">一般Ⅰ</td>
+                            <td style= "width:100px ">一般ⅠⅠ</td>
+                            <td style= "width:100px ">一般ⅠⅠ</td>
+                        </tr>
+                    </thead>
+                    <tr ng-if="aql.IsInsert" ng-form="aql.InsertForm">
+                        <td>
+                            <button class="btn btn-xs btn-success" ng-disabled="aql.InsertForm.$invalid" ng-click="aql.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="aql.IsInsert=false" ><i class="fa fa-undo"></i></button>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': aql.InsertForm.BacthMin.$invalid }">
+                                <input type="number" name="BacthMin" class="form-control" placeholder="最小值" ng-model="aql.NewItem.BacthMin" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': aql.InsertForm.BacthMax.$invalid }">
+                                <input type="number" name="BacthMax" class="form-control" placeholder="最大值" ng-model="aql.NewItem.BacthMax" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': aql.InsertForm.S1.$invalid }">
+                                <input type="text" name="S1" class="form-control" placeholder="特殊S-1" ng-model="aql.NewItem.S1" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': aql.InsertForm.S2.$invalid }">
+                                <input type="text" name="S2" class="form-control" placeholder="特殊S-2" ng-model="aql.NewItem.S2" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': aql.InsertForm.S3.$invalid }">
+                                <input type="text" name="S3" class="form-control" placeholder="特殊S-3" ng-model="aql.NewItem.S3" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': aql.InsertForm.S4.$invalid }">
+                                <input type="text" name="S4" class="form-control" placeholder="特殊S-4" ng-model="aql.NewItem.S4" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': aql.InsertForm.CI.$invalid }">
+                                <input type="text" name="CI" class="form-control" placeholder="一般Ⅰ" ng-model="aql.NewItem.CI" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': aql.InsertForm.CII.$invalid }">
+                                <input type="text" name="CII" class="form-control" placeholder="一般ⅠⅠ" ng-model="aql.NewItem.CII" required />
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="{ 'has-error': aql.InsertForm.CIII.$invalid }">
+                                <input type="text" name="CIII" class="form-control" placeholder="一般ⅠⅠ" ng-model="aql.NewItem.CIII" required />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-repeat= "item in aql.List " ng-form="item.ItemForm">
+                        <td>
+                            <span ng-if="!item.IsEdit">
+                                <button class="btn btn-xs btn-primary" ng-click="aql.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="aql.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </span>
+                            <span ng-if="item.IsEdit">
+                                <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="aql.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                                <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                            </span>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.BacthMin }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_BacthMin.$invalid }">
+                                 <input type="number" name="item_BacthMin" class="form-control" placeholder="最小值" ng-model="aql.EditItem.BacthMin" required />
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.BacthMax }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_BacthMax.$invalid }">
+                                 <input type="number" name="item_BacthMax" class="form-control" placeholder="最大值" ng-model="aql.EditItem.BacthMax" required />
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.S1 }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_S1.$invalid }">
+                                 <input type="text" name="item_S1" class="form-control" placeholder="特殊S-1" ng-model="aql.EditItem.S1" required />
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.S2 }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_S2.$invalid }">
+                                 <input type="text" name="item_S2" class="form-control" placeholder="特殊S-2" ng-model="aql.EditItem.S2" required />
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.S3 }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_S3.$invalid }">
+                                 <input type="text" name="item_S3" class="form-control" placeholder="特殊S-3" ng-model="aql.EditItem.S3" required />
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.S4 }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_S4.$invalid }">
+                                 <input type="text" name="item_S4" class="form-control" placeholder="特殊S-4" ng-model="aql.EditItem.S4" required />
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.CI }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_CI.$invalid }">
+                                 <input type="text" name="item_CI" class="form-control" placeholder="一般Ⅰ" ng-model="aql.EditItem.CI" required />
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.CII }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_CII.$invalid }">
+                                 <input type="text" name="item_CII" class="form-control" placeholder="一般ⅠⅠ" ng-model="aql.EditItem.CII" required />
+                            </div>
+                        </td>
+                        <td>
+                            <span ng-if="!item.IsEdit">{{ item.CIII }}</span>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_CIII.$invalid }">
+                                 <input type="text" name="item_CIII" class="form-control" placeholder="一般ⅠⅠ" ng-model="aql.EditItem.CIII" required />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "aql.page.total>aql.page.size ">
+                <div uib-pagination total-items= "aql.page.total " ng-model= "aql.page.index " items-per-page= "aql.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "aql.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

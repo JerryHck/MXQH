@@ -1,0 +1,57 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="mail.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">发件日志</uib-tab-heading>
+        <div class="wrapper-xs">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" class="form-control"  ng-model="mail.Ser.aMailSubject" placeholder="发件主题">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off" type="text" class="form-control" ng-model="mail.Ser.aMailTo" placeholder="收件人">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" date-time-picker class="form-control"  ng-model="mail.Ser.aSentTime" placeholder="发送时间>=" option="mail.DateTimeOption">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" date-time-picker class="form-control"  ng-model="mail.Ser.aSentTime1" placeholder="发送时间<=">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "mail.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "mail.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-xs ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table " >
+                    <thead>
+                        <tr>
+                            <td style="width:100px ">操作</td>
+                            <td title="发送时间" style= "width:100px ">发送时间</td>
+                            <td title="发件主题" style= "width:100px ">发件主题</td>
+                            <!--<td title="发件内容" style= "width:100px ">发件内容</td>-->
+                            <td title="收件人" style= "width:100px ">收件人</td>
+                            <td title="抄送" style= "width:100px ">抄送</td>
+                            <td title="发件结果" style= "width:100px ">发件结果</td>
+                            <td title="发件人" style= "width:100px ">发件人</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in mail.List ">
+                        <td>
+                            <button type="button" title="查看邮件" class="btn btn-xs btn-info" ng-click="mail.Open(item)"><i class="glyphicon glyphicon-search "></i></button>
+                        </td>
+                        <td title="{{ item.SentTime }}">{{ item.SentTime | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                        <td title="{{ item.MailSubject }}">{{ item.MailSubject }}</td>
+                        <!--<td title="{{ item.MailBody }}">{{ item.MailBody }}</td>-->
+                        <td title="{{ item.MailTo }}">{{ item.MailTo }}</td>
+                        <td title="{{ item.MailCC }}">{{ item.MailCC }}</td>
+                        <td title="{{ item.Result }}">{{ item.Result }}</td>
+                        <td title="{{ item.MailFrom }}">{{ item.MailFrom }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "mail.page.total>mail.page.size ">
+                <div uib-pagination total-items= "mail.page.total " ng-model= "mail.page.index " items-per-page= "mail.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "mail.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

@@ -1,0 +1,173 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="gf.promise">
+    <uib-tab index="0" select="gf.SelectTab(0)" deselect="gf.SelectTab(-1)">
+        <uib-tab-heading class="h5">客退返修登记(功放)</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class="btn btn-sm btn-success " ng-click="gf.Insert()"><i class="glyphicon glyphicon-plus "></i>增加客退返修登记（功放）</button>
+                <div class="form-group">
+                    开始时间: <input type="text" date-time-picker class="form-control" ng-model="gf.Ser.a_CreateDate" placeholder="开始时间" option="vm.DateTimeOption">
+                </div>
+                <button ng-click="gf.Ser.a_CreateDate= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+                    <span class="glyphicon glyphicon-trash text-danger"></span>
+                </button>
+                <div class="form-group">
+                    结束时间:<input type="text" date-time-picker class="form-control" ng-model="gf.Ser.b_CreateDate" placeholder="结束时间" option="vm.DateTimeOption">
+                </div>
+                <button ng-click="gf.Ser.b_CreateDate= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+                    <span class="glyphicon glyphicon-trash text-danger"></span>
+                </button>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="gf.Ser.SNCode" placeholder="SN码">
+                </div>
+                <div class="form-group">
+                    <div basic-select="User" placeholder="姓名" ng-model="gf.Ser.CreateBy" clear="true"></div>
+                </div>
+                <button class="btn btn-sm btn-info " ng-click="gf.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                <!--<button class= "btn btn-sm btn-success " ng-click= "gf.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>-->
+            </div>
+        </div>
+        <div class="padder-md ">
+            <table class="table pad-xs">
+                <thead>
+                    <tr>
+                        <td style="width:60px">操作</td>
+                        <td style="width:100px ">是否修复</td>
+                        <td style="width:100px ">维修时间</td>
+                        <td style="width:100px ">工单号</td>
+                        <td style="width:100px ">客户订单号</td>
+                        <td style="width:100px ">产品名称</td>
+                        <td style="width:100px ">客户名称</td>
+                        <td style="width:100px ">条码</td>
+                        <td style="width:100px ">SN码</td>
+                        <td style="width:100px ">一级不良</td>
+                        <td style="width:100px ">二级不良</td>
+                        <td style="width:100px ">创建人</td>
+                        <td style="width:100px ">创建时间</td>
+                        <td style="width:100px ">备注</td>
+                    </tr>
+                </thead>
+
+                <tr ng-repeat="item in gf.List " ng-form="item.ItemForm">
+                    <td>
+                        <span ng-if="!item.IsEdit">
+                            <button class="btn btn-xs btn-primary" ng-click="gf.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                            <!--<button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="gf.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>-->
+                        </span>
+                        <!--<span ng-if="item.IsEdit">
+                            <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="gf.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                        </span>-->
+                    </td>
+                    <!--<td><input disabled="disabled" type="checkbox"
+                               name="IsRepair" class="form-control ng-pristine ng-untouched ng-valid ng-scope ng-not-empty"
+                               placeholder="IsRepair" ng-model="item.IsRepair" ng-if="item.IsRepair"></td>-->
+                    <td title="{{ item.IsRepair }}"><span ng-if="item.IsRepair==1">已修复</span><span ng-if="item.IsRepair==0">未修复</span></td>
+                    <td title="{{ item.ModifyDate }}">{{ item.ModifyDate  | date: 'yyyy-MM-dd hh:dd:mm'}}</td>
+                    <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td title="{{ item.CustomerOrder }}">{{ item.CustomerOrder }}</td>
+                    <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
+                    <td title="{{ item.CustomerName }}">{{ item.CustomerName }}</td>
+                    <td title="{{ item.BarCode }}">{{ item.BarCode }}</td>
+                    <td title="{{ item.SNCode }}">{{ item.SNCode }}</td>
+                    <td title="{{ item.FirstPoorName }}">{{ item.FirstPoorName }}</td>
+                    <td title="{{ item.SecondPoorName }}">{{ item.SecondPoorName }}</td>
+                    <td title="{{ item.CreateName }}">{{ item.CreateName }}</td>
+                    <td title="{{ item.CreateDate }}">{{ item.CreateDate | date: 'yyyy-MM-dd hh:dd:mm' }}</td>
+                    <td title="{{ item.PoorReason }}">{{ item.PoorReason }}</td>
+                </tr>
+            </table>
+            <div class="col-md-12 text-center " ng-if="gf.page.total>gf.page.size ">
+                <div uib-pagination total-items="gf.page.total " ng-model="gf.page.index " items-per-page="gf.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                     ng-change="gf.PageChange() " next-text="下一页 " last-text="最后页  " boundary-links="true " boundary-link-numbers="true "></div>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="1">
+        <uib-tab-heading class="h5">已维修</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    开始时间: <input type="text" date-time-picker class="form-control" ng-model="gf.Ser.a_CreateDate2" placeholder="开始时间" option="vm.DateTimeOption">
+                </div>
+                <button ng-click="gf.Ser.a_CreateDate2= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+                    <span class="glyphicon glyphicon-trash text-danger"></span>
+                </button>
+                <div class="form-group">
+                    结束时间:<input type="text" date-time-picker class="form-control" ng-model="gf.Ser.b_CreateDate2" placeholder="结束时间" option="vm.DateTimeOption">
+                </div>
+                <button ng-click="gf.Ser.b_CreateDate2= undefined" class="btn btn-default" ng-disabled="ngDisabled">
+                    <span class="glyphicon glyphicon-trash text-danger"></span>
+                </button>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="gf.Ser.BSN" placeholder="SN码">
+                </div>
+                <!--<div class="form-group">
+                    <input type="text" class="form-control" ng-model="gf.Ser.ModifyBy" placeholder="姓名">
+                </div>-->
+                <div class="form-group">
+                    <div basic-select="User" placeholder="维修员" ng-model="gf.Ser.ModifyBy" clear="true"></div>
+                    <!--  <div basic-select="User" ng-model="qc.Ser.Operator" placeholder="维修员" clear="true"></div>-->
+                </div>
+                <button class="btn btn-sm btn-info " ng-click="gf.Search2() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                <button class="btn btn-sm btn-success " ng-click="gf.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class="padder-md ">
+            <table class="table pad-xs">
+                <thead>
+                    <tr>
+                        <td style="width:100px ">是否修复</td>
+                        <td style="width:100px ">维修时间</td>
+                        <td style="width:100px ">维修人</td>
+                        <td style="width:100px ">工单号</td>
+                        <td style="width:100px ">客户订单号</td>
+                        <td style="width:100px ">产品名称</td>
+                        <td style="width:100px ">条码</td>
+                        <td style="width:100px ">SN码</td>
+                        <td style="width:100px ">一级不良</td>
+                        <td style="width:100px ">二级不良</td>
+                        <td style="width:100px ">维修类别</td>
+                        <td style="width:100px ">处理方式</td>
+                        <td style="width:100px ">更换主板的编码</td>
+                        <td style="width:100px ">备注</td>
+                    </tr>
+                </thead>
+
+                <tr ng-repeat="item in gf.List2 " ng-form="item.ItemForm">
+                    <!--<td>
+                        <span ng-if="!item.IsEdit">
+                            <button class="btn btn-xs btn-primary" ng-click="gf.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                            <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="gf.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                        </span>
+                        <span ng-if="item.IsEdit">
+                            <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="gf.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                            <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                        </span>
+                    </td>-->
+                    <!--<td><input disabled="disabled" type="checkbox"
+                    name="IsRepair" class="form-control ng-pristine ng-untouched ng-valid ng-scope ng-not-empty"
+                    placeholder="IsRepair" ng-model="item.IsRepair" ng-if="item.IsRepair"></td>-->
+
+                    <td title="{{ item.IsRepair }}"><span ng-if="item.IsRepair==1">已修复</span><span ng-if="item.IsRepair==0">未修复</span></td>
+                    <td title="{{ item.ModifyDate }}">{{ item.ModifyDate |date : 'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td title="{{ item.ModifyName }}">{{ item.ModifyName }}</td>
+                    <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                    <td title="{{ item.CustomerOrder }}">{{ item.CustomerOrder }}</td>
+                    <td title="{{ item.ProcedureName }}">{{ item.ProcedureName }}</td>
+                    <td title="{{ item.BarCode }}">{{ item.BarCode }}</td>
+                    <td title="{{ item.BSN }}">{{ item.BSN }}</td>
+                    <td title="{{ item.FirstPoorName }}">{{ item.FirstPoorName }}</td>
+                    <td title="{{ item.SecondPoorName }}">{{ item.SecondPoorName }}</td>
+                    <td title="{{ item.MaintenanceTtype }}">{{ item.Maintenance }}</td>
+                    <td title="{{ item.ProcessingMode }}">{{ item.ProModeName }}</td>
+                    <td title="{{ item.Motherboard }}">{{ item.Motherboard }}</td>
+                    <td title="{{ item.RepairReason }}">{{ item.RepairReason }}</td>
+                </tr>
+            </table>
+            <div class="col-md-12 text-center " ng-if="gf.page2.total>gf.page2.size ">
+                <div uib-pagination total-items="gf.page2.total " ng-model="gf.page2.index " items-per-page="gf.page2.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                     ng-change="gf.PageChange2() " next-text="下一页 " last-text="最后页  " boundary-links="true " boundary-link-numbers="true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

@@ -1,0 +1,276 @@
+<div class="no-padder" cg-busy="pl.promise">
+    <span class="pull-right">
+        <!--<button class="btn btn-sm btn-success m-t-sm m-r-xs pull-right" ng-click="pl.Compare() "><i class="glyphicon glyphicon-import "></i>差异比对</button>-->
+        <button class="btn btn-sm btn-info m-t-sm m-r-xs " ng-click="pl.OpenHis() ">
+            <i class="glyphicon glyphicon-search "></i>
+            <span class="text-black">{{ pl.VerData.Import.ImportDate }}-{{ pl.VerData.Import.VerNo }} 比对版本{{ pl.VerData.VerNo }}</span>
+        </button>
+        <button ng-disabled="pl.VerData.IsCompare" class="btn btn-sm btn-success m-t-sm m-r-xs" ng-click="pl.SaveCompare() "><i class="glyphicon glyphicon-save "></i>保存</button>
+        <button class="btn btn-sm btn-danger m-t-sm m-r-xs" ng-click="pl.DeleteCompare() "><i class="glyphicon glyphicon-remove "></i>删除</button>
+    </span>
+    <uib-tabset active="active" type="tabs">
+        <uib-tab index="0">
+            <uib-tab-heading class="h5">排产计划异常</uib-tab-heading>
+            <div class="wrapper-xs">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <input autocomplete="off" type="text" date-picker class="form-control" ng-model="pl.Ser.bProduceDate" placeholder="排产日期" option="pl.DateOption">
+                    </div>
+                    <button class="btn btn-sm btn-info " ng-click="pl.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                    <button class="btn btn-sm btn-success " ng-click="pl.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>
+                </div>
+            </div>
+            <div class="padder-xs ">
+                <div class="col-md-12 scroll-x no-padder">
+                    <table class="table pad-xss padder-v-xxs" style="table-layout:fixed">
+                        <thead>
+                            <tr>
+                                <td title="序号" style="width:50px ">序号</td>
+                                <td title="MRP分类" style="width:80px ">MRP分类</td>
+                                <!--<td title="番号" style="width:80px ">番号</td>-->
+                                <td title="生产订单" style="width:130px ">生产订单</td>
+                                <td title="料号" style="width:100px ">料号</td>
+                                <td title="品名" style="width:160px ">品名</td>
+                                <td title="状态" style="width:100px ">状态</td>
+                                <td title="工单数量" style="width:100px ">工单数量</td>
+                                <td title="本次排产数" style="width:100px ">本次排产数</td>
+                                <td title="生产线别" style="width:100px ">生产线别</td>
+                                <td title="计划开工日期" style="width:100px ">计划开工</td>
+                                <td title="计划完工日期" style="width:100px ">计划完工</td>
+
+
+                                <td title="U9需求分类号" style="width:160px ">U9需求分类号</td>
+                                <td title="U9生产线别" style="width:100px ">U9生产线别</td>
+                                <td title="U9计划开工日期" style="width:100px ">U9计划开工</td>
+                                <td title="U9计划完工日期" style="width:100px ">U9计划完工</td>
+                                
+
+                                <td title="异常描述" style="width:500px ">异常描述</td>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in pl.List ">
+                            <td title="{{ item.Dtl.RowNo }}">{{ item.Dtl.RowNo }}</td>
+                            <td title="{{ item.Dtl.MRPType }}">{{ item.Dtl.MRPType }}</td>
+                            <!--<td title="{{ item.Dtl.PanName }}">{{ item.Dtl.PanName }}</td>-->
+                            <td title="{{ item.Dtl.WorkOrder }}">{{ item.Dtl.WorkOrder }}</td>
+                            <td class="one-line" title="{{ item.Dtl.MaterialCode }}">{{ item.Dtl.MaterialCode }}</td>
+                            <td class="one-line text-lef" title="{{ item.Dtl.MaterialName }}">{{ item.Dtl.MaterialName }}</td>
+                            <td title="{{ item.Dtl.State }}">{{ item.Dtl.State }}</td>
+                            <td title="{{ item.Dtl.Quantity }}">{{ item.Dtl.Quantity }}</td>
+                            <td title="{{ item.Dtl.ThisPlanQty }}" >{{ item.Dtl.ThisPlanQty }}</td>
+                            <td title="{{ item.Dtl.Line }}">{{ item.Dtl.Line }}</td>
+                            <td title="{{ item.Dtl.PlanStDate }}">{{ item.Dtl.PlanStDate | date:'yyyy-MM-dd' }}</td>
+                            <td title="{{ item.Dtl.PlanEdDate }}">{{ item.Dtl.PlanEdDate | date:'yyyy-MM-dd'}}</td>
+
+                            <td title="{{ item.DemandCode }}">{{ item.DemandCode }}</td>
+                            <td title="{{ item.Line }}">{{ item.Line }}</td>
+
+                            <td title="{{ item.PlanStDate }}">{{ item.PlanStDate | date:'yyyy-MM-dd' }}</td>
+                            <td title="{{ item.PlanEdDate }}">{{ item.PlanEdDate | date:'yyyy-MM-dd'}}</td>
+
+                            <td title="{{ item.ErrMsg }}" class="text-left">{{ item.ErrMsg }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-12 text-center " ng-if="pl.page.total>pl.page.size ">
+                    <div uib-pagination total-items="pl.page.total " ng-model="pl.page.index " items-per-page="pl.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                         ng-change="pl.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+                </div>
+            </div>
+        </uib-tab>
+
+        <uib-tab index="1">
+            <uib-tab-heading class="h5">排产计划差异</uib-tab-heading>
+            <div class="wrapper-xs">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div config-select tb="WorkOrderPlanDiffU9" col="ToU9Sate" clear="true" ng-model="pl.Ser1.IsToU9" placeholder="状态"></div>
+                            <span class="input-group-addon" ng-click="pl.Ser1.IsToU9 = undefined"><a class="text-danger"><i class="glyphicon glyphicon-trash"></i> </a></span>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <input autocomplete="off" type="text" class="form-control" ng-model="pl.Ser1.aWorkOrder" placeholder="生产订单">
+                    </div>
+                    <div class="form-group">
+                        <input autocomplete="off" type="text" class="form-control" ng-model="pl.Ser1.aMaterialCode" placeholder="料号">
+                    </div>
+                    <div class="form-group">
+                        <input autocomplete="off" type="text" class="form-control" ng-model="pl.Ser1.aLine" placeholder="生产线别">
+                    </div>
+                    <div class="form-group">
+                        <input autocomplete="off" type="text" class="form-control" ng-model="pl.Ser1.aMaterialName" placeholder="品名">
+                    </div>
+                    <div class="form-group">
+                        <input autocomplete="off" type="text" class="form-control" ng-model="pl.Ser1.aMRPType" placeholder="MRP分类">
+                    </div>
+                    <div class="form-group">
+                        <input autocomplete="off" type="text" class="form-control" ng-model="pl.Ser1.OAFlowNO" placeholder="OA流程单号">
+                    </div>
+                    <button class="btn btn-sm btn-info " ng-click="pl.Search1() "><i class="glyphicon glyphicon-search "></i>查询</button>
+
+                    <button class="btn btn-sm btn-danger pull-right" ng-click="pl.ToOAFlow() "><i class="glyphicon glyphicon-upload "></i>提交OA工单变更流程</button>
+
+                    <button class="btn btn-sm btn-success " ng-click="pl.ExportExcel1() "><i class="glyphicon glyphicon-export "></i> 导出</button>
+                </div>
+            </div>
+            <div class="padder-xs ">
+                <div class="col-md-12 no-padder">
+                    <table class="table padder-v-xxs" style="position:absolute;table-layout:fixed;border-collapse:collapse; width:360px">
+                        <colgroup>
+                            <col style="width:50px " />
+                            <col style="width:50px " />
+                            <col style="width:100px " />
+                            <col style="width:80px " />
+                            <col style="width:120px " />
+                            <col style="width:0px " />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <td rowspan="2" title="操作" style="width:50px;">
+                                    <label class="i-checks i-checks-sm" title="全选本页">
+                                        <input autocomplete="off" type="checkbox" ng-disabled="!pl.VerData.IsCompare" ng-model="pl.IsPage" ng-change="pl.PageCheckChange(item)"><i></i>
+                                    </label>
+                                    操作
+                                </td>
+                                <td rowspan="2" title="序号" style="width:50px;">序号</td>
+                                <td rowspan="2" title="同步状态" style="width:100px ">同步状态</td>
+                                <td rowspan="2" title="MRP分类" style="width:80px ">MRP分类</td>
+                                <td rowspan="2" title="生产订单号" style="width:100px ">生产订单号</td>
+                                <td rowspan="2" title="料号" style="width:80px ">料号</td>
+                                <td style="width:0px ">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td style="width:0px ">&nbsp;</td>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in pl.List1 ">
+                            <td>
+                                <label ng-if="item.IsToU9 == 0" class="i-checks i-checks-sm" title="选择">
+                                    <input autocomplete="off"  type="checkbox" ng-disabled="!pl.VerData.IsCompare" ng-model="item.isCheck"><i></i>
+                                </label>
+                            </td>
+                            <td title="{{ item.RowNo }}">{{ item.RowNo }}</td>
+                            <td class="one-line" title="{{ item.ToU9State }}" ng-class="{'bg-warning':item.IsToU9 == 1 || item.IsToU9 == 2, 'bg-success':item.IsToU9 == 3, 'bg-danger':item.IsToU9 == 2}">{{ item.ToU9State }}</td>
+                            <td class="one-line" title="{{ item.MRPType }}">{{ item.MRPType }}</td>
+                            <td class="one-line" title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                            <td class="one-line" title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <div class="scroll-x">
+                        <table class="table padder-v-xxs" id="tbDiff" style="table-layout:fixed;border-collapse:collapse;">
+                            <colgroup>
+                                <col style="width:50px " />
+                                <col style="width:50px " />
+                                <col style="width:100px " />
+                                <col style="width:80px " />
+                                <col style="width:120px " />
+                                <col style="width:80px " />
+                                <col style="width:120px " />
+                                <col style="width:120px " />
+                                <col style="width:100px;" />
+                                <col style="width:90px; " />
+                                <col style="width:90px; " />
+                                <col style="width:90px; " />
+                                <col style="width:90px; " />
+                                <col style="width:90px; " />
+                                <col style="width:140px;" />
+                                <col style="width:140px;" />
+                                <col style="width:140px;" />
+                                <col style="width:90px; " />
+                                <col style="width:90px; " />
+                                <col style="width:90px; " />
+                                <col style="width:90px; " />
+                                <col style="width:160px;" />
+                                <col style="width:150px " />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <td rowspan="2" title="操作" style="width:50px;">
+                                        操作
+                                        <label class="i-checks i-checks-sm" title="全选本页">
+                                            <input autocomplete="off" type="checkbox"><i></i>
+                                        </label>
+                                    </td>
+                                    <td rowspan="2" title="序号" style="width:50px;">序号</td>
+                                    <td rowspan="2" title="同步状态" style="width:100px ">同步状态</td>
+                                    <td rowspan="2" title="MRP分类" style="width:80px ">MRP分类</td>
+                                    <td rowspan="2" title="生产订单号" style="width:120px ">生产订单号</td>
+                                    <td rowspan="2" title="料号" style="width:80px ">料号</td>
+                                    <td rowspan="2" title="品名" style="width:120px ">品名</td>
+                                    <td rowspan="2" title="规格" style="width:120px ">规格</td>
+                                    <td rowspan="2" title="状态" style="width:70px ">状态</td>
+                                    <td colspan="8" title="U9" style="width:1000px; background-color:#f2e4d3">U9</td>
+                                    <td colspan="6" title="排产计划" style="width:690px; background-color:#ebbcbc ">排产计划</td>
+                                    <td rowspan="2" title="备注" style="width:100px ">备注</td>
+                                    <td rowspan="2" title="OA流程单号" style="width:150px ">OA流程单号</td>
+                                </tr>
+                                <tr>
+                                    <td title="生产线别" style="width:100px; background-color:#f2e4d3 ">生产线别</td>
+                                    <td title="计划开工日期" style="width:80px; background-color:#f2e4d3 ">计划开工</td>
+                                    <td title="计划完工日期" style="width:80px; background-color:#f2e4d3 ">计划完工</td>
+                                    <td title="工单数量" style="width:80px; background-color:#f2e4d3 ">工单数量</td>
+                                    <td title="累计开工" style="width:80px; background-color:#f2e4d3 ">累计开工</td>
+                                    <td title="累计完工" style="width:80px; background-color:#f2e4d3 ">累计完工</td>
+                                    <td title="客户订单" style="width:140px; background-color:#f2e4d3 ">客户订单</td>
+                                    <td title="需求分类号" style="width:140px; background-color:#f2e4d3 ">需求分类号</td>
+                                    <td title="生产线别" style="width:100px; background-color:#ebbcbc ">生产线别</td>
+                                    <td title="本次排产数量" style="width:70px; background-color:#ebbcbc ">本次排产</td>
+                                    <td title="计划开工日期" style="width:80px; background-color:#ebbcbc ">计划开工</td>
+                                    <td title="计划完工日期" style="width:80px; background-color:#ebbcbc ">计划完工</td>
+                                    <td title="本次排产日期" style="width:80px; background-color:#ebbcbc ">排产日期</td>
+                                    <td title="需求分类号" style="width:160px; background-color:#ebbcbc ">需求分类号</td>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in pl.List1 ">
+                                <td>
+                                    <label ng-if="item.IsToU9 == 0" class="i-checks i-checks-sm" title="选择">
+                                        <input autocomplete="off" type="checkbox"><i></i>
+                                    </label>
+                                </td>
+                                <td title="{{ item.RowNo }}">{{ item.RowNo }}</td>
+                                <td class="one-line" title="{{ item.ToU9State }}" ng-class="{'bg-warning':item.IsToU9 == 1 || item.IsToU9 == 2, 'bg-success':item.IsToU9 == 3, 'bg-danger':item.IsToU9 == 2}">{{ item.ToU9State }}</td>
+                                <td class="one-line" title="{{ item.MRPType }}">{{ item.MRPType }}</td>
+                                <td class="one-line"  title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                                <td class="one-line" title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                                <td class="one-line" title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
+                                <td class="one-line" title="{{ item.MateSpec }}">{{ item.MateSpec }}</td>
+                                <td class="one-line" title="{{ item.State }}">{{ item.State }}</td>
+                                <td class="one-line" title="{{ item.Line }}">{{ item.Line }}</td>
+                                <td class="one-line" title="{{ item.PlanStDate }}">{{ item.PlanStDate | date:'yyyy-MM-dd' }}</td>
+                                <td class="one-line" title="{{ item.PlanEdDate }}">{{ item.PlanEdDate | date:'yyyy-MM-dd' }}</td>
+                                <td class="one-line" title="{{ item.Quantity }}">{{ item.Quantity }}</td>
+                                <td class="one-line" title="{{ item.TotalStartQty }}">{{ item.TotalStartQty }}</td>
+                                <td class="one-line" title="{{ item.TotalCompleteQty }}">{{ item.TotalCompleteQty }}</td>
+                                <td class="one-line" title="{{ item.CustomOrder }}">{{ item.CustomOrder }}</td>
+                                <td class="one-line" title="{{ item.DemandCode }}">{{ item.DemandCode }}</td>
+                                <td class="one-line" title="{{ item.Dtl.Line }}">{{ item.Dtl.Line }}</td>
+                                <td class="one-line" title="{{ item.Dtl.ThisPlanQty }}">{{ item.Dtl.ThisPlanQty }}</td>
+                                <td class="one-line" title="{{ item.Dtl.PlanStDate }}">{{ item.Dtl.PlanStDate | date:'yyyy-MM-dd' }}</td>
+                                <td class="one-line" title="{{ item.Dtl.PlanEdDate }}">{{ item.Dtl.PlanEdDate | date:'yyyy-MM-dd' }}</td>
+                                <td class="one-line" title="{{ item.Dtl.ProduceDate }}">{{ item.Dtl.ProduceDate | date:'yyyy-MM-dd' }}</td>
+                                <td class="one-line" title="{{ item.Dtl.DemandCode }}">{{ item.Dtl.DemandCode }}</td>
+                                <td class="one-line" title="{{ item.Dtl.Remark }}">{{ item.Dtl.Remark }}</td>
+                                <td class="one-line" >
+                                    <a title="点击打开OA流程:{{ item.OAFlowNO }}" ng-if="item.OAFlowID" class="text-info font-v3" ng-click="pl.OpenOAUrl(item)">
+                                        打开OA流程
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12 text-center " ng-if="pl.page1.total>pl.page1.size ">
+                    <label class="i-checks i-checks-sm pull-left" title="全选">
+                        <input autocomplete="off" type="checkbox" ng-disabled="!pl.VerData.IsCompare" ng-model="pl.IsAll" ng-change="pl.AllCheckChange()"><i></i>全选
+                    </label>
+                    <div uib-pagination total-items="pl.page1.total " ng-model="pl.page1.index " items-per-page="pl.page1.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                         ng-change="pl.PageChange1() " num-pages next-text="下一页 " last-text="最后页 " boundary-links="true" boundary-link-numbers="true "></div>
+                </div>
+            </div>
+            
+        </uib-tab>
+    </uib-tabset>
+</div>

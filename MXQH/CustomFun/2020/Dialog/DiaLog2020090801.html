@@ -1,0 +1,129 @@
+<div class="modal-header text-center" cg-busy="bl.promise">
+    <span class="modal-title h3">工单外部标签导入</span>
+</div>
+<div class="modal-body wrapper-xs">
+    <div class="panel panel-default">
+        <div class="panel-body padder-v-xs padder-xs">
+            <div class="col-sm-5 padder-xs">
+                <div class="panel panel-default scroll-y" ng-form="bl.DialogForm">
+                    <div class="panel-body  padder-xs padder-v-xs">
+                        <div class="form-horizontal no-padder">
+                            <div class="form-group  col-xs-12 padder-xs">
+                                <label class="col-xs-4 control-label">工单号</label>
+                                <div class="col-xs-8 no-padder" ng-class="{ 'has-error' : bl.DialogForm.WorkOrder.$invalid }">
+                                    <input type="text" name="WorkOrder" ng-disabled="bl.form.index == 2" class="form-control" ng-keyup="bl.KeyDonwOrder($event)"
+                                           uib-typeahead="order.WorkOrder as order.WorkOrder for order in bl.OrderList | orderBy: 'FirstChar'| filter:{WorkOrder: $viewValue} | limitTo:8" placeholder="工单号" ng-model="bl.Item.WorkOrder" required />
+                                    <p class="text-danger h6">输入工单后按回车获取信息</p>
+                                </div>
+                            </div>
+                            <div class="form-group  col-xs-12 padder-xs">
+                                <label class="col-xs-4 control-label">料号</label>
+                                <div class="col-xs-8 no-padder" ng-class="{ 'has-error' : bl.DialogForm.MaterialCode.$invalid }">
+                                    <input type="text" name="MaterialCode" class="form-control" placeholder="料号" ng-model="bl.PackMain.Order.MaterialCode" disabled required />
+                                </div>
+                            </div>
+                            <div class="form-group  col-xs-12 padder-xs">
+                                <label class="col-xs-4 control-label">料名</label>
+                                <div class="col-xs-8 no-padder" ng-class="{ 'has-error' : bl.DialogForm.MaterialName.$invalid }">
+                                    <input type="text" name="MaterialName" class="form-control" placeholder="料名" ng-model="bl.PackMain.Order.MaterialName" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group  col-xs-12 padder-xs">
+                                <label class="col-xs-4 control-label">客户订单号</label>
+                                <div class="col-xs-8 no-padder">
+                                    <input type="text" name="MaterialName" class="form-control" placeholder="客户订单号" ng-model="bl.PackMain.Order.CustomerOrder" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group  col-xs-12 padder-xs">
+                                <label class="col-xs-4 control-label">工单数量</label>
+                                <div class="col-xs-8 no-padder" ng-class="{ 'has-error' : bl.DialogForm.Quantity.$invalid }">
+                                    <input type="text" name="Quantity" class="form-control" placeholder="工单数量" ng-model="bl.PackMain.Order.Quantity" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group  col-xs-12 padder-xs">
+                                <label class="col-xs-4 control-label">每箱数量</label>
+                                <div class="col-xs-8 no-padder" ng-class="{ 'has-error' : bl.DialogForm.PerBoxQuantity.$invalid }">
+                                    <input type="text" name="PerBoxQuantity" class="form-control" placeholder="每箱数量" ng-model="bl.PackMain.PerBoxQuantity" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group  col-xs-12 padder-xs">
+                                <label class="col-xs-4 control-label">总箱数</label>
+                                <div class="col-xs-8 no-padder" ng-class="{ 'has-error' : bl.DialogForm.Quantity.$invalid }">
+                                    <input type="text" name="ToTalBox" class="form-control" placeholder="总箱数" ng-model="bl.PackMain.ToTalBox" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group  col-xs-12 padder-xs">
+                                <label class="col-xs-4 control-label">标签需求数</label>
+                                <div class="col-xs-8 no-padder">
+                                    <input type="text" class="form-control" placeholder="标签需求数" ng-model="bl.NeedCount" disabled/>
+                                </div>
+                            </div>
+                            <div class="form-group  col-xs-12 padder-xs">
+                                <label class="col-xs-4 control-label">箱/外箱数</label>
+                                <div class="col-xs-8 no-padder" ng-class="{ 'has-error' : bl.DialogForm.PerPackNum.$invalid }">
+                                    <input type="number" min="1" name="PerPackNum" class="form-control" placeholder="多少箱对应一个外箱标签" ng-blur="bl.CalToOut(bl.PackMain.ToTalBox,bl.BLOSData.PerPackNum)" ng-model="bl.BLOSData.PerPackNum" required />
+                                </div>
+                            </div>
+                            <div class="form-group  col-xs-12 padder-xs">
+                                <label class="col-xs-4 control-label">打印数量</label>
+                                <div class="col-xs-8 no-padder" ng-class="{ 'has-error' : bl.DialogForm.PrintNum.$invalid }">
+                                    <input type="number" min="1" name="PrintNum" class="form-control" placeholder="打印数量" ng-model="bl.BLOSData.PrintNum" required />
+                                </div>
+                            </div>
+                            <div class="form-group  col-xs-12 padder-xs">
+                                <label class="col-xs-4 control-label">导入标签</label>
+                                <div class="col-xs-8 no-padder">
+                                    <div file-upload ng-disabled="bl.DialogForm.$invalid" file-data="bl.FileData" file-type=".pdf" ng-complete="bl.ImportFile(fileData)"></div>
+                                    <p class="text-danger h6">注：系统不会更新覆盖已经打印过的外部标签，如需更新它们，请手动替换服务器文件</p>
+                                </div>
+                            </div>
+                            <div class="form-group  col-xs-12 padder-xs">
+                                <label class="col-xs-4 control-label"></label>
+                                <div class="col-xs-8 no-padder">
+                                    <p class="text-warning h3">当前导入的总标签数：{{ bl.OSNlist.length }} 页</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2 padder-xs scroll-y" style="max-height:600px">
+                <div class="list-group">
+                    <a ng-repeat="item in bl.OSNlist" class="list-group-item padder-xs hover-anchor cl" ng-class="{'hover': item.FileUrl == bl.FileUrl, ' b-l-info':$index%2==0, 'b-l-primary':$index%2==1}"
+                       ng-click="bl.ShowSn = item.FileUrl">
+                        {{ item.OSNCode }}
+                        <span class="pull-right text-success" ng-if="item.IsPrint == 'True'" title="已经打印，不会再更新覆盖"><i class="glyphicon glyphicon-print"></i></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-5 padder-xs scroll-y" style="max-height:600px">
+                <div class="panel panel-danger"  ng-if="bl.ErrList && bl.ErrList.length>0">
+                    <div class="panel-heading text-center">已绑定其他工单列表</div>
+                    <table class="table m-t-xs">
+                        <thead>
+                            <tr>
+                                <td title="外部标签编号" style="width:120px ">外部标签编号</td>
+                                <td title="绑定工单" style="width:100px ">绑定工单</td>
+                                <td title="料号" style="width:100px ">料号</td>
+                                <td title="料号" style="width:100px ">料名</td>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in bl.ErrList">
+                            <td title="{{ item.OSNCode }}">{{ item.OSNCode }}</td>
+                            <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
+                            <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                            <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <embed embed-src="{{ bl.ShowSn }}" type="application/pdf" width="100%" height="350px" internalinstanceid="81" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="col-md-12 text-center">
+        <button class="btn btn-success pull-none" type="button" ng-disabled="bl.DialogForm.$invalid" ng-click="bl.Save()">储存</button>
+        <button class="btn btn-warning pull-none" type="button" ng-click="bl.Cancel()">取消</button>
+    </div>
+</div>

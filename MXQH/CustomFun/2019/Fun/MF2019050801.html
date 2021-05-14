@@ -1,0 +1,58 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="pie.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">PIE JO生产查询</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="pie.Ser.Jo" placeholder="JO工单">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="pie.Ser.Line" placeholder="产线">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="pie.Ser.ProCode" placeholder="成品">
+                </div>
+                <div class="form-group">
+                    <input type="text" date-time-picker class="form-control"  ng-model="pie.Ser.StartDate" placeholder="开始时间" option="vm.DateTimeOption">
+                </div>
+                <div class="form-group">
+                    <input type="text" date-time-picker class="form-control"  ng-model="pie.Ser.EndDate" placeholder="结束时间" option="vm.DateTimeOption">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "pie.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "pie.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <table class= "table " >
+                <tr>
+                    <td style= "width:100px ">JO工单</td>
+                    <td style= "width:100px ">成品</td>
+                    <td style= "width:100px ">需求量</td>
+                    <td style= "width:100px ">产线</td>
+                    <td style= "width:100px ">最早开工</td>
+                    <td style= "width:100px ">投入量</td>
+                    <td style= "width:100px ">产出量</td>
+                    <td style= "width:100px ">完工时间</td>
+                    <td style= "width:100px ">累计投入</td>
+                    <td style= "width:100px ">累计产出</td>
+                </tr>
+                <tr ng-repeat= "item in pie.List ">
+                    <td>{{ item.Jo }}</td>
+                    <td>{{ item.ItemCode }}</td>
+                    <td>{{ item.Qty }}</td>
+                    <td>{{ item.Line }}</td>
+                    <td>{{ item.StartTime }}</td>
+                    <td>{{ item.InCount }}</td>
+                    <td>{{ item.OutCount }}</td>
+                    <td>{{ item.EndTime }}</td>
+                    <td>{{ item.TotalInCount }}</td>
+                    <td>{{ item.ToOutCount }}</td>
+                </tr>
+            </table>
+            <div class= "col-md-12 text-center " ng-if= "pie.page.total>pie.page.size ">
+                <div uib-pagination total-items= "pie.page.total " ng-model= "pie.page.index " items-per-page= "pie.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "pie.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

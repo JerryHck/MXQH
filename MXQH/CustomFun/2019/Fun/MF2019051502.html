@@ -1,0 +1,55 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="adr.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">组装线生产日报</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <div auto-first="true" basic-select="AssemblyLine" placeholder="线别" ng-model="adr.Ser.LineType" select-class="text-xs" ng-name="adr.Ser.LineType"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="adr.Ser.MO_DocNo" placeholder="工单号">
+                </div>
+                <div class="form-group">
+                    <input type="text" date-time-picker class="form-control" ng-model="adr.Ser.SD" placeholder="开始时间" option="vm.DateTimeOption">
+                </div>
+                <div class="form-group">
+                    <input type="text" date-time-picker class="form-control" ng-model="adr.Ser.ED" placeholder="结束时间" option="vm.DateTimeOption">
+                </div>
+                <button class="btn btn-sm btn-info " ng-click="adr.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                <button class="btn btn-sm btn-success " ng-click="adr.ExportExcel() "><i class="glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class="padder-md ">
+            <table class="table ">
+                <tr>
+                    <td style="width:100px ">工单号</td>
+                    <td style="width:100px ">产品编码</td>
+                    <td style="width:100px ">产品名称</td>
+                    <td style="width:100px ">线别</td>
+                    <td style="width:100px ">开始时间</td>
+                    <td style="width:100px ">结束时间</td>
+                    <td style="width:100px ">投入数量</td>
+                    <td style="width:100px ">复位数量</td>
+                    <td style="width:100px ">产出数量</td>
+                </tr>
+                <tr ng-repeat="item in adr.List ">
+                    <td>{{ item.WorOrder }}</td>
+                    <td>{{ item.MaterialCode }}</td>
+                    <td>{{ item.MaterialName }}</td>
+                    <td>{{ item.LineName }}</td>
+                    <td>{{ item.StartDate }}</td>
+                    <td>{{ item.EndDate }}</td>
+                    <td>{{ item.InputQty }}</td>
+                    <td>{{ item.ResetQty }}</td>
+                    <td>{{ item.OutputQty }}</td>
+                </tr>
+            </table>
+            <div class="col-md-12 text-center " ng-if="adr.page.total>adr.page.size ">
+                <div uib-pagination total-items="adr.page.total " ng-model="adr.page.index " items-per-page="adr.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                     ng-change="adr.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

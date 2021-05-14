@@ -1,0 +1,52 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="bom.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">PLM料品BOM状态</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="bom.Ser.a_Code" placeholder="料号">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="bom.Ser.a_Name" placeholder="物料名称">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="bom.Ser.a_InBom" placeholder="所在BOM">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "bom.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "bom.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table one-line" >
+                    <thead>
+                        <tr>
+                            <td title="料号" style= "width:100px ">料号</td>
+                            <td title="物料名称" style= "width:150px ">物料名称</td>
+                            <td title="规格描述" style= "width:200px ">规格描述</td>
+                            <td title="规格/型号" style= "width:200px ">规格/型号</td>
+                            <td title="是否冻结" style= "width:100px ">是否冻结</td>
+                            <td title="申请时间" style= "width:100px ">申请时间</td>
+                            <td title="出现次数" style= "width:100px ">出现次数</td>
+                            <td title="所在BOM" style= "width:300px ">所在BOM</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in bom.List ">
+                        <td title="{{ item.Code }}">{{ item.Code }}</td>
+                        <td title="{{ item.Name }}">{{ item.Name }}</td>
+                        <td title="{{ item.Spec }}">{{ item.Spec }}</td>
+                        <td title="{{ item.Spec2 }}">{{ item.Spec2 }}</td>
+                        <td title="{{ item.IsFrozen }}">{{ item.IsFrozen }}</td>
+                        <td title="{{ item.CreateDate }}">{{ item.CreateDate }}</td>
+                        <td title="{{ item.BomTime }}">{{ item.BomTime }}</td>
+                        <td title="{{ item.InBom }}">{{ item.InBom }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "bom.page.total>bom.page.size ">
+                <div uib-pagination total-items= "bom.page.total " ng-model= "bom.page.index " items-per-page= "bom.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "bom.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

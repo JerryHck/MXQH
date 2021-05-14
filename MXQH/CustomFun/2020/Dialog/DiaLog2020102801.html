@@ -1,0 +1,39 @@
+<div class="modal-header text-center">
+    <button class="btn btn-sm btn-warning pull-left" type="button" ng-click="tb.Cancel()">取消</button>
+    <h3 class="modal-title">表设计弹窗</h3>
+</div>
+<div class="modal-body wrapper-xs h6" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body padder-xs padder-v-xxs">
+            <div class="wrapper-sm">
+                <div class="form-inline">
+                    <button class= "btn btn-sm btn-info " ng-click= "tb.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                </div>
+            </div>
+            <div class="padder-sm table-responsive">
+                <table class="table one-line">
+                    <thead>
+                        <tr>
+                            <td title="a_AucId" style= "width:100px ">a_AucId</td>
+                            <td title="a_CustomerCode" style= "width:100px ">a_CustomerCode</td>
+                            <td title="a_CustomerID" style= "width:100px ">a_CustomerID</td>
+                            <td title="客户" style= "width:100px ">客户</td>
+                            <td title="客户单号" style= "width:100px ">客户单号</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in tb.List " ng-click="tb.OK(item)">
+                        <td title="{{ item.AucId }}">{{ item.AucId }}</td>
+                        <td title="{{ item.CustomerCode }}">{{ item.CustomerCode }}</td>
+                        <td title="{{ item.CustomerID }}">{{ item.CustomerID }}</td>
+                        <td title="{{ item.CustomerName }}">{{ item.CustomerName }}</td>
+                        <td title="{{ item.CustomerOrder }}">{{ item.CustomerOrder }}</td>
+                    </tr>
+                </table>
+                <div class= "col-md-12 text-center " ng-if= "tb.page.total>tb.page.size ">
+                    <div uib-pagination total-items= "tb.page.total " ng-model= "tb.page.index " items-per-page= "tb.page.size " max-size= "10 " first-text= "<< " previous-text= "< "
+                     ng-change= "tb.PageChange() " next-text= "> " last-text= ">> " boundary-links= "true " boundary-link-numbers= "true "></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
