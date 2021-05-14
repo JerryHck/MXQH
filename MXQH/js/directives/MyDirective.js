@@ -995,6 +995,7 @@ angular.module('AppSet')
             controller: ['$scope', function ($scope) {
                 var option = {};
                 $scope.fileData = $scope.fileData || {};
+                console.log($scope.fileData)
                 option.onComplete = function (data) {
                     if ($scope.ngComplete) {
                         var index = data.length > 0 ? data.length - 1 : 0;

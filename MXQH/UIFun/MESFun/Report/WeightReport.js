@@ -20,7 +20,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function PageChange() {
-        vm.promise = AjaxService.ExecPlanPage("MESSnCodeWeigth", "Report", vm.Ser, vm.page.index, vm.page.size).then(function (data) {
+        vm.promise = AjaxService.ExecPlanPage("MESSnCodeWeight", "Report", vm.Ser, vm.page.index, vm.page.size).then(function (data) {
             vm.List = data.List;
             vm.page.total = data.Count;
         });
@@ -28,7 +28,7 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window) {
     }
 
     function ExportExcel() {
-        vm.promise = AjaxService.GetPlanExcel("MESSnCodeWeigth", "Report", vm.Ser).then(function (data) {
+        vm.promise = AjaxService.GetPlanExcel("MESSnCodeWeight", "Report", vm.Ser).then(function (data) {
             $window.location.href = data.File;
         });
     }

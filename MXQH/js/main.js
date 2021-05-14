@@ -3,8 +3,8 @@
 /* Controllers */
 
 angular.module('app')
-  .controller('AppCtrl', ['$scope', '$localStorage', '$window', 'toastr', 'AjaxService', '$state', '$rootScope', '$cookieStore', 'appUrl', 'Dialog', 'FileUrl',
-    function ($scope, $localStorage, $window, toastr, AjaxService, $state, $rootScope, $cookieStore, appUrl, Dialog, FileUrl) {
+  .controller('AppCtrl', ['$scope', '$localStorage', '$window', 'toastr', 'AjaxService', '$state', '$rootScope', '$cookieStore', 'appUrl', 'Dialog', 'FileUrl', '$translate',
+    function ($scope, $localStorage, $window, toastr, AjaxService, $state, $rootScope, $cookieStore, appUrl, Dialog, FileUrl, $translate) {
         // add 'ie' classes to html
         var isIE = !!navigator.userAgent.match(/MSIE/i);
         isIE && angular.element($window.document.body).addClass('ie');
@@ -71,7 +71,19 @@ angular.module('app')
         });
 
         // save settings to local storage
-        
+        //语言配置
+        $scope.lang = { isopen: false };
+        $scope.langs = { en: '英语', de_DE: '中文', it_IT: '意大利' };
+        $scope.selectLang = $scope.langs[$translate.proposedLanguage()] || "English";
+        $scope.setLang = function (langKey, $event) {
+            // set the current lang
+            $scope.selectLang = $scope.langs[langKey];
+            // You can change the language during runtime
+            $translate.use(langKey);
+            $scope.lang.isopen = !$scope.lang.isopen;
+        };
+
+
         $scope.$watch('vm.app.settings', function () {
             if (vm.app.settings.asideDock && vm.app.settings.asideFixed) {
                 // aside dock and fixed must set the header fixed.

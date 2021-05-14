@@ -7,7 +7,7 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
     vm.form = Form[ItemData.name ? 1 : 0];
     vm.NewItem = ItemData.name ? ItemData : {DialogNo : "-1", IsSystem: false, LoadFiles: [] };
     //是新增功能的时候--计算中间文件夹
-    var dir = vm.NewItem.DialogNo== '-1' ? (new Date()).Format("yyyy") : new Date(vm.NewItem.CreateDate).Format("yyyy");
+    var dir = (vm.NewItem.DialogNo == '-1' ? (new Date()).Format("yyyy")  : new Date(vm.NewItem.CreateDate).Format("yyyy")) + "\\Dialog";
     vm.NewItem.Action = ItemData.name ? "U" : "I";
     vm.isExists = isExists;
     vm.LoadAdd = LoadAdd;
@@ -597,7 +597,7 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
         sbHtml += '                    <thead>\n';
         sbHtml += '                        <tr>\n';
         fun.ColList.forEach(function (row) {
-            sbHtml += "                            <td title=\"" + row.ColumnText + "\" style= \"width:" + (row.Width ? "100px" : row.Width) + " \">" + row.ColumnText + "</td>\n";
+            sbHtml += "                            <td title=\"" + row.ColumnText + "\" style= \"width:" + (!row.Width ? "100px" : row.Width) + " \">" + row.ColumnText + "</td>\n";
         });
         //标题添加
         sbHtml += '                        </tr>\n';
