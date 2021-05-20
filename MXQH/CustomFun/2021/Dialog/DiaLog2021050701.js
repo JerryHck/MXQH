@@ -1,11 +1,14 @@
 ﻿'use strict';
 
 angular.module('AppSet')
-.controller('BomMateSoftVerDialogCtrl', ['$scope', 'ItemData', '$uibModalInstance', 'Form', 'AjaxService', 'toastr', '$window',
-function ($scope, ItemData, $uibModalInstance, Form, AjaxService, toastr, $window) {
+.controller('BomMateSoftVerDialogCtrl', ['$scope', 'ItemData', '$uibModalInstance', 'Form', 'AjaxService', 'toastr', '$window', 'Dialog',
+function ($scope, ItemData, $uibModalInstance, Form, AjaxService, toastr, $window, Dialog) {
 
     var vm = this;
-    vm.form = Form[ItemData.Code ? 1 : 0];    vm.Item = angular.copy(ItemData);;
+    vm.form = Form[ItemData.Code ? 1 : 0]; vm.Item = angular.copy(ItemData);
+
+    vm.page = { index: 1, size: 20 };
+
     vm.Save = Save;
     vm.Cancel = Cancel;
     vm.ChangeMate = ChangeMate;
@@ -17,6 +20,7 @@ function ($scope, ItemData, $uibModalInstance, Form, AjaxService, toastr, $windo
     vm.DownLoad = DownLoad;
     vm.OKSign = OKSign;
     vm.IsVerExists = IsVerExists;
+    vm.OpenCMPT = OpenCMPT;
 
     if (ItemData.Code) {
         ChangeMate()
@@ -32,6 +36,12 @@ function ($scope, ItemData, $uibModalInstance, Form, AjaxService, toastr, $windo
                 vm.NewItem = { ID: -1 };
                 vm.IsInsert = true;
             }
+        })
+    }
+
+    function OpenCMPT(item) {
+        Dialog.OpenDialog("BomMateSoftCMPTDialog", item).then(function (data) {
+
         })
     }
 
@@ -65,9 +75,10 @@ function ($scope, ItemData, $uibModalInstance, Form, AjaxService, toastr, $windo
 
     function GetMateSoftVer() {
         //获取该料之前的软件版本
-        AjaxService.GetPlans("BomMateSoftVer", { name: "Code", value: vm.Item.Code }).then(function (data2) {
+        AjaxService.GetPlansPage("BomMateSoftVer", { name: "Code", value: vm.Item.Code }, vm.page.index, vm.page.size).then(function (data2) {
             vm.IsInsert = false;
-            vm.List = data2;
+            vm.List = data2.List;
+            vm.page.total = data2.Count;
         })
     }
 

@@ -1,0 +1,51 @@
+﻿<div class="modal-header text-center">
+    <button class="btn btn-sm btn-success pull-left" type="button" ng-click="wo.OKClose()">确认</button>
+    <button class="btn btn-sm btn-warning pull-right" type="button" ng-click="wo.Cancel()">取消</button>
+    <h3 class="modal-title">U9工单列表</h3>
+</div>
+<div class="modal-body wrapper-xs h6" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body padder-xs padder-v-xxs">
+            <div class="wrapper-sm">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <input type="text" class="form-control"  ng-model="wo.Ser.aDocNo" placeholder="工单号">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control"  ng-model="wo.Ser.bCode" placeholder="品号">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control"  ng-model="wo.Ser.bName" placeholder="品名">
+                    </div>
+                    <button class= "btn btn-sm btn-info " ng-click= "wo.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                </div>
+            </div>
+            <div class="padder-sm table-responsive">
+                <table class="table one-line">
+                    <thead>
+                        <tr>
+                            <td title="工单号" style= "width:100px ">工单号</td>
+                            <td title="品号" style= "width:100px ">品号</td>
+                            <td title="品名" style= "width:100px ">品名</td>
+                            <td title="订单量" style= "width:100px ">订单量</td>
+                            <td title="规格" style= "width:100px ">规格</td>
+                            <td title="UPPH" style= "width:100px ">UPPH</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in wo.List " ng-click="wo.Select(item)" ng-class="{'bg-danger-light': item.ID == wo.SerItem.ID}" ng-dblclick="wo.OK(item)" title="双击选择关闭">
+                        <td title="{{ item.DocNo }}">{{ item.DocNo }}</td>
+                        <td title="{{ item.Item.Code }}">{{ item.Item.Code }}</td>
+                        <td title="{{ item.Item.Name }}">{{ item.Item.Name }}</td>
+                        <td title="{{ item.ProductQty }}">{{ item.ProductQty }}</td>
+                        <td title="{{ item.Item.SPECS }}">{{ item.Item.SPECS }}</td>
+                        <td title="{{ item.Item.UPPH }}">{{ item.Item.UPPH }}</td>
+                    </tr>
+                </table>
+                <div class= "col-md-12 text-center " ng-if= "wo.page.total>wo.page.size ">
+                    <div uib-pagination total-items= "wo.page.total " ng-model= "wo.page.index " items-per-page= "wo.page.size " max-size= "10 " first-text= "<< " previous-text= "< "
+                     ng-change= "wo.PageChange() " next-text= "> " last-text= ">> " boundary-links= "true " boundary-link-numbers= "true "></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -16,6 +16,7 @@ function ($scope, $http, AjaxService, toastr, $window, Dialog) {
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
     vm.ChangeState = ChangeState;
+    vm.SerLog = SerLog;
 
     function Search() {
         vm.page.index = 1;
@@ -26,6 +27,10 @@ function ($scope, $http, AjaxService, toastr, $window, Dialog) {
         Dialog.OpenDialog("BcEquipment", {}).then(function (data) {
             PageChange();
         }, function () { })
+    }
+
+    function SerLog(item) {
+        Dialog.OpenDialog("EquipmentRpLogDialog", item).then(function (data) { }, function () { })
     }
 
     function Edit(item) {

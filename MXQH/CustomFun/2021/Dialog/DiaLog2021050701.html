@@ -93,7 +93,7 @@
                                             <span ng-if="!item.IsEdit">
                                                 <button class="btn btn-xs btn-primary" ng-if="!item.IsConfirm" title="更新编辑" ng-click="bo.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
                                                 <button class="btn btn-xs btn-success" ng-if="!item.IsConfirm" title="确认版本" ng-confirm="{text:'确认生效后将不能再做任何修改与上传软件包，确定生效吗'}" ng-click="bo.OKSign(item)"><i class="glyphicon glyphicon-ok-sign"></i></button>
-                                                <button ng-if="item.IsConfirm" class="btn btn-xs btn-primary" ng-confirm="{text:'确定要删除吗'}" ng-click="bo.Delete(item)">
+                                                <button ng-if="item.IsConfirm" class="btn btn-xs btn-primary" title="设置兼容版本" ng-click="bo.OpenCMPT(item)">
                                                     兼容<i class="fa fa-group"></i>
                                                 </button>
                                             </span>

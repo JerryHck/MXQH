@@ -17,6 +17,7 @@ function ($scope, $http, AjaxService, toastr, $window, Dialog) {
     vm.Search = Search;
     vm.ExportExcel = ExportExcel;
     vm.DownLoad = DownLoad;
+    vm.OpenCMPT = OpenCMPT;
 
     Search();
     function Search() {
@@ -30,6 +31,12 @@ function ($scope, $http, AjaxService, toastr, $window, Dialog) {
         Dialog.OpenDialog("BomMateSoftVerDialog", {}).then(function (data) {
             PageChange()
         }, function (em) { PageChange() })
+    }
+
+    function OpenCMPT(item) {
+        Dialog.OpenDialog("BomMateSoftCMPTDialog", item).then(function (data) {
+
+        })
     }
 
     function SaveInsert() {

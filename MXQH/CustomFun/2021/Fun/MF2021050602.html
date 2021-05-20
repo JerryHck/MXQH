@@ -22,7 +22,7 @@
                 <table class= "table pad-xs one-line" >
                     <thead>
                         <tr>
-                            <td style= "width:60px">操作</td>
+                            <td style= "width:80px">操作</td>
                             <td style= "width:100px ">软件料号</td>
                             <td style= "width:100px ">软件料名称</td>
                             <td style= "width:100px ">软件料规格</td>
@@ -37,9 +37,12 @@
                         </tr>
                     </thead>
                     <tr ng-repeat= "item in bo.List " ng-form="item.ItemForm">
-                        <td>
+                        <td class="multi-line">
                             <span ng-if="!item.IsEdit">
                                 <button class="btn btn-xs btn-primary" ng-click="bo.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button ng-if="item.IsConfirm" class="btn btn-xs btn-primary" title="设置兼容版本" ng-click="bo.OpenCMPT(item)">
+                                    <i class="fa fa-group"></i>
+                                </button>
                                 <!--<button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="bo.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>-->
                             </span>
                             <span ng-if="item.IsEdit">

@@ -1,0 +1,116 @@
+﻿<div class="modal-header">
+    <div class="modal-title h3">
+        <button class="btn btn-warning pull-right" type="button" ng-click="mo.Cancel()">取消</button>
+        <button ng-if="!mo.Item.IsComplete" class="btn btn-success pull-right m-r-md" type="button" ng-disabled="DialogForm.$invalid||mo.List1.length == 0 ||(mo.Item.State&&mo.Item.State!=0)" ng-click="mo.Save('1')">储存并提交到OA审批</button>
+        <button ng-if="!mo.Item.IsComplete" class="btn btn-success pull-right m-r-md" type="button" ng-disabled="DialogForm.$invalid||mo.List1.length == 0 ||(mo.Item.State&&mo.Item.State!=0)" ng-click="mo.Save('0')">储存</button>
+        工单软件版本兼容
+    </div>
+</div>
+<div class="modal-body wrapper-sm" ng-form="DialogForm" cg-busy="mo.promise">
+    <div class="panel panel-default">
+        <div class="panel-body no-padder padder-v-xxs">
+            <div class="col-xs-3 no-padder">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">工单信息</div>
+                    <div class="panel-body padder-xs padder-v-xs">
+                        <div class="form form-horizontal">
+                            <div class="form-group-xs col-xs-12 padder-xxs">
+                                <label class="control-label col-sm-3 padder-xs">U9工单号:</label>
+                                <div class="col-sm-9 padder-xs">
+                                    <div class="input-group">
+                                        <input autocomplete="off" type="text" disabled="disabled" name="ListNo" class="form-control" placeholder="U9工单号" ng-model="mo.Item.WorkOrder" required>
+                                        <span class="input-group-addon"><a class="text-success" ng-click="mo.OpenMO()"><i class="glyphicon glyphicon-search"></i></a></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group-xs col-xs-12 padder-xxs">
+                                <label class="control-label col-sm-3 padder-xs">工单料号:</label>
+                                <div class="col-sm-9 padder-xs">
+                                    <p class="form-control-static">{{ mo.Item.MateCode }}</p>
+                                </div>
+                            </div>
+                            <div class="form-group-xs col-xs-12 padder-xxs">
+                                <label class="control-label col-sm-3 padder-xs">工单料名:</label>
+                                <div class="col-sm-9 padder-xs">
+                                    <p class="form-control-static">{{ mo.Item.MateName }}</p>
+                                </div>
+                            </div>
+                            <div class="form-group-xs col-xs-12 padder-xxs">
+                                <label class="control-label col-sm-3 padder-xs">备注说明:</label>
+                                <div class="col-sm-9 padder-xs">
+                                    <textarea ng-disabled="mo.Item.State && mo.Item.State!=0" class="form-control" name="HitchDesc" rows="2" ng-model="mo.Item.Remark" placeholder="备注说明" ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-5 padder-xxs">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">可选软件版本</div>
+                    <div class="panel-body padder-xs padder-v-xs">
+                        <!--<div class="wrapper-sm">
+                            <div class="form-inline">
+                                <button class="btn btn-sm btn-info " ng-click="mo.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                            </div>
+                        </div>-->
+                        <div class="padder-sm table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td title="操作" style="width:40px ">操作</td>
+                                        <td title="软件版本" style="width:60px ">软件料号</td>
+                                        <td title="软件版本" style="width:100px ">软件版本</td>
+                                        <td title="添加时间" style="width:60px ">创建时间</td>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in mo.List">
+                                    <td title="选择">
+                                        <label class="i-checks i-checks-sm">
+                                            <input autocomplete="off" type="checkbox" ng-disabled="mo.Item.State && mo.Item.State!=0" ng-change="mo.ChangeSelect(item)" ng-model="item.IsSelect"><i></i>
+                                        </label>
+                                    </td>
+                                    <td title="{{ item.Soft.Code }}">{{ item.Soft.Code }}</td>
+                                    <td title="{{ item.Soft.SoftVersion }}">{{ item.Soft.SoftVersion }}</td>
+                                    <td title="{{ item.CreateDate }}">{{ item.CreateDate | date:'yyyy-MM-dd HH:mm' }}</td>
+                                </tr>
+                            </table>
+                            <div class="col-md-12 text-center " ng-if="mo.page.total>mo.page.size ">
+                                <div uib-pagination total-items="mo.page.total " ng-model="mo.page.index " items-per-page="mo.page.size " max-size="5 " first-text="<< " previous-text="< "
+                                     ng-change="mo.PageChange() " next-text="> " last-text=">> " boundary-links="true " boundary-link-numbers="true "></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4 padder-xs">
+                <div class="panel panel-success">
+                    <div class="panel-heading text-center">已设置兼容版本</div>
+                    <div class="panel-body padder-xs padder-v-xs">
+                        <div class="padder-sm table-responsive">
+                            <table class="table one-line">
+                                <thead>
+                                    <tr>
+                                        <td title="操作" style="width:30px ">操作</td>
+                                        <td title="软件版本" style="width:100px ">软件版本</td>
+                                        <td title="添加时间" style="width:100px ">添加时间</td>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in mo.List1">
+                                    <td title="选择">
+                                        <button class="btn btn-xs btn-danger" ng-disabled="mo.Item.State && mo.Item.State!=0" title="删除" ng-click="mo.DeleteSoft(item, $index)">
+                                            <i class="glyphicon glyphicon-remove"></i>
+                                        </button>
+                                    </td>
+                                    <td title="{{ item.SoftVersion }}">{{ item.SoftVersion }}</td>
+                                    <td title="{{ item.CreateDate }}">{{ item.CreateDate | date:'yyyy-MM-dd HH:mm' }}</td>
+                                </tr>
+                            </table>
+                            <!--<pre> {{ mo.List1 | json }} </pre>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

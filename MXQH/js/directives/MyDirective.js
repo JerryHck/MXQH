@@ -492,9 +492,9 @@ angular.module('AppSet')
         },
         template: '<div class="py-xl-0 pt-xl-0" ng-class="{ \'input-group\' : clear }">'
                   + '    <ui-select ng-model="$parent.ngModel" theme="bootstrap" ng-change="ngChange()"  class="{{ selectClass }}" ng-disabled="ngDisabled" name="{{ ngName }}" ng-required="ngRequired">'
-                  + '         <ui-select-match placeholder="请选择...">{{ $select.selected }}</ui-select-match>'
-                  + '          <ui-select-choices class="pl-1" repeat="item in data | filter: $select.search track by item" refresh-delay="0">'
-                  + '             <div ng-bind-html="item | highlight: $select.search"></div>'
+                  + '         <ui-select-match placeholder="请选择...">{{ $select.selected.Conn }}</ui-select-match>'
+                  + '          <ui-select-choices class="pl-1" repeat="item.Conn as item in data | filter: $select.search track by item.Conn" refresh-delay="0">'
+                  + '             <div  style="min-width: 150px;"><span ng-bind-html="item.Conn | highlight: $select.search"></span>  <span class="pull-right h6 text-muted">{{ item.DbType }}</span></div>'
                   + '         </ui-select-choices>'
                   + '     </ui-select>'
                   + '    <span class="input-group-btn" ng-if="clear">'
@@ -510,7 +510,7 @@ angular.module('AppSet')
         AjaxService.BasicCustom("GetConnectList").then(function (data) {
             scope.data = data;
             scope.ListData = angular.copy(scope.data);
-            scope.ngModel = scope.ngModel || data[0];
+            scope.ngModel = scope.ngModel || data[0].Conn;
         });
     }
 }])

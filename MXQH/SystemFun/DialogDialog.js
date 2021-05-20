@@ -578,7 +578,8 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
         var maxSize = vm.NewItem.size == 'sm' || !vm.NewItem.size || vm.NewItem.size == "" ? "5" : "10";
         var sbHtml = "";
         sbHtml += "<div class=\"modal-header text-center\">\n";
-        sbHtml += '    <button class="btn btn-sm btn-warning pull-left" type="button" ng-click="' + vm.NewItem.controllerAs + '.Cancel()">取消</button>\n';
+        sbHtml += '    <button class="btn btn-sm btn-warning pull-left" type="button" ng-click="' + vm.NewItem.controllerAs + '.OKClose()">取消</button>\n';
+        sbHtml += '    <button class="btn btn-sm btn-warning pull-right" type="button" ng-click="' + vm.NewItem.controllerAs + '.Cancel()">取消</button>\n';
         sbHtml += '    <h3 class="modal-title">' + fun.FunName + '</h3>\n';
         sbHtml += "</div>\n";
         sbHtml += '<div class="modal-body wrapper-xs h6" ng-form="DialogForm">\n';
@@ -602,7 +603,7 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
         //标题添加
         sbHtml += '                        </tr>\n';
         sbHtml += '                    </thead>\n';
-        sbHtml += '                    <tr ng-repeat="item in ' + vm.NewItem.controllerAs + '.List " ng-click="' + vm.NewItem.controllerAs + '.OK(item)">\n';
+        sbHtml += '                    <tr ng-repeat="item in ' + vm.NewItem.controllerAs + '.List " ng-click="' + vm.NewItem.controllerAs + '.Select(item)" ng-dblclick="' + vm.NewItem.controllerAs + '.OK(item)">\n';
        
         fun.ColList.forEach(function (row) {
             if (fun.DataType == "E") {
@@ -650,6 +651,8 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
         sbJs += "    vm.Search = Search;\n";
         sbJs += "    vm.OK = OK;\n";
         sbJs += "    vm.Cancel = Cancel;\n";
+        sbJs += "    vm.Select = Select;\n";
+        sbJs += "    vm.OKClose = OKClose;\n";
         sbJs += "\n";
         sbJs += "    Search();\n";
         sbJs += "    function Search() {\n";
@@ -670,6 +673,12 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
 
             sbJs += "    function GetContition() {\n";
             sbJs = getEnJsSer(fun, sbJs);
+
+            sbJs += "        if (ItemData.SerList && ItemData.SerList.length > 0) {\n";
+            sbJs += "            for (var i = 0, len = ItemData.SerList.length; i < len; i++) {\n";
+            sbJs += "                list.push(ItemData.SerList[i]);\n";
+            sbJs += "            }\n";
+            sbJs += "        }\n";
             sbJs += "        return list;\n";
             sbJs += "    }\n";
 
@@ -691,6 +700,14 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
         else {
             sbJs += "        $uibModalInstance.close(item);\n";
         }
+        sbJs += "    }\n";
+
+        sbJs += "    function Select(item) {\n";
+        sbJs += "        vm.SerItem = angular.copy(item);\n";
+        sbJs += "    }\n";
+
+        sbJs += "    function OKColse() {\n";
+        sbJs += "        $uibModalInstance.dismiss('vm.SerItem');\n";
         sbJs += "    }\n";
 
         sbJs += "    function Cancel() {\n";

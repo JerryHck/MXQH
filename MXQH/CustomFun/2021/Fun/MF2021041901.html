@@ -28,6 +28,7 @@
                             <td style= "width:100px ">购入费用</td>
                             <td style= "width:100px ">使用部门</td>
                             <td style= "width:100px ">管理部门</td>
+                            <td style="width:100px ">保养/维修</td>
                             <td style= "width:100px ">存放位置</td>
                             <td style= "width:100px ">状态</td>
                             <td style= "width:100px ">供应商</td>
@@ -52,6 +53,9 @@
                         <td title="{{ item.BuyAmount }}">{{ item.BuyAmount }}</td>
                         <td title="{{ item.UseDept }}">{{ item.UseDept }}</td>
                         <td title="{{ item.Dept }}">{{ item.Dept }}</td>
+                        <td title="点击查看保养维修记录">
+                            <a href="" class="text-success" ng-click="eq.SerLog(item)">【查看记录】</a>
+                        </td>
                         <td title="{{ item.Location }}">{{ item.Location }}</td>
                         <td title="{{ item.StateDesc }}">
                             <div ng-class="{'bg-success':item.State == '1', 'bg-warning':item.State == '2', 'bg-info':item.State == '3', 'bg-danger':item.State == '4'}">
