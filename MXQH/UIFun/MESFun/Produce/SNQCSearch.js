@@ -28,10 +28,10 @@ function ($scope, $http, AjaxService, toastr, $window) {
             vm.Data = data;
             if (vm.Data.data3 && vm.Data.data3[0]) {
                 var en = { name: "BSN", value: vm.Data.data3[0].InternalCode };
-                AjaxService.GetPlans("MESAucAtetest", en).then(function (data2) {
-                    vm.ATEData = data2;
-                    vm.KeysData = Object.keys(data2[0]);
-                })
+                //AjaxService.GetPlans("MESAucAtetest", en).then(function (data2) {
+                //    vm.ATEData = data2;
+                //    vm.KeysData = Object.keys(data2[0]);
+                //})
             }
         });
 

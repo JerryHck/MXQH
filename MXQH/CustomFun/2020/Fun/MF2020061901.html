@@ -1,0 +1,158 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="PTC.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">成品感应测试查询</uib-tab-heading>
+        <div class="wrapper-xs">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" class="form-control"  ng-model="PTC.Ser.aBSN" placeholder="内控码">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" date-time-picker class="form-control"  ng-model="PTC.Ser.aTS" placeholder="测试开始时间" option="PTC.DateTimeOption">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" date-time-picker class="form-control"  ng-model="PTC.Ser.aTS1" placeholder="测试结束时间" option="PTC.DateTimeOption">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "PTC.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "PTC.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-xs ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table " >
+                    <thead>
+                        <tr>
+                            <td title="Test_Time" style= "width:100px ">Test_Time</td>
+                            <td title="BSNCode" style= "width:100px ">BSNCode</td>
+                            <td title="STATE" style= "width:100px ">STATE</td>
+                            <td title="Model_Name" style= "width:100px ">Model_Name</td>
+                            <td title="a_ElapsedTime" style= "width:100px ">a_ElapsedTime</td>
+                            <td title="a_TX_Freq_Error" style= "width:100px ">a_TX_Freq_Error</td>
+                            <td title="a_TX_Freq1_Hi_Power" style= "width:100px ">a_TX_Freq1_Hi_Power</td>
+                            <td title="a_TX_Freq1_Lo_Power" style= "width:100px ">a_TX_Freq1_Lo_Power</td>
+                            <td title="a_TX_Modulation_Sensitivity" style= "width:100px ">a_TX_Modulation_Sensitivity</td>
+                            <td title="a_RX_Max_Audio_Output" style= "width:100px ">a_RX_Max_Audio_Output</td>
+                            <td title="a_RX_Sensitivity" style= "width:100px ">a_RX_Sensitivity</td>
+                            <td title="a_WORK_PROC" style= "width:100px ">a_WORK_PROC</td>
+                            <td title="a_PROD_STAGE" style= "width:100px ">a_PROD_STAGE</td>
+                            <td title="a_TX_Freq1_Hi_Power_Current" style= "width:100px ">a_TX_Freq1_Hi_Power_Current</td>
+                            <td title="a_Lan_Test" style= "width:100px ">a_Lan_Test</td>
+                            <td title="a_Digital_Frequency_Cal" style= "width:100px ">a_Digital_Frequency_Cal</td>
+                            <td title="a_Digital_1_Frequency_Error_HP" style= "width:100px ">a_Digital_1_Frequency_Error_HP</td>
+                            <td title="a_Digital_1_Broadband_Power_HP" style= "width:100px ">a_Digital_1_Broadband_Power_HP</td>
+                            <td title="a_Digital_1_Symbol_Deviation_HP" style= "width:100px ">a_Digital_1_Symbol_Deviation_HP</td>
+                            <td title="a_Digital_1_FSK_Error_HP" style= "width:100px ">a_Digital_1_FSK_Error_HP</td>
+                            <td title="a_Digital_1_BER_HP" style= "width:100px ">a_Digital_1_BER_HP</td>
+                            <td title="a_Digital_1_Magnitude_Error_HP" style= "width:100px ">a_Digital_1_Magnitude_Error_HP</td>
+                            <td title="a_Digital_1_Frequency_Error" style= "width:100px ">a_Digital_1_Frequency_Error</td>
+                            <td title="a_Digital_1_Broadband_Power" style= "width:100px ">a_Digital_1_Broadband_Power</td>
+                            <td title="a_Digital_2_Frequency_Error_HP" style= "width:100px ">a_Digital_2_Frequency_Error_HP</td>
+                            <td title="a_Digital_2_Broadband_Power_HP" style= "width:100px ">a_Digital_2_Broadband_Power_HP</td>
+                            <td title="a_Digital_2_Symbol_Deviation_HP" style= "width:100px ">a_Digital_2_Symbol_Deviation_HP</td>
+                            <td title="a_Digital_2_FSK_Error_HP" style= "width:100px ">a_Digital_2_FSK_Error_HP</td>
+                            <td title="a_Digital_2_BER_HP" style= "width:100px ">a_Digital_2_BER_HP</td>
+                            <td title="a_Digital_2_Magnitude_Error_HP" style= "width:100px ">a_Digital_2_Magnitude_Error_HP</td>
+                            <td title="a_Digital_2_Sensitivity" style= "width:100px ">a_Digital_2_Sensitivity</td>
+                            <td title="a_Digital_2_Frequency_Error" style= "width:100px ">a_Digital_2_Frequency_Error</td>
+                            <td title="a_Digital_2_Broadband_Power" style= "width:100px ">a_Digital_2_Broadband_Power</td>
+                            <td title="a_Digital_3_Frequency_Error_HP" style= "width:100px ">a_Digital_3_Frequency_Error_HP</td>
+                            <td title="a_Digital_3_Broadband_Power_HP" style= "width:100px ">a_Digital_3_Broadband_Power_HP</td>
+                            <td title="a_Digital_3_Symbol_Deviation_HP" style= "width:100px ">a_Digital_3_Symbol_Deviation_HP</td>
+                            <td title="a_Digital_3_FSK_Error_HP" style= "width:100px ">a_Digital_3_FSK_Error_HP</td>
+                            <td title="a_Digital_3_BER_HP" style= "width:100px ">a_Digital_3_BER_HP</td>
+                            <td title="a_Digital_3_Magnitude_Error_HP" style= "width:100px ">a_Digital_3_Magnitude_Error_HP</td>
+                            <td title="a_Digital_3_Frequency_Error" style= "width:100px ">a_Digital_3_Frequency_Error</td>
+                            <td title="a_Digital_3_Broadband_Power" style= "width:100px ">a_Digital_3_Broadband_Power</td>
+                            <td title="a_Digital_4_Frequency_Error_HP" style= "width:100px ">a_Digital_4_Frequency_Error_HP</td>
+                            <td title="a_Digital_4_Broadband_Power_HP" style= "width:100px ">a_Digital_4_Broadband_Power_HP</td>
+                            <td title="a_Digital_4_Symbol_Deviation_HP" style= "width:100px ">a_Digital_4_Symbol_Deviation_HP</td>
+                            <td title="a_Digital_4_FSK_Error_HP" style= "width:100px ">a_Digital_4_FSK_Error_HP</td>
+                            <td title="a_Digital_4_BER_HP" style= "width:100px ">a_Digital_4_BER_HP</td>
+                            <td title="a_Digital_4_Magnitude_Error_HP" style= "width:100px ">a_Digital_4_Magnitude_Error_HP</td>
+                            <td title="a_Digital_4_Frequency_Error" style= "width:100px ">a_Digital_4_Frequency_Error</td>
+                            <td title="a_Digital_4_Broadband_Power" style= "width:100px ">a_Digital_4_Broadband_Power</td>
+                            <td title="a_Digital_5_Frequency_Error_HP" style= "width:100px ">a_Digital_5_Frequency_Error_HP</td>
+                            <td title="a_Digital_5_Broadband_Power_HP" style= "width:100px ">a_Digital_5_Broadband_Power_HP</td>
+                            <td title="a_Digital_5_Symbol_Deviation_HP" style= "width:100px ">a_Digital_5_Symbol_Deviation_HP</td>
+                            <td title="a_Digital_5_FSK_Error_HP" style= "width:100px ">a_Digital_5_FSK_Error_HP</td>
+                            <td title="a_Digital_5_BER_HP" style= "width:100px ">a_Digital_5_BER_HP</td>
+                            <td title="a_Digital_5_Magnitude_Error_HP" style= "width:100px ">a_Digital_5_Magnitude_Error_HP</td>
+                            <td title="a_Digital_5_Frequency_Error" style= "width:100px ">a_Digital_5_Frequency_Error</td>
+                            <td title="a_Digital_5_Broadband_Power" style= "width:100px ">a_Digital_5_Broadband_Power</td>
+                            <td title="a_Digital_1_Symbol_Deviation" style= "width:100px ">a_Digital_1_Symbol_Deviation</td>
+                            <td title="a_Digital_1_FSK_Error" style= "width:100px ">a_Digital_1_FSK_Error</td>
+                            <td title="a_Digital_1_BER" style= "width:100px ">a_Digital_1_BER</td>
+                            <td title="a_Digital_1_Magnitude_Error" style= "width:100px ">a_Digital_1_Magnitude_Error</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in PTC.List ">
+                        <td title="{{ item.TS }}">{{ item.TS }}</td>
+                        <td title="{{ item.BSN }}">{{ item.BSN }}</td>
+                        <td title="{{ item.STATE }}">{{ item.STATE }}</td>
+                        <td title="{{ item.MODEL_NAME }}">{{ item.MODEL_NAME }}</td>
+                        <td title="{{ item.ElapsedTime }}">{{ item.ElapsedTime }}</td>
+                        <td title="{{ item.TX_Freq_Error }}">{{ item.TX_Freq_Error }}</td>
+                        <td title="{{ item.TX_Freq1_Hi_Power }}">{{ item.TX_Freq1_Hi_Power }}</td>
+                        <td title="{{ item.TX_Freq1_Lo_Power }}">{{ item.TX_Freq1_Lo_Power }}</td>
+                        <td title="{{ item.TX_Modulation_Sensitivity }}">{{ item.TX_Modulation_Sensitivity }}</td>
+                        <td title="{{ item.RX_Max_Audio_Output }}">{{ item.RX_Max_Audio_Output }}</td>
+                        <td title="{{ item.RX_Sensitivity }}">{{ item.RX_Sensitivity }}</td>
+                        <td title="{{ item.WORK_PROC }}">{{ item.WORK_PROC }}</td>
+                        <td title="{{ item.PROD_STAGE }}">{{ item.PROD_STAGE }}</td>
+                        <td title="{{ item.TX_Freq1_Hi_Power_Current }}">{{ item.TX_Freq1_Hi_Power_Current }}</td>
+                        <td title="{{ item.Lan_Test }}">{{ item.Lan_Test }}</td>
+                        <td title="{{ item.Digital_Frequency_Cal }}">{{ item.Digital_Frequency_Cal }}</td>
+                        <td title="{{ item.Digital_1_Frequency_Error_HP }}">{{ item.Digital_1_Frequency_Error_HP }}</td>
+                        <td title="{{ item.Digital_1_Broadband_Power_HP }}">{{ item.Digital_1_Broadband_Power_HP }}</td>
+                        <td title="{{ item.Digital_1_Symbol_Deviation_HP }}">{{ item.Digital_1_Symbol_Deviation_HP }}</td>
+                        <td title="{{ item.Digital_1_FSK_Error_HP }}">{{ item.Digital_1_FSK_Error_HP }}</td>
+                        <td title="{{ item.Digital_1_BER_HP }}">{{ item.Digital_1_BER_HP }}</td>
+                        <td title="{{ item.Digital_1_Magnitude_Error_HP }}">{{ item.Digital_1_Magnitude_Error_HP }}</td>
+                        <td title="{{ item.Digital_1_Frequency_Error }}">{{ item.Digital_1_Frequency_Error }}</td>
+                        <td title="{{ item.Digital_1_Broadband_Power }}">{{ item.Digital_1_Broadband_Power }}</td>
+                        <td title="{{ item.Digital_2_Frequency_Error_HP }}">{{ item.Digital_2_Frequency_Error_HP }}</td>
+                        <td title="{{ item.Digital_2_Broadband_Power_HP }}">{{ item.Digital_2_Broadband_Power_HP }}</td>
+                        <td title="{{ item.Digital_2_Symbol_Deviation_HP }}">{{ item.Digital_2_Symbol_Deviation_HP }}</td>
+                        <td title="{{ item.Digital_2_FSK_Error_HP }}">{{ item.Digital_2_FSK_Error_HP }}</td>
+                        <td title="{{ item.Digital_2_BER_HP }}">{{ item.Digital_2_BER_HP }}</td>
+                        <td title="{{ item.Digital_2_Magnitude_Error_HP }}">{{ item.Digital_2_Magnitude_Error_HP }}</td>
+                        <td title="{{ item.Digital_2_Sensitivity }}">{{ item.Digital_2_Sensitivity }}</td>
+                        <td title="{{ item.Digital_2_Frequency_Error }}">{{ item.Digital_2_Frequency_Error }}</td>
+                        <td title="{{ item.Digital_2_Broadband_Power }}">{{ item.Digital_2_Broadband_Power }}</td>
+                        <td title="{{ item.Digital_3_Frequency_Error_HP }}">{{ item.Digital_3_Frequency_Error_HP }}</td>
+                        <td title="{{ item.Digital_3_Broadband_Power_HP }}">{{ item.Digital_3_Broadband_Power_HP }}</td>
+                        <td title="{{ item.Digital_3_Symbol_Deviation_HP }}">{{ item.Digital_3_Symbol_Deviation_HP }}</td>
+                        <td title="{{ item.Digital_3_FSK_Error_HP }}">{{ item.Digital_3_FSK_Error_HP }}</td>
+                        <td title="{{ item.Digital_3_BER_HP }}">{{ item.Digital_3_BER_HP }}</td>
+                        <td title="{{ item.Digital_3_Magnitude_Error_HP }}">{{ item.Digital_3_Magnitude_Error_HP }}</td>
+                        <td title="{{ item.Digital_3_Frequency_Error }}">{{ item.Digital_3_Frequency_Error }}</td>
+                        <td title="{{ item.Digital_3_Broadband_Power }}">{{ item.Digital_3_Broadband_Power }}</td>
+                        <td title="{{ item.Digital_4_Frequency_Error_HP }}">{{ item.Digital_4_Frequency_Error_HP }}</td>
+                        <td title="{{ item.Digital_4_Broadband_Power_HP }}">{{ item.Digital_4_Broadband_Power_HP }}</td>
+                        <td title="{{ item.Digital_4_Symbol_Deviation_HP }}">{{ item.Digital_4_Symbol_Deviation_HP }}</td>
+                        <td title="{{ item.Digital_4_FSK_Error_HP }}">{{ item.Digital_4_FSK_Error_HP }}</td>
+                        <td title="{{ item.Digital_4_BER_HP }}">{{ item.Digital_4_BER_HP }}</td>
+                        <td title="{{ item.Digital_4_Magnitude_Error_HP }}">{{ item.Digital_4_Magnitude_Error_HP }}</td>
+                        <td title="{{ item.Digital_4_Frequency_Error }}">{{ item.Digital_4_Frequency_Error }}</td>
+                        <td title="{{ item.Digital_4_Broadband_Power }}">{{ item.Digital_4_Broadband_Power }}</td>
+                        <td title="{{ item.Digital_5_Frequency_Error_HP }}">{{ item.Digital_5_Frequency_Error_HP }}</td>
+                        <td title="{{ item.Digital_5_Broadband_Power_HP }}">{{ item.Digital_5_Broadband_Power_HP }}</td>
+                        <td title="{{ item.Digital_5_Symbol_Deviation_HP }}">{{ item.Digital_5_Symbol_Deviation_HP }}</td>
+                        <td title="{{ item.Digital_5_FSK_Error_HP }}">{{ item.Digital_5_FSK_Error_HP }}</td>
+                        <td title="{{ item.Digital_5_BER_HP }}">{{ item.Digital_5_BER_HP }}</td>
+                        <td title="{{ item.Digital_5_Magnitude_Error_HP }}">{{ item.Digital_5_Magnitude_Error_HP }}</td>
+                        <td title="{{ item.Digital_5_Frequency_Error }}">{{ item.Digital_5_Frequency_Error }}</td>
+                        <td title="{{ item.Digital_5_Broadband_Power }}">{{ item.Digital_5_Broadband_Power }}</td>
+                        <td title="{{ item.Digital_1_Symbol_Deviation }}">{{ item.Digital_1_Symbol_Deviation }}</td>
+                        <td title="{{ item.Digital_1_FSK_Error }}">{{ item.Digital_1_FSK_Error }}</td>
+                        <td title="{{ item.Digital_1_BER }}">{{ item.Digital_1_BER }}</td>
+                        <td title="{{ item.Digital_1_Magnitude_Error }}">{{ item.Digital_1_Magnitude_Error }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "PTC.page.total>PTC.page.size ">
+                <div uib-pagination total-items= "PTC.page.total " ng-model= "PTC.page.index " items-per-page= "PTC.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "PTC.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

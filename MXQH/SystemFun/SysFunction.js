@@ -355,7 +355,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
                 vm.FunCodeSetting.FunNo = data.data[0].SN;
 
                 //是新增功能的时候--计算中间文件夹
-                var dir = vm.SelectedFun.FunNo == '-1' ? (new Date()).Format("yyyyMM") : new Date(vm.SelectedFun.CreateDate).Format("yyyyMM");
+                var dir = (vm.SelectedFun.FunNo == '-1' ? (new Date()).Format("yyyy") : new Date(vm.SelectedFun.CreateDate).Format("yyyy")) + "\\Fun";
 
                 var htmlEn = {};
                 htmlEn.Dir = dir;
@@ -440,7 +440,7 @@ function ($rootScope, $scope, $window, Dialog, toastr, AjaxService, MyPop) {
     function FunctionFile(f) {
 
         //是新增功能的时候--计算中间文件夹
-        var dir = vm.SelectedFun.FunNo == '-1' ? (new Date()).Format("yyyyMM") : new Date(vm.SelectedFun.CreateDate).Format("yyyyMM");
+        var dir = (vm.SelectedFun.FunNo == '-1' ? (new Date()).Format("yyyy") : new Date(vm.SelectedFun.CreateDate).Format("yyyy")) + "\\Fun";
      
         //添加文件
         if (vm.SelectedFun.IsSystem == 1) {

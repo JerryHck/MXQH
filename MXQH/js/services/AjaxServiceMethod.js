@@ -32,6 +32,7 @@
             //无事务读取存储过程——存储过程内只允许读
             GetProc:GetProc,
             //同步获取数据
+            GetPlanWait:GetPlanWait,
             GetPlansWait:GetPlansWait,
             GetPlansTop:GetPlansTop,
             //分页获取实体资料
@@ -168,6 +169,14 @@
         }
 
         //获得计划资料-同步
+        function GetPlanWait(name, json, limitCol) {
+            var url = serviceUrl + generic;
+            var en = {};
+            en.planName = name;
+            en.strJson = JSON.stringify(convertArray(json)) || '[]';
+            en.limitUserCol = limitCol;
+            return AjaxWait(url, en, "GetPlan")
+        }
         function GetPlansWait(name, json, limitCol) {
             var url = serviceUrl + generic;
             var en = {};

@@ -74,8 +74,6 @@
     <Content Include="css\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="css\font-awesome-4.7.0\HELP-US-OUT.txt" />
     <Content Include="css\font-awesome.min.css" />
-    <Content Include="CustomFun\201912\qlBadDialog.html" />
-    <Content Include="CustomFun\201912\qlBadDialog.js" />
     <Content Include="Data\Handler\New.html" />
     <Content Include="Data\Handler\New.js" />
     <Content Include="Flow.html" />
@@ -206,6 +204,8 @@
     <Content Include="SystemFun\FlowNodeSetDialog.js" />
     <Content Include="SystemFun\FormFlow.html" />
     <Content Include="SystemFun\FormFlow.js" />
+    <Content Include="SystemFun\LanguageSet.html" />
+    <Content Include="SystemFun\LanguageSet.js" />
     <Content Include="SystemFun\ResetPswDialog.html" />
     <Content Include="SystemFun\ResetPswDialog.js" />
     <Content Include="SystemFun\SerialNumber.html" />
@@ -589,6 +589,7 @@
     <None Include="css\less\app.font.less" />
     <None Include="css\less\app.table.less" />
     <Content Include="fonts\hanyi.ttf" />
+    <Content Include="Data\lang.json" />
     <None Include="Properties\PublishProfiles\2.pubxml" />
     <None Include="Properties\PublishProfiles\MXQH.pubxml" />
     <Content Include="Scripts\angular\angular-file-upload\angular-file-upload.js.map" />
@@ -912,6 +913,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="CustomFun\2019\" />
     <Folder Include="CustomFun\2020\" />
     <Folder Include="js\controllers\uploads\" />
     <Folder Include="src\" />

@@ -1,0 +1,44 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="PCBAonlineCK.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">后焊投板查询</uib-tab-heading>
+        <div class="wrapper-xs">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" class="form-control"  ng-model="PCBAonlineCK.Ser.aInternalCode" placeholder="扫描内控码">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "PCBAonlineCK.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "PCBAonlineCK.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-xs ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table " >
+                    <thead>
+                        <tr>
+                            <td title="内控码" style= "width:100px ">内控码</td>
+                            <td title="物料编码" style= "width:100px ">物料编码</td>
+                            <td title="物料名称" style= "width:100px ">物料名称</td>
+                            <td title="工单号" style= "width:100px ">工单号</td>
+                            <td title="工单数量" style= "width:100px ">工单数量</td>
+                            <td title="操作时间" style= "width:100px ">操作时间</td>
+                            <td title="操作人" style= "width:100px ">操作人</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in PCBAonlineCK.List ">
+                        <td title="{{ item.InternalCode }}">{{ item.InternalCode }}</td>
+                        <td title="{{ item.PlanSearch.MaterialID }}">{{ item.PlanSearch.MaterialID }}</td>
+                        <td title="{{ item.PlanSearch.MaterialCode }}">{{ item.PlanSearch.MaterialCode }}</td>
+                        <td title="{{ item.PlanSearch.WorkOrder }}">{{ item.PlanSearch.WorkOrder }}</td>
+                        <td title="{{ item.PlanSearch.Quantity }}">{{ item.PlanSearch.Quantity }}</td>
+                        <td title="{{ item.CreateDate }}">{{ item.CreateDate }}</td>
+                        <td title="{{ item.CreateUserID }}">{{ item.CreateUserID }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "PCBAonlineCK.page.total>PCBAonlineCK.page.size ">
+                <div uib-pagination total-items= "PCBAonlineCK.page.total " ng-model= "PCBAonlineCK.page.index " items-per-page= "PCBAonlineCK.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "PCBAonlineCK.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

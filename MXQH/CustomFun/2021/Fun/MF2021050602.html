@@ -1,0 +1,80 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="bo.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">物料软件版本</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class= "btn btn-sm btn-success " ng-click= "bo.Insert() "><i class= "glyphicon glyphicon-plus "></i>新增</button>
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" class="form-control"  ng-model="bo.Ser.aCode" placeholder="软件料号">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" class="form-control"  ng-model="bo.Ser.aName" placeholder="软件名称">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" class="form-control"  ng-model="bo.Ser.aSoftVersion" placeholder="软件版本">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "bo.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <!--<button class= "btn btn-sm btn-success " ng-click= "bo.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>-->
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <div class="col-md-12 scroll-x no-padder" >
+                <table class= "table pad-xs one-line" >
+                    <thead>
+                        <tr>
+                            <td style= "width:80px">操作</td>
+                            <td style= "width:100px ">软件料号</td>
+                            <td style= "width:100px ">软件料名称</td>
+                            <td style= "width:100px ">软件料规格</td>
+                            <td style= "width:100px ">当前有效版本</td>
+                            <td style= "width:100px ">软件包</td>
+                            <td style="width:100px ">是否确认</td>
+                            <td style= "width:100px ">备注-版本说明</td>
+                            <td style= "width:100px ">创建人</td>
+                            <td style= "width:100px ">创建时间</td>
+                            <td style="width:100px ">修改人</td>
+                            <td style= "width:100px ">修改时间</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in bo.List " ng-form="item.ItemForm">
+                        <td class="multi-line">
+                            <span ng-if="!item.IsEdit">
+                                <button class="btn btn-xs btn-primary" ng-click="bo.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button ng-if="item.IsConfirm" class="btn btn-xs btn-primary" title="设置兼容版本" ng-click="bo.OpenCMPT(item)">
+                                    <i class="fa fa-group"></i>
+                                </button>
+                                <!--<button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="bo.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>-->
+                            </span>
+                            <span ng-if="item.IsEdit">
+                                <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="bo.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                                <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                            </span>
+                        </td>
+                        <td title="{{ item.Code }}">{{ item.Code }}</td>
+                        <td title="{{ item.Name }}">{{ item.Name }}</td>
+                        <td title="{{ item.SPECS }}">{{ item.SPECS }}</td>
+                        <td title="{{ item.SoftVersion }}">{{ item.SoftVersion }}</td>
+                        <td title="点击下载软件包"><a ng-click="bo.DownLoad(item.File.FileUrl)" class="text-success">{{ item.File.FileName }}</a></td>
+                        <td>
+                            <div ng-if="!item.IsEdit">
+                                 <div toggle-switch ng-model="item.IsConfirm" class="w-xxs switch-success" on-label="是" off-label="否" on-value = "1" off-value ="0" is-disabled="true"></div>
+                            </div>
+                            <div ng-if="item.IsEdit"  ng-class="{ 'has-error' : item.ItemForm.item_IsConfirm.$invalid }">
+                                 <div toggle-switch ng-model="bo.EditItem.IsConfirm" class="w-xxs switch-success" on-label="是" off-label="否" on-value = "1" off-value ="0" is-disabled="!item.IsEdit"></div>
+                            </div>
+                        </td>
+                        <td title="{{ item.Remark }}">{{ item.Remark }}</td>
+                        <td title="{{ item.Creator }}">{{ item.Creator }}</td>
+                        <td title="{{ item.CreateDate }}">{{ item.CreateDate | date:'yyyy-MM-dd HH:mm' }}</td>
+                        <td title="{{ item.Modify }}">{{ item.Modify }}</td>
+                        <td title="{{ item.ModifyDate }}">{{ item.ModifyDate | date:'yyyy-MM-dd HH:mm'}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "bo.page.total>bo.page.size ">
+                <div uib-pagination total-items= "bo.page.total " ng-model= "bo.page.index " items-per-page= "bo.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "bo.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

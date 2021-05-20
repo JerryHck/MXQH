@@ -1,0 +1,155 @@
+<div class="modal-header text-center">
+    <button class="btn btn-warning pull-left" type="button" ng-click="bo.Cancel()">取消</button>
+    <span class="modal-title h3">物料软件版本{{ bo.form.title }}</span>
+</div>
+<div class="modal-body wrapper-xs" cg-busy="bo.promise">
+    <div class="panel panel-default scroll-y" style="min-height:450px" ng-form="bo.DialogForm">
+        <div class="panel-body  padder-xs padder-v-xs" style="min-height:500px">
+            <div class="hbox">
+                <div class="col w-lg">
+                    <div class="panel panel-info">
+                        <div class="panel-heading text-center">软件料信息</div>
+                        <div class="panel-body padder-xxs">
+                            <div class="form">
+                                <div class="form-group padder-xs">
+                                    <label class="control-label text-info">软件料号:</label>
+                                    <div class="no-padder" ng-class="{ 'has-error' : bo.DialogForm.U9SoftMate.$invalid }">
+                                        <div basic-select="U9SoftMate" ng-disabled="bo.IsInsert||bo.form.index != 0" ng-name="U9SoftMate" ng-model="bo.Item.Code" ng-required="true" ng-change="bo.ChangeMate()"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group padder-xs">
+                                    <label class="control-label text-info">软件料名:</label>
+                                    <div class="no-padder">
+                                        {{ bo.Item.Name }}
+                                    </div>
+                                </div>
+                                <div class="form-group padder-xs">
+                                    <label class="control-label text-info">软件料规格:</label>
+                                    <div class="no-padder">
+                                        {{ bo.Item.SPECS }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 padder-xxs text-danger">
+                        <span class="font-bold h6">注：</span>
+                        <ol>
+                            <li>同一个软件料只能有一个未确认版本和一个生效版本</li>
+                            <li>版本确认后才生效，并且旧版本失效</li>
+                            <li>烧录软件只能下载生效版本的软件包</li>
+                            <li>只有确认后的版本才能设置其兼容版本</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="col w-auto">
+                    <div class="panel panel-default">
+                        <div class="panel-heading text-center">
+                            <button class="btn btn-sm btn-success m-t-n-xs pull-left" ng-disabled="bo.InsertForm.$invalid || !bo.Item.Code" ng-click="bo.Insert() "><i class="glyphicon glyphicon-plus "></i>新增</button>
+                            软件版本信息
+                        </div>
+                        <div class="panel-body padder-xs">
+                            <div class="col-md-12 scroll-x no-padder">
+                                <table class="table pad-xs">
+                                    <thead>
+                                        <tr>
+                                            <td style="width:60px">操作</td>
+                                            <td style="width:100px ">版本号</td>
+                                            <td style="width:200px ">烧录软件包</td>
+                                            <td style="width:100px ">版本说明</td>
+                                            <td style="width:50px ">确认</td>
+                                            <td style="width:50px ">有效</td>
+                                            <td style="width:60px ">上传人</td>
+                                            <!--<td style="width:60px ">上传时间</td>-->
+                                        </tr>
+                                    </thead>
+                                    <tr ng-if="bo.IsInsert" ng-form="bo.InsertForm">
+                                        <td>
+                                            <button class="btn btn-xs btn-success" title="储存" ng-disabled="bo.InsertForm.$invalid" ng-click="bo.SaveInsert()"><i class="glyphicon glyphicon-save"></i></button>
+                                            <button class="btn btn-xs btn-warning" title="取消" ng-click="bo.IsInsert=false"><i class="fa fa-undo"></i></button>
+                                        </td>
+                                        <td>
+                                            <div ng-class="{ 'has-error': bo.InsertForm.Version.$invalid }">
+                                                <input autocomplete="off" type="text" name="Version" class="form-control" ng-blur="bo.IsVerNewExists()" placeholder="版本号" ng-model="bo.NewItem.SoftVersion" required />
+                                                <div ng-messages="bo.InsertForm.Version.$error" class="help-block" role="alert">
+                                                    <div ng-message="unique">版本号重复</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div ng-class="{ 'has-error': bo.InsertForm.UpSdk.$invalid }">
+                                                <div file-upload ng-name="UpSdk" file-data="bo.NewItem.SDK" ng-required="true"></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <textarea rows="2" class="form-control" ng-model="bo.NewItem.Remark"></textarea>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr ng-repeat="item in bo.List " ng-form="item.ItemForm">
+                                        <td>
+                                            <span ng-if="!item.IsEdit">
+                                                <button class="btn btn-xs btn-primary" ng-if="!item.IsConfirm" title="更新编辑" ng-click="bo.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                                                <button class="btn btn-xs btn-success" ng-if="!item.IsConfirm" title="确认版本" ng-confirm="{text:'确认生效后将不能再做任何修改与上传软件包，确定生效吗'}" ng-click="bo.OKSign(item)"><i class="glyphicon glyphicon-ok-sign"></i></button>
+                                                <button ng-if="item.IsConfirm" class="btn btn-xs btn-primary" title="设置兼容版本" ng-click="bo.OpenCMPT(item)">
+                                                    兼容<i class="fa fa-group"></i>
+                                                </button>
+                                            </span>
+                                            <span ng-if="item.IsEdit">
+                                                <button class="btn btn-xs btn-success" ng-disabled="item.ItemForm.$invalid" ng-click="bo.SaveEdit($index)"><i class="glyphicon glyphicon-save"></i></button>
+                                                <button class="btn btn-xs btn-warning" ng-click="item.IsEdit=false"><i class="fa fa-undo"></i></button>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div ng-if="!item.IsEdit" title="{{ item.SoftVersion }}" class="text-left">
+                                                {{ item.SoftVersion }}
+                                            </div>
+                                            <div ng-if="item.IsEdit" ng-class="{ 'has-error': item.ItemForm.item_Version.$invalid }">
+                                                <input autocomplete="off" type="text" name="item_Version" class="form-control" ng-blur="bo.IsVerExists(item)" placeholder="版本号" ng-model="bo.EditItem.SoftVersion" required />
+                                                <div ng-messages="bo.InsertForm.Version.$error" class="help-block" role="alert">
+                                                    <div ng-message="unique">版本号重复</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span ng-if="!item.IsEdit" title="点击可下载">
+                                                <a ng-click="bo.DownLoad(item.File.FileUrl)" class="text-success">{{ item.File.FileName }}</a>
+                                            </span>
+                                            <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_UpSdk.$invalid }">
+                                                <div file-upload ng-name="item_UpSdk"  file-data="bo.EditItem.SDK" ng-required="true"></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div ng-if="!item.IsEdit" class="text-left">
+                                                {{ item.Remark }}
+                                            </div>
+                                            <div ng-if="item.IsEdit" ng-class="{ 'has-error' : item.ItemForm.item_Remark.$invalid }">
+                                                <textarea autocomplete="off" rows="2" type="text" name="item_Remark" class="form-control" placeholder="版本说明" ng-model="bo.EditItem.Remark" required />
+                                            </div>
+                                        </td>
+                                        <td> <div toggle-switch ng-model="item.IsConfirm" class="w-xxs switch-success" on-label="是" off-label="否" on-value="1" off-value="0" is-disabled="true"></div> </td>
+                                        <td> <div toggle-switch ng-model="item.IsEffective" class="w-xxs switch-success" on-label="是" off-label="否" on-value="1" off-value="0" is-disabled="true"></div> </td>
+                                        <td title="上传时间 {{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}"> {{ item.Creator }} </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-12 text-center " ng-if="bo.page.total>bo.page.size ">
+                                <div uib-pagination total-items="bo.page.total " ng-model="bo.page.index " items-per-page="bo.page.size " max-size="10 " first-text="第一页 " previous-text="上一页 "
+                                     ng-change="bo.PageChange() " next-text="下一页 " last-text="最后页 " boundary-links="true " boundary-link-numbers="true "></div>
+                            </div>
+                            <!--<pre>{{ bo.List | json }}</pre>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="modal-footer">
+    <div class="col-md-12 text-center">
+        <button class="btn btn-success pull-none" type="button" ng-disabled="bo.DialogForm.$invalid" ng-click="bo.Save()">储存</button>
+        <button class="btn btn-warning pull-none" type="button" ng-click="bo.Cancel()">取消</button>
+    </div>
+</div>-->

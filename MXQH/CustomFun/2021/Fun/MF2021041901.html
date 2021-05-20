@@ -1,0 +1,85 @@
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="eq.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">设备信息管理</uib-tab-heading>
+        <div class="wrapper-md">
+            <div class="form-inline">
+                <button class= "btn btn-sm btn-success " ng-click= "eq.Insert() "><i class= "glyphicon glyphicon-plus "></i>新增</button>
+                <div class="form-group">
+                    <input autocomplete="off" type="text" class="form-control" ng-model="mail.Ser.aCode" placeholder="设备编码">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off" type="text" class="form-control" ng-model="mail.Ser.aName" placeholder="设备名称">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "eq.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <!--<button class= "btn btn-sm btn-success " ng-click= "eq.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>-->
+            </div>
+        </div>
+        <div class= "padder-md ">
+            <div class="col-md-12 scroll-x no-padder" >
+                <table class= "table pad-xs" style="width:1800px">
+                    <thead>
+                        <tr>
+                            <td style= "width:60px">操作</td>
+                            <td style= "width:100px ">设备编码</td>
+                            <td style= "width:100px ">设备名称</td>
+                            <!--<td style="width:100px ">保养/维修</td>-->
+                            <td style= "width:100px ">设备品牌</td>
+                            <td style= "width:100px ">设备规格</td>
+                            <td style= "width:100px ">购入费用</td>
+                            <td style= "width:100px ">使用部门</td>
+                            <td style= "width:100px ">管理部门</td>
+                            <td style="width:100px ">保养/维修</td>
+                            <td style= "width:100px ">存放位置</td>
+                            <td style= "width:100px ">状态</td>
+                            <td style= "width:100px ">供应商</td>
+                            <td style= "width:100px ">U9卡片编码</td>
+                            <td style= "width:100px ">备注</td>
+                            <td style= "width:100px ">创建人</td>
+                            <td style= "width:100px ">创建时间</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in eq.List " ng-form="item.ItemForm">
+                        <td>
+                            <button class="btn btn-xs btn-primary" ng-click="eq.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
+                        </td>
+                        <td title="{{ item.Code }}">{{ item.Code }}</td>
+                        <td title="{{ item.Name }}">{{ item.Name }}</td>
+                        <!--<td>
+                            <button class="btn btn-xs btn-info" ng-click="eq.Edit(item)">保养</button>
+                            <button class="btn btn-xs btn-danger" ng-click="eq.Edit(item)">维修<i class="glyphicon glyphicon-registration-mark"></i></button>
+                        </td>-->
+                        <td title="{{ item.Brand }}">{{ item.Brand }}</td>
+                        <td title="{{ item.EqSpec }}">{{ item.EqSpec }}</td>
+                        <td title="{{ item.BuyAmount }}">{{ item.BuyAmount }}</td>
+                        <td title="{{ item.UseDept }}">{{ item.UseDept }}</td>
+                        <td title="{{ item.Dept }}">{{ item.Dept }}</td>
+                        <td title="点击查看保养维修记录">
+                            <a href="" class="text-success" ng-click="eq.SerLog(item)">【查看记录】</a>
+                        </td>
+                        <td title="{{ item.Location }}">{{ item.Location }}</td>
+                        <td title="{{ item.StateDesc }}">
+                            <div ng-class="{'bg-success':item.State == '1', 'bg-warning':item.State == '2', 'bg-info':item.State == '3', 'bg-danger':item.State == '4'}">
+                                {{ item.StateDesc }}
+                                <a title="使用设备" ng-if="item.State == '0'" class="pull-right text-success" ng-click="eq.ChangeState(item, '1')">
+                                    <i class="glyphicon glyphicon-expand"></i>
+                                </a>
+                                <a title="闲置设备" ng-if="item.State == '1'" class="pull-right text-warning" ng-click="eq.ChangeState(item, '0')">
+                                    <i class="glyphicon glyphicon-stop"></i>
+                                </a>
+                            </div>
+                        </td>
+                        <td title="{{ item.VenderName }}">{{ item.VenderName }}</td>
+                        <td title="{{ item.U9CardCode }}">{{ item.U9CardCode }}</td>
+                        <td title="{{ item.Remark }}">{{ item.Remark }}</td>
+                        <td title="{{ item.CreateBy }}">{{ item.Creator }}</td>
+                        <td title="{{ item.CreateDate }}">{{ item.CreateDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "eq.page.total>eq.page.size ">
+                <div uib-pagination total-items= "eq.page.total " ng-model= "eq.page.index " items-per-page= "eq.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "eq.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

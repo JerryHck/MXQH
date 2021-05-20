@@ -34,7 +34,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
     vm.GenCode = GenCode;
 
     //中间文件夹
-    var dir = ItemData.FunNo == '-1' ? (new Date()).Format("yyyyMM") : new Date(ItemData.CreateDate).Format("yyyyMM");
+    var dir = (ItemData.FunNo == '-1' ? (new Date()).Format("yyyy") : new Date(ItemData.CreateDate).Format("yyyy")) + "\\Fun";
 
     InitSer();
     //获取数据设定
@@ -410,7 +410,7 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
         sbHtml += "                    <thead>\n";
         sbHtml += "                        <tr>\n";
         fun.ColList.forEach(function (row) {
-            sbHtml += "                            <td title=\"" + row.ColumnText + "\" style= \"width:" + (row.Width ? "100px" : row.Width) + " \">" + row.ColumnText + "</td>\n";
+            sbHtml += "                            <td title=\"" + row.ColumnText + "\" style= \"width:" + (!row.Width ? "100px" : row.Width) + " \">" + row.ColumnText + "</td>\n";
         });
         sbHtml += "                        </tr>\n";
         sbHtml += "                    </thead>\n";
@@ -750,8 +750,8 @@ function ($scope, $uibModalInstance, ItemData, toastr, AjaxService, $rootScope) 
         sbJS += "'use strict';\n";
         sbJS += "\n";
         sbJS += "angular.module('AppSet')\n";
-        sbJS += ".controller('" + fun.Controller + "', ['$scope', '$http', 'AjaxService', 'toastr', '$window',\n";
-        sbJS += "function ($scope, $http, AjaxService, toastr, $window) {\n";
+        sbJS += ".controller('" + fun.Controller + "', ['$scope', 'Dialog', 'AjaxService', 'toastr', '$window',\n";
+        sbJS += "function ($scope, Dialog, AjaxService, toastr, $window) {\n";
         sbJS += "\n";
         sbJS += "    var vm = this;\n";
         sbJS += "    vm.page = { index: 1, size: 12 };\n";

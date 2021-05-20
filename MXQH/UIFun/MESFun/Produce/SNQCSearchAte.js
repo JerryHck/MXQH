@@ -26,9 +26,9 @@ function ($scope, $http, AjaxService, toastr, $window) {
     function PageChange() {
         vm.promise = AjaxService.ExecPlan("MESSNCode", "review", vm.Ser).then(function (data) {
             vm.Data = data;
-            if (vm.Data.data3 && vm.Data.data3[0]) {
-                var en = { name: "BSN", value: vm.Data.data3[0].InternalCode };
-                AjaxService.GetPlans("MESAucAtetest", en).then(function (data2) {
+            if (vm.Data.data5 && vm.Data.data5[0] && vm.Data.data5[0].BSN) {
+                var en = { name: "BSN", value: vm.Data.data5[0].BSN };
+                AjaxService.GetPlansTop("MESAucAtetest", en, 500).then(function (data2) {
                     vm.ATEData = data2;
                     vm.KeysData = Object.keys(data2[0]);
                 })

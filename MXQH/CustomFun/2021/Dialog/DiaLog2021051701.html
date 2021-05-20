@@ -1,0 +1,79 @@
+﻿<div class="modal-header text-center">
+    <button class="btn btn-sm btn-success pull-left" title="储存" ng-click="bo.OK()">
+        储存<i class="glyphicon glyphicon-save"></i>
+    </button>
+    <button class="btn btn-sm btn-warning pull-right" type="button" ng-click="bo.Cancel()">关闭</button>
+    <h3 class="modal-title">{{ bo.Item.Code }}-{{ bo.Item.SoftVersion }}软件版本兼容设置</h3>
+</div>
+<div class="modal-body wrapper-xs h6" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body no-padder padder-v-xxs">
+            <div class="col-xs-4 no-padder">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">可选软件版本</div>
+                    <div class="panel-body padder-xs padder-v-xs">
+                        <!--<div class="wrapper-sm">
+                            <div class="form-inline">
+                                <button class="btn btn-sm btn-info " ng-click="bo.Search() "><i class="glyphicon glyphicon-search "></i>查询</button>
+                            </div>
+                        </div>-->
+                        <div class="padder-sm table-responsive">
+                            <table class="table one-line">
+                                <thead>
+                                    <tr>
+                                        <td title="操作" style="width:30px ">操作</td>
+                                        <td title="软件版本" style="width:100px ">软件版本</td>
+                                        <td title="添加时间" style="width:100px ">创建时间</td>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in bo.List">
+                                    <td title="选择">
+                                        <label class="i-checks i-checks-sm">
+                                            <input autocomplete="off" type="checkbox" ng-change="bo.ChangeSelect(item)" ng-model="item.IsSelect"><i></i>
+                                        </label>
+                                    </td>
+                                    <td title="{{ item.SoftVersion }}">{{ item.SoftVersion }}</td>
+                                    <td title="{{ item.CreateDate }}">{{ item.CreateDate | date:'yyyy-MM-dd HH:mm' }}</td>
+                                </tr>
+                            </table>
+                            <div class="col-md-12 text-center " ng-if="bo.page.total>bo.page.size ">
+                                <div uib-pagination total-items="bo.page.total " ng-model="bo.page.index " items-per-page="bo.page.size " max-size="5 " first-text="<< " previous-text="< "
+                                     ng-change="bo.PageChange() " next-text="> " last-text=">> " boundary-links="true " boundary-link-numbers="true "></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-8 padder-xs">
+                <div class="panel panel-success">
+                    <div class="panel-heading text-center">已设置兼容版本</div>
+                    <div class="panel-body padder-xs padder-v-xs">
+                        <div class="padder-sm table-responsive">
+                            <table class="table one-line">
+                                <thead>
+                                    <tr>
+                                        <td title="操作" style="width:30px ">操作</td>
+                                        <td title="软件版本" style="width:100px ">软件版本</td>
+                                        <td title="添加人" style="width:100px ">添加人</td>
+                                        <td title="添加时间" style="width:100px ">添加时间</td>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="item in bo.List1 | filter: { IsEffective: true }">
+                                    <td title="选择">
+                                        <button class="btn btn-xs btn-danger" title="删除" ng-click="bo.DeleteSoft(item)">
+                                            <i class="glyphicon glyphicon-remove"></i>
+                                        </button>
+                                    </td>
+                                    <td title="{{ item.SoftVersion }}">{{ item.SoftVersion }}</td>
+                                    <td title="{{ item.Creator }}">{{ item.Creator }}</td>
+                                    <td title="{{ item.CreateDate }}">{{ item.CreateDate | date:'yyyy-MM-dd HH:mm' }}</td>
+                                </tr>
+                            </table>
+                            <!--<pre> {{ bo.List1 | json }} </pre>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

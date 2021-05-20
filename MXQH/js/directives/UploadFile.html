@@ -1,14 +1,14 @@
 <div class="col-md-12 has-feedback m-b-xxs no-padder">
     <div class="input-group">
-        <span class="input-group-addon" ng-if="!ngDisabled">
+        <span class="input-group-addon" ng-if="!ngDisabled" title="浏览">
             <a class="pull-left" ng-click="Open($event)"><i class="fa fa-folder-open"></i></a>
         </span>
-        <input autocomplete="off" class="form-control padder-xxs" ng-disabled="ngDisabled" placeholder="{{ placeholder }}" type="text" ng-model="fileData.OriginalName">
-        <span class="input-group-addon text-success" ng-if="isUploaded">{{ fileData.FileType }}</span>
-        <span class="input-group-addon" ng-if="isUploaded">
+        <input autocomplete="off" class="form-control padder-xxs" name="{{ ngName }}" ng-required="ngRequired" ng-disabled="ngDisabled" placeholder="{{ placeholder }}" type="text" ng-model="fileData.OriginalName">
+        <span class="input-group-addon text-success" ng-if="fileData.FileType">{{ fileData.FileType }}</span>
+        <span class="input-group-addon" ng-if="fileData.FileUrl" title="下载文件">
             <a ng-click="DownLoad(fileData.FileUrl)" class="text-success"><i class="glyphicon glyphicon-download"></i></a>
         </span>
-        <input autocomplete="off"  type="file" class="fileType" name="{{ ngName }}" ng-required="ngRequired" nv-file-select="" uploader="uploader" style="display: none; width:0px" accept="{{ fileType }}">
+        <input autocomplete="off"  type="file" class="fileType" nv-file-select="" uploader="uploader" style="display: none; width:0px" accept="{{ fileType }}">
     </div>
 </div>
 <div class="col-md-12 m-t-none no-padder" ng-if="uploader.progress<100 && uploader.progress>0">

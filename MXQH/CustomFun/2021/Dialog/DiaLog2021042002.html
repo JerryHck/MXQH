@@ -1,0 +1,51 @@
+<div class="modal-header text-center">
+    <button class="btn btn-sm btn-success pull-left" type="button" ng-click="fa.OK(fa.SelectItem)">确定</button>
+    <span class="h4 modal-title">U9设备选择</span>
+    <button class="btn btn-sm btn-warning pull-right" type="button" ng-click="fa.Cancel()">取消</button>
+</div>
+<div class="modal-body wrapper-xs h6" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body padder-xs padder-v-xxs">
+            <div class="wrapper-sm">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <input type="text" class="form-control"  ng-model="fa.Ser.aCode" placeholder="标签编号">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control"  ng-model="fa.Ser.aU9CardCode" placeholder="U9卡片号">
+                    </div>
+                    <button class= "btn btn-sm btn-info " ng-click= "fa.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                </div>
+            </div>
+            <div class="padder-sm table-responsive">
+                <span class="text-danger h6">注:双击快速选择</span>
+                <table class="table one-line">
+                    <thead>
+                        <tr>
+                            <td title="标签编号" style= "width:80px ">标签编号</td>
+                            <td title="U9卡片号" style= "width:80px ">U9卡片号</td>
+                            <td title="设备名称" style= "width:130px ">设备名称</td>
+                            <td title="所属组织" style= "width:150px ">所属组织</td>
+                            <td title="管理部门" style= "width:150px ">管理部门</td>
+                            <td title="使用部门" style= "width:150px ">使用部门</td>
+                            <td title="存储位置" style="width:150px ">存储位置</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in fa.List " ng-class="{'bg-danger-light': item.Code == fa.SelectItem.Code}" ng-click="fa.Select(item)" ng-dblclick="fa.OK(item)">
+                        <td title="{{ item.Code }}">{{ item.Code }}</td>
+                        <td title="{{ item.U9CardCode }}">{{ item.U9CardCode }}</td>
+                        <td title="{{ item.Name }}">{{ item.Name }}</td>
+                        <td title="{{ item.Company }}">{{ item.Company }}</td>
+                        <td title="{{ item.Dept }}">{{ item.Dept }}</td>
+                        <td title="{{ item.UseDept }}">{{ item.UseDept }}</td>
+                        <td title="{{ item.Location }}">{{ item.Location }}</td>
+                    </tr>
+                </table>
+                <div class= "col-md-12 text-center " ng-if= "fa.page.total>fa.page.size ">
+                    <div uib-pagination total-items= "fa.page.total " ng-model= "fa.page.index " items-per-page= "fa.page.size " max-size= "10 " first-text= "<< " previous-text= "< "
+                     ng-change= "fa.PageChange() " next-text= "> " last-text= ">> " boundary-links= "true " boundary-link-numbers= "true "></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

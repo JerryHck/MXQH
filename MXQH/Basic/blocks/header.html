@@ -37,7 +37,7 @@
                 <li ng-repeat="item in vm.SysList"><a ng-click="vm.ChangeSys(item)">{{ item.SysName }}</a></li>
             </ul>
         </li>
-        <li class="dropdown pos-stc hidden-xs" dropdown>
+        <li class="dropdown pos-stc hidden-sm hidden-xs" dropdown>
             <a href class="dropdown-toggle" data-toggle="dropdown">
                 <span>所有功能</span>
                 <span class="caret"></span>
@@ -109,18 +109,18 @@
                 </div>
             </div>
         </li>
-        <li class="dropdown hidden-xs" dropdown>
+        <li class="dropdown hidden-md  hidden-sm hidden-xs" dropdown>
             <a class="dropdown-toggle" data-toggle="dropdown">
                 <span>表单流程</span>
                 <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-                <li><a ng-click="vm.OpFlow('app.flowAdd')">新建表单</a></li>
+                <li><a ng-click="vm.OpFlow('app.flowAdd')" translate="header.navbar.new.NewForm">新建表单</a></li>
             </ul>
         </li>
     </ul>
     <!-- search form -->
-    <form class="navbar-form navbar-form-sm navbar-left shift hidden-xs" ui-shift="prependTo" target=".navbar-collapse" role="search">
+    <form class="navbar-form navbar-form-sm navbar-left shift hidden-sm" ui-shift="prependTo" target=".navbar-collapse" role="search">
         <div class="form-group">
             <input autocomplete="off" type="text" ng-model="vm.SelectedFun" uib-typeahead="fun as fun.FunName for fun in vm.FunctionList | filter:$viewValue | limitTo:8"
                    class="form-control input-sm bg-light no-border rounded padder" placeholder="查找功能..." ng-keypress="vm.Go(vm.SelectedFun)">
@@ -128,13 +128,25 @@
     </form>
     <!-- nabar right -->
     <ul class="nav navbar-nav navbar-right" id="dpMenus">
-        <li class="hidden-xs">
+        <li class="hidden-md hidden-sm hidden-xs">
             <a class="h6 text-info-dker pull-down pull-right-xs">{{ vm.SysTime }}</a>
         </li>
-        <li class="hidden-xs">
+        <li class="dropdown hidden-sm" is-open="lang.isopen" dropdown>
+            <a href class="dropdown-toggle" dropdown-toggle>
+                {{selectLang}} <b class="caret"></b>
+            </a>
+            <!-- dropdown -->
+            <ul class="dropdown-menu animated fadeInRight w">
+                <li ng-repeat="(langKey, label) in langs">
+                    <a ng-click="setLang(langKey, $event)">{{label}}</a>
+                </li>
+            </ul>
+            <!-- / dropdown -->
+        </li>
+        <li class="hidden-md">
             <a class="text-success h4" stop-propagation ng-click="vm.Reflash()"><i class="glyphicon glyphicon-refresh"></i></a>
         </li>
-        <li class="hidden-xs">
+        <li class="hidden-md">
             <a ui-fullscreen></a>
         </li>
         <li class="dropdown" dropdown>

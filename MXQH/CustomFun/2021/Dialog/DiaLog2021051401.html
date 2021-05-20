@@ -1,0 +1,56 @@
+﻿<div class="modal-header text-center">
+    <button class="btn btn-sm btn-warning pull-left" type="button" ng-click="eq.Cancel()">取消</button>
+    <h3 class="modal-title">设备维修保养记录</h3>
+</div>
+<div class="modal-body wrapper-xs h6" ng-form="DialogForm">
+    <div class="panel panel-default">
+        <div class="panel-body padder-xs padder-v-xxs">
+            <div class="wrapper-sm">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <div config-select ng-model="eq.Ser.aOpType" tb="BcEquipmentRt" col="OpType" placeholder="类型"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" date-picker class="form-control"  ng-model="eq.Ser.aStartTime" placeholder="开始时间>=" option="eq.DateOption">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" date-picker class="form-control"  ng-model="eq.Ser.aStartTime1" placeholder="开始时间<=" option="eq.DateOption">
+                    </div>
+                    <button class= "btn btn-sm btn-info " ng-click= "eq.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                </div>
+            </div>
+            <div class="padder-sm table-responsive">
+                <table class="table one-line">
+                    <thead>
+                        <tr>
+                            <td title="设备编码" style= "width:100px ">设备编码</td>
+                            <td title="设备名称" style= "width:100px ">设备名称</td>
+                            <td title="类型" style= "width:100px ">类型</td>
+                            <td title="开始时间" style= "width:100px ">开始时间</td>
+                            <td title="原因" style= "width:100px ">原因</td>
+                            <td title="费用" style= "width:100px ">费用</td>
+                            <td title="责任人" style= "width:100px ">责任人</td>
+                            <td title="维修类型" style= "width:100px ">维修类型</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="item in eq.List ">
+                        <td title="{{ item.EqData.Code }}">{{ item.EqData.Code }}</td>
+                        <td title="{{ item.EqData.Name }}">{{ item.EqData.Name }}</td>
+                        <td title="{{ item.OpTypeDesc }}">{{ item.OpTypeDesc }}</td>
+                        <td title="{{ item.StartTime }}">{{ item.StartTime | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                        <td title="{{ item.Reason }}">{{ item.Reason }}</td>
+                        <td title="{{ item.Amount }}">{{ item.Amount }}</td>
+                        <td title="{{ item.ChargePer }}">{{ item.ChargePer }}</td>
+                        <td title="{{ item.RpTypeDesc }}">
+                            <span ng-if="item.OpType == '1'">{{ item.RpTypeDesc }}</span>
+                        </td>
+                    </tr>
+                </table>
+                <div class= "col-md-12 text-center " ng-if= "eq.page.total>eq.page.size ">
+                    <div uib-pagination total-items= "eq.page.total " ng-model= "eq.page.index " items-per-page= "eq.page.size " max-size= "10 " first-text= "<< " previous-text= "< "
+                     ng-change= "eq.PageChange() " next-text= "> " last-text= ">> " boundary-links= "true " boundary-link-numbers= "true "></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,183 @@
+<div class="modal-header">
+    <div class="modal-title h3">
+        <button class="btn btn-warning pull-right" type="button" ng-click="eq.Cancel()">取消</button>
+        <button ng-if="!eq.Item.IsComplete" class="btn btn-success pull-right m-r-md" type="button" ng-disabled="DialogForm.$invalid||(eq.Item.State && eq.Item.State!=0)" ng-click="eq.Save('1')">储存并提交到OA审批</button>
+        <button ng-if="!eq.Item.IsComplete" class="btn btn-success pull-right m-r-md" type="button" ng-disabled="DialogForm.$invalid||(eq.Item.State && eq.Item.State!=0)" ng-click="eq.Save('0')">储存</button>
+        设备保养/维修
+    </div>
+</div>
+<div class="modal-body wrapper-sm" ng-form="DialogForm" cg-busy="eq.promise">
+    <div class="panel panel-default">
+        <div class="panel-body wrapper-xs">
+            <div class="form-horizontal">
+                <div class="form-group-xs col-xs-12">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">申请类型:</label>
+                        <div class="col-sm-8 padder-xs">
+                            <div toggle-switch ng-model="eq.Item.OpType" class="w-xxs switch-success" on-label="维修" off-label="保养"
+                                 on-value="1" off-value="0" is-disabled="eq.IsEdit"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">{{ eq.Item.OpType == '0'?'保养':'维修' }}单号:</label>
+                        <div class="col-sm-8 padder-xs">
+                            <input autocomplete="off" type="text" disabled="disabled" name="ListNo" class="form-control" placeholder="申请单号" ng-model="eq.Item.DocNo" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs" ng-if="eq.Item.OpType == '0'">
+                        <label class="control-label col-sm-4 padder-xs">设备编号:</label>
+                        <div class="col-sm-8 padder-xs" ng-class="{ 'has-error' : DialogForm.EqCode.$invalid }">
+                            <div ng-disabled="eq.IsEdit"
+                                 ng-name="EqCode" ng-required="true" basic-select="BcEquipment"
+                                 placeholder="设备编号" ng-model="eq.Item.EqData" select-class="text-xs"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs" ng-if="eq.Item.OpType == '1'">
+                        <label class="control-label col-sm-4 padder-xs">报障单号:</label>
+                        <div class="col-sm-8 padder-xs" ng-if="eq.Item.OpType == '1'" ng-class="{ 'has-error' : DialogForm.HitchID.$invalid }">
+                            <div ng-disabled="eq.IsEdit"
+                                 ng-name="HitchID" ng-required="true" basic-select="BcEquipmentHitch"
+                                 placeholder="报障单号" ng-model="eq.Item.HitchID" select-class="text-xs" ng-change="eq.ChangeHitch()"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group-xs col-xs-12">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">设备编号:</label>
+                        <div class="col-sm-8 padder-xs form-control-static text-danger-lter">
+                            {{ eq.Item.EqData.Code }}
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">设备名称:</label>
+                        <div class="col-sm-8 padder-xs form-control-static text-danger-lter">
+                            {{ eq.Item.EqData.Name }}
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">品牌:</label>
+                        <div class="col-sm-8 padder-xs">
+                            <p class="form-control-static font-bold text-danger-lter">{{eq.Item.EqData.Brand }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group-xs col-xs-12">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">设备规格:</label>
+                        <div class="col-sm-8 padder-xs">
+                            <p class="form-control-static font-bold text-danger-lter">{{eq.Item.EqData.EqSpec}}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">品牌:</label>
+                        <div class="col-sm-8 padder-xs">
+                            <p class="form-control-static font-bold text-danger-lter">{{eq.Item.EqData.Brand }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">供应商:</label>
+                        <div class="col-sm-8 padder-xs">
+                            <p class="form-control-static font-bold text-danger-lter">{{eq.Item.EqData.VenderName}}</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group-xs col-xs-12">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">购入时间:</label>
+                        <div class="col-sm-8 padder-xs">
+                            <p class="form-control-static font-bold text-danger-lter">{{eq.Item.EqData.BuyTime | date:'yyyy-MM-dd HH:mm:ss' }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">购入费用:</label>
+                        <div class="col-sm-8 padder-xs">
+                            <p class="form-control-static font-bold text-danger-lter">{{eq.Item.EqData.BuyAmount}}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">存放位置:</label>
+                        <div class="input-group padder-xs col-sm-8">
+                            <p class="form-control-static font-bold text-danger-lter">{{eq.Item.EqData.Location}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group-xs col-xs-12">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">使用部门:</label>
+                        <div class="col-sm-8 padder-xs">
+                            <p class="form-control-static font-bold text-danger-lter">{{eq.Item.EqData.UseDept }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">管理部门:</label>
+                        <div class="col-sm-8 padder-xs">
+                            <p class="form-control-static font-bold text-danger-lter">{{eq.Item.EqData.Dept }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">设备状态:</label>
+                        <div class="input-group padder-xs col-sm-8">
+                            <p class="form-control-static font-bold text-danger-lter">{{eq.Item.EqData.StateDesc }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group-xs col-xs-12">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">U9卡片:</label>
+                        <div class="input-group padder-xs col-sm-8">
+                            <p class="form-control-static font-bold text-danger-lter">{{eq.Item.EqData.U9CardCode}}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 padder-xs">
+                        <label class="control-label col-sm-2 padder-xs">设备备注:</label>
+                        <div class="col-sm-10 padder-xs">
+                            <p class="form-control-static font-bold text-danger-lter">{{eq.Item.EqData.Remark }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group-xs col-xs-12">
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">开始时间:</label>
+                        <div class="input-group padder-xs col-sm-8" ng-class="{ 'has-error' : DialogForm.StartTime.$invalid }">
+                            <input autocomplete="off" ng-disabled="eq.Item.State&&eq.Item.State!=0" date-time-picker type="text" name="StartTime" option="eq.Option" format="Y-m-d H:i" class="form-control" placeholder="开始时间" ng-model="eq.Item.StartTime" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">费用:</label>
+                        <div class="input-group padder-xs col-sm-8" ng-class="{ 'has-error' : DialogForm.Amount.$invalid }">
+                            <input type="number" min="0" ng-disabled="eq.Item.State&&eq.Item.State!=0" class="form-control" name="Amount" ng-model="eq.Item.Amount" placeholder="费用" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">责任人:</label>
+                        <div class="input-group padder-xs col-sm-8" ng-class="{ 'has-error' : DialogForm.ChargePer.$invalid }">
+                            <input ng-disabled="eq.Item.State&&eq.Item.State!=0" class="form-control" name="ChargePer" ng-model="eq.Item.ChargePer" placeholder="责任人" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group-xs col-xs-12">
+                    <div class="col-sm-4 padder-xs" ng-if="eq.Item.OpType == '1'">
+                        <label class="control-label col-sm-4 padder-xs">维修类型:</label>
+                        <div class="input-group padder-xs col-sm-8">
+                            <div toggle-switch ng-model="eq.Item.RpType" class="w-sm switch-success" on-label="内部维修" off-label="外协维修"
+                                 on-value="0" off-value="1" is-disabled="eq.IsEdit"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">说明:</label>
+                        <div class="input-group padder-xs col-sm-8" ng-class="{ 'has-error' : DialogForm.Remark.$invalid }">
+                            <textarea ng-disabled="eq.Item.State&&eq.Item.State!=0" class="form-control" name="Remark" rows="2" ng-model="eq.Item.Remark" placeholder="说明信息" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 padder-xs">
+                        <label class="control-label col-sm-4 padder-xs">原因:</label>
+                        <div class="input-group padder-xs col-sm-8" ng-class="{ 'has-error' : DialogForm.Reason.$invalid }">
+                            <textarea ng-disabled="eq.Item.State&&eq.Item.State!=0" class="form-control" name="Reason" rows="2" ng-model="eq.Item.Reason" placeholder="原因" required></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
