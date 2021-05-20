@@ -75,7 +75,6 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
         en.SNColumns = JSON.stringify(SNList);
         en.DocNo = "";
         en.CreatedBy = $rootScope.User.Name;
-        console.log(en);
         vm.promise = AjaxService.ExecPlan("MouldModify", "Save", en).then(function (data) {
             if (data.data[0].MsgType == "1") {
                 toastr.success(data.data[0].Msg);
@@ -231,8 +230,8 @@ function ($rootScope, $scope, Dialog, toastr, AjaxService, Form) {
                     vm.IsEqual[p] = false;
                 } else {
                     modifyData.ModifySeg = p;
-                    modifyData.DataBeforeModify = vm.Original[p].toString();
-                    modifyData.DataAfterModify = vm.Item[p].toString();
+                    modifyData.DataBeforeModify = vm.Original[p];
+                    modifyData.DataAfterModify = vm.Item[p];
                     var m = angular.copy(modifyData);
                     vm.ModifySeg.push(m);//保存变更字段信息
                     vm.IsEqual[p] = true;
