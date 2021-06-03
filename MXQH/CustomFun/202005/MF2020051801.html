@@ -1,0 +1,56 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="rpt.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">库存汇总</uib-tab-heading>
+        <div class="wrapper-xs">
+            <div class="form-inline">
+                <div class="form-group">
+                    
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "rpt.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "rpt.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-xs ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table " >
+                    <thead>
+                        <tr>
+                            <td title="序号" style= "width:100px ">序号</td>
+                            <td title="料号" style="width:100px ">料号</td>
+                            <td title="品名" style="width:100px ">品名</td>
+                            <td title="单号" style= "width:100px ">单号</td>
+                            <td title="单据类型" style= "width:100px ">单据类型</td>
+                            <td title="SN码" style= "width:100px ">SN码</td>
+                            <td title="创建日期" style= "width:100px ">出入库日期</td>
+                            <td title="状态" style= "width:100px ">状态</td>
+                            <td title="阶段" style= "width:100px ">阶段</td>
+                            <td title="总量" style= "width:100px ">总量</td>
+                            <td title="可用量" style="width:100px ">可用量</td>
+                            <td title="不可用量" style= "width:100px ">不可用量</td>
+                            <td title="在库状态" style= "width:100px ">在库状态</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in rpt.List ">
+                        <td title="{{ item.OrderNo }}">{{ item.OrderNo }}</td>
+                        <td title="{{ item.MaterialCode }}">{{ item.MaterialCode }}</td>
+                        <td title="{{ item.MaterialName }}">{{ item.MaterialName }}</td>
+                        <td title="{{ item.DocNo }}">{{ item.DocNo }}</td>
+                        <td title="{{ item.DocType }}">{{ item.DocType }}</td>
+                        <td title="{{ item.SNCode }}">{{ item.SNCode }}</td>
+                        <td title="{{ item.CreateDate|date:'yyyy-MM-dd HH:mm' }}">{{ item.CreateDate|date:'yyyy-MM-dd HH:mm' }}</td>
+                        <td title="{{ item.Status }}">{{ item.Status }}</td>
+                        <td title="{{ item.Progress }}">{{ item.Progress }}</td>
+                        <td title="{{ item.Total }}">{{ item.Total }}</td>
+                        <td title="{{ item.UnAvaiable }}">{{ item.Total-item.UnAvaiable }}</td>
+                        <td title="{{ item.UnAvaiable }}">{{ item.UnAvaiable }}</td>
+                        <td title="{{ item.DocType3 }}">{{ item.DocType3 }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "rpt.page.total>rpt.page.pageSize ">
+                <div uib-pagination total-items= "rpt.page.total " ng-model= "rpt.page.pageIndex " items-per-page= "rpt.page.pageSize " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "rpt.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
