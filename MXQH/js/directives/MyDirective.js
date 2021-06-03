@@ -134,10 +134,11 @@ angular.module('AppSet')
         require: 'ngModel',
         scope: {
             ngModel: '=',
-            ngDisabled: '=',
-            searchEnabled: '=',
-            srcData: '=',
-            clear: '=',
+            ngDisabled: '=?ngDisabled',
+            searchEnabled: '=?searchEnabled',
+            srcData: '=?srcData',
+            selectItem: '=?selectItem',
+            clear: '=?clear',
             selectClass: '@',
             autoFirst: '@',
             placeholder: '@',
@@ -200,6 +201,7 @@ angular.module('AppSet')
                 ListData = angular.copy(scope.srcData);
                 if (scope.autoFirst.toLowerCase() == 'true' && !scope.ngModel) {
                     scope.ngModel = enName.ReturnColumn == undefined || enName.ReturnColumn == '' ? ListData[0] : ListData[0][enName.ReturnColumn];
+                    scope.selectItem = ListData[0];
                 }
                 scope.limit = scope.limit || ListData.length;
                 scope.limit = scope.limit == 0 ? 1 : scope.limit;
@@ -219,6 +221,7 @@ angular.module('AppSet')
                     }
                     if (data2.length > 0 && scope.autoFirst.toLowerCase() == 'true' && !scope.ngModel) {
                         scope.ngModel = enName.ReturnColumn == undefined || enName.ReturnColumn == '' ? data2[0] : data2[0][enName.ReturnColumn];
+                        scope.selectItem = data2[0];
                     }
                     scope.limit = scope.limit || ListData.length;
                     scope.limit = scope.limit == 0 ? 1 : scope.limit;
@@ -284,6 +287,14 @@ angular.module('AppSet')
         }
 
         scope.ValueChange = function () {
+            if(enName.ReturnColumn == undefined || enName.ReturnColumn == ''){
+                scope.selectItem = scope.data[y];
+            }else{
+                for (var y = 0, leny = scope.data.length; y < leny; y++) {
+                    if (scope.data[y][enName.ReturnColumn] == scope.ngModel) {
+                        scope.selectItem = scope.data[y];
+                    }
+                }}
             if (scope.ngChange) {
                 AjaxService.AjaxHandle("GetFileText", "123").then(function (data) {
                     scope.ngChange();
@@ -520,9 +531,10 @@ angular.module('AppSet')
         require: 'ngModel',
         scope: {
             ngModel: '=',
-            ngDisabled: '=',
-            searchEnabled: '=',
-            configOption: '=',
+            ngDisabled: '=?ngDisabled',
+            searchEnabled: '=?searchEnabled',
+            configOption: '=?configOption',
+            selectItem: '=?selectItem',
             tb: '@',
             col:'@',
             placeholder: '@',
@@ -532,7 +544,7 @@ angular.module('AppSet')
             autoFirst:'@',
             ngChange:'&'
         },
-        template: '<ui-select name="{{ ngName }}" ng-change="OnChange()" class="{{ selectClass }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="ngRequired">'
+        template: '<ui-select name="{{ ngName }}" ng-change="ValueChange()" class="{{ selectClass }}" ng-model="$parent.ngModel" theme="bootstrap" search-enabled="searchEnabled" ng-disabled="ngDisabled" ng-required="ngRequired">'
                   + ' <ui-select-match placeholder="{{ placeholder }}">{{ $select.selected.ClDesc }}</ui-select-match>       '
                   + ' <ui-select-choices repeat="item.ClInf as item in data | propsFilter: {ClInf: $select.search, ClDesc: $select.search}">                          '
                   + '      <div ng-bind-html="item.ClDesc | highlight: $select.search"></div>'
@@ -554,10 +566,16 @@ angular.module('AppSet')
                 scope.data = data;
                 if (data.length > 0 && scope.autoFirst.toLowerCase() == 'true') {
                     scope.ngModel = scope.ngModel || data[0].ClInf;
+                    scope.selectItem = data[0];
                 }
             });
         }
-        scope.OnChange = function () {
+        scope.ValueChange = function () {
+            for (var y = 0, leny = scope.data.length; y < leny; y++) {
+                if (scope.data[y].ClInf == scope.ngModel) {
+                    scope.selectItem = scope.data[y];
+                }
+            }
             if (scope.ngChange) {
                 AjaxService.doAysc().then(function (data) {
                     scope.ngChange();

@@ -20,8 +20,7 @@
                     <div class="col-md-12 padder-xs">
                         <label class="col-md-3 control-label">力同委外单号</label>
                         <div class="col-md-8 no-padder" ng-class="{ 'has-error' : m.DialogForm.AucWPO.$invalid }">
-                            <input autocomplete="off"  type="text" class="form-control" name="AucWPO" placeholder="力同委外单号"
-                                   ng-model="m.Item.AucWPO" ng-disabled="m.IsPack"  required>
+                            <div basic-select="SMTAucWPO" ng-name="AucWPO" select-item="m.selectItem" placeholder="力同委外单号" ng-required="true" ng-model="m.Item.AucDocCode" ng-change="m.ChangeWPO()" ng-disabled="m.IsPack"></div>
                         </div>
                     </div>
                 </div>
@@ -59,4 +58,4 @@
         <button class="btn btn-warning pull-none" type="button" ng-click="m.cancel()">取消</button>
     </div>
 </div>
-<!--<pre>{{ m.SerList | json }}</pre>-->
+<!--<pre>{{ m.Item | json }}</pre>-->

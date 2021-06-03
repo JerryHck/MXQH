@@ -73,6 +73,7 @@ function ($rootScope, $scope, $timeout, Dialog, toastr, AjaxService, MyPop) {
         if (vm.InCodeControl == undefined) return;
         var en = {};
         en.InternalCode = vm.InCodeControl;
+
         AjaxService.ExecPlan("MesMxWOrder", 'ass', en, false).then(function (data) {
             if (data.data[0].MsgType == 'Error') {
                 vm.Item.InCode = undefined;
@@ -109,7 +110,9 @@ function ($rootScope, $scope, $timeout, Dialog, toastr, AjaxService, MyPop) {
         }
         en.InternalCode = vm.InCodeControl;
         en.ProcedureID = vm.ProcedureItem.boProcedureID;
+        console.log(123)
         vm.promise = AjaxService.ExecPlan("MesMxWOrder", "saveass", en).then(function (data) {
+            console.log(data)
             if (data.data[0].MsgType == 'Success') {
                 vm.MesList.splice(0, 0, { Id: vm.MesList.length + 1, IsOk: true, Msg: data.data[0].Msg });
                 //vm.PassCount = data.data1[0].ToTalCount;

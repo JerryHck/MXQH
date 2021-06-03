@@ -21,6 +21,7 @@
             <tr>
                 <td style="width:60px ">操作</td>
                 <td style="width:100px ">供应商编号</td>
+                <td style="width:100px ">对应U9编号</td>
                 <td style="width:100px ">供应商简称</td>
                 <td style="width:100px ">供应商名称</td>
                 <td style="width:100px ">供应商邮件</td>
@@ -34,6 +35,7 @@
                     <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="v.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
                 </td>
                 <td>{{ item.VenderSN }}</td>
+                <td>{{ item.U9SN }}</td>
                 <td>{{ item.ShortName }}</td>
                 <td>{{ item.VenderName }}</td>
                 <td>{{ item.EMail }}</td>

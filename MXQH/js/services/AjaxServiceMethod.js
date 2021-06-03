@@ -479,9 +479,7 @@
         }
 
         function doAysc() {
-            var d = $q.defer();
-            d.resolve(123);
-            return d.promise;
+            return GetPlansTop("User", {}, 0)
         }
 
         function httpFun(q, url, postData, type) {

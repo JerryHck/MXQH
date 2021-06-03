@@ -8,11 +8,17 @@ function WPOFunDialogCtrl($rootScope, $scope, $uibModalInstance, Form, ItemData,
     vm.form = Form[ItemData.Id ? 1 : 0];
     vm.Item = angular.copy(ItemData);
     vm.isExists = isExists;
+    vm.ChangeWPO = ChangeWPO;
 
     if (ItemData.Id) {
         AjaxService.GetPlan("WPOPackage", { name: "MOId", value: ItemData.Id }).then(function (data) {
             vm.IsPack = data.Id;
         });
+    }
+
+
+    function ChangeWPO() {
+        vm.Item.AucWPO = vm.selectItem.DocNo;
     }
 
     //储存

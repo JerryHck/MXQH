@@ -1,4 +1,4 @@
-﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="mo.promise">
+<uib-tabset active="active" type="tabs" class="h-100" cg-busy="mo.promise">
     <uib-tab index="0">
         <uib-tab-heading class="h5">工单软件兼容</uib-tab-heading>
         <div class="wrapper-md">
@@ -37,7 +37,7 @@
                     <tr ng-repeat= "item in mo.List " ng-form="item.ItemForm">
                         <td>
                             <button class="btn btn-xs btn-primary" ng-click="mo.Edit(item)"><i class="glyphicon glyphicon-edit"></i></button>
-                            <button class="btn btn-xs btn-danger" ng-confirm="{text:'确定要删除吗'}" ng-click="mo.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                            <button class="btn btn-xs btn-danger" ng-if="item.State == '0'" ng-confirm="{text:'确定要删除吗'}" ng-click="mo.Delete(item)"><i class="glyphicon glyphicon-remove"></i></button>
                         </td>
                         <td title="{{ item.WorkOrder }}">{{ item.WorkOrder }}</td>
                         <td title="{{ item.MateCode }}">{{ item.MateCode }}</td>

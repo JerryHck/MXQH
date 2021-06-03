@@ -51,6 +51,10 @@ function ($scope, Dialog, AjaxService, toastr, $window) {
     }
 
     function Delete(item) {
+        if (item.State != '0') {
+            toastr.error("已经提交OA,不允许再删除");
+            return;
+        }
         var en = angular.copy(item);
         en.ItemForm = undefined;
         vm.promise = AjaxService.PlanDelete("MOSoftCMPTApply", en).then(function (data) {

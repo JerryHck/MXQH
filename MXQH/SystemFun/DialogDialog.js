@@ -578,7 +578,7 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
         var maxSize = vm.NewItem.size == 'sm' || !vm.NewItem.size || vm.NewItem.size == "" ? "5" : "10";
         var sbHtml = "";
         sbHtml += "<div class=\"modal-header text-center\">\n";
-        sbHtml += '    <button class="btn btn-sm btn-warning pull-left" type="button" ng-click="' + vm.NewItem.controllerAs + '.OKClose()">取消</button>\n';
+        sbHtml += '    <button class="btn btn-sm btn-success pull-left" type="button" ng-click="' + vm.NewItem.controllerAs + '.OKClose()">确定</button>\n';
         sbHtml += '    <button class="btn btn-sm btn-warning pull-right" type="button" ng-click="' + vm.NewItem.controllerAs + '.Cancel()">取消</button>\n';
         sbHtml += '    <h3 class="modal-title">' + fun.FunName + '</h3>\n';
         sbHtml += "</div>\n";
@@ -706,8 +706,8 @@ function ($scope, $uibModalInstance, Form, ItemData, toastr, Dialog, AjaxService
         sbJs += "        vm.SerItem = angular.copy(item);\n";
         sbJs += "    }\n";
 
-        sbJs += "    function OKColse() {\n";
-        sbJs += "        $uibModalInstance.dismiss('vm.SerItem');\n";
+        sbJs += "    function OKClose() {\n";
+        sbJs += "        $uibModalInstance.close(vm.SerItem);\n";
         sbJs += "    }\n";
 
         sbJs += "    function Cancel() {\n";
