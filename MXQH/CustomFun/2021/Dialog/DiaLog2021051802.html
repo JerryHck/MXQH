@@ -1,4 +1,4 @@
-﻿<div class="modal-header">
+<div class="modal-header">
     <div class="modal-title h3">
         <button class="btn btn-warning pull-right" type="button" ng-click="mo.Cancel()">取消</button>
         <button ng-if="!mo.Item.IsComplete" class="btn btn-success pull-right m-r-md" type="button" ng-disabled="DialogForm.$invalid||mo.List1.length == 0 ||(mo.Item.State&&mo.Item.State!=0)" ng-click="mo.Save('1')">储存并提交到OA审批</button>

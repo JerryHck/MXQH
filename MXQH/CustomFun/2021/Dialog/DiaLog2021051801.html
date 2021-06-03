@@ -1,4 +1,4 @@
-﻿<div class="modal-header text-center">
+<div class="modal-header text-center">
     <button class="btn btn-sm btn-success pull-left" type="button" ng-click="wo.OKClose()">确认</button>
     <button class="btn btn-sm btn-warning pull-right" type="button" ng-click="wo.Cancel()">取消</button>
     <h3 class="modal-title">U9工单列表</h3>
@@ -25,6 +25,7 @@
                     <thead>
                         <tr>
                             <td title="工单号" style= "width:100px ">工单号</td>
+                            <td title="工单类型" style="width:100px ">工单类型</td>
                             <td title="品号" style= "width:100px ">品号</td>
                             <td title="品名" style= "width:100px ">品名</td>
                             <td title="订单量" style= "width:100px ">订单量</td>
@@ -34,6 +35,7 @@
                     </thead>
                     <tr ng-repeat="item in wo.List " ng-click="wo.Select(item)" ng-class="{'bg-danger-light': item.ID == wo.SerItem.ID}" ng-dblclick="wo.OK(item)" title="双击选择关闭">
                         <td title="{{ item.DocNo }}">{{ item.DocNo }}</td>
+                        <td title="{{ item.MOTypeTrl.Name }}">{{ item.MOTypeTrl.Name }}</td>
                         <td title="{{ item.Item.Code }}">{{ item.Item.Code }}</td>
                         <td title="{{ item.Item.Name }}">{{ item.Item.Name }}</td>
                         <td title="{{ item.ProductQty }}">{{ item.ProductQty }}</td>

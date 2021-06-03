@@ -11,7 +11,6 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, AjaxService, toastr, 
     vm.Cancel = Cancel;
     vm.Item = ItemData.ID ? angular.copy(ItemData) : { };
     vm.IsEdit = ItemData.ID ? true : false;
-    vm.ChangeHitch = ChangeHitch;
     vm.OpenMO = OpenMO;
     vm.ChangeSelect = ChangeSelect;
     vm.DeleteSoft = DeleteSoft;
@@ -24,13 +23,24 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, AjaxService, toastr, 
         if (ItemData.ID) { return; }
         var en = {};
         //en.SerList = [{ name: "DocState", value: "3", type: "!=" }];
-        en.SerList = [{ name: "Code", value: "202020351", type: "=", tableAs:"b" }];
+        en.SerList = [{ name: "Code", value: "202020351", type: "=", tableAs:"d" }];
         Dialog.OpenDialog("U9WorkOrderDialog", en).then(function (data) {
-            vm.Item.MOData = data;
-            vm.Item.WorkOrder = data.DocNo;
-            vm.Item.MateCode = data.Item.Code;
-            vm.Item.MateName = data.Item.Name;
-            PageChange1();
+            var serEn = [{ name: "WorkOrder", value: data.DocNo, type: "=" },
+                { name: "State", value: "0", type: "=", level: 2 },
+                { name: "State", value: "1", type: "=", level: 2, action: 'or' }];
+            AjaxService.GetPlan("MOSoftCMPTApply", serEn).then(function (modata) {
+                if (modata.ID) {
+                    toastr.error("所选工单已经开有兼容申请，且未OA审核完成，不允许再提新申请");
+                    vm.Item = ItemData.ID ? angular.copy(ItemData) : {};
+                } else {
+                    vm.Item.MOData = data;
+                    vm.Item.WorkOrder = data.DocNo;
+                    vm.Item.MateCode = data.Item.Code;
+                    vm.Item.MateName = data.Item.Name;
+                }
+                PageChange1();
+            })
+            
         }, function (err) { })
     }
 
@@ -48,7 +58,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, AjaxService, toastr, 
             //检查选中
             for (var i = 0, len = vm.List1.length; i < len; i++) {
                 for (var j = 0, len1 = vm.List.length; j < len1; j++) {
-                    if (vm.List[j].ID == vm.List1[i].MateSoftID) {
+                    if (vm.List[j].MateSoftID == vm.List1[i].MateSoftID) {
                         vm.List[j].IsSelect = true;
                     }
                 }
@@ -61,7 +71,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, AjaxService, toastr, 
         item.IsEffective = false;
         vm.List1.splice(index, 1);
         for (var j = 0, len1 = vm.List.length; j < len1; j++) {
-            if (vm.List[j].ID == item.MateSoftID) {
+            if (vm.List[j].MateSoftID == item.MateSoftID) {
                 vm.List[j].IsSelect = false;
             }
         }
@@ -88,7 +98,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, AjaxService, toastr, 
         if (item.IsSelect) {
             var en = {};
             en.IsEffective = true;
-            en.MateSoftID = item.ID;
+            en.MateSoftID = item.MateSoftID;
             en.SoftVersion = item.SoftVersion;
             en.CreateDate = new Date();
             vm.List1.push(en);
@@ -97,7 +107,7 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, AjaxService, toastr, 
             //添加
             var index = -1;
             for (var j = 0, len1 = vm.List1.length; j < len1; j++) {
-                if (item.ID == vm.List1[j].MateSoftID) {
+                if (item.MateSoftID == vm.List1[j].MateSoftID) {
                     index = j;
                     break;
                 }
@@ -106,17 +116,6 @@ function ($rootScope, $scope, ItemData, $uibModalInstance, AjaxService, toastr, 
         }
     }
 
-    function ChaneType() {
-        if (!ItemData.ID) {
-            vm.Item = { OpType: vm.Item.OpType, Amount: 0, RpType: '0', DocNo: vm.Item.DocNo };
-        }
-    }
-
-    function ChangeHitch() {
-        AjaxService.GetPlan("BcEquipmentHitch", { name: "ID", value: vm.Item.HitchID }).then(function (data) {
-            vm.Item.EqData = data.EqData;
-        })
-    }
 
     //保存
     function Save(obj) {

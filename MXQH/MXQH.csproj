@@ -224,6 +224,10 @@
     <Content Include="SystemFun\SystemSetting.js" />
     <Content Include="SystemFun\ToolManager.html" />
     <Content Include="SystemFun\ToolManager.js" />
+    <Content Include="SystemFun\UpTfMethodSetDialog.html" />
+    <Content Include="SystemFun\UpTfMethodSetDialog.js" />
+    <Content Include="SystemFun\UpTransforSet.html" />
+    <Content Include="SystemFun\UpTransforSet.js" />
     <Content Include="UIFun\Board\U9IssuedLLMateBoard.html" />
     <Content Include="UIFun\Board\U9IssuedLLMateBoard.js" />
     <Content Include="UIFun\Board\WorkOrderBoard.html" />
