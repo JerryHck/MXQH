@@ -42,6 +42,7 @@
                 <thead>
                     <tr>
                         <td style="width:60px ">查看</td>
+                        <td style="width:80px ">是否冻结</td>
                         <td style="width:80px ">物料编码</td>
                         <td style="width:120px ">物料名称</td>
                         <td style="width:160px ">规格</td>
@@ -64,6 +65,7 @@
                         <button class="btn btn-xs btn-info" title="查看" ng-click="pmc.GetBomDetail(item.MaterialVerId)"><i class="glyphicon glyphicon-cog"></i></button>
                         <!--<button class="btn btn-xs btn-danger" title="删除" ng-confirm="{text:'确定要删除吗'}" ng-click="pmc.Delete(item.ID)"><i class="glyphicon glyphicon-remove"></i></button>-->
                     </td>
+                    <td title="{{ item.IsFrozenName }}">{{ item.IsFrozenName }}</td>
                     <td title="{{ item.Code }}">{{ item.Code }}</td>
                     <td title="{{ item.Name }}" style="white-space:normal;word-break:break-all;">{{ item.Name }}</td>
                     <td title="{{ item.Spec }}" style="white-space:normal;word-break:break-all;">{{ item.Spec }}</td>
@@ -109,6 +111,7 @@
                 <thead>
                     <tr>
                         <td style="width:60px ">层次号</td>
+                        <td style="width:80px ">是否冻结</td>
                         <td style="width:80px ">物料编码</td>
                         <td style="width:100px ">物料名称</td>
                         <td style="width:120px ">规格</td>
@@ -127,6 +130,7 @@
                 </thead>
                 <tr ng-repeat="item in pmc.BOMDetail " ng-style="item.IsFrozen&&pmc.GrayBg">
                     <td title="{{ item.RN }}">{{ item.RN }}</td>
+                    <td title="{{ item.IsFrozenName }}">{{ item.IsFrozenName }}</td>
                     <td title="{{ item.Code }}">{{ item.Code }}</td>
                     <td title="{{ item.Name }}" style="white-space:normal;word-break:break-all;">{{ item.Name }}</td>
                     <td title="{{ item.Spec }}" style="white-space:normal;word-break:break-all;">{{ item.Spec }}</td>
