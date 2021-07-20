@@ -124,7 +124,7 @@
                                             </div>-->
                                         </td>
                                         <td>{{sn.MaterialCode}}</td>
-                                        <td title="{{sn.MaterialName}}">{{sn.MaterialName}}</td>
+                                        <td title="{{sn.MaterialName}}" style="white-space:normal;word-break:normal;">{{sn.MaterialName}}</td>
                                         <td>
                                             <span ng-if="!sn.IsEdit">{{sn.Remark}}</span>
                                             <textarea ng-if="sn.IsEdit" ng-model="ship.EditItem.Remark" rows="5" class="form-control"></textarea>

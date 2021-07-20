@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12 scroll-x" style="min-height:300px;">
+        <div class="col-md-12 scroll-x table-responsive" style="min-height:300px;">
             <table class="table pad-xs">
                 <thead>
                     <tr>
@@ -165,7 +165,8 @@
                                 <div config-select ng-model="rdssc.EditItem.DocType" config-option="rdssc.DocTypeList" auto-first="false" ng-name="e_DocType" placeholder="单据类型"></div>
                             </div>
                         </td>
-                        <td style="white-space:normal;word-break:normal;">{{item.MaterialCode}}</td>
+                       
+                        <td style="white-space:normal;word-break:break-word;">{{item.MaterialCode}}</td>
                         <td style="white-space:normal;word-break:normal;">{{item.MaterialName}}</td>
                         <td>{{item.Progress}}</td>
                         <td>
