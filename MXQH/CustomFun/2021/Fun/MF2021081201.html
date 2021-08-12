@@ -1,0 +1,73 @@
+﻿<uib-tabset active="active" type="tabs" class="h-100" cg-busy="kpictrl.promise">
+    <uib-tab index="0">
+        <uib-tab-heading class="h5">项目考核报表</uib-tab-heading>
+        <div class="wrapper-xs">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" date-picker class="form-control"  ng-model="kpictrl.Ser.aTaskPlanStartDate" placeholder="计划开始日期大于" option="kpictrl.DateOption">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" date-picker class="form-control"  ng-model="kpictrl.Ser.aTaskPlanStartDate2" placeholder="计划开始日期小于" option="kpictrl.DateOption">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" date-picker class="form-control"  ng-model="kpictrl.Ser.aTaskPlanEndDate" placeholder="计划完成日期大于" option="kpictrl.DateOption">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off"  type="text" date-picker class="form-control"  ng-model="kpictrl.Ser.aTaskPlanEndDate2" placeholder="计划完成日期小于" option="kpictrl.DateOption">
+                </div>
+                <button class= "btn btn-sm btn-info " ng-click= "kpictrl.Search() "><i class= "glyphicon glyphicon-search "></i>查询</button>
+                <button class= "btn btn-sm btn-success " ng-click= "kpictrl.ExportExcel() "><i class= "glyphicon glyphicon-export "></i> 导出</button>
+            </div>
+        </div>
+        <div class= "padder-xs ">
+            <div class="col-md-12 scroll-x no-padder">
+                <table class= "table " >
+                    <thead>
+                        <tr>
+                            <td title="项目编码" style= "width:100px ">项目编码</td>
+                            <td title="项目名称" style= "width:100px ">项目名称</td>
+                            <td title="项目状态" style= "width:100px ">项目状态</td>
+                            <td title="项目经理" style= "width:100px ">项目经理</td>
+                            <td title="项目计划开始日期" style= "width:100px ">项目计划开始日期</td>
+                            <td title="项目计划完成日期" style= "width:100px ">项目计划完成日期</td>
+                            <td title="实际开始日期" style= "width:100px ">实际开始日期</td>
+                            <td title="任务编码" style= "width:100px ">任务编码</td>
+                            <td title="项目任务名称" style= "width:100px ">项目任务名称</td>
+                            <td title="任务负责人" style= "width:100px ">任务负责人</td>
+                            <td title="任务计划开始日期" style= "width:100px ">任务计划开始日期</td>
+                            <td title="任务计划完成日期" style= "width:100px ">任务计划完成日期</td>
+                            <td title="任务实际开始时间" style= "width:100px ">任务实际开始时间</td>
+                            <td title="任务实际结束时间" style= "width:100px ">任务实际结束时间</td>
+                            <td title="任务状态" style= "width:100px ">任务状态</td>
+                            <td title="严格考核" style= "width:100px ">严格考核</td>
+                            <td title="按当月考核" style= "width:100px ">按当月考核</td>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat= "item in kpictrl.List ">
+                        <td title="{{ item.WorkCode }}">{{ item.WorkCode }}</td>
+                        <td title="{{ item.WorkName  }}">{{ item.WorkName  }}</td>
+                        <td title="{{ item.StateName }}">{{ item.StateName }}</td>
+                        <td title="{{ item.Principal  }}">{{ item.Principal  }}</td>
+                        <td title="{{ item.PlanStartDate  }}">{{ item.PlanStartDate  }}</td>
+                        <td title="{{ item.PlanEndDate  }}">{{ item.PlanEndDate  }}</td>
+                        <td title="{{ item.ActualStartDate  }}">{{ item.ActualStartDate  }}</td>
+                        <td title="{{ item.TaskCode }}">{{ item.TaskCode }}</td>
+                        <td title="{{ item.TaskName  }}">{{ item.TaskName  }}</td>
+                        <td title="{{ item.TaskPrincipal }}">{{ item.TaskPrincipal }}</td>
+                        <td title="{{ item.TaskPlanStartDate  }}">{{ item.TaskPlanStartDate  }}</td>
+                        <td title="{{ item.TaskPlanEndDate  }}">{{ item.TaskPlanEndDate  }}</td>
+                        <td title="{{ item.TaskActualStartDate  }}">{{ item.TaskActualStartDate  }}</td>
+                        <td title="{{ item.TaskActualEndDate  }}">{{ item.TaskActualEndDate  }}</td>
+                        <td title="{{ item.IntState }}">{{ item.IntState }}</td>
+                        <td title="{{ item.yangekaohe }}">{{ item.yangekaohe }}</td>
+                        <td title="{{ item.dangyuekaohe }}">{{ item.dangyuekaohe }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class= "col-md-12 text-center " ng-if= "kpictrl.page.total>kpictrl.page.size ">
+                <div uib-pagination total-items= "kpictrl.page.total " ng-model= "kpictrl.page.index " items-per-page= "kpictrl.page.size " max-size= "10 " first-text= "第一页 " previous-text= "上一页 "
+                     ng-change= "kpictrl.PageChange() " next-text= "下一页 " last-text= "最后页 " boundary-links= "true " boundary-link-numbers= "true "></div>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
