@@ -36,14 +36,26 @@ function ($scope, Dialog, AjaxService, toastr, $window) {
         if (vm.Ser.aTaskPlanStartDate) {
             list.push({ name: "TaskPlanStartDate", value: vm.Ser.aTaskPlanStartDate, tableAs:"a", type:">" });
         }
-        if (vm.Ser.aTaskPlanStartDate2) {
-            list.push({ name: "TaskPlanStartDate", value: vm.Ser.aTaskPlanStartDate2, tableAs:"a", type:"<" });
-        }
-        if (vm.Ser.aTaskPlanEndDate) {
-            list.push({ name: "TaskPlanEndDate", value: vm.Ser.aTaskPlanEndDate, tableAs:"a", type:">" });
-        }
+        //if (vm.Ser.aTaskPlanStartDate2) {
+        //    list.push({ name: "TaskPlanStartDate", value: vm.Ser.aTaskPlanStartDate2, tableAs:"a", type:"<" });
+        //}
+        //if (vm.Ser.aTaskPlanEndDate) {
+        //    list.push({ name: "TaskPlanEndDate", value: vm.Ser.aTaskPlanEndDate, tableAs:"a", type:">" });
+        //}
         if (vm.Ser.aTaskPlanEndDate2) {
             list.push({ name: "TaskPlanEndDate", value: vm.Ser.aTaskPlanEndDate2, tableAs:"a", type:"<" });
+        }
+        if (vm.Ser.aWorkCode) {
+            list.push({ name: "WorkCode", value: '%' + vm.Ser.aWorkCode+'%', tableAs: "a", type: "like" });
+        }
+        if (vm.Ser.aWorkName) {
+            list.push({ name: "WorkName", value: '%' + vm.Ser.aWorkName + '%', tableAs: "a", type: "like" });
+        }
+        if (vm.Ser.aPrincipal) {
+            list.push({ name: "Principal", value: '%' + vm.Ser.aPrincipal + '%', tableAs: "a", type: "like" });
+        }
+        if (vm.Ser.aTaskPrincipal) {
+            list.push({ name: "TaskPrincipal", value: '%' + vm.Ser.aTaskPrincipal + '%', tableAs: "a", type: "like" });
         }
         return list;
     }
