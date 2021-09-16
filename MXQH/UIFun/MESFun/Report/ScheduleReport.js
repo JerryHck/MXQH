@@ -5,7 +5,7 @@ angular.module('app')
 function ($rootScope, $scope, $http, AjaxService, toastr, $window, Form) {
 
     var vm = this;
-    vm.Ser = { pageIndex: 1, pageSize:10 };
+    vm.Ser = { pageIndex: 1, pageSize:12 };
 
     vm.DataBind = DataBind;
     vm.Search = Search;
@@ -50,14 +50,17 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, Form) {
 
         en.shortName = 'Schedule';
         en.planName = 'MesPlanDetail';
-        en.Json = JSON.stringify({ WorkOrder: vm.Ser.WorkOrder, pageSize: vm.Ser.pageSize, pageIndex: vm.Ser.pageIndex, LineID: vm.Ser.LineID, SD: vm.Ser.SD, ED: vm.Ser.ED });
+        en.Json = JSON.stringify({ WorkOrder: vm.Ser.WorkOrder, pageSize: 99999999, pageIndex: vm.Ser.pageIndex, LineID: vm.Ser.LineID, SD: vm.Ser.SD, ED: vm.Ser.ED });
         en.IsTrans = false;
 
-        en2.Conn = 'U9con';
-        en2.Proc = 'dbo.sp_mes_GetPlanData';
+        //en2.Conn = 'U9con';
+        //en2.Proc = 'dbo.sp_mes_GetPlanData';
+        //en2.Json = JSON.stringify({ WorkOrder: vm.Ser.WorkOrder, MRPCategory: vm.Ser.MRPCategory });
+        //en2.IsTrans = false;
+        en2.shortName = 'Schedule';
+        en2.planName = 'U9MO';
         en2.Json = JSON.stringify({ WorkOrder: vm.Ser.WorkOrder, MRPCategory: vm.Ser.MRPCategory });
         en2.IsTrans = false;
-
         
         //en2.shortName = 'Schedule';
         //en2.planName = 'MesPlanDetail';
@@ -67,8 +70,8 @@ function ($rootScope, $scope, $http, AjaxService, toastr, $window, Form) {
         list.push(en);
         list.push(en2);
         enx.strJson = JSON.stringify(list);
-        vm.promise = AjaxService.BasicCustom("ExecProcMultiExcel", enx).then(function (data) {
-            console.log(data);
+        vm.promise = AjaxService.BasicCustom("ExecProcMultiExcel", enx).then(function (data) {            
+            $window.location.href = data.File;
         });
     }
 
